@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/searchall",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "MOLGENIS searchall",
   "author": "Bart Charbon",
   "publishConfig": {
