@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "description": "Interface for managing groups, users and permissions",
   "author": "sido <sido@haakma.org>",
-  "private": true,
+  "publishConfig": {
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/"
+  },
+  "files": [
+    "dist/*",
+    "*.json"
+  ],
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "yarn dev",

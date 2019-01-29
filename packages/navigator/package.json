@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "description": "its a navigator for your packages and entities",
   "author": "Dennis Hendriksen <d.hendriksen@umcg.nl>",
-  "private": true,
+  "publishConfig": {
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/"
+  },
+  "files": [
+    "dist/*",
+    "*.json"
+  ],
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",

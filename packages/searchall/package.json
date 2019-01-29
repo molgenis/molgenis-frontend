@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "description": "MOLGENIS searchall",
   "author": "Bart Charbon",
-  "private": true,
+  "publishConfig": {
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/"
+  },
+  "files": [
+    "dist/*",
+    "*.json"
+  ],
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
