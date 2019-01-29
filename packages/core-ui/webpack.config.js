@@ -10,9 +10,9 @@ var configuration = {
 			'react-components' : 'modules/react-components',
 			'rest-client' : 'modules/rest-client',
 			'i18n' : 'modules/i18n',
-			'jquery-ui' : '../../resources/js/jquery-ui-1.9.2.custom.min',
-			'jq-edit-rangeslider' : '../../resources/js/jQEditRangeSlider-min',
-			'select2' : '../../resources/js/select2-patched',
+			'jquery-ui' : 'lib/jquery-ui-1.9.2.custom.min',
+			'jq-edit-rangeslider' : 'lib/jQEditRangeSlider-min',
+			'select2' : 'lib/select2-patched',
 			'utils' : 'modules/utils'
 		}
 	},
