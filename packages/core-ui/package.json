@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "watch": "webpack -d --watch",
-    "build": "webpack -d",
+    "dev:build": "webpack -d",
+    "build": "webpack -p --config webpack.production.config.js",
     "unit": "cross-env NODE_ENV=test babel-node ./test/index.js",
     "test": "yarn unit",
     "webpack-stats": "webpack --profile --json > target/json.stats",
