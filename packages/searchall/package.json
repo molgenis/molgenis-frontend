@@ -1,15 +1,13 @@
 {
   "name": "@molgenis/searchall",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1+03b2736",
   "description": "MOLGENIS searchall",
   "author": "Bart Charbon",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/"
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
+    "access": "public"
   },
-  "files": [
-    "dist/*",
-    "*.json"
-  ],
+  "files": ["dist"],
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
@@ -106,5 +104,6 @@
   "engines": {
     "node": ">= 8.9.0",
     "yarn": ">= 0.24.5"
-  }
+  },
+  "gitHead": "03b27362d15f448f5cb81926a64b29a2064cb62d"
 }

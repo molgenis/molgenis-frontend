@@ -3,14 +3,14 @@ var webpack = require('webpack');
 
 var configuration = {
     resolve: {
-        root: [path.resolve('./src'), path.resolve('./node_modules')],
+        root: [path.resolve('./src'), path.resolve('./node_modules'), path.resolve('./lib')],
         alias: {
             'react-components': 'modules/react-components',
             'rest-client': 'modules/rest-client',
             'i18n': 'modules/i18n',
-            'jquery-ui': 'lib/jquery-ui-1.9.2.custom.min',
-            'jq-edit-rangeslider': 'lib/jQEditRangeSlider-min',
-            'select2': 'lib/select2-patched',
+            'jquery-ui': 'jquery-ui-1.9.2.custom.min',
+            'jq-edit-rangeslider': 'jQEditRangeSlider-min',
+            'select2': 'select2-patched',
             'utils' : 'modules/utils'
         }
     },
@@ -21,7 +21,7 @@ var configuration = {
         'vendor-bundle': ['molgenis-vendor-webpack']
     },
     output: {
-        path : '../dist/js/dist',
+        path : 'dist/js/dist',
         filename: 'molgenis-[name].js',
         publicPath: '/js/dist/'
     },    
@@ -57,7 +57,7 @@ var configuration = {
         loaders: [{
             test: /\.jsx?$/,
             loader: 'babel',
-            exclude: [/node_modules/, /src[/\\]main[/\\]resources[/\\]js/]
+            exclude: [/node_modules/, /lib/]
         }, {
             test: /\.css$/,
             loader: 'style-loader!css-loader'

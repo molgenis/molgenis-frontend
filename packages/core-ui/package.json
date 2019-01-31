@@ -1,27 +1,26 @@
 {
   "name": "@molgenis/core-ui",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.3",
   "description": "Dependencies for the MOLGENIS UI",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/"
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
+    "access": "public"
   },
-  "files": [
-    "dist/*",
-    "*.json"
-  ],
+  "files": ["dist"],
   "scripts": {
     "watch": "webpack -d --watch",
     "dev:build": "webpack -d",
-    "build": "webpack -p --config webpack.production.config.js",
+    "build": "yarn run sass:build && yarn run copy && webpack -p --config webpack.production.config.js",
     "unit": "cross-env NODE_ENV=test babel-node ./test/index.js",
     "test": "yarn unit",
     "webpack-stats": "webpack --profile --json > target/json.stats",
-    "build-task:scss-compile": "node-sass-chokidar --source-map true --style compressed src/scss -o ../resources/css/bootstrap-4",
-    "build-task:autoprefixer": "postcss ../resources/css/bootstrap-4/bootstrap-molgenis-blue.css --use autoprefixer -d ../resources/css/bootstrap-4",
-    "build-task:css-minify": "cleancss --level 1 --source-map-inline-sources --output ../resources/css/bootstrap-4/bootstrap-molgenis-blue.min.css ../resources/css/bootstrap-4/bootstrap-molgenis-blue.css",
-    "sass:build": "npm-run-all -p build-task:*",
+    "build-task:scss-compile": "node-sass-chokidar --source-map true --style compressed src/scss -o dist/css/bootstrap-4",
+    "build-task:autoprefixer": "postcss dist/css/bootstrap-4/bootstrap-molgenis-blue.css --use autoprefixer -d dist/css/bootstrap-4",
+    "build-task:css-minify": "cleancss --level 1 --source-map-inline-sources --output dist/css/bootstrap-4/bootstrap-molgenis-blue.min.css dist/css/bootstrap-4/bootstrap-molgenis-blue.css",
+    "sass:build": "npm-run-all -s build-task:*",
     "sass:watch": "chokidar 'src/scss/**/*.scss' -c 'npm run sass:build'",
-    "dev:theme": "npm-run-all -p sass:*"
+    "dev:theme": "npm-run-all -p sass:*",
+    "copy": "yarn run copyfiles lib/* dist/js -u1"
   },
   "repository": {
     "type": "git",
@@ -75,6 +74,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "chokidar-cli": "^1.2.1",
     "clean-css-cli": "^4.2.1",
+    "copyfiles": "^2.1.0",
     "cross-env": "^3.1.4",
     "css-loader": "^0.23.1",
     "expect": "^1.6.0",
@@ -121,5 +121,6 @@
         ]
       }
     }
-  }
+  },
+  "gitHead": "03b27362d15f448f5cb81926a64b29a2064cb62d"
 }
