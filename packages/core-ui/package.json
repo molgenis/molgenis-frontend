@@ -3,12 +3,9 @@
   "version": "0.0.1-alpha.0",
   "description": "Dependencies for the MOLGENIS UI",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/"
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
+    "access": "public"
   },
-  "files": [
-    "dist/*",
-    "*.json"
-  ],
   "scripts": {
     "watch": "webpack -d --watch",
     "dev:build": "webpack -d",
@@ -22,7 +19,7 @@
     "sass:build": "npm-run-all -s build-task:*",
     "sass:watch": "chokidar 'src/scss/**/*.scss' -c 'npm run sass:build'",
     "dev:theme": "npm-run-all -p sass:*",
-    "copy": " yarn run copyfiles lib/* dist/js -u1"
+    "copy": "yarn run copyfiles lib/* dist/js -u1"
   },
   "repository": {
     "type": "git",

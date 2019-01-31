@@ -4,12 +4,9 @@
   "description": "Client code for one click importer UI",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/"
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
+    "access": "public"
   },
-  "files": [
-    "dist/*",
-    "*.json"
-  ],
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",

@@ -2,12 +2,9 @@
   "name": "@molgenis/menu",
   "version": "0.0.1-alpha.0",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/"
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
+    "access": "public"
   },
-  "files": [
-    "dist/*",
-    "*.json"
-  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name context src/main.ts --dest dist/js/menu",

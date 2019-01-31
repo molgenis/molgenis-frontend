@@ -4,12 +4,9 @@
   "description": "UI code for the app-manager plugin",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/"
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
+    "access": "public"
   },
-  "files": [
-    "dist/*",
-    "*.json"
-  ],
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "yarn dev",
