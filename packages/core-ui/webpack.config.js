@@ -5,14 +5,14 @@ var webpack = require('webpack');
 var configuration = {
 	// Resolve location of node modules and molgenis modules specific javascript
 	resolve : {
-		root : [ path.resolve('./src'), path.resolve('./node_modules') ],
+		root : [ path.resolve('./src'), path.resolve('./node_modules'), path.resolve('./lib') ],
 		alias : {
 			'react-components' : 'modules/react-components',
 			'rest-client' : 'modules/rest-client',
 			'i18n' : 'modules/i18n',
-			'jquery-ui' : 'lib/jquery-ui-1.9.2.custom.min',
-			'jq-edit-rangeslider' : 'lib/jQEditRangeSlider-min',
-			'select2' : 'lib/select2-patched',
+			'jquery-ui' : 'jquery-ui-1.9.2.custom.min',
+			'jq-edit-rangeslider' : 'jQEditRangeSlider-min',
+			'select2' : 'select2-patched',
 			'utils' : 'modules/utils'
 		}
 	},
@@ -49,7 +49,7 @@ var configuration = {
 			// select these two presets that make it compile jsx -> js and es6
 			// -> js
 			loader : 'babel',
-			exclude : [ /node_modules/, /src[/\\]main[/\\]resources[/\\]js/]
+			exclude : [ /node_modules/, /lib/]
 		}, {
 			test : /\.css$/,
 			loader : 'style-loader!css-loader'

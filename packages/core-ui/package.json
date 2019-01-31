@@ -22,7 +22,7 @@
     "sass:build": "npm-run-all -s build-task:*",
     "sass:watch": "chokidar 'src/scss/**/*.scss' -c 'npm run sass:build'",
     "dev:theme": "npm-run-all -p sass:*",
-    "copy": " yarn run copyfiles src/lib/* dist -u2"
+    "copy": " yarn run copyfiles lib/* dist/js -u1"
   },
   "repository": {
     "type": "git",
