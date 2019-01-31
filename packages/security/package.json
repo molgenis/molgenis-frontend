@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/security",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1",
   "description": "Interface for managing groups, users and permissions",
   "author": "sido <sido@haakma.org>",
   "publishConfig": {
