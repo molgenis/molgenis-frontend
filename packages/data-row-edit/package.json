@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/data-row-edit",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Data row edit",
   "author": "sido <sido@haakma.org>",
   "publishConfig": {
