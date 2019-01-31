@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/metadata-manager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MOLGENIS Metadata manager",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
   "publishConfig": {

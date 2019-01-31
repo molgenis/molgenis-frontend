@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/core-ui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Dependencies for the MOLGENIS UI",
   "publishConfig": {
     "registry": "https://registry.molgenis.org/repository/npm-hosted/",
