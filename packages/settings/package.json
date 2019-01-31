@@ -1,12 +1,13 @@
 {
   "name": "@molgenis/settings",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1+03b2736",
   "description": "Settings",
   "author": "sido <sido@haakma.org>",
   "publishConfig": {
     "registry": "https://registry.molgenis.org/repository/npm-hosted/",
     "access": "public"
   },
+  "files": ["dist"],
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "yarn dev",
@@ -113,5 +114,6 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "gitHead": "03b27362d15f448f5cb81926a64b29a2064cb62d"
 }
