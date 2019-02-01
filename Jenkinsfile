@@ -87,7 +87,7 @@ pipeline {
                 container('node') {
                     // TODO: Use --conventional-commits
                     sh "yarn lerna publish ${RELEASE_SCOPE} --yes"
-                    hubotSend(message: '${env.REPOSITORY} has been successfully deployed.', status:'SUCCESS')
+                    hubotSend(message: "${env.REPOSITORY} has been successfully deployed.", status:'SUCCESS')
                 }
             }
         }
