@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/app-manager",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "UI code for the app-manager plugin",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
   "publishConfig": {

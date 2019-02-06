@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/menu",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "publishConfig": {
     "registry": "https://registry.molgenis.org/repository/npm-hosted/",
     "access": "public"

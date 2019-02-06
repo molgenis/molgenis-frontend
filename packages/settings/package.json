@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/settings",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Settings",
   "author": "sido <sido@haakma.org>",
   "publishConfig": {

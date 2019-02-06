@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/navigator",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "its a navigator for your packages and entities",
   "author": "Dennis Hendriksen <d.hendriksen@umcg.nl>",
   "publishConfig": {
