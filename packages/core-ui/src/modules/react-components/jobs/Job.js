@@ -34,10 +34,10 @@ var Job = React.createClass({
             <div>
                 {job.progressMessage}
                 <ProgressBar
-                  progressMessage={this._formatProgressMessage()}
-                  progressPct={job.progressMax !== undefined ? this._getProgressPct() : 100}
-                  status={this._getCssClass() || 'primary'}
-                  active={this._isActive()}
+                    progressMessage={this._formatProgressMessage()}
+                    progressPct={job.progressMax !== undefined ? this._getProgressPct() : 100}
+                    status={this._getCssClass() || 'primary'}
+                    active={this._isActive()}
                 />
             </div>
             {job && showLog && <div>
@@ -60,7 +60,8 @@ var Job = React.createClass({
         this.setState({showLog: !this.state.showLog})
     },
     _cancelJobClick: function () {
-        $.post('/plugin/jobs/cancel/' + encodeURIComponent(this.props.job._meta.name) + '/' + encodeURIComponent(this.props.job.identifier))
+        let entityTypeId = this.props.job._meta ? this.props.job._meta.name : this.props.job.__entityTypeId
+        $.post('/plugin/jobs/cancel/' + encodeURIComponent(entityTypeId) + '/' + encodeURIComponent(this.props.job.identifier))
     },
     _getCssClass: function () {
         let cssTable = {
