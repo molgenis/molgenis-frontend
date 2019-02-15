@@ -45,7 +45,7 @@ pipeline {
                 }
             }
         }
-        stage('Install, test and publish: [ master ]') {
+        stage('Install, test and publish as canary: [ master ]') {
             when {
                 branch 'master'
             }
@@ -56,7 +56,8 @@ pipeline {
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
                     sh "yarn lerna run build"
-                    sh "yarn lerna publish --canary --no-push --yes"
+                    sh "yarn lerna version"
+                    sh "yarn lerna publish --canary"
                 }
             }
             post {
@@ -76,17 +77,13 @@ pipeline {
                     script {
                         env.RELEASE_SCOPE = input(
                                 message: 'Do you want to release?',
-                                ok: 'Release',
-                                parameters: [
-                                        choice(choices: 'patch\nminor\nmajor', description: '', name: 'RELEASE_SCOPE')
-                                ]
+                                ok: 'Release'
                         )
                     }
                 }
                 milestone 2
                 container('node') {
-                    // TODO: Use --conventional-commits
-                    sh "yarn lerna publish ${RELEASE_SCOPE} --yes"
+                    sh "yarn lerna publish"
                     hubotSend(message: "${env.REPOSITORY} has been successfully deployed.", status:'SUCCESS')
                 }
             }
