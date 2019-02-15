@@ -56,7 +56,6 @@ pipeline {
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
                     sh "yarn lerna run build"
-                    sh "yarn lerna version"
                     sh "yarn lerna publish --canary"
                 }
             }
