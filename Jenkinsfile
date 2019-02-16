@@ -51,6 +51,7 @@ pipeline {
             }
             steps {
                 milestone 1
+                sh "git fetch --tags"
                 container('node') {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
