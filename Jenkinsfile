@@ -45,19 +45,16 @@ pipeline {
                 }
             }
         }
-        stage('Install, test and publish as canary: [ master ]') {
+        stage('Install, test and build: [ master ]') {
             when {
                 branch 'master'
             }
             steps {
-                milestone 1
-                sh "git fetch --tags"
                 container('node') {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
                     sh "yarn lerna run build"
-                    sh "yarn lerna publish --canary"
                 }
             }
             post {
@@ -68,11 +65,25 @@ pipeline {
                 }
             }
         }
+        stage('Release canary: [ master ]'){
+            when {
+                branch 'master'
+            }
+            steps {
+                lock("Tags"){
+                    sh "git fetch --tags"
+                    container('node') {
+                        sh "yarn lerna publish --canary"
+                    }
+                }
+            }
+        }
         stage('Release: [ master ]') {
             when {
                 branch 'master'
             }
             steps {
+                milestone 1
                 timeout(time: 30, unit: 'MINUTES') {
                     script {
                         env.RELEASE_SCOPE = input(
@@ -81,7 +92,6 @@ pipeline {
                         )
                     }
                 }
-                milestone 2
                 container('node') {
                     sh "yarn lerna publish"
                     hubotSend(message: "${env.REPOSITORY} has been successfully deployed.", status:'SUCCESS')
