@@ -3,7 +3,14 @@
 # molgenis-frontend
 These are *stable* apps for MOLGENIS. The *stable* apps will compose the MOLGENIS frontend. These are used in the [molgenis/molgenis repository](https://github.com/molgenis/molgenis)
 
-## Tools and compiling
+The following will be addressed:
+
+- [Environment](#environment)
+- [Developing](#developing)
+- [Integrate with MOLGENIS](#integrate-with-molgenis)
+- [Guidelines](#guidelines)
+
+## Environment
 When developing client code, you will need to following tools:
  - Node v8.9.0 (LTS version) and included NPM version
  - Yarn v1.10.3 or greater
@@ -17,30 +24,37 @@ To get started run
 > yarn lerna bootstrap
 ```
 
+The following will be addresses:
+
+- [Usage of yarn with Vue](#usage-of-yarn-with-vue)
+- [Update existing stable apps](#update-existing-(stable)-apps)
+- [Create new stable apps](#create-new-(stable)-apps)
+
+### Usage of yarn with Vue
 The following three commands can be used to install, develop and test client code:
 
 ```bash
-yarn install
-yarn serve
-yarn test
+> yarn install
+> yarn serve
+> yarn test
 ```
 
 Third party dependencies can be added: 
 
 ```bash
-yarn add <library_name>
+> yarn add <library_name>
 ```
 
 Third party development dependencies can be added: 
 
 ```bash
-yarn add --dev <library_name>
+> yarn add --dev <library_name>
 ```
 
 or removed:
 
 ```bash
-yarn remove <library_name>
+> yarn remove <library_name>
 ```
 
 using yarn.
@@ -51,16 +65,16 @@ Commit this file to your Git repository as it ensures future builds to use the v
 When running your client code in development on port 8081, it will help to run the MOLGENIS locally on port 8080. 
 The vue-cli comes with a proxy table that will redirect any REST calls to localhost:8080.
 
-### Update existing apps
-**You have to update the [package.json]() in the molgenis/molgenis repository and the [pom.xml]() when you start developing.** The version of the module has to be renamed to **canary**. 
+### Update existing (stable) apps
+**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository. The version of the app you start to develop has to be updated to [ *canary* ]**. 
 
 That way each merge with the master on this repository will be automatically picked up by the main MOLGENIS repository.
 
 The whole development flow is working as follows. 
 
-- PR's
-- Merges with master
-- Releases
+- [PR's](#pull-requests)
+- [Merges with master](#merges-with-master)
+- [Releases](#Releases)
 
 #### Pull request
 When you start developing and define a set of changes to be a pull-request it is not published on the [stable appstore](https://registry.molgenis.org/#browse/browse:npm-stable) by default. 
@@ -92,14 +106,10 @@ Using the ```preset.json``` is recommended. If you need specific tooling you can
 
 >note: Make sure you update the project-name to @molgenis/#new-app# for publishing purposes
 
-## Integrate with [molgenis/molgenis](https://github.com/molgenis/molgenis)
+## Integrate with MOLGENIS
+There is a workflow you have to follow to implement new frontend code in [molgenis/molgenis-frontend](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/).
 
-There is a workflow you have to follow to implement new frontend code in the MOLGENIS application.
-
-### Add a new app to [molgenis/molgenis-frontend](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/)
-There a few steps you need to take when you want to add a new frontend stable app to the MOLGENIS repository.
-
-#### Add to [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json)
+### Add to [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json)
 Make sure you add the new app to the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json).
 
 ```bash
@@ -110,7 +120,7 @@ yarn add <new-app>
 
 Change the version into **canary**.
 
-#### Add to [pom.xml](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/pom.xml) as well.
+### Add to [pom.xml](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/pom.xml) as well.
 You have to include the package in the [pom.xml](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/pom.xml) as well.
 
 ```
@@ -123,7 +133,7 @@ You have to include the package in the [pom.xml](https://github.com/molgenis/mol
 ...
 ```
 
-#### Create a [molgenis/molgenis-new-app](https://github.com/molgenis/molgenis) module to serve the new app
+### Create a [molgenis/molgenis-new-app](https://github.com/molgenis/molgenis) module to serve the new app
 You need three files:
 
 - pom.xml
