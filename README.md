@@ -156,12 +156,15 @@ You have to create a module with the following inside your ```pom.xml```:
   <name>#new app#</name>
   <description>Plugin module for serving new app.</description>
 
+  <!-- start optional -->
   <dependencies>
     <dependency>
       <groupId>org.molgenis</groupId>
       <artifactId>#depedant module#</artifactId>
       <version>${project.version}</version>
     </dependency>
+  </dependencies>
+  <!-- end optional -->  
 </project>
 ```
 
