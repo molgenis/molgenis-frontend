@@ -98,8 +98,8 @@ If you do not have the vue-cli (version 3), please check [vue-cli](https://cli.v
 If you have the vue-cli installed you can use the following steps to quickly install a working Vue template.
 
 ```bash
-cd packages/
-vue create --preset ../preset.json **#new-app-name#** 
+> cd packages/
+> vue create --preset ../preset.json <new-app-name> 
 ```
 
 Using the ```preset.json``` is recommended. If you need specific tooling you can also choose manual.
@@ -113,9 +113,9 @@ There is a workflow you have to follow to implement new frontend code in [molgen
 Make sure you add the new app to the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json).
 
 ```bash
-cd molgenis/molgenis-frontend
-
-yarn add <new-app>
+> cd molgenis/molgenis-frontend
+> 
+> yarn add <new-app>
 ```
 
 Change the version into **canary**.
@@ -231,7 +231,7 @@ Below you can find some guidelines + code examples for stuff that we view is sta
 Install bootstrap-vue.
 
 ```
-yarn add bootstrap-vue
+> yarn add bootstrap-vue
 ```
 
 Example component.
