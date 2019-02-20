@@ -82,7 +82,7 @@ The changes have to be tested by hand. You test the changes by proxying the app 
 
 #### Merges with master
 When you merge a pull-request it produces a fixed number (an alpha release) and a 'canary-tag' on the [stable appstore](https://registry.molgenis.org/#browse/browse:npm-stable).
-By setting the canary release as you start developing in MOLGENIS the  
+By setting the canary-tag in the MOLGENIS repository you automatically pickup new changes from the MOLGENIS frontend when you build the MOLGENIS repository.
 
 #### Releases
 You can manually perform a release on Jenkins and specify if it should be a patch, minor or major increment.
