@@ -5,7 +5,7 @@
   ],
   "version": "independent",
   "yes": true,
-  "registry": "https://registry.molgenis.org/repository/npm-hosted/",
+  "registry": "https://registry.molgenis.org/repository/npm-stable/",
   "command": {
     "version": {
       "conventionalCommits": true
