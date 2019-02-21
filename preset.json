@@ -3,7 +3,7 @@
   "plugins": {
     "@vue/cli-plugin-babel": {},
     "@vue/cli-plugin-typescript": {
-      "classComponent": true,
+      "classComponent": false,
       "useTsWithBabel": true
     },
     "@vue/cli-plugin-eslint": {
