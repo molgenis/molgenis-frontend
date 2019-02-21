@@ -229,25 +229,6 @@ That is it.
 ## Guidelines
 Below you can find some guidelines + code examples for stuff that we view is standard when creating a MOLGENIS plugin.
 
-**Use Bootstrap-VUE for your CSS[<sup>1</sup>](#guidelines-1)**
-
-Install bootstrap-vue.
-
-```
-> yarn add bootstrap-vue
-```
-
-Example component.
-```html
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Bootstrap grid system is amazing!</h1>
-        </div>
-    </div>
-</div>
-```
-
 **Use Font awesome for icons[<sup>1</sup>](#guidelines-1)**
 
 
