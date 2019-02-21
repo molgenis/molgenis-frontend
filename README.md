@@ -6,6 +6,7 @@ These are *stable* apps for MOLGENIS. The *stable* apps will compose the MOLGENI
 The following will be addressed:
 
 - [Environment](#environment)
+- [Commits](#commits)
 - [Developing](#developing)
 - [Integrate with MOLGENIS](#integrate-with-molgenis)
 - [Guidelines](#guidelines)
@@ -17,6 +18,28 @@ When developing client code, you will need to following tools:
 
 The project is built using [lerna](https://lernajs.io/) to manage the monorepo and [yarn](https://yarnpkg.com/) as the npm client.
 
+## Commits
+We use independent versioning for the apps. This makes it hard to interactively specify at release
+time what type of upgrade each app needs.
+
+So please specify your changes using [conventional commits](www.conventionalcommits.org).
+This allows lerna to deduce the version increments for each app from the commits.
+As a bonus, it will generate a per-app changelogs.
+
+If you've run `yarn install`, you can use [`commitizen`](https://commitizen.github.io/cz-cli/) to
+formulate your commits interactively from anywhere in the repository. Just type `git cz` instead
+of `git commit`. It will accept command line flags too.
+
+### Allowed scopes
+Use the app directory names as scopes.
+
+### Allowed types
+The [Angular conventional commit types](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type).
+
+### Squash messy commits
+When merging a pull request that does not use conventional commits you can squash the commits
+into a single conventional commit.
+
 ## Developing
 To get started run
 ```bash
@@ -24,7 +47,7 @@ To get started run
 > yarn lerna bootstrap
 ```
 
-The following will be addresses:
+The following will be addressed:
 
 - [Usage of yarn with Vue](#usage-of-yarn-with-vue)
 - [Update existing stable apps](#update-existing-(stable)-apps)
@@ -85,7 +108,9 @@ When you merge a pull-request it produces a fixed number (an alpha release) and 
 By setting the canary-tag in the MOLGENIS repository you automatically pickup new changes from the MOLGENIS frontend when you build the MOLGENIS repository.
 
 #### Releases
-You can manually perform a release on Jenkins and specify if it should be a patch, minor or major increment.
+You can manually perform a release on Jenkins.
+Lerna will determine which modules need to be released and what type of increment is needed based
+on the git log. Please use conventional commits so that this is determined correctly.
 
 For more information, see the `lerna version` [command documentation](https://github.com/lerna/lerna/tree/master/commands/version#readme).
 
