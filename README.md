@@ -19,28 +19,6 @@ When developing client code, you will need to following tools:
 
 The project is built using [lerna](https://lernajs.io/) to manage the monorepo and [yarn](https://yarnpkg.com/) as the npm client.
 
-## Commits
-We use independent versioning for the apps. This makes it hard to interactively specify at release
-time what type of upgrade each app needs.
-
-So please specify your changes using [conventional commits](www.conventionalcommits.org).
-This allows lerna to deduce the version increments for each app from the commits.
-As a bonus, it will generate a per-app changelogs.
-
-If you've run `yarn install`, you can use [`commitizen`](https://commitizen.github.io/cz-cli/) to
-formulate your commits interactively from anywhere in the repository. Just type `git cz` instead
-of `git commit`. It will accept command line flags too.
-
-### Allowed scopes
-Use the app directory names as scopes.
-
-### Allowed types
-The [Angular conventional commit types](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type).
-
-### Squash messy commits
-When merging a pull request that does not use conventional commits you can squash the commits
-into a single conventional commit.
-
 ## Developing
 To get started run
 ```bash
@@ -50,9 +28,32 @@ To get started run
 
 The following will be addressed:
 
+- [Commits](#commits)
 - [Usage of yarn with Vue](#usage-of-yarn-with-vue)
-- [Update existing stable apps](#update-existing-(stable)-apps)
-- [Create new stable apps](#create-new-(stable)-apps)
+- [Update existing stable apps](#update-existing-stable-apps)
+- [Create new stable apps](#create-new-stable-apps)
+
+### Commits
+We use independent versioning for the apps. This makes it hard to interactively specify at release
+time what type of upgrade each app needs.
+
+So please specify your changes using [conventional commits](https://www.conventionalcommits.org).
+This allows lerna to deduce the version increments for each app from the commits.
+As a bonus, it will generate a per-app changelogs.
+
+If you've run `yarn install`, you can use [`commitizen`](https://commitizen.github.io/cz-cli/) to
+formulate your commits interactively from anywhere in the repository. Just type `git cz` instead
+of `git commit`. It will accept command line flags too.
+
+#### Allowed scopes
+Use the app directory names as scopes.
+
+#### Allowed types
+The [Angular conventional commit types](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type).
+
+#### Squash messy commits
+When merging a pull request that does not use conventional commits you can squash the commits
+into a single conventional commit.
 
 ### Usage of yarn with Vue
 The following three commands can be used to install, develop and test client code:
@@ -89,8 +90,8 @@ Commit this file to your Git repository as it ensures future builds to use the v
 When running your client code in development on port 8081, it will help to run the MOLGENIS locally on port 8080. 
 The vue-cli comes with a proxy table that will redirect any REST calls to localhost:8080.
 
-### Update existing (stable) apps
-**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository. The version of the app you start to develop has to be updated to [ *canary* ]**. 
+### Update existing stable apps
+**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable apps. The version of the app you start to develop has to be updated to [ *canary* ]**. 
 
 That way each merge with the master on this repository will be automatically picked up by the main MOLGENIS repository.
 
@@ -118,7 +119,7 @@ For more information, see the `lerna version` [command documentation](https://gi
 The modules are published to our [stable appstore](https://registry.molgenis.org/#browse/browse:npm-stable) 
 `https://registry.molgenis.org/repository/npm-stable/`
 
-### Create new (stable) apps
+### Create new stable apps
 If you do not have the vue-cli (version 3), please check [vue-cli](https://cli.vuejs.org/). 
 
 If you have the vue-cli installed you can use the following steps to quickly install a working Vue template.
@@ -341,8 +342,6 @@ export default {
 ```
 
 More to come...
-
-<sup><a name="guidelines-1">1</a> Configuration is provided in the molgenis-vue-template</sup>
 
 
 
