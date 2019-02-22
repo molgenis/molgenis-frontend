@@ -3,6 +3,6 @@
 - [ ] Code reviewed
 - [ ] Code unit/integration/system tested
 - [ ] User documentation updated
-- [ ] Clean commits
+- [ ] Conventional commits (squash if needed)
 - [ ] No warnings during install
 - [ ] Updated flow typing

@@ -2,10 +2,20 @@
   "name": "molgenis-frontend",
   "private": true,
   "devDependencies": {
+    "commitizen": "^3.0.6",
+    "cz-conventional-changelog": "2.1.0",
     "lerna": "^3.4.3"
+  },
+  "scripts": {
+    "commit": "git-cz"
   },
   "engines": {
     "node": ">= 8.11.3",
     "yarn": ">= 1.13.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
