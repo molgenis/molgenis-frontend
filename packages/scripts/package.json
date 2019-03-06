@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build  --dest dist/scripts",
     "lint": "vue-cli-service lint",
     "e2e": "vue-cli-service test:e2e",
     "unit": "vue-cli-service test:unit"
@@ -44,27 +44,6 @@
     "typescript-eslint-parser": "^22.0.0",
     "vue-jest": "^3.0.3",
     "vue-template-compiler": "^2.6.8"
-  },
-  "vue": {
-    "devServer": {
-      "proxy": {
-        "^/api": {
-          "target": "http://localhost:8080"
-        },
-        "^/scripts": {
-          "target": "http://localhost:8080"
-        },
-        "^/js": {
-          "target": "http://localhost:8080"
-        },
-        "^/css": {
-          "target": "http://localhost:8080"
-        },
-        "^/menu": {
-          "target": "http://localhost:8080"
-        }
-      }
-    }
   },
   "eslintConfig": {
     "root": true,
