@@ -1,10 +1,21 @@
 // vue.config.js
 module.exports = {
   filenameHashing: false,
-  configureWebpack: config => {
-    config.externals = {
+  outputDir: 'dist',
+  configureWebpack: {
+    externals: {
       'bootstrap': 'bootstrap'
-    }
+    },
+    output: {
+      filename: 'js/scripts/[name].js',
+      chunkFilename: 'js/scripts/[name].js'
+    },
+  },
+  css: {
+    extract: {
+      filename: 'css/scripts/[name].css',
+      chunkFilename: 'css/scripts/[name].css',
+    },
   },
   "devServer": {
     "proxy": {
