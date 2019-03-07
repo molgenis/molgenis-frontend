@@ -8,8 +8,8 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-// @ts-ignore
-  base: window.BaseURL || "/",
+  // @ts-ignore
+  base: window.BaseURL || '/',
   routes: [
     {
       path: '/',

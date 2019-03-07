@@ -36,8 +36,10 @@
       <b-col sm="4">
       </b-col>
     </b-row>
-    <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">Cancel</button>
-    <button :disabled="!nameValidation" d="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">Save</button>
+    <div class="mb-4">
+      <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">Cancel</button>
+      <button :disabled="!nameValidation" d="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">Save</button>
+    </div>
   </div>
 </template>
 

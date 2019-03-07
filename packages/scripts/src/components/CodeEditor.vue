@@ -58,7 +58,7 @@ export default {
         let result
         let list = []
         while ((result = parameter.exec(code)) !== null) {
-          list.push(result[1]) // add the caputure group
+          list.push(result[1]) // add the capture group
         }
         this.$emit('valueChange', { 'parameters': list, 'content': code })
         this.parameters = list

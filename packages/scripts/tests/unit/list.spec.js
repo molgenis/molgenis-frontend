@@ -1,5 +1,8 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
+import ExecuteButton from '../../src/components/ExecuteButton'
+import RunModal from '../../src/components/RunModal'
+
 import ListScripts from '../../src/views/ListScripts'
 import * as schemas from './test-schemas'
 import BootstrapVue from 'bootstrap-vue'
@@ -49,5 +52,67 @@ describe('views/ListScript.vue', () => {
     wrapper.vm.confirmedRemove()
     expect(store.dispatch).toBeCalledWith('removeScript', 'Hello World')
     expect(wrapper.vm.$data.confirmedToRemove).toBe('')
+  })
+})
+
+describe('components/ExecuteButton.vue', () => {
+  let getters
+  let store
+  let wrapper
+
+  beforeEach(() => {
+    getters = {
+      loaded: jest.fn().mockReturnValue(true)
+    }
+    store = new Vuex.Store({
+      getters
+    })
+    store.dispatch = jest.fn().mockResolvedValue({})
+    wrapper = mount(ExecuteButton, {
+      store,
+      localVue,
+      propsData: {
+        parameters: ['x', 'y', 'age'],
+        name: 'test',
+        doSave: true,
+        form: {}
+      },
+      stubs: ['font-awesome-icon']
+    })
+  })
+
+  it('will open modal if given parameters', () => {
+    expect(wrapper.vm.showModal).toBeFalsy()
+    wrapper.vm.run()
+    expect(wrapper.vm.showModal).toBeTruthy()
+  })
+
+  it('can save state if given "doSave: true" prop', () => {
+    wrapper.vm.execute()
+    expect(store.dispatch).toBeCalled()
+  })
+})
+
+describe('components/RunModal.vue', () => {
+  let getters
+  let store
+  let wrapper
+
+  beforeEach(() => {
+    wrapper = mount(RunModal, {
+      localVue,
+      propsData: {
+        parameters: ['x', 'y', 'age'],
+        name: 'test'
+      }
+    })
+    window.open = jest.fn()
+  })
+
+  it('Adds parameters to start script url', () => {
+    const form = { values: ['1', '2', '33'] }
+    wrapper.setData(form)
+    wrapper.vm.run()
+    expect(window.open).toHaveBeenCalledWith('/scripts/test/start?x=1&y=2&age=33&', '_blank')
   })
 })

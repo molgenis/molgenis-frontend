@@ -28,8 +28,10 @@
         <small v-if="form.generateToken">Please use: <code>${molgenisToken}</code></small>
       </b-col>
     </b-row>
-    <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">Cancel</button>
-    <button id="save-btn" class="btn btn-primary mr-3" type="submit" @click.prevent="onSubmit">Save</button>
+    <div class="mb-4">
+      <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">Cancel</button>
+      <button id="save-btn" class="btn btn-primary mr-3" type="submit" @click.prevent="onSubmit">Save</button>
+    </div>
   </div>
 </template>
 
