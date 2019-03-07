@@ -3,6 +3,7 @@ module.exports = {
   filenameHashing: false,
   outputDir: 'dist',
   configureWebpack: {
+    devtool: 'source-map',
     externals: {
       'bootstrap': 'bootstrap'
     },

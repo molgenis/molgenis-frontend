@@ -1,7 +1,7 @@
 <template>
   <span v-if="loaded">
     <b-button @click.stop="execute"
-              :size="size" variant="secondary"><font-awesome-icon class='mr-2' icon="play" size="lg" /> <slot></slot></b-button>
+              :size="size" variant="primary"><font-awesome-icon class='mr-2' icon="play" size="lg" /> <slot></slot></b-button>
     <RunModal v-model="showModal"
               :parameters="parameters"
               :name="name"

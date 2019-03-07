@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="navigator-actions">
-      <b-button class="mb-3" size="sm" variant="secondary" @click="createNewScript">New script</b-button>
+      <b-button class="mb-3" size="sm" variant="primary" @click="createNewScript">New script</b-button>
     </div>
     <b-modal v-model="showRemoveModal"
              id="removeScriptModal"
@@ -22,7 +22,7 @@
       <template
         slot="edit"
         slot-scope="data">
-        <b-button :name="data.item.name" size="sm" variant="secondary" @click="editScript({name: data.item.name})">
+        <b-button :name="data.item.name" size="sm" variant="primary" @click="editScript({name: data.item.name})">
           <font-awesome-icon icon="edit" size="lg" />
         </b-button>
       </template>
