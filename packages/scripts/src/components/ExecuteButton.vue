@@ -1,6 +1,6 @@
 <template>
   <span v-if="loaded">
-    <b-button @click.stop="execute"
+    <b-button @click.stop="execute" :disabled="disabled"
               :size="size" variant="primary"><font-awesome-icon class='mr-2' icon="play" size="lg" /> <slot></slot></b-button>
     <RunModal v-model="showModal"
               :parameters="parameters"
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import RunModal from '../components/RunModal'
 
 export default {
@@ -22,6 +22,10 @@ export default {
     size: {
       type: String,
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     },
     doSave: {
       type: Boolean,
@@ -35,7 +39,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['loaded'])
+    ...mapState(['loaded'])
   },
   components: { RunModal },
   methods: {

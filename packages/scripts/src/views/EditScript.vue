@@ -5,7 +5,7 @@
     </b-alert>
     <h1>{{form.name}}</h1>
     <CodeEditor v-if="loaded" @valueChange="onValueChange" :initialData="form.content">
-      <ExecuteButton :doSave="true" :form="form" size="sm" :parameters="form.parameters" :name="form.name">Save and Run</ExecuteButton>
+      <ExecuteButton :disabled="(!contentValidation)" :doSave="true" :form="form" size="sm" :parameters="form.parameters" :name="form.name">Save and Run</ExecuteButton>
     </CodeEditor>
     <b-row class="mb-3">
       <b-col sm="4" class="border-right">
@@ -30,13 +30,13 @@
     </b-row>
     <div class="mb-4">
       <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">Cancel</button>
-      <button id="save-btn" class="btn btn-primary mr-3" type="submit" @click.prevent="onSubmit">Save</button>
+      <button :disabled="(!contentValidation)" id="save-btn" class="btn btn-primary mr-3" type="submit" @click.prevent="onSubmit">Save</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import CodeEditor from '../components/CodeEditor'
 import ExecuteButton from '../components/ExecuteButton'
 
@@ -57,7 +57,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['scriptTypes', 'scripts', 'loaded'])
+    ...mapState(['scriptTypes', 'scripts', 'loaded']),
+    contentValidation () {
+      return this.form.content.length > 0
+    }
   },
   watch: {
     scripts (scripts) {

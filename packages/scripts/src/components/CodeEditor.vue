@@ -35,11 +35,11 @@ export default {
           id: 'content',
           label: 'Script',
           description: null,
-          required: (formData) => true,
+          required: () => true,
           disabled: false,
           readOnly: false,
-          visible: (formData) => true,
-          validate: (formData) => true
+          visible: () => true,
+          validate: () => true
         }
       ],
       codeEditorData: {
@@ -53,16 +53,16 @@ export default {
     onValueChanged (event) {
       this.codeEditorData = event
       const code = event.content
-      if (code) {
-        const parameter = /\${(\w+)}/g // Select ${name} from code
-        let result
-        let list = []
-        while ((result = parameter.exec(code)) !== null) {
-          list.push(result[1]) // add the capture group
-        }
-        this.$emit('valueChange', { 'parameters': list, 'content': code })
-        this.parameters = list
+      // if (code) {
+      const parameter = /\${(\w+)}/g // Select ${name} from code
+      let result
+      let list = []
+      while ((result = parameter.exec(code)) !== null) {
+        list.push(result[1]) // add the capture group
       }
+      this.$emit('valueChange', { 'parameters': list, 'content': code })
+      this.parameters = list
+      // }
     }
   },
   created () {
@@ -81,5 +81,8 @@ export default {
     position: absolute;
     bottom: 2rem;
     right: 1rem;
+  }
+  >>> form.vf-form-invalid + #in-corner{
+    bottom: 3.5rem;
   }
 </style>

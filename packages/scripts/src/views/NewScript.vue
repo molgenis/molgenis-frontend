@@ -38,13 +38,13 @@
     </b-row>
     <div class="mb-4">
       <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">Cancel</button>
-      <button :disabled="!nameValidation" d="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">Save</button>
+      <button :disabled="(!nameValidation || !contentValidation)" d="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">Save</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import CodeEditor from '../components/CodeEditor'
 
 export default {
@@ -64,9 +64,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['scriptTypes', 'scripts', 'loaded']),
+    ...mapState(['scriptTypes', 'scripts', 'loaded']),
     nameValidation () {
       return this.nameChanged ? (this.form.name.length > 0 && this.isUniqueName) : null
+    },
+    contentValidation () {
+      return this.form.content.length > 0
     },
     formName () {
       return this.form.name

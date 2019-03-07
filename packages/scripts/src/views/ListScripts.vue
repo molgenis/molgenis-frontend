@@ -54,7 +54,7 @@
 
 <script>
 import Vue from 'vue'
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import { ReadyState } from '@/types/state'
 import ExecuteButton from '../components/ExecuteButton'
 
@@ -99,7 +99,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapGetters(['scripts', 'loaded'])
+    ...mapState(['scripts', 'loaded'])
   },
   components: { ExecuteButton },
   methods: {
