@@ -5,4 +5,4 @@
 - [ ] User documentation updated
 - [ ] Conventional commits (squash if needed)
 - [ ] No warnings during install
-- [ ] Updated flow typing
+- [ ] Updated javascript typing
