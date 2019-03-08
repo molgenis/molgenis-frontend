@@ -9,7 +9,6 @@ localVue.use(Vuex)
 localVue.use(BootstrapVue)
 
 describe('views/EditScript.vue', () => {
-  let getters
   let actions
   let store
   let wrapper
@@ -25,18 +24,18 @@ describe('views/EditScript.vue', () => {
     $router = {
       push: jest.fn()
     }
-    getters = {
-      scripts: jest.fn().mockReturnValue(schemas.Script),
-      scriptTypes: jest.fn().mockReturnValue(schemas.ScriptType),
-      loaded: jest.fn().mockReturnValue(true)
-    }
     actions = {
       saveParametersAndScripts: jest.fn().mockResolvedValue({}),
       addParameters: jest.fn().mockResolvedValue({}),
       editScript: jest.fn().mockResolvedValue({})
     }
     store = new Vuex.Store({
-      actions, getters
+      state: {
+        scripts: schemas.Script,
+        scriptTypes: schemas.ScriptType,
+        loaded: true
+      },
+      actions
     })
     wrapper = shallowMount(EditScript, {
       store,

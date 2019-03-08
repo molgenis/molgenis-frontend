@@ -53,7 +53,6 @@ export default {
     onValueChanged (event) {
       this.codeEditorData = event
       const code = event.content
-      // if (code) {
       const parameter = /\${(\w+)}/g // Select ${name} from code
       let result
       let list = []
@@ -62,7 +61,6 @@ export default {
       }
       this.$emit('valueChange', { 'parameters': list, 'content': code })
       this.parameters = list
-      // }
     }
   },
   created () {

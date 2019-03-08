@@ -12,17 +12,16 @@ localVue.use(Vuex)
 localVue.use(BootstrapVue)
 
 describe('views/ListScript.vue', () => {
-  let getters
   let store
   let wrapper
 
   beforeEach(() => {
-    getters = {
-      scripts: jest.fn().mockReturnValue(schemas.Script),
-      loaded: jest.fn().mockReturnValue(true)
-    }
     store = new Vuex.Store({
-      getters
+      state: {
+        scripts: schemas.Script,
+        scriptTypes: schemas.ScriptType,
+        loaded: true
+      }
     })
     store.dispatch = jest.fn()
     wrapper = mount(ListScripts, {
@@ -56,16 +55,16 @@ describe('views/ListScript.vue', () => {
 })
 
 describe('components/ExecuteButton.vue', () => {
-  let getters
   let store
   let wrapper
 
   beforeEach(() => {
-    getters = {
-      loaded: jest.fn().mockReturnValue(true)
-    }
     store = new Vuex.Store({
-      getters
+      state: {
+        scripts: schemas.Script,
+        scriptTypes: schemas.ScriptType,
+        loaded: true
+      }
     })
     store.dispatch = jest.fn().mockResolvedValue({})
     wrapper = mount(ExecuteButton, {
@@ -94,8 +93,6 @@ describe('components/ExecuteButton.vue', () => {
 })
 
 describe('components/RunModal.vue', () => {
-  let getters
-  let store
   let wrapper
 
   beforeEach(() => {
