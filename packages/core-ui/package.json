@@ -16,6 +16,7 @@
     "unit": "cross-env NODE_ENV=test babel-node ./test/index.js",
     "test": "yarn unit",
     "webpack-stats": "webpack --profile --json > target/json.stats",
+    "build-task:cleanup": "rm ./dist/css/bootstrap-4/*.css",
     "build-task:scss-compile": "node-sass-chokidar --source-map true src/scss/ -o dist/css/bootstrap-4",
     "build-task:autoprefixer": "postcss dist/css/bootstrap-4/*.css --use autoprefixer -d dist/css/bootstrap-4",
     "build-task:css-minify": "foreach -g \"./dist/css/bootstrap-4/*.css\" -x \"cleancss -O2 #{path} -o #{path}.min.css\" --no-c",
