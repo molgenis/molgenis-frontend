@@ -15,7 +15,7 @@ describe('actions', () => {
       const groupList = ['groups']
 
       const get = td.function('api.get')
-      td.when(get('/api/plugin/security/group')).thenResolve(groupList)
+      td.when(get('/api/identities/v1/group')).thenResolve(groupList)
       td.replace(api, 'get', get)
 
       const options = {
@@ -36,7 +36,7 @@ describe('actions', () => {
       }
 
       const get = td.function('api.get')
-      td.when(get('/api/plugin/security/group')).thenReject(error)
+      td.when(get('/api/identities/v1/group')).thenReject(error)
       td.replace(api, 'get', get)
 
       const options = {
@@ -59,7 +59,7 @@ describe('actions', () => {
       ]
 
       const get = td.function('api.get')
-      td.when(get('/api/plugin/security/group/my-group/role')).thenResolve(roles)
+      td.when(get('/api/identities/v1/group/my-group/role')).thenResolve(roles)
       td.replace(api, 'get', get)
 
       const options = {
@@ -80,7 +80,7 @@ describe('actions', () => {
           code: 'backend'
         }]
       }
-      td.when(get('/api/plugin/security/group/error-group/role')).thenReject(error)
+      td.when(get('/api/identities/v1/group/error-group/role')).thenReject(error)
       td.replace(api, 'get', get)
 
       const options = {
@@ -102,7 +102,7 @@ describe('actions', () => {
       ]
 
       const get = td.function('api.get')
-      td.when(get('/api/plugin/security/user')).thenResolve(users)
+      td.when(get('/api/identities/v1/user')).thenResolve(users)
       td.replace(api, 'get', get)
 
       const options = {
@@ -122,7 +122,7 @@ describe('actions', () => {
           code: 'backend'
         }]
       }
-      td.when(get('/api/plugin/security/user')).thenReject(error)
+      td.when(get('/api/identities/v1/user')).thenReject(error)
       td.replace(api, 'get', get)
 
       const options = {
@@ -165,7 +165,7 @@ describe('actions', () => {
       ]
 
       const get = td.function('api.get')
-      td.when(get('/api/plugin/security/group/my-group/member')).thenResolve(members)
+      td.when(get('/api/identities/v1/group/my-group/member')).thenResolve(members)
       td.replace(api, 'get', get)
 
       const options = {
@@ -186,7 +186,7 @@ describe('actions', () => {
           code: 'backend'
         }]
       }
-      td.when(get('/api/plugin/security/group/error-group/member')).thenReject(error)
+      td.when(get('/api/identities/v1/group/error-group/member')).thenReject(error)
       td.replace(api, 'get', get)
 
       const options = {
@@ -207,7 +207,7 @@ describe('actions', () => {
       const groupPermissions = ['ADD_MEMBERSHIP', 'REMOVE_MEMBERSHIP']
 
       const get = td.function('api.get')
-      td.when(get('/api/plugin/security/group/my-group/permission')).thenResolve(groupPermissions)
+      td.when(get('/api/identities/v1/group/my-group/permission')).thenResolve(groupPermissions)
       td.replace(api, 'get', get)
 
       const options = {
@@ -228,7 +228,7 @@ describe('actions', () => {
           code: 'backend'
         }]
       }
-      td.when(get('/api/plugin/security/group/error-group/permission')).thenReject(error)
+      td.when(get('/api/identities/v1/group/error-group/permission')).thenReject(error)
       td.replace(api, 'get', get)
 
       const options = {
@@ -262,7 +262,7 @@ describe('actions', () => {
       }
 
       const post = td.function('api.post')
-      td.when(post('/api/plugin/security/group', generatedPayload)).thenResolve(response)
+      td.when(post('/api/identities/v1/group', generatedPayload)).thenResolve(response)
       td.replace(api, 'post', post)
 
       const options = {
@@ -298,7 +298,7 @@ describe('actions', () => {
       }
 
       const post = td.function('api.post')
-      td.when(post('/api/plugin/security/group', generatedPayload)).thenReject(error)
+      td.when(post('/api/identities/v1/group', generatedPayload)).thenReject(error)
       td.replace(api, 'post', post)
 
       const options = {
@@ -323,7 +323,7 @@ describe('actions', () => {
       }
 
       const post = td.function('api.post')
-      td.when(post('/api/plugin/security/group/my-group/member', generatedPayload)).thenResolve()
+      td.when(post('/api/identities/v1/group/my-group/member', generatedPayload)).thenResolve()
       td.replace(api, 'post', post)
 
       const options = {
@@ -352,7 +352,7 @@ describe('actions', () => {
       }
 
       const post = td.function('api.post')
-      td.when(post('/api/plugin/security/group/my-group/member', generatedPayload)).thenReject(error)
+      td.when(post('/api/identities/v1/group/my-group/member', generatedPayload)).thenReject(error)
       td.replace(api, 'post', post)
 
       const options = {
@@ -372,7 +372,7 @@ describe('actions', () => {
 
     it('should remove a member from the group and displays toast', done => {
       const delete_ = td.function('api.delete_')
-      td.when(delete_('/api/plugin/security/group/my-group/member/user1')).thenResolve()
+      td.when(delete_('/api/identities/v1/group/my-group/member/user1')).thenResolve()
       td.replace(api, 'delete_', delete_)
 
       const options = {
@@ -395,7 +395,7 @@ describe('actions', () => {
       }
 
       const delete_ = td.function('api.delete_')
-      td.when(delete_('/api/plugin/security/group/my-group/member/user1')).thenReject(error)
+      td.when(delete_('/api/identities/v1/group/my-group/member/user1')).thenReject(error)
       td.replace(api, 'delete_', delete_)
 
       const options = {
@@ -421,7 +421,7 @@ describe('actions', () => {
       }
 
       const put = td.function('api.put')
-      td.when(put('/api/plugin/security/group/my-group/member/user1', generatedPayload)).thenResolve()
+      td.when(put('/api/identities/v1/group/my-group/member/user1', generatedPayload)).thenResolve()
       td.replace(api, 'put', put)
 
       const options = {
@@ -448,7 +448,7 @@ describe('actions', () => {
       }
 
       const put = td.function('api.put')
-      td.when(put('/api/plugin/security/group/my-group/member/user1', generatedPayload)).thenReject(error)
+      td.when(put('/api/identities/v1/group/my-group/member/user1', generatedPayload)).thenReject(error)
       td.replace(api, 'put', put)
 
       const options = {
@@ -467,7 +467,7 @@ describe('actions', () => {
 
     it('should delete group and display toast', done => {
       const delete_ = td.function('api.delete_')
-      td.when(delete_('/api/plugin/security/group/my-group')).thenResolve()
+      td.when(delete_('/api/identities/v1/group/my-group')).thenResolve()
       td.replace(api, 'delete_', delete_)
 
       const options = {
@@ -493,7 +493,7 @@ describe('actions', () => {
       }
 
       const delete_ = td.function('api.post')
-      td.when(delete_('/api/plugin/security/group/my-group')).thenReject(error)
+      td.when(delete_('/api/identities/v1/group/my-group')).thenReject(error)
       td.replace(api, 'delete_', delete_)
 
       const options = {
