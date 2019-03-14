@@ -36,14 +36,9 @@ export default {
   methods: {
     run () {
       this.showModal = false
-      let url = '/scripts/' + this.name + '/start?'
-      // this.parameters.forEach((key, index) => {
-      //   url += encodeURIComponent(key) + '=' + encodeURIComponent(this.values[index]) + '&'
-      // })
-      url += this.parameters.reduce((accumulator, key, index) => {
+      const url = this.parameters.reduce((accumulator, key, index) => {
         return accumulator + encodeURIComponent(key) + '=' + encodeURIComponent(this.values[index]) + '&'
-      })
-      console.log(url)
+      }, '/scripts/' + this.name + '/start?')
       window.open(url, '_blank')
     }
   }
