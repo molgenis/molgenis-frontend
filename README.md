@@ -7,7 +7,6 @@ These are *stable* apps for MOLGENIS. The *stable* apps will compose the MOLGENI
 The following will be addressed:
 
 - [Environment](#environment)
-- [Commits](#commits)
 - [Developing](#developing)
 - [Integrate with MOLGENIS](#integrate-with-molgenis)
 - [Guidelines](#guidelines)
@@ -30,6 +29,7 @@ The following will be addressed:
 
 - [Commits](#commits)
 - [Usage of yarn with Vue](#usage-of-yarn-with-vue)
+- [Using yarn link for live editing](#using-yarn-link-for-live-editing)
 - [Update existing stable apps](#update-existing-stable-apps)
 - [Create new stable apps](#create-new-stable-apps)
 
