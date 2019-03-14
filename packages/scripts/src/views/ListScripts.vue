@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="navigator-actions">
-      <b-button class="mb-3" size="sm" variant="primary" @click="createNewScript">New script</b-button>
+      <b-button class="mb-3" size="sm" variant="primary" @click="createNewScript" v-b-tooltip.hover title="Add new script"><font-awesome-icon icon="plus" size="lg" /> New script</b-button>
     </div>
     <b-modal v-model="showRemoveModal"
              id="removeScriptModal"
@@ -22,14 +22,14 @@
       <template
         slot="edit"
         slot-scope="data">
-        <b-button :name="data.item.name" size="sm" variant="primary" @click="editScript({name: data.item.name})">
+        <b-button :name="data.item.name" size="sm" variant="primary" @click="editScript({name: data.item.name})" v-b-tooltip.hover title="Edit script">
           <font-awesome-icon icon="edit" size="lg" />
         </b-button>
       </template>
       <template
         slot="remove"
         slot-scope="data">
-        <b-button class="removeButton" size="sm" variant="danger" @click="doOpenModal(data.item.name)">
+        <b-button class="removeButton" size="sm" variant="danger" @click="doOpenModal(data.item.name)" v-b-tooltip.hover title="Delete script">
           <font-awesome-icon icon="trash" size="lg" />
         </b-button>
       </template>
@@ -46,7 +46,7 @@
       <template
         slot="execute"
         slot-scope="data">
-        <ExecuteButton v-if="loaded" size="sm" :parameters="simpleParameters(data.item.parameters)" :name="data.item.name">Run</ExecuteButton>
+        <ExecuteButton v-if="loaded" size="sm" :parameters="simpleParameters(data.item.parameters)" :name="data.item.name" v-b-tooltip.hover title="Run script">Run</ExecuteButton>
       </template>
     </b-table>
   </div>

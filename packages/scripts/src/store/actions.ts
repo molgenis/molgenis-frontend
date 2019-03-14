@@ -76,6 +76,7 @@ export default {
       api.get('/api/v2/sys_scr_ScriptParameter?num=10000').then((response: any) => {
         const existingParameters = response.items.map((parameter:any) => { return parameter.name })
         existingParameters.push('molgenisToken')
+        existingParameters.push('outputFile')
 
         // Filter out pre existing parameters and commit only the unique new ones
         existingParameters.map((toRemove:string) => {

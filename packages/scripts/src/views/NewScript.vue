@@ -29,7 +29,6 @@
         <b-form-radio-group id="generateToken" v-model="form.generateToken" name="generateToken">
           <b-form-radio value="true">True</b-form-radio>
           <b-form-radio value="false">False</b-form-radio>
-          <b-form-radio value="">N/A</b-form-radio>
         </b-form-radio-group>
         <small v-if="form.generateToken=='true'">Please use: <code>${molgenisToken}</code></small>
       </b-col>
