@@ -7,7 +7,6 @@ These are *stable* apps for MOLGENIS. The *stable* apps will compose the MOLGENI
 The following will be addressed:
 
 - [Environment](#environment)
-- [Commits](#commits)
 - [Developing](#developing)
 - [Integrate with MOLGENIS](#integrate-with-molgenis)
 - [Guidelines](#guidelines)
@@ -30,6 +29,7 @@ The following will be addressed:
 
 - [Commits](#commits)
 - [Usage of yarn with Vue](#usage-of-yarn-with-vue)
+- [Using yarn link for live editing](#using-yarn-link-for-live-editing)
 - [Update existing stable apps](#update-existing-stable-apps)
 - [Create new stable apps](#create-new-stable-apps)
 
@@ -89,6 +89,30 @@ Commit this file to your Git repository as it ensures future builds to use the v
 
 When running your client code in development on port 8081, it will help to run the MOLGENIS locally on port 8080. 
 The vue-cli comes with a proxy table that will redirect any REST calls to localhost:8080.
+
+### Using yarn link for live editing
+You can use [`yarn link`](https://yarnpkg.com/lang/en/docs/cli/link/) while developing to view the
+results directly in MOLGENIS.
+
+Assuming you've checked out `molgenis/molgenis` and `molgenis/molgenis-frontend` repositories to directory `~/git`,
+and want to get started working on module `scripts`, do this once:
+
+* Open both projects in IntelliJ.
+* In the molgenis project, go to the molgenis-frontend module and mark the 
+`node_modules/@molgenis/scripts/dist` directory as resources root. (Does not happen automatically even
+though the pom.xml lists it as such.)
+* Start `molgenis` webapp in exploded mode using IntelliJ IDEA
+* Run `yarn link` in `~git/molgenis-frontend/packages/scripts`.
+* Run `yarn link "@molgenis/scripts"` in `~git/molgenis/molgenis-frontend/`
+* If the project supports webpack watch modus, start it: `yarn watch`
+
+Now for each change:
+* make change in `molgenis-frontend`
+* (If the project does not support webpack watch modus) Manually run `yarn build`.
+* Wait for webpack to finish
+* Tab out to the browser. You should see a tiny progress bar in the molgenis window of IntelliJ.
+* Wait for the popup saying `Compilation finished` to appear.
+* Reload the browser window to see the changes 
 
 ### Update existing stable apps
 **You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable apps. The version of the app you start to develop has to be updated to [ *canary* ]**. 

@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
+    "watch": "vue-cli-service build --target lib --name context src/main.ts --dest dist/js/menu --watch",
     "build": "vue-cli-service build --target lib --name context src/main.ts --dest dist/js/menu",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
