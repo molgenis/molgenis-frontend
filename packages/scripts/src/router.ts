@@ -9,7 +9,7 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   // @ts-ignore
-  base: window.__INITIAL_STATE__.baseURL || '/',
+  base: window.__INITIAL_STATE__.baseUrl || '/',
   routes: [
     {
       path: '/',

@@ -17,7 +17,9 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(BootstrapVue)
 
 Vue.use(i18n, {
+  // @ts-ignore
   lng: window.__INITIAL_STATE__.lng || 'en',
+  // @ts-ignore
   fallbackLng: window.__INITIAL_STATE__.fallbackLng || 'en',
   namespace: ['scripts'],
   callback () {

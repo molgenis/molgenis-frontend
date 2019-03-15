@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <b-alert v-if="showError" variant="danger" show dismissible>
       {{ 'scripts-connection-error' | i18n }}
       <router-link to="/login" tag="button">Sign in</router-link>
