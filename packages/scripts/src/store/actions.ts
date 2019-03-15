@@ -23,6 +23,9 @@ export default {
   },
   editScript ({ dispatch, commit } : any, script: any) {
     return new Promise((resolve, reject) => {
+      ['molgenisToken', 'outputFile'].map((toRemove:string) => {
+        script.parameters = script.parameters.filter((parameter:string) => parameter !== toRemove)
+      })
       const options = {
         body: JSON.stringify({ entities: [script] })
       }
@@ -36,6 +39,9 @@ export default {
   },
   newScript ({ dispatch, commit } : any, script: any) {
     return new Promise((resolve, reject) => {
+      ['molgenisToken', 'outputFile'].map((toRemove:string) => {
+        script.parameters = script.parameters.filter((parameter:string) => parameter !== toRemove)
+      })
       const options = {
         body: JSON.stringify({ entities: [script] })
       }
