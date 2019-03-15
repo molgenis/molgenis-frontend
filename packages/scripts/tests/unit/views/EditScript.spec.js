@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import EditScript from '../../src/views/EditScript'
-import * as schemas from './test-schemas'
+import EditScript from '../../../src/views/EditScript'
+import * as schemas from '../test-schemas'
 import BootstrapVue from 'bootstrap-vue'
 
 const localVue = createLocalVue()

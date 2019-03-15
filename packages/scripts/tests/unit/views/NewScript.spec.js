@@ -1,9 +1,8 @@
 /* eslint-disable no-template-curly-in-string */
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import NewScript from '../../src/views/NewScript'
-import CodeEditor from '../../src/components/CodeEditor'
-import * as schemas from './test-schemas'
+import NewScript from '../../../src/views/NewScript'
+import * as schemas from '../test-schemas'
 import BootstrapVue from 'bootstrap-vue'
 
 const localVue = createLocalVue()
@@ -60,21 +59,5 @@ describe('views/NewScript.vue', () => {
       expect($router.push).toBeCalledTimes(1)
       done()
     }, 300)
-  })
-})
-
-describe('components/CodeEditor.vue', () => {
-  let wrapper
-  beforeEach(() => {
-    wrapper = shallowMount(CodeEditor, {
-      localVue
-    })
-  })
-
-  it('can find parameters in a string', () => {
-    const content = 'test ${x}${y} $age{} ${} ${age}'
-    wrapper.vm.onValueChanged({ content })
-    expect(wrapper.emitted().valueChange[0][0].content).toEqual(content)
-    expect(wrapper.emitted().valueChange[0][0].parameters).toEqual(['x', 'y', 'age'])
   })
 })

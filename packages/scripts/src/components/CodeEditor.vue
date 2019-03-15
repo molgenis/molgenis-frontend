@@ -66,7 +66,7 @@ export default {
       this.codeEditorData = event
       const code = event.content
       let list = this.findParameters(code)
-      list = list.filter((value, index, self) => self.indexOf(value) === index) // select Unique values
+      list = list.filter((value, index, self) => self.indexOf(value) === index) // select only unique values
       this.$emit('valueChange', { 'parameters': list, 'content': code })
       this.parameters = list
     }
@@ -91,10 +91,11 @@ export default {
   }
   >>> .in-corner {
     position: absolute;
-    bottom: 2rem;
+    bottom: 1rem;
     right: 1rem;
+    z-index: 10;
   }
   >>> form.vf-form-invalid + .in-corner{
-    bottom: 3.5rem;
+    bottom: 2.5rem;
   }
 </style>
