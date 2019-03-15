@@ -12,7 +12,7 @@
       <span class="in-corner"><slot></slot></span>
     </div>
     <div class="mb-3">
-      <small v-if="parameters.length>0">Exposed Parameters
+      <small v-if="parameters.length>0">{{ 'scripts-exposed-parameters' | i18n }}
         <b-badge :variant="(parameter=='molgenisToken'||parameter=='outputFile')?'secondary':'primary'" class="mr-1" v-for="(parameter, index) in parameters" :key="`type-${index}`" >{{parameter}}</b-badge>
       </small>
     </div>
@@ -36,7 +36,7 @@ export default {
         {
           type: 'script',
           id: 'content',
-          label: 'Script',
+          label: '',
           description: null,
           required: () => true,
           disabled: false,

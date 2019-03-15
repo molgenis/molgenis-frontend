@@ -7,6 +7,7 @@ import BootstrapVue from 'bootstrap-vue'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(BootstrapVue)
+localVue.filter('i18n', jest.fn())
 
 describe('views/EditScript.vue', () => {
   let actions

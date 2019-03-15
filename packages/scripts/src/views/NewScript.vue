@@ -1,18 +1,18 @@
 <template>
   <div class="container">
     <b-alert v-if="showValidationError" variant="danger" show dismissible>
-      Error on saving data
+      {{ 'scripts-save-error' | i18n }}
     </b-alert>
     <b-row class="mb-3">
       <b-col sm="9">
-        <label>Name *</label>
+        <label>{{ 'scripts-name-label' | i18n }} *</label>
         <b-form-input :state="nameValidation" id="name" type="text" v-model="form.name"/>
         <b-form-invalid-feedback :state="nameValidation">
-          This field is required, and needs to be unique.
+          {{ 'scripts-unique-error' | i18n }}
         </b-form-invalid-feedback>
       </b-col>
       <b-col sm="3">
-        <label>Type</label>
+        <label>{{ 'scripts-type-label' | i18n }}</label>
         <b-form-select v-model="form.type">
           <option v-for="(type, index) in scriptTypes" :key="`type-${index}`" :value="type">{{type}}</option>
         </b-form-select>
@@ -21,23 +21,23 @@
     <CodeEditor @valueChange="onValueChange" />
     <b-row class="mb-3">
       <b-col sm="4" class="border-right">
-        <label>Result file extension</label>
+        <label>{{ 'scripts-result-file-extension' | i18n }}</label>
         <b-form-input id="name" type="text" v-model='form.resultFileExtension' placeholder=""/>
       </b-col>
       <b-col sm="4">
-        <label class="mb-3">Generate security token</label>
+        <label class="mb-3">{{ 'scripts-generate-security-token' | i18n }}</label>
         <b-form-radio-group id="generateToken" v-model="form.generateToken" name="generateToken">
-          <b-form-radio value="true">True</b-form-radio>
-          <b-form-radio value="false">False</b-form-radio>
+          <b-form-radio value="true">{{ 'scripts-true-label' | i18n }}</b-form-radio>
+          <b-form-radio value="false">{{ 'scripts-false-label' | i18n }}</b-form-radio>
         </b-form-radio-group>
-        <small v-if="form.generateToken=='true'">Please use: <code>${molgenisToken}</code></small>
+        <small v-if="form.generateToken=='true'">{{ 'scripts-please-use' | i18n }}: <code>${molgenisToken}</code></small>
       </b-col>
       <b-col sm="4">
       </b-col>
     </b-row>
     <div class="mb-4">
-      <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">Cancel</button>
-      <button :disabled="(!nameValidation || !contentValidation)" d="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">Save</button>
+      <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">{{ 'scripts-cancel-label' | i18n }}</button>
+      <button :disabled="(!nameValidation || !contentValidation)" d="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">{{ 'scripts-save-label' | i18n }}</button>
     </div>
   </div>
 </template>

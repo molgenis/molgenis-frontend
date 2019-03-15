@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
+localVue.filter('i18n', jest.fn())
 
 describe('App.vue', () => {
   let actions

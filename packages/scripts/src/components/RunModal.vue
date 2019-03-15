@@ -1,8 +1,8 @@
 <template>
   <b-modal
     :ref="'modal-'+name"
-    title="Parameters"
-    ok-title="Run"
+    :title="'scripts-parameters-label' | i18n"
+    :ok-title="'scripts-run-label' | i18n"
     @ok="run"
     v-model="showModal"
   >

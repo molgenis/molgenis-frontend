@@ -1,15 +1,15 @@
 <template>
   <div class="container">
     <div class="navigator-actions">
-      <b-button class="mb-3" size="sm" variant="primary" @click="createNewScript" v-b-tooltip.hover title="Add new script"><font-awesome-icon icon="plus" size="lg" /> New script</b-button>
+      <b-button class="mb-3" size="sm" variant="primary" @click="createNewScript" v-b-tooltip.hover :title="'scripts-add-new-script' | i18n"><font-awesome-icon icon="plus" size="lg" /> {{ 'scripts-new-script' | i18n }}</b-button>
     </div>
     <b-modal v-model="showRemoveModal"
              id="removeScriptModal"
-             title="Confirm Deletion"
-             ok-title="Delete"
+             :title="'scripts-confirm-deletion' | i18n"
+             :ok-title="'scripts-delete-label' | i18n"
              ok-variant="danger"
              @ok="confirmedRemove">
-      <p class="my-4">Are you sure you want to remove this script?</p>
+      <p class="my-4">{{ 'scripts-remove-script' | i18n }}</p>
     </b-modal>
     <b-table
       :hover="true"
@@ -22,14 +22,14 @@
       <template
         slot="edit"
         slot-scope="data">
-        <b-button :name="data.item.name" size="sm" variant="primary" @click="editScript({name: data.item.name})" v-b-tooltip.hover title="Edit script">
+        <b-button :name="data.item.name" size="sm" variant="primary" @click="editScript({name: data.item.name})" v-b-tooltip.hover :title="'scripts-edit-script' | i18n">
           <font-awesome-icon icon="edit" size="lg" />
         </b-button>
       </template>
       <template
         slot="remove"
         slot-scope="data">
-        <b-button class="removeButton" size="sm" variant="danger" @click="doOpenModal(data.item.name)" v-b-tooltip.hover title="Delete script">
+        <b-button class="removeButton" size="sm" variant="danger" @click="doOpenModal(data.item.name)" v-b-tooltip.hover :title="'scripts-delete-script' | i18n">
           <font-awesome-icon icon="trash" size="lg" />
         </b-button>
       </template>
@@ -46,7 +46,7 @@
       <template
         slot="execute"
         slot-scope="data">
-        <ExecuteButton v-if="loaded" size="sm" :parameters="simpleParameters(data.item.parameters)" :name="data.item.name" v-b-tooltip.hover title="Run script">Run</ExecuteButton>
+        <ExecuteButton v-if="loaded" size="sm" :parameters="simpleParameters(data.item.parameters)" :name="data.item.name" v-b-tooltip.hover :title="'scripts-run-script' | i18n">{{ 'scripts-run-label' | i18n }}</ExecuteButton>
       </template>
     </b-table>
   </div>
@@ -72,17 +72,17 @@ export default Vue.extend({
           'class': 'compact align-middle'
         },
         name: {
-          label: 'Name',
+          label: 'scripts-name-label' | this.i18n,
           sortable: true,
           'class': 'align-middle'
         },
         parameters: {
-          label: 'Parameters',
+          label: 'scripts-parameters-label' | this.i18n,
           sortable: false,
           'class': 'align-middle'
         },
         resultFileExtension: {
-          label: 'Result file extension',
+          label: 'scripts-result-file-extension' | this.i18n,
           sortable: false,
           'class': 'compact align-middle'
         },
