@@ -102,8 +102,8 @@ and want to get started working on module `scripts`, do this once:
 `node_modules/@molgenis/scripts/dist` directory as resources root. (Does not happen automatically even
 though the pom.xml lists it as such.)
 * Start `molgenis` webapp in exploded mode using IntelliJ IDEA
-* Run `yarn link` in `~git/molgenis-frontend/packages/scripts`.
-* Run `yarn link "@molgenis/scripts"` in `~git/molgenis/molgenis-frontend/`
+* Run `yarn link` in `~/git/molgenis-frontend/packages/scripts`.
+* Run `yarn link "@molgenis/scripts"` in `~/git/molgenis/molgenis-frontend/`
 * If the project supports webpack watch modus, start it: `yarn watch`
 
 Now for each change:
