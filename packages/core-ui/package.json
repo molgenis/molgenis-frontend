@@ -18,7 +18,7 @@
     "webpack-stats": "webpack --profile --json > target/json.stats",
     "build-task:scss-compile": "node-sass-chokidar --source-map true src/scss/ -o dist/css/bootstrap-4",
     "build-task:autoprefixer": "postcss dist/css/bootstrap-4/*.css --use autoprefixer -d dist/css/bootstrap-4",
-    "build-task:css-minify": "foreach -g \"./dist/css/bootstrap-4/*.css\" -x \"cleancss -O2 #{path} -o #{path}.min.css\" --no-c",
+    "build-task:css-minify": "foreach -i \"./dist/css/bootstrap-4/*.min.css\" -g \"./dist/css/bootstrap-4/*.css\" -x \"cleancss -O2 #{path} -o #{dir}/#{name}.min.css\" --no-c",
     "sass:build": "npm-run-all build-task:*",
     "sass:watch": "chokidar 'src/scss/**/*.scss' -c 'npm run sass:build'",
     "dev:theme": "npm-run-all sass:*",
