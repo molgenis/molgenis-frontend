@@ -2,7 +2,7 @@
 export enum ReadyState { loading = 'loading', failed = 'failed', ready = 'ready' }
 
 export interface State{
-  scripts: any[]
+  scripts: object[]
   scriptTypes: string[]
   loaded: boolean
 }
