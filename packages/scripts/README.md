@@ -1,4 +1,7 @@
-# molgenis-scripts
+# molgenis scripts module
+
+Create, edit, change and execute your scrips with molgenis.
+[View the scripts documentation here](https://molgenis.gitbooks.io/molgenis/content/user_documentation/scripts/guide-scripts.html)
 
 ## Project setup
 ```
@@ -15,19 +18,9 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
-```
-yarn run test
-```
-
 ### Lints and fixes files
 ```
 yarn run lint
-```
-
-### Run your end-to-end tests
-```
-yarn run e2e
 ```
 
 ### Run your unit tests
