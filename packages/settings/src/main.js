@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import App from './App'
 import SettingsUi from './components/SettingsUi'
-import i18n from '@molgenis/molgenis-i18n-js/dist/molgenis-i18n.esm'
+import i18n from '@molgenis/molgenis-i18n-js'
 import 'font-awesome/css/font-awesome.min.css'
 
 Vue.use(Router)
