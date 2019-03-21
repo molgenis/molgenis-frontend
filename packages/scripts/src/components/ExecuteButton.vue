@@ -1,6 +1,6 @@
 <template>
-  <span v-if="loaded">
-    <b-button @click.stop="execute" :disabled="disabled"
+  <span v-if="loaded" :name="name" >
+    <b-button @click.stop="execute" :disabled="disabled" class="runButton"
               :size="size" variant="primary"><font-awesome-icon class='mr-2' icon="play" size="lg" /> <slot></slot></b-button>
     <RunModal v-model="showModal"
               :parameters="parameters"

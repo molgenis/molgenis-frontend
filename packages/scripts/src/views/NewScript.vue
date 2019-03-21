@@ -22,7 +22,7 @@
     <b-row class="mb-3">
       <b-col sm="4" class="border-right">
         <label>{{ 'scripts-result-file-extension' | i18n }}</label>
-        <b-form-input id="name" type="text" v-model='form.resultFileExtension' placeholder=""/>
+        <b-form-input id="fileExtension" type="text" v-model='form.resultFileExtension' placeholder=""/>
       </b-col>
       <b-col sm="4">
         <label class="mb-3">{{ 'scripts-generate-security-token' | i18n }}</label>
@@ -37,7 +37,7 @@
     </b-row>
     <div class="mb-4">
       <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">{{ 'scripts-cancel-label' | i18n }}</button>
-      <button :disabled="(!nameValidation || !contentValidation)" d="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">{{ 'scripts-save-label' | i18n }}</button>
+      <button :disabled="(!nameValidation || !contentValidation)" id="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">{{ 'scripts-save-label' | i18n }}</button>
     </div>
   </div>
 </template>

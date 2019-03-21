@@ -28,5 +28,10 @@ yarn run lint
 yarn run unit
 ```
 
+### Run your end to end tests
+```
+yarn run e2e
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

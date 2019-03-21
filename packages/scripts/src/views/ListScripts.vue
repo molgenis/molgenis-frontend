@@ -22,14 +22,14 @@
       <template
         slot="edit"
         slot-scope="data">
-        <b-button :name="data.item.name" size="sm" variant="primary" @click="editScript({name: data.item.name})" v-b-tooltip.hover :title="'scripts-edit-script' | i18n">
+        <b-button :name="data.item.name" class="editButton" size="sm" variant="primary" @click="editScript({name: data.item.name})" v-b-tooltip.hover :title="'scripts-edit-script' | i18n">
           <font-awesome-icon icon="edit" size="lg" />
         </b-button>
       </template>
       <template
         slot="remove"
         slot-scope="data">
-        <b-button class="removeButton" size="sm" variant="danger" @click="doOpenModal(data.item.name)" v-b-tooltip.hover :title="'scripts-delete-script' | i18n">
+        <b-button :name="data.item.name" class="removeButton" size="sm" variant="danger" @click="doOpenModal(data.item.name)" v-b-tooltip.hover :title="'scripts-delete-script' | i18n">
           <font-awesome-icon icon="trash" size="lg" />
         </b-button>
       </template>

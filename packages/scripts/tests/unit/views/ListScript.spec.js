@@ -2,7 +2,7 @@ import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 
 import ListScripts from '../../../src/views/ListScripts'
-import * as schemas from '../test-schemas'
+import * as schemas from '../../test-schemas'
 import BootstrapVue from 'bootstrap-vue'
 
 const localVue = createLocalVue()

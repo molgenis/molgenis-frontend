@@ -1,4 +1,6 @@
 // vue.config.js
+const schemas = require('./tests/test-schemas.js')
+
 module.exports = {
   filenameHashing: false,
   outputDir: 'dist',
@@ -19,7 +21,9 @@ module.exports = {
     }
   },
   'devServer': {
-    'proxy': {
+    // In CI mode, Safari cannot contact "localhost", so as a workaround, run the dev server using the jenkins agent pod dns instead.
+    host: process.env.JENKINS_AGENT_NAME || 'localhost',
+    proxy: process.env.NODE_ENV === 'production' ? undefined : {
       '^/api': {
         'target': 'http://localhost:8080'
       },
@@ -35,6 +39,26 @@ module.exports = {
       '^/menu': {
         'target': 'http://localhost:8080'
       }
+    },
+    before: function (app, server) {
+      app.get('/api/v2/sys_scr_Script', function (req, res) {
+        res.json(schemas.Script)
+      })
+      app.get('/api/v2/sys_scr_ScriptType', function (req, res) {
+        res.json(schemas.ScriptType)
+      })
+      app.get('/api/v2/sys_scr_ScriptParameter', function (req, res) {
+        res.json(schemas.ScriptParameter)
+      })
+      app.put('/api/v2/sys_scr_Script', function (req, res) { // edit script
+        res.json(schemas.Created)
+      })
+      app.post('/api/v2/sys_scr_Script', function (req, res) { // New script
+        res.json(schemas.Created)
+      })
+      app.post('/api/v2/sys_scr_ScriptParameter', function (req, res) {
+        res.json(schemas.Created)
+      })
     }
   }
 }
