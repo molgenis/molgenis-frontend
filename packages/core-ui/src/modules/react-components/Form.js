@@ -703,33 +703,32 @@ var Form = React.createClass({
         _.each(this.state.entity.allAttributes, function (attr) {
             var value = entityInstance[attr.name];
 
-            if (value !== null && value !== undefined) {
-                switch (attr.fieldType) {
-                    case 'DATE':
-                        form[attr.name] = moment(value, 'YYYY-MM-DD', true);
-                        break;
-                    case 'DATE_TIME':
-                        form[attr.name] = moment(value, moment.ISO_8601, true);
-                        break;
-                    case 'CATEGORICAL':
-                    case 'XREF':
-                        form[attr.name] = value[attr.refEntity.idAttribute];
-                        break;
-                    case 'CATEGORICAL_MREF':
-                    case 'MREF':
-                    case 'ONE_TO_MANY':
-                        form[attr.name] = _.map(value.items, function (item) {
-                            return item[attr.refEntity.idAttribute];
-                        }).join();
-                        break;
-                    case 'COMPOUND':
-                        //nothing, no value
-                        break;
-                    default:
-                        form[attr.name] = value;
-                        break;
-                }
+            switch (attr.fieldType) {
+                case 'DATE':
+                    form[attr.name] = moment(value, 'YYYY-MM-DD', true);
+                    break;
+                case 'DATE_TIME':
+                    form[attr.name] = moment(value, moment.ISO_8601, true);
+                    break;
+                case 'CATEGORICAL':
+                case 'XREF':
+                    form[attr.name] = value === null || value === undefined ? value :value[attr.refEntity.idAttribute];
+                    break;
+                case 'CATEGORICAL_MREF':
+                case 'MREF':
+                case 'ONE_TO_MANY':
+                    form[attr.name] = _.map(value.items, function (item) {
+                        return item[attr.refEntity.idAttribute];
+                    }).join();
+                    break;
+                case 'COMPOUND':
+                    //nothing, no value
+                    break;
+                default:
+                    form[attr.name] = value;
+                    break;
             }
+
         }, this);
 
         try {
