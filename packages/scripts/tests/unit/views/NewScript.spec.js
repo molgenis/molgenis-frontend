@@ -61,3 +61,49 @@ describe('views/NewScript.vue', () => {
     }, 300)
   })
 })
+
+
+describe('views/NewScript.vue', () => {
+  let actions
+  let store
+  let wrapper
+  let $router
+
+  beforeEach(() => {
+    $router = {
+      push: jest.fn()
+    }
+    actions = {
+      newParametersAndScripts: jest.fn().mockRejectedValue({}),
+      addParameters: jest.fn().mockResolvedValue({}),
+      editScript: jest.fn().mockResolvedValue({})
+    }
+    store = new Vuex.Store({
+      state: {
+        scripts: schemas.Script,
+        scriptTypes: schemas.ScriptType,
+        loaded: true
+      },
+      actions
+    })
+    wrapper = shallowMount(NewScript, {
+      store,
+      localVue,
+      mocks: {
+        $router
+      },
+      stubs: ['font-awesome-icon']
+    })
+  })
+
+  it('show an error on failed submit', (done) => {
+    const form = { nameChanged: false, form: { name: 'UniqueName2', content: 'script' } }
+    wrapper.setData(form)
+    wrapper.vm.onSubmit()
+    setTimeout(() => {
+      expect(actions.newParametersAndScripts).toHaveBeenCalled()
+      expect(wrapper.vm.showValidationError).toBeTruthy()
+      done()
+    }, 300)
+  })
+})
