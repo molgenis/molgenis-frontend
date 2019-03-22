@@ -712,12 +712,12 @@ var Form = React.createClass({
                     break;
                 case 'CATEGORICAL':
                 case 'XREF':
-                    form[attr.name] = value === null || value === undefined ? value :value[attr.refEntity.idAttribute];
+                    form[attr.name] = value === null || value === undefined ? value : value[attr.refEntity.idAttribute];
                     break;
                 case 'CATEGORICAL_MREF':
                 case 'MREF':
                 case 'ONE_TO_MANY':
-                    form[attr.name] = value === null || value === undefined ? _.map(value.items, function (item) {
+                    form[attr.name] = value === null || value === undefined ? value : _.map(value.items, function (item) {
                         return item[attr.refEntity.idAttribute];
                     }).join();
                     break;
