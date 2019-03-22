@@ -78,7 +78,7 @@ module.exports = {
       .setValue('#y', '42')
       .setValue('#age', '30')
       .setValue('#name', 'Jan Modal')
-      .click('span[name="test2"] .modal-footer button.btn-primary') // Click delete button
+      .click('span[name="test2"] .modal-footer button.btn.btn-secondary') // Click cancel
       .waitForElementNotVisible("span[name='test2'] div.modal-dialog.modal-md", 5000)
       .end()
   }
