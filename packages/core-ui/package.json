@@ -12,7 +12,7 @@
   "scripts": {
     "watch": "webpack -d --watch",
     "dev:build": "webpack -d",
-    "build": "yarn run sass:build && yarn run copy && webpack -p --config webpack.production.config.js",
+    "build": "yarn run copy && webpack -p --config webpack.production.config.js",
     "unit": "cross-env NODE_ENV=test babel-node ./test/index.js",
     "test": "yarn unit",
     "webpack-stats": "webpack --profile --json > target/json.stats",
