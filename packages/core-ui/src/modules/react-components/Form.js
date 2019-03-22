@@ -717,7 +717,7 @@ var Form = React.createClass({
                 case 'CATEGORICAL_MREF':
                 case 'MREF':
                 case 'ONE_TO_MANY':
-                    form[attr.name] = _.map(value.items, function (item) {
+                    form[attr.name] = value === null || value === undefined ? _.map(value.items, function (item) {
                         return item[attr.refEntity.idAttribute];
                     }).join();
                     break;
