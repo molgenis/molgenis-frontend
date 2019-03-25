@@ -21,7 +21,12 @@
           <p v-html="questionnaireDescription"></p>
 
           <button class="btn btn-lg btn-primary mt-2 float-right" @click="startQuestionnaire">
-            {{ 'questionnaire_start' | i18n }}
+            <template v-if="isStarted">
+              {{ 'questionnaires_table_continue_questionnaire_button' | i18n }}
+            </template>
+            <template v-else>
+             {{ 'questionnaire_start' | i18n }}
+            </template>
           </button>
         </template>
 
@@ -58,6 +63,9 @@
       },
       questionnaireList () {
         return this.$store.state.questionnaireList
+      },
+      isStarted () {
+        return this.$store.getters.isStarted(this.questionnaireId)
       }
     },
     created () {

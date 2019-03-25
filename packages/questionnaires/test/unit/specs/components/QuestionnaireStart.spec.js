@@ -34,6 +34,7 @@ describe('QuestionnaireStart component', () => {
     getters = {
       getQuestionnaireLabel: () => () => 'label',
       getQuestionnaireDescription: () => () => 'description',
+      isStarted: () => () => true,
       questionnaireList: () => []
     }
 
@@ -86,6 +87,11 @@ describe('QuestionnaireStart component', () => {
   it('should retrieve the label from the store', () => {
     const wrapper = shallow(QuestionnaireStart, {propsData, store, stubs, localVue, mocks})
     expect(wrapper.vm.questionnaireLabel).to.equal('label')
+  })
+
+  it('should retrieve if the questionnaire is started', () => {
+    const wrapper = shallow(QuestionnaireStart, {propsData, store, stubs, localVue, mocks})
+    expect(wrapper.vm.isStarted).to.equal(true)
   })
 
   it('should return error from the store', () => {
