@@ -52,7 +52,7 @@ describe('actions', () => {
 
     it('should call search all endpoint and store results in the state via a mutation', done => {
       const get = td.function('api.get')
-      td.when(get('/api/searchall/search?term=test')).thenResolve(response)
+      td.when(get('/plugin/searchAll/search?term=test')).thenResolve(response)
       td.replace(api, 'get', get)
 
       const options = {
@@ -67,7 +67,7 @@ describe('actions', () => {
 
     it('should fail and set an error in the state via a mutation', done => {
       const get = td.function('api.get')
-      td.when(get('/api/searchall/search?term=test')).thenReject('ERRORRRRR')
+      td.when(get('/plugin/searchAll/search?term=test')).thenReject('ERRORRRRR')
       td.replace(api, 'get', get)
 
       const options = {
