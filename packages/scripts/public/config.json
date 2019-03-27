@@ -1,0 +1,12 @@
+{
+  "name":"molgenis-scripts",
+  "label":"molgenis-scripts",
+  "description":"Interface to display and execute custom scripts",
+  "version":"0.1.0",
+  "apiDependency":"v2",
+  "includeMenuAndFooter":true,
+  "runtimeOptions":
+  {
+    "language":"en"
+  }
+}
