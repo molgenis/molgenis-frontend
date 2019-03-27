@@ -195,6 +195,10 @@ const getters = {
 
   getQuestionLabel: (state: QuestionnaireState): Function => (questionId: string) => {
     return getQuestionById(state.chapters, questionId).label
+  },
+
+  isStarted: (state: QuestionnaireState): Function => (questionnaireId: string) => {
+    return state.questionnaireList.find((questionnaire) => questionnaire.id === questionnaireId).status !== 'NOT_STARTED'
   }
 }
 

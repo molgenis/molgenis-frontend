@@ -241,7 +241,7 @@ describe('getters', () => {
       }
     },
     questionnaireList: [
-      {id: 'q1', label: 'questionaire1', description: 'desc1', status: 'OPEN'},
+      {id: 'q1', label: 'questionaire1', description: 'desc1', status: 'NOT_STARTED'},
       {id: 'q2', label: 'questionaire2', description: 'desc2', status: 'OPEN'}
     ]
   }
@@ -451,6 +451,16 @@ describe('getters', () => {
     it('should thrown an exception if the given id is not a question id', () => {
       const questionId = 'non-existent-id'
       expect(() => getters.getQuestionLabel(state)(questionId)).to.throw()
+    })
+  })
+
+  describe('isStarted', () => {
+    it('should return false is the questionnaire is not started', () => {
+      expect(getters.isStarted(state)(state.questionnaireList[0].id)).to.equal(false)
+    })
+
+    it('should return true is the questionnaire is started', () => {
+      expect(getters.isStarted(state)(state.questionnaireList[1].id)).to.equal(true)
     })
   })
 })
