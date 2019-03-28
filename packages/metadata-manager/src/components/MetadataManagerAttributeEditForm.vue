@@ -169,9 +169,11 @@
           </div>
 
           <div v-if="isReferenceType" class="form-group row">
-            <label class="col-3 col-form-label text-muted">{{ 'attribute-edit-form-cascade-delete-label' | i18n }}</label>
-            <div class="col checkbox-column">
-              <input v-model="cascadeDelete" class="form-control" type="checkbox">
+            <div class="col-3 text-muted"><label for="cascadeDeleteCheckbox">{{ 'attribute-edit-form-cascade-delete-label' | i18n }}</label></div>
+            <div class="col-9">
+              <div class="form-check">
+                <input v-model="cascadeDelete" class="form-check-input position-static" type="checkbox" id="cascadeDeleteCheckbox">
+              </div>
             </div>
           </div>
 
@@ -237,28 +239,28 @@
         <div class="col-md-3">
 
           <div class="form-group row">
-            <div class="col-9 text-muted">{{ 'attribute-edit-form-nullable-label' | i18n }}</div>
+            <div class="col-9 text-muted"><label for="nullableCheckbox">{{ 'attribute-edit-form-nullable-label' | i18n }}</label></div>
             <div class="col-3">
               <div class="form-check">
-                <input v-model="nullable" class="form-check-input position-static" type="checkbox">
+                <input v-model="nullable" class="form-check-input position-static" type="checkbox" id="nullableCheckbox">
               </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <div class="col-9 text-muted">{{ 'attribute-edit-form-auto-label' | i18n }}</div>
+            <div class="col-9 text-muted"><label for="autoCheckbox">{{ 'attribute-edit-form-auto-label' | i18n }}</label></div>
             <div class="col-3">
               <div class="form-check">
-                <input v-model="auto" class="form-check-input position-static" type="checkbox">
+                <input v-model="auto" class="form-check-input position-static" type="checkbox" id="autoCheckbox">
               </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <div class="col-9 text-muted">{{ 'attribute-edit-form-visible-label' | i18n }}</div>
+            <div class="col-9 text-muted"><label for="visibleCheckbox">{{ 'attribute-edit-form-visible-label' | i18n }}</label></div>
             <div class="col-3">
               <div class="form-check">
-                <input v-model="visible" class="form-check-input position-static" type="checkbox">
+                <input v-model="visible" class="form-check-input position-static" type="checkbox" id="visibleCheckbox">
               </div>
             </div>
           </div>
@@ -266,28 +268,28 @@
 
         <div class="col-md-3">
           <div class="form-group row">
-            <div class="col-9 text-muted">{{ 'attribute-edit-form-unique-label' | i18n }}</div>
+            <div class="col-9 text-muted"><label for="uniqueCheckbox">{{ 'attribute-edit-form-unique-label' | i18n }}</label></div>
             <div class="col-3">
               <div class="form-check">
-                <input v-model="unique" class="form-check-input position-static" type="checkbox">
+                <input v-model="unique" class="form-check-input position-static" type="checkbox" id="uniqueCheckbox">
               </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <div class="col-9 text-muted">{{ 'attribute-edit-form-readonly-label' | i18n }}</div>
+            <div class="col-9 text-muted"><label for="readonlyCheckbox">{{ 'attribute-edit-form-readonly-label' | i18n }}</label></div>
             <div class="col-3">
               <div class="form-check">
-                <input v-model="readonly" class="form-check-input position-static" type="checkbox">
+                <input v-model="readonly" class="form-check-input position-static" type="checkbox" id="readonlyCheckbox">
               </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <div class="col-9 text-muted">{{ 'attribute-edit-form-aggregatable-label' | i18n }}</div>
+            <div class="col-9 text-muted"><label for="aggregatableCheckbox">{{ 'attribute-edit-form-aggregatable-label' | i18n }}</label></div>
             <div class="col-3">
               <div class="form-check">
-                <input v-model="aggregatable" class="form-check-input position-static" type="checkbox">
+                <input v-model="aggregatable" class="form-check-input position-static" type="checkbox" id="aggregatableCheckbox">
               </div>
             </div>
           </div>
