@@ -27,7 +27,7 @@ describe('appendToForm', () => {
     blob['lastModifiedDate'] = ''
     blob['name'] = 'my file'
     repository.appendToForm([{id: 'x', type: 'file'}], formData, ['x', blob])
-    td.verify(formData.append('x', blob,'my file'))
+    td.verify(formData.append('x', blob, 'my file'))
   })
 
   it('should append file field with null value', () => {
