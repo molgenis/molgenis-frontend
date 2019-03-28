@@ -13,22 +13,19 @@ const isFileIncluded = (formData, formFields) => {
   return !!fieldsWithFile
 }
 
+export const appendToForm = (fields, formData, [key, value]) => {
+  const isFile = value && fields.find((field) => field.id === key && field.type === 'file' && typeof value !== 'string')
+  if (isFile) {
+    formData.append(key, value, value.name)
+  } else {
+    const stringValue = value === undefined || value === null ? '' : value
+    formData.append(key, stringValue)
+  }
+}
+
 const buildFormData = (data, fields) => {
   const formData = new FormData()
-  Object.entries(data).forEach((pair) => {
-    const [key, value] = pair
-    const isFile = fields.find((field) => {
-      return field.id === key && field.type === 'file' && typeof value !==
-        'string'
-    })
-
-    if (isFile) {
-      formData.append(key, value, value.name)
-    } else {
-      const stringValue = value === undefined || value === null ? '' : value
-      formData.append(key, stringValue)
-    }
-  })
+  Object.entries(data).forEach((pair) => appendToForm(fields, formData, pair))
   return formData
 }
 
