@@ -1,6 +1,6 @@
 {
   "name": "@molgenis/scripts",
-  "version": "0.2.2",
+  "version": "0.2.1",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -9,6 +9,9 @@
     "e2e": "vue-cli-service test:e2e",
     "unit": "vue-cli-service test:unit"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-regular-svg-icons": "^5.7.2",
