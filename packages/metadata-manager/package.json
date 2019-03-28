@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "description": "MOLGENIS Metadata manager",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
-  "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
-    "access": "public"
-  },
   "files": [
     "dist"
   ],

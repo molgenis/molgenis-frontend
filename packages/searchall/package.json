@@ -3,10 +3,6 @@
   "version": "0.1.1",
   "description": "MOLGENIS searchall",
   "author": "Bart Charbon",
-  "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
-    "access": "public"
-  },
   "files": [
     "dist"
   ],

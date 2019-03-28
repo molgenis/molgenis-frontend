@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "description": "Data row edit",
   "author": "sido <sido@haakma.org>",
-  "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
-    "access": "public"
-  },
   "files": [
     "dist"
   ],
