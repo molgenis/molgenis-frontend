@@ -17,10 +17,7 @@ const buildFormData = (data, fields) => {
   const formData = new FormData()
   Object.entries(data).forEach((pair) => {
     const [key, value] = pair
-    const isFile = fields.find((field) => {
-      return field.id === key && field.type === 'file' && typeof value !==
-        'string'
-    })
+    const isFile = value && fields.find((field) => field.id === key && field.type === 'file' && typeof value !== 'string')
 
     if (isFile) {
       formData.append(key, value, value.name)
