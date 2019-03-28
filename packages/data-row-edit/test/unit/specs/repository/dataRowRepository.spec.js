@@ -3,6 +3,44 @@ import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 import api from '@molgenis/molgenis-api-client'
 import * as repository from '@/repository/dataRowRepository'
 
+describe('appendToForm', () => {
+  const formData = new FormData()
+
+  beforeEach(function () {
+    td.reset()
+    const append = td.function('FormData.append')
+    td.replace(formData, 'append', append)
+  })
+
+  it('should append string field', () => {
+    repository.appendToForm([{id: 'x', type: 'string'}], formData, ['x', 'x'])
+    td.verify(formData.append('x', 'x'))
+  })
+
+  it('should append file field with string value', () => {
+    repository.appendToForm([{id: 'x', type: 'file'}], formData, ['x', 'x'])
+    td.verify(formData.append('x', 'x'))
+  })
+
+  it('should append file field with Blob value', () => {
+    const blob = new Blob([''], {type: 'text/html'})
+    blob['lastModifiedDate'] = ''
+    blob['name'] = 'my file'
+    repository.appendToForm([{id: 'x', type: 'file'}], formData, ['x', blob])
+    td.verify(formData.append('x', blob,'my file'))
+  })
+
+  it('should append file field with null value', () => {
+    repository.appendToForm([{id: 'x', type: 'file'}], formData, ['x', null])
+    td.verify(formData.append('x', ''))
+  })
+
+  it('should append file field with undefined value', () => {
+    repository.appendToForm([{id: 'x', type: 'file'}], formData, ['x', null])
+    td.verify(formData.append('x', ''))
+  })
+})
+
 describe('Data row repository', () => {
   const createResponse = {
     meta: {
