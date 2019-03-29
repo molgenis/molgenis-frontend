@@ -4,7 +4,7 @@ module.exports = function (config) {
   config.set({
     browsers: ['PhantomJS'],
     frameworks: ['mocha', 'sinon-chai'],
-    reporters: ['spec', 'coverage'],
+    reporters: ['coverage', 'mocha'],
     files: [
     '../../node_modules/es6-promise/dist/es6-promise.auto.js',
       '../../node_modules/babel-polyfill/dist/polyfill.js',
@@ -21,6 +21,9 @@ module.exports = function (config) {
       reporters: [
         {type: 'cobertura', subdir: 'cobertura'}
       ]
+    },
+    mochaReporter: {
+      showDiff: true
     },
     junitReporter: {
       outputDir: '../../../../../target/surefire-reports',
