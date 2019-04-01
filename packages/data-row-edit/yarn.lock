@@ -116,10 +116,10 @@
     i18next-xhr-backend "^1.4.1"
     moment "^2.18.1"
 
-"@molgenis/molgenis-ui-form@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-1.2.0.tgz#098191bceb8753ea847d480ea3d32a90a925b447"
-  integrity sha512-kWHozri01zd14dZw0J+B7H2TG+bUVd+ReCWav04ApYAM+7aXWZk7PIbfbCWmaLxKcvsKGFEdiYPXKUKF320rnw==
+"@molgenis/molgenis-ui-form@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-3.0.0.tgz#98917758b8fb99e60c93214245fc80b47fc83696"
+  integrity sha512-eulq59hQYqkzRNES1kmEJGkLF8QtQeB4ylCZKyu6NIeUisB/IgZlRQOmf0MEUjVMKIW1x5Udgre+56nMzSkBow==
   dependencies:
     "@molgenis/molgenis-api-client" "^2.1.2"
     "@molgenis/rsql" "^0.1.1"
@@ -128,7 +128,7 @@
     vue-code "^1.2.3"
     vue-flatpickr-component "^8.0.0"
     vue-form "^4.10.1"
-    vue-select ConnorStroomberg/vue-select.git#release/patch-for-update-issue
+    vue-select "^2.6.3"
 
 "@molgenis/molgenis-vue-test-utils@^1.0.0":
   version "1.1.0"
@@ -9019,9 +9019,10 @@ vue-router@^3.0.1:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
   integrity sha512-vLLoY452L+JBpALMP5UHum9+7nzR9PeIBCghU9ZtJ1eWm6ieUI8Zb/DI3MYxH32bxkjzYV1LRjNv4qr8d+uX/w==
 
-vue-select@ConnorStroomberg/vue-select.git#release/patch-for-update-issue:
-  version "2.4.0"
-  resolved "https://codeload.github.com/ConnorStroomberg/vue-select/tar.gz/3bee82380e07634b4d5d7d1c2450d7101581a9b0"
+vue-select@^2.6.3:
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-2.6.3.tgz#c123630dbcda28225dd7697fc2f4f34333a5ae58"
+  integrity sha512-0zZ0/LEe9mNcDVKPiGSDun2qJ0e51ts5Z9f17XyL6bPMzw6rxNYPpx+fcSZsbfNYxwXuK3q4uFkucybw/EeQcA==
 
 vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
   version "3.1.2"
