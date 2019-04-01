@@ -3,15 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/searchall@0.1.1...@molgenis/searchall@0.1.2) (2019-04-01)
-
-**Note:** Version bump only for package @molgenis/searchall
+## 0.1.1 (2019-04-01)
 
 
+### Bug Fixes
 
-
-
-## 0.1.1 (2019-03-27)
+* **metadata-manager:** Flatten the attribute tree when dragging attributes ([735a514](https://github.com/molgenis/molgenis-frontend/commit/735a514)), closes [molgenis/molgenis#8269](https://github.com/molgenis/molgenis/issues/8269)
 
 
 
@@ -28,5 +25,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## 0.0.1-alpha.0 (2019-01-29)
-
-**Note:** Version bump only for package @molgenis/searchall
