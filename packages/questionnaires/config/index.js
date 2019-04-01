@@ -5,6 +5,7 @@
 const path = require('path')
 const questionnaireList = require('./dev-responses/questionnaire-list.js')
 const localizedMessages = require('./dev-responses/localized-messages.js')
+const localizedFormMessages = require('./dev-responses/localized-ui-form-messages')
 const firstQuestionnaireResponse = require('./dev-responses/first-questionnaire-response.js')
 const secondQuestionnaireResponse = require('./dev-responses/second-questionnaire-response.js')
 const thirdQuestionnaireResponse = require('./dev-responses/third-questionnaire-response.js')
@@ -69,6 +70,10 @@ module.exports = {
 
       app.get('/api/v2/i18n/questionnaire/en', function (req, res) {
         res.json(localizedMessages)
+      })
+
+      app.get('/api/v2/i18n/ui-form/en', function (req, res) {
+        res.json(localizedFormMessages)
       })
 
       app.get('/menu/plugins/questionnaires/start/questionnaire_1', function (req, res) {
