@@ -1,6 +1,7 @@
 {
   "name": "@molgenis/scripts",
   "version": "0.2.1",
+  "license": "LGPL-3.0",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
