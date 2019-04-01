@@ -2,6 +2,10 @@
   "name": "@molgenis/scripts",
   "version": "0.2.1",
   "license": "LGPL-3.0",
+  "publishConfig": {
+    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
+    "access": "public"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -20,7 +24,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.5",
     "@molgenis/molgenis-api-client": "^3.1.0",
     "@molgenis/molgenis-i18n-js": "^0.1.1",
-    "@molgenis/molgenis-ui-form": "^2.1.0",
+    "@molgenis/molgenis-ui-form": "^3.0.0",
     "vue": "^2.6.8",
     "vue-router": "^3.0.2",
     "vuex": "^3.1.0"

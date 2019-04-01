@@ -27,14 +27,34 @@
         required: true
       }
     },
+    data () {
+      return {
+        flatTree: []
+      }
+    },
     computed: {
       attributes: {
         get () {
           return this.attributeTree
         },
         set (value) {
-          this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, { key: 'attributes', value: value })
+          this.createFlatTree(value)
+          this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, { key: 'attributes', value: this.flatTree })
         }
+      }
+    },
+    methods: {
+      createFlatTree (attributeTree) {
+        this.flatTree = []
+        this.fillFlatTree(attributeTree)
+      },
+      fillFlatTree (attributeTree) {
+        attributeTree.forEach((attr) => {
+          this.flatTree.push(attr)
+          if (attr.children.length > 0) {
+            this.fillFlatTree(attr.children)
+          }
+        })
       }
     },
     components: {

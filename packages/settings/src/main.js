@@ -28,7 +28,7 @@ const settingsRouter = new Router({
 Vue.use(i18n, {
   lng: lng,
   fallbackLng: fallbackLng,
-  namespace: 'settings',
+  namespace: ['settings', 'ui-form'],
   callback () {
     /* eslint-disable no-new */
     new Vue({
