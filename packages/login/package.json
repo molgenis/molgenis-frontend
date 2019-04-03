@@ -10,8 +10,13 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@molgenis/molgenis-i18n-js": "^0.1.1",
+    "@molgenis/molgenis-ui-form": "^3.0.0",
+    "bootstrap": "4.2.1",
+    "bootstrap-vue": "^2.0.0-rc.16",
     "core-js": "^2.6.5",
-    "vue": "^2.6.6"
+    "vue": "^2.6.6",
+    "vue-router": "^3.0.2"
   },
   "devDependencies": {
     "@types/jest": "^23.1.4",
