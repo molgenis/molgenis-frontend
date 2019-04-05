@@ -2,7 +2,7 @@
 [![Code Coverage](https://codecov.io/gh/molgenis/molgenis-frontend/branch/master/graph/badge.svg)](https://codecov.io/gh/molgenis/molgenis-frontend/branch/master)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 # molgenis-frontend
-These are *stable* apps for MOLGENIS. The *stable* apps will compose the MOLGENIS frontend. These are used in the [molgenis/molgenis repository](https://github.com/molgenis/molgenis)
+These are *stable* packages for MOLGENIS. The *stable* packages will compose the MOLGENIS frontend. These are used in the [molgenis/molgenis repository](https://github.com/molgenis/molgenis)
 
 The following will be addressed:
 
@@ -28,13 +28,13 @@ To get started run
 The following will be addressed:
 
 - [Commits](#commits)
-- [Usage of yarn with Vue](#usage-of-yarn-with-vue)
-- [Using yarn link for live editing](#using-yarn-link-for-live-editing)
-- [Update existing stable apps](#update-existing-stable-apps)
-- [Create new stable apps](#create-new-stable-apps)
+- [Usage of yarn with VUE](#usage-of-yarn-with-vue)
+- [Testing packages](#testing-packages)
+- [Update existing stable packages](#update-existing-stable-packages)
+- [Create new stable packages](#create-new-stable-packages)
 
 ### Commits
-We use independent versioning for the apps. This makes it hard to interactively specify at release
+We use independent versioning for the packages. This makes it hard to interactively specify at release
 time what type of upgrade each app needs.
 
 So please specify your changes using [conventional commits](https://www.conventionalcommits.org).
@@ -90,7 +90,150 @@ Commit this file to your Git repository as it ensures future builds to use the v
 When running your client code in development on port 8081, it will help to run the MOLGENIS locally on port 8080. 
 The vue-cli comes with a proxy table that will redirect any REST calls to localhost:8080.
 
-### Using yarn link for live editing
+### Testing packages
+When you want to test a package there are actually three ways to do this.
+
+- [Make a standalone setup and mock the API responses](#make-a-standalone-setup)
+- [Proxy the MOLGENIS backend in front of the package](#proxying-molgenis-backend)
+- [Link the package in the MOLGENIS backend for full integration](#using-yarn-link-for-live-editing) 
+
+#### Make a standalone setup
+You always want to start with an offline setup for the package. You then need to define the state and mock 
+responses first and have to think about the API you want to use. In cli2 and cli3 the setup is different so 
+both are described.  
+
+##### cli2
+When you are creating a standalone setup in cli2 you need to add an ```index.html``` file (is generated automatically).
+Besides this you need to add mock responses to supply you **store**. You can add them in ```#package#/config/index.js```. 
+
+*Example:*
+
+```javascript
+...
+const listOfItems = require('./dev-responses/list.js')
+const localizedMessages = require('./dev-responses/localized-messages.js')
+const localizedFormMessages = require('./dev-responses/localized-ui-form-messages')
+...
+  before (app) {
+      app.get('/menu/plugins/#package#/list', function (req, res) {
+        res.json(listOfItems)
+      })
+      app.get('/api/v2/i18n/#package#/en', function (req, res) {
+        res.json(localizedMessages)
+      })
+      app.get('/api/v2/i18n/ui-form/en', function (req, res) {
+        res.json(localizedFormMessages)
+      })
+...
+```
+
+This before block is used by the **store** which instead of accessing the real end-points. This is also used by the end-to-end tests to test the ui.
+
+##### cli3
+When you are creating a standalone setup in cli3 you need to add an ```index.html``` file (is generated automatically).
+Besides this you need to add mock responses to supply you **store**. You can add them in ```vue.config.js```.
+ 
+*Example:* 
+ 
+```javascript
+...
+const listOfItems = require('./dev-responses/list.js')
+const localizedMessages = require('./dev-responses/localized-messages.js')
+const localizedFormMessages = require('./dev-responses/localized-ui-form-messages')
+...
+  before: function (app, server) {
+      app.get('/menu/plugins/#package#/list', function (req, res) {
+        res.json(listOfItems)
+      })      
+      app.get('/api/v2/i18n/#package#/en', function (req, res) {
+        res.json(localizedMessages)
+      })
+      app.get('/api/v2/i18n/ui-form/en', function (req, res) {
+        res.json(localizedFormMessages)
+      })           
+...
+``` 
+
+This before block is used by the **store** which instead of accessing the real end-points. This is also used by the end-to-end tests to test the ui.
+ 
+#### Proxying MOLGENIS backend
+We now have two configurations for the VUE packages. One based on [vue-cli2](https://) and one based on [vue-cli3](https://).
+
+##### cli2
+You need to configure the MOLGENIS backend in the index.js of the vue configuration. It is usually placed here: ```#package#/config/index.js```
+
+You need to: 'add, change or leave it as it is', this configuration block:
+
+*Example:*
+
+```javascript
+...
+dev: {
+    ...
+    proxyTable: {
+      '/login': {
+        target: 'http://localhost:8080'
+      },
+      '/api': {
+        target: 'http://localhost:8080'
+      },
+      '/plugin/#package#': {
+        target: 'http://localhost:8080'
+      }
+    },
+...
+```
+
+You need to add the paths that are used by the package. In this case:
+
+```javascript
+- '/login'
+- '/api'
+- '/plugin'
+```
+
+The idea is that we lean as much on public API's as possible. That we do not need lot's of specific webservices for plugins.
+
+> note: You need to disable the ```before```-block in the ```#package#/config/index.js```. This way you are making sure that 
+the package is not using the mock responses.
+
+
+##### cli3
+In cli3 you have a lot less configuration. Default the vue configuration is located partially in the ```package.json``` and in ```vue.config.js```. 
+To proxy we need to amend the ```vue.config.js```.
+
+*Example:*
+
+```javascript
+...
+ 'devServer': {
+    proxy: process.env.NODE_ENV === 'production' ? undefined : {
+      '^/login': {
+        'target': 'http://localhost:8080'
+      },
+      '^/api': {
+        'target': 'http://localhost:8080'
+      },
+      '^/plugin/#package#': {
+        'target': 'http://localhost:8080'
+      },
+...
+```
+
+You need to add the paths that are used by the package. In this case:
+
+```javascript
+- '/login'
+- '/api'
+- '/plugin'
+```
+
+The idea is that we lean as much on public API's as possible. That we do not need lot's of specific webservices for plugins.
+
+> note: You need to disable the ```before```-block in the ```vue.config.js```. This way you are making sure that 
+the package is not using the mock responses.
+
+#### Using yarn link for live editing
 You can use [`yarn link`](https://yarnpkg.com/lang/en/docs/cli/link/) while developing to view the
 results directly in MOLGENIS.
 
@@ -114,8 +257,8 @@ Now for each change:
 * Wait for the popup saying `Compilation finished` to appear.
 * Reload the browser window to see the changes 
 
-### Update existing stable apps
-**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable apps. The version of the app you start to develop has to be updated to [ *canary* ]**. 
+### Update existing stable packages
+**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable packages. The version of the app you start to develop has to be updated to [ *canary* ]**. 
 
 That way each merge with the master on this repository will be automatically picked up by the main MOLGENIS repository.
 
@@ -126,11 +269,11 @@ The whole development flow is working as follows.
 - [Releases](#Releases)
 
 #### Pull request
-When you start developing and define a set of changes to be a pull-request it is not published on the [stable appstore](https://registry.molgenis.org/#browse/browse:npm-stable) by default. 
+When you start developing and define a set of changes to be a pull-request it is not published on the [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable) by default. 
 The changes have to be tested by hand. You test the changes by proxying the app to MOLGENIS and see if it works.
 
 #### Merges with master
-When you merge a pull-request it produces a fixed number (an alpha release) and a 'canary-tag' on the [stable appstore](https://registry.molgenis.org/#browse/browse:npm-stable).
+When you merge a pull-request it produces a fixed number (an alpha release) and a 'canary-tag' on the [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable).
 By setting the canary-tag in the MOLGENIS repository you automatically pickup new changes from the MOLGENIS frontend when you build the MOLGENIS repository.
 
 #### Releases
@@ -140,10 +283,10 @@ on the git log. Please use conventional commits so that this is determined corre
 
 For more information, see the `lerna version` [command documentation](https://github.com/lerna/lerna/tree/master/commands/version#readme).
 
-The modules are published to our [stable appstore](https://registry.molgenis.org/#browse/browse:npm-stable) 
+The modules are published to our [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable) 
 `https://registry.molgenis.org/repository/npm-stable/`
 
-### Create new stable apps
+### Create new stable packages
 If you do not have the vue-cli (version 3), please check [vue-cli](https://cli.vuejs.org/). 
 
 If you have the vue-cli installed you can use the following steps to quickly install a working Vue template.
