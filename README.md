@@ -306,7 +306,7 @@ Using the ```preset.json``` is recommended. If you need specific tooling you can
 >note: Make sure you update the project-name to @molgenis/#new-app# for publishing purposes
 
 ## Integrate with MOLGENIS
-There is a workflow you have to follow to implement new frontend code in [molgenis/molgenis-frontend](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/).
+There is a workflow you have to follow to implement new frontend code in [molgenis/molgenis/molgenis-frontend](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/).
 
 ### Add to [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json)
 Make sure you add the new app to the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json).
