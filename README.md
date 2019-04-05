@@ -28,7 +28,7 @@ To get started run
 The following will be addressed:
 
 - [Commits](#commits)
-- [Usage of yarn with VUE](#usage-of-yarn-with-vue)
+- [Usage of yarn](#usage-of-yarn)
 - [Testing packages](#testing-packages)
 - [Update existing stable packages](#update-existing-stable-packages)
 - [Create new stable packages](#create-new-stable-packages)
@@ -55,7 +55,7 @@ The [Angular conventional commit types](https://github.com/angular/angular/blob/
 When merging a pull request that does not use conventional commits you can squash the commits
 into a single conventional commit.
 
-### Usage of yarn with Vue
+### Usage of yarn
 The following three commands can be used to install, develop and test client code:
 
 ```bash
