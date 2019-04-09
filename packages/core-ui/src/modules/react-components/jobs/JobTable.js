@@ -59,6 +59,8 @@ var JobTable = React.createClass({
                 return <span className="label label-success">Success</span>
             case 'PENDING':
                 return <span className="label label-primary">Pending</span>
+            case 'CANCELING':
+                return <span className="label label-default">Canceling</span>
             case 'CANCELED':
                 return <span className="label label-default">Canceled</span>
             case 'RUNNING':
