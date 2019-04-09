@@ -24,8 +24,8 @@ var Jobs = React.createClass({
     render: function () {
         const {jobs, onSelect, selectedJobId} = this.props;
         const selectedJob = jobs.find((job)=> job.identifier === selectedJobId);
-        const runningJobs = jobs.filter(job => job.status === 'RUNNING');
-        const finishedJobs = jobs.filter(job => job.status !== 'RUNNING');
+        const runningJobs = jobs.filter(job => job.status === 'RUNNING' || job.status === 'CANCELING');
+        const finishedJobs = jobs.filter(job => job.status !== 'RUNNING' && job.status !== 'CANCELING');
 
         return <div>
             {runningJobs.length > 0 && <div className="row">
