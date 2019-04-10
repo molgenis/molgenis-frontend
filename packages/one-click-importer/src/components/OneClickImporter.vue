@@ -7,7 +7,7 @@
             <label for="file-input">{{ 'import-input-label' | i18n }}</label>
             <input
               id="file-input"
-              class="form-control"
+              class="form-control molgenis-file-input"
               ref="fileInput"
               type="file"
               accept=".csv, .zip, .xls, .xlsx, text/csv, application/zip, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
@@ -96,6 +96,13 @@
     margin-left: 1rem;
     padding-top: 0.5em;
     font-size: smaller;
+  }
+
+  /** This is required when alternative bootstrap themes are used. The sass compiler somehow sets the height to a
+  magically calculated number and makes the button of the file upload too big in firefox and poorly positioned in other
+  browsers.*/
+  .molgenis-file-input {
+    height: 100%;
   }
 </style>
 
