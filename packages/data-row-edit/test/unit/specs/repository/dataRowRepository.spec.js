@@ -1,5 +1,4 @@
 import td from 'testdouble'
-import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 import api from '@molgenis/molgenis-api-client'
 import * as repository from '@/repository/dataRowRepository'
 
@@ -69,26 +68,15 @@ describe('Data row repository', () => {
 
   describe('fetch', () => {
     it('when no rowId is set fetch the table structure and map it to form data', (done) => {
-      td.replace(EntityToFormMapper, 'generateForm', () => {
-        return {a: 'b'}
-      })
-
-      repository.fetch('tableId', null).then((mappedData) => {
-        expect(mappedData.formLabel).to.equal('for create label')
-        done()
-      }, () => {
+      repository.fetch('tableId', null).then(() => done(), () => {
         expect(true).to.equal(false) // fail test in case rejection
         done()
       })
     })
 
     it('when rowId is set fetch the table structure and data and map it to form data', (done) => {
-      td.replace(EntityToFormMapper, 'generateForm', () => {
-        return {c: 'd'}
-      })
-
-      repository.fetch('tableId', 'rowId').then((mappedData) => {
-        expect(mappedData.formLabel).to.equal('for update label')
+      repository.fetch('tableId', 'rowId').then((resp) => {
+        expect(resp.meta.label).to.equal('for update label')
         done()
       }, () => {
         expect(true).to.equal(false) // fail test in case rejection

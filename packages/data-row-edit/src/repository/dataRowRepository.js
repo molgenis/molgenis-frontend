@@ -1,9 +1,4 @@
-import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 import api from '@molgenis/molgenis-api-client'
-
-const entityMapperSettings = {
-  showNonVisibleAttributes: true
-}
 
 const isFileIncluded = (formData, formFields) => {
   const fieldsWithFile = formFields
@@ -45,33 +40,22 @@ const doPost = (uri, formData, formFields) => {
 }
 
 /**
- * response mixes data and metadata, this function creates a new object with separate properties for data and metadata
+ * Fetch for edit-response mixes data and metadata,
+ * this function creates a new object with separate properties for data and metadata, similar to the
+ * fetch for create response
  * @param response
- * @returns {{_meta: *, rowData: *}}
+ * @returns Promise{{meta: *, rowData: *}}
  */
 const parseEditResponse = (response) => {
   // noinspection JSUnusedLocalSymbols
   const { _meta, _href, ...rowData } = response
-  return {_meta, rowData}
+  return Promise.resolve({meta: _meta, rowData: rowData})
 }
 
-const fetchForCreate = (tableId) => {
-  return new Promise((resolve, reject) => {
-    api.get('/api/v2/' + tableId + '?num=0').then((response) => {
-      const mappedData = EntityToFormMapper.generateForm(response.meta, {}, { mapperMode: 'CREATE', ...entityMapperSettings })
-      resolve({formLabel: response.meta.label, ...mappedData})
-    }, reject)
-  })
-}
+const fetchForCreate = (tableId) => api.get('/api/v2/' + tableId + '?num=0')
 
 const fetchForUpdate = (tableId, rowId) => {
-  return new Promise((resolve, reject) => {
-    api.get('/api/v2/' + tableId + '/' + rowId).then((response) => {
-      const {_meta, rowData} = parseEditResponse(response)
-      const mappedData = EntityToFormMapper.generateForm(_meta, rowData, { mapperMode: 'UPDATE', ...entityMapperSettings })
-      resolve({formLabel: response._meta.label, ...mappedData})
-    }, reject)
-  })
+  return api.get('/api/v2/' + tableId + '/' + rowId).then(response => parseEditResponse(response))
 }
 
 const create = (formData, formFields, tableId) => {
