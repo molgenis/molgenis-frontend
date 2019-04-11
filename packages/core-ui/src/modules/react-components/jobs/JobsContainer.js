@@ -56,8 +56,8 @@ var JobsContainer = React.createClass({
         if (!this.state.jobs) {
             return [];
         }
-        const runningJobIDs = this.state.jobs.filter((job) => job.status === 'RUNNING').map((job) => job.identifier);
-        return jobs.filter((newJob) => newJob.status !== 'RUNNING' && runningJobIDs.indexOf(newJob.identifier) >= 0);
+        const runningJobIDs = this.state.jobs.filter((job) => job.status === 'RUNNING' || job.status === 'CANCELING').map((job) => job.identifier);
+        return jobs.filter((newJob) => newJob.status !== 'RUNNING' && newJob.status !== 'CANCELING' && runningJobIDs.indexOf(newJob.identifier) >= 0);
     },
     retrieveJobs: function () {
         var self = this;

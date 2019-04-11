@@ -46,7 +46,7 @@ const JobContainer = React.createClass({
         const self = this;
         $.get(this.props.jobHref, function (job) {
             self.setState({job})
-            if (job.status === 'SUCCESS' || job.status === 'FAILED' || job.status === 'FINISHED') {
+            if (job.status === 'SUCCESS' || job.status === 'FAILED' || job.status === 'FINISHED' || job.status === 'CANCELED') {
                 self.clearIntervals()
                 if (self.props.onCompletion) {
                     self.props.onCompletion(job);
