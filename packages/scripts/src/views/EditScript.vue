@@ -4,7 +4,7 @@
       {{ 'scripts-save-error' | i18n }}
     </b-alert>
     <h1>{{form.name}}</h1>
-    <CodeEditor v-if="loaded" @valueChange="onValueChange" :initialData="form.content">
+    <CodeEditor v-if="loaded" @valueChange="onValueChange" :initialData="form.content" :scriptType="form.type">
       <ExecuteButton :disabled="(!contentValidation)" :doSave="true" :form="form" size="sm" :parameters="form.parameters" :name="form.name">{{ 'scripts-save-and-run' | i18n }}</ExecuteButton>
     </CodeEditor>
     <b-row class="mb-3">
