@@ -1,5 +1,5 @@
 const freeMarkerRegEx = /\${(\w+)}/g // Match foo from ${foo}
-const magmaRegEx = /\$\('(\w+)'\)/g // Match foo from $('foo')
+const magmaRegEx = /\$\(\"(\w+)\"\)/g // Match foo from $('foo')
 
 const findParameters = (codeString: string, type: string): string[] => {
   const parameterRegEx = type === 'JavaScript (Magma)' ? magmaRegEx : freeMarkerRegEx
