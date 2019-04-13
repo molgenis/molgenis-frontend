@@ -1,11 +1,12 @@
 pipeline {
     agent {
         kubernetes {
-            label 'node-carbon'
+            label 'node-carbon-kaniko'
         }
     }
     environment {
         REPOSITORY = 'molgenis/molgenis-frontend'
+        LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
     }
     stages {
         stage('Prepare') {
@@ -42,6 +43,23 @@ pipeline {
                     container('node') {
                         sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
                     }
+                }
+            }
+        }
+        stage('Push to registries [ PR ]') {
+            when {
+                changeRequest()
+            }
+            environment {
+                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                DOCKER_CONFIG="/root/.docker"
+            }
+            steps {
+                container (name: 'kaniko', shell: '/busybox/sh') {
+                    sh "#!/busybox/sh\nmkdir -p /root/.docker/"
+                    sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > /root/.docker/config.json"
+                    sh "#!/busybox/sh\nrm -rf docker/dist&&mkdir docker/dist&&cp -rf packages/*/dist/* docker/dist"
+                    sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker --destination ${LOCAL_REPOSITORY}:${TAG}"
                 }
             }
         }
