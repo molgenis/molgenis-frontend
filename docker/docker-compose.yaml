@@ -4,8 +4,12 @@ services:
     image: ${FRONTEND_REPOSITORY}:${FRONTEND_TAG}
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./wait-for-it.sh:/bin/wait-for-it.sh:ro
+    depends_on:
+      - molgenis
     ports:
       - 80:80
+    command: ["/bin/wait-for-it.sh", "molgenis:8080", "--", "nginx", "-g", "daemon off;"]
   molgenis:
     image: ${MOLGENIS_REPOSITORY}:${MOLGENIS_TAG}
     environment:
