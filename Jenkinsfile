@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            label 'node-carbon-kaniko'
+            label 'node-carbon'
         }
     }
     environment {
