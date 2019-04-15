@@ -24,4 +24,7 @@ describe('components/CodeEditor.vue', () => {
     expect(wrapper.emitted().valueChange[0][0].parameters).toEqual(['x', 'y', 'age'])
   })
 
+  it('can extract parameters via findParameters', () => {
+    expect(wrapper.vm.findParameters('test ${x}${y} $age{} ${} ${age}')).toEqual(['x', 'y', 'age'])
+  })
 })
