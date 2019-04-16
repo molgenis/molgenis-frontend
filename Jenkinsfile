@@ -7,7 +7,7 @@ pipeline {
     environment {
         REPOSITORY = 'molgenis/molgenis-frontend'
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
-        CHART_VERSION = '0.0.1'
+        CHART_VERSION = '0.1.0'
     }
     stages {
         stage('Prepare') {
@@ -68,6 +68,7 @@ pipeline {
         stage('Deploy preview [ PR ]') {
             environment {
                 TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                NAME = "preview-frontend-${TAG.toLowerCase()}"
             }
             steps {
                 container('vault') {
@@ -77,22 +78,21 @@ pipeline {
                 container('rancher') {
                     sh "rancher context switch dev-molgenis"
                     sh "rancher apps install " +
-                        "-n frontend-${TAG.toLowerCase()} " +
                         "molgenis-helm-molgenis-frontend " +
-                        "frontend-${TAG.toLowerCase()} " +
+                        "${NAME} " +
                         "--version ${CHART_VERSION} " +
                         "--no-prompt " +
-                        "--set ingress.hosts[0].name=frontend-${TAG.toLowerCase()}.dev.molgenis.org " +
                         "--set environment=dev " +
                         "--set image.tag=${TAG} " +
                         "--set image.repository=${LOCAL_REGISTRY} " +
+                        "--set backend.url=https://latest.test.molgenis.org " +
                         "--set image.pullPolicy=Always"
                 }
             }
             post {
                 success {
-                    hubotSend(message: 'PR Preview available on https://frontend-${TAG.toLowerCase()}.molgenis.org', status:'INFO', site: 'slack-pr-app-team')
-                    githubPRComment(comment: 'PR Preview available on https://frontend-${TAG.toLowerCase()}.molgenis.org')
+                    hubotSend(message: "PR Preview available on https://${NAME}.dev.molgenis.org", status:'INFO', site: 'slack-pr-app-team')
+                    // githubPRComment(comment: githubPRMessage("PR Preview available on https://${NAME}.dev.molgenis.org"))
                 }
             }
         }
