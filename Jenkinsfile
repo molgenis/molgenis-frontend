@@ -7,6 +7,7 @@ pipeline {
     environment {
         REPOSITORY = 'molgenis/molgenis-frontend'
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
+        CHART_VERSION = '0.1.0'
     }
     stages {
         stage('Prepare') {
@@ -59,7 +60,39 @@ pipeline {
                     sh "#!/busybox/sh\nmkdir -p /root/.docker/"
                     sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > /root/.docker/config.json"
                     sh "#!/busybox/sh\nrm -rf docker/dist&&mkdir docker/dist&&cp -rf packages/*/dist/* docker/dist"
+                    sh "#!/busybox/sh\nrm -rf docker/dist/index.htm*"
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker --destination ${LOCAL_REPOSITORY}:${TAG}"
+                }
+            }
+        }
+        stage('Deploy preview [ PR ]') {
+            environment {
+                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                NAME = "preview-frontend-${TAG.toLowerCase()}"
+            }
+            steps {
+                container('vault') {
+                    sh "mkdir /home/jenkins/.rancher"
+                    sh 'vault read -field=value secret/ops/jenkins/rancher/cli2.json > /home/jenkins/.rancher/cli2.json'
+                }
+                container('rancher') {
+                    sh "rancher context switch dev-molgenis"
+                    sh "rancher apps install " +
+                        "molgenis-helm-molgenis-frontend " +
+                        "${NAME} " +
+                        "--version ${CHART_VERSION} " +
+                        "--no-prompt " +
+                        "--set environment=dev " +
+                        "--set image.tag=${TAG} " +
+                        "--set image.repository=${LOCAL_REGISTRY} " +
+                        "--set backend.url=https://latest.test.molgenis.org " +
+                        "--set image.pullPolicy=Always"
+                }
+            }
+            post {
+                success {
+                    hubotSend(message: "PR Preview available on https://${NAME}.dev.molgenis.org", status:'INFO', site: 'slack-pr-app-team')
+                    // githubPRComment(comment: githubPRMessage("PR Preview available on https://${NAME}.dev.molgenis.org"))
                 }
             }
         }
