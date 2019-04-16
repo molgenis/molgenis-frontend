@@ -7,6 +7,7 @@ pipeline {
     environment {
         REPOSITORY = 'molgenis/molgenis-frontend'
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
+        CHART_VERSION = '0.0.1'
     }
     stages {
         stage('Prepare') {
@@ -61,6 +62,37 @@ pipeline {
                     sh "#!/busybox/sh\nrm -rf docker/dist&&mkdir docker/dist&&cp -rf packages/*/dist/* docker/dist"
                     sh "#!/busybox/sh\nrm -rf docker/dist/index.htm*"
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker --destination ${LOCAL_REPOSITORY}:${TAG}"
+                }
+            }
+        }
+        stage('Deploy preview [ PR ]') {
+            environment {
+                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+            }
+            steps {
+                container('vault') {
+                    sh "mkdir /home/jenkins/.rancher"
+                    sh 'vault read -field=value secret/ops/jenkins/rancher/cli2.json > /home/jenkins/.rancher/cli2.json'
+                }
+                container('rancher') {
+                    sh "rancher context switch dev-molgenis"
+                    sh "rancher apps install " +
+                        "-n frontend-${TAG.toLowerCase()} " +
+                        "molgenis-helm-molgenis-frontend " +
+                        "frontend-${TAG.toLowerCase()} " +
+                        "--version ${CHART_VERSION} " +
+                        "--no-prompt " +
+                        "--set ingress.hosts[0].name=frontend-${TAG.toLowerCase()}.dev.molgenis.org " +
+                        "--set environment=dev " +
+                        "--set image.tag=${TAG} " +
+                        "--set image.repository=${LOCAL_REGISTRY} " +
+                        "--set image.pullPolicy=Always"
+                }
+            }
+            post {
+                success {
+                    hubotSend(message: 'PR Preview available on https://frontend-${TAG.toLowerCase()}.molgenis.org', status:'INFO', site: 'slack-pr-app-team')
+                    githubPRComment(comment: 'PR Preview available on https://frontend-${TAG.toLowerCase()}.molgenis.org')
                 }
             }
         }
