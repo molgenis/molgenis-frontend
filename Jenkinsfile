@@ -59,6 +59,7 @@ pipeline {
                     sh "#!/busybox/sh\nmkdir -p /root/.docker/"
                     sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > /root/.docker/config.json"
                     sh "#!/busybox/sh\nrm -rf docker/dist&&mkdir docker/dist&&cp -rf packages/*/dist/* docker/dist"
+                    sh "#!/busybox/sh\nrm -rf docker/dist/index.htm*"
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker --destination ${LOCAL_REPOSITORY}:${TAG}"
                 }
             }
