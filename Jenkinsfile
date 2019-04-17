@@ -7,7 +7,6 @@ pipeline {
     environment {
         REPOSITORY = 'molgenis/molgenis-frontend'
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
-        CHART_VERSION = '0.1.0'
     }
     stages {
         stage('Prepare') {
@@ -81,9 +80,8 @@ pipeline {
                 container('rancher') {
                     sh "rancher context switch dev-molgenis"
                     sh "rancher apps install " +
-                        "molgenis-helm-molgenis-frontend " +
+                        "molgenis-frontend " +
                         "${NAME} " +
-                        "--version ${CHART_VERSION} " +
                         "--no-prompt " +
                         "--set environment=dev " +
                         "--set image.tag=${TAG} " +
