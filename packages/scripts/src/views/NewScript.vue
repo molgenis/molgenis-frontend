@@ -18,7 +18,7 @@
         </b-form-select>
       </b-col>
     </b-row>
-    <CodeEditor @valueChange="onValueChange" :scriptType="form.type"/>
+    <CodeEditor @valueChange="onValueChange" />
     <b-row class="mb-3">
       <b-col sm="4" class="border-right">
         <label>{{ 'scripts-result-file-extension' | i18n }}</label>
