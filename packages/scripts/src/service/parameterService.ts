@@ -9,7 +9,7 @@ const extractCandidates = (codeString: string, regEx: RegExp) => {
   let result
   let list = []
   while ((result = regEx.exec(codeString)) !== null) {
-    list.push(result[1]) // add the capture group
+    list.push(result[1] || result[2]) // add the capture group
   }
   return list
 }
