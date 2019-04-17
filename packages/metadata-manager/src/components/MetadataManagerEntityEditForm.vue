@@ -14,12 +14,14 @@
         </div>
 
         <div class="form-group row">
-          <label class="col-4 col-form-label text-muted">{{ 'entity-edit-form-abstract-label' | i18n
-            }}</label>
-          <div class="col checkbox-column">
-            <input v-model="abstract0" class="form-control" type="checkbox">
+            <div class="col-4 text-muted"><label for="abstractCheckbox">{{ 'entity-edit-form-abstract-label' | i18n
+            }}</label></div>
+            <div class="col">
+              <div class="form-check">
+                <input v-model="abstract0" class="form-check-input position-static" type="checkbox" id="abstractCheckbox">
+              </div>
+            </div>
           </div>
-        </div>
 
         <div class="form-group-row float-right">
           <save-button :onClick="saveEntityType" :disabled="!isEntityTypeEdited">
@@ -143,10 +145,6 @@
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
-
-  .checkbox-column {
-    padding-top: 11px
-  }
 
   /*screen-md border on inner column when columns aligned next to each other*/
   @media (min-width: 768px) {
