@@ -1,5 +1,5 @@
 const freeMarkerRegEx = /\${([a-zA-Z0-9-#]+)}/g // Match foo from ${foo}
-const magmaRegEx = /\$\(\"([a-zA-Z0-9-#]+)\"\)|$\(\'([a-zA-Z0-9-#]+)\'\)/g // Match foo from $('foo') or $("foo")
+const magmaRegEx = /\$\(\"([a-zA-Z0-9-#]+)\"\)|\$\(\'([a-zA-Z0-9-#]+)\'\)/g // Match foo from $('foo') or $("foo")
 const validFirstChar = /[a-zA-Z]/ // only chars are allowed at the start 
 
 const isNotReservedWord = (word: string) => !["login", "logout", "csv", "base", "exist", "meta", "_idValue"].includes(word)
