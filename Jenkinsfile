@@ -6,6 +6,8 @@ pipeline {
     }
     environment {
         REPOSITORY = 'molgenis/molgenis-frontend'
+        LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
+        CHART_VERSION = '0.1.0'
     }
     stages {
         stage('Prepare') {
@@ -18,7 +20,7 @@ pipeline {
                         env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
                         env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-frontend secret/ops/token/codecov', returnStdout: true)
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
-                        sh "echo '_auth=${NEXUS_AUTH}' > ~/.npmrc"
+                        sh "set +x; echo '_auth=${NEXUS_AUTH}' > ~/.npmrc"
                     }
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
@@ -41,6 +43,62 @@ pipeline {
                 always {
                     container('node') {
                         sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                    }
+                }
+            }
+        }
+        stage('Push to registries [ PR ]') {
+            when {
+                changeRequest()
+            }
+            environment {
+                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                DOCKER_CONFIG="/root/.docker"
+            }
+            steps {
+                container (name: 'kaniko', shell: '/busybox/sh') {
+                    sh "#!/busybox/sh\nmkdir -p /root/.docker/"
+                    sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > /root/.docker/config.json"
+                    sh "#!/busybox/sh\nrm -rf docker/dist&&mkdir docker/dist&&cp -rf packages/*/dist/* docker/dist"
+                    sh "#!/busybox/sh\nrm -rf docker/dist/index.htm*"
+                    sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker --destination ${LOCAL_REPOSITORY}:${TAG}"
+                }
+            }
+        }
+        stage('Deploy preview [ PR ]') {
+            when {
+                changeRequest()
+            }
+            environment {
+                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                NAME = "preview-frontend-${TAG.toLowerCase()}"
+            }
+            steps {
+                container('vault') {
+                    sh "mkdir /home/jenkins/.rancher"
+                    sh 'vault read -field=value secret/ops/jenkins/rancher/cli2.json > /home/jenkins/.rancher/cli2.json'
+                }
+                container('rancher') {
+                    sh "rancher context switch dev-molgenis"
+                    sh "rancher apps install " +
+                        "molgenis-helm-molgenis-frontend " +
+                        "${NAME} " +
+                        "--version ${CHART_VERSION} " +
+                        "--no-prompt " +
+                        "--set environment=dev " +
+                        "--set image.tag=${TAG} " +
+                        "--set image.repository=${LOCAL_REGISTRY} " +
+                        "--set backend.url=https://latest.test.molgenis.org " +
+                        "--set image.pullPolicy=Always"
+                }
+            }
+            post {
+                success {
+                    hubotSend(message: "PR Preview available on https://${NAME}.dev.molgenis.org", status:'INFO', site: 'slack-pr-app-team')
+                    container('node') {
+                        sh "set +x; curl -X POST -H 'Content-Type: application/json' -H 'Authorization: token ${GITHUB_TOKEN}' " +
+                            "--data '{\"body\":\":star: PR Preview available on https://${NAME}.dev.molgenis.org\"}' " +
+                            "https://api.github.com/repos/molgenis/molgenis-frontend/issues/${CHANGE_ID}/comments"
                     }
                 }
             }

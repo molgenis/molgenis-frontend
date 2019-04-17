@@ -1,6 +1,7 @@
 import {shallow} from 'vue-test-utils'
 import DataRowEdit from '@/components/DataRowEdit'
 import * as repository from '@/repository/dataRowRepository'
+import { EntityToFormMapper as mapper } from '@molgenis/molgenis-ui-form'
 import td from 'testdouble'
 
 describe('DataRowEdit component', () => {
@@ -85,6 +86,9 @@ describe('DataRowEdit component', () => {
         propsData: {
           dataTableId: tableId,
           dataRowId: rowId
+        },
+        mocks: {
+          $t: () => {}
         }
       })
 
@@ -167,69 +171,41 @@ describe('DataRowEdit component', () => {
         type: 'danger'
       })
     })
-
-    it('initializeForm should setup the form and set showForm to true', () => {
-      const mappedData = {
-        formFields: ['abc'],
-        formData: {foo: 'bar'}
-      }
-      wrapper.vm.initializeForm(mappedData)
-      expect(wrapper.vm.formFields).to.deep.equal(['abc'])
-      expect(wrapper.vm.formData).to.deep.equal({foo: 'bar'})
-      expect(wrapper.vm.showForm).to.equal(true)
-    })
   })
 
   describe('created', () => {
-    let mappedCreateData = {
-      formFields: ['a'],
-      formData: {a: 'b'},
-      formLabel: 'form label'
-    }
-    let mappedUpdateData = {
-      formFields: ['a'],
-      formData: {b: 'c'},
-      formLabel: 'form label'
+    let mappedData = {
+      meta: {
+        label: 'form label'
+      },
+      formFields: ['a']
     }
 
     beforeEach(function () {
       td.reset()
 
       const fetch = td.function('repository.fetch')
-      td.when(fetch(tableId, rowId)).thenResolve(mappedUpdateData)
-      td.when(fetch(tableId, null)).thenResolve(mappedCreateData)
+      td.when(fetch(tableId, null)).thenResolve(mappedData)
       td.replace(repository, 'fetch', fetch)
+
+      const generateForm = td.function('mapper.generateForm')
+      td.when(generateForm(td.matchers.anything(), td.matchers.anything(), td.matchers.anything())).thenReturn(mappedData)
+      td.replace(mapper, 'generateForm', generateForm)
     })
 
-    it('when rowId is not set fetch the data structure and initialize the form', (done) => {
+    it('should fetch the data structure and initialize the form', (done) => {
       const wrapper = shallow(DataRowEdit, {
         propsData: {
           dataTableId: tableId
+        },
+        mocks: {
+          $t: () => {}
         }
       })
 
       wrapper.vm.$nextTick(() => { // resolve then
         wrapper.vm.$nextTick(() => { // update the model
           expect(wrapper.vm.formFields).to.deep.equal(['a'])
-          expect(wrapper.vm.formData).to.deep.equal({a: 'b'})
-          expect(wrapper.vm.showForm).to.equal(true)
-          done()
-        })
-      })
-    })
-
-    it('should when rowId is set fetch the data to be edited, and initialize the form', (done) => {
-      const wrapper = shallow(DataRowEdit, {
-        propsData: {
-          dataTableId: tableId,
-          dataRowId: rowId
-        }
-      })
-
-      wrapper.vm.$nextTick(() => { // resolve then
-        wrapper.vm.$nextTick(() => { // update the model
-          expect(wrapper.vm.formFields).to.deep.equal(['a'])
-          expect(wrapper.vm.formData).to.deep.equal({b: 'c'})
           expect(wrapper.vm.showForm).to.equal(true)
           done()
         })

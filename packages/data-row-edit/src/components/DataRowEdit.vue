@@ -69,7 +69,7 @@
 </template>
 
 <script>
-  import { FormComponent } from '@molgenis/molgenis-ui-form'
+  import { FormComponent, EntityToFormMapper as mapper } from '@molgenis/molgenis-ui-form'
   import '../../node_modules/@molgenis/molgenis-ui-form/dist/static/css/molgenis-ui-form.css'
   import * as repository from '@/repository/dataRowRepository'
 
@@ -131,16 +131,25 @@
         }
         this.showForm = true
         this.isSaving = false
-      },
-      initializeForm (mappedData) {
-        this.formFields = mappedData.formFields
-        this.formData = mappedData.formData
-        this.dataTableLabel = mappedData.formLabel
-        this.showForm = true
       }
     },
     created: function () {
-      repository.fetch(this.dataTableId, this.dataRowId).then(this.initializeForm, this.handleError)
+      const mapperOptions = {
+        showNonVisibleAttributes: true,
+        mapperMode: this.dataRowId ? 'UPDATE' : 'CREATE',
+        booleanLabels: {
+          trueLabel: this.$t('data-row-edit-boolean-true'),
+          falseLabel: this.$t('data-row-edit-boolean-false'),
+          nillLabel: this.$t('data-row-edit-boolean-null')
+        }
+      }
+      repository.fetch(this.dataTableId, this.dataRowId).then(resp => {
+        this.dataTableLabel = resp.meta.label
+        const mappedData = mapper.generateForm(resp.meta, resp.rowData, mapperOptions)
+        this.formFields = mappedData.formFields
+        this.formData = mappedData.formData
+        this.showForm = true
+      }, this.handleError)
     },
     components: {
       FormComponent
