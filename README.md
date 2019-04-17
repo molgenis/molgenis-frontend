@@ -162,7 +162,7 @@ const localizedFormMessages = require('./dev-responses/localized-ui-form-message
 This before block is used by the **store** which instead of accessing the real end-points. This is also used by the end-to-end tests to test the ui.
  
 #### Proxying MOLGENIS backend
-We now have two configurations for the VUE packages. One based on [vue-cli2](https://) and one based on [vue-cli3](https://).
+We now have two configurations for the VUE packages. One based on [vue-cli2](https://cli.vuejs.org/guide/creating-a-project.html#using-the-gui) and one based on [vue-cli3](https://cli.vuejs.org/guide/creating-a-project.html#vue-create).
 
 ##### cli2
 You need to configure the MOLGENIS backend in the index.js of the vue configuration. It is usually placed here: ```#package#/config/index.js```
@@ -197,7 +197,7 @@ You need to add the paths that are used by the package. In this case:
 - '/plugin'
 ```
 
-The idea is that we lean as much on public API's as possible. That we do not need lot's of specific webservices for plugins.
+The idea is that we lean as much on public API's as possible. Then we do not need lot's of specific webservices for plugins.
 
 > note: You need to disable the ```before```-block in the ```#package#/config/index.js```. This way you are making sure that 
 the package is not using the mock responses.
