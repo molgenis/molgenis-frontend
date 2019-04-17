@@ -13,7 +13,7 @@ describe('service/parameterService', () => {
         })
 
         it('should find params with single quotes in when type is JavaScript (Magma)', () => {
-            expect(findParameters('$("blah-di-blah")', 'JavaScript (Magma)')).toEqual(['blah-di-blah'])
+            expect(findParameters("$('blah-di-blah')", 'JavaScript (Magma)')).toEqual(['blah-di-blah'])
         })
     })
 
