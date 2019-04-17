@@ -29,9 +29,9 @@ The following will be addressed:
 
 - [Commits](#commits)
 - [Usage of yarn](#usage-of-yarn)
-- [Testing packages](#testing-packages)
-- [Update existing stable packages](#update-existing-stable-packages)
 - [Create new stable packages](#create-new-stable-packages)
+- [Update existing stable packages](#update-existing-stable-packages)
+- [Testing packages](#testing-packages)
 
 ### Commits
 We use independent versioning for the packages. This makes it hard to interactively specify at release
@@ -91,15 +91,15 @@ When running your client code in development on port 8081, it will help to run t
 The vue-cli comes with a proxy table that will redirect any REST calls to localhost:8080.
 
 ### Testing packages
-When you want to test a package there are actually three ways to do this. 
+There are three ways to test a package:
 
 1. [Make a standalone setup and mock the API responses](#make-a-standalone-setup)
 2. [Proxy the MOLGENIS backend in front of the package](#proxying-molgenis-backend)
 3. [Link the package in the MOLGENIS backend for full integration](#using-yarn-link-for-live-editing) 
 
-> **note: the hierarchy of the ways to test the packages is important.**
+> **note: the ordering of the ways to test the packages is important.**
 >
->The first and second test manners should be sufficient to actually be confident that you application works. In the preview mode, 
+>The first and second test manners should be sufficient to actually be confident that your application works. In the preview mode, 
 where you already integrated the artifact in MOLGENIS you also test the integration. 
 
 #### Make a standalone setup
