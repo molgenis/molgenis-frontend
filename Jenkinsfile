@@ -20,7 +20,7 @@ pipeline {
                         env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
                         env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-frontend secret/ops/token/codecov', returnStdout: true)
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
-                        sh "echo '_auth=${NEXUS_AUTH}' > ~/.npmrc"
+                        sh "set +x; echo '_auth=${NEXUS_AUTH}' > ~/.npmrc"
                     }
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
@@ -66,6 +66,9 @@ pipeline {
             }
         }
         stage('Deploy preview [ PR ]') {
+            when {
+                changeRequest()
+            }
             environment {
                 TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
                 NAME = "preview-frontend-${TAG.toLowerCase()}"
@@ -92,7 +95,11 @@ pipeline {
             post {
                 success {
                     hubotSend(message: "PR Preview available on https://${NAME}.dev.molgenis.org", status:'INFO', site: 'slack-pr-app-team')
-                    // githubPRComment(comment: githubPRMessage("PR Preview available on https://${NAME}.dev.molgenis.org"))
+                    container('node') {
+                        sh "set +x; curl -X POST -H 'Content-Type: application/json' -H 'Authorization: token ${GITHUB_TOKEN}' " +
+                            "--data '{\"body\":\":star: PR Preview available on https://${NAME}.dev.molgenis.org\"}' " +
+                            "https://api.github.com/repos/molgenis/molgenis-frontend/issues/${CHANGE_ID}/comments"
+                    }
                 }
             }
         }
