@@ -303,7 +303,7 @@ If you have the vue-cli installed you can use the following steps to quickly ins
 
 Using the ```preset.json``` is recommended. If you need specific tooling you can also choose manual.
 
->note: Make sure you update the project-name to @molgenis/#new-app# for publishing purposes
+>note: Make sure you update the project-name to @molgenis/#new-app# for publishing purposes in the ```package.json``` *name-key* of the package you created.
 
 ## Integrate with MOLGENIS
 There is a workflow you have to follow to implement new frontend code in [molgenis/molgenis/molgenis-frontend](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/).
