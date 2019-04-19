@@ -108,6 +108,7 @@
         this.alert = null
       },
       handleError (message) {
+        this.isSaving = false
         this.alert = {
           message: typeof message !== 'string' ? 'An error has occurred.' : message,
           type: 'danger'
