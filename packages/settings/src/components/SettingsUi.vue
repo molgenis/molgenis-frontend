@@ -28,8 +28,7 @@
             id="save-btn-top"
             class="btn btn-primary"
             type="submit"
-            @click.prevent="onSubmit"
-            :disabled="formState.$pristine || formState.$invalid">
+            @click.prevent="onSubmit">
             Save changes
           </button>
 
@@ -109,6 +108,7 @@
         this.alert = null
       },
       handleError (message) {
+        this.isSaving = false
         this.alert = {
           message: typeof message !== 'string' ? 'An error has occurred.' : message,
           type: 'danger'
