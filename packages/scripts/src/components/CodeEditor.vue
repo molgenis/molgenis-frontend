@@ -52,26 +52,20 @@ export default {
       codeEditorData: {
         content: ''
       },
-      codeEditorState: {},
-      parameters: []
+      codeEditorState: {}
     }
   },
-  watch: {
-    scriptType: function (val) {
-      this.updateParams(this.codeEditorData.content, this.scriptType)
+  computed: {
+    parameters: function () {
+      let list = findParameters(this.codeEditorData.content, this.scriptType)
+      list = list.filter((value, index, self) => self.indexOf(value) === index) // select only unique values
+      this.$emit('valueChange', { 'parameters': list, 'content': this.codeEditorData.content })
+      return list
     }
   },
   methods: {
     onValueChanged (event) {
       this.codeEditorData = event
-      const code = event.content
-      this.updateParams(code, this.scriptType)
-    },
-    updateParams (code, type) {
-      let list = findParameters(code, this.scriptType)
-      list = list.filter((value, index, self) => self.indexOf(value) === index) // select only unique values
-      this.$emit('valueChange', { 'parameters': list, 'content': code })
-      this.parameters = list
     }
   },
   created () {
