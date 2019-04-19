@@ -23,5 +23,4 @@ describe('components/CodeEditor.vue', () => {
     expect(wrapper.emitted().valueChange[0][0].content).toEqual(content)
     expect(wrapper.emitted().valueChange[0][0].parameters).toEqual(['x', 'y', 'age'])
   })
-
 })
