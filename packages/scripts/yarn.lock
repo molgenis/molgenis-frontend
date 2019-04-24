@@ -736,10 +736,10 @@
     i18next-xhr-backend "^1.4.1"
     moment "^2.18.1"
 
-"@molgenis/molgenis-ui-form@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-3.0.0.tgz#98917758b8fb99e60c93214245fc80b47fc83696"
-  integrity sha512-eulq59hQYqkzRNES1kmEJGkLF8QtQeB4ylCZKyu6NIeUisB/IgZlRQOmf0MEUjVMKIW1x5Udgre+56nMzSkBow==
+"@molgenis/molgenis-ui-form@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-3.0.1.tgz#515539c9018ac71101a41a8f7e295f3ef2d89aca"
+  integrity sha512-vSzn8mEWL61OPiAlzD4A/TFPj3jBMcgesAZBf3UYHLAG10a5g56PnuWKSq3148oTgSegq9kPAfWRdL5/HAUFAw==
   dependencies:
     "@molgenis/molgenis-api-client" "^2.1.2"
     "@molgenis/rsql" "^0.1.1"
@@ -748,12 +748,12 @@
     vue-code "^1.2.3"
     vue-flatpickr-component "^8.0.0"
     vue-form "^4.10.1"
-    vue-select "^2.6.3"
+    vue-select "^2.6.4"
 
 "@molgenis/rsql@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@molgenis/rsql/-/rsql-0.1.1.tgz#de234a5f8de71ab1405cce48bb5c5c76c4525ca4"
-  integrity sha512-2OtVDzXSTws76RR9zUpYRDPw6SLuG7KfeaFpTwrayPhGlXfJE2D/gDR1TktCuaNWFbq90oLb3RTlxAoB5NgmAg==
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@molgenis/rsql/-/rsql-0.1.2.tgz#1e0c7658d6e6e558995418a35766880e5ef41fa3"
+  integrity sha512-VoRSD4wVUPemYgT+/2pR2ZWjQxxJW+F6UX+vvcQiwo+IOC6AjjfhYUPXtAbmg8JeooGo3KOFXWY6HRjxDcnixg==
   dependencies:
     mdurl "^1.0.1"
 
@@ -2589,9 +2589,9 @@ code-point-at@^1.0.0:
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
 codemirror@5.x:
-  version "5.45.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.45.0.tgz#db5ebbb3bf44028c684053f3954d011efcec27ad"
-  integrity sha512-c19j644usCE8gQaXa0jqn2B/HN9MnB2u6qPIrrhrMkB+QAP42y8G4QnTwuwbVSoUS1jEl7JU9HZMGhCDL0nsAw==
+  version "5.46.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.46.0.tgz#be3591572f88911e0105a007c324856a9ece0fb7"
+  integrity sha512-3QpMge0vg4QEhHW3hBAtCipJEWjTJrqLLXdIaWptJOblf1vHFeXLNtFhPai/uX2lnFCehWNk4yOdaMR853Z02w==
 
 collection-visit@^1.0.0:
   version "1.0.0"
@@ -10388,10 +10388,10 @@ vue-router@^3.0.2:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.2.tgz#dedc67afe6c4e2bc25682c8b1c2a8c0d7c7e56be"
   integrity sha512-opKtsxjp9eOcFWdp6xLQPLmRGgfM932Tl56U9chYTnoWqKxQ8M20N7AkdEbM5beUh6wICoFGYugAX9vQjyJLFg==
 
-vue-select@^2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-2.6.3.tgz#c123630dbcda28225dd7697fc2f4f34333a5ae58"
-  integrity sha512-0zZ0/LEe9mNcDVKPiGSDun2qJ0e51ts5Z9f17XyL6bPMzw6rxNYPpx+fcSZsbfNYxwXuK3q4uFkucybw/EeQcA==
+vue-select@^2.6.4:
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-2.6.4.tgz#cb82ea3417a4b0f68101f53528ba1c0b04de5308"
+  integrity sha512-OZIzzGlYwro2QcgAmcn2c4LQDPrYIT3+iaf4WciKPIeFFjgzRti6FC5Qjr2XEPqd85wqtsifuYyxsyb/JoJ4CQ==
 
 vue-style-loader@^4.1.0:
   version "4.1.2"
