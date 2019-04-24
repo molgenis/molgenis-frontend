@@ -13,10 +13,12 @@ The following will be addressed:
 
 ## Environment
 When developing client code, you will need to following tools:
- - Node v8.9.0 (LTS version) and included NPM version
+ - Node v8.11.3 (LTS version) and included NPM version
  - Yarn v1.10.3 or greater
 
-The project is built using [lerna](https://lernajs.io/) to manage the monorepo and [yarn](https://yarnpkg.com/) as the npm client.
+The project is built using [lerna](https://lerna.js.org/) to manage the monorepo and [yarn](https://yarnpkg.com/) as the npm client.
+
+> note: It can be hard to migrate from old to new versions. Please check the [troubleshooting guide](TROUBLESHOOTING.md) if you have trouble setting up the environment.
 
 ## Developing
 To get started run
