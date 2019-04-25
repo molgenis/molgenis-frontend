@@ -144,7 +144,7 @@ const actions = {
   },
 
   'checkRootPackageExists' ({commit, dispatch}: { commit: Function, dispatch: Function }, packageName) {
-    const url = '/api/v2/sys_md_Package?&num=1&q=label==\'' + encodeURIComponent(packageName) + '\';parent==\'\''
+    const url = '/api/v2/sys_md_Package?&num=1&q=id==\'' + encodeURIComponent(packageName) + '\''
 
     return new Promise((resolve, reject) => {
       api.get(url).then((response) => {
