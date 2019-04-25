@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/core-ui@0.2.2...@molgenis/core-ui@0.2.3) (2019-04-25)
+
+
+### Bug Fixes
+
+* **core-ui:** notify completion when canceling job becomes canceled ([517ac81](https://github.com/molgenis/molgenis-frontend/commit/517ac81))
+* **core-ui:** show canceling jobs with the running jobs ([ab13b01](https://github.com/molgenis/molgenis-frontend/commit/ab13b01)), closes [#35](https://github.com/molgenis/molgenis-frontend/issues/35)
+* **core-ui:** show Job finished popup when job goes from cancelling to canceled ([9c5fba1](https://github.com/molgenis/molgenis-frontend/commit/9c5fba1))
+* **core-ui:** show shield for canceling jobs ([832298b](https://github.com/molgenis/molgenis-frontend/commit/832298b))
+
+
+
+
+
 ## [0.2.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/core-ui@0.2.1...@molgenis/core-ui@0.2.2) (2019-04-01)
 
 **Note:** Version bump only for package @molgenis/core-ui
