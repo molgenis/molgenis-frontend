@@ -1,5 +1,6 @@
 {
   "name": "molgenis-frontend",
+  "license": "LGPL-3.0",
   "private": true,
   "devDependencies": {
     "commitizen": "^3.0.6",
