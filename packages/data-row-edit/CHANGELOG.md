@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/data-row-edit@1.0.1...@molgenis/data-row-edit@2.0.0) (2019-05-02)
+
+
+### Bug Fixes
+
+* **data-row-edit:** Fix for [#8470](https://github.com/molgenis/molgenis-frontend/issues/8470) and [#8464](https://github.com/molgenis/molgenis-frontend/issues/8464) ([612ceaf](https://github.com/molgenis/molgenis-frontend/commit/612ceaf))
+
+
+### BREAKING CHANGES
+
+* **data-row-edit:** Erroneous validation expressions in the visibleExpression, nullableExpression and
+validationExpression will not stop execution of the scripts but instead fallback to a default value
+(see documentation) and continue with a warning.
+
+
+
+
+
 ## [1.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/data-row-edit@1.0.0...@molgenis/data-row-edit@1.0.1) (2019-04-25)
 
 
