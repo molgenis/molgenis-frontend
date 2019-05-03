@@ -3,7 +3,7 @@ import type {CreateGroupCommand, GroupMember} from '../flow.type'
 import api from '@molgenis/molgenis-api-client'
 import asyncUtilService from '../service/asyncUtilService'
 
-const SECURITY_API_ROUTE = '/api/identities/v1'
+const SECURITY_API_ROUTE = '/api/identities'
 const SECURITY_API_VERSION = ''
 const GROUP_ENDPOINT = SECURITY_API_ROUTE + SECURITY_API_VERSION + '/group'
 const TEMP_USER_ENDPOINT = SECURITY_API_ROUTE + SECURITY_API_VERSION + '/user'
