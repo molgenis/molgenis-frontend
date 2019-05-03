@@ -60,17 +60,36 @@ into a single conventional commit.
 ### Usage of yarn
 The following three commands can be used to install, develop and test client code:
 
+#### cli2
+
+```bash
+> yarn install
+> yarn dev
+> yarn unit
+> yarn e2e
+// (to run unit and e2e together)
+> yarn test 
+> yarn build
+```
+#### cli3
+
 ```bash
 > yarn install
 > yarn serve
-> yarn test
+> yarn test:unit
+> yarn test:e2e
+> yarn build
 ```
+
+#### Global commands
 
 Third party dependencies can be added: 
 
 ```bash
 > yarn add <library_name>
 ```
+
+
 
 Third party development dependencies can be added: 
 
@@ -161,51 +180,74 @@ Besides this you need to add mock responses to supply you **store**. You can add
 ```javascript
 ...
 const listOfItems = require('./dev-responses/list.js')
-const localizedMessages = require('./dev-responses/localized-messages.js')
-const localizedFormMessages = require('./dev-responses/localized-ui-form-messages')
 ...
   before (app) {
-      app.get('/menu/plugins/#package#/list', function (req, res) {
+      app.get('#apipath#', function (req, res) {
         res.json(listOfItems)
-      })
-      app.get('/api/v2/i18n/#package#/en', function (req, res) {
-        res.json(localizedMessages)
-      })
-      app.get('/api/v2/i18n/ui-form/en', function (req, res) {
-        res.json(localizedFormMessages)
       })
 ...
 ```
 
-This before block is used by the **store** which instead of accessing the real end-points. This is also used by the end-to-end tests to test the ui.
+This before block is used by the **store** instead of accessing the real end-points. This is also used by the end-to-end tests to test the ui.
+
+> note: You need to use yarn to install, test, serve and develop the package. Check: [Usage of yarn](#usage-of-yarn) (cli2).
 
 ##### cli3
 When you are creating a standalone setup in cli3 you need to add an ```index.html``` file (is generated automatically).
 Besides this you need to add mock responses to supply you **store**. You can add them in ```vue.config.js```.
+
+A template of ```vue.config.js``` can be found here:
+
+```javascript
+// vue.config.js
+module.exports = {
+  chainWebpack: config => {
+    config.externals({
+      '#external library key#': '#library name#'
+    })
+  },
+  devServer: {
+    // In CI mode, Safari cannot contact "localhost", so as a workaround, run the dev server using the jenkins agent pod dns instead.
+    host: process.env.JENKINS_AGENT_NAME || 'localhost',
+    // Do not proxy in production to allow for mocking api response in e2e test ( e2e tests are run in production mode)
+    proxy: process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:8080',
+    before: function (app, server) {
+      app.get('#api path#', function (req, res) {
+        res.json({
+          href: '#href api#',
+          items: [
+            {
+              _href: '#item href#',
+              code: '#item code#',
+            },
+          ]
+        })
+      })
+    }
+  }
+}
+```
+
  
 *Example:* 
  
 ```javascript
 ...
 const listOfItems = require('./dev-responses/list.js')
-const localizedMessages = require('./dev-responses/localized-messages.js')
-const localizedFormMessages = require('./dev-responses/localized-ui-form-messages')
 ...
   before: function (app, server) {
-      app.get('/menu/plugins/#package#/list', function (req, res) {
+      app.get('#api path#', function (req, res) {
         res.json(listOfItems)
       })      
-      app.get('/api/v2/i18n/#package#/en', function (req, res) {
-        res.json(localizedMessages)
-      })
-      app.get('/api/v2/i18n/ui-form/en', function (req, res) {
-        res.json(localizedFormMessages)
-      })           
 ...
 ``` 
 
-This before block is used by the **store** which instead of accessing the real end-points. This is also used by the end-to-end tests to test the ui.
- 
+This before block is used by the **store** instead of accessing the real end-points. This is also used by the end-to-end tests to test the ui.
+
+> note: You need to use yarn to install, test, serve and develop the package. Check: [Usage of yarn](#usage-of-yarn) (cli3). 
+
+
+
 #### Proxying MOLGENIS backend
 We now have two configurations for the VUE packages. One based on [vue-cli2](https://cli.vuejs.org/guide/creating-a-project.html#using-the-gui) and one based on [vue-cli3](https://cli.vuejs.org/guide/creating-a-project.html#vue-create).
 
