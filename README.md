@@ -92,6 +92,49 @@ Commit this file to your Git repository as it ensures future builds to use the v
 When running your client code in development on port 8081, it will help to run the MOLGENIS locally on port 8080. 
 The vue-cli comes with a proxy table that will redirect any REST calls to localhost:8080.
 
+### Create new stable packages
+If you do not have the vue-cli (version 3), please check [vue-cli](https://cli.vuejs.org/). 
+
+If you have the vue-cli installed you can use the following steps to quickly install a working Vue template.
+
+```bash
+> cd packages/
+> vue create --preset ../preset.json <new-app-name> 
+```
+
+Using the ```preset.json``` is recommended. If you need specific tooling you can also choose manual.
+
+>note: Make sure you update the project-name to @molgenis/#new-app# for publishing purposes in the ```package.json``` *name-key* of the package you created.
+
+### Update existing stable packages
+**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable packages. The version of the app you start to develop has to be updated to [ *canary* ]**. 
+
+That way each merge with the master on this repository will be automatically picked up by the main MOLGENIS repository.
+
+The whole development flow is working as follows. 
+
+- [PR's](#pull-requests)
+- [Merges with master](#merges-with-master)
+- [Releases](#Releases)
+
+#### Pull request
+When you start developing and define a set of changes to be a pull-request it is not published on the [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable) by default. 
+The changes have to be tested by hand. You test the changes by proxying the app to MOLGENIS and see if it works.
+
+#### Merges with master
+When you merge a pull-request it produces a fixed number (an alpha release) and a 'canary-tag' on the [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable).
+By setting the canary-tag in the MOLGENIS repository you automatically pickup new changes from the MOLGENIS frontend when you build the MOLGENIS repository.
+
+#### Releases
+You can manually perform a release on Jenkins.
+Lerna will determine which modules need to be released and what type of increment is needed based
+on the git log. Please use conventional commits so that this is determined correctly.
+
+For more information, see the `lerna version` [command documentation](https://github.com/lerna/lerna/tree/master/commands/version#readme).
+
+The modules are published to our [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable) 
+`https://registry.molgenis.org/repository/npm-stable/`
+
 ### Testing packages
 There are three ways to test a package:
 
@@ -263,49 +306,6 @@ Now for each change:
 * Tab out to the browser. You should see a tiny progress bar in the molgenis window of IntelliJ.
 * Wait for the popup saying `Compilation finished` to appear.
 * Reload the browser window to see the changes 
-
-### Update existing stable packages
-**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable packages. The version of the app you start to develop has to be updated to [ *canary* ]**. 
-
-That way each merge with the master on this repository will be automatically picked up by the main MOLGENIS repository.
-
-The whole development flow is working as follows. 
-
-- [PR's](#pull-requests)
-- [Merges with master](#merges-with-master)
-- [Releases](#Releases)
-
-#### Pull request
-When you start developing and define a set of changes to be a pull-request it is not published on the [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable) by default. 
-The changes have to be tested by hand. You test the changes by proxying the app to MOLGENIS and see if it works.
-
-#### Merges with master
-When you merge a pull-request it produces a fixed number (an alpha release) and a 'canary-tag' on the [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable).
-By setting the canary-tag in the MOLGENIS repository you automatically pickup new changes from the MOLGENIS frontend when you build the MOLGENIS repository.
-
-#### Releases
-You can manually perform a release on Jenkins.
-Lerna will determine which modules need to be released and what type of increment is needed based
-on the git log. Please use conventional commits so that this is determined correctly.
-
-For more information, see the `lerna version` [command documentation](https://github.com/lerna/lerna/tree/master/commands/version#readme).
-
-The modules are published to our [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable) 
-`https://registry.molgenis.org/repository/npm-stable/`
-
-### Create new stable packages
-If you do not have the vue-cli (version 3), please check [vue-cli](https://cli.vuejs.org/). 
-
-If you have the vue-cli installed you can use the following steps to quickly install a working Vue template.
-
-```bash
-> cd packages/
-> vue create --preset ../preset.json <new-app-name> 
-```
-
-Using the ```preset.json``` is recommended. If you need specific tooling you can also choose manual.
-
->note: Make sure you update the project-name to @molgenis/#new-app# for publishing purposes in the ```package.json``` *name-key* of the package you created.
 
 ## Integrate with MOLGENIS
 There is a workflow you have to follow to implement new frontend code in [molgenis/molgenis/molgenis-frontend](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/).
