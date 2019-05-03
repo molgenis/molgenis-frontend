@@ -669,10 +669,9 @@
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.4"
 
-"@molgenis/molgenis-ui-context@^0.5.1":
+"@molgenis/molgenis-ui-context@git://github.com/connoratrug/molgenis-ui-context.git#fix/hamburger-shown-in-ie":
   version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-0.5.1.tgz#56835961adb5e18551a9789611bcbf15d4aac0c0"
-  integrity sha512-K9qih6PGl21942c8FWxVWHgoJzn9hdGbP4OarcfsPjAU5MgbhMQijH0hBoF18JkSYuTc3ogKcgfJ4tmXUfccgQ==
+  resolved "git://github.com/connoratrug/molgenis-ui-context.git#305dd454677c55fd3ebb9a216c1ba4cab60d8f1f"
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 

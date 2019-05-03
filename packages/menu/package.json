@@ -19,7 +19,7 @@
     "unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@molgenis/molgenis-ui-context": "^0.5.1",
+    "@molgenis/molgenis-ui-context": "git://github.com/connoratrug/molgenis-ui-context.git#fix/hamburger-shown-in-ie",
     "vue": "^2.5.17"
   },
   "devDependencies": {
