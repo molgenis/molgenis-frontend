@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/security@0.1.3...@molgenis/security@0.1.4) (2019-05-03)
+
+
+### Bug Fixes
+
+* **security:** Remove version from identities endpoint URL ([69ccd52](https://github.com/molgenis/molgenis-frontend/commit/69ccd52))
+
+
+
+
+
 ## [0.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/security@0.1.2...@molgenis/security@0.1.3) (2019-04-25)
 
 
