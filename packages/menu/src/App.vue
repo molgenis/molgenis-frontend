@@ -1,19 +1,19 @@
 <template>
   <div id="molgenis-site-menu">
-    <CookieWall v-if="showCookieWall" cookieName="permissionforcookies" />
-    <NavBar :molgenis-menu="molgenisMenu"></NavBar>
+    <cookie-wall v-if="showCookieWall" cookieName="permissionforcookies" />
+    <header-component :molgenis-menu="molgenisMenu"/>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import NavBar from '../node_modules/@molgenis/molgenis-ui-context/src/components/NavBar.vue'
+import HeaderComponent from '../node_modules/@molgenis/molgenis-ui-context/src/components/HeaderComponent.vue'
 import CookieWall from '../node_modules/@molgenis/molgenis-ui-context/src/components/CookieWall'
 
 export default Vue.extend({
   name: 'molgenis-site-menu',
   components: {
-    NavBar, CookieWall
+    HeaderComponent, CookieWall
   },
   data () {
     return {
