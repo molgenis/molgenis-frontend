@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/menu@0.1.4...@molgenis/menu@0.1.5) (2019-05-10)
+
+
+### Bug Fixes
+
+* **menu:** Fix [#8481](https://github.com/molgenis/molgenis-frontend/issues/8481) Bump molgenis-ui-context (0.5 -> 1.x) and use new sticky header feature ([8378aba](https://github.com/molgenis/molgenis-frontend/commit/8378aba))
+
+
+
+
+
 ## [0.1.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/menu@0.1.3...@molgenis/menu@0.1.4) (2019-05-03)
 
 **Note:** Version bump only for package @molgenis/menu
