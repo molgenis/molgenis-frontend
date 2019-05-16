@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/menu@0.1.5...@molgenis/menu@0.1.6) (2019-05-16)
+
+
+### Bug Fixes
+
+* **menu:** Fix 8300 error in console when not signed in ([e0e2bfb](https://github.com/molgenis/molgenis-frontend/commit/e0e2bfb))
+
+
+
+
+
 ## [0.1.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/menu@0.1.4...@molgenis/menu@0.1.5) (2019-05-10)
 
 
