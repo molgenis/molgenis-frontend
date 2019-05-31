@@ -13,12 +13,25 @@ If you setup node and yarn please check:
     Could be usefull to reload your terminal, because of updates in you ```.bash_profile```
 
 ### Using NVM
-To install NodeJS or a new version of NodeJS on your system please follow the steps below:
+To install NodeJS or a new version of NodeJS on your system please follow the steps below.
 
 *Mac or Linux*
 ```bash
-nvm install 
+# to install node (latest)
+nvm install node
+
+# to use a specific version of node
+nvm list
+nvm use #node version#
 ```
 
+*Windows*
+```powershell
+# to install node (latest)
+nvm install node
 
+# to use a specific version of node
+nvm list
+nvm use #node version#
+```
 
