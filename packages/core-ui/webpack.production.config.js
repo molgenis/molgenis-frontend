@@ -1,6 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
 
+const pkgVersion = require('./package.json').version
+const buildDate = new Date().toUTCString()
+const pkgName = require('./package.json').name
+const bannerText = `package-name: ${pkgName}
+package-version: ${pkgVersion}
+build-date: ${buildDate}`
+
 var configuration = {
     resolve: {
         root: [path.resolve('./src'), path.resolve('./node_modules'), path.resolve('./lib')],
@@ -48,7 +55,8 @@ var configuration = {
             }
         }),
         new webpack.optimize.CommonsChunkPlugin(['vendor-bundle'],
-            'molgenis-[name].js')
+            'molgenis-[name].js'),
+        new webpack.BannerPlugin(bannerText)
     ],
     resolveLoader: {
         root: [path.resolve('./node_modules')]
