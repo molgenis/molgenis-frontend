@@ -15,6 +15,13 @@ const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : require('../config/prod.env')
 
+const pkgVersion = require('../package.json').version
+const buildDate = new Date().toUTCString()
+const pkgName = require('../package.json').name
+const bannerText = `package-name: ${pkgName}
+package-version: ${pkgVersion}
+build-date: ${buildDate}`
+
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -104,7 +111,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    })
+    }),
+    new webpack.BannerPlugin({banner: bannerText})
   ]
 })
 

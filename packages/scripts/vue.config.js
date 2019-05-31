@@ -1,18 +1,30 @@
 // vue.config.js
 const schemas = require('./tests/test-schemas.js')
+const BannerPlugin = require('webpack').BannerPlugin
+const pkgVersion = require('./package.json').version
+const pkgName = require('./package.json').name
+
+const now = new Date()
+const buildDate = now.toUTCString()
+const bannerText = `package-name: ${pkgName}
+package-version: ${pkgVersion}
+build-date: ${buildDate}`
 
 module.exports = {
   filenameHashing: false,
   outputDir: 'dist',
-  configureWebpack: {
-    devtool: 'source-map',
-    externals: {
+  configureWebpack: config => {
+    config.devtool = 'source-map',
+    config.externals = {
       'bootstrap': 'bootstrap'
-    },
-    output: {
-      filename: 'js/scripts/[name].js',
-      chunkFilename: 'js/scripts/[name].js'
     }
+    config.output.filename = 'js/scripts/[name].js',
+    config.output.chunkFilename ='js/scripts/[name].js'
+    config.plugins.push(
+      new BannerPlugin({
+        banner: bannerText
+      })
+    )
   },
   css: {
     extract: {
