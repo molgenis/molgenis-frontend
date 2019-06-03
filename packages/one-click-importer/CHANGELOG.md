@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/connoratrug/molgenis-frontend/compare/@molgenis/one-click-importer@0.1.2...@molgenis/one-click-importer@0.1.3) (2019-06-03)
+
+**Note:** Version bump only for package @molgenis/one-click-importer
+
+
+
+
+
 ## [0.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/one-click-importer@0.1.1...@molgenis/one-click-importer@0.1.2) (2019-04-25)
 
 

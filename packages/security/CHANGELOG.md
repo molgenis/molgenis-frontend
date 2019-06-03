@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/connoratrug/molgenis-frontend/compare/@molgenis/security@0.1.4...@molgenis/security@0.1.5) (2019-06-03)
+
+**Note:** Version bump only for package @molgenis/security
+
+
+
+
+
 ## [0.1.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/security@0.1.3...@molgenis/security@0.1.4) (2019-05-03)
 
 

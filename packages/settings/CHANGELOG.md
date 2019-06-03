@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/connoratrug/molgenis-frontend/compare/@molgenis/settings@1.0.3...@molgenis/settings@1.0.4) (2019-06-03)
+
+**Note:** Version bump only for package @molgenis/settings
+
+
+
+
+
 ## [1.0.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis/settings@1.0.2...@molgenis/settings@1.0.3) (2019-05-27)
 
 
