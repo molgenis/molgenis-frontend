@@ -146,26 +146,11 @@ pipeline {
                 GIT_AUTHOR_NAME = 'molgenis-jenkins'
                 GIT_COMMITTER_EMAIL = 'molgenis+ci@gmail.com'
                 GIT_COMMITTER_NAME = 'molgenis-jenkins'
-                NPM_CONFIG_EMAIL='molgenis+npm@gmail.com'
-                NPM_CONFIG_USERNAME='molgenis-npm'
-                // NPM_TOKEN
-                // GH_TOKEN 
-                // RELEASE_GH_TOKEN
-                RELEASE_GH_USERNAME = 'molgenis-jenkins'
             }
             steps {
+                milestone 2
                 container('node') {
-                    // This will publish all npm packages, including creating commits and tags for each release,
-                    // in the format that lerna expects for the `lerna updated` command.
-                    // # Pre: Set up the versions, tags and commits
-                    sh "lerna-semantic-release pre" 
-                    // # Perform: # Publishes to npm
-                    sh "lerna-semantic-release perform"
-                    // # Post
-                    sh "lerna-semantic-release post"
-                    // # Generates a changelog in each package in a file named CHANGELOG.md 
-                    //- will not commit or push that file any more after version 7.0.5 any more.
-                    // If you want to do something with it, you will need to do this manually.
+                sh "npx semantic-release -e semantic-release-monorepo"
                 }
             }
         }

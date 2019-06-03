@@ -6,7 +6,8 @@
     "commitizen": "^3.0.6",
     "cz-conventional-changelog": "2.1.0",
     "lerna": "^3.4.3",
-    "lerna-semantic-release": "^9.1.0"
+    "semantic-release": "^15.13.12",
+    "semantic-release-monorepo": "^6.1.1"
   },
   "scripts": {
     "commit": "git-cz"
