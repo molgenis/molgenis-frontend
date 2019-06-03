@@ -138,7 +138,7 @@ pipeline {
             when {
                 branch 'master'
                 not {
-                changelog '.*\\[skip ci\\]$'
+                    changelog '.*\\[skip ci\\]$'
                 }
             }
             environment {
@@ -150,7 +150,7 @@ pipeline {
             steps {
                 milestone 2
                 container('node') {
-                sh "npx semantic-release -e semantic-release-monorepo"
+                    sh "npx semantic-release -e semantic-release-monorepo"
                 }
             }
         }
