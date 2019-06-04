@@ -1,9 +1,8 @@
 {
-  "name": "@molgenis/menu",
+  "name": "@molgenis-ui/menu",
   "version": "0.1.6",
   "license": "LGPL-3.0",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
     "access": "public"
   },
   "files": [

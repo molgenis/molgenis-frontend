@@ -1,11 +1,10 @@
 {
-  "name": "@molgenis/settings",
+  "name": "@molgenis-ui/settings",
   "version": "1.0.3",
   "license": "LGPL-3.0",
   "description": "Settings",
   "author": "sido <sido@haakma.org>",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
     "access": "public"
   },
   "files": [

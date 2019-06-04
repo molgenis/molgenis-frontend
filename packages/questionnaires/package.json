@@ -1,11 +1,10 @@
 {
-  "name": "@molgenis/questionnaires",
+  "name": "@molgenis-ui/questionnaires",
   "version": "1.0.0",
   "license": "LGPL-3.0",
   "description": "Frontend code for the molgenis-questionnaire module",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
     "access": "public"
   },
   "files": [

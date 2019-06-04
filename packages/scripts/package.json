@@ -1,9 +1,8 @@
 {
-  "name": "@molgenis/scripts",
+  "name": "@molgenis-ui/scripts",
   "version": "1.0.2",
   "license": "LGPL-3.0",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
     "access": "public"
   },
   "scripts": {
