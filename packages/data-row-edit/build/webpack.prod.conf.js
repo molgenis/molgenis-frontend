@@ -33,8 +33,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/data-row-edit/[name].js'),
-    chunkFilename: utils.assetsPath('js/data-row-edit/[id].js')
+    filename: utils.assetsPath('js/[name].js'),
+    chunkFilename: utils.assetsPath('js/[id].js')
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
@@ -52,7 +52,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract css into its own file
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/data-row-edit/[name].css')
+      filename: utils.assetsPath('css/[name].css')
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
@@ -115,7 +115,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.BannerPlugin({
       banner: bannerText
     })
-  ],
+  ]
 })
 
 if (config.build.productionGzip) {

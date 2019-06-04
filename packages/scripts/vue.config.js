@@ -18,8 +18,6 @@ module.exports = {
     config.externals = {
       'bootstrap': 'bootstrap'
     }
-    config.output.filename = 'js/scripts/[name].js',
-    config.output.chunkFilename ='js/scripts/[name].js'
     config.plugins.push(
       new BannerPlugin({
         banner: bannerText
@@ -28,8 +26,8 @@ module.exports = {
   },
   css: {
     extract: {
-      filename: 'css/scripts/[name].css',
-      chunkFilename: 'css/scripts/[name].css'
+      filename: 'css/[name].css',
+      chunkFilename: 'css/[name].css'
     }
   },
   'devServer': {
