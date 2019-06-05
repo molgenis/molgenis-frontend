@@ -121,19 +121,6 @@ pipeline {
                 }
             }
         }
-        stage('Release canary: [ master ]'){
-            when {
-                branch 'master'
-            }
-            steps {
-                lock("Tags"){
-                    sh "git fetch --tags"
-                    container('node') {
-                        sh "yarn lerna publish --canary"
-                    }
-                }
-            }
-        }
         stage('Release: [ master ]') {
             when {
                 allOf {
