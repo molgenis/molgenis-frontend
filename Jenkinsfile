@@ -46,7 +46,7 @@ pipeline {
                 }
             }
         }
-        stage('Push to registries [ PR ]') {
+        stage('Build container serving the artifacts [ PR ]') {
             when {
                 changeRequest()
             }
@@ -56,10 +56,9 @@ pipeline {
             }
             steps {
                 container (name: 'kaniko', shell: '/busybox/sh') {
-                    sh "#!/busybox/sh\nmkdir -p /root/.docker/"
-                    sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > /root/.docker/config.json"
-                    sh "#!/busybox/sh\nrm -rf docker/dist&&mkdir docker/dist&&cp -rf packages/*/dist/* docker/dist"
-                    sh "#!/busybox/sh\nrm -rf docker/dist/index.htm*"
+                    sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
+                    sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
+                    sh "#!/busybox/sh\n. ${WORKSPACE}/copy_package_dist_dirs.sh"
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker --destination ${LOCAL_REPOSITORY}:${TAG}"
                 }
             }
