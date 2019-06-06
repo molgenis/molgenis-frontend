@@ -9,9 +9,6 @@
   "command": {
     "version": {
       "conventionalCommits": true
-    },
-    "publish": {
-      "verifyAccess": false
     }
   }
 }
