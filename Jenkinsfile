@@ -138,7 +138,7 @@ pipeline {
             steps {
                 milestone 1
                 container('node') {
-                    sh "yarn lerna publish"
+                    sh "yarn lerna publish --registry https://registry.npmjs.org/"
                 }
             }
         }
