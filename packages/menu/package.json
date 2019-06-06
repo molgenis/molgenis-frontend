@@ -1,9 +1,8 @@
 {
-  "name": "@molgenis/menu",
+  "name": "@molgenis-ui/menu",
   "version": "0.1.6",
   "license": "LGPL-3.0",
   "publishConfig": {
-    "registry": "https://registry.molgenis.org/repository/npm-hosted/",
     "access": "public"
   },
   "files": [
@@ -11,8 +10,8 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
-    "watch": "vue-cli-service build --target lib --name context src/main.ts --dest dist/js/menu --watch",
-    "build": "vue-cli-service build --target lib --name context src/main.ts --dest dist/js/menu",
+    "watch": "vue-cli-service build --target lib --name context src/main.ts --watch",
+    "build": "vue-cli-service build --target lib --name context src/main.ts",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
