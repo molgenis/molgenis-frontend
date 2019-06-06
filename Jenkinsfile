@@ -7,6 +7,7 @@ pipeline {
     environment {
         REPOSITORY = 'molgenis/molgenis-frontend'
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
+        npm_config_registry = "https://registry.npmjs.org"
     }
     stages {
         stage('Prepare') {
@@ -138,7 +139,9 @@ pipeline {
             steps {
                 milestone 1
                 container('node') {
-                    sh "yarn lerna publish --registry https://registry.npmjs.org/"
+                    sh "set +x; npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN}"
+                    sh "npm whoami"
+                    sh "yarn lerna publish"
                 }
             }
         }
