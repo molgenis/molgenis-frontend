@@ -3,7 +3,7 @@ services:
   frontend:
     image: ${FRONTEND_REPOSITORY}:${FRONTEND_TAG}
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx-local.conf:/etc/nginx/nginx.conf:ro
       - ./wait-for-it.sh:/bin/wait-for-it.sh:ro
     depends_on:
       - molgenis
