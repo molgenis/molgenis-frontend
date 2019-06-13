@@ -13,6 +13,9 @@ build-date: ${buildDate}`
 module.exports = {
   filenameHashing: false,
   outputDir: 'dist',
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/@molgenis-ui/scripts/dist/'
+    : '/',
   configureWebpack: config => {
     config.devtool = 'source-map',
     config.externals = {
