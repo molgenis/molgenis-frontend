@@ -117,7 +117,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: '',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/@molgenis-ui/questionnaires/dist/',
 
     /**
      * Source Maps

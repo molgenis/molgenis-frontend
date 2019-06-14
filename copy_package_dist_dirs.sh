@@ -3,6 +3,6 @@
 rm -rf docker/dist
 mkdir -p docker/dist/@molgenis-ui
 for file in packages/*; do 
-    mkdir "docker/dist/$(basename "$file")"
+    mkdir -p "docker/dist/@molgenis-ui/$(basename "$file")/dist"
     cp -rf "${file}/dist" "docker/dist/@molgenis-ui/$(basename "$file")"
 done

@@ -11,6 +11,9 @@ build-date: ${buildDate}`
 // vue.config.js
 module.exports = {
   filenameHashing: false,
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/@molgenis-ui/menu/dist/'
+    : '/',
   configureWebpack: config => {
     config.plugins.push(
       new BannerPlugin({
