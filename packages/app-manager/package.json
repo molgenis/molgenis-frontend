@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/app-manager",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "LGPL-3.0",
   "description": "UI code for the app-manager plugin",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",

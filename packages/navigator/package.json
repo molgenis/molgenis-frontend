@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/navigator",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "LGPL-3.0",
   "description": "its a navigator for your packages and entities",
   "author": "Dennis Hendriksen <d.hendriksen@umcg.nl>",

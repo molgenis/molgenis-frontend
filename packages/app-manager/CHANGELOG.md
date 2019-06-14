@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/app-manager@0.1.2...@molgenis-ui/app-manager@0.1.3) (2019-06-14)
+
+
+### Bug Fixes
+
+* **app-manager:** fix public path ([d086175](https://github.com/molgenis/molgenis-frontend/commit/d086175))
+
+
+
+
+
 ## 0.1.2 (2019-06-06)
 
 

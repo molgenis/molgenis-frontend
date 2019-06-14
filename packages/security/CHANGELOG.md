@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.1.5...@molgenis-ui/security@0.1.6) (2019-06-14)
+
+
+### Bug Fixes
+
+* **security:** fix public path ([77714d9](https://github.com/molgenis/molgenis-frontend/commit/77714d9))
+
+
+
+
+
 ## 0.1.5 (2019-06-06)
 
 

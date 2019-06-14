@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.3...@molgenis-ui/metadata-manager@0.1.4) (2019-06-14)
+
+
+### Bug Fixes
+
+* **metadata-manager:** fix public path ([a6e5fec](https://github.com/molgenis/molgenis-frontend/commit/a6e5fec))
+
+
+
+
+
 ## 0.1.3 (2019-06-06)
 
 

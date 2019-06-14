@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@3.0.0...@molgenis-ui/data-row-edit@3.0.1) (2019-06-14)
+
+
+### Bug Fixes
+
+* **data-row-edit:** fix public path ([f294e75](https://github.com/molgenis/molgenis-frontend/commit/f294e75))
+
+
+
+
+
 # 3.0.0 (2019-06-06)
 
 

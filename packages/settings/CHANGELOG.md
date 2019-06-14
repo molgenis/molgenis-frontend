@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@2.0.0...@molgenis-ui/settings@2.0.1) (2019-06-14)
+
+
+### Bug Fixes
+
+* **settings:** fix public path ([c751003](https://github.com/molgenis/molgenis-frontend/commit/c751003))
+
+
+
+
+
 # 2.0.0 (2019-06-06)
 
 
