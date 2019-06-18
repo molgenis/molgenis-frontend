@@ -135,6 +135,7 @@ The whole development flow is working as follows.
 - [PR's](#pull-requests)
 - [Merges with master](#merges-with-master)
 - [Releases](#Releases)
+- [Deployment](#Deployment)
 
 #### Pull request
 When you start developing and define a set of changes to be a pull-request it is not published on the [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable) by default. 
@@ -145,14 +146,34 @@ When you merge a pull-request it produces a fixed number (an alpha release) and 
 By setting the canary-tag in the MOLGENIS repository you automatically pickup new changes from the MOLGENIS frontend when you build the MOLGENIS repository.
 
 #### Releases
-You can manually perform a release on Jenkins.
+A release will automatically be done when an app is merged with the master.
 Lerna will determine which modules need to be released and what type of increment is needed based
 on the git log. Please use conventional commits so that this is determined correctly.
 
 For more information, see the `lerna version` [command documentation](https://github.com/lerna/lerna/tree/master/commands/version#readme).
 
-The modules are published to our [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable) 
-`https://registry.molgenis.org/repository/npm-stable/`
+The modules are published to our [stable repository](https://registry.npmjs.org/molgenis-ui)
+
+#### Deployment
+When the packages are published they will be automatically deployed based upon the app-configuration in each MOLGENIS instance. The service which serves the packages is at the moment https://unpkg.com. This service serves and NPM bundle as a bundle of files.
+
+Unpackage fetches tgz packages from npm ( @molgenis-ui ) and unzips and serves them.
+unpkg.com forwards requests to versioned requests.
+
+**Example configuration:**
+
+@molgenis/navigator has versions: 1.0.0 , 2.0.1, 2.1.2
+
+```unpkg/@molgenis/navigator```
+ is forwarded to 
+```unpkg/@molgenis/navigator@2.1.2 ( latest )```
+
+```unpkg/@molgenis/navigator@2.0.1```
+ Is not  forwarded ( version request )
+
+```unpkg/@molgenis/navigator@~2```
+ is forwarded to 
+```unpkg/@molgenis/navigator@2.0.1 ( latest within major )```
 
 ### Testing packages
 There are three ways to test a package:
