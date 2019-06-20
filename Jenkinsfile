@@ -83,7 +83,7 @@ pipeline {
                         "molgenis-frontend " +
                         "${NAME} " +
                         "--no-prompt " +
-                        "--set environment=dev " +
+                        "--set molgenis-proxy.environment=dev " +
                         "--set image.tag=${TAG} " +
                         "--set image.repository=${LOCAL_REGISTRY} " +
                         "--set molgenis-proxy.url=http://master-molgenis.molgenis-abcde.svc:8080 " +
