@@ -1,9 +1,9 @@
 version: "3.0"
 services:
   frontend:
-    image: ${FRONTEND_REPOSITORY}:${FRONTEND_TAG}
+    build: 
+      context: ./production
     volumes:
-      - ./nginx-local.conf:/etc/nginx/nginx.conf:ro
       - ./wait-for-it.sh:/bin/wait-for-it.sh:ro
     depends_on:
       - molgenis
