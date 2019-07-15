@@ -20,6 +20,7 @@ pipeline {
                         env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
                         env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-frontend secret/ops/token/codecov', returnStdout: true)
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
+                        env.DOCKERHUB_AUTH = sh(script: 'vault read -field=base64 secret/ops/token/dockerhub', returnStdout: true)
                         env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
                     }
                 }
@@ -59,8 +60,8 @@ pipeline {
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
                     sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
-                    sh "#!/busybox/sh\n. ${WORKSPACE}/copy_package_dist_dirs.sh"
-                    sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker --destination ${LOCAL_REPOSITORY}:${TAG}"
+                    sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview/copy_package_dist_dirs.sh"
+                    sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/preview --destination ${LOCAL_REPOSITORY}:${TAG}"
                 }
             }
         }
@@ -135,13 +136,27 @@ pipeline {
                 GIT_AUTHOR_NAME = 'molgenis-jenkins'
                 GIT_COMMITTER_EMAIL = 'molgenis+ci@gmail.com'
                 GIT_COMMITTER_NAME = 'molgenis-jenkins'
+                TAG = '8'
+                DOCKER_CONFIG='/root/.docker'
             }
-            steps {
-                milestone 1
-                container('node') {
-                    sh "set +x; npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN}"
-                    sh "npm whoami"
-                    sh "yarn lerna publish"
+            stages {
+                stage('Build and publish: [master]') {
+                    steps {
+                        milestone 1
+                        container('node') {
+                            sh "set +x; npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN}"
+                            sh "yarn lerna publish"
+                        }
+                    }
+                }
+                stage('Release docker image: [ master ]') {
+                    steps {
+                        container (name: 'kaniko', shell: '/busybox/sh') {
+                            sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
+                            sh "#!/busybox/sh\necho '{\"auths\": {\"registry.hub.docker.com\": {\"auth\": \"${DOCKERHUB_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
+                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/production --build-arg MOLGENIS_VERSION=latest --destination ${REPOSITORY}:latest"
+                        }
+                    }
                 }
             }
         }
