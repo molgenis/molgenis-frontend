@@ -10,7 +10,7 @@ You can test the deployment using ```docker-compose.yaml```
 By executing ```docker-compose up``` you can test the container using **unpkg.com** as tbe service that is serving the frontend. The image that is used to run the production frontends is composed of a set of apps with certain major versions defined in the ```docker/production/conf.d/frontend/stable.conf``` file.
 
 ```
-location /ui/@molgenis-ui/app-manager/ {}
+location /@molgenis-ui/app-manager/ {
   proxy_pass https://unpkg.com/@molgenis-ui/app-manager**@~0**/;
   proxy_intercept_errors on;
   recursive_error_pages on;
@@ -30,7 +30,7 @@ The highlighted part is representing the major version resolvement. There in tot
 The configuration files which are always deployed are:
 
 - **experimental.conf**
-  Contains all apps thaat are publish to @molglenis-experimental scope on https://npmjs.org
+  Contains all apps thaat are publish to @molgenis-experimental scope on https://npmjs.org
 - **common.conf**
   Adds the redirect configuration for the proxy
 - **backend.conf**
