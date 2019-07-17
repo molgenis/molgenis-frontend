@@ -84,10 +84,10 @@ pipeline {
                         "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +
                         "--no-prompt " +
-                        "--set molgenis-proxy.environment=dev " +
+                        "--set environment=dev " +
                         "--set image.tag=${TAG} " +
                         "--set image.repository=${LOCAL_REGISTRY} " +
-                        "--set molgenis-proxy.url=http://master-molgenis.molgenis-abcde.svc:8080 " +
+                        "--set molgenis-frontend.backend.url=http://master-molgenis.molgenis-abcde.svc:8080 " +
                         "--set image.pullPolicy=Always"
                 }
             }
