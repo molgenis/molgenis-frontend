@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/menu@0.1.8...@molgenis-ui/menu@0.1.9) (2019-07-18)
+
+
+### Bug Fixes
+
+* removed broken dependency ([e95d88b](https://github.com/molgenis/molgenis-frontend/commit/e95d88b))
+
+
+
+
+
 ## [0.1.8](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/menu@0.1.7...@molgenis-ui/menu@0.1.8) (2019-06-14)
 
 **Note:** Version bump only for package @molgenis-ui/menu
