@@ -1,5 +1,5 @@
 {
-  "name": "data-explorer",
+  "name": "@molgenis/data-explorer",
   "version": "0.1.0",
   "private": true,
   "scripts": {
