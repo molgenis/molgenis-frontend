@@ -80,7 +80,7 @@ pipeline {
                 container('rancher') {
                     sh "rancher context switch dev-molgenis"
                     sh "rancher apps install " +
-                        "molgenis-frontend " +
+                        "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +
                         "--no-prompt " +
                         "--set molgenis-proxy.environment=dev " +
