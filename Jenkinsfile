@@ -154,9 +154,9 @@ pipeline {
                         container (name: 'kaniko', shell: '/busybox/sh') {
                             sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
                             sh "#!/busybox/sh\necho '{\"auths\": {\"registry.hub.docker.com\": {\"auth\": \"${DOCKERHUB_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
-                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/production --build-arg MOLGENIS_VERSION=lts --destination ${REPOSITORY}:${TAG}-lts"
-                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/production --build-arg MOLGENIS_VERSION=stable --destination ${REPOSITORY}:${TAG}-stable"
-                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/production --build-arg MOLGENIS_VERSION=latest --destination ${REPOSITORY}:latest"
+                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/proxy-config --build-arg MOLGENIS_VERSION=lts --destination ${REPOSITORY}:${TAG}-lts"
+                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/proxy-config --build-arg MOLGENIS_VERSION=stable --destination ${REPOSITORY}:${TAG}-stable"
+                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/proxy-config --build-arg MOLGENIS_VERSION=latest --destination ${REPOSITORY}:latest"
                         }
                     }
                 }
