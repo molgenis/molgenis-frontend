@@ -3,7 +3,8 @@ The frontend deployment is deployed with an NGINX docker image at the moment. We
 
 ## Production (for test, acceptance and production environments)
 
-### Developing
+### Preview
+PR's are served by a standalone docker image which contains the files of the referring pullrequest. The backend is https://master.dev.molgenis.org that is proxied default in front of the PR's. 
 
 ### Testing
 You can test the deployment using ```docker-compose.yaml```
