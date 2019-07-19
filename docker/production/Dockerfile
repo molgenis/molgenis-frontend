@@ -1,9 +1,10 @@
 FROM nginx:1.16.0
 
-ARG MOLGENIS_VERSION=latest
+ARG MOLGENIS_VERSION=lts
 
 # Remove default configuration
-RUN rm -rf /etc/nginx/conf.d/default.conf
+RUN rm -rf /etc/nginx/conf.d/*.conf
+RUN rm -rf /etc/nginx/sites-enabled/*.conf
 
 # Copy the server configuration
 COPY conf.d/molgenis.conf /etc/nginx/conf.d/
