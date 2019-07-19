@@ -12,7 +12,7 @@
 
 <script>
 import Vue from 'vue'
-import FilterContainer from 'molgenis-ui-filter/src/components/FilterContainer'
+import FilterContainer from '@molgenis/molgenis-ui-filter/src/components/FilterContainer'
 export default Vue.extend({
   name: 'FiltersView',
   components: { FilterContainer },
