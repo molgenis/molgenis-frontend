@@ -123,7 +123,7 @@ If you have the vue-cli installed you can use the following steps to quickly ins
 
 Using the ```preset.json``` is recommended. If you need specific tooling you can also choose manual.
 
->note: Make sure you update the project-name to @molgenis/#new-app# for publishing purposes in the ```package.json``` *name-key* of the package you created.
+>note: Make sure you update the project-name to @molgenis-ui/#new-app# for publishing purposes in the ```package.json``` *name-key* of the package you created.
 
 ### Update existing stable packages
 **You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable packages. The version of the app you start to develop has to be updated to [ *canary* ]**. 
@@ -162,18 +162,18 @@ unpkg.com forwards requests to versioned requests.
 
 **Example configuration:**
 
-@molgenis/navigator has versions: 1.0.0 , 2.0.1, 2.1.2
+@molgenis-ui/navigator has versions: 1.0.0 , 2.0.1, 2.1.2
 
-```unpkg/@molgenis/navigator```
+```unpkg/@molgenis-ui/navigator```
  is forwarded to 
-```unpkg/@molgenis/navigator@2.1.2 ( latest )```
+```unpkg/@molgenis-ui/navigator@2.1.2 ( latest )```
 
-```unpkg/@molgenis/navigator@2.0.1```
+```unpkg/@molgenis-ui/navigator@2.0.1```
  Is not  forwarded ( version request )
 
-```unpkg/@molgenis/navigator@~2```
+```unpkg/@molgenis-ui/navigator@~2```
  is forwarded to 
-```unpkg/@molgenis/navigator@2.0.1 ( latest within major )```
+```unpkg/@molgenis-ui/navigator@2.0.1 ( latest within major )```
 
 ### Testing packages
 There are three ways to test a package:
@@ -355,11 +355,11 @@ and want to get started working on module `scripts`, do this once:
 
 * Open both projects in IntelliJ.
 * In the molgenis project, go to the molgenis-frontend module and mark the 
-`node_modules/@molgenis/scripts/dist` directory as resources root. (Does not happen automatically even
+`node_modules/@molgenis-ui/scripts/dist` directory as resources root. (Does not happen automatically even
 though the pom.xml lists it as such.)
 * Start `molgenis` webapp in exploded mode using IntelliJ IDEA
 * Run `yarn link` in `~/git/molgenis-frontend/packages/scripts`.
-* Run `yarn link "@molgenis/scripts"` in `~/git/molgenis/molgenis-frontend/`
+* Run `yarn link "@molgenis-ui/scripts"` in `~/git/molgenis/molgenis-frontend/`
 * If the project supports webpack watch modus, start it: `yarn watch`
 
 Now for each change:
@@ -392,7 +392,7 @@ You have to include the package in the [pom.xml](https://github.com/molgenis/mol
 <build>
   <resources>
     <resource>
-      <directory>node_modules/@molgenis/##new-app##/dist</directory>
+      <directory>node_modules/@molgenis-ui/##new-app##/dist</directory>
     </resource>
 ...
 ```
