@@ -20,7 +20,8 @@ pipeline {
                         env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
                         env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-frontend secret/ops/token/codecov', returnStdout: true)
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
-                        env.DOCKERHUB_AUTH = sh(script: 'vault read -field=value secret/ops/token/dockerhub', returnStdout: true)
+                        env.DOCKER_USERNAME = sh(script: 'vault read -field=username secret/gcc/account/dockerhub', returnStdout: true)
+                        env.DOCKER_PASSWORD = sh(script: 'vault read -field=password secret/gcc/account/dockerhub', returnStdout: true)
                         env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
                     }
                 }
@@ -153,7 +154,7 @@ pipeline {
                     steps {
                         container (name: 'kaniko', shell: '/busybox/sh') {
                             sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
-                            sh "#!/busybox/sh\necho '{\"auths\": {\"registry.hub.docker.com\": {\"auth\": \"${DOCKERHUB_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
+                            sh "#!/busybox/sh\ncat ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin"
                             sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/proxy-config --build-arg MOLGENIS_VERSION=lts --destination ${REPOSITORY}:${TAG}-lts"
                             sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/proxy-config --build-arg MOLGENIS_VERSION=stable --destination ${REPOSITORY}:${TAG}-stable"
                             sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/proxy-config --build-arg MOLGENIS_VERSION=latest --destination ${REPOSITORY}:latest"
