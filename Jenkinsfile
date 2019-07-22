@@ -20,8 +20,8 @@ pipeline {
                         env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
                         env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-frontend secret/ops/token/codecov', returnStdout: true)
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
-                        env.DOCKER_USERNAME = sh(script: 'vault read -field=username secret/ops/account/dockerhub', returnStdout: true)
-                        env.DOCKER_PASSWORD = sh(script: 'vault read -field=password secret/ops/account/dockerhub', returnStdout: true)
+                        env.DOCKER_USERNAME = sh(script: 'vault read -field=username secret/gcc/account/dockerhub', returnStdout: true)
+                        env.DOCKER_PASSWORD = sh(script: 'vault read -field=password secret/gcc/account/dockerhub', returnStdout: true)
                         env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
                     }
                 }
