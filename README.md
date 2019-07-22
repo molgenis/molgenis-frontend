@@ -137,13 +137,11 @@ The whole development flow is working as follows.
 - [Releases](#Releases)
 - [Deployment](#Deployment)
 
-#### Pull request
-When you start developing and define a set of changes to be a pull-request it is not published on the [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable) by default. 
-The changes have to be tested by hand. You test the changes by proxying the app to MOLGENIS and see if it works.
+#### Pull requests
+PR's will build locally and will be packaged locally in a docker. The docker will be proxied in front of the https://master.dev.molgenis.org as a preview on kubernetes. 
 
 #### Merges with master
-When you merge a pull-request it produces a fixed number (an alpha release) and a 'canary-tag' on the [stable repository](https://registry.molgenis.org/#browse/browse:npm-stable).
-By setting the canary-tag in the MOLGENIS repository you automatically pickup new changes from the MOLGENIS frontend when you build the MOLGENIS repository.
+Merges with the master automatically will deploy on npmjs.org.
 
 #### Releases
 A release will automatically be done when an app is merged with the master.
