@@ -1,6 +1,6 @@
 FROM nginx:1.16.0
 
-ARG MOLGENIS_VERSION=lts
+ARG MOLGENIS_VERSION=latest
 
 # Remove default configuration
 RUN rm -rf /etc/nginx/conf.d/*.conf
