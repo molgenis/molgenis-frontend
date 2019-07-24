@@ -13,7 +13,7 @@ export default new Router({
       component: MainView
     },
     {
-      path: '/:entity',
+      path: '/entity/:entity',
       name: 'main-view',
       component: MainView
     }
