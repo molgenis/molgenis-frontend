@@ -3,7 +3,7 @@ import App from '@/App.vue'
 
 describe('App.vue', () => {
   it('exists', () => {
-    const wrapper = shallowMount(App)
+    const wrapper = shallowMount(App, { stubs: ['router-view'] })
     expect(wrapper.exists()).toBeTruthy()
   })
 })
