@@ -1,19 +1,15 @@
 <template>
-  <div id="app">
+  <page-component id="app">
     <router-view />
-  </div>
+  </page-component>
 </template>
 
 <script>
 import Vue from 'vue'
+import PageComponent from '../node_modules/@molgenis/molgenis-ui-context/src/components//PageComponent.vue'
 
 export default Vue.extend({
-  name: 'app'
+  name: 'app',
+  components: { PageComponent }
 })
 </script>
-
-<style>
-  .modal-backdrop {
-    opacity: 0.3;
-  }
-</style>

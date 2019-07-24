@@ -768,6 +768,13 @@
     i18next-xhr-backend "^1.4.1"
     moment "^2.18.1"
 
+"@molgenis/molgenis-ui-context@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-1.2.0.tgz#716df476061549a6ed71005fa1b3df1c54445aa3"
+  integrity sha512-ql8lepwvvMHW2zUBD5gc+sLvrdfMO1uAxQtSuJZaqnUEzzzDU9i0pWOoYp0ljMGlNDTbFZAA405q3xA0GIKopw==
+  dependencies:
+    "@molgenis/molgenis-api-client" "^3.1.0"
+
 "@molgenis/molgenis-ui-filter@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-filter/-/molgenis-ui-filter-1.1.2.tgz#92971ddc4baec078683644fdfee64f64495567ac"
