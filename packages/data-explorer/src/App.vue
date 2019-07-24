@@ -12,3 +12,9 @@ export default Vue.extend({
   name: 'app'
 })
 </script>
+
+<style>
+  .modal-backdrop {
+    opacity: 0.3;
+  }
+</style>
