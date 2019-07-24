@@ -17,7 +17,8 @@
     "@molgenis/molgenis-i18n-js": "^0.2.1",
     "@molgenis/molgenis-ui-filter": "^1.1.2",
     "core-js": "^2.6.5",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.7"
   },
   "devDependencies": {
     "@types/jest": "^23.1.4",

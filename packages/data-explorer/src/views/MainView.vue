@@ -7,6 +7,7 @@
             </div>
             <div class="col-9" >
                 <pre>dataview</pre>
+                {{$route.params.entity}}
             </div>
         </div>
     </div>

@@ -1,15 +1,14 @@
 <template>
   <div id="app">
-    <main-view />
+    <router-view />
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import MainView from './views/MainView'
+
 export default Vue.extend({
-  name: 'app',
-  components: { MainView }
+  name: 'app'
 })
 </script>
 
