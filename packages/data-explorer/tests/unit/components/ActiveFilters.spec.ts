@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import ActiveFilters from '@/components/ActiveFilters.vue'
+import ActiveFilters from '@/components/ToolbarView/ActiveFilters.vue'
 
 describe('ActiveFilters.vue', () => {
   it('exists', () => {

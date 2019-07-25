@@ -1,5 +1,4 @@
 <template>
-  <!-- Note: This is a placeholder object -->
   <div>
     <filter-container
       v-model="selections"

@@ -1,22 +1,19 @@
 <template>
-  <!-- Note: This is a placeholder object -->
   <div class="toolbar">
-    <div @click="isList=!isList">
     <info-icon-button
-      v-if="isList"
-
-      name="card display"
+      v-if="getDataDisplayLayout() === 'table'"
+      @click.native="setDataDisplayLayout('cards')"
+      name="Card layout"
       class="float-right">
       <font-awesome-icon icon="th" />
     </info-icon-button>
     <info-icon-button
       v-else
-      @click="isList=!isList"
-      name="List display"
+      @click.native="setDataDisplayLayout('table')"
+      name="Table layout"
       class="float-right">
       <font-awesome-icon icon="th-list" />
     </info-icon-button>
-    </div>
 
     <info-icon-button name="Shopping cart" class="float-right">
       <font-awesome-icon icon="shopping-cart" />
@@ -28,8 +25,8 @@
 
 <script>
 import Vue from 'vue'
-import ActiveFilters from '../components/ActiveFilters'
-import InfoIconButton from '../components/InfoIconButton'
+import ActiveFilters from '../components/ToolbarView/ActiveFilters'
+import InfoIconButton from '../components/Utils/InfoIconButton'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingCart, faTh, faThList } from '@fortawesome/free-solid-svg-icons'
@@ -38,9 +35,12 @@ library.add(faShoppingCart, faTh, faThList)
 
 export default Vue.extend({
   name: 'ToolbarView',
-  data () {
-    return {
-      isList: true
+  methods: {
+    setDataDisplayLayout (value) {
+      this.$store.commit('setDataDisplayLayout', value)
+    },
+    getDataDisplayLayout () {
+      return this.$store.state.dataDisplayLayout
     }
   },
   components: { ActiveFilters, InfoIconButton, FontAwesomeIcon }

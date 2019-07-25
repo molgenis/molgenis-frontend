@@ -4,11 +4,11 @@ module.exports = {
     host: process.env.JENKINS_AGENT_NAME || 'localhost',
     proxy: process.env.NODE_ENV === 'production' ? undefined : {
       '^/api': {
-        'target': 'https://lifelines.dev.molgenis.org',
+        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
         'keepOrigin': true
       },
       '^/app-ui-context': {
-        'target': 'https://lifelines.dev.molgenis.org',
+        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
         'keepOrigin': true
       }
     }

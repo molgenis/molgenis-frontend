@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import InfoIconButton from '@/components/InfoIconButton.vue'
+import InfoIconButton from '@/components/Utils/InfoIconButton.vue'
 
 describe('InfoIconButton.vue', () => {
   it('exists', () => {
