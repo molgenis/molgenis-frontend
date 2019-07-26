@@ -1,6 +1,13 @@
 <template>
   <div class="container-fluid mb-4">
     <h2>{{activeEntity}}</h2>
+    <toast-component
+      class="toast-component mt-2"
+      v-if="toast"
+      :type="toast.type"
+      :message="toast.message"
+      @toastCloseBtnClicked="clearToast">
+    </toast-component>
     <div class="flex-mainview" :class="{'showfilters': !showFilters}">
       <div class="flex-filter" >
         <filters-view />
@@ -15,18 +22,24 @@
 <script>
 import Vue from 'vue'
 import FiltersView from './FiltersView'
+import ToastComponent from '../components/Utils/ToastComponent'
 import DataView from './DataView'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default Vue.extend({
   name: 'MainView',
   computed: {
-    ...mapState(['showFilters', 'activeEntity'])
+    ...mapState(['showFilters', 'activeEntity', 'toast'])
+  },
+  methods: {
+    ...mapMutations([
+      'clearToast'
+    ])
   },
   created () {
     this.$store.commit('setActiveEntity', this.$route.params.entity)
   },
-  components: { FiltersView, DataView }
+  components: { FiltersView, DataView, ToastComponent }
 })
 </script>
 

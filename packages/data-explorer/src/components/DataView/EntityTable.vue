@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-1" v-if="entities && entities.items.length > 0">
+  <div class="mt-1 entity-table" v-if="entities && entities.items.length > 0">
     <table class="table">
       <thead>
       <tr>
@@ -31,4 +31,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+  .entity-table{
+    width: 0;
+  }
 </style>
