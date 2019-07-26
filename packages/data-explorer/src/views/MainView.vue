@@ -1,11 +1,11 @@
 <template>
   <div class="container-fluid mb-4">
     <h2>{{activeEntity}}<small><small> (maybe some breadcrumbs?)</small></small></h2>
-    <div class="row" :class="{'showfilters': !showFilters}">
-      <div class="col-sm-3" >
+    <div class="flex-mainview" :class="{'showfilters': !showFilters}">
+      <div class="flex-filter" >
         <filters-view />
       </div>
-      <div class="col-sm-9" >
+      <div class="flex-data" >
         <data-view />
       </div>
     </div>
@@ -29,17 +29,39 @@ export default Vue.extend({
   components: { FiltersView, DataView }
 })
 </script>
+
 <style scoped>
-  .col-sm-3{
-    transition: flex 0.3s, padding 0.3s;
+  .flex-mainview{
+    display: flex;
+    white-space: normal;
+  }
+  .flex-filter{
+    transition: max-width 0.3s, min-width 0.3s;
+    min-width: 15rem;
+    max-width: 20rem;
+    padding-right: 1rem;
+    flex: 1 0 0rem;
     overflow: hidden;
+
   }
-  .showfilters .col-sm-3{
-    flex: 0 0 0%;
-    padding: 0;
+  .showfilters .flex-filter{
+    flex: 0 0 0;
+    max-width: 0;
+    min-width: 0;
+    padding-right: 0;
   }
-  .showfilters .col-sm-9{
-    flex: 0 0 100%;
-    max-width: 100%;
+  .flex-data{
+    flex: 1 0 0
+  }
+
+  @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
+    .flex-mainview{
+      display: block;
+    }
+    .flex-mainview .flex-filter{
+      min-width: 0;
+      max-width: none;
+      padding: 0;
+    }
   }
 </style>

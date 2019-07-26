@@ -5,7 +5,7 @@ const state: ApplicationState = {
   activeEntity: 'it_emx_datatypes_TypeTest',
   entityData: null,
   entityMeta: null,
-  dataDisplayLayout: 'table',
+  dataDisplayLayout: 'cards',
   showFilters: true
 }
 
