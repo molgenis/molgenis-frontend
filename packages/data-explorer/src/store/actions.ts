@@ -6,6 +6,5 @@ export default {
   loadEntity: tryAction(async ({ commit, state } : any) => {
     const response = await api.get('/api/entity/' + state.activeEntity)
     commit('setEntityData', response)
-    console.log(response)
   })
 }

@@ -3,7 +3,7 @@
     <toolbar-view />
     <EntityCards
       :entities="activeEntityData"
-      v-if="getLayout === 'cards'" />
+      v-if="dataDisplayLayout === 'cards'" />
     <EntityTable
       :entities="activeEntityData"
       v-else />
@@ -12,7 +12,7 @@
 
 <script>
 import Vue from 'vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import ToolbarView from './ToolbarView'
 import EntityCards from '../components/DataView/EntityCards'
 import EntityTable from '../components/DataView/EntityTable'
@@ -21,9 +21,7 @@ export default Vue.extend({
   name: 'DataView',
   computed: {
     ...mapGetters(['activeEntityData']),
-    getLayout () {
-      return this.$store.state.dataDisplayLayout
-    }
+    ...mapState(['dataDisplayLayout'])
   },
   created () {
     this.$store.dispatch('loadEntity')

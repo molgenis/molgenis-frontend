@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid mb-4">
-    <h2>{{activeEntity}}<small><small> (maybe some breadcrumbs?)</small></small></h2>
+    <h2>{{activeEntity}}</h2>
     <div class="flex-mainview" :class="{'showfilters': !showFilters}">
       <div class="flex-filter" >
         <filters-view />
@@ -37,7 +37,7 @@ export default Vue.extend({
   }
   .flex-filter{
     transition: max-width 0.3s, min-width 0.3s;
-    min-width: 15rem;
+    min-width: 20rem;
     max-width: 20rem;
     padding-right: 1rem;
     flex: 1 0 0rem;
