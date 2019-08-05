@@ -88,7 +88,7 @@ pipeline {
                         "--set image.tag=${TAG} " +
                         "--set image.repository=${LOCAL_REGISTRY} " +
                         "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
-                        "--set proxy.backend.service.targetRelease=master-molgenis " +
+                        "--set proxy.backend.service.targetRelease=master " +
                         "--set image.pullPolicy=Always"
                 }
             }
