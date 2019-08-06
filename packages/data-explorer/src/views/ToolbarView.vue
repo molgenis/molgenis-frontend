@@ -1,7 +1,7 @@
 <template>
   <div class="toolbar">
     <info-icon-button
-      v-if="showFilters === true"
+      v-if="showFilters"
       @click.native="setShowFilter(false)"
       name="Hide filter"
       class="float-right">

@@ -20,7 +20,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  button svg path{
+  button svg path {
     transition: fill 0.3s;
   }
   button:hover svg path {
