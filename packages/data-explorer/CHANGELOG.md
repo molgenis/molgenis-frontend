@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.3.0...@molgenis-ui/data-explorer@0.4.0) (2019-08-06)
+
+
+### Bug Fixes
+
+* **data-explorer:** Removed double slash in url ([1dab735](https://github.com/molgenis/molgenis-frontend/commit/1dab735))
+
+
+### Features
+
+* **data-explorer:** Add placeholder and empty tests ([b9056b9](https://github.com/molgenis/molgenis-frontend/commit/b9056b9))
+
+
+
+
+
 # [0.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.2.0...@molgenis-ui/data-explorer@0.3.0) (2019-07-24)
 
 
