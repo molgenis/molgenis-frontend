@@ -4,7 +4,7 @@ import { tryAction } from './helpers'
 
 export default {
   loadEntity: tryAction(async ({ commit, state } : any) => {
-    const response = await api.get('/api/entity/' + state.activeEntity)
+    const response = await api.get(`/api/entity/${state.activeEntity}`)
     commit('setEntityData', response)
   })
 }
