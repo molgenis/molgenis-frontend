@@ -87,7 +87,8 @@ pipeline {
                         "--set environment=dev " +
                         "--set image.tag=${TAG} " +
                         "--set image.repository=${LOCAL_REGISTRY} " +
-                        "--set proxy.backend.url=http://master-molgenis.molgenis-abcde.svc:8080 " +
+                        "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
+                        "--set proxy.backend.service.targetRelease=master " +
                         "--set image.pullPolicy=Always"
                 }
             }
