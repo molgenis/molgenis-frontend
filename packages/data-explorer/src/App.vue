@@ -6,7 +6,7 @@
 
 <script>
 import Vue from 'vue'
-import PageComponent from '../node_modules/@molgenis/molgenis-ui-context/src/components//PageComponent.vue'
+import PageComponent from '../node_modules/@molgenis/molgenis-ui-context/src/components/PageComponent.vue'
 
 export default Vue.extend({
   name: 'app',
