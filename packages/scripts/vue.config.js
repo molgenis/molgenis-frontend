@@ -17,7 +17,7 @@ module.exports = {
     ? '/@molgenis-ui/scripts/dist/'
     : '/',
   configureWebpack: config => {
-    config.devtool = 'source-map',
+    config.devtool = 'source-map'
     config.externals = {
       'bootstrap': 'bootstrap'
     }
@@ -37,9 +37,6 @@ module.exports = {
     // In CI mode, Safari cannot contact "localhost", so as a workaround, run the dev server using the jenkins agent pod dns instead.
     host: process.env.JENKINS_AGENT_NAME || 'localhost',
     proxy: process.env.NODE_ENV === 'production' ? undefined : {
-      '^/api': {
-        'target': 'http://localhost:8080'
-      },
       '^/scripts': {
         'target': 'http://localhost:8080'
       },
@@ -71,6 +68,12 @@ module.exports = {
       })
       app.post('/api/v2/sys_scr_ScriptParameter', function (req, res) {
         res.json(schemas.Created)
+      })
+      app.post('/api/v2/i18n/scripts/en', function (req, res) {
+        res.json(schemas.i18n)
+      })
+      app.post('/api/v2/i18n/scripts', function (req, res) {
+        res.json(schemas.i18n)
       })
     }
   }
