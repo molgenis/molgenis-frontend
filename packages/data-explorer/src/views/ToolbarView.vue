@@ -66,7 +66,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .toolbar{
+  .toolbar {
     margin-left: -0.25rem;
     margin-right: -0.25rem;
   }

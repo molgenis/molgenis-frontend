@@ -31,7 +31,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .entity-table{
+  .entity-table {
     width: 0;
   }
 </style>

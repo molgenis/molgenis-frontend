@@ -44,11 +44,11 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .flex-mainview{
+  .flex-mainview {
     display: flex;
     white-space: normal;
   }
-  .flex-filter{
+  .flex-filter {
     transition: max-width 0.3s, min-width 0.3s;
     min-width: 20rem;
     max-width: 20rem;
@@ -57,21 +57,21 @@ export default Vue.extend({
     overflow: hidden;
 
   }
-  .showfilters .flex-filter{
+  .showfilters .flex-filter {
     flex: 0 0 0;
     max-width: 0;
     min-width: 0;
     padding-right: 0;
   }
-  .flex-data{
+  .flex-data {
     flex: 1 0 0
   }
 
   @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
-    .flex-mainview{
+    .flex-mainview {
       display: block;
     }
-    .flex-mainview .flex-filter{
+    .flex-mainview .flex-filter {
       min-width: 0;
       max-width: none;
       padding: 0;

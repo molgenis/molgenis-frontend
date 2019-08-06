@@ -23,7 +23,7 @@ export default Vue.extend({
   button svg path{
     transition: fill 0.3s;
   }
-  button:hover svg path{
+  button:hover svg path {
     fill: var(--danger);
   }
 </style>

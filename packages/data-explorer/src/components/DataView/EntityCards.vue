@@ -26,28 +26,28 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .showfilters .card-columns{
+  .showfilters .card-columns {
     column-count: 4;
   }
 
   @media only screen and (max-width: 1200px) { /* Bootstrap brakepoint xl */
-    .flex-mainview .card-columns{
+    .flex-mainview .card-columns {
       column-count: 2;
     }
-    .showfilters .card-columns{
+    .showfilters .card-columns {
       column-count: 3;
     }
   }
   @media only screen and (max-width: 992px) { /* Bootstrap brakepoint lg */
-    .flex-mainview .card-columns{
+    .flex-mainview .card-columns {
       column-count: 1;
     }
-    .showfilters .card-columns{
+    .showfilters .card-columns {
       column-count: 2;
     }
   }
   @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
-    .flex-mainview .card-columns{
+    .flex-mainview .card-columns {
       column-count: 1;
     }
   }
