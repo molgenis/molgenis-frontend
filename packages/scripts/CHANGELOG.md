@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/scripts@2.0.1...@molgenis-ui/scripts@2.0.2) (2019-08-06)
+
+
+### Bug Fixes
+
+* **Scripts:** Remove tooltip ([cc13e85](https://github.com/molgenis/molgenis-frontend/commit/cc13e85)), closes [#8380](https://github.com/molgenis/molgenis-frontend/issues/8380)
+
+
+
+
+
 ## [2.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/scripts@2.0.0...@molgenis-ui/scripts@2.0.1) (2019-06-14)
 
 
