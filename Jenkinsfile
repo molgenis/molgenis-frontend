@@ -22,6 +22,7 @@ pipeline {
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
                         env.DOCKERHUB_AUTH = sh(script: 'vault read -field=value secret/gcc/token/dockerhub', returnStdout: true)
                         env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
+                        env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
                     }
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
@@ -38,6 +39,9 @@ pipeline {
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
                     sh "yarn lerna run build"
+                }
+                container('sonar') {
+                    sh "sonar-scanner -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
                 }
             }
             post {
@@ -113,6 +117,9 @@ pipeline {
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
                     sh "yarn lerna run build"
+                }
+                container('sonar') {
+                    sh "sonar-scanner"
                 }
             }
             post {
