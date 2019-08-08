@@ -7,7 +7,7 @@
       v-if="dataDisplayLayout === 'cards'" />
     <entity-table
       :entities="activeEntityData"
-      :isShop="false"
+      :isShop="true"
       v-else />
   </div>
 </template>

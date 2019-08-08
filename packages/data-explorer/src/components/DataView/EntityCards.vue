@@ -50,7 +50,7 @@ export default Vue.extend({
   computed: {
     ...mapState(['shoppingFilter', 'entityMeta', 'shoppedEntityItems']),
     idAttribute () {
-      return this.$store.state.entityMeta.idAttribute
+      return this.entityMeta.idAttribute
     },
     entitiesToShow () {
       if (this.shoppingFilter) {
