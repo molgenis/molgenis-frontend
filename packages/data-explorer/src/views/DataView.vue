@@ -1,11 +1,13 @@
 <template>
   <div>
     <toolbar-view />
-    <EntityCards
+    <entity-cards
       :entities="activeEntityData"
+      :isShop="true"
       v-if="dataDisplayLayout === 'cards'" />
-    <EntityTable
+    <entity-table
       :entities="activeEntityData"
+      :isShop="false"
       v-else />
   </div>
 </template>
@@ -25,6 +27,7 @@ export default Vue.extend({
   },
   created () {
     this.$store.dispatch('loadEntity')
+    this.$store.dispatch('loadMetaData')
   },
   components: { ToolbarView, EntityCards, EntityTable }
 })

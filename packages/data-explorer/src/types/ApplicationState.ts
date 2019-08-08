@@ -9,5 +9,7 @@ export default interface ApplicationState {
   activeEntity: String | null
   entityData: any
   entityMeta: any
-  showFilters: boolean,
+  shoppedEntityItems: String[]
+  showFilters: Boolean
+  shoppingFilter: Boolean
 }
