@@ -2,7 +2,7 @@
   "npmClient": "yarn",
   "npmClientArgs": ["--frozen-lockfile"],
   "packages": [
-    "packages/*"
+    "packages/app-manager"
   ],
   "version": "independent",
   "yes": true,
