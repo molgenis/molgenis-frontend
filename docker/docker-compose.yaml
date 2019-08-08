@@ -29,7 +29,7 @@ services:
       - elasticsearch
       - minio
     volumes:
-      - app-data:/opt/molgenis
+      - app-data:/home/molgenis
     depends_on:
       - elasticsearch
     healthcheck:
