@@ -64,7 +64,7 @@ export default Vue.extend({
     padding-right: 0;
   }
   .flex-data {
-    flex: 1 0 0
+    flex: 1 0 0;
   }
 
   @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
