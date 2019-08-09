@@ -7,7 +7,6 @@
 
 <script>
 import Vue from 'vue'
-import { mapMutations } from 'vuex'
 import ShoppingButton from '../Utils/ShoppingButton'
 
 export default Vue.extend({
@@ -31,9 +30,6 @@ export default Vue.extend({
       required: false,
       default: () => false
     }
-  },
-  methods: {
-    ...mapMutations(['toggleShoppingItems'])
   },
   components: { ShoppingButton }
 })
