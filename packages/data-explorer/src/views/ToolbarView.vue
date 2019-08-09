@@ -30,7 +30,18 @@
       <font-awesome-icon icon="th-list" />
     </info-icon-button>
 
-    <info-icon-button name="Shopping cart" class="float-right">
+    <info-icon-button
+      v-if="shoppingFilter"
+      @click.native="setShoppingFilter(false)"
+      name="Show all"
+      class="float-right">
+      <font-awesome-icon icon="store" />
+    </info-icon-button>
+    <info-icon-button
+      v-else
+      @click.native="setShoppingFilter(true)"
+      name="Show cart"
+      class="float-right">
       <font-awesome-icon icon="shopping-cart" />
     </info-icon-button>
 
@@ -44,14 +55,14 @@ import ActiveFilters from '../components/ToolbarView/ActiveFilters'
 import InfoIconButton from '../components/Utils/InfoIconButton'
 import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingCart, faTh, faThList, faSlidersH } from '@fortawesome/free-solid-svg-icons'
+import { faStore, faShoppingCart, faTh, faThList, faSlidersH } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faShoppingCart, faTh, faThList, faSlidersH)
+library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore)
 
 export default Vue.extend({
   name: 'ToolbarView',
   computed: {
-    ...mapState(['dataDisplayLayout', 'showFilters'])
+    ...mapState(['dataDisplayLayout', 'showFilters', 'shoppingFilter'])
   },
   methods: {
     setShowFilter (value) {
@@ -59,6 +70,9 @@ export default Vue.extend({
     },
     setDataDisplayLayout (value) {
       this.$store.commit('setDataDisplayLayout', value)
+    },
+    setShoppingFilter (value) {
+      this.$store.commit('setShoppingFilter', value)
     }
   },
   components: { ActiveFilters, InfoIconButton, FontAwesomeIcon }

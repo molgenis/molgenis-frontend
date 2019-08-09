@@ -6,7 +6,9 @@ const state: ApplicationState = {
   entityData: null,
   entityMeta: null,
   dataDisplayLayout: 'cards',
-  showFilters: true
+  showFilters: true,
+  shoppingFilter: false,
+  shoppedEntityItems: []
 }
 
 export default state

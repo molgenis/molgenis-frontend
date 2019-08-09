@@ -9,7 +9,9 @@ import i18n from '@molgenis/molgenis-i18n-js'
 Vue.config.productionTip = false
 
 Vue.use(i18n, {
-  namespace: ['filters'],
+  lng: 'en',
+  fallbackLng: 'en',
+  namespace: ['dataexplorer'],
   callback () {
     new Vue({
       store,
