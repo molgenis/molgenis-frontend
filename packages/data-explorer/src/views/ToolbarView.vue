@@ -31,14 +31,14 @@
     </info-icon-button>
 
     <info-icon-button
-      v-if="shoppingFilter"
+      v-if="shoppingFilter && hasCart"
       @click.native="setShoppingFilter(false)"
       name="Show all"
       class="float-right">
       <font-awesome-icon icon="store" />
     </info-icon-button>
     <info-icon-button
-      v-else
+      v-else-if="hasCart"
       @click.native="setShoppingFilter(true)"
       name="Show cart"
       class="float-right">
@@ -63,6 +63,13 @@ export default Vue.extend({
   name: 'ToolbarView',
   computed: {
     ...mapState(['dataDisplayLayout', 'showFilters', 'shoppingFilter'])
+  },
+  props: {
+    hasCart: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    }
   },
   methods: {
     setShowFilter (value) {

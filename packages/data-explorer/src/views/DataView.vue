@@ -1,6 +1,7 @@
 <template>
   <div>
-    <toolbar-view />
+    <!--TODO: hasCart and isShop should be set to true when entityType is tagged as "SHOPABLE"-->
+    <toolbar-view :hasCart="true"/>
     <entity-view :isShop="true"/>
   </div>
 </template>
