@@ -1,5 +1,4 @@
-import ApplicationState, { Toast } from '@/types/ApplicationState'
-import Vue from 'vue'
+import ApplicationState, { Toast, DataApiResponse, MetaDataApiResponse } from '@/types/ApplicationState'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {
@@ -11,7 +10,7 @@ export default {
   setDataDisplayLayout (state: ApplicationState, layout: String) {
     state.dataDisplayLayout = layout
   },
-  setEntityData (state: ApplicationState, data: any) {
+  setEntityData (state: ApplicationState, data: DataApiResponse) {
     state.entityData = data
   },
   setShowFilters (state: ApplicationState, showFilters: boolean) {
@@ -31,7 +30,7 @@ export default {
       state.shoppedEntityItems.push(id)
     }
   },
-  setMetaData (state: ApplicationState, meta: any) {
+  setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.entityMeta = meta
   }
 }
