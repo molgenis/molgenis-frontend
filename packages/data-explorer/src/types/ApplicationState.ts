@@ -15,7 +15,6 @@ type DataApiResponsePage = {
   number: number
 }
 
-
 export type DataApiResponse = {
   links: {
     self: string
