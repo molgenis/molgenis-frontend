@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="card"
-  >
+  <div class="card">
     <shopping-button :showShop="showShop" @click.native="cardClick"></shopping-button>
     <slot></slot>
   </div>
