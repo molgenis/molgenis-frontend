@@ -6,35 +6,35 @@
 </template>
 
 <script>
-  import ShoppingButton from '../Utils/ShoppingButton'
-  export default {
-    name: 'EntityTableRow',
-    props: {
-      id: {
-        type: String,
-        required: true
-      },
-      data: {
-        type: Object,
-        required: true
-      },
-      isSelected: {
-        type: Boolean,
-        required: false,
-        default: () => false
-      },
-      clickShop: {
-        type: Function,
-        required: false
-      },
-      isShop: {
-        type: Boolean,
-        required: false,
-        default: () => false
-      }
+import ShoppingButton from '../Utils/ShoppingButton'
+export default {
+  name: 'EntityTableRow',
+  props: {
+    id: {
+      type: String,
+      required: true
     },
-    components: { ShoppingButton }
-  }
+    data: {
+      type: Object,
+      required: true
+    },
+    isSelected: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+    clickShop: {
+      type: Function,
+      required: false
+    },
+    isShop: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    }
+  },
+  components: { ShoppingButton }
+}
 </script>
 
 <style scoped>

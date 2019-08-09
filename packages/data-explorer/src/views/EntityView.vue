@@ -39,45 +39,45 @@
 </template>
 
 <script>
-  import EntityCard from '../components/DataView/EntityCard'
-  import EntityTableRow from '../components/DataView/EntityTableRow'
-  import EntityTableHeader from '../components/DataView/EntityTableHeader'
-  import { mapGetters, mapState, mapMutations } from 'vuex'
+import EntityCard from '../components/DataView/EntityCard'
+import EntityTableRow from '../components/DataView/EntityTableRow'
+import EntityTableHeader from '../components/DataView/EntityTableHeader'
+import { mapGetters, mapState, mapMutations } from 'vuex'
 
-  export default {
-    name: 'EntityView',
-    components: {EntityCard, EntityTableRow, EntityTableHeader},
-    props: {
-      isShop: {
-        type: Boolean,
-        required: false,
-        default: () => false
-      }
+export default {
+  name: 'EntityView',
+  components: { EntityCard, EntityTableRow, EntityTableHeader },
+  props: {
+    isShop: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    }
+  },
+  computed: {
+    ...mapGetters(['activeEntityData']),
+    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'entityMeta', 'shoppedEntityItems']),
+    idAttribute () {
+      return this.entityMeta.idAttribute
     },
-    computed: {
-      ...mapGetters(['activeEntityData']),
-      ...mapState(['dataDisplayLayout', 'shoppingFilter', 'entityMeta', 'shoppedEntityItems']),
-      idAttribute () {
-        return this.entityMeta.idAttribute
-      },
-      entitiesToShow () {
-        if (this.shoppingFilter) {
-          return this.activeEntityData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
-        } else {
-          return this.activeEntityData.items
-        }
+    entitiesToShow () {
+      if (this.shoppingFilter) {
+        return this.activeEntityData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
+      } else {
+        return this.activeEntityData.items
       }
+    }
+  },
+  methods: {
+    ...mapMutations(['toggleShoppingItems']),
+    getEntityId (entity) {
+      return entity.data[this.idAttribute].toString()
     },
-    methods: {
-      ...mapMutations(['toggleShoppingItems']),
-      getEntityId (entity) {
-        return entity.data[this.idAttribute].toString()
-      },
-      isSelected (entity) {
-        return this.shoppedEntityItems.includes(this.getEntityId(entity))
-      }
-    },
+    isSelected (entity) {
+      return this.shoppedEntityItems.includes(this.getEntityId(entity))
+    }
   }
+}
 </script>
 
 <style scoped>

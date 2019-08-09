@@ -11,20 +11,20 @@
 </template>
 
 <script>
-  export default {
-    name: 'EntityTableHeader',
-    props: {
-      header: {
-        type: Array,
-        required: true
-      },
-      isShop: {
-        type: Boolean,
-        required: false,
-        default: () => false
-      }
+export default {
+  name: 'EntityTableHeader',
+  props: {
+    header: {
+      type: Array,
+      required: true
+    },
+    isShop: {
+      type: Boolean,
+      required: false,
+      default: () => false
     }
   }
+}
 </script>
 
 <style scoped>
