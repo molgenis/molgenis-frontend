@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div id="alert-message fade" v-if="message" :class="'alert alert-' + type" role="alert">
+    <div id="alert-message" v-if="message" :class="'alert alert-' + type" role="alert">
       <button @click="$emit('toastCloseBtnClicked')" type="button" class="close">
         <span aria-hidden="true">&times;</span>
       </button>
