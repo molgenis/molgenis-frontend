@@ -36,7 +36,3 @@ export default {
   components: { ShoppingButton }
 }
 </script>
-
-<style scoped>
-
-</style>
