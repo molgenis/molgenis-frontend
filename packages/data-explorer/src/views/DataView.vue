@@ -1,7 +1,7 @@
 <template>
   <div>
     <toolbar-view />
-    <entity-view />
+    <entity-view :isShop="true"/>
   </div>
 </template>
 

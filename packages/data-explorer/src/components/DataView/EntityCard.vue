@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="card"
-  >
-    <shopping-button :showShop="showShop" @click.native="cardClick"></shopping-button>
+  <div class="card">
+    <shopping-button v-if="isShop" :showShop="showShop" @click.native="clickShop(id)"></shopping-button>
     <slot></slot>
   </div>
 </template>
@@ -24,6 +22,10 @@ export default Vue.extend({
       required: false,
       default: () => false
     },
+    clickShop: {
+      type: Function,
+      required: false
+    },
     isShop: {
       type: Boolean,
       required: false,
@@ -36,12 +38,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapMutations(['toggleShoppingItems']),
-    cardClick () {
-      if (this.isShop) {
-        this.toggleShoppingItems(this.id)
-      }
-    }
+    ...mapMutations(['toggleShoppingItems'])
   },
   components: { ShoppingButton }
 })
