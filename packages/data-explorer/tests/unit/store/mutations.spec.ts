@@ -5,15 +5,15 @@ describe('mutations', () => {
   describe('setToast', () => {
     it('replace the toast with the passed toast', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setToast(baseAppState, {type: 'danger', message: 'message'})
-      expect(baseAppState.toast).toEqual({type: 'danger', message: 'message'})
+      mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
+      expect(baseAppState.toast).toEqual({ type: 'danger', message: 'message' })
     })
   })
 
   describe('clearToast', () => {
     it('clears the toast', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setToast(baseAppState, {type: 'danger', message: 'message'})
+      mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
       mutations.clearToast(baseAppState)
       expect(baseAppState.toast).toEqual(null)
     })
@@ -33,10 +33,10 @@ describe('mutations', () => {
       const entityData = {
         items: [
           {
-            data: {id: '1', label: 'blaat'},
-            links: {'self': 'https://beautiful_link.nl/1'}
+            data: { id: '1', label: 'blaat' },
+            links: { 'self': 'https://beautiful_link.nl/1' }
           }],
-        links: {'self': 'https://beautiful_link.nl'},
+        links: { 'self': 'https://beautiful_link.nl' },
         page: {
           size: 1,
           totalElements: 1,
@@ -80,12 +80,12 @@ describe('mutations', () => {
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
     })
     it('adds another item to shopping cart', () => {
-      let baseAppState = Object.assign({shoppedEntityItems: ['item1']}, state)
+      let baseAppState = Object.assign({ shoppedEntityItems: ['item1'] }, state)
       mutations.toggleShoppingItems(baseAppState, 'item2')
       expect(baseAppState.shoppedEntityItems).toEqual(['item1', 'item2'])
     })
     it('removes an existing item from shopping cart', () => {
-      let baseAppState = Object.assign({shoppedEntityItems: ['item1', 'item2']}, state)
+      let baseAppState = Object.assign({ shoppedEntityItems: ['item1', 'item2'] }, state)
       mutations.toggleShoppingItems(baseAppState, 'item2')
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
     })
@@ -95,61 +95,61 @@ describe('mutations', () => {
     it('sets the meta data', () => {
       let baseAppState = Object.assign({}, state)
       const entityMetaData = {
-        "href": "/api/v2/test",
-        "hrefCollection": "/api/v2/test",
-        "name": "test",
-        "label": "Test",
-        "description": "Beautiful description",
-        "attributes": [
+        'href': '/api/v2/test',
+        'hrefCollection': '/api/v2/test',
+        'name': 'test',
+        'label': 'Test',
+        'description': 'Beautiful description',
+        'attributes': [
           {
-            "href": "/api/v2/test/meta/id",
-            "fieldType": "INT",
-            "name": "id",
-            "label": "id",
-            "attributes": [],
-            "auto": false,
-            "nillable": false,
-            "readOnly": true,
-            "labelAttribute": false,
-            "unique": true,
-            "visible": true,
-            "lookupAttribute": true,
-            "isAggregatable": false
+            'href': '/api/v2/test/meta/id',
+            'fieldType': 'INT',
+            'name': 'id',
+            'label': 'id',
+            'attributes': [],
+            'auto': false,
+            'nillable': false,
+            'readOnly': true,
+            'labelAttribute': false,
+            'unique': true,
+            'visible': true,
+            'lookupAttribute': true,
+            'isAggregatable': false
           },
           {
-            "href": "/api/v2/test/meta/label",
-            "fieldType": "STRING",
-            "name": "label",
-            "label": "label",
-            "attributes": [],
-            "auto": false,
-            "nillable": false,
-            "readOnly": true,
-            "labelAttribute": true,
-            "unique": true,
-            "visible": true,
-            "lookupAttribute": true,
-            "isAggregatable": false
+            'href': '/api/v2/test/meta/label',
+            'fieldType': 'STRING',
+            'name': 'label',
+            'label': 'label',
+            'attributes': [],
+            'auto': false,
+            'nillable': false,
+            'readOnly': true,
+            'labelAttribute': true,
+            'unique': true,
+            'visible': true,
+            'lookupAttribute': true,
+            'isAggregatable': false
           }
         ],
-        "labelAttribute": "label",
-        "idAttribute": "id",
-        "lookupAttributes": [
-          "id"
+        'labelAttribute': 'label',
+        'idAttribute': 'id',
+        'lookupAttributes': [
+          'id'
         ],
-        "isAbstract": false,
-        "writable": true,
-        "languageCode": "en",
-        "permissions": [
-          "DELETE_DATA",
-          "READ_METADATA",
-          "READ_DATA",
-          "UPDATE_METADATA",
-          "AGGREGATE_DATA",
-          "DELETE_METADATA",
-          "UPDATE_DATA",
-          "COUNT_DATA",
-          "ADD_DATA"
+        'isAbstract': false,
+        'writable': true,
+        'languageCode': 'en',
+        'permissions': [
+          'DELETE_DATA',
+          'READ_METADATA',
+          'READ_DATA',
+          'UPDATE_METADATA',
+          'AGGREGATE_DATA',
+          'DELETE_METADATA',
+          'UPDATE_DATA',
+          'COUNT_DATA',
+          'ADD_DATA'
         ]
       }
       mutations.setMetaData(baseAppState, entityMetaData)
