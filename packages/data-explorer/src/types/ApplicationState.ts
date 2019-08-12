@@ -57,11 +57,11 @@ export type MetaDataApiResponse = {
 
 export default interface ApplicationState {
   toast: Toast | null,
-  dataDisplayLayout: String
-  activeEntity: String | null
+  dataDisplayLayout: string
+  activeEntity: string | null
   entityData: DataApiResponse | null
   entityMeta: MetaDataApiResponse | null
-  shoppedEntityItems: String[]
-  showFilters: Boolean
-  shoppingFilter: Boolean
+  shoppedEntityItems: string[]
+  showFilters: boolean
+  shoppingFilter: boolean
 }
