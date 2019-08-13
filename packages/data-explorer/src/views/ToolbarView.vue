@@ -44,6 +44,9 @@
       class="float-right">
       <font-awesome-icon icon="shopping-cart" />
     </info-icon-button>
+    <button v-if="shoppingFilter && hasCart" class="btn btn-danger float-right m-1">
+      <font-awesome-icon icon="shopping-bag" /> Order
+    </button>
 
     <active-filters />
   </div>
@@ -55,9 +58,9 @@ import ActiveFilters from '../components/ToolbarView/ActiveFilters'
 import InfoIconButton from '../components/Utils/InfoIconButton'
 import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faStore, faShoppingCart, faTh, faThList, faSlidersH } from '@fortawesome/free-solid-svg-icons'
+import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore)
+library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag)
 
 export default Vue.extend({
   name: 'ToolbarView',

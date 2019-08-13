@@ -35,6 +35,11 @@
                         :clickShop="toggleShoppingItems"></entity-table-row>
       </tbody>
     </table>
+
+    <button v-if="shoppingFilter && isShop" class="btn btn-danger m-1">
+      <font-awesome-icon icon="shopping-bag" /> Order
+    </button>
+
   </div>
 </template>
 
@@ -43,10 +48,14 @@ import EntityCard from '../components/DataView/EntityCard'
 import EntityTableRow from '../components/DataView/EntityTableRow'
 import EntityTableHeader from '../components/DataView/EntityTableHeader'
 import { mapGetters, mapState, mapMutations } from 'vuex'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faShoppingBag)
 
 export default {
   name: 'EntityView',
-  components: { EntityCard, EntityTableRow, EntityTableHeader },
+  components: { EntityCard, EntityTableRow, EntityTableHeader, FontAwesomeIcon },
   props: {
     isShop: {
       type: Boolean,
