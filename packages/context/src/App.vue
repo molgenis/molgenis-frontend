@@ -17,8 +17,8 @@ export default Vue.extend({
   },
   data () {
     return {
-      molgenisMenu: window.molgenisMenu,
-      showCookieWall: window.cookieWall
+      molgenisMenu: molgenisMenu,
+      showCookieWall: cookieWall
     }
   }
 })

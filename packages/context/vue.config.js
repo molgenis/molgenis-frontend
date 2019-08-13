@@ -12,7 +12,7 @@ build-date: ${buildDate}`
 module.exports = {
   filenameHashing: false,
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/@molgenis-ui/menu/dist/'
+    ? '/@molgenis-ui/context/dist/'
     : '/',
   configureWebpack: config => {
     config.plugins.push(

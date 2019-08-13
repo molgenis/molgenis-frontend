@@ -1,6 +1,6 @@
 {
-  "name": "@molgenis-ui/menu",
-  "version": "0.1.9",
+  "name": "@molgenis-ui/context",
+  "version": "1.0.0",
   "license": "LGPL-3.0",
   "publishConfig": {
     "access": "public"
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@molgenis/molgenis-ui-context": "^1.0.1",
+    "requirejs": "^2.3.6",
     "vue": "^2.5.17"
   },
   "devDependencies": {
