@@ -5,4 +5,4 @@ Vue.config.productionTip = false
 
 new Vue({
   render: createElement => createElement(App)
-}).$mount('#molgenis-site-context')
+}).$mount('#molgenis-context')
