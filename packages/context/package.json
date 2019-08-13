@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@molgenis/molgenis-ui-context": "^1.0.1",
-    "requirejs": "^2.3.6",
     "vue": "^2.5.17"
   },
   "devDependencies": {
