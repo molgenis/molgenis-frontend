@@ -8,7 +8,7 @@
       :message="toast.message"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
-    <div class="flex-mainview" :class="{'showfilters': !showFilters}">
+    <div class="flex-mainview d-flex" :class="{'showfilters': !showFilters}">
       <div class="flex-filter" >
         <filters-view />
       </div>
@@ -45,7 +45,6 @@ export default Vue.extend({
 
 <style scoped>
   .flex-mainview {
-    display: flex;
     white-space: normal;
   }
   .flex-filter {
@@ -53,18 +52,12 @@ export default Vue.extend({
     min-width: 20rem;
     max-width: 20rem;
     padding-right: 1rem;
-    flex: 1 0 0rem;
     overflow: hidden;
-
   }
   .showfilters .flex-filter {
-    flex: 0 0 0;
     max-width: 0;
     min-width: 0;
     padding-right: 0;
-  }
-  .flex-data {
-    flex: 1 0 0;
   }
 
   @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
