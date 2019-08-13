@@ -59,6 +59,9 @@ export default Vue.extend({
     min-width: 0;
     padding-right: 0;
   }
+  .flex-data {
+    max-width: calc(100% - 20rem);
+  }
 
   @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
     .flex-mainview {
