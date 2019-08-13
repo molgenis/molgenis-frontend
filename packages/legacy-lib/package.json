@@ -1,0 +1,23 @@
+{
+  "name": "@molgenis-ui/legacy-lib",
+  "version": "1.0.0",
+  "license": "LGPL-3.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@molgenis/molgenis-ui-context": "^1.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^3.2.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "gitHead": "03b27362d15f448f5cb81926a64b29a2064cb62d"
+}
