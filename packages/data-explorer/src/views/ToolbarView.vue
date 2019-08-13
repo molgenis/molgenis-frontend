@@ -8,7 +8,7 @@
       <font-awesome-icon icon="sliders-h" />
     </info-icon-button>
     <info-icon-button
-      v-else-if="!shoppingFilter"
+      v-else
       @click.native="setShowFilter(true)"
       name="Show Filters"
       class="float-right">
@@ -83,7 +83,6 @@ export default Vue.extend({
     },
     setShoppingFilter (value) {
       this.$store.commit('setShoppingFilter', value)
-      this.$store.commit('setShowFilters', !value) // Hide filters in shopping cart
     }
   },
   components: { ActiveFilters, InfoIconButton, FontAwesomeIcon }
