@@ -36,7 +36,7 @@
       </tbody>
     </table>
 
-    <button v-if="shoppingFilter && isShop" class="btn btn-danger m-1">
+    <button v-if="shoppingFilter && isShop" class="btn btn-success m-1">
       <font-awesome-icon icon="shopping-bag" /> Order
     </button>
 
