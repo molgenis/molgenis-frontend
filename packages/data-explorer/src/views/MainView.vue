@@ -54,13 +54,17 @@ export default Vue.extend({
     padding-right: 1rem;
     overflow: hidden;
   }
+  .flex-data {
+    max-width: calc(100% - 20rem);
+    width: 100%;
+  }
   .showfilters .flex-filter {
     max-width: 0;
     min-width: 0;
     padding-right: 0;
   }
-  .flex-data {
-    max-width: calc(100% - 20rem);
+  .showfilters .flex-data {
+    max-width: 100%;
   }
 
   @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
