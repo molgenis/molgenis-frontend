@@ -7,7 +7,7 @@ export default {
   clearToast (state: ApplicationState) {
     state.toast = null
   },
-  setDataDisplayLayout (state: ApplicationState, layout: String) {
+  setDataDisplayLayout (state: ApplicationState, layout: string) {
     state.dataDisplayLayout = layout
   },
   setEntityData (state: ApplicationState, data: DataApiResponse) {
