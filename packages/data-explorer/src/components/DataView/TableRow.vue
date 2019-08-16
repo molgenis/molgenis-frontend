@@ -1,7 +1,7 @@
 <template>
   <tr>
-    <td v-if="isShop"><shopping-button :isSelected="isSelected" @click.native="clickShop(id)"></shopping-button></td>
-    <td v-for="(item, index) in data" :key="index">{{item}}</td>
+    <td v-if="isShop"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></td>
+    <td v-for="(item, index) in rowData" :key="index">{{item}}</td>
   </tr>
 </template>
 
@@ -14,7 +14,7 @@ export default {
       type: String,
       required: true
     },
-    data: {
+    rowData: {
       type: Object,
       required: true
     },
@@ -22,10 +22,6 @@ export default {
       type: Boolean,
       required: false,
       default: () => false
-    },
-    clickShop: {
-      type: Function,
-      required: false
     },
     isShop: {
       type: Boolean,
