@@ -1,4 +1,5 @@
-import ApplicationState, { Toast, DataApiResponse, MetaDataApiResponse } from '@/types/ApplicationState'
+import ApplicationState, { Toast } from '@/types/ApplicationState'
+import { DataApiResponse, MetaDataApiResponse } from '@/types/ApiResponse'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {
