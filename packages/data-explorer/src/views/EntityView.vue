@@ -11,8 +11,7 @@
         :key="index"
         :id="getEntityId(entity)"
         :isSelected="isSelected(entity)"
-        :isShop="isShop"
-        :clickShop="toggleShoppingItems">
+        :isShop="isShop">
 
         <!-- Card template, to be made generic-->
         <div class="card-body">
@@ -31,8 +30,7 @@
                         :id="getEntityId(entity)"
                         :data="entity.data"
                         :isSelected="isSelected(entity)"
-                        :isShop="isShop"
-                        :clickShop="toggleShoppingItems"></entity-table-row>
+                        :isShop="isShop"></entity-table-row>
       </tbody>
     </table>
 
@@ -44,10 +42,10 @@
 </template>
 
 <script>
-import EntityCard from '../components/DataView/EntityCard'
-import EntityTableRow from '../components/DataView/EntityTableRow'
-import EntityTableHeader from '../components/DataView/EntityTableHeader'
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import EntityCard from '../components/DataView/ExplorerCard'
+import EntityTableRow from '../components/DataView/TableRow'
+import EntityTableHeader from '../components/DataView/TableHeader'
+import { mapGetters, mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -78,7 +76,6 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleShoppingItems']),
     getEntityId (entity) {
       return entity.data[this.idAttribute].toString()
     },

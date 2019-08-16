@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <shopping-button v-if="isShop" :isSelected="isSelected" @click.native="clickShop(id)"></shopping-button>
+    <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
     <slot></slot>
   </div>
 </template>
@@ -20,10 +20,6 @@ export default Vue.extend({
       type: Boolean,
       required: false,
       default: () => false
-    },
-    clickShop: {
-      type: Function,
-      required: false
     },
     isShop: {
       type: Boolean,
