@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 v-if="entityMeta && entityMeta.label" class="mb-0">{{entityMeta.label}}</h2>
+    <h1 v-if="entityMeta && entityMeta.label" class="mb-0">{{entityMeta.label}}</h1>
     <small v-if="entityMeta && entityMeta.description" class="text-secondary"><em>{{entityMeta.description}}</em></small>
 
     <!--TODO: hasCart and isShop should be set to true when entityType is tagged as "SHOPABLE"-->
