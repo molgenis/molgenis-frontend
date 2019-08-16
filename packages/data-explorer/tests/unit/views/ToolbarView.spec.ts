@@ -28,15 +28,9 @@ describe('ToolbarView.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  it('show/hides the filters', () => {
-    const wrapper = shallowMount(ToolbarView, { store, localVue })
-    wrapper.find('info-icon-button-stub[name="Hide filter"]').trigger('click')
-    expect(mutations.setShowFilters.mock.calls.length > 0).toBeTruthy()
-  })
-
   it('can change to card/table layout', () => {
     const wrapper = shallowMount(ToolbarView, { store, localVue })
-    wrapper.find('info-icon-button-stub[name="Table layout"]').trigger('click')
+    wrapper.find('.table-layout').trigger('click')
     expect(mutations.setDataDisplayLayout.mock.calls.length > 0).toBeTruthy()
   })
 })

@@ -7,6 +7,14 @@ module.exports = {
         'target': 'https://preview-pr-8588-2.dev.molgenis.org',
         'keepOrigin': true
       },
+      '^/css': {
+        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
+        'keepOrigin': true
+      },
+      '^/fonts': {
+        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
+        'keepOrigin': true
+      },
       '^/app-ui-context': {
         'target': 'https://preview-pr-8588-2.dev.molgenis.org',
         'keepOrigin': true

@@ -1,50 +1,35 @@
 <template>
   <div class="toolbar">
-    <info-icon-button
-      v-if="showFilters"
-      @click.native="setShowFilter(false)"
-      name="Hide filter"
-      class="float-right">
-      <font-awesome-icon icon="sliders-h" />
-    </info-icon-button>
-    <info-icon-button
-      v-else-if="!shoppingFilter"
-      @click.native="setShowFilter(true)"
-      name="Show Filters"
-      class="float-right">
-      <font-awesome-icon icon="sliders-h" />
-    </info-icon-button>
-
-    <info-icon-button
+    <button
       v-if="dataDisplayLayout === 'table'"
-      @click.native="setDataDisplayLayout('cards')"
-      name="Card layout"
-      class="float-right">
+      @click="setDataDisplayLayout('cards')"
+      class="btn btn-light ml-1 float-right btn-outline-secondary">
       <font-awesome-icon icon="th" />
-    </info-icon-button>
-    <info-icon-button
+      Card layout
+    </button>
+    <button
       v-else
-      @click.native="setDataDisplayLayout('table')"
-      name="Table layout"
-      class="float-right">
+      @click="setDataDisplayLayout('table')"
+      class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
       <font-awesome-icon icon="th-list" />
-    </info-icon-button>
+      Table layout
+    </button>
 
-    <info-icon-button
+    <button
       v-if="shoppingFilter && hasCart"
-      @click.native="setShoppingFilter(false)"
-      name="Show all"
-      class="float-right">
+      @click="setShoppingFilter(false)"
+      class="btn btn-light ml-1 float-right btn-outline-secondary">
       <font-awesome-icon icon="store" />
-    </info-icon-button>
-    <info-icon-button
+      Show store
+    </button>
+    <button
       v-else-if="hasCart"
-      @click.native="setShoppingFilter(true)"
-      name="Show cart"
-      class="float-right">
+      @click="setShoppingFilter(true)"
+      class="btn btn-light ml-1 float-right btn-outline-secondary">
       <font-awesome-icon icon="shopping-cart" />
-    </info-icon-button>
-    <button v-if="shoppingFilter && hasCart" class="btn btn-success float-right m-1">
+      Show cart
+    </button>
+    <button v-if="shoppingFilter && hasCart" class="btn btn-success float-right ml-1">
       <font-awesome-icon icon="shopping-bag" /> Order
     </button>
 
@@ -55,7 +40,6 @@
 <script>
 import Vue from 'vue'
 import ActiveFilters from '../components/ToolbarView/ActiveFilters'
-import InfoIconButton from '../components/Utils/InfoIconButton'
 import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
@@ -75,9 +59,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    setShowFilter (value) {
-      this.$store.commit('setShowFilters', value)
-    },
     setDataDisplayLayout (value) {
       this.$store.commit('setDataDisplayLayout', value)
     },
@@ -86,13 +67,6 @@ export default Vue.extend({
       this.$store.commit('setShowFilters', !value) // Hide filters in shopping cart
     }
   },
-  components: { ActiveFilters, InfoIconButton, FontAwesomeIcon }
+  components: { ActiveFilters, FontAwesomeIcon }
 })
 </script>
-
-<style scoped>
-  .toolbar {
-    margin-left: -0.25rem;
-    margin-right: -0.25rem;
-  }
-</style>

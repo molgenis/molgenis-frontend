@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button type="button" class="btn btn-light m-1"> Search: Hello wor <font-awesome-icon icon="times" class="ml-1" /></button>
-    <button type="button" class="btn btn-light m-1"> Color: Red <font-awesome-icon icon="times" class="ml-1" /></button>
+    <button type="button" class="btn btn-light mr-1 btn-outline-secondary"> Search: Hello wor <font-awesome-icon icon="times" class="ml-1" /></button>
+    <button type="button" class="btn btn-light mr-1 btn-outline-secondary"> Color: Red <font-awesome-icon icon="times" class="ml-1" /></button>
   </div>
 </template>
 

@@ -1,21 +1,46 @@
 <template>
   <div>
-    <filter-container
-      v-model="selections"
-      :filters="filters"
-      :filters-shown="filtersShown"
-      :can-edit="true"
-      @update="updateState"
-    />
+
+    <div class="">
+      <div class="p-0 pl-3 d-flex justify-content-between align-items-center">
+        <h2>
+          Filters
+        </h2>
+        <button
+          type="button"
+          class="btn btn-light m-2 btn-outline-secondary hide-filters"
+          title="Hide Filters"
+          @click="setShowFilters(false)">
+          <font-awesome-icon icon="chevron-left" />
+        </button>
+      </div>
+      <div class="p-2">
+        <filter-container
+          v-model="selections"
+          :filters="filters"
+          :filters-shown="filtersShown"
+          :can-edit="true"
+          @update="updateState"
+        />
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
+import { mapState, mapMutations } from 'vuex'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import FilterContainer from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/FilterContainer.vue'
+
+library.add(faChevronLeft)
+
 export default Vue.extend({
   name: 'FiltersView',
-  components: { FilterContainer },
+  components: { FilterContainer, FontAwesomeIcon },
   data () {
     return {
       selections: {
@@ -71,7 +96,11 @@ export default Vue.extend({
       }]
     }
   },
+  computed: {
+    ...mapState(['showFilters', 'shoppingFilter'])
+  },
   methods: {
+    ...mapMutations([ 'setShowFilters' ]),
     updateState (newState) {
       this.filtersShown = newState
     }

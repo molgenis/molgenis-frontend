@@ -1,6 +1,5 @@
 <template>
-  <div class="container-fluid mb-4">
-    <h2>{{activeEntity}}</h2>
+  <div class="container-fluid my-4">
     <toast-component
       class="toast-component mt-2"
       v-if="toast"
@@ -12,7 +11,17 @@
       <div class="flex-filter" >
         <filters-view />
       </div>
-      <div class="flex-data" >
+      <div class="flex-data ml-4" >
+        <button
+          type="button"
+          class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
+          title="Show Filters"
+          v-if="!showFilters"
+          @click="setShowFilters(true)">
+          <font-awesome-icon icon="chevron-up" />
+          <span class="ml-2">Filters</span>
+        </button>
+
         <data-view />
       </div>
     </div>
@@ -25,25 +34,38 @@ import FiltersView from './FiltersView'
 import ToastComponent from '../components/Utils/ToastComponent'
 import DataView from './DataView'
 import { mapState, mapMutations } from 'vuex'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faChevronUp)
 
 export default Vue.extend({
   name: 'MainView',
   computed: {
-    ...mapState(['showFilters', 'activeEntity', 'toast'])
+    ...mapState(['showFilters', 'toast'])
   },
   methods: {
-    ...mapMutations([
-      'clearToast'
-    ])
+    ...mapMutations([ 'clearToast', 'setShowFilters' ])
   },
   created () {
-    this.$store.commit('setActiveEntity', this.$route.params.entity)
+    if (this.$route.params.entity) {
+      this.$store.commit('setActiveEntity', this.$route.params.entity)
+    }
   },
-  components: { FiltersView, DataView, ToastComponent }
+  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon }
 })
 </script>
 
 <style scoped>
+  .show-filters-button{
+    display: inline-block;
+    white-space: nowrap;
+    position: absolute;
+    left: -1px;
+    transform: rotate(90deg);
+    transform-origin: 0 100%;
+  }
   .flex-mainview {
     white-space: normal;
   }
@@ -54,8 +76,9 @@ export default Vue.extend({
     padding-right: 1rem;
     overflow: hidden;
   }
+
   .flex-data {
-    max-width: calc(100% - 20rem);
+    max-width: calc(100% - 22rem);
     width: 100%;
   }
   .showfilters .flex-filter {

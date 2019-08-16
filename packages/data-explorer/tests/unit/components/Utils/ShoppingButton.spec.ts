@@ -6,6 +6,6 @@ describe('ShoppingButton.vue', () => {
     const wrapper = shallowMount(ShoppingButton, { propsData: { isSelected: true } })
     expect(wrapper.classes()).toContain('btn-primary')
     wrapper.setProps({ isSelected: false })
-    expect(wrapper.classes()).toContain('btn-outline-primary')
+    expect(wrapper.classes()).toContain('btn-outline-secondary')
   })
 })
