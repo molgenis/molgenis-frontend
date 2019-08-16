@@ -16,7 +16,7 @@
           type="button"
           class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
           title="Show Filters"
-          v-if="!showFilters"
+          v-if="!showFilters && !shoppingFilter"
           @click="setShowFilters(true)">
           <font-awesome-icon icon="chevron-up" />
           <span class="ml-2">Filters</span>
@@ -43,7 +43,7 @@ library.add(faChevronUp)
 export default Vue.extend({
   name: 'MainView',
   computed: {
-    ...mapState(['showFilters', 'toast'])
+    ...mapState(['showFilters', 'toast', 'shoppingFilter'])
   },
   methods: {
     ...mapMutations([ 'clearToast', 'setShowFilters' ])
