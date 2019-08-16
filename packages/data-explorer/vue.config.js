@@ -15,6 +15,10 @@ module.exports = {
         'target': 'https://preview-pr-8588-2.dev.molgenis.org',
         'keepOrigin': true
       },
+      '^/img': {
+        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
+        'keepOrigin': true
+      },
       '^/app-ui-context': {
         'target': 'https://preview-pr-8588-2.dev.molgenis.org',
         'keepOrigin': true

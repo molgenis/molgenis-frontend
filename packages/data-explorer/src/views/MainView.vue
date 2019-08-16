@@ -58,7 +58,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .show-filters-button{
+  .show-filters-button {
     display: inline-block;
     white-space: nowrap;
     position: absolute;
