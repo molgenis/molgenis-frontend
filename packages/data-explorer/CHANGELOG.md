@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.4.0...@molgenis-ui/data-explorer@0.5.0) (2019-08-19)
+
+
+### Features
+
+* **data-explorer:** Add shoppingcart ([#96](https://github.com/molgenis/molgenis-frontend/issues/96)) ([ceaf966](https://github.com/molgenis/molgenis-frontend/commit/ceaf966))
+
+
+
+
+
 # [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.3.0...@molgenis-ui/data-explorer@0.4.0) (2019-08-06)
 
 
