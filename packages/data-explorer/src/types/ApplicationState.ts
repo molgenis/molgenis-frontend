@@ -1,3 +1,5 @@
+import { DataApiResponse, MetaDataApiResponse } from '@/types/ApiResponse'
+
 export type Toast = {
   type: 'danger' | 'success',
   message: string
@@ -5,9 +7,11 @@ export type Toast = {
 
 export default interface ApplicationState {
   toast: Toast | null,
-  dataDisplayLayout: String
-  activeEntity: String | null
-  entityData: any
-  entityMeta: any
-  showFilters: boolean,
+  dataDisplayLayout: string
+  activeEntity: string | null
+  entityData: DataApiResponse | null
+  entityMeta: MetaDataApiResponse | null
+  shoppedEntityItems: string[]
+  showFilters: boolean
+  shoppingFilter: boolean
 }

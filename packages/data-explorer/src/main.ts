@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import 'bootstrap'
 import App from './App.vue'
 import router from './router'
 import store from './store/store'
@@ -9,7 +10,9 @@ import i18n from '@molgenis/molgenis-i18n-js'
 Vue.config.productionTip = false
 
 Vue.use(i18n, {
-  namespace: ['filters'],
+  lng: 'en',
+  fallbackLng: 'en',
+  namespace: ['dataexplorer'],
   callback () {
     new Vue({
       store,

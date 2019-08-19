@@ -1,31 +1,29 @@
 <template>
   <div>
-    <toolbar-view />
-    <EntityCards
-      :entities="activeEntityData"
-      v-if="dataDisplayLayout === 'cards'" />
-    <EntityTable
-      :entities="activeEntityData"
-      v-else />
+    <h1 v-if="entityMeta && entityMeta.label" class="mb-0">{{entityMeta.label}}</h1>
+    <small v-if="entityMeta && entityMeta.description" class="text-secondary"><em>{{entityMeta.description}}</em></small>
+
+    <!--TODO: hasCart and isShop should be set to true when entityType is tagged as "SHOPABLE"-->
+    <toolbar-view :hasCart="true"></toolbar-view>
+    <entity-view :isShop="true"></entity-view>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import { mapGetters, mapState } from 'vuex'
 import ToolbarView from './ToolbarView'
-import EntityCards from '../components/DataView/EntityCards'
-import EntityTable from '../components/DataView/EntityTable'
+import EntityView from './EntityView'
+import { mapState } from 'vuex'
 
 export default Vue.extend({
   name: 'DataView',
   computed: {
-    ...mapGetters(['activeEntityData']),
-    ...mapState(['dataDisplayLayout'])
+    ...mapState(['activeEntity', 'entityMeta'])
   },
   created () {
     this.$store.dispatch('loadEntity')
+    this.$store.dispatch('loadMetaData')
   },
-  components: { ToolbarView, EntityCards, EntityTable }
+  components: { ToolbarView, EntityView }
 })
 </script>
