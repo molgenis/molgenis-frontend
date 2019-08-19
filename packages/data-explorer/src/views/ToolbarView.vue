@@ -4,14 +4,14 @@
       v-if="dataDisplayLayout === 'table'"
       @click="setDataDisplayLayout('cards')"
       class="btn btn-light ml-1 float-right btn-outline-secondary">
-      <font-awesome-icon icon="th" />
+      <font-awesome-icon icon="th"></font-awesome-icon>
       Card layout
     </button>
     <button
       v-else
       @click="setDataDisplayLayout('table')"
       class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
-      <font-awesome-icon icon="th-list" />
+      <font-awesome-icon icon="th-list"></font-awesome-icon>
       Table layout
     </button>
 
@@ -19,21 +19,21 @@
       v-if="shoppingFilter && hasCart"
       @click="setShoppingFilter(false)"
       class="btn btn-light ml-1 float-right btn-outline-secondary">
-      <font-awesome-icon icon="store" />
+      <font-awesome-icon icon="store"></font-awesome-icon>
       Show store
     </button>
     <button
       v-else-if="hasCart"
       @click="setShoppingFilter(true)"
       class="btn btn-light ml-1 float-right btn-outline-secondary">
-      <font-awesome-icon icon="shopping-cart" />
+      <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
       Show cart
     </button>
     <button v-if="shoppingFilter && hasCart" class="btn btn-success float-right ml-1">
-      <font-awesome-icon icon="shopping-bag" /> Order
+      <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
     </button>
 
-    <active-filters />
+    <active-filters></active-filters>
   </div>
 </template>
 

@@ -8,8 +8,8 @@
       @toastCloseBtnClicked="clearToast">
     </toast-component>
     <div class="flex-mainview d-flex" :class="{'showfilters': !showFilters}">
-      <div class="flex-filter" >
-        <filters-view />
+      <div class="flex-filter">
+        <filters-view></filters-view>
       </div>
       <div class="flex-data ml-4" >
         <button
@@ -18,11 +18,11 @@
           title="Show Filters"
           v-if="!showFilters && !shoppingFilter"
           @click="setShowFilters(true)">
-          <font-awesome-icon icon="chevron-up" />
+          <font-awesome-icon icon="chevron-up"></font-awesome-icon>
           <span class="ml-2">Filters</span>
         </button>
 
-        <data-view />
+        <data-view></data-view>
       </div>
     </div>
   </div>

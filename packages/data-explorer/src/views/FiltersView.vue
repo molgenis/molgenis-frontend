@@ -11,7 +11,7 @@
           class="btn btn-light m-2 btn-outline-secondary hide-filters"
           title="Hide Filters"
           @click="setShowFilters(false)">
-          <font-awesome-icon icon="chevron-left" />
+          <font-awesome-icon icon="chevron-left"></font-awesome-icon>
         </button>
       </div>
       <div class="p-2">
@@ -21,7 +21,7 @@
           :filters-shown="filtersShown"
           :can-edit="true"
           @update="updateState"
-        />
+        ></filter-container>
       </div>
     </div>
 

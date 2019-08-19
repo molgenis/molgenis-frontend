@@ -4,8 +4,8 @@
     <small v-if="entityMeta && entityMeta.description" class="text-secondary"><em>{{entityMeta.description}}</em></small>
 
     <!--TODO: hasCart and isShop should be set to true when entityType is tagged as "SHOPABLE"-->
-    <toolbar-view :hasCart="true"/>
-    <entity-view :isShop="true"/>
+    <toolbar-view :hasCart="true"></toolbar-view>
+    <entity-view :isShop="true"></entity-view>
   </div>
 </template>
 

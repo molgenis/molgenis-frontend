@@ -35,7 +35,7 @@
     </table>
 
     <button v-if="shoppingFilter && isShop" class="btn btn-success m-1">
-      <font-awesome-icon icon="shopping-bag" /> Order
+      <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
     </button>
 
   </div>
