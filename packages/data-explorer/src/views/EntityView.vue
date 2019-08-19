@@ -5,7 +5,7 @@
     </div>
 
     <div class="card-columns" v-else-if="dataDisplayLayout==='cards'">
-      <entity-card
+      <explorer-card
         class="card"
         v-for="(entity, index) in entitiesToShow"
         :key="index"
@@ -19,18 +19,18 @@
           <p class="card-text">{{entity.data.xtext}}</p>
         </div>
 
-      </entity-card>
+      </explorer-card>
     </div>
 
     <table v-else class="table">
-      <entity-table-header :header="Object.keys(entitiesToShow[0].data)" :isShop="isShop"></entity-table-header>
+      <table-header :header="tableHeaderToShow" :isShop="isShop"></table-header>
       <tbody>
-      <entity-table-row v-for="(entity, index) in entitiesToShow"
+      <table-row v-for="(entity, index) in entitiesToShow"
                         :key="index"
                         :id="getEntityId(entity)"
                         :rowData="entity.data"
                         :isSelected="isSelected(entity)"
-                        :isShop="isShop"></entity-table-row>
+                        :isShop="isShop"></table-row>
       </tbody>
     </table>
 
@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import EntityCard from '../components/DataView/ExplorerCard'
-import EntityTableRow from '../components/DataView/TableRow'
-import EntityTableHeader from '../components/DataView/TableHeader'
+import ExplorerCard from '../components/DataView/ExplorerCard'
+import TableRow from '../components/DataView/TableRow'
+import TableHeader from '../components/DataView/TableHeader'
 import { mapGetters, mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
@@ -53,7 +53,7 @@ library.add(faShoppingBag)
 
 export default {
   name: 'EntityView',
-  components: { EntityCard, EntityTableRow, EntityTableHeader, FontAwesomeIcon },
+  components: { ExplorerCard, TableRow, TableHeader, FontAwesomeIcon },
   props: {
     isShop: {
       type: Boolean,
@@ -66,6 +66,9 @@ export default {
     ...mapState(['dataDisplayLayout', 'shoppingFilter', 'entityMeta', 'shoppedEntityItems']),
     idAttribute () {
       return this.entityMeta.idAttribute
+    },
+    tableHeaderToShow () {
+      return Object.keys(this.entitiesToShow[0].data)
     },
     entitiesToShow () {
       if (this.shoppingFilter) {
