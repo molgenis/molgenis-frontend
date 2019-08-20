@@ -7,8 +7,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "main": "dist/index.html",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
