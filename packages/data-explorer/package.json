@@ -1,7 +1,11 @@
 {
-  "name": "@molgenis-ui/data-explorer",
+  "name": "@molgenis-experimental/data-explorer",
   "version": "0.5.0",
   "license": "LGPL-3.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.html",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -9,6 +13,10 @@
     "e2e": "vue-cli-service test:e2e",
     "unit": "vue-cli-service test:unit"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
