@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const BannerPlugin = require('webpack').BannerPlugin
+const packageJson = require('./package.json')
 const pkgVersion = packageJson.version
 const pkgName = packageJson.name
 
@@ -10,6 +11,7 @@ package-version: ${pkgVersion}
 build-date: ${buildDate}`
 
 module.exports = {
+  outputDir: 'dist',
   publicPath: process.env.NODE_ENV === 'production'
     ? pkgName + '/dist/'
     : '/',
