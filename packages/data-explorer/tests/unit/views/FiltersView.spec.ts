@@ -1,8 +1,8 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
-import ToolbarView from '@/views/ToolbarView.vue'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
+import FiltersView from '@/views/FiltersView.vue'
 import Vuex from 'vuex'
 
-describe('ToolbarView.vue', () => {
+describe('FiltersView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store: any
@@ -24,13 +24,13 @@ describe('ToolbarView.vue', () => {
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(ToolbarView, { store, localVue })
+    const wrapper = shallowMount(FiltersView)
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  it('can change to card/table layout', () => {
-    const wrapper = shallowMount(ToolbarView, { store, localVue })
-    wrapper.find('.table-layout').trigger('click')
-    expect(mutations.setDataDisplayLayout.mock.calls.length > 0).toBeTruthy()
+  it('show/hides the filters', () => {
+    const wrapper = shallowMount(FiltersView, { store, localVue })
+    wrapper.find('.hide-filters').trigger('click')
+    expect(mutations.setShowFilters.mock.calls.length > 0).toBeTruthy()
   })
 })

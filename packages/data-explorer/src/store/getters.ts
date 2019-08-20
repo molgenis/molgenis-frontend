@@ -1,6 +1,6 @@
 import ApplicationState from '@/types/ApplicationState'
 
 export default {
-  activeEntityData: (state: ApplicationState): object =>
+  activeEntityData: (state: ApplicationState): object|null =>
     state.entityData
 }

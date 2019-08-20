@@ -1,6 +1,5 @@
 <template>
-  <div class="container-fluid mb-4">
-    <h2>{{activeEntity}}</h2>
+  <div class="container-fluid my-4">
     <toast-component
       class="toast-component mt-2"
       v-if="toast"
@@ -8,12 +7,22 @@
       :message="toast.message"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
-    <div class="flex-mainview" :class="{'showfilters': !showFilters}">
-      <div class="flex-filter" >
-        <filters-view />
+    <div class="flex-mainview d-flex" :class="{'showfilters': !showFilters}">
+      <div class="flex-filter">
+        <filters-view></filters-view>
       </div>
-      <div class="flex-data" >
-        <data-view />
+      <div class="flex-data ml-4" >
+        <button
+          type="button"
+          class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
+          title="Show Filters"
+          v-if="!showFilters && !shoppingFilter"
+          @click="setShowFilters(true)">
+          <font-awesome-icon icon="chevron-up"></font-awesome-icon>
+          <span class="ml-2">Filters</span>
+        </button>
+
+        <data-view></data-view>
       </div>
     </div>
   </div>
@@ -25,27 +34,39 @@ import FiltersView from './FiltersView'
 import ToastComponent from '../components/Utils/ToastComponent'
 import DataView from './DataView'
 import { mapState, mapMutations } from 'vuex'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faChevronUp)
 
 export default Vue.extend({
   name: 'MainView',
   computed: {
-    ...mapState(['showFilters', 'activeEntity', 'toast'])
+    ...mapState(['showFilters', 'toast', 'shoppingFilter'])
   },
   methods: {
-    ...mapMutations([
-      'clearToast'
-    ])
+    ...mapMutations([ 'clearToast', 'setShowFilters' ])
   },
   created () {
-    this.$store.commit('setActiveEntity', this.$route.params.entity)
+    if (this.$route.params.entity) {
+      this.$store.commit('setActiveEntity', this.$route.params.entity)
+    }
   },
-  components: { FiltersView, DataView, ToastComponent }
+  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon }
 })
 </script>
 
 <style scoped>
+  .show-filters-button {
+    display: inline-block;
+    white-space: nowrap;
+    position: absolute;
+    left: -1px;
+    transform: rotate(90deg);
+    transform-origin: 0 100%;
+  }
   .flex-mainview {
-    display: flex;
     white-space: normal;
   }
   .flex-filter {
@@ -53,18 +74,20 @@ export default Vue.extend({
     min-width: 20rem;
     max-width: 20rem;
     padding-right: 1rem;
-    flex: 1 0 0rem;
     overflow: hidden;
+  }
 
+  .flex-data {
+    max-width: calc(100% - 22rem);
+    width: 100%;
   }
   .showfilters .flex-filter {
-    flex: 0 0 0;
     max-width: 0;
     min-width: 0;
     padding-right: 0;
   }
-  .flex-data {
-    flex: 1 0 0
+  .showfilters .flex-data {
+    max-width: 100%;
   }
 
   @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
