@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="btn btn-sm btn-light m-2 btn-outline-dark"
+    class="btn btn-sm m-2 text-nowrap btn-light"
     title="Table settings"
     @click="alterSettings">
     <font-awesome-icon icon="cog"></font-awesome-icon>
