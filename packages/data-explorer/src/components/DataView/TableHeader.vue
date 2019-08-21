@@ -17,11 +17,6 @@ export default {
     header: {
       type: Array,
       required: true
-    },
-    isShop: {
-      type: Boolean,
-      required: false,
-      default: () => false
     }
   }
 }

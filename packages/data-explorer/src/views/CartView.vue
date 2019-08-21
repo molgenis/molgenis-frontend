@@ -1,51 +1,42 @@
 <template>
-  <div class="mt-3 entity-table" v-if="activeEntityData && activeEntityData.items.length > 0 && entityMeta">
+  <div class="mt-2 entity-table" v-if="activeEntityData && activeEntityData.items.length > 0 && entityMeta">
     <div v-if="entitiesToShow.length === 0" class="alert alert-warning">
       {{ 'dataexplorer_empty_shopping_cart' | i18n}}
     </div>
-
-    <div class="card-columns" v-else-if="dataDisplayLayout==='cards'">
-      <explorer-card
-        class="card"
-        v-for="(entity, index) in entitiesToShow"
-        :key="index"
-        :id="getEntityId(entity)"
-        :isSelected="isSelected(entity)">
-
-        <!-- Card template, to be made generic-->
-        <div class="card-body">
-          <h5 class="card-title">{{entity.data.xstring}}</h5>
-          <p class="card-text">{{entity.data.xtext}}</p>
-        </div>
-
-      </explorer-card>
+    <div v-else>
+      <button class="btn btn-success" v-if="entitiesToShow.length > 10">
+        <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
+      </button>
+      <table class="table">
+        <table-header :header="tableHeaderToShow" :isShop="true"></table-header>
+        <tbody>
+        <table-row v-for="(entity, index) in entitiesToShow"
+                   :key="index"
+                   :id="getEntityId(entity)"
+                   :rowData="entity.data"
+                   :isSelected="isSelected(entity)"
+                   :isShop="true"></table-row>
+        </tbody>
+      </table>
+      <button class="btn btn-success mb-2">
+        <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
+      </button>
     </div>
-
-    <table v-else class="table">
-      <table-header :header="tableHeaderToShow"></table-header>
-      <tbody>
-      <table-row v-for="(entity, index) in entitiesToShow"
-                        :key="index"
-                        :id="getEntityId(entity)"
-                        :rowData="entity.data"
-                        :isSelected="isSelected(entity)"></table-row>
-      </tbody>
-    </table>
   </div>
 </template>
 
 <script>
-import ExplorerCard from '../components/DataView/ExplorerCard'
 import TableRow from '../components/DataView/TableRow'
 import TableHeader from '../components/DataView/TableHeader'
 import { mapGetters, mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faShoppingBag)
 
 export default {
-  name: 'EntityView',
-  components: { ExplorerCard, TableRow, TableHeader },
+  name: 'CartView',
+  components: { TableRow, TableHeader, FontAwesomeIcon },
   computed: {
     ...mapGetters(['activeEntityData']),
     ...mapState(['dataDisplayLayout', 'showShoppingCart', 'entityMeta', 'shoppedEntityItems']),

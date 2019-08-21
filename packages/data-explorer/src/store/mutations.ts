@@ -20,8 +20,8 @@ export default {
   setActiveEntity (state: ApplicationState, entity: string) {
     state.activeEntity = entity
   },
-  setShoppingFilter (state: ApplicationState, store: boolean) {
-    state.shoppingFilter = store
+  setShowShoppingCart (state: ApplicationState, cart: boolean) {
+    state.showShoppingCart = cart
   },
   toggleShoppingItems (state: ApplicationState, id: string) {
     const index = state.shoppedEntityItems.indexOf(id)

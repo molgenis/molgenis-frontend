@@ -7,7 +7,7 @@ const state: ApplicationState = {
   entityMeta: null,
   dataDisplayLayout: 'cards',
   showFilters: true,
-  shoppingFilter: false,
+  showShoppingCart: false,
   shoppedEntityItems: []
 }
 

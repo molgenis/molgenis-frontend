@@ -68,8 +68,8 @@ describe('mutations', () => {
   describe('setShoppingFilter', () => {
     it('sets if the table is a store', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setShoppingFilter(baseAppState, true)
-      expect(baseAppState.shoppingFilter).toEqual(true)
+      mutations.setShowShoppingCart(baseAppState, true)
+      expect(baseAppState.showShoppingCart).toEqual(true)
     })
   })
 

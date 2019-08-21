@@ -1,5 +1,5 @@
 <template>
-  <div class="toolbar">
+  <div class="toolbar mt-2">
     <button
       v-if="dataDisplayLayout === 'table'"
       @click="setDataDisplayLayout('cards')"
@@ -16,21 +16,18 @@
     </button>
 
     <button
-      v-if="shoppingFilter && hasCart"
-      @click="setShoppingFilter(false)"
+      v-if="showShoppingCart && hasCart"
+      @click="setShowShoppingCart(false)"
       class="btn btn-light ml-1 float-right btn-outline-secondary">
       <font-awesome-icon icon="store"></font-awesome-icon>
       Show store
     </button>
     <button
       v-else-if="hasCart"
-      @click="setShoppingFilter(true)"
+      @click="setShowShoppingCart(true)"
       class="btn btn-light ml-1 float-right btn-outline-secondary">
       <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
       Show cart
-    </button>
-    <button v-if="shoppingFilter && hasCart" class="btn btn-success float-right ml-1">
-      <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
     </button>
 
     <active-filters></active-filters>
@@ -49,7 +46,7 @@ library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag)
 export default Vue.extend({
   name: 'ToolbarView',
   computed: {
-    ...mapState(['dataDisplayLayout', 'showFilters', 'shoppingFilter'])
+    ...mapState(['dataDisplayLayout', 'showFilters', 'showShoppingCart'])
   },
   props: {
     hasCart: {
@@ -62,8 +59,8 @@ export default Vue.extend({
     setDataDisplayLayout (value) {
       this.$store.commit('setDataDisplayLayout', value)
     },
-    setShoppingFilter (value) {
-      this.$store.commit('setShoppingFilter', value)
+    setShowShoppingCart (value) {
+      this.$store.commit('setShowShoppingCart', value)
       this.$store.commit('setShowFilters', !value) // Hide filters in shopping cart
     }
   },

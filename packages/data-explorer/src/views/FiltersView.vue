@@ -97,7 +97,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState(['showFilters', 'shoppingFilter'])
+    ...mapState(['showFilters'])
   },
   methods: {
     ...mapMutations([ 'setShowFilters' ]),

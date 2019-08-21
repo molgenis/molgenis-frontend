@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
+    <shopping-button :id="id" :isSelected="isSelected"></shopping-button>
     <slot></slot>
   </div>
 </template>
@@ -17,11 +17,6 @@ export default Vue.extend({
       required: true
     },
     isSelected: {
-      type: Boolean,
-      required: false,
-      default: () => false
-    },
-    isShop: {
       type: Boolean,
       required: false,
       default: () => false
