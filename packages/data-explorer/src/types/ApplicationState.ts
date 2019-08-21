@@ -13,5 +13,8 @@ export default interface ApplicationState {
   entityMeta: MetaDataApiResponse | null
   shoppedEntityItems: string[]
   showFilters: boolean
-  shoppingFilter: boolean
+  shoppingFilter: boolean,
+  isShop: boolean,
+  settingsRowId: string | null,
+  settingsTable: string
 }

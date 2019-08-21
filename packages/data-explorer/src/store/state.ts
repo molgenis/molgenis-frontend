@@ -8,7 +8,10 @@ const state: ApplicationState = {
   dataDisplayLayout: 'cards',
   showFilters: true,
   shoppingFilter: false,
-  shoppedEntityItems: []
+  shoppedEntityItems: [],
+  isShop: false,
+  settingsRowId: null,
+  settingsTable: 'de_dataexplorer_table_settings'
 }
 
 export default state

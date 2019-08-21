@@ -1,8 +1,9 @@
 import actions from '@/store/actions'
 
-const mockResponses: {[key:string]: Object} = {
+const mockResponses: { [key: string]: Object } = {
   '/api/entity/entity': { 'loaded': true },
-  '/api/v2/entity': { meta: { 'loaded': true } }
+  '/api/v2/entity': { meta: { 'loaded': true } },
+  '/api/entity/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true } }] }
 }
 jest.mock('@molgenis/molgenis-api-client', () => {
   return {
@@ -27,6 +28,16 @@ describe('actions', () => {
       const state = { activeEntity: 'entity' }
       await actions.loadMetaData({ commit, state })
       expect(commit).toHaveBeenCalledWith('setMetaData', { 'loaded': true })
+      done()
+    })
+  })
+  describe('getTableSettings', () => {
+    it('gets the settings for the selected table', async (done) => {
+      const commit = jest.fn()
+      const state = { isShop: false, settingsRowId: '', settingsTable: 'settingsEntity' }
+      await actions.getTableSettings({ commit, state }, { tableName: 'entity' })
+      expect(commit).toHaveBeenCalledWith('setIsShop', true)
+      expect(commit).toHaveBeenCalledWith('setSettingsRowId', 'blaat')
       done()
     })
   })
