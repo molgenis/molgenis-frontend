@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.6.0...@molgenis-experimental/data-explorer@0.6.1) (2019-08-21)
+
+
+### Bug Fixes
+
+* **packageJson:** include packageJson as well ([11e3ec5](https://github.com/molgenis/molgenis-frontend/commit/11e3ec5))
+
+
+
+
+
 # 0.6.0 (2019-08-20)
 
 
