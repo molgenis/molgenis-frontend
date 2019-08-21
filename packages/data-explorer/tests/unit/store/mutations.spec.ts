@@ -22,8 +22,8 @@ describe('mutations', () => {
   describe('setDataDisplayLayout', () => {
     it('sets the display layout', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setDataDisplayLayout(baseAppState, 'table')
-      expect(baseAppState.dataDisplayLayout).toEqual('table')
+      mutations.setDataDisplayLayout(baseAppState, 'TableView')
+      expect(baseAppState.dataDisplayLayout).toEqual('TableView')
     })
   })
 

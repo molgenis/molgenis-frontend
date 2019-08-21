@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import EntityView from '@/views/EntityView.vue'
+import EntityView from '@/views/SelectLayoutView.vue'
 import Vuex from 'vuex'
 
 describe('EntityView.vue', () => {

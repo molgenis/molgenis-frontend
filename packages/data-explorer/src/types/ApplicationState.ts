@@ -7,11 +7,12 @@ export type Toast = {
 
 export default interface ApplicationState {
   toast: Toast | null,
-  dataDisplayLayout: string
+  dataDisplayLayout: 'CardView' | 'TableView'
   activeEntity: string | null
   entityData: DataApiResponse | null
   entityMeta: MetaDataApiResponse | null
   shoppedEntityItems: string[]
   showFilters: boolean
   showShoppingCart: boolean
+  isShop: boolean
 }

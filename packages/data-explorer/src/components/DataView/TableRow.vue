@@ -22,6 +22,11 @@ export default {
       type: Boolean,
       required: false,
       default: () => false
+    },
+    isShop: {
+      type: Boolean,
+      required: false,
+      default: () => false
     }
   },
   components: { ShoppingButton }

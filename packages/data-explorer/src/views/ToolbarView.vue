@@ -1,15 +1,15 @@
 <template>
   <div class="toolbar mt-2">
     <button
-      v-if="dataDisplayLayout === 'table'"
-      @click="setDataDisplayLayout('cards')"
+      v-if="dataDisplayLayout === 'TableView'"
+      @click="setDataDisplayLayout('CardView')"
       class="btn btn-light ml-1 float-right btn-outline-secondary">
       <font-awesome-icon icon="th"></font-awesome-icon>
       Card layout
     </button>
     <button
       v-else
-      @click="setDataDisplayLayout('table')"
+      @click="setDataDisplayLayout('TableView')"
       class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
       <font-awesome-icon icon="th-list"></font-awesome-icon>
       Table layout
@@ -41,6 +41,8 @@ import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { DataLayout } from '@/types/ApplicationState'
+
 library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag)
 
 export default Vue.extend({

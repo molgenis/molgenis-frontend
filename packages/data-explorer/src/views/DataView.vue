@@ -13,7 +13,7 @@
 <script>
 import Vue from 'vue'
 import ToolbarView from './ToolbarView'
-import EntityView from './EntityView'
+import EntityView from './SelectLayoutView'
 import CartView from './CartView'
 import { mapState, mapActions } from 'vuex'
 

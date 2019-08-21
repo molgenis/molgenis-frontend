@@ -5,10 +5,11 @@ const state: ApplicationState = {
   activeEntity: 'it_emx_datatypes_TypeTest',
   entityData: null,
   entityMeta: null,
-  dataDisplayLayout: 'cards',
+  dataDisplayLayout: 'CardView',
   showFilters: true,
   showShoppingCart: false,
-  shoppedEntityItems: []
+  shoppedEntityItems: [],
+  isShop: true
 }
 
 export default state
