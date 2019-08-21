@@ -5,7 +5,7 @@
         <h1 v-if="entityMeta && entityMeta.label" class="mb-0">{{entityMeta.label}}</h1>
         <small v-if="entityMeta && entityMeta.description" class="text-secondary"><em>{{entityMeta.description}}</em></small>
       </div>
-      <div class="col-2">
+      <div class="col-2" v-if="activeEntity">
         <table-settings-button class="float-right" :selectedTable="activeEntity" :selectedRowId="settingsRowId"></table-settings-button>
       </div>
     </div>
