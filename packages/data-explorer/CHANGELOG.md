@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.6.2...@molgenis-experimental/data-explorer@0.7.0) (2019-08-21)
+
+
+### Bug Fixes
+
+* **DataView:** Do not render the button when activeEntity is empty ([d930d9c](https://github.com/molgenis/molgenis-frontend/commit/d930d9c))
+
+
+### Features
+
+* **settings:** Read settings from settings table ([ba558ef](https://github.com/molgenis/molgenis-frontend/commit/ba558ef))
+
+
+
+
+
 ## [0.6.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.6.1...@molgenis-experimental/data-explorer@0.6.2) (2019-08-21)
 
 
