@@ -3,7 +3,7 @@
     type="button"
     class="btn btn-sm btn-light m-2 btn-outline-dark"
     title="Table settings"
-    @click="alter_settings">
+    @click="alterSettings">
     <font-awesome-icon icon="cog"></font-awesome-icon>
     Table settings
   </button>
@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    alter_settings () {
+    alterSettings () {
       if (this.selectedRowId) {
         console.log('id', this.selectedRowId, 'will be updated')
       } else {
