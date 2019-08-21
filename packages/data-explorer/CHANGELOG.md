@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.6.1...@molgenis-experimental/data-explorer@0.6.2) (2019-08-21)
+
+
+### Bug Fixes
+
+* **router:** updated base path ([53c9b70](https://github.com/molgenis/molgenis-frontend/commit/53c9b70))
+
+
+
+
+
 ## [0.6.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.6.0...@molgenis-experimental/data-explorer@0.6.1) (2019-08-21)
 
 
