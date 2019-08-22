@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
+    <shopping-button v-if="isShop" :id="id" :isSelected="isSelected"></shopping-button>
     <slot></slot>
   </div>
 </template>
@@ -10,7 +10,7 @@ import Vue from 'vue'
 import ShoppingButton from '../Utils/ShoppingButton'
 
 export default Vue.extend({
-  name: 'EntityCards',
+  name: 'ExplorerCard',
   props: {
     id: {
       type: String,
@@ -23,8 +23,7 @@ export default Vue.extend({
     },
     isShop: {
       type: Boolean,
-      required: false,
-      default: () => false
+      required: true
     }
   },
   components: { ShoppingButton }

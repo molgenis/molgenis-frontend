@@ -16,7 +16,7 @@
           type="button"
           class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
           title="Show Filters"
-          v-if="!showFilters && !shoppingFilter"
+          v-if="!showFilters && !showShoppingCart"
           @click="setShowFilters(true)">
           <font-awesome-icon icon="chevron-up"></font-awesome-icon>
           <span class="ml-2">Filters</span>
@@ -25,6 +25,7 @@
         <data-view></data-view>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -43,14 +44,14 @@ library.add(faChevronUp)
 export default Vue.extend({
   name: 'MainView',
   computed: {
-    ...mapState(['showFilters', 'toast', 'shoppingFilter'])
+    ...mapState(['showFilters', 'toast', 'showShoppingCart'])
   },
   methods: {
     ...mapMutations([ 'clearToast', 'setShowFilters' ])
   },
   created () {
     if (this.$route.params.entity) {
-      this.$store.commit('setActiveEntity', this.$route.params.entity)
+      this.$store.commit('setTableName', this.$route.params.entity)
     }
   },
   components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon }

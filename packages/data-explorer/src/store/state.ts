@@ -2,12 +2,12 @@ import ApplicationState from '@/types/ApplicationState'
 
 const state: ApplicationState = {
   toast: null,
-  activeEntity: 'it_emx_datatypes_TypeTest',
-  entityData: null,
-  entityMeta: null,
-  dataDisplayLayout: 'cards',
+  tableName: 'it_emx_datatypes_TypeTest',
+  tableData: null,
+  tableMeta: null,
+  dataDisplayLayout: 'CardView',
   showFilters: true,
-  shoppingFilter: false,
+  showShoppingCart: false,
   shoppedEntityItems: [],
   isShop: false,
   settingsRowId: null,

@@ -2,18 +2,18 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-10">
-        <h1 v-if="entityMeta && entityMeta.label" class="mb-0">{{entityMeta.label}}</h1>
-        <small v-if="entityMeta && entityMeta.description" class="text-secondary"><em>{{entityMeta.description}}</em></small>
+        <h1 v-if="tableMeta && tableMeta.label" class="mb-0">{{tableMeta.label}}</h1>
+        <small v-if="tableMeta && tableMeta.description" class="text-secondary"><em>{{tableMeta.description}}</em></small>
       </div>
-      <div class="col-2" v-if="activeEntity">
-        <table-settings-button class="float-right" :selectedTable="activeEntity" :selectedRowId="settingsRowId"></table-settings-button>
+      <div class="col-2" v-if="tableName">
+        <table-settings-button class="float-right" :selectedTable="tableName" :selectedRowId="settingsRowId"></table-settings-button>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <!--TODO: hasCart and isShop should be set to true when entityType is tagged as "SHOPABLE"-->
-        <toolbar-view :hasCart="isShop"></toolbar-view>
-        <entity-view :isShop="isShop"></entity-view>
+        <toolbar-view></toolbar-view>
+        <cart-view v-if="showShoppingCart"></cart-view>
+        <select-layout-view v-else></select-layout-view>
       </div>
     </div>
   </div>
@@ -22,20 +22,24 @@
 <script>
 import Vue from 'vue'
 import ToolbarView from './ToolbarView'
-import EntityView from './EntityView'
+import SelectLayoutView from './SelectLayoutView'
 import TableSettingsButton from '../components/Utils/TableSettingsButton'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import CartView from './CartView'
 
 export default Vue.extend({
   name: 'DataView',
   computed: {
-    ...mapState(['activeEntity', 'entityMeta', 'openTableSettings', 'settingsRowId', 'isShop'])
+    ...mapState(['showShoppingCart', 'tableName', 'tableMeta', 'openTableSettings', 'settingsRowId', 'isShop'])
+  },
+  methods: {
+    ...mapActions(['loadTableData', 'loadTableMetaData'])
   },
   created () {
-    this.$store.dispatch('loadEntity')
-    this.$store.dispatch('loadMetaData')
-    this.$store.dispatch('getTableSettings', { tableName: this.activeEntity })
+    this.loadTableData()
+    this.loadTableMetaData()
+    this.$store.dispatch('getTableSettings', { tableName: this.tableName })
   },
-  components: { ToolbarView, EntityView, TableSettingsButton }
+  components: { ToolbarView, SelectLayoutView, TableSettingsButton, CartView }
 })
 </script>

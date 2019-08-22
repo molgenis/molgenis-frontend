@@ -8,7 +8,7 @@
 <script>
 import ShoppingButton from '../Utils/ShoppingButton'
 export default {
-  name: 'EntityTableRow',
+  name: 'TableRow',
   props: {
     id: {
       type: String,

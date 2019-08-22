@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="">
+    <div>
       <div class="p-0 pl-3 d-flex justify-content-between align-items-center">
         <h2>
           Filters
@@ -97,7 +97,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState(['showFilters', 'shoppingFilter'])
+    ...mapState(['showFilters'])
   },
   methods: {
     ...mapMutations([ 'setShowFilters' ]),

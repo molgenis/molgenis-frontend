@@ -8,20 +8,20 @@ export default {
   clearToast (state: ApplicationState) {
     state.toast = null
   },
-  setDataDisplayLayout (state: ApplicationState, layout: string) {
+  setDataDisplayLayout (state: ApplicationState, layout: ApplicationState['dataDisplayLayout']) {
     state.dataDisplayLayout = layout
   },
-  setEntityData (state: ApplicationState, data: DataApiResponse) {
-    state.entityData = data
+  setTableData (state: ApplicationState, data: DataApiResponse) {
+    state.tableData = data
   },
   setShowFilters (state: ApplicationState, showFilters: boolean) {
     state.showFilters = showFilters
   },
-  setActiveEntity (state: ApplicationState, entity: string) {
-    state.activeEntity = entity
+  setTableName (state: ApplicationState, entity: string) {
+    state.tableName = entity
   },
-  setShoppingFilter (state: ApplicationState, store: boolean) {
-    state.shoppingFilter = store
+  setShowShoppingCart (state: ApplicationState, cart: boolean) {
+    state.showShoppingCart = cart
   },
   toggleShoppingItems (state: ApplicationState, id: string) {
     const index = state.shoppedEntityItems.indexOf(id)
@@ -31,8 +31,8 @@ export default {
       state.shoppedEntityItems.push(id)
     }
   },
-  setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
-    state.entityMeta = meta
+  setTableMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
+    state.tableMeta = meta
   },
   setIsShop (state: ApplicationState, isShop: boolean) {
     state.isShop = isShop
