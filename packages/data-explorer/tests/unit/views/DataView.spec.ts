@@ -19,7 +19,8 @@ describe('DataView.vue', () => {
     }
     actions = {
       loadTableData: jest.fn(),
-      loadTableMetaData: jest.fn()
+      loadTableMetaData: jest.fn(),
+      getTableSettings: jest.fn()
     }
     store = new Vuex.Store({
       state, getters, actions

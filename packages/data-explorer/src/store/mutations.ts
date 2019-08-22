@@ -33,5 +33,11 @@ export default {
   },
   setTableMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
+  },
+  setIsShop (state: ApplicationState, isShop: boolean) {
+    state.isShop = isShop
+  },
+  setSettingsRowId (state: ApplicationState, settingsRowId: string) {
+    state.settingsRowId = settingsRowId
   }
 }
