@@ -21,13 +21,13 @@
                    :isShop="true"></table-row>
         </tbody>
       </table>
-      <button class="btn btn-primary mr-2" @click="closeShoppingCart">
-        <font-awesome-icon icon="chevron-left"></font-awesome-icon> Back
-      </button>
-      <button class="btn btn-success mr-2">
-        <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
-      </button>
     </div>
+    <button class="btn btn-primary mr-2" @click="closeShoppingCart">
+      <font-awesome-icon icon="chevron-left"></font-awesome-icon> Back
+    </button>
+    <button v-if="entitiesToShow.length > 0" class="btn btn-success mr-2">
+      <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
+    </button>
   </div>
 </template>
 

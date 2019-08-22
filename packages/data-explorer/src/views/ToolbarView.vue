@@ -1,7 +1,7 @@
 <template>
   <div class="toolbar mt-2">
     <button
-      v-if="dataDisplayLayout === 'TableView'"
+      v-if="!showShoppingCart && dataDisplayLayout === 'TableView'"
       @click="setDataDisplayLayout('CardView')"
       class="btn btn-light ml-1 float-right btn-outline-secondary">
       <font-awesome-icon icon="th"></font-awesome-icon>
@@ -9,7 +9,7 @@
     </button>
     <button
       v-else
-      @click="setDataDisplayLayout('TableView')"
+      @click="!showShoppingCart && setDataDisplayLayout('TableView')"
       class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
       <font-awesome-icon icon="th-list"></font-awesome-icon>
       Table layout
