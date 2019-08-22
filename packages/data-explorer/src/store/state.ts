@@ -5,6 +5,7 @@ const state: ApplicationState = {
   activeEntity: 'it_emx_datatypes_TypeTest',
   entityData: null,
   entityMeta: null,
+  entityMetaRefLabels: null,
   dataDisplayLayout: 'cards',
   showFilters: true,
   shoppingFilter: false,

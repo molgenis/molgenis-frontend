@@ -11,7 +11,6 @@
     </div>
     <div class="row">
       <div class="col">
-        <!--TODO: hasCart and isShop should be set to true when entityType is tagged as "SHOPABLE"-->
         <toolbar-view :hasCart="isShop"></toolbar-view>
         <entity-view :isShop="isShop"></entity-view>
       </div>
@@ -24,17 +23,20 @@ import Vue from 'vue'
 import ToolbarView from './ToolbarView'
 import EntityView from './EntityView'
 import TableSettingsButton from '../components/Utils/TableSettingsButton'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default Vue.extend({
   name: 'DataView',
   computed: {
     ...mapState(['activeEntity', 'entityMeta', 'openTableSettings', 'settingsRowId', 'isShop'])
   },
+  methods: {
+    ...mapActions(['loadEntity', 'loadMetaData', 'getTableSettings'])
+  },
   created () {
-    this.$store.dispatch('loadEntity')
-    this.$store.dispatch('loadMetaData')
-    this.$store.dispatch('getTableSettings', { tableName: this.activeEntity })
+    this.loadEntity()
+    this.loadMetaData()
+    this.getTableSettings({ tableName: this.activeEntity })
   },
   components: { ToolbarView, EntityView, TableSettingsButton }
 })

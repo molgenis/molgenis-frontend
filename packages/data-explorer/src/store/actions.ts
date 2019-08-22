@@ -11,6 +11,7 @@ export default {
   loadMetaData: tryAction(async ({ commit, state } : { commit: any, state: ApplicationState}) => {
     const response = await api.get(`/api/v2/${state.activeEntity}`)
     commit('setMetaData', response.meta)
+    commit('setMetaDataRefLabels', response.meta)
   }),
   getTableSettings: tryAction(async ({ commit, state }: {commit: any, state: ApplicationState},
     payload : { tableName: string }) => {
