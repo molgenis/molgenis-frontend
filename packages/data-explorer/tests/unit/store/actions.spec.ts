@@ -1,9 +1,9 @@
 import actions from '@/store/actions'
 
 const mockResponses: { [key: string]: Object } = {
-  '/api/entity/entity': { 'loaded': true },
+  '/api/data/entity': { 'loaded': true },
   '/api/v2/entity': { meta: { 'loaded': true } },
-  '/api/entity/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true } }] }
+  '/api/data/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true } }] }
 }
 jest.mock('@molgenis/molgenis-api-client', () => {
   return {
