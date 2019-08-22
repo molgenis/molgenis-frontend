@@ -13,7 +13,7 @@ export default {
     commit('setTableMetaData', response.meta)
   }),
   getTableSettings: tryAction(async ({ commit, state }: {commit: any, state: ApplicationState},
-    payload : { tableName: string }) => {
+                                     payload : { tableName: string }) => {
     const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
     if (response.items.length > 0) {
       const id = response.items[0].data.id
