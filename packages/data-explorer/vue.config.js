@@ -33,23 +33,23 @@ module.exports = {
     host: process.env.JENKINS_AGENT_NAME || 'localhost',
     proxy: process.env.NODE_ENV === 'production' ? undefined : {
       '^/api': {
-        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
+        'target': 'https://data-v3.dev.molgenis.org',
         'keepOrigin': true
       },
       '^/css': {
-        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
+        'target': 'https://data-v3.dev.molgenis.org',
         'keepOrigin': true
       },
       '^/fonts': {
-        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
+        'target': 'https://data-v3.dev.molgenis.org',
         'keepOrigin': true
       },
       '^/img': {
-        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
+        'target': 'https://data-v3.dev.molgenis.org',
         'keepOrigin': true
       },
       '^/app-ui-context': {
-        'target': 'https://preview-pr-8588-2.dev.molgenis.org',
+        'target': 'https://data-v3.dev.molgenis.org',
         'keepOrigin': true
       }
     }

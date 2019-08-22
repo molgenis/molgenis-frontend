@@ -5,7 +5,7 @@ import { tryAction } from './helpers'
 
 export default {
   loadEntity: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState}) => {
-    const response = await api.get(`/api/entity/${state.activeEntity}`)
+    const response = await api.get(`/api/data/${state.activeEntity}`)
     commit('setEntityData', response)
   }),
   loadMetaData: tryAction(async ({ commit, state } : { commit: any, state: ApplicationState}) => {
@@ -14,7 +14,7 @@ export default {
   }),
   getTableSettings: tryAction(async ({ commit, state }: {commit: any, state: ApplicationState},
     payload : { tableName: string }) => {
-    const response = await api.get(`/api/entity/${state.settingsTable}?q=table=="${payload.tableName}"`)
+    const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
     if (response.items.length > 0) {
       const id = response.items[0].data.id
       const shop = response.items[0].data.shop
