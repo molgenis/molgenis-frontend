@@ -1,7 +1,11 @@
 {
-  "name": "@molgenis-ui/data-explorer",
-  "version": "0.4.0",
+  "name": "@molgenis-experimental/data-explorer",
+  "version": "0.7.1",
   "license": "LGPL-3.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.html",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -9,6 +13,10 @@
     "e2e": "vue-cli-service test:e2e",
     "unit": "vue-cli-service test:unit"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
@@ -38,6 +46,7 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "banner-webpack-plugin": "^0.2.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "ts-jest": "^23.0.0",

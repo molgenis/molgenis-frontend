@@ -1,11 +1,13 @@
 <template>
   <div class="mt-2 entity-table" v-if="tableData && tableData.items.length > 0 && tableMeta">
-    {{entitiesToShow}}
     <div v-if="entitiesToShow.length === 0" class="alert alert-warning">
       {{ 'dataexplorer_empty_shopping_cart' | i18n}}
     </div>
     <div v-else>
-      <button class="btn btn-success" v-if="entitiesToShow.length > 10">
+      <button class="btn btn-primary mr-2" @click="closeShoppingCart" v-if="entitiesToShow.length > 5">
+        <font-awesome-icon icon="chevron-left"></font-awesome-icon> Back
+      </button>
+      <button class="btn btn-success mr-2" v-if="entitiesToShow.length > 5">
         <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
       </button>
       <table class="table">
@@ -19,7 +21,10 @@
                    :isShop="true"></table-row>
         </tbody>
       </table>
-      <button class="btn btn-success mb-2">
+      <button class="btn btn-primary mr-2" @click="closeShoppingCart">
+        <font-awesome-icon icon="chevron-left"></font-awesome-icon> Back
+      </button>
+      <button class="btn btn-success mr-2">
         <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
       </button>
     </div>
@@ -31,9 +36,9 @@ import TableRow from '../components/DataView/TableRow'
 import TableHeader from '../components/DataView/TableHeader'
 import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingBag, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faShoppingBag)
+library.add(faShoppingBag, faChevronLeft)
 
 export default {
   name: 'CartView',
@@ -56,6 +61,10 @@ export default {
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
+    },
+    closeShoppingCart () {
+      this.$store.commit('setShowShoppingCart', false)
+      this.$store.commit('setShowFilters', true)
     }
   }
 }

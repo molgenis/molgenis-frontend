@@ -9,7 +9,9 @@ const state: ApplicationState = {
   showFilters: true,
   showShoppingCart: false,
   shoppedEntityItems: [],
-  isShop: true
+  isShop: false,
+  settingsRowId: null,
+  settingsTable: 'de_dataexplorer_table_settings'
 }
 
 export default state

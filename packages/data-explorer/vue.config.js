@@ -1,15 +1,32 @@
 const webpack = require('webpack')
+const BannerPlugin = require('webpack').BannerPlugin
+const packageJson = require('./package.json')
+const pkgVersion = packageJson.version
+const pkgName = packageJson.name
+
+const now = new Date()
+const buildDate = now.toUTCString()
+const bannerText = `package-name: ${pkgName}
+package-version: ${pkgVersion}
+build-date: ${buildDate}`
 
 module.exports = {
-  configureWebpack: {
-    plugins: [
+  outputDir: 'dist',
+  publicPath: process.env.NODE_ENV === 'production'
+    ? pkgName + '/dist/'
+    : '/',
+  configureWebpack: config => {
+    config.plugins.push(
+      new BannerPlugin({
+        banner: bannerText
+      }),
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery',
         Popper: ['popper.js', 'default']
       })
-    ]
+    )
   },
   devServer: {
     // In CI mode, Safari cannot contact "localhost", so as a workaround, run the dev server using the jenkins agent pod dns instead.

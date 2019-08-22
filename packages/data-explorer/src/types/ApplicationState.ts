@@ -15,4 +15,6 @@ export default interface ApplicationState {
   showFilters: boolean
   showShoppingCart: boolean
   isShop: boolean
+  settingsRowId: string | null,
+  settingsTable: string
 }

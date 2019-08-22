@@ -14,16 +14,9 @@
       <font-awesome-icon icon="th-list"></font-awesome-icon>
       Table layout
     </button>
-
+{{isShop}}
     <button
-      v-if="showShoppingCart && isShop"
-      @click="setShowShoppingCart(false)"
-      class="btn btn-light ml-1 float-right btn-outline-secondary">
-      <font-awesome-icon icon="store"></font-awesome-icon>
-      Show store
-    </button>
-    <button
-      v-else-if="isShop"
+      v-if="!showShoppingCart && isShop"
       @click="setShowShoppingCart(true)"
       class="btn btn-light ml-1 float-right btn-outline-secondary">
       <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
