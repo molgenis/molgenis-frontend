@@ -35,9 +35,9 @@ export default {
   },
   components: { ExplorerCard },
   computed: {
-    ...mapState(['entityMeta', 'shoppedEntityItems', 'isShop']),
+    ...mapState(['tableMeta', 'shoppedEntityItems', 'isShop']),
     idAttribute () {
-      return this.entityMeta.idAttribute
+      return this.tableMeta.idAttribute
     }
   },
   methods: {

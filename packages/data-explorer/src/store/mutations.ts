@@ -11,14 +11,14 @@ export default {
   setDataDisplayLayout (state: ApplicationState, layout: ApplicationState['dataDisplayLayout']) {
     state.dataDisplayLayout = layout
   },
-  setEntityData (state: ApplicationState, data: DataApiResponse) {
-    state.entityData = data
+  setTableData (state: ApplicationState, data: DataApiResponse) {
+    state.tableData = data
   },
   setShowFilters (state: ApplicationState, showFilters: boolean) {
     state.showFilters = showFilters
   },
-  setActiveEntity (state: ApplicationState, entity: string) {
-    state.activeEntity = entity
+  setTableName (state: ApplicationState, entity: string) {
+    state.tableName = entity
   },
   setShowShoppingCart (state: ApplicationState, cart: boolean) {
     state.showShoppingCart = cart
@@ -31,7 +31,7 @@ export default {
       state.shoppedEntityItems.push(id)
     }
   },
-  setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
-    state.entityMeta = meta
+  setTableMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
+    state.tableMeta = meta
   }
 }

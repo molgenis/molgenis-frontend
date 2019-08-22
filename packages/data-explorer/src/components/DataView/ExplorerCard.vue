@@ -10,7 +10,7 @@ import Vue from 'vue'
 import ShoppingButton from '../Utils/ShoppingButton'
 
 export default Vue.extend({
-  name: 'EntityCards',
+  name: 'ExplorerCard',
   props: {
     id: {
       type: String,

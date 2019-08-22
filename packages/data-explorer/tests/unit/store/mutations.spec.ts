@@ -27,7 +27,7 @@ describe('mutations', () => {
     })
   })
 
-  describe('setEntityData', () => {
+  describe('setTableData', () => {
     it('sets the entity data', () => {
       let baseAppState = Object.assign({}, state)
       const entityData = {
@@ -44,8 +44,8 @@ describe('mutations', () => {
           number: 0
         }
       }
-      mutations.setEntityData(baseAppState, entityData)
-      expect(baseAppState.entityData).toEqual(entityData)
+      mutations.setTableData(baseAppState, entityData)
+      expect(baseAppState.tableData).toEqual(entityData)
     })
   })
 
@@ -57,15 +57,15 @@ describe('mutations', () => {
     })
   })
 
-  describe('setActiveEntity', () => {
+  describe('setTableName', () => {
     it('sets the active entity', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setActiveEntity(baseAppState, 'table')
-      expect(baseAppState.activeEntity).toEqual('table')
+      mutations.setTableName(baseAppState, 'table')
+      expect(baseAppState.tableName).toEqual('table')
     })
   })
 
-  describe('setShoppingFilter', () => {
+  describe('setShowShoppingCart', () => {
     it('sets if the table is a store', () => {
       let baseAppState = Object.assign({}, state)
       mutations.setShowShoppingCart(baseAppState, true)
@@ -152,8 +152,8 @@ describe('mutations', () => {
           'ADD_DATA'
         ]
       }
-      mutations.setMetaData(baseAppState, entityMetaData)
-      expect(baseAppState.entityMeta).toEqual(entityMetaData)
+      mutations.setTableMetaData(baseAppState, entityMetaData)
+      expect(baseAppState.tableMeta).toEqual(entityMetaData)
     })
   })
 })

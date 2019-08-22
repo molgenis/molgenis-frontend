@@ -51,7 +51,7 @@ export default Vue.extend({
   },
   created () {
     if (this.$route.params.entity) {
-      this.$store.commit('setActiveEntity', this.$route.params.entity)
+      this.$store.commit('setTableName', this.$route.params.entity)
     }
   },
   components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon }

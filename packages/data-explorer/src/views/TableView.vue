@@ -30,9 +30,9 @@ export default {
   },
   components: { TableRow, TableHeader },
   computed: {
-    ...mapState(['entityMeta', 'shoppedEntityItems', 'isShop']),
+    ...mapState(['tableMeta', 'shoppedEntityItems', 'isShop']),
     idAttribute () {
-      return this.entityMeta.idAttribute
+      return this.tableMeta.idAttribute
     },
     tableHeaderToShow () {
       return Object.keys(this.entitiesToShow[0].data)

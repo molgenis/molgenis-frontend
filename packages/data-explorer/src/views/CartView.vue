@@ -1,5 +1,6 @@
 <template>
-  <div class="mt-2 entity-table" v-if="activeEntityData && activeEntityData.items.length > 0 && entityMeta">
+  <div class="mt-2 entity-table" v-if="tableData && tableData.items.length > 0 && tableMeta">
+    {{entitiesToShow}}
     <div v-if="entitiesToShow.length === 0" class="alert alert-warning">
       {{ 'dataexplorer_empty_shopping_cart' | i18n}}
     </div>
@@ -28,7 +29,7 @@
 <script>
 import TableRow from '../components/DataView/TableRow'
 import TableHeader from '../components/DataView/TableHeader'
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -38,20 +39,15 @@ export default {
   name: 'CartView',
   components: { TableRow, TableHeader, FontAwesomeIcon },
   computed: {
-    ...mapGetters(['activeEntityData']),
-    ...mapState(['dataDisplayLayout', 'showShoppingCart', 'entityMeta', 'shoppedEntityItems']),
+    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableData']),
     idAttribute () {
-      return this.entityMeta.idAttribute
+      return this.tableMeta.idAttribute
     },
     tableHeaderToShow () {
       return Object.keys(this.entitiesToShow[0].data)
     },
     entitiesToShow () {
-      if (this.showShoppingCart) {
-        return this.activeEntityData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
-      } else {
-        return this.activeEntityData.items
-      }
+      return this.tableData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
     }
   },
   methods: {
@@ -64,38 +60,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .showfilters .card-columns {
-    column-count: 4;
-  }
-
-  @media only screen and (max-width: 1200px) {
-    /* Bootstrap brakepoint xl */
-    .flex-mainview .card-columns {
-      column-count: 2;
-    }
-
-    .showfilters .card-columns {
-      column-count: 3;
-    }
-  }
-
-  @media only screen and (max-width: 992px) {
-    /* Bootstrap brakepoint lg */
-    .flex-mainview .card-columns {
-      column-count: 1;
-    }
-
-    .showfilters .card-columns {
-      column-count: 2;
-    }
-  }
-
-  @media only screen and (max-width: 576px) {
-    /* Bootstrap brakepoint sm */
-    .flex-mainview .card-columns {
-      column-count: 1;
-    }
-  }
-</style>

@@ -1,8 +1,8 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import EntityView from '@/views/SelectLayoutView.vue'
+import CardView from '@/views/CardView.vue'
 import Vuex from 'vuex'
 
-describe('EntityView.vue', () => {
+describe('CardView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store: any
@@ -14,8 +14,8 @@ describe('EntityView.vue', () => {
     state = {
       shoppingFilter: false,
       entityMeta: { idAttribute: 'id' },
-      shoppedEntityItems: ['1', '3'],
-      dataDisplayLayout: 'cards'
+      dataDisplayLayout: 'CartView',
+      shoppedEntityItems: [1, 3]
     }
     mutations = {
       toggleShoppingItems: jest.fn()
@@ -34,14 +34,9 @@ describe('EntityView.vue', () => {
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(EntityView, { store, localVue, propsData: { isShop: false } })
+    const wrapper = shallowMount(CardView, { store,
+      localVue,
+      propsData: { entitiesToShow: [] } })
     expect(wrapper.exists()).toBeTruthy()
-  })
-
-  it('can filter selected shop items', () => {
-    const wrapper = shallowMount(EntityView, { store, localVue, propsData: { isShop: true } })
-    expect(wrapper.findAll('explorer-card-stub').length).toEqual(3)
-    state.shoppingFilter = true
-    expect(wrapper.findAll('explorer-card-stub').length).toEqual(2)
   })
 })

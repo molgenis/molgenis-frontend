@@ -1,7 +1,7 @@
 import actions from '@/store/actions'
 
 const mockResponses: {[key:string]: Object} = {
-  '/api/entity/entity': { 'loaded': true },
+  '/api/data/entity': { 'loaded': true },
   '/api/v2/entity': { meta: { 'loaded': true } }
 }
 jest.mock('@molgenis/molgenis-api-client', () => {
@@ -12,21 +12,21 @@ jest.mock('@molgenis/molgenis-api-client', () => {
 })
 
 describe('actions', () => {
-  describe('loadEntity', () => {
-    it('loads the selected entity data', async (done) => {
+  describe('loadTableData', () => {
+    it('loads the selected table data', async (done) => {
       const commit = jest.fn()
-      const state = { activeEntity: 'entity' }
-      await actions.loadEntity({ commit, state })
-      expect(commit).toHaveBeenCalledWith('setEntityData', { 'loaded': true })
+      const state = { tableName: 'entity' }
+      await actions.loadTableData({ commit, state })
+      expect(commit).toHaveBeenCalledWith('setTableData', { 'loaded': true })
       done()
     })
   })
-  describe('loadMetaData', () => {
+  describe('loadTableMetaData', () => {
     it('loads the selected metadata', async (done) => {
       const commit = jest.fn()
-      const state = { activeEntity: 'entity' }
-      await actions.loadMetaData({ commit, state })
-      expect(commit).toHaveBeenCalledWith('setMetaData', { 'loaded': true })
+      const state = { tableName: 'entity' }
+      await actions.loadTableMetaData({ commit, state })
+      expect(commit).toHaveBeenCalledWith('setTableMetaData', { 'loaded': true })
       done()
     })
   })

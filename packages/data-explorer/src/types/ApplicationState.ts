@@ -8,9 +8,9 @@ export type Toast = {
 export default interface ApplicationState {
   toast: Toast | null,
   dataDisplayLayout: 'CardView' | 'TableView'
-  activeEntity: string | null
-  entityData: DataApiResponse | null
-  entityMeta: MetaDataApiResponse | null
+  tableName: string | null
+  tableData: DataApiResponse | null
+  tableMeta: MetaDataApiResponse | null
   shoppedEntityItems: string[]
   showFilters: boolean
   showShoppingCart: boolean

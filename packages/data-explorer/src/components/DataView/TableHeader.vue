@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'EntityTableHeader',
+  name: 'TableHeader',
   props: {
     header: {
       type: Array,
