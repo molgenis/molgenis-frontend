@@ -38,7 +38,7 @@ export default Vue.extend({
   created () {
     this.loadTableData()
     this.loadTableMetaData()
-    this.$store.dispatch('getTableSettings', { tableName: this.activeEntity })
+    this.$store.dispatch('getTableSettings', { tableName: this.tableName })
   },
   components: { ToolbarView, SelectLayoutView, TableSettingsButton, CartView }
 })
