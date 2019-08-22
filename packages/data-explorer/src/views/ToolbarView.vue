@@ -14,7 +14,6 @@
       <font-awesome-icon icon="th-list"></font-awesome-icon>
       Table layout
     </button>
-{{isShop}}
     <button
       v-if="!showShoppingCart && isShop"
       @click="setShowShoppingCart(true)"
