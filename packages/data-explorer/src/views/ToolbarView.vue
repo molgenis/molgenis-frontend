@@ -34,7 +34,6 @@ import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { DataLayout } from '@/types/ApplicationState'
 
 library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag)
 
@@ -49,7 +48,7 @@ export default Vue.extend({
     },
     setShowShoppingCart (value) {
       this.$store.commit('setShowShoppingCart', value)
-      this.$store.commit('setShowFilters', !value) // Hide filters in shopping cart
+      this.$store.commit('setShowFilters', !value)
     }
   },
   components: { ActiveFilters, FontAwesomeIcon }

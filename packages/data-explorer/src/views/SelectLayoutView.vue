@@ -16,7 +16,7 @@ import TableView from './TableView'
 import ExplorerCard from '../components/DataView/ExplorerCard'
 import TableRow from '../components/DataView/TableRow'
 import TableHeader from '../components/DataView/TableHeader'
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'SelectLayoutView',
