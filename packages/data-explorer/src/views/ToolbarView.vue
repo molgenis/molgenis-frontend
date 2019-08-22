@@ -8,8 +8,8 @@
       Card layout
     </button>
     <button
-      v-else
-      @click="!showShoppingCart && setDataDisplayLayout('TableView')"
+      v-else-if="!showShoppingCart"
+      @click="setDataDisplayLayout('TableView')"
       class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
       <font-awesome-icon icon="th-list"></font-awesome-icon>
       Table layout
