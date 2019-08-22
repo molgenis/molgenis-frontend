@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.7.0...@molgenis-experimental/data-explorer@0.7.1) (2019-08-22)
+
+
+### Bug Fixes
+
+* **actions.spec:** Fix test ([a6e5db0](https://github.com/molgenis/molgenis-frontend/commit/a6e5db0))
+* **vue.config:** Update config to work with new backend ([85d8483](https://github.com/molgenis/molgenis-frontend/commit/85d8483))
+
+
+
+
+
 # [0.7.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.6.2...@molgenis-experimental/data-explorer@0.7.0) (2019-08-21)
 
 
