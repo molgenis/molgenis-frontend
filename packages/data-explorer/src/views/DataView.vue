@@ -31,11 +31,10 @@ export default Vue.extend({
     ...mapState(['activeEntity', 'entityMeta', 'openTableSettings', 'settingsRowId', 'isShop'])
   },
   methods: {
-    ...mapActions(['loadEntity', 'loadMetaData', 'getTableSettings'])
+    ...mapActions(['getTableData', 'getTableSettings'])
   },
   created () {
-    this.loadEntity()
-    this.loadMetaData()
+    this.getTableData()
     this.getTableSettings({ tableName: this.activeEntity })
   },
   components: { ToolbarView, EntityView, TableSettingsButton }

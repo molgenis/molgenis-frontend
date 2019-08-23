@@ -1,6 +1,7 @@
 import ApplicationState, {Toast} from '@/types/ApplicationState'
 import {DataApiResponse, MetaDataApiResponse, MetaDataAttribute} from '@/types/ApiResponse'
-import {StringMap} from '@/types/GeneralTypes'
+import {EntityMetaRefs} from '@/types/ApplicationState'
+import {filterQueryGenerator, expandQueryGenerator} from '../utils/QueryBuilder'
 
 export default {
   setToast(state: ApplicationState, toast: Toast) {
@@ -12,9 +13,12 @@ export default {
   setDataDisplayLayout(state: ApplicationState, layout: string) {
     state.dataDisplayLayout = layout
   },
-  setEntityData(state: ApplicationState, data: DataApiResponse) {
+  setTableData(state: ApplicationState, data: DataApiResponse) {
     state.entityData = data
   },
+  // setDefaultEntityData(state: ApplicationState, data: DataApiResponse) {
+  //   state.defaultEntityData = data
+  // },
   setShowFilters(state: ApplicationState, showFilters: boolean) {
     state.showFilters = showFilters
   },
@@ -36,13 +40,13 @@ export default {
     state.entityMeta = meta
   },
   setMetaDataRefLabels(state: ApplicationState, meta: MetaDataApiResponse) {
-    const labels = meta.attributes.reduce((obj : StringMap, attribute : MetaDataAttribute) => {
-      if (attribute.refEntity && !obj[attribute.refEntity.name]) {
-        obj[attribute.refEntity.name] = attribute.refEntity.labelAttribute.toString()
+    const refItems = meta.attributes.reduce((obj : EntityMetaRefs, attribute : MetaDataAttribute) => {
+      if (attribute.refEntity) {
+        obj[attribute.name] = { refEntity: attribute.refEntity.name.toString(), labelAttribute: attribute.refEntity.labelAttribute.toString() }
       }
       return obj
-    }, <StringMap>{})
-    state.entityMetaRefLabels = labels
+    }, <EntityMetaRefs>{})
+    state.entityMetaRefs = refItems
   },
   setIsShop(state: ApplicationState, isShop: boolean) {
     state.isShop = isShop

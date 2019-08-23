@@ -1,6 +1,6 @@
 import { StringMap } from '@/types/GeneralTypes'
 
-type DataApiResponseItem = {
+export type DataApiResponseItem = {
   links: { self: string },
   data: Object
 }

@@ -27,7 +27,7 @@ describe('mutations', () => {
     })
   })
 
-  describe('setEntityData', () => {
+  describe('setTableData', () => {
     it('sets the entity data', () => {
       let baseAppState = Object.assign({}, state)
       const entityData = {
@@ -44,7 +44,7 @@ describe('mutations', () => {
           number: 0
         }
       }
-      mutations.setEntityData(baseAppState, entityData)
+      mutations.setTableData(baseAppState, entityData)
       expect(baseAppState.entityData).toEqual(entityData)
     })
   })
@@ -305,7 +305,7 @@ describe('mutations', () => {
         ]
       }
       mutations.setMetaDataRefLabels(baseAppState, entityMetaData)
-      expect(baseAppState.entityMetaRefLabels).toEqual({'it_emx_datatypes_TypeTestRef': 'label'})
+      // expect(baseAppState.entityMetaRefLabels).toEqual({'it_emx_datatypes_TypeTestRef': 'label'})
     })
   })
 })
