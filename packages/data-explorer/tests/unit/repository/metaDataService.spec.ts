@@ -89,9 +89,9 @@ describe('metaDataService', () => {
   })
   describe('getAttributesFromMeta', () => {
     it('should get a string array of attributes from meta object', () => {
-      const expected_attributes = ['id', 'reference', 'multi_reference']
+      const expectedAttributes = ['id', 'reference', 'multi_reference']
       const observed = getAttributesfromMeta(meta)
-      expect(observed).toEqual(expected_attributes)
+      expect(observed).toEqual(expectedAttributes)
     })
   })
 })

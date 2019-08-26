@@ -1,5 +1,5 @@
 <template>
-
+  <div>Custom card content</div>
 </template>
 
 <script>

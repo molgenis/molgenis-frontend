@@ -39,7 +39,7 @@
 
 <script>
 import Vue from 'vue'
-import ActiveFilters from '../components/ToolbarView/ActiveFilters'
+import ActiveFilters from '../components/toolbarView/ActiveFilters'
 import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag } from '@fortawesome/free-solid-svg-icons'

@@ -22,7 +22,7 @@
 import Vue from 'vue'
 import ToolbarView from './ToolbarView'
 import EntityView from './EntityView'
-import TableSettingsButton from '../components/Utils/TableSettingsButton'
+import TableSettingsButton from '../components/utils/TableSettingsButton'
 import { mapState, mapActions } from 'vuex'
 
 export default Vue.extend({

@@ -3,7 +3,7 @@
     <h5 class="card-title">{{dataLabel}}</h5>
     <div class="card-text">
       <table>
-        <tr v-for="(value, head) in dataContents">
+        <tr v-for="(value, head) in dataContents" :key="head">
           <th scope="row">{{head}}</th>
           <td>{{value}}</td>
         </tr>

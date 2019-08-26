@@ -1,8 +1,6 @@
 import ApplicationState, { Toast, EntityMetaRefs } from '@/types/ApplicationState'
 import { DataApiResponse, MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
 
-import { filterQueryGenerator, expandQueryGenerator } from '../repository/queryBuilder'
-
 export default {
   setToast (state: ApplicationState, toast: Toast) {
     state.toast = toast
@@ -41,8 +39,12 @@ export default {
   },
   setMetaDataRefLabels (state: ApplicationState, meta: MetaDataApiResponse) {
     const refItems = meta.attributes.reduce((obj : EntityMetaRefs, attribute : MetaDataAttribute) => {
-      if (attribute.refEntity) {
-        obj[attribute.name] = { refEntity: attribute.refEntity.name.toString(), labelAttribute: attribute.refEntity.labelAttribute.toString() }
+      if (attribute.refEntity) { 
+        obj[attribute.name] = { 
+          refEntity: attribute.refEntity.name.toString(),
+          fieldType: attribute.fieldType,
+          labelAttribute: attribute.refEntity.labelAttribute.toString() 
+        }
       }
       return obj
     }, <EntityMetaRefs>{})

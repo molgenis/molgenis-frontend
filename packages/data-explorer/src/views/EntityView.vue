@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import ExplorerCard from '../components/DataView/ExplorerCard'
-import TableRow from '../components/DataView/TableRow'
-import TableHeader from '../components/DataView/TableHeader'
+import ExplorerCard from '../components/dataView/ExplorerCard'
+import TableRow from '../components/dataView/TableRow'
+import TableHeader from '../components/dataView/TableHeader'
 import { mapGetters, mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
