@@ -8,9 +8,7 @@ const buildFilterQuery = (entityMetaRefs: EntityMetaRefs, attributes:string[]) =
 }
 
 const buildExpandQuery = (entityMetaRefs: EntityMetaRefs, attributes:string[]) => {
-  console.log(attributes)
   const expandQuery = attributes.reduce((query: string, attribute: string) => {
-    console.log(attribute, query)
     return entityMetaRefs[attribute] ? `${query},${attribute}` : `${query}`
   }, <string>'').replace(',', '')
   return expandQuery

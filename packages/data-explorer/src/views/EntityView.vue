@@ -103,7 +103,7 @@ export default {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     },
     getEntityLabel (entity) {
-      return entity[this.labelAttribute].toString()
+      return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
     },
     buildQuery () {
       const attributes = this.entityMeta.attributes.filter((attribute) => attribute.fieldType !== 'COMPOUND').slice(0, 10).map((attribute) => attribute.name)
