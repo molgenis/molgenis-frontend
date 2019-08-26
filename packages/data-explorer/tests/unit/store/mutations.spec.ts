@@ -5,15 +5,15 @@ describe('mutations', () => {
   describe('setToast', () => {
     it('replace the toast with the passed toast', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setToast(baseAppState, {type: 'danger', message: 'message'})
-      expect(baseAppState.toast).toEqual({type: 'danger', message: 'message'})
+      mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
+      expect(baseAppState.toast).toEqual({ type: 'danger', message: 'message' })
     })
   })
 
   describe('clearToast', () => {
     it('clears the toast', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setToast(baseAppState, {type: 'danger', message: 'message'})
+      mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
       mutations.clearToast(baseAppState)
       expect(baseAppState.toast).toEqual(null)
     })
@@ -33,10 +33,10 @@ describe('mutations', () => {
       const entityData = {
         items: [
           {
-            data: {id: '1', label: 'blaat'},
-            links: {'self': 'https://beautiful_link.nl/1'}
+            data: { id: '1', label: 'blaat' },
+            links: { 'self': 'https://beautiful_link.nl/1' }
           }],
-        links: {'self': 'https://beautiful_link.nl'},
+        links: { 'self': 'https://beautiful_link.nl' },
         page: {
           size: 1,
           totalElements: 1,
@@ -80,12 +80,12 @@ describe('mutations', () => {
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
     })
     it('adds another item to shopping cart', () => {
-      let baseAppState = Object.assign({shoppedEntityItems: ['item1']}, state)
+      let baseAppState = Object.assign({ shoppedEntityItems: ['item1'] }, state)
       mutations.toggleShoppingItems(baseAppState, 'item2')
       expect(baseAppState.shoppedEntityItems).toEqual(['item1', 'item2'])
     })
     it('removes an existing item from shopping cart', () => {
-      let baseAppState = Object.assign({shoppedEntityItems: ['item1', 'item2']}, state)
+      let baseAppState = Object.assign({ shoppedEntityItems: ['item1', 'item2'] }, state)
       mutations.toggleShoppingItems(baseAppState, 'item2')
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
     })
@@ -211,77 +211,77 @@ describe('mutations', () => {
             'isAggregatable': false
           },
           {
-            "href": "/api/v2/it_emx_datatypes_TypeTest/meta/xmrefnillable_value",
-            "fieldType": "MREF",
-            "name": "xmrefnillable_value",
-            "label": "xmrefnillable_value",
-            "attributes": [],
-            "refEntity": {
-              "href": "/api/v2/it_emx_datatypes_TypeTestRef",
-              "hrefCollection": "/api/v2/it_emx_datatypes_TypeTestRef",
-              "name": "it_emx_datatypes_TypeTestRef",
-              "label": "TypeTestRef",
-              "description": "MOLGENIS Data types test ref entity",
-              "attributes": [
+            'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xmrefnillable_value',
+            'fieldType': 'MREF',
+            'name': 'xmrefnillable_value',
+            'label': 'xmrefnillable_value',
+            'attributes': [],
+            'refEntity': {
+              'href': '/api/v2/it_emx_datatypes_TypeTestRef',
+              'hrefCollection': '/api/v2/it_emx_datatypes_TypeTestRef',
+              'name': 'it_emx_datatypes_TypeTestRef',
+              'label': 'TypeTestRef',
+              'description': 'MOLGENIS Data types test ref entity',
+              'attributes': [
                 {
-                  "href": "/api/v2/it_emx_datatypes_TypeTestRef/meta/value",
-                  "fieldType": "STRING",
-                  "name": "value",
-                  "label": "value label",
-                  "description": "TypeTestRef value attribute",
-                  "attributes": [],
-                  "maxLength": 255,
-                  "auto": false,
-                  "nillable": false,
-                  "readOnly": true,
-                  "labelAttribute": false,
-                  "unique": true,
-                  "visible": true,
-                  "lookupAttribute": true,
-                  "isAggregatable": false
+                  'href': '/api/v2/it_emx_datatypes_TypeTestRef/meta/value',
+                  'fieldType': 'STRING',
+                  'name': 'value',
+                  'label': 'value label',
+                  'description': 'TypeTestRef value attribute',
+                  'attributes': [],
+                  'maxLength': 255,
+                  'auto': false,
+                  'nillable': false,
+                  'readOnly': true,
+                  'labelAttribute': false,
+                  'unique': true,
+                  'visible': true,
+                  'lookupAttribute': true,
+                  'isAggregatable': false
                 },
                 {
-                  "href": "/api/v2/it_emx_datatypes_TypeTestRef/meta/label",
-                  "fieldType": "STRING",
-                  "name": "label",
-                  "label": "label label",
-                  "description": "TypeTestRef label attribute",
-                  "attributes": [],
-                  "maxLength": 255,
-                  "auto": false,
-                  "nillable": false,
-                  "readOnly": false,
-                  "labelAttribute": true,
-                  "unique": false,
-                  "visible": true,
-                  "lookupAttribute": true,
-                  "isAggregatable": false
+                  'href': '/api/v2/it_emx_datatypes_TypeTestRef/meta/label',
+                  'fieldType': 'STRING',
+                  'name': 'label',
+                  'label': 'label label',
+                  'description': 'TypeTestRef label attribute',
+                  'attributes': [],
+                  'maxLength': 255,
+                  'auto': false,
+                  'nillable': false,
+                  'readOnly': false,
+                  'labelAttribute': true,
+                  'unique': false,
+                  'visible': true,
+                  'lookupAttribute': true,
+                  'isAggregatable': false
                 }
               ],
-              "labelAttribute": "label",
-              "idAttribute": "value",
-              "lookupAttributes": [
-                "value",
-                "label"
+              'labelAttribute': 'label',
+              'idAttribute': 'value',
+              'lookupAttributes': [
+                'value',
+                'label'
               ],
-              "isAbstract": false,
-              "writable": false,
-              "languageCode": "en",
-              "permissions": [
-                "READ_METADATA",
-                "COUNT_DATA",
-                "AGGREGATE_DATA",
-                "READ_DATA"
+              'isAbstract': false,
+              'writable': false,
+              'languageCode': 'en',
+              'permissions': [
+                'READ_METADATA',
+                'COUNT_DATA',
+                'AGGREGATE_DATA',
+                'READ_DATA'
               ]
             },
-            "auto": false,
-            "nillable": true,
-            "readOnly": false,
-            "labelAttribute": false,
-            "unique": false,
-            "visible": true,
-            "lookupAttribute": false,
-            "isAggregatable": false
+            'auto': false,
+            'nillable': true,
+            'readOnly': false,
+            'labelAttribute': false,
+            'unique': false,
+            'visible': true,
+            'lookupAttribute': false,
+            'isAggregatable': false
           }
         ],
         'labelAttribute': 'label',

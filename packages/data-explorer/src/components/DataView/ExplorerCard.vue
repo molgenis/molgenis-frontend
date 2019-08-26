@@ -9,42 +9,41 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import ShoppingButton from '../Utils/ShoppingButton'
-  import DefaultCardContent from './DefaultCardContent'
-  import CustomCardContent from './CustomCardContent'
+import Vue from 'vue'
+import ShoppingButton from '../Utils/ShoppingButton'
+import DefaultCardContent from './DefaultCardContent'
+import CustomCardContent from './CustomCardContent'
 
-
-  export default Vue.extend({
-    name: 'ExplorerCard',
-    props: {
-      id: {
-        type: String,
-        required: true
-      },
-      isSelected: {
-        type: Boolean,
-        required: false,
-        default: () => false
-      },
-      isShop: {
-        type: Boolean,
-        required: false,
-        default: () => false
-      },
-      dataLabel: {
-        type: String,
-        required: true
-      },
-      dataContents: {
-        type: Object,
-        required: true
-      },
-      customCode: {
-        type: String,
-        required: false
-      }
+export default Vue.extend({
+  name: 'ExplorerCard',
+  props: {
+    id: {
+      type: String,
+      required: true
     },
-    components: {ShoppingButton, DefaultCardContent, CustomCardContent}
-  })
+    isSelected: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+    isShop: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+    dataLabel: {
+      type: String,
+      required: true
+    },
+    dataContents: {
+      type: Object,
+      required: true
+    },
+    customCode: {
+      type: String,
+      required: false
+    }
+  },
+  components: { ShoppingButton, DefaultCardContent, CustomCardContent }
+})
 </script>

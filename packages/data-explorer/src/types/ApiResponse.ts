@@ -2,7 +2,14 @@ import { StringMap } from '@/types/GeneralTypes'
 
 export type DataApiResponseItem = {
   links: { self: string },
-  data: Object
+  items?:[],
+  data: {[key:string]: string | DataApiResponseItem}
+}
+
+export type DataApiResponseItemMref = {
+  links: { self: string },
+  items:[],
+  data: {[key:string]: string | DataApiResponseItem}
 }
 
 type DataApiResponsePage = {
@@ -25,7 +32,7 @@ export type MetaDataAttribute = {
   fieldType: string,
   name: string,
   label: string,
-  attributes: StringMap[],
+  attributes?: StringMap[],
   auto: boolean,
   nillable: boolean,
   readOnly: boolean,

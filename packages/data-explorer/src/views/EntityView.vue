@@ -24,7 +24,6 @@
       </div>
     </div>
 
-
     <div class="row" v-else>
       <div class="col">
         <table class="table">
@@ -54,66 +53,66 @@
 </template>
 
 <script>
-  import ExplorerCard from '../components/DataView/ExplorerCard'
-  import TableRow from '../components/DataView/TableRow'
-  import TableHeader from '../components/DataView/TableHeader'
-  import { mapGetters, mapState, mapActions } from 'vuex'
-  import { library } from '@fortawesome/fontawesome-svg-core'
-  import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-  import { filterQueryGenerator, expandQueryGenerator} from '../utils/QueryBuilder'
+import ExplorerCard from '../components/DataView/ExplorerCard'
+import TableRow from '../components/DataView/TableRow'
+import TableHeader from '../components/DataView/TableHeader'
+import { mapGetters, mapState, mapActions } from 'vuex'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { filterQueryGenerator, expandQueryGenerator } from '../repository/queryBuilder'
 
-  library.add(faShoppingBag)
+library.add(faShoppingBag)
 
-  export default {
-    name: 'EntityView',
-    components: {ExplorerCard, TableRow, TableHeader, FontAwesomeIcon},
-    props: {
-      isShop: {
-        type: Boolean,
-        required: false,
-        default: () => false
-      }
+export default {
+  name: 'EntityView',
+  components: { ExplorerCard, TableRow, TableHeader, FontAwesomeIcon },
+  props: {
+    isShop: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    }
+  },
+  computed: {
+    ...mapGetters(['activeEntityData']),
+    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'entityMeta', 'entityMetaRefs', 'shoppedEntityItems', 'defaultEntityData']),
+    idAttribute () {
+      return this.entityMeta.idAttribute
     },
-    computed: {
-      ...mapGetters(['activeEntityData']),
-      ...mapState(['dataDisplayLayout', 'shoppingFilter', 'entityMeta', 'entityMetaRefs', 'shoppedEntityItems', 'defaultEntityData']),
-      idAttribute () {
-        return this.entityMeta.idAttribute
-      },
-      labelAttribute () {
-        return this.entityMeta.labelAttribute
-      },
-      tableHeaderToShow () {
-        return Object.keys(this.entitiesToShow[0])
-      },
-      entitiesToShow () {
-        if (this.shoppingFilter) {
-          return this.activeEntityData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
-        } else {
-          return this.activeEntityData.items
-        }
-      }
+    labelAttribute () {
+      return this.entityMeta.labelAttribute
     },
-    methods: {
-      ...mapActions(['loadDefaultEntityData']),
-      getEntityId (entity) {
-        return entity[this.idAttribute].toString()
-      },
-      isSelected (entity) {
-        return this.shoppedEntityItems.includes(this.getEntityId(entity))
-      },
-      getEntityLabel (entity) {
-        return entity[this.labelAttribute].toString()
-      },
-      buildQuery () {
-        const attributes = this.entityMeta.attributes.filter((attribute)=> attribute.fieldType !=='COMPOUND').slice(0,10).map((attribute)=>  attribute.name)
-        const expand = expandQueryGenerator(this.entityMetaRefs, attributes)
-        const filter = filterQueryGenerator(this.entityMetaRefs, attributes)
-        return `expand=${expand}&filter=${filter}`
+    tableHeaderToShow () {
+      return Object.keys(this.entitiesToShow[0])
+    },
+    entitiesToShow () {
+      if (this.shoppingFilter) {
+        return this.activeEntityData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
+      } else {
+        return this.activeEntityData.items
       }
     }
+  },
+  methods: {
+    ...mapActions(['loadDefaultEntityData']),
+    getEntityId (entity) {
+      return entity[this.idAttribute].toString()
+    },
+    isSelected (entity) {
+      return this.shoppedEntityItems.includes(this.getEntityId(entity))
+    },
+    getEntityLabel (entity) {
+      return entity[this.labelAttribute].toString()
+    },
+    buildQuery () {
+      const attributes = this.entityMeta.attributes.filter((attribute) => attribute.fieldType !== 'COMPOUND').slice(0, 10).map((attribute) => attribute.name)
+      const expand = expandQueryGenerator(this.entityMetaRefs, attributes)
+      const filter = filterQueryGenerator(this.entityMetaRefs, attributes)
+      return `expand=${expand}&filter=${filter}`
+    }
   }
+}
 </script>
 
 <style scoped>

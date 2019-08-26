@@ -13,19 +13,19 @@
 </template>
 
 <script>
-  export default {
-    name: 'DefaultCardContent',
-    props: {
-      dataLabel: {
-        type: String,
-        required: true
-      },
-      dataContents: {
-        type: Object,
-        required: true
-      }
+export default {
+  name: 'DefaultCardContent',
+  props: {
+    dataLabel: {
+      type: String,
+      required: true
+    },
+    dataContents: {
+      type: Object,
+      required: true
     }
   }
+}
 </script>
 
 <style scoped>

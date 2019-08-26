@@ -8,6 +8,7 @@ export type Toast = {
 export type EntityMetaRefs = {
   [s: string]: {
     refEntity: string,
+    fieldType: string,
     labelAttribute: string
   }
 }
