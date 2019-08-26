@@ -38,10 +38,10 @@ describe('EntityView.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  // it('can filter selected shop items', () => {
-  //   const wrapper = shallowMount(EntityView, { store, localVue, propsData: { isShop: true } })
-  //   expect(wrapper.findAll('explorer-card-stub').length).toEqual(3)
-  //   state.shoppingFilter = true
-  //   expect(wrapper.findAll('explorer-card-stub').length).toEqual(2)
-  // })
+  it('can filter selected shop items', () => {
+    const wrapper = shallowMount(EntityView, { store, localVue, propsData: { isShop: true } })
+    expect(wrapper.findAll('explorer-card-stub').length).toEqual(3)
+    state.shoppingFilter = true
+    expect(wrapper.findAll('explorer-card-stub').length).toEqual(2)
+  })
 })
