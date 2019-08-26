@@ -23,9 +23,9 @@ describe('EntityView.vue', () => {
     getters = {
       activeEntityData: jest.fn().mockReturnValue({
         items: [
-           { id: '1' },
-           { id: '2' },
-           { id: '3' }
+          { id: '1' },
+          { id: '2' },
+          { id: '3' }
         ] })
     }
     store = new Vuex.Store({

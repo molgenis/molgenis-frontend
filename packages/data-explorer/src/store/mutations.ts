@@ -39,11 +39,11 @@ export default {
   },
   setMetaDataRefLabels (state: ApplicationState, meta: MetaDataApiResponse) {
     const refItems = meta.attributes.reduce((obj : EntityMetaRefs, attribute : MetaDataAttribute) => {
-      if (attribute.refEntity) { 
-        obj[attribute.name] = { 
+      if (attribute.refEntity) {
+        obj[attribute.name] = {
           refEntity: attribute.refEntity.name.toString(),
           fieldType: attribute.fieldType,
-          labelAttribute: attribute.refEntity.labelAttribute.toString() 
+          labelAttribute: attribute.refEntity.labelAttribute.toString()
         }
       }
       return obj
