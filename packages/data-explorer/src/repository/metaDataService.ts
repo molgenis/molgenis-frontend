@@ -17,7 +17,6 @@ const getRefsFromMeta = (meta: MetaDataApiResponse) => {
 const getAttributesfromMeta = (metaData: MetaDataApiResponse) => {
   return metaData.attributes
     .filter((attribute: MetaDataAttribute) => attribute.fieldType !== 'COMPOUND') // TODO:Compounds are out of scope for now because they will be treated differently in meta data api v3
-    .slice(0, 10) // TODO:We only get the first ten because otherwise the URL will get too big with the expand and filter
     .map((attribute: MetaDataAttribute) => attribute.name)
 }
 
