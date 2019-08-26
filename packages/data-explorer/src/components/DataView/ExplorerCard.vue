@@ -21,6 +21,14 @@ export default Vue.extend({
       type: String,
       required: true
     },
+    dataLabel: {
+      type: String,
+      required: true
+    },
+    dataContents: {
+      type: Object,
+      required: true
+    },
     isSelected: {
       type: Boolean,
       required: false,
@@ -30,14 +38,6 @@ export default Vue.extend({
       type: Boolean,
       required: false,
       default: () => false
-    },
-    dataLabel: {
-      type: String,
-      required: true
-    },
-    dataContents: {
-      type: Object,
-      required: true
     },
     customCode: {
       type: String,

@@ -3,7 +3,15 @@ import EntityCard from '@/components/DataView/ExplorerCard.vue'
 
 describe('EntityCard.vue', () => {
   it('exists', () => {
-    const wrapper = shallowMount(EntityCard, { propsData: { id: 'none' } })
+    const propsData = {
+      id: 'none',
+      dataLabel: 'dataLabel',
+      dataContents: {
+        id: 155143544,
+        myField: 'myValue'
+      }
+    }
+    const wrapper = shallowMount(EntityCard, { propsData })
     expect(wrapper.exists()).toBeTruthy()
   })
 })
