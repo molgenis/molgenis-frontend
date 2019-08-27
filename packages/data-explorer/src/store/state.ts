@@ -6,7 +6,7 @@ const state: ApplicationState = {
   tableData: null,
   tableMeta: null,
   dataDisplayLayout: 'CardView',
-  showFilters: true,
+  hideFilters: false,
   showShoppingCart: false,
   shoppedEntityItems: [],
   isShop: false,

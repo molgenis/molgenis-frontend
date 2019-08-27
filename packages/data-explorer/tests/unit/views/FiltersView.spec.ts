@@ -12,10 +12,10 @@ describe('FiltersView.vue', () => {
   beforeEach(() => {
     state = {
       dataDisplayLayout: 'cards',
-      showFilters: true
+      hideFilters: true
     }
     mutations = {
-      setShowFilters: jest.fn(),
+      setHideFilters: jest.fn(),
       setDataDisplayLayout: jest.fn()
     }
     store = new Vuex.Store({
@@ -31,6 +31,6 @@ describe('FiltersView.vue', () => {
   it('show/hides the filters', () => {
     const wrapper = shallowMount(FiltersView, { store, localVue })
     wrapper.find('.hide-filters').trigger('click')
-    expect(mutations.setShowFilters.mock.calls.length > 0).toBeTruthy()
+    expect(mutations.setHideFilters.mock.calls.length > 0).toBeTruthy()
   })
 })
