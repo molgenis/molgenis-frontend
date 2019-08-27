@@ -1,0 +1,22 @@
+10:06:03.483 INFO [GridLauncherV3.parse] - Selenium server version: 3.141.59, revision: e82be7d358
+10:06:03.593 INFO [GridLauncherV3.lambda$buildLaunchers$3] - Launching a standalone Selenium Server on port 4444
+2019-08-27 10:06:03.715:INFO::main: Logging initialized @533ms to org.seleniumhq.jetty9.util.log.StdErrLog
+10:06:03.985 INFO [WebDriverServlet.<init>] - Initialising WebDriverServlet
+10:06:04.119 INFO [SeleniumServer.boot] - Selenium Server is up and running on port 4444
+10:06:04.311 INFO [ActiveSessionFactory.apply] - Capabilities are: {
+  "acceptSslCerts": true,
+  "browserName": "firefox",
+  "javascriptEnabled": true,
+  "marionette": true,
+  "name": "Test"
+}
+10:06:04.313 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.firefox.GeckoDriverService)
+1566893164686	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/7n/qf9sbmsj3yxdz2mwgk2btyt40000gn/T/rust_mozprofile.bZroBtROEJ0n"
+1566893165173	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
+1566893165174	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
+1566893165174	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
+1566893166750	Marionette	INFO	Listening on port 50206
+10:06:06.884 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
+10:06:06.919 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session 969da739-8a90-4742-aa3a-5311a617ef41 (org.openqa.selenium.firefox.GeckoDriverService)
+1566893168136	Marionette	INFO	Stopped listening on port 50206
+10:06:08.662 INFO [ActiveSessions$1.onStop] - Removing session 969da739-8a90-4742-aa3a-5311a617ef41 (org.openqa.selenium.firefox.GeckoDriverService)
