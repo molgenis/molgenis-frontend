@@ -57,10 +57,10 @@ module.exports = {
         res.json(schemas.UIContext)
       })
       app.get('/api/v2/it_emx_datatypes_TypeTest', function (req, res) {
-        res.json(schemas.TableData)
+        res.json(schemas.MetaData)
       })
       app.get('/api/data/it_emx_datatypes_TypeTest', function (req, res) {
-        res.json(schemas.MetaData)
+        res.json(schemas.TableData)
       })
       app.get('/api/data/de_dataexplorer_table_settings', function (req, res) {
         res.json(schemas.TableSettings)

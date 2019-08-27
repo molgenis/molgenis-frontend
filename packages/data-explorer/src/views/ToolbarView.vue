@@ -3,7 +3,7 @@
     <button
       v-if="!showShoppingCart && dataDisplayLayout === 'TableView'"
       @click="setDataDisplayLayout('CardView')"
-      class="btn btn-light ml-1 float-right btn-outline-secondary">
+      class="btn btn-light ml-1 float-right btn-outline-secondary card-layout">
       <font-awesome-icon icon="th"></font-awesome-icon>
       Card layout
     </button>
@@ -17,7 +17,7 @@
     <button
       v-if="!showShoppingCart && isShop"
       @click="setShowShoppingCart(true)"
-      class="btn btn-light ml-1 float-right btn-outline-secondary">
+      class="btn btn-light ml-1 float-right btn-outline-secondary show-cart">
       <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
       Show cart
     </button>
