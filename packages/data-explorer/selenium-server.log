@@ -1,73 +1,18 @@
-15:07:54.783 INFO [GridLauncherV3.parse] - Selenium server version: 3.141.59, revision: e82be7d358
-15:07:54.851 INFO [GridLauncherV3.lambda$buildLaunchers$3] - Launching a standalone Selenium Server on port 4444
-2019-08-27 15:07:54.903:INFO::main: Logging initialized @399ms to org.seleniumhq.jetty9.util.log.StdErrLog
-15:07:55.155 INFO [WebDriverServlet.<init>] - Initialising WebDriverServlet
-15:07:55.285 INFO [SeleniumServer.boot] - Selenium Server is up and running on port 4444
-15:07:55.493 INFO [ActiveSessionFactory.apply] - Capabilities are: {
+15:18:15.554 INFO [GridLauncherV3.parse] - Selenium server version: 3.141.59, revision: e82be7d358
+15:18:15.622 INFO [GridLauncherV3.lambda$buildLaunchers$3] - Launching a standalone Selenium Server on port 4444
+2019-08-27 15:18:15.676:INFO::main: Logging initialized @393ms to org.seleniumhq.jetty9.util.log.StdErrLog
+15:18:15.923 INFO [WebDriverServlet.<init>] - Initialising WebDriverServlet
+15:18:16.051 INFO [SeleniumServer.boot] - Selenium Server is up and running on port 4444
+15:18:16.253 INFO [ActiveSessionFactory.apply] - Capabilities are: {
   "acceptSslCerts": true,
-  "browserName": "firefox",
+  "browserName": "chrome",
   "javascriptEnabled": true,
-  "marionette": true,
   "name": "Test"
 }
-15:07:55.495 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.firefox.GeckoDriverService)
-1566911275867	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/7n/qf9sbmsj3yxdz2mwgk2btyt40000gn/T/rust_mozprofile.ASWLf0lpQRe8"
-1566911276362	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
-1566911276362	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
-1566911276363	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
-1566911277958	Marionette	INFO	Listening on port 50180
-15:07:58.065 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
-15:07:58.094 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session 8536a812-5f3f-1748-b4a6-701ee7179daf (org.openqa.selenium.firefox.GeckoDriverService)
-1566911280607	Marionette	INFO	Stopped listening on port 50180
-15:08:01.146 INFO [ActiveSessions$1.onStop] - Removing session 8536a812-5f3f-1748-b4a6-701ee7179daf (org.openqa.selenium.firefox.GeckoDriverService)
-15:08:01.157 INFO [ActiveSessionFactory.apply] - Capabilities are: {
-  "acceptSslCerts": true,
-  "browserName": "firefox",
-  "javascriptEnabled": true,
-  "marionette": true,
-  "name": "Test"
-}
-15:08:01.157 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.firefox.GeckoDriverService)
-1566911281334	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/7n/qf9sbmsj3yxdz2mwgk2btyt40000gn/T/rust_mozprofile.kNvuRQKZvkjX"
-1566911281825	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
-1566911281825	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
-1566911281825	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
-1566911283313	Marionette	INFO	Listening on port 50498
-15:08:03.399 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
-15:08:03.402 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session 38e3513f-6a96-f54c-91a4-cc993ca500fe (org.openqa.selenium.firefox.GeckoDriverService)
-1566911286584	Marionette	INFO	Stopped listening on port 50498
-15:08:07.126 INFO [ActiveSessions$1.onStop] - Removing session 38e3513f-6a96-f54c-91a4-cc993ca500fe (org.openqa.selenium.firefox.GeckoDriverService)
-15:08:07.134 INFO [ActiveSessionFactory.apply] - Capabilities are: {
-  "acceptSslCerts": true,
-  "browserName": "firefox",
-  "javascriptEnabled": true,
-  "marionette": true,
-  "name": "Test"
-}
-15:08:07.135 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.firefox.GeckoDriverService)
-1566911287291	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/7n/qf9sbmsj3yxdz2mwgk2btyt40000gn/T/rust_mozprofile.MhSEvwUbVodF"
-1566911287771	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
-1566911287771	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
-1566911287771	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
-1566911289262	Marionette	INFO	Listening on port 50816
-15:08:09.367 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
-15:08:09.369 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session 57f2de16-c181-8545-9eb2-5d191e1f0b26 (org.openqa.selenium.firefox.GeckoDriverService)
-1566911294137	Marionette	INFO	Stopped listening on port 50816
-15:08:14.681 INFO [ActiveSessions$1.onStop] - Removing session 57f2de16-c181-8545-9eb2-5d191e1f0b26 (org.openqa.selenium.firefox.GeckoDriverService)
-15:08:14.687 INFO [ActiveSessionFactory.apply] - Capabilities are: {
-  "acceptSslCerts": true,
-  "browserName": "firefox",
-  "javascriptEnabled": true,
-  "marionette": true,
-  "name": "Test"
-}
-15:08:14.688 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.firefox.GeckoDriverService)
-1566911294837	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/7n/qf9sbmsj3yxdz2mwgk2btyt40000gn/T/rust_mozprofile.q16KrxkEoCXl"
-1566911295350	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: mozillaAddons
-1566911295350	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: resource://pdf.js/
-1566911295350	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid extension permission: about:reader*
-1566911296926	Marionette	INFO	Listening on port 51139
-15:08:17.002 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
-15:08:17.004 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session 3ab96526-d61e-e54e-af0d-a15055a8568b (org.openqa.selenium.firefox.GeckoDriverService)
-1566911299930	Marionette	INFO	Stopped listening on port 51139
-15:08:20.471 INFO [ActiveSessions$1.onStop] - Removing session 3ab96526-d61e-e54e-af0d-a15055a8568b (org.openqa.selenium.firefox.GeckoDriverService)
+15:18:16.254 INFO [ActiveSessionFactory.lambda$apply$11] - Matched factory org.openqa.selenium.grid.session.remote.ServicedSession$Factory (provider: org.openqa.selenium.chrome.ChromeDriverService)
+Starting ChromeDriver 76.0.3809.68 (420c9498db8ce8fcd190a954d51297672c1515d5-refs/branch-heads/3809@{#864}) on port 21857
+Only local connections are allowed.
+Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
+15:18:17.364 INFO [ProtocolHandshake.createSession] - Detected dialect: W3C
+15:18:17.396 INFO [RemoteSession$Factory.lambda$performHandshake$0] - Started new session 4ccb8af21c6645cac241d546844d3427 (org.openqa.selenium.chrome.ChromeDriverService)
+15:18:18.209 INFO [ActiveSessions$1.onStop] - Removing session 4ccb8af21c6645cac241d546844d3427 (org.openqa.selenium.chrome.ChromeDriverService)

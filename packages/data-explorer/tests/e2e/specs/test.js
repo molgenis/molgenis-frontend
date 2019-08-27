@@ -57,15 +57,15 @@ module.exports = {
       .pause(300)
       .waitForElementVisible('.btn.hide-filters', 5000)
       .assert.elementNotPresent('show-filters-button')
-      .assert.cssClassNotPresent(".flex-mainview", "hidefilters")
+      .assert.cssClassNotPresent('.flex-mainview', 'hidefilters')
       .click('.btn.hide-filters')
       .pause(300)
-      .assert.cssClassPresent(".flex-mainview", "hidefilters")
+      .assert.cssClassPresent('.flex-mainview', 'hidefilters')
       .waitForElementVisible('.btn.show-filters-button', 5000)
       .click('.btn.show-filters-button')
       .pause(300)
       .assert.elementNotPresent('show-filters-button')
-      .assert.cssClassNotPresent(".flex-mainview", "hidefilters")
+      .assert.cssClassNotPresent('.flex-mainview', 'hidefilters')
       .end()
   }
 }
