@@ -6,20 +6,15 @@
       :key="index"
       :id="getEntityId(entity)"
       :isSelected="isSelected(entity)"
-      :isShop="isShop">
-
-      <!-- Card template, to be made generic-->
-      <div class="card-body">
-        <h5 class="card-title">{{entity.data.xstring}}</h5>
-        <p class="card-text">{{entity.data.xtext}}</p>
-      </div>
-
+      :isShop="isShop"
+      :dataLabel="getEntityLabel(entity)"
+      :dataContents="entity">
     </explorer-card>
   </div>
 </template>
 
 <script>
-import ExplorerCard from '../components/DataView/ExplorerCard'
+import ExplorerCard from '../components/dataView/ExplorerCard'
 import { mapState } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
@@ -38,11 +33,17 @@ export default {
     ...mapState(['tableMeta', 'shoppedEntityItems', 'isShop']),
     idAttribute () {
       return this.tableMeta.idAttribute
+    },
+    labelAttribute () {
+      return this.tableMeta.labelAttribute
     }
   },
   methods: {
     getEntityId (entity) {
-      return entity.data[this.idAttribute].toString()
+      return entity[this.idAttribute].toString()
+    },
+    getEntityLabel (entity) {
+      return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))

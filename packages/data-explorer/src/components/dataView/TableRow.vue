@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ShoppingButton from '../Utils/ShoppingButton'
+import ShoppingButton from '../utils/ShoppingButton'
 export default {
   name: 'TableRow',
   props: {

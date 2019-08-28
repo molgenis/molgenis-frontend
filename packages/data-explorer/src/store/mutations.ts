@@ -1,5 +1,5 @@
-import ApplicationState, { Toast } from '@/types/ApplicationState'
-import { DataApiResponse, MetaDataApiResponse } from '@/types/ApiResponse'
+import ApplicationState, { Toast, EntityMetaRefs } from '@/types/ApplicationState'
+import { DataApiResponse, MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {
@@ -14,6 +14,9 @@ export default {
   setTableData (state: ApplicationState, data: DataApiResponse) {
     state.tableData = data
   },
+  // setDefaultEntityData(state: ApplicationState, data: DataApiResponse) {
+  //   state.defaultEntityData = data
+  // },
   setShowFilters (state: ApplicationState, showFilters: boolean) {
     state.showFilters = showFilters
   },
@@ -34,10 +37,26 @@ export default {
   setTableMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
   },
+  setMetaDataRefLabels (state: ApplicationState, meta: MetaDataApiResponse) {
+    const refItems = meta.attributes.reduce((obj : EntityMetaRefs, attribute : MetaDataAttribute) => {
+      if (attribute.refEntity) {
+        obj[attribute.name] = {
+          refEntity: attribute.refEntity.name.toString(),
+          fieldType: attribute.fieldType,
+          labelAttribute: attribute.refEntity.labelAttribute.toString()
+        }
+      }
+      return obj
+    }, <EntityMetaRefs>{})
+    state.entityMetaRefs = refItems
+  },
   setIsShop (state: ApplicationState, isShop: boolean) {
     state.isShop = isShop
   },
   setSettingsRowId (state: ApplicationState, settingsRowId: string) {
     state.settingsRowId = settingsRowId
+  },
+  setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
+    state.tableMeta = meta
   }
 }

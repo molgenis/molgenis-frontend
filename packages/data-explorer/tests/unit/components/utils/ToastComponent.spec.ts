@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import ToastComponent from '@/components/Utils/ToastComponent.vue'
+import ToastComponent from '@/components/utils/ToastComponent.vue'
 
 describe('ToastComponent.vue', () => {
   it('shows information', () => {
