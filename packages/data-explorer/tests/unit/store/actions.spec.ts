@@ -242,7 +242,7 @@ describe('actions', () => {
         dataDisplayLayout: 'CardView',
         defaultEntityData: null,
         entityMetaRefs: {},
-        showFilters: true,
+        hideFilters: true,
         showShoppingCart: false,
         shoppedEntityItems: [],
         isShop: false,
