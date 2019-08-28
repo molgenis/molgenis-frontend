@@ -199,7 +199,7 @@ const dataResponse = {
 const mockResponses: {[key:string]: Object} = {
   '/api/data/entity': { 'loaded': true },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
-  '/api/v2/entity': metaResponse,
+  '/api/v2/entity?num=0': metaResponse,
   '/api/data/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true } }] }
 }
 jest.mock('@molgenis/molgenis-api-client', () => {
