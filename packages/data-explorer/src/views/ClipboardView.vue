@@ -64,7 +64,7 @@ export default {
     },
     closeShoppingCart () {
       this.$store.commit('setShowShoppingCart', false)
-      this.$store.commit('setShowFilters', true)
+      this.$store.commit('setHideFilters', true)
     }
   }
 }

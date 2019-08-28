@@ -12,10 +12,10 @@ describe('ToolbarView.vue', () => {
   beforeEach(() => {
     state = {
       dataDisplayLayout: 'cards',
-      showFilters: true
+      hideFilters: true
     }
     mutations = {
-      setShowFilters: jest.fn(),
+      setHideFilters: jest.fn(),
       setDataDisplayLayout: jest.fn()
     }
     store = new Vuex.Store({

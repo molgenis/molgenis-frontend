@@ -49,11 +49,11 @@ describe('mutations', () => {
     })
   })
 
-  describe('setShowFilters', () => {
+  describe('setHideFilters', () => {
     it('sets if the filters should be shown', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setShowFilters(baseAppState, false)
-      expect(baseAppState.showFilters).toEqual(false)
+      mutations.setHideFilters(baseAppState, false)
+      expect(baseAppState.hideFilters).toEqual(false)
     })
   })
 

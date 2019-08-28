@@ -14,11 +14,8 @@ export default {
   setTableData (state: ApplicationState, data: DataApiResponse) {
     state.tableData = data
   },
-  // setDefaultEntityData(state: ApplicationState, data: DataApiResponse) {
-  //   state.defaultEntityData = data
-  // },
-  setShowFilters (state: ApplicationState, showFilters: boolean) {
-    state.showFilters = showFilters
+  setHideFilters (state: ApplicationState, hideFilters: boolean) {
+    state.hideFilters = hideFilters
   },
   setTableName (state: ApplicationState, entity: string) {
     state.tableName = entity
