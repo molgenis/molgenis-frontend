@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.8.4...@molgenis-experimental/data-explorer@0.8.5) (2019-08-28)
+
+
+### Bug Fixes
+
+* **data-explorer:** Changed naming. ( Value was fliped from what you would expect from naming ) ([0a8d70a](https://github.com/molgenis/molgenis-frontend/commit/0a8d70a))
+
+
+
+
+
 ## [0.8.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.8.3...@molgenis-experimental/data-explorer@0.8.4) (2019-08-28)
 
 
