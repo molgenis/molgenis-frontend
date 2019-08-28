@@ -39,7 +39,7 @@ library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag)
 export default Vue.extend({
   name: 'ToolbarView',
   computed: {
-    ...mapState(['dataDisplayLayout', 'showFilters', 'showShoppingCart', 'isShop'])
+    ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'isShop'])
   },
   methods: {
     setDataDisplayLayout (value) {
@@ -47,7 +47,7 @@ export default Vue.extend({
     },
     setShowShoppingCart (value) {
       this.$store.commit('setShowShoppingCart', value)
-      this.$store.commit('setShowFilters', !value)
+      this.$store.commit('setHideFilters', !value)
     }
   },
   components: { ActiveFilters, FontAwesomeIcon }

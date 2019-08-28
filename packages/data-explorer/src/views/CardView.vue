@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style scoped>
-  .showfilters .card-columns {
+  .hidefilters .card-columns {
     column-count: 4;
   }
 
@@ -63,7 +63,7 @@ export default {
       column-count: 2;
     }
 
-    .showfilters .card-columns {
+    .hidefilters .card-columns {
       column-count: 3;
     }
   }
@@ -74,7 +74,7 @@ export default {
       column-count: 1;
     }
 
-    .showfilters .card-columns {
+    .hidefilters .card-columns {
       column-count: 2;
     }
   }

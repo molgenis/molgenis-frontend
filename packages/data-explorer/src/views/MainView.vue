@@ -7,7 +7,7 @@
       :message="toast.message"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
-    <div class="flex-mainview d-flex" :class="{'showfilters': !showFilters}">
+    <div class="flex-mainview d-flex" :class="{'hidefilters': hideFilters}">
       <div class="flex-filter">
         <filters-view></filters-view>
       </div>
@@ -16,8 +16,8 @@
           type="button"
           class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
           title="Show Filters"
-          v-if="!showFilters && !showShoppingCart"
-          @click="setShowFilters(true)">
+          v-if="hideFilters && !showShoppingCart"
+          @click="setHideFilters(false)">
           <font-awesome-icon icon="chevron-up"></font-awesome-icon>
           <span class="ml-2">Filters</span>
         </button>
@@ -44,10 +44,10 @@ library.add(faChevronUp)
 export default Vue.extend({
   name: 'MainView',
   computed: {
-    ...mapState(['showFilters', 'toast', 'showShoppingCart'])
+    ...mapState(['hideFilters', 'toast', 'showShoppingCart'])
   },
   methods: {
-    ...mapMutations([ 'clearToast', 'setShowFilters' ])
+    ...mapMutations([ 'clearToast', 'setHideFilters' ])
   },
   created () {
     if (this.$route.params.entity) {
@@ -82,12 +82,12 @@ export default Vue.extend({
     max-width: calc(100% - 22rem);
     width: 100%;
   }
-  .showfilters .flex-filter {
+  .hidefilters .flex-filter {
     max-width: 0;
     min-width: 0;
     padding-right: 0;
   }
-  .showfilters .flex-data {
+  .hidefilters .flex-data {
     max-width: 100%;
   }
 

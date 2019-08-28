@@ -10,7 +10,7 @@
           type="button"
           class="btn btn-light m-2 btn-outline-secondary hide-filters"
           title="Hide Filters"
-          @click="setShowFilters(false)">
+          @click="setHideFilters(true)">
           <font-awesome-icon icon="chevron-left"></font-awesome-icon>
         </button>
       </div>
@@ -97,10 +97,10 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState(['showFilters'])
+    ...mapState(['hideFilters'])
   },
   methods: {
-    ...mapMutations([ 'setShowFilters' ]),
+    ...mapMutations([ 'setHideFilters' ]),
     updateState (newState) {
       this.filtersShown = newState
     }

@@ -8,7 +8,7 @@ const state: ApplicationState = {
   dataDisplayLayout: 'CardView',
   defaultEntityData: null,
   entityMetaRefs: {},
-  showFilters: true,
+  hideFilters: false,
   showShoppingCart: false,
   shoppedEntityItems: [],
   isShop: false,
