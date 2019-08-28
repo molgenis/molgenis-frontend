@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import TableView from '@/views/TableView.vue'
 import Vuex from 'vuex'
 
-describe('CardView.vue', () => {
+describe('TableView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store: any
@@ -27,7 +27,7 @@ describe('CardView.vue', () => {
   it('exists', () => {
     const wrapper = shallowMount(TableView, { store,
       localVue,
-      propsData: { entitiesToShow: [{ data: { id: '1' } }] } })
+      propsData: { entitiesToShow: [{ id: '1' }] } })
     expect(wrapper.exists()).toBeTruthy()
   })
 })
