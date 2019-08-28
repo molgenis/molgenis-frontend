@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import EntityTableHeader from '@/components/DataView/TableHeader.vue'
+import EntityTableHeader from '@/components/dataView/TableHeader.vue'
 
 describe('EntityTableHeader.vue', () => {
   it('exists', () => {

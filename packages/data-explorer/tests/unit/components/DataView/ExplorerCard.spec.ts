@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import EntityCard from '@/components/DataView/ExplorerCard.vue'
+import EntityCard from '@/components/dataView/ExplorerCard.vue'
 
 describe('EntityCard.vue', () => {
   it('exists', () => {

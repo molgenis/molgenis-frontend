@@ -40,7 +40,6 @@ const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiR
 
   const response = await api.get(`/api/data/${tableId}?${query}`)
   const resolvedItems = response.items.map((item:any) => levelOneRowMapper(item, metaDataRefs))
-
   response.items = resolvedItems
   return response
 }

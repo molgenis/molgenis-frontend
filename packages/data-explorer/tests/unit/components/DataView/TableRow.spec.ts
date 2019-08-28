@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import EntityTableRow from '@/components/DataView/TableRow.vue'
+import EntityTableRow from '@/components/dataView/TableRow.vue'
 
 describe('EntityTableRow.vue', () => {
   it('exists', () => {

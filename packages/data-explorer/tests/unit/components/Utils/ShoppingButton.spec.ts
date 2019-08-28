@@ -1,5 +1,5 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import ShoppingButton from '@/components/Utils/ShoppingButton.vue'
+import ShoppingButton from '@/components/utils/ShoppingButton.vue'
 import Vuex from 'vuex'
 
 describe('ShoppingButton.vue', () => {
