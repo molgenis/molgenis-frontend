@@ -5,7 +5,7 @@
     <table-row v-for="(entity, index) in entitiesToShow"
                :key="index"
                :id="getEntityId(entity)"
-               :rowData="entity.data"
+               :rowData="entity"
                :isSelected="isSelected(entity)"
                :isShop="isShop"></table-row>
     </tbody>
@@ -35,12 +35,12 @@ export default {
       return this.tableMeta.idAttribute
     },
     tableHeaderToShow () {
-      return Object.keys(this.entitiesToShow[0].data)
+      return Object.keys(this.entitiesToShow[0])
     }
   },
   methods: {
     getEntityId (entity) {
-      return entity.data[this.idAttribute].toString()
+      return entity[this.idAttribute].toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
