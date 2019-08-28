@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import TableView from '@/views/TableView.vue'
 import Vuex from 'vuex'
 
-describe('CardView.vue', () => {
+describe('TableView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store: any

@@ -4,10 +4,10 @@
       {{ 'dataexplorer_empty_shopping_cart' | i18n}}
     </div>
     <div v-else>
-      <button class="btn btn-primary mr-2" @click="closeShoppingCart" v-if="entitiesToShow.length > 5">
+      <button class="btn btn-primary cart-back mr-2" @click="closeShoppingCart" v-if="entitiesToShow.length > 5">
         <font-awesome-icon icon="chevron-left"></font-awesome-icon> Back
       </button>
-      <button class="btn btn-success mr-2" v-if="entitiesToShow.length > 5">
+      <button class="btn btn-success cart-order mr-2" v-if="entitiesToShow.length > 5">
         <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
       </button>
       <table class="table">
@@ -22,10 +22,10 @@
         </tbody>
       </table>
     </div>
-    <button class="btn btn-primary mr-2" @click="closeShoppingCart">
+    <button class="btn btn-primary cart-back mr-2" @click="closeShoppingCart">
       <font-awesome-icon icon="chevron-left"></font-awesome-icon> Back
     </button>
-    <button v-if="entitiesToShow.length > 0" class="btn btn-success mr-2">
+    <button v-if="entitiesToShow.length > 0" class="btn btn-success cart-order mr-2">
       <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
     </button>
   </div>
@@ -64,7 +64,7 @@ export default {
     },
     closeShoppingCart () {
       this.$store.commit('setShowShoppingCart', false)
-      this.$store.commit('setHideFilters', true)
+      this.$store.commit('setHideFilters', false)
     }
   }
 }

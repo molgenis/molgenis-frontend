@@ -1,3 +1,4 @@
+const schemas = require('./tests/test-schemas.js')
 const webpack = require('webpack')
 const BannerPlugin = require('webpack').BannerPlugin
 const packageJson = require('./package.json')
@@ -31,12 +32,9 @@ module.exports = {
   devServer: {
     // In CI mode, Safari cannot contact "localhost", so as a workaround, run the dev server using the jenkins agent pod dns instead.
     host: process.env.JENKINS_AGENT_NAME || 'localhost',
-    proxy: process.env.NODE_ENV === 'production' ? undefined : {
+    // Used to proxy a external API server to have someone to talk to during development
+    proxy: process.env.NODE_ENV !== 'development' ? undefined : {
       '^/api': {
-        'target': 'https://data-v3.dev.molgenis.org',
-        'keepOrigin': true
-      },
-      '^/css': {
         'target': 'https://data-v3.dev.molgenis.org',
         'keepOrigin': true
       },
@@ -52,6 +50,21 @@ module.exports = {
         'target': 'https://data-v3.dev.molgenis.org',
         'keepOrigin': true
       }
+    },
+    // Used as mock in e2e tests
+    before: process.env.NODE_ENV !== 'test' ? undefined : function (app) {
+      app.get('/app-ui-context', function (req, res) {
+        res.json(schemas.UIContext)
+      })
+      app.get('/api/v2/it_emx_datatypes_TypeTest', function (req, res) {
+        res.json(schemas.MetaData)
+      })
+      app.get('/api/data/it_emx_datatypes_TypeTest', function (req, res) {
+        res.json(schemas.TableData)
+      })
+      app.get('/api/data/de_dataexplorer_table_settings', function (req, res) {
+        res.json(schemas.TableSettings)
+      })
     }
   }
 }
