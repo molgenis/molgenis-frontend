@@ -47,7 +47,7 @@ export default Vue.extend({
     },
     setShowShoppingCart (value) {
       this.$store.commit('setShowShoppingCart', value)
-      this.$store.commit('setHideFilters', !value)
+      this.$store.commit('setHideFilters', value)
     }
   },
   components: { ActiveFilters, FontAwesomeIcon }

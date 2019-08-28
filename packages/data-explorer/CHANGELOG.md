@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.8.3...@molgenis-experimental/data-explorer@0.8.4) (2019-08-28)
+
+
+### Bug Fixes
+
+* **data-explorer:** Fixed broken clipboard ([7d963aa](https://github.com/molgenis/molgenis-frontend/commit/7d963aa))
+
+
+
+
+
 ## [0.8.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.8.2...@molgenis-experimental/data-explorer@0.8.3) (2019-08-28)
 
 

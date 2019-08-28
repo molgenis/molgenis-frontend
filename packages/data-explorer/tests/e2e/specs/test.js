@@ -55,12 +55,10 @@ module.exports = {
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
-      .expect.elements('.filter-container .filter-card').count.to.equal(4)
-    browser.click('.remove-button')
-      .expect.elements('.filter-container .filter-card').count.to.equal(3)
-    browser.click('.add-button')
+      .click('.remove-button')
+      .click('.add-button')
       .assert.elementPresent('#modal-add-filter')
       .click('.btn.btn-primary')
-    browser.end()
+      .end()
   }
 }
