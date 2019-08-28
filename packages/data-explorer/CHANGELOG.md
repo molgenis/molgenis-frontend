@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.8.0...@molgenis-experimental/data-explorer@0.8.1) (2019-08-28)
+
+**Note:** Version bump only for package @molgenis-experimental/data-explorer
+
+
+
+
+
+# [0.8.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.7.2...@molgenis-experimental/data-explorer@0.8.0) (2019-08-28)
+
+
+### Bug Fixes
+
+* **tests:** Fix tests ([53fb6c4](https://github.com/molgenis/molgenis-frontend/commit/53fb6c4))
+* Rename folders to lowercase to fix the app ([2e078e1](https://github.com/molgenis/molgenis-frontend/commit/2e078e1))
+
+
+### Features
+
+* **card:** Make default card + merge with master ([4d5fd23](https://github.com/molgenis/molgenis-frontend/commit/4d5fd23))
+* **defaultCard:** First implementation of default card ([c134860](https://github.com/molgenis/molgenis-frontend/commit/c134860))
+* **DefaultCardContent:** WIP ([081f113](https://github.com/molgenis/molgenis-frontend/commit/081f113))
+
+
+
+
+
 ## [0.7.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.7.1...@molgenis-experimental/data-explorer@0.7.2) (2019-08-22)
 
 

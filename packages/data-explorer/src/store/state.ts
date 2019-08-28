@@ -6,6 +6,8 @@ const state: ApplicationState = {
   tableData: null,
   tableMeta: null,
   dataDisplayLayout: 'CardView',
+  defaultEntityData: null,
+  entityMetaRefs: {},
   hideFilters: false,
   showShoppingCart: false,
   shoppedEntityItems: [],

@@ -12,7 +12,7 @@
     <div class="row">
       <div class="col">
         <toolbar-view></toolbar-view>
-        <cart-view v-if="showShoppingCart"></cart-view>
+        <clipboard-view v-if="showShoppingCart"></clipboard-view>
         <select-layout-view v-else></select-layout-view>
       </div>
     </div>
@@ -23,9 +23,9 @@
 import Vue from 'vue'
 import ToolbarView from './ToolbarView'
 import SelectLayoutView from './SelectLayoutView'
-import TableSettingsButton from '../components/Utils/TableSettingsButton'
+import TableSettingsButton from '../components/utils/TableSettingsButton'
 import { mapState, mapActions } from 'vuex'
-import CartView from './CartView'
+import ClipboardView from './ClipboardView'
 
 export default Vue.extend({
   name: 'DataView',
@@ -33,13 +33,12 @@ export default Vue.extend({
     ...mapState(['showShoppingCart', 'tableName', 'tableMeta', 'openTableSettings', 'settingsRowId', 'isShop'])
   },
   methods: {
-    ...mapActions(['loadTableData', 'loadTableMetaData'])
+    ...mapActions(['getTableData', 'getTableSettings'])
   },
   created () {
-    this.loadTableData()
-    this.loadTableMetaData()
-    this.$store.dispatch('getTableSettings', { tableName: this.tableName })
+    this.getTableData()
+    this.getTableSettings({ tableName: this.activeEntity })
   },
-  components: { ToolbarView, SelectLayoutView, TableSettingsButton, CartView }
+  components: { ToolbarView, SelectLayoutView, TableSettingsButton, ClipboardView }
 })
 </script>

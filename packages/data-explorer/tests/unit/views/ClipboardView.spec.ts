@@ -1,8 +1,8 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import CartView from '@/views/CartView.vue'
+import ClipboardView from '@/views/ClipboardView.vue'
 import Vuex from 'vuex'
 
-describe('CartView.vue', () => {
+describe('ClipboardView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.filter('i18n', jest.fn())
@@ -15,9 +15,9 @@ describe('CartView.vue', () => {
       shoppedEntityItems: [1, 3],
       tableData: {
         items: [
-          { data: { id: '1' } },
-          { data: { id: '2' } },
-          { data: { id: '3' } }
+          { id: '1' },
+          { id: '2' },
+          { id: '3' }
         ]
       }
     }
@@ -25,7 +25,7 @@ describe('CartView.vue', () => {
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(CartView, { store, localVue })
+    const wrapper = shallowMount(ClipboardView, { store, localVue })
     expect(wrapper.exists()).toBeTruthy()
   })
 })

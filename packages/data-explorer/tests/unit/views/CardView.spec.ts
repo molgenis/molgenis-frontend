@@ -14,7 +14,7 @@ describe('CardView.vue', () => {
     state = {
       shoppingFilter: false,
       entityMeta: { idAttribute: 'id' },
-      dataDisplayLayout: 'CartView',
+      dataDisplayLayout: 'ClipboardView',
       shoppedEntityItems: [1, 3]
     }
     mutations = {
@@ -23,9 +23,9 @@ describe('CardView.vue', () => {
     getters = {
       activeEntityData: jest.fn().mockReturnValue({
         items: [
-          { data: { id: '1' } },
-          { data: { id: '2' } },
-          { data: { id: '3' } }
+          { id: '1' },
+          { id: '2' },
+          { id: '3' }
         ] })
     }
     store = new Vuex.Store({
