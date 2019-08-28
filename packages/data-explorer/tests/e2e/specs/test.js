@@ -7,6 +7,7 @@ module.exports = {
   'show table layout and card layout': browser => {
     browser
       .url(process.env.VUE_DEV_SERVER_URL)
+      .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
       .waitForElementVisible('.card-columns', timeOutDelay)
