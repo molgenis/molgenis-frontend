@@ -37,7 +37,7 @@ export default Vue.extend({
   },
   created () {
     this.getTableData()
-    this.getTableSettings({ tableName: this.activeEntity })
+    this.getTableSettings({ tableName: this.tableName })
   },
   components: { ToolbarView, SelectLayoutView, TableSettingsButton, ClipboardView }
 })
