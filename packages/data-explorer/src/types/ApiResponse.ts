@@ -1,6 +1,15 @@
-type DataApiResponseItem = {
+import { StringMap } from '@/types/GeneralTypes'
+
+export type DataApiResponseItem = {
   links: { self: string },
-  data: Object
+  items?:[],
+  data: {[key:string]: string | DataApiResponseItem}
+}
+
+export type DataApiResponseItemMref = {
+  links: { self: string },
+  items:[],
+  data: {[key:string]: string | DataApiResponseItem}
 }
 
 type DataApiResponsePage = {
@@ -18,12 +27,12 @@ export type DataApiResponse = {
   page: DataApiResponsePage
 }
 
-type MetaDataAttribute = {
+export type MetaDataAttribute = {
   href: string,
   fieldType: string,
   name: string,
   label: string,
-  attributes: Object[],
+  attributes?: StringMap[],
   auto: boolean,
   nillable: boolean,
   readOnly: boolean,
@@ -31,7 +40,8 @@ type MetaDataAttribute = {
   unique: boolean,
   visible: boolean,
   lookupAttribute: boolean,
-  isAggregatable: boolean
+  isAggregatable: boolean,
+  refEntity?: {name: string, labelAttribute: string}
 }
 
 export type MetaDataApiResponse = {
