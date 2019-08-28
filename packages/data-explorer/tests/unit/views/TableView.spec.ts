@@ -27,7 +27,7 @@ describe('CardView.vue', () => {
   it('exists', () => {
     const wrapper = shallowMount(TableView, { store,
       localVue,
-      propsData: { entitiesToShow: [{ data: { id: '1' } }] } })
+      propsData: { entitiesToShow: [{ id: '1' }] } })
     expect(wrapper.exists()).toBeTruthy()
   })
 })
