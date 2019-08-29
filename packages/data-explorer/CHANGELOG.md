@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.8.6...@molgenis-experimental/data-explorer@0.8.7) (2019-08-29)
+
+
+### Bug Fixes
+
+* **data-explorer:** Added the correct url to molgenis bootstrap style ([#113](https://github.com/molgenis/molgenis-frontend/issues/113)) ([e25a2c5](https://github.com/molgenis/molgenis-frontend/commit/e25a2c5))
+
+
+
+
+
 ## [0.8.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.8.5...@molgenis-experimental/data-explorer@0.8.6) (2019-08-28)
 
 **Note:** Version bump only for package @molgenis-experimental/data-explorer
