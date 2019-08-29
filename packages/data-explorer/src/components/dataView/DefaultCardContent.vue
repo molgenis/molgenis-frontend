@@ -10,6 +10,7 @@
           {{value}}
         </div>
       </div>
+      <button class="btn btn-info mt-3" @click="handleExpandBtnClicked">{{ expandBtnText }}</button>
     </div>
   </div>
 </template>
@@ -17,6 +18,11 @@
 <script>
 export default {
   name: 'DefaultCardContent',
+  data: () => {
+    return {
+      cardState: 'closed'
+    }
+  },
   props: {
     dataLabel: {
       type: String,
@@ -25,6 +31,21 @@ export default {
     dataContents: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    expandBtnText () {
+      return this.cardState === 'closed' ? 'Expand' : 'Collapse'
+    }
+  },
+  methods: {
+    handleExpandBtnClicked () {
+      if (this.cardState === 'closed') {
+        this.cardState = 'open'
+        this.$emit('expandDefaultCard')
+      } else {
+        this.cardState = 'closed'
+      }
     }
   }
 }

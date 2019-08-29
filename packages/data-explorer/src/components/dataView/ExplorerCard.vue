@@ -3,7 +3,11 @@
     <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
     <slot>
       <custom-card-content v-if="customCode"></custom-card-content>
-      <default-card-content v-else :dataLabel="dataLabel" :dataContents="dataContents"></default-card-content>
+      <default-card-content v-else
+      :dataLabel="dataLabel"
+      :dataContents="dataContents"
+      @expandDefaultCard="handleDefaultCardExpand"
+      ></default-card-content>
     </slot>
   </div>
 </template>
@@ -44,6 +48,11 @@ export default Vue.extend({
       required: false
     }
   },
-  components: { ShoppingButton, DefaultCardContent, CustomCardContent }
+  components: { ShoppingButton, DefaultCardContent, CustomCardContent },
+  methods: {
+    handleDefaultCardExpand () {
+      this.$emit('expandCard', { id: this.id })
+    }
+  }
 })
 </script>

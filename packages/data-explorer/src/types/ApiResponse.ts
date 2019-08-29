@@ -45,17 +45,17 @@ export type MetaDataAttribute = {
 }
 
 export type MetaDataApiResponse = {
+  attributes: MetaDataAttribute[],
+  description: string,
   href: string,
   hrefCollection: string,
-  name: string,
-  label: string,
-  description: string,
-  attributes: MetaDataAttribute[],
-  labelAttribute: string,
   idAttribute: string,
-  lookupAttributes: string[],
   isAbstract: boolean,
-  writable: boolean,
+  label: string,
+  labelAttribute: string,
   languageCode: string,
+  lookupAttributes: string[],
+  name: string,
   permissions: string[]
+  writable: boolean,
 }

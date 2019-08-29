@@ -1,6 +1,6 @@
 import ApplicationState, { Toast, EntityMetaRefs } from '@/types/ApplicationState'
 import { DataApiResponse, MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
-
+import { StringMap } from '@/types/GeneralTypes'
 export default {
   setToast (state: ApplicationState, toast: Toast) {
     state.toast = toast
@@ -55,5 +55,18 @@ export default {
   },
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
+  },
+  updateRowData (state: ApplicationState, { rowId, rowData }: {rowId: string, rowData: StringMap}) {
+    if (!state.tableData) {
+      throw new Error('cannot update empty table data')
+    }
+    // todo need to refacor state.tableData to look up list
+    state.tableData.items.forEach((row, index) => {
+      // @ts-ignore
+      if (row[state.tableMeta.idAttribute].toString() === rowId) {
+        // @ts-ignore
+        state.tableData.items[index] = rowData
+      }
+    })
   }
 }
