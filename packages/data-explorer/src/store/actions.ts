@@ -20,7 +20,7 @@ export default {
     }
   }),
   getTableData: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
-    if (typeof state.tableName !== 'string') {
+    if (state.tableName === null) {
       throw new Error('cannot load table data for non string table id')
     }
     const metaData = await metaDataRepository.fetchMetaData(state.tableName)

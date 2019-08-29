@@ -272,5 +272,12 @@ describe('actions', () => {
       convertedResponse.items = data
       expect(commit).toHaveBeenCalledWith('setTableData', convertedResponse)
     })
+
+    it('should throw a error if the state does not contain a string table name', async () => {
+      const commit = jest.fn()
+      state.tableName = null
+      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
+      expect(actions.getTableData({ commit, state })).rejects.toEqual(new Error('cannot load table data for non string table id'))
+    })
   })
 })
