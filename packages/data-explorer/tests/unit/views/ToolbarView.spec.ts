@@ -12,7 +12,13 @@ describe('ToolbarView.vue', () => {
   beforeEach(() => {
     state = {
       dataDisplayLayout: 'cards',
-      hideFilters: true
+      hideFilters: true,
+      tableSettings: {
+        settingsTable: 'de_dataexplorer_table_settings',
+        settingsRowId: null,
+        collapseLimit: 5,
+        isShop: false
+      }
     }
     mutations = {
       setHideFilters: jest.fn(),
