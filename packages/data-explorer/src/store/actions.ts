@@ -29,9 +29,6 @@ export default {
     commit('setTableData', tableData)
   },
   fetchRowData: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: {rowId: string}) => {
-    if (typeof payload.rowId !== 'string') {
-      throw new Error('cannot load row data for non string row id')
-    }
     if (typeof state.tableName !== 'string') {
       throw new Error('cannot load table data for non string table id')
     }

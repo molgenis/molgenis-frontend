@@ -1,5 +1,7 @@
 import actions from '@/store/actions'
 import ApplicationState from '@/types/ApplicationState'
+import * as metaDataRepository from '@/repository/metaDataRepository'
+import * as dataRepository from '@/repository/dataRepository'
 
 const metaResponse = {
   meta: {
@@ -209,7 +211,42 @@ jest.mock('@molgenis/molgenis-api-client', () => {
   }
 })
 
+jest.mock('@/repository/metaDataRepository', () => {
+  return {
+    fetchMetaData: jest.fn()
+  }
+})
+
+jest.mock('@/repository/dataRepository', () => {
+  return {
+    getTableDataWithReference: jest.fn(),
+    getRowDataWithReference: jest.fn()
+  }
+})
+
+let state: ApplicationState
+
 describe('actions', () => {
+    beforeEach(() => {
+      state = {
+        toast: null,
+        tableName: 'it_emx_datatypes_TypeTest',
+        tableData: null,
+        tableMeta: null,
+        dataDisplayLayout: 'CardView',
+        defaultEntityData: null,
+        entityMetaRefs: {},
+        hideFilters: true,
+        showShoppingCart: false,
+        shoppedEntityItems: [],
+        tableSettings: {
+          isShop: false,
+          settingsRowId: null,
+          settingsTable: 'de_dataexplorer_table_settings',
+          collapseLimit: 5
+        }
+      }
+    })
   describe('loadTableData', () => {
     it('loads the selected table data', async (done) => {
       const commit = jest.fn()
@@ -231,46 +268,16 @@ describe('actions', () => {
   })
 
   describe('getTableData', () => {
-    let state: ApplicationState
-    beforeEach(() => {
-      state = {
-        toast: null,
-        tableName: 'it_emx_datatypes_TypeTest',
-        tableData: null,
-        tableMeta: null,
-        dataDisplayLayout: 'CardView',
-        defaultEntityData: null,
-        entityMetaRefs: {},
-        hideFilters: true,
-        showShoppingCart: false,
-        shoppedEntityItems: [],
-        tableSettings: {
-          isShop: false,
-          settingsRowId: null,
-          settingsTable: 'de_dataexplorer_table_settings',
-          collapseLimit: 5
-        }
-      }
-    })
     it('should fetch the table data from the backend', async () => {
       const commit = jest.fn()
       state.tableName = 'entity'
-      jest.setTimeout(6000)
+      // @ts-ignore ts does not know its a mock
+      metaDataRepository.fetchMetaData.mockResolvedValue({meta: 'data'})
+      // @ts-ignore ts does not know its a mock
+      dataRepository.getTableDataWithReference.mockResolvedValue({mock: 'data'})
       await actions.getTableData({ commit, state })
-      expect(commit).toHaveBeenCalledWith('setMetaData', metaResponse.meta)
-      const data = [
-        {
-          id: 1,
-          xbool: true,
-          xcategorical_value: 'label1'
-        }, {
-          id: 2,
-          xbool: false,
-          xcategorical_value: 'label2'
-        }]
-      const convertedResponse = JSON.parse(JSON.stringify(dataResponse))
-      convertedResponse.items = data
-      expect(commit).toHaveBeenCalledWith('setTableData', convertedResponse)
+      expect(commit).toHaveBeenCalledWith('setMetaData', {meta: 'data'})
+      expect(commit).toHaveBeenCalledWith('setTableData', {mock: 'data'})
     })
 
     it('should throw a error if the state does not contain a string table name', async () => {
@@ -278,6 +285,17 @@ describe('actions', () => {
       state.tableName = null
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
       expect(actions.getTableData({ commit, state })).rejects.toEqual(new Error('cannot load table data for non string table id'))
+    })
+  })
+
+  describe('fetch row data', () => {
+    it('should fetch the data for a single row', async () => {
+      state.tableName = 'tableName'
+      const commit = jest.fn()
+      // @ts-ignore ts does not know its a mock
+      metaDataRepository.fetchMetaData.mockResolvedValue({meta: 'data'})
+      await actions.fetchRowData({commit, state}, { rowId: 'rowId'})
+      expect(commit).toBeCalledWith('setMetaData', {meta: 'data'})
     })
   })
 })
