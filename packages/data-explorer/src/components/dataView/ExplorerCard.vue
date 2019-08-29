@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card mg-explorer-card">
     <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
     <slot>
       <custom-card-content v-if="customCode"></custom-card-content>
@@ -61,3 +61,9 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+  .mg-explorer-card {
+    min-width: 24rem;
+  }
+</style>

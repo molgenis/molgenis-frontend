@@ -1,5 +1,5 @@
 <template>
-  <div class="card-columns">
+  <div class="card-deck">
     <explorer-card
       v-for="(entity, index) in entitiesToShow"
       :key="index"
