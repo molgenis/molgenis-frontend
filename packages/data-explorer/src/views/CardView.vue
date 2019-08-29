@@ -1,7 +1,6 @@
 <template>
   <div class="card-columns">
     <explorer-card
-      class="card"
       v-for="(entity, index) in entitiesToShow"
       :key="index"
       :id="getEntityId(entity)"
