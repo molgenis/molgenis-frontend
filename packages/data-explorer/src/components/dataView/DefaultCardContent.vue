@@ -1,8 +1,10 @@
 <template>
-  <div class="card-body">
-    <h5 class="card-title">{{dataLabel}}</h5>
+  <div>
+    <h5 class="card-title mg-default-card-title">{{dataLabel}}
+      <slot name="shopping-button"></slot>
+    </h5>
     <div class="card-text">
-      <div class="row" v-for="(value, head) in dataToShow" :key="head">
+      <div class="row mb-1" v-for="(value, head) in dataToShow" :key="head">
         <div class="col-6">
           {{head}}
         </div>
@@ -10,8 +12,12 @@
           {{value}}
         </div>
       </div>
-      <button class="btn btn-info mt-3" v-if="this.collapseLimit" @click="handleExpandBtnClicked">{{ expandBtnText }}
-      </button>
+      <div class="row">
+        <div class="col mt-2">
+          <button class="btn btn-outline-info btn-sm" v-if="this.collapseLimit" @click="handleExpandBtnClicked">{{ expandBtnText }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -68,5 +74,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .mg-default-card-title {
+    min-height: 3rem;
+  }
 </style>
