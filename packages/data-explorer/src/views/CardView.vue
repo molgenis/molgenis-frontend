@@ -6,7 +6,8 @@
       :key="index"
       :id="getEntityId(entity)"
       :isSelected="isSelected(entity)"
-      :isShop="isShop"
+      :isShop="tableSettings.isShop"
+      :collapseLimit="tableSettings.collapseLimit"
       :dataLabel="getEntityLabel(entity)"
       :dataContents="entity"
       @expandCard="handleExpandCard">
@@ -31,7 +32,7 @@ export default {
   },
   components: { ExplorerCard },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'isShop']),
+    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },

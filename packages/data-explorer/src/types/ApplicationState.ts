@@ -22,9 +22,12 @@ export default interface ApplicationState {
   defaultEntityData: DataApiResponseItem[] | null,
   entityMetaRefs: EntityMetaRefs,
   shoppedEntityItems: string[]
-  hideFilters: boolean
+  hideFilters: boolean,
   showShoppingCart: boolean
-  isShop: boolean
-  settingsRowId: string | null,
-  settingsTable: string
+  tableSettings: {
+    settingsTable: string,
+    settingsRowId: string | null,
+    collapseLimit: number,
+    isShop: boolean
+  }
 }

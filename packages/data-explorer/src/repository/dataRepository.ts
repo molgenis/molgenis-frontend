@@ -8,8 +8,6 @@ import { DataApiResponseItem, MetaDataApiResponse } from '../types/ApiResponse'
 import { StringMap } from '../types/GeneralTypes'
 import { EntityMetaRefs } from '@/types/ApplicationState'
 
-const NUMBER_OF_INITIAL_COLUMNS = 5
-
 const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs) => {
   const row = rowData.data
   return Object.keys(row).reduce((accum, key) => {
@@ -35,10 +33,10 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMet
   }, <StringMap>{})
 }
 
-const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiResponse) => {
+const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiResponse, numberOfInitialColumns: number) => {
   const attributes:string[] = getAttributesfromMeta(metaData)
   const metaDataRefs = getRefsFromMeta(metaData)
-  const initialColumnIds = attributes.splice(0, NUMBER_OF_INITIAL_COLUMNS)
+  const initialColumnIds = attributes.splice(0, numberOfInitialColumns)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, initialColumnIds)
 
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)

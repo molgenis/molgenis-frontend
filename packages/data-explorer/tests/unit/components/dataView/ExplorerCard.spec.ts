@@ -9,7 +9,8 @@ describe('ExplorerCard.vue', () => {
       dataContents: {
         id: 155143544,
         myField: 'myValue'
-      }
+      },
+      collapseLimit: 5
     }
     const wrapper = shallowMount(EntityCard, { propsData })
     expect(wrapper.exists()).toBeTruthy()

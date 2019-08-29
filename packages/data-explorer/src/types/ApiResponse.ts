@@ -6,12 +6,6 @@ export type DataApiResponseItem = {
   data: {[key:string]: string | DataApiResponseItem}
 }
 
-export type DataApiResponseItemMref = {
-  links: { self: string },
-  items:[],
-  data: {[key:string]: string | DataApiResponseItem}
-}
-
 type DataApiResponsePage = {
   size: number,
   totalElements: number,

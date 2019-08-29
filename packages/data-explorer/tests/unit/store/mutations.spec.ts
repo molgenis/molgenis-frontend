@@ -156,18 +156,13 @@ describe('mutations', () => {
       expect(baseAppState.tableMeta).toEqual(entityMetaData)
     })
   })
-  describe('setIsShop', () => {
-    it('sets if the selected table is a shop', () => {
+  describe('setTableSettings', () => {
+    it('sets the tableSettings', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setIsShop(baseAppState, true)
-      expect(baseAppState.isShop).toEqual(true)
-    })
-  })
-  describe('setSettingsRowId', () => {
-    it('sets the settings row id of the selected table', () => {
-      let baseAppState = Object.assign({}, state)
-      mutations.setSettingsRowId(baseAppState, 'blaat')
-      expect(baseAppState.settingsRowId).toEqual('blaat')
+      mutations.setTableSettings(baseAppState, {shop: 'true', collapse_limit: '5', id: 'blaat'})
+      expect(baseAppState.tableSettings.isShop).toEqual(true)
+      expect(baseAppState.tableSettings.collapseLimit).toEqual(5)
+      expect(baseAppState.tableSettings.settingsRowId).toEqual('blaat')
     })
   })
   describe('setMetaDataRefLabels', () => {

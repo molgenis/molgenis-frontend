@@ -200,7 +200,7 @@ const mockResponses: {[key:string]: Object} = {
   '/api/data/entity': { 'loaded': true },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
-  '/api/data/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true } }] }
+  '/api/data/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true, collapse_limit: 5} }] }
 }
 jest.mock('@molgenis/molgenis-api-client', () => {
   return {
@@ -223,10 +223,9 @@ describe('actions', () => {
   describe('getTableSettings', () => {
     it('gets the settings for the selected table', async (done) => {
       const commit = jest.fn()
-      const state = { isShop: false, settingsRowId: '', settingsTable: 'settingsEntity' }
+      const state = { tableSettings: {isShop: false, settingsRowId: '', settingsTable: 'settingsEntity', collapseLimit: 0} }
       await actions.getTableSettings({ commit, state }, { tableName: 'entity' })
-      expect(commit).toHaveBeenCalledWith('setIsShop', true)
-      expect(commit).toHaveBeenCalledWith('setSettingsRowId', 'blaat')
+      expect(commit).toHaveBeenCalledWith('setTableSettings', {shop: true, collapse_limit: 5, id: 'blaat'})
       done()
     })
   })
@@ -245,9 +244,12 @@ describe('actions', () => {
         hideFilters: true,
         showShoppingCart: false,
         shoppedEntityItems: [],
-        isShop: false,
-        settingsRowId: null,
-        settingsTable: 'de_dataexplorer_table_settings'
+        tableSettings: {
+          isShop: false,
+          settingsRowId: null,
+          settingsTable: 'de_dataexplorer_table_settings',
+          collapseLimit: 5
+        }
       }
     })
     it('should fetch the table data from the backend', async () => {

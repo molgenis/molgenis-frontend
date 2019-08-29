@@ -6,6 +6,7 @@
       <default-card-content v-else
       :dataLabel="dataLabel"
       :dataContents="dataContents"
+      :collapseLimit="collapseLimit"
       @expandDefaultCard="handleDefaultCardExpand"
       ></default-card-content>
     </slot>
@@ -46,6 +47,10 @@ export default Vue.extend({
     customCode: {
       type: String,
       required: false
+    },
+    collapseLimit: {
+      type: Number,
+      default: () => 5
     }
   },
   components: { ShoppingButton, DefaultCardContent, CustomCardContent },
