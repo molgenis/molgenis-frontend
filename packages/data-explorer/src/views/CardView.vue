@@ -9,6 +9,7 @@
       :collapseLimit="tableSettings.collapseLimit"
       :dataLabel="getEntityLabel(entity)"
       :dataContents="entity"
+      :numberOfAttributes="tableMeta.attributes.length"
       @expandCard="handleExpandCard">
     </explorer-card>
   </div>

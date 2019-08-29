@@ -159,7 +159,7 @@ describe('mutations', () => {
   describe('setTableSettings', () => {
     it('sets the tableSettings', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setTableSettings(baseAppState, {shop: 'true', collapse_limit: '5', id: 'blaat'})
+      mutations.setTableSettings(baseAppState, { shop: 'true', collapse_limit: '5', id: 'blaat' })
       expect(baseAppState.tableSettings.isShop).toEqual(true)
       expect(baseAppState.tableSettings.collapseLimit).toEqual(5)
       expect(baseAppState.tableSettings.settingsRowId).toEqual('blaat')

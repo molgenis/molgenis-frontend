@@ -200,7 +200,7 @@ const mockResponses: {[key:string]: Object} = {
   '/api/data/entity': { 'loaded': true },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
-  '/api/data/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true, collapse_limit: 5} }] }
+  '/api/data/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true, collapse_limit: 5 } }] }
 }
 jest.mock('@molgenis/molgenis-api-client', () => {
   return {
@@ -223,9 +223,9 @@ describe('actions', () => {
   describe('getTableSettings', () => {
     it('gets the settings for the selected table', async (done) => {
       const commit = jest.fn()
-      const state = { tableSettings: {isShop: false, settingsRowId: '', settingsTable: 'settingsEntity', collapseLimit: 0} }
+      const state = { tableSettings: { isShop: false, settingsRowId: '', settingsTable: 'settingsEntity', collapseLimit: 0 } }
       await actions.getTableSettings({ commit, state }, { tableName: 'entity' })
-      expect(commit).toHaveBeenCalledWith('setTableSettings', {shop: true, collapse_limit: 5, id: 'blaat'})
+      expect(commit).toHaveBeenCalledWith('setTableSettings', { shop: true, collapse_limit: 5, id: 'blaat' })
       done()
     })
   })

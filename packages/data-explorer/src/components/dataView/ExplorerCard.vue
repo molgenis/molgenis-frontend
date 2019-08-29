@@ -7,6 +7,7 @@
                               :dataLabel="dataLabel"
                               :dataContents="dataContents"
                               :collapseLimit="collapseLimit"
+                              :numberOfAttributes="numberOfAttributes"
                               @expandDefaultCard="handleDefaultCardExpand"
         >
           <template v-slot:shopping-button>
@@ -37,6 +38,10 @@ export default Vue.extend({
     },
     dataContents: {
       type: Object,
+      required: true
+    },
+    numberOfAttributes: {
+      type: Number,
       required: true
     },
     isSelected: {
