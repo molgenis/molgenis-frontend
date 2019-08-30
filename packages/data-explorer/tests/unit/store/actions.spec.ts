@@ -227,26 +227,26 @@ jest.mock('@/repository/dataRepository', () => {
 let state: ApplicationState
 
 describe('actions', () => {
-    beforeEach(() => {
-      state = {
-        toast: null,
-        tableName: 'it_emx_datatypes_TypeTest',
-        tableData: null,
-        tableMeta: null,
-        dataDisplayLayout: 'CardView',
-        defaultEntityData: null,
-        entityMetaRefs: {},
-        hideFilters: true,
-        showShoppingCart: false,
-        shoppedEntityItems: [],
-        tableSettings: {
-          isShop: false,
-          settingsRowId: null,
-          settingsTable: 'de_dataexplorer_table_settings',
-          collapseLimit: 5
-        }
+  beforeEach(() => {
+    state = {
+      toast: null,
+      tableName: 'it_emx_datatypes_TypeTest',
+      tableData: null,
+      tableMeta: null,
+      dataDisplayLayout: 'CardView',
+      defaultEntityData: null,
+      entityMetaRefs: {},
+      hideFilters: true,
+      showShoppingCart: false,
+      shoppedEntityItems: [],
+      tableSettings: {
+        isShop: false,
+        settingsRowId: null,
+        settingsTable: 'de_dataexplorer_table_settings',
+        collapseLimit: 5
       }
-    })
+    }
+  })
   describe('loadTableData', () => {
     it('loads the selected table data', async (done) => {
       const commit = jest.fn()
@@ -272,12 +272,12 @@ describe('actions', () => {
       const commit = jest.fn()
       state.tableName = 'entity'
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaData.mockResolvedValue({meta: 'data'})
+      metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
       // @ts-ignore ts does not know its a mock
-      dataRepository.getTableDataWithReference.mockResolvedValue({mock: 'data'})
+      dataRepository.getTableDataWithReference.mockResolvedValue({ mock: 'data' })
       await actions.getTableData({ commit, state })
-      expect(commit).toHaveBeenCalledWith('setMetaData', {meta: 'data'})
-      expect(commit).toHaveBeenCalledWith('setTableData', {mock: 'data'})
+      expect(commit).toHaveBeenCalledWith('setMetaData', { meta: 'data' })
+      expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
     })
 
     it('should throw a error if the state does not contain a string table name', async () => {
@@ -293,9 +293,9 @@ describe('actions', () => {
       state.tableName = 'tableName'
       const commit = jest.fn()
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaData.mockResolvedValue({meta: 'data'})
-      await actions.fetchRowData({commit, state}, { rowId: 'rowId'})
-      expect(commit).toBeCalledWith('setMetaData', {meta: 'data'})
+      metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
+      await actions.fetchRowData({ commit, state }, { rowId: 'rowId' })
+      expect(commit).toBeCalledWith('setMetaData', { meta: 'data' })
     })
   })
 })
