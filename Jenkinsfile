@@ -25,6 +25,9 @@ pipeline {
                         env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
                     }
                 }
+                container('node') {
+                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
+                }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
             }
@@ -38,6 +41,7 @@ pipeline {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
+                    sh "yarn lerna run --scope @molgenis-experimental/data-explorer e2e --env ci_chrome,ci_safari,ci_ie11,ci_firefox"
                     sh "yarn lerna run build"
                 }
                 container('sonar') {
@@ -171,7 +175,12 @@ pipeline {
             }
         }
     }
-    post{
+    post {
+        always {
+            container('node') {
+                sh "daemon --name=sauceconnect --stop"
+            }
+        }
         success {
             hubotSend(message: 'Build success', status:'INFO', site: 'slack-pr-app-team')
         }
