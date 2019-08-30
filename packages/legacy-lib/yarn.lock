@@ -70,9 +70,9 @@
     lodash "^4.17.4"
 
 "@molgenis/molgenis-ui-context@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-1.3.1.tgz#fed0652b902fb62edd7083f1f99b076fbb334cff"
-  integrity sha512-m28BjEyfsTcLQHbJwrqYEezdervWzv0MDaPJVcyRpG2xcaz0kDCKlYzLGha9nJLuxnwMcIF5D0hrY/sLrLdC8A==
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-1.3.2.tgz#c63b244be72f784ceec161b59af7d5ffd0cfb83f"
+  integrity sha512-wse2QFBzVehC+aWbeWVRYeicJRlh4asByEgCzTHqcNAeGVQ69pE4ZVs3Me8V7mDV4pOX+nHK6zhGj51LG41N2w==
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 
