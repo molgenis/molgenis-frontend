@@ -12,22 +12,30 @@ export default {
   }),
   getTableSettings: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState },
     payload: { tableName: string }) => {
-    const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+    const response = await api.get(`/api/data/${state.tableSettings.settingsTable}?q=table=="${payload.tableName}"`)
     if (response.items.length > 0) {
       const id = response.items[0].data.id
-      const shop = response.items[0].data.shop
-      commit('setIsShop', shop)
-      commit('setSettingsRowId', id)
+      commit('setTableSettings', response.items[0].data)
       return id
     }
   }),
   getTableData: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
-    if (typeof state.tableName !== 'string') {
-      throw new Error('cannot load table data for non string entity id')
+    if (state.tableName === null) {
+      throw new Error('cannot load table data for non string table id')
     }
     const metaData = await metaDataRepository.fetchMetaData(state.tableName)
     commit('setMetaData', metaData)
-    const tableData = await dataRepository.getTableDataWithReference(state.tableName, metaData)
+    const tableData = await dataRepository.getTableDataWithReference(state.tableName, metaData, state.tableSettings.collapseLimit)
     commit('setTableData', tableData)
+  },
+  fetchRowData: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: {rowId: string}) => {
+    if (typeof state.tableName !== 'string') {
+      throw new Error('cannot load table data for non string table id')
+    }
+    const metaData = await metaDataRepository.fetchMetaData(state.tableName)
+    commit('setMetaData', metaData)
+    const rowData = await dataRepository.getRowDataWithReference(state.tableName, payload.rowId, metaData)
+    commit('updateRowData', { rowId: payload.rowId, rowData })
   }
+
 }

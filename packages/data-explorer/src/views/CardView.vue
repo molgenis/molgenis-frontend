@@ -1,23 +1,25 @@
 <template>
-  <div class="card-columns">
+  <div class="card-deck">
     <explorer-card
-      class="card"
       v-for="(entity, index) in entitiesToShow"
       :key="index"
       :id="getEntityId(entity)"
       :isSelected="isSelected(entity)"
-      :isShop="isShop"
+      :isShop="tableSettings.isShop"
+      :collapseLimit="tableSettings.collapseLimit"
       :dataLabel="getEntityLabel(entity)"
-      :dataContents="entity">
+      :dataContents="entity"
+      :numberOfAttributes="tableMeta.attributes.length"
+      @expandCard="handleExpandCard">
     </explorer-card>
   </div>
 </template>
 
 <script>
 import ExplorerCard from '../components/dataView/ExplorerCard'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingBag, faPlay } from '@fortawesome/free-solid-svg-icons'
 library.add(faShoppingBag)
 
 export default {
@@ -30,7 +32,7 @@ export default {
   },
   components: { ExplorerCard },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'isShop']),
+    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -39,6 +41,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['fetchRowData']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
     },
@@ -47,6 +50,9 @@ export default {
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
+    },
+    handleExpandCard (payload) {
+      this.fetchRowData({ rowId: payload.id })
     }
   }
 }

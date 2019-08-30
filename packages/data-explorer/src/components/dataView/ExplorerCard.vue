@@ -1,10 +1,21 @@
 <template>
-  <div class="card">
-    <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
-    <slot>
-      <custom-card-content v-if="customCode"></custom-card-content>
-      <default-card-content v-else :dataLabel="dataLabel" :dataContents="dataContents"></default-card-content>
-    </slot>
+  <div class="card mg-explorer-card m-2">
+    <div class="card-body">
+      <slot>
+        <custom-card-content v-if="customCode"></custom-card-content>
+        <default-card-content v-else
+                              :dataLabel="dataLabel"
+                              :dataContents="dataContents"
+                              :collapseLimit="collapseLimit"
+                              :numberOfAttributes="numberOfAttributes"
+                              @expandDefaultCard="handleDefaultCardExpand"
+        >
+          <template v-slot:shopping-button>
+            <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
+          </template>
+        </default-card-content>
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -29,6 +40,10 @@ export default Vue.extend({
       type: Object,
       required: true
     },
+    numberOfAttributes: {
+      type: Number,
+      required: true
+    },
     isSelected: {
       type: Boolean,
       required: false,
@@ -42,8 +57,23 @@ export default Vue.extend({
     customCode: {
       type: String,
       required: false
+    },
+    collapseLimit: {
+      type: Number,
+      default: () => 5
     }
   },
-  components: { ShoppingButton, DefaultCardContent, CustomCardContent }
+  components: { ShoppingButton, DefaultCardContent, CustomCardContent },
+  methods: {
+    handleDefaultCardExpand () {
+      this.$emit('expandCard', { id: this.id })
+    }
+  }
 })
 </script>
+
+<style scoped>
+  .mg-explorer-card {
+    min-width: 24rem;
+  }
+</style>

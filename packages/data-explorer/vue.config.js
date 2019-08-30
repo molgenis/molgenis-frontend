@@ -49,6 +49,22 @@ module.exports = {
       '^/app-ui-context': {
         'target': 'https://data-v3.dev.molgenis.org',
         'keepOrigin': true
+      },
+      '^/menu/main/dataexplorer/details': {
+        'target': 'https://data-v3.dev.molgenis.org',
+        'changeOrigin': true
+      },
+      '^/css': {
+        'target': 'https://data-v3.dev.molgenis.org',
+        'changeOrigin': true
+      },
+      '^/js': {
+        'target': 'https://data-v3.dev.molgenis.org',
+        'changeOrigin': true
+      },
+      '^/@molgenis-ui': {
+        'target': 'https://data-v3.dev.molgenis.org',
+        'changeOrigin': true
       }
     },
     // Used as mock in e2e tests

@@ -33,17 +33,27 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMet
   }, <StringMap>{})
 }
 
-const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiResponse) => {
+const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiResponse, numberOfInitialColumns: number) => {
   const attributes:string[] = getAttributesfromMeta(metaData)
   const metaDataRefs = getRefsFromMeta(metaData)
-  const query = buildExpandedAttributesQuery(metaDataRefs, attributes)
+  const initialColumnIds = attributes.splice(0, numberOfInitialColumns)
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, initialColumnIds)
 
-  const response = await api.get(`/api/data/${tableId}?${query}`)
+  const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)
   const resolvedItems = response.items.map((item:any) => levelOneRowMapper(item, metaDataRefs))
   response.items = resolvedItems
   return response
 }
 
+const getRowDataWithReference = async (tableId: string, rowId: string, metaData: MetaDataApiResponse) => {
+  const attributes:string[] = getAttributesfromMeta(metaData)
+  const metaDataRefs = getRefsFromMeta(metaData)
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes)
+  const response = await api.get(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
+  return levelOneRowMapper(response, metaDataRefs)
+}
+
 export {
-  getTableDataWithReference
+  getTableDataWithReference,
+  getRowDataWithReference
 }

@@ -15,7 +15,7 @@
       Table layout
     </button>
     <button
-      v-if="!showShoppingCart && isShop"
+      v-if="!showShoppingCart && tableSettings.isShop"
       @click="setShowShoppingCart(true)"
       class="btn btn-light ml-1 float-right btn-outline-secondary show-cart">
       <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
@@ -39,7 +39,7 @@ library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag)
 export default Vue.extend({
   name: 'ToolbarView',
   computed: {
-    ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'isShop'])
+    ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'tableSettings'])
   },
   methods: {
     setDataDisplayLayout (value) {
