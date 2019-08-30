@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.8.7...@molgenis-experimental/data-explorer@0.9.0) (2019-08-30)
+
+
+### Bug Fixes
+
+* **data-explorer:** remove double 'card' class ([ad1e486](https://github.com/molgenis/molgenis-frontend/commit/ad1e486))
+* **data-explorer:** update unit test to fix test failure, add missing required props and mock data ([758937f](https://github.com/molgenis/molgenis-frontend/commit/758937f))
+* **ToolBarView:** Fix renamed variable in state ([ff922be](https://github.com/molgenis/molgenis-frontend/commit/ff922be))
+* **vue.config:** Add some more links to proxy config ([a1c033e](https://github.com/molgenis/molgenis-frontend/commit/a1c033e))
+
+
+### Features
+
+* **data-explorer:** expandable card ([265ddb1](https://github.com/molgenis/molgenis-frontend/commit/265ddb1))
+* **DefaultCard:** Expand card on click ([e7d2a54](https://github.com/molgenis/molgenis-frontend/commit/e7d2a54))
+* **DefaultCard:** WIP Add info button ([2ca49ad](https://github.com/molgenis/molgenis-frontend/commit/2ca49ad))
+
+
+
+
+
 ## [0.8.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.8.6...@molgenis-experimental/data-explorer@0.8.7) (2019-08-29)
 
 
