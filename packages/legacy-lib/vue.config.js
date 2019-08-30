@@ -17,7 +17,8 @@ module.exports = {
         { from: 'node_modules/jquery/dist/jquery.slim.min.js' },
         { from: 'node_modules/jquery/dist/jquery.slim.min.map' },
         { from: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' },
-        { from: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js.map' }
+        { from: 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js.map' },
+        { from: 'node_modules/bootswatch/dist', to: 'bootswatch' }
       ])
     )
   }
