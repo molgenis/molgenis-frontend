@@ -17,13 +17,19 @@ pipeline {
                 }
                 container('vault') {
                     script {
+                        env.TUNNEL_IDENTIFIER = sh(script: 'echo ${GIT_COMMIT}-${BUILD_NUMBER}', returnStdout: true)
                         env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
                         env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-frontend secret/ops/token/codecov', returnStdout: true)
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
                         env.DOCKERHUB_AUTH = sh(script: 'vault read -field=value secret/gcc/token/dockerhub', returnStdout: true)
                         env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
                         env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
+                        env.SAUCE_CRED_USR = sh(script: 'vault read -field=username secret/ops/token/saucelabs', returnStdout: true)
+                        env.SAUCE_CRED_PSW = sh(script: 'vault read -field=value secret/ops/token/saucelabs', returnStdout: true)
                     }
+                }
+                container('node') {
+                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
@@ -38,6 +44,7 @@ pipeline {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
+                    sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --env ci_chrome,ci_safari,ci_ie11,ci_firefox"
                     sh "yarn lerna run build"
                 }
                 container('sonar') {
@@ -171,7 +178,12 @@ pipeline {
             }
         }
     }
-    post{
+    post {
+        always {
+            container('node') {
+                sh "daemon --name=sauceconnect --stop"
+            }
+        }
         success {
             hubotSend(message: 'Build success', status:'INFO', site: 'slack-pr-app-team')
         }
