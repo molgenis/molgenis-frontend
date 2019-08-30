@@ -10,11 +10,11 @@ module.exports = {
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
-      .waitForElementVisible('.card-columns', timeOutDelay)
+      .waitForElementVisible('.card-deck', timeOutDelay)
       .click('.table-layout')
       .waitForElementVisible('table.table', timeOutDelay)
       .click('.card-layout')
-      .waitForElementVisible('.card-columns', timeOutDelay)
+      .waitForElementVisible('.card-deck', timeOutDelay)
       .end()
   },
   'add and remove items from shoppingcart': browser => {
