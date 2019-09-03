@@ -3,6 +3,7 @@
     <div class="card-body">
       <slot>
         <custom-card-content v-if="customCode"
+                             :id="id"
                              :customCode="customCode"
                              :record="dataContents"
         ></custom-card-content>
