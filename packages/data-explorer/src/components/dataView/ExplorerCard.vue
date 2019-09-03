@@ -2,7 +2,10 @@
   <div class="card mg-explorer-card m-2">
     <div class="card-body">
       <slot>
-        <custom-card-content v-if="customCode" :customCode="customCode"></custom-card-content>
+        <custom-card-content v-if="customCode"
+                             :customCode="customCode"
+                             :record="dataContents"
+        ></custom-card-content>
         <default-card-content v-else
                               :dataLabel="dataLabel"
                               :dataContents="dataContents"
