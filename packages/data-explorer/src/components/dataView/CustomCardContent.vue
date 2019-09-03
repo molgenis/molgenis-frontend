@@ -1,14 +1,20 @@
 <template>
-  <div>Custom card content</div>
+  <div class="custom-card position-relative">
+    <div v-html="customCode"></div>
+    <pre>
+    |{{customCode}}|
+    </pre>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'CustomCardContent'
-
+  name: 'CustomCardContent',
+  props: {
+    customCode: {
+      type: String,
+      required: true
+    }
+  }
 }
 </script>
-
-<style scoped>
-
-</style>
