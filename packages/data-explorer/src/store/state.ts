@@ -15,6 +15,7 @@ const state: ApplicationState = {
     settingsTable: 'de_dataexplorer_table_settings',
     settingsRowId: null,
     collapseLimit: 5,
+    customCardCode: null,
     isShop: false
   }
 }

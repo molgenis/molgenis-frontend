@@ -26,6 +26,7 @@ export default interface ApplicationState {
   showShoppingCart: boolean
   tableSettings: {
     settingsTable: string,
+    customCardCode: string | null,
     settingsRowId: string | null,
     collapseLimit: number,
     isShop: boolean

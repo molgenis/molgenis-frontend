@@ -10,6 +10,7 @@
       :dataLabel="getEntityLabel(entity)"
       :dataContents="entity"
       :numberOfAttributes="tableMeta.attributes.length"
+      :customCode="tableSettings.customCardCode"
       @expandCard="handleExpandCard">
     </explorer-card>
   </div>
@@ -18,9 +19,6 @@
 <script>
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import { mapState, mapActions } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag, faPlay } from '@fortawesome/free-solid-svg-icons'
-library.add(faShoppingBag)
 
 export default {
   name: 'CardView',

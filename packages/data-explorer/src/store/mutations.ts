@@ -53,6 +53,7 @@ export default {
     state.tableSettings.isShop = Boolean(tableSettings.shop)
     state.tableSettings.collapseLimit = parseInt(tableSettings.collapse_limit)
     state.tableSettings.settingsRowId = tableSettings.id
+    state.tableSettings.customCardCode = tableSettings.card_template
   },
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
