@@ -2,7 +2,8 @@ import { EntityMetaRefs } from '../types/ApplicationState'
 
 const buildFilterQuery = (entityMetaRefs: EntityMetaRefs, attributes:string[]) => {
   const filterQuery = attributes.reduce((query: string, attribute: string) => {
-    return entityMetaRefs[attribute] ? `${query},${attribute}(${entityMetaRefs[attribute].labelAttribute})` : `${query},${attribute}`
+    // return entityMetaRefs[attribute] ? `${query},${attribute}(${entityMetaRefs[attribute].labelAttribute})` : `${query},${attribute}`
+    return entityMetaRefs[attribute] ? `${query},${attribute}` : `${query},${attribute}`
   }, <string>'').replace(',', '')
   return filterQuery
 }
