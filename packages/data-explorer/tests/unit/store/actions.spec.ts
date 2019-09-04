@@ -243,6 +243,7 @@ describe('actions', () => {
         isShop: false,
         settingsRowId: null,
         customCardCode: null,
+        customCardAttrs: '',
         settingsTable: 'de_dataexplorer_table_settings',
         collapseLimit: 5
       }

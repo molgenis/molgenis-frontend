@@ -35,9 +35,6 @@ export default {
   methods: {
     ...mapActions(['fetchRowData'])
   },
-  created () {
-    this.fetchRowData({ rowId: this.id })
-  },
   computed: {
     template: function () {
       return '<div>' + this.customCode.trim() + '</div>'

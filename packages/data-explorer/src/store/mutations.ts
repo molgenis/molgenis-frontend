@@ -54,6 +54,7 @@ export default {
     state.tableSettings.collapseLimit = parseInt(tableSettings.collapse_limit)
     state.tableSettings.settingsRowId = tableSettings.id
     state.tableSettings.customCardCode = tableSettings.card_template
+    state.tableSettings.customCardAttrs = tableSettings.template_attrs
   },
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
