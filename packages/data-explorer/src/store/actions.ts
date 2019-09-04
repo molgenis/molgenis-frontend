@@ -25,16 +25,8 @@ export default {
     }
     const metaData = await metaDataRepository.fetchMetaData(state.tableName)
     commit('setMetaData', metaData)
-
-    if (state.dataDisplayLayout === 'CardView' && state.tableSettings.customCardCode) {
-      // Show custom cards
-      const tableData = await dataRepository.getTableDataWithReferenceFromConfig(state.tableName, metaData, state.tableSettings)
-      commit('setTableData', tableData)
-    } else {
-      // Show rows with col. limit
-      const tableData = await dataRepository.getTableDataWithReference(state.tableName, metaData, state.tableSettings.collapseLimit)
-      commit('setTableData', tableData)
-    }
+    const tableData = await dataRepository.getTableDataWithReference(state.tableName, metaData, state.tableSettings, !!(state.dataDisplayLayout === 'CardView' && state.tableSettings.customCardCode))
+    commit('setTableData', tableData)
   },
   fetchRowData: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: {rowId: string}) => {
     if (typeof state.tableName !== 'string') {
