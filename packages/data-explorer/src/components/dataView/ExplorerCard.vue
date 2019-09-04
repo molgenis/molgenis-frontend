@@ -1,12 +1,16 @@
 <template>
-  <div class="card mg-explorer-card m-2">
+  <div class="card mg-explorer-card m-2 position-relative">
     <div class="card-body">
       <slot>
         <custom-card-content v-if="customCode"
                              :id="id"
                              :customCode="customCode"
                              :record="dataContents"
-        ></custom-card-content>
+        >
+          <template v-slot:shopping-button>
+            <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
+          </template>
+        </custom-card-content>
         <default-card-content v-else
                               :dataLabel="dataLabel"
                               :dataContents="dataContents"

@@ -1,19 +1,12 @@
 <template>
-  <div class="custom-card position-relative">
+  <div class="custom-card">
+    <slot name="shopping-button"></slot>
     <v-runtime-template :template="template"></v-runtime-template>
-
-    <pre style="border:1px solid red">
-    {{customCode}}
-    ---
-    {{record}}
-    </pre>
-
   </div>
 </template>
 
 <script>
 import VRuntimeTemplate from 'v-runtime-template'
-import { mapActions } from 'vuex'
 
 export default {
   name: 'CustomCardContent',
@@ -31,9 +24,6 @@ export default {
       type: String,
       required: true
     }
-  },
-  methods: {
-    ...mapActions(['fetchRowData'])
   },
   computed: {
     template: function () {
