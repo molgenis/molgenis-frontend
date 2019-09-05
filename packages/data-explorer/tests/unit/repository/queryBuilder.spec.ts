@@ -18,7 +18,7 @@ describe('metaDataService', () => {
     it('should build a query with expand and filter to get all attributes', () => {
       const expected = 'expand=reference,multi_reference&filter=id,reference(label),multi_reference(label)'
       const attributes = ['id', 'reference', 'multi_reference']
-      const observed = buildExpandedAttributesQuery(metaRefs, attributes, false)
+      const observed = buildExpandedAttributesQuery(metaRefs, attributes, true)
       expect(observed).toEqual(expected)
     })
   })
