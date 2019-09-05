@@ -40,11 +40,9 @@ const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiR
   } else {
     attributes = getAttributesfromMeta(metaData).splice(0, tableSetting.collapseLimit)
   }
-  attributes.push('id')
-
+  if (!attributes.includes('id')) attributes.push('id')
   const metaDataRefs = getRefsFromMeta(metaData)
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes)
-
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes, !isCustomCard)
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)
   const resolvedItems = response.items.map((item:any) => levelOneRowMapper(item, metaDataRefs))
   response.items = resolvedItems
@@ -54,7 +52,7 @@ const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiR
 const getRowDataWithReference = async (tableId: string, rowId: string, metaData: MetaDataApiResponse) => {
   const attributes:string[] = getAttributesfromMeta(metaData)
   const metaDataRefs = getRefsFromMeta(metaData)
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes)
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes, false)
   const response = await api.get(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
   return levelOneRowMapper(response, metaDataRefs)
 }
