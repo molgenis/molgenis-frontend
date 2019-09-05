@@ -1,5 +1,5 @@
 <template>
-  <div class="card mg-explorer-card m-2 position-relative">
+  <div class="card mg-explorer-card m-2 position-relative overflow-hidden">
     <div class="card-body">
       <slot>
         <custom-card-content v-if="customCode"

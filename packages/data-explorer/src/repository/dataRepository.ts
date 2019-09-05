@@ -4,7 +4,7 @@ import api from '@molgenis/molgenis-api-client'
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta, getRefsFromMeta } from './metaDataService'
 
-import { DataApiResponseItem, MetaDataApiResponse } from '../types/ApiResponse'
+import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse } from '../types/ApiResponse'
 import { StringMap } from '../types/GeneralTypes'
 import { EntityMetaRefs, TableSetting } from '@/types/ApplicationState'
 
@@ -33,6 +33,32 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMet
   }, <StringMap>{})
 }
 
+// @ts-ignore
+const apiResponseMapper = (rowData) => {
+  const row = rowData.data
+  return Object.keys(row).reduce((accum:any, key) => {
+    if (typeof row[key] === 'object') {
+      // @ts-ignore
+      accum[key] = levelNRowMapper(row[key])
+    } else {
+      accum[key] = row[key]
+    }
+    return accum
+  }, {})
+}
+
+const levelNRowMapper = (rowData: DataApiResponseItem) => {
+  if (rowData.hasOwnProperty('items')) {
+    const rows = rowData.items
+    // @ts-ignore
+    return rows.map((rowData) => {
+      return apiResponseMapper(rowData)
+    })
+  } else {
+    return apiResponseMapper(rowData)
+  }
+}
+
 const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiResponse, tableSetting: TableSetting, isCustomCard:boolean) => {
   let attributes:string[]
   if (isCustomCard) {
@@ -44,8 +70,13 @@ const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiR
   const metaDataRefs = getRefsFromMeta(metaData)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes, !isCustomCard)
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)
-  const resolvedItems = response.items.map((item:any) => levelOneRowMapper(item, metaDataRefs))
-  response.items = resolvedItems
+  if (!isCustomCard) {
+    const resolvedItems = response.items.map((item: any) => levelOneRowMapper(item, metaDataRefs))
+    response.items = resolvedItems
+  } else {
+    const resolvedItems = response.items.map((item: any) => levelNRowMapper(item))
+    response.items = resolvedItems
+  }
   return response
 }
 
