@@ -42,7 +42,6 @@ const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiR
   }
   if (!attributes.includes('id')) attributes.push('id')
   const metaDataRefs = getRefsFromMeta(metaData)
-  console.log(metaDataRefs)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes, !isCustomCard)
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)
   const resolvedItems = response.items.map((item:any) => levelOneRowMapper(item, metaDataRefs))
