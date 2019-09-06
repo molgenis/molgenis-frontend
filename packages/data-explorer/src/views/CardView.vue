@@ -3,7 +3,8 @@
     <explorer-card
       v-for="(entity, index) in entitiesToShow"
       :key="index"
-      :id="getEntityId(entity)"
+      :dataId="getEntityId(entity)"
+      :dataTable="tableName"
       :isSelected="isSelected(entity)"
       :isShop="tableSettings.isShop"
       :collapseLimit="tableSettings.collapseLimit"
@@ -30,7 +31,7 @@ export default {
   },
   components: { ExplorerCard },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings']),
+    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings', 'tableName']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },

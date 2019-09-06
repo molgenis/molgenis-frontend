@@ -3,15 +3,17 @@
     <div class="card-body">
       <slot>
         <custom-card-content v-if="customCode"
-                             :id="id"
+                             :id="dataId"
                              :customCode="customCode"
                              :record="dataContents"
         >
           <template v-slot:shopping-button>
-            <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
+            <shopping-button :id="dataId" v-if="isShop" :isSelected="isSelected"></shopping-button>
           </template>
         </custom-card-content>
         <default-card-content v-else
+                              :dataId="dataId"
+                              :dataTable="dataTable"
                               :dataLabel="dataLabel"
                               :dataContents="dataContents"
                               :collapseLimit="collapseLimit"
@@ -19,7 +21,7 @@
                               @expandDefaultCard="handleDefaultCardExpand"
         >
           <template v-slot:shopping-button>
-            <shopping-button :id="id" v-if="isShop" :isSelected="isSelected"></shopping-button>
+            <shopping-button :id="dataId" v-if="isShop" :isSelected="isSelected"></shopping-button>
           </template>
         </default-card-content>
       </slot>
@@ -36,7 +38,11 @@ import CustomCardContent from './CustomCardContent'
 export default Vue.extend({
   name: 'ExplorerCard',
   props: {
-    id: {
+    dataId: {
+      type: String,
+      required: true
+    },
+    dataTable: {
       type: String,
       required: true
     },
@@ -74,7 +80,7 @@ export default Vue.extend({
   components: { ShoppingButton, DefaultCardContent, CustomCardContent },
   methods: {
     handleDefaultCardExpand () {
-      this.$emit('expandCard', { id: this.id })
+      this.$emit('expandCard', { id: this.dataId })
     }
   }
 })

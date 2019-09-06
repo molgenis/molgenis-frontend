@@ -14,7 +14,7 @@
       </div>
       <div class="row">
         <div class="col mt-2">
-          <button v-if="this.numberOfAttributes > this.collapseLimit" class="btn btn-outline-info btn-sm mr-1" @click="handleExpandBtnClicked">
+          <button v-if="this.numberOfAttributes > this.collapseLimit" class="btn btn-outline-info btn-sm mr-1 mg-card-expand" @click="handleExpandBtnClicked">
             <font-awesome-icon icon="chevron-up" v-if="this.cardState==='open'"></font-awesome-icon>
             <font-awesome-icon icon="chevron-right" v-if="this.cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
           </button>
@@ -42,6 +42,14 @@ export default {
   },
   props: {
     dataLabel: {
+      type: String,
+      required: true
+    },
+    dataId: {
+      type: String,
+      required: true
+    },
+    dataTable: {
       type: String,
       required: true
     },
@@ -77,7 +85,10 @@ export default {
   },
   methods: {
     goToDetails () {
-      window.location.href = '/menu/main/dataexplorer/details/it_emx_datatypes_TypeTest/1'
+      window.location.href = this.buildDetailLink()
+    },
+    buildDetailLink () {
+      return `/menu/main/dataexplorer/details/${this.dataTable}/${this.dataId}`
     },
     handleExpandBtnClicked () {
       if (this.cardState === 'closed') {
