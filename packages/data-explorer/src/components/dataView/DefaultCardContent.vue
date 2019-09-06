@@ -18,7 +18,7 @@
             <font-awesome-icon icon="chevron-up" v-if="this.cardState==='open'"></font-awesome-icon>
             <font-awesome-icon icon="chevron-right" v-if="this.cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
           </button>
-          <button class="btn btn-outline-info btn-sm" @click="goToDetails">
+          <button class="btn btn-outline-info btn-sm mg-info-btn" @click="goToDetails">
             <font-awesome-icon icon="search"></font-awesome-icon> Info
           </button>
         </div>
@@ -81,14 +81,14 @@ export default {
       } else {
         return this.dataContents
       }
+    },
+    detailLink () {
+      return `/menu/main/dataexplorer/details/${this.dataTable}/${this.dataId}`
     }
   },
   methods: {
     goToDetails () {
-      window.location.href = this.buildDetailLink()
-    },
-    buildDetailLink () {
-      return `/menu/main/dataexplorer/details/${this.dataTable}/${this.dataId}`
+      window.location.assign(this.detailLink)
     },
     handleExpandBtnClicked () {
       if (this.cardState === 'closed') {
