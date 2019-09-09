@@ -33,11 +33,11 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMet
   }, <StringMap>{})
 }
 
-// @ts-ignore
-const apiResponseMapper = (rowData) => {
+const apiResponseMapper = (rowData: DataApiResponseItem) => {
   const row = rowData.data
-  return Object.keys(row).reduce((accum:any, key) => {
+  return Object.keys(row).reduce((accum:{[s: string]: string|object}, key) => {
     if (typeof row[key] === 'object') {
+      // This is checked by the line above
       // @ts-ignore
       accum[key] = levelNRowMapper(row[key])
     } else {
@@ -48,9 +48,8 @@ const apiResponseMapper = (rowData) => {
 }
 
 const levelNRowMapper = (rowData: DataApiResponseItem) => {
-  if (rowData.hasOwnProperty('items')) {
-    const rows = rowData.items
-    // @ts-ignore
+  if (rowData.items) {
+    const rows: [] = rowData.items
     return rows.map((rowData) => {
       return apiResponseMapper(rowData)
     })
@@ -70,14 +69,16 @@ const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiR
   const metaDataRefs = getRefsFromMeta(metaData)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes, !isCustomCard)
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)
-  if (!isCustomCard) {
-    const resolvedItems = response.items.map((item: any) => levelOneRowMapper(item, metaDataRefs))
-    response.items = resolvedItems
-  } else {
-    const resolvedItems = response.items.map((item: any) => levelNRowMapper(item))
-    response.items = resolvedItems
-  }
+  response.items = getMappedData(response, metaDataRefs, isCustomCard)
   return response
+}
+
+const getMappedData = (response: any, metaDataRefs: any, isCustomCard: boolean) => {
+  if (!isCustomCard) {
+    return response.items.map((item:DataApiResponseItem) => levelOneRowMapper(item, metaDataRefs))
+  } else {
+    return response.items.map((item:DataApiResponseItem) => levelNRowMapper(item))
+  }
 }
 
 const getRowDataWithReference = async (tableId: string, rowId: string, metaData: MetaDataApiResponse) => {
@@ -90,5 +91,7 @@ const getRowDataWithReference = async (tableId: string, rowId: string, metaData:
 
 export {
   getTableDataWithReference,
-  getRowDataWithReference
+  getRowDataWithReference,
+  levelNRowMapper,
+  getMappedData
 }

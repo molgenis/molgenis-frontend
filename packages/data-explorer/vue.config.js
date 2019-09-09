@@ -36,35 +36,35 @@ module.exports = {
     // Used to proxy a external API server to have someone to talk to during development
     proxy: process.env.NODE_ENV !== 'development' ? undefined : {
       '^/api': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': 'https://data-v3.test.molgenis.org',
         'keepOrigin': true
       },
       '^/fonts': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': 'https://data-v3.test.molgenis.org',
         'keepOrigin': true
       },
       '^/img': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': 'https://data-v3.test.molgenis.org',
         'keepOrigin': true
       },
       '^/app-ui-context': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': 'https://data-v3.test.molgenis.org',
         'keepOrigin': true
       },
       '^/menu/main/dataexplorer/details': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': 'https://data-v3.test.molgenis.org',
         'changeOrigin': true
       },
       '^/css': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': 'https://data-v3.test.molgenis.org',
         'changeOrigin': true
       },
       '^/js': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': 'https://data-v3.test.molgenis.org',
         'changeOrigin': true
       },
       '^/@molgenis-ui': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': 'https://data-v3.test.molgenis.org',
         'changeOrigin': true
       }
     },
