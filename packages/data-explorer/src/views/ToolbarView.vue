@@ -2,21 +2,21 @@
   <div class="toolbar mt-2">
     <button
       v-if="!showShoppingCart && dataDisplayLayout === 'TableView'"
-      @click="setDataDisplayLayout('CardView')"
+      @click="toggleDataDisplayLayout"
       class="btn btn-light ml-1 float-right btn-outline-secondary card-layout">
       <font-awesome-icon icon="th"></font-awesome-icon>
       Card layout
     </button>
     <button
       v-else-if="!showShoppingCart"
-      @click="setDataDisplayLayout('TableView')"
+      @click="toggleDataDisplayLayout"
       class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
       <font-awesome-icon icon="th-list"></font-awesome-icon>
       Table layout
     </button>
     <button
       v-if="!showShoppingCart && tableSettings.isShop"
-      @click="setShowShoppingCart(true)"
+      @click="openShoppingCart"
       class="btn btn-light ml-1 float-right btn-outline-secondary show-cart">
       <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
       Show cart
@@ -29,7 +29,7 @@
 <script>
 import Vue from 'vue'
 import ActiveFilters from '../components/toolbarView/ActiveFilters'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -42,12 +42,14 @@ export default Vue.extend({
     ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'tableSettings'])
   },
   methods: {
-    setDataDisplayLayout (value) {
-      this.$store.commit('setDataDisplayLayout', value)
+    ...mapMutations(['setDataDisplayLayout', 'setShowShoppingCart', 'setHideFilters']),
+    toggleDataDisplayLayout () {
+      const value = this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
+      this.setDataDisplayLayout(value)
     },
-    setShowShoppingCart (value) {
-      this.$store.commit('setShowShoppingCart', value)
-      this.$store.commit('setHideFilters', value)
+    openShoppingCart () {
+      this.setShowShoppingCart(true)
+      this.setHideFilters(true)
     }
   },
   components: { ActiveFilters, FontAwesomeIcon }

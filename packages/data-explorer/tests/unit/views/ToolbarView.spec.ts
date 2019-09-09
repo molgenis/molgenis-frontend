@@ -11,18 +11,20 @@ describe('ToolbarView.vue', () => {
 
   beforeEach(() => {
     state = {
-      dataDisplayLayout: 'cards',
+      dataDisplayLayout: 'CardView',
       hideFilters: true,
       tableSettings: {
         settingsTable: 'de_dataexplorer_table_settings',
         settingsRowId: null,
         collapseLimit: 5,
-        isShop: false
-      }
+        isShop: true
+      },
+      showShoppingCart: false
     }
     mutations = {
       setHideFilters: jest.fn(),
-      setDataDisplayLayout: jest.fn()
+      setDataDisplayLayout: jest.fn(),
+      setShowShoppingCart: jest.fn()
     }
     store = new Vuex.Store({
       state, mutations
@@ -34,9 +36,40 @@ describe('ToolbarView.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  it('can change to card/table layout', () => {
+  it('can change to table layout', () => {
     const wrapper = shallowMount(ToolbarView, { store, localVue })
-    wrapper.find('.table-layout').trigger('click')
-    expect(mutations.setDataDisplayLayout.mock.calls.length > 0).toBeTruthy()
+    wrapper.find('button.table-layout').trigger('click')
+    // @ts-ignore
+    expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'TableView')
+  })
+
+  it('can change to card layout', () => {
+    state = {
+      dataDisplayLayout: 'TableView',
+      hideFilters: true,
+      tableSettings: {
+        settingsTable: 'de_dataexplorer_table_settings',
+        settingsRowId: null,
+        collapseLimit: 5,
+        isShop: true
+      },
+      showShoppingCart: false
+    }
+    store = new Vuex.Store({
+      state, mutations
+    })
+    const wrapper = shallowMount(ToolbarView, { store, localVue })
+    wrapper.find('button.card-layout').trigger('click')
+    // @ts-ignore
+    expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'CardView')
+  })
+
+  it('opens shoppingcart', () => {
+    const wrapper = shallowMount(ToolbarView, { store, localVue })
+    const button = wrapper.find('button.show-cart')
+    console.log(button)
+    button.trigger('click')
+    expect(mutations.setShowShoppingCart).toHaveBeenCalledWith(state, true)
+    expect(mutations.setHideFilters).toHaveBeenCalledWith(state, true)
   })
 })
