@@ -45,13 +45,13 @@ export default {
       return entity[this.idAttribute].toString()
     },
     getEntityLabel (entity) {
-      return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
+      return this.labelAttribute ? entity[this.labelAttribute].toString() : this.getEntityId(entity).toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     },
-    handleExpandCard (payload) {
-      this.fetchRowData({ rowId: payload.id })
+    handleExpandCard (entity) {
+      this.fetchRowData({ rowId: this.getEntityId(entity) })
     }
   }
 }
