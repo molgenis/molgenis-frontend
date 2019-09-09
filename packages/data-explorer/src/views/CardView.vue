@@ -3,7 +3,8 @@
     <explorer-card
       v-for="(entity, index) in entitiesToShow"
       :key="index"
-      :id="getEntityId(entity)"
+      :dataId="getEntityId(entity)"
+      :dataTable="tableName"
       :isSelected="isSelected(entity)"
       :isShop="tableSettings.isShop"
       :collapseLimit="tableSettings.collapseLimit"
@@ -30,7 +31,7 @@ export default {
   },
   components: { ExplorerCard },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings']),
+    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings', 'tableName']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -44,13 +45,13 @@ export default {
       return entity[this.idAttribute].toString()
     },
     getEntityLabel (entity) {
-      return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
+      return this.labelAttribute ? entity[this.labelAttribute].toString() : this.getEntityId(entity).toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     },
-    handleExpandCard (payload) {
-      this.fetchRowData({ rowId: payload.id })
+    handleExpandCard (entity) {
+      this.fetchRowData({ rowId: this.getEntityId(entity) })
     }
   }
 }

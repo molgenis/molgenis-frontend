@@ -6,6 +6,8 @@ describe('ExplorerCard.vue', () => {
     const propsData = {
       id: 'none',
       dataLabel: 'dataLabel',
+      dataTable: 'myTable',
+      dataId: 'myId',
       dataContents: {
         id: 155143544,
         myField: 'myValue'
