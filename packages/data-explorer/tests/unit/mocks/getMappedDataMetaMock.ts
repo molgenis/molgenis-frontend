@@ -1,0 +1,2 @@
+export default
+{ 'function_description': { 'refEntity': 'root_hospital_functions', 'fieldType': 'CATEGORICAL_MREF', 'labelAttribute': 'label' }, 'department': { 'refEntity': 'root_hospital_departments', 'fieldType': 'CATEGORICAL', 'labelAttribute': 'label' }, 'birthplace': { 'refEntity': 'root_cities', 'fieldType': 'CATEGORICAL', 'labelAttribute': 'label' }, 'gender': { 'refEntity': 'root_gender', 'fieldType': 'CATEGORICAL', 'labelAttribute': 'label' }, 'user': { 'refEntity': 'root_hospital_users', 'fieldType': 'XREF', 'labelAttribute': 'displayName' } }
