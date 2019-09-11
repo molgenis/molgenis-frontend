@@ -14,9 +14,9 @@
       </div>
       <div class="row">
         <div class="col mt-2">
-          <button v-if="this.numberOfAttributes > this.collapseLimit" class="btn btn-outline-info btn-sm mr-1 mg-card-expand" @click="handleExpandBtnClicked">
-            <font-awesome-icon icon="chevron-up" v-if="this.cardState==='open'"></font-awesome-icon>
-            <font-awesome-icon icon="chevron-right" v-if="this.cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
+          <button v-if="numberOfAttributes > collapseLimit" class="btn btn-outline-info btn-sm mr-1 mg-card-expand" @click="handleExpandBtnClicked">
+            <font-awesome-icon icon="chevron-up" v-if="cardState==='open'"></font-awesome-icon>
+            <font-awesome-icon icon="chevron-right" v-if="cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
           </button>
           <button class="btn btn-outline-info btn-sm mg-info-btn" @click="goToDetails">
             <font-awesome-icon icon="search"></font-awesome-icon> Info

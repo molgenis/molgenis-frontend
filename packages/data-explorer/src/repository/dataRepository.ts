@@ -65,7 +65,8 @@ const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiR
   } else {
     attributes = getAttributesfromMeta(metaData).splice(0, tableSetting.collapseLimit)
   }
-  if (!attributes.includes('id')) attributes.push('id')
+  if (!attributes.includes(metaData.idAttribute)) attributes.push(metaData.idAttribute)
+
   const metaDataRefs = getRefsFromMeta(metaData)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes, !isCustomCard)
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)

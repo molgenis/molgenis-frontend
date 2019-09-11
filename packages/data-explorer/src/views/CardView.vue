@@ -12,7 +12,7 @@
       :dataContents="entity"
       :numberOfAttributes="tableMeta.attributes.length"
       :customCode="tableSettings.customCardCode"
-      @expandCard="handleExpandCard">
+      @expandCard="handleExpandCard(entity)">
     </explorer-card>
   </div>
 </template>
