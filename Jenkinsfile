@@ -1,33 +1,4 @@
-def transform_subject_data(subject_datas):
-    for subject_data in subject_datas:
-        # create subject row that references the events
-        subject_key = subject_data['key']
-        subject_row = {'id': subject_key}
-        tables['subject'].append(subject_row)
-        event_row = None
-        for event in subject_data['event_data']:
-            event_oid = event['oid']
-            subject_event_id = f"{subject_key}_{event_oid}"
-            if not event_oid in subject_row:
-                # new event found for this subject, create empty event row
-                # and reference it in the subject
-                event_row = {'id': subject_event_id}
-                tables[event_oid].append(event_row)
-                subject_row[event_oid] = subject_event_id
-            event_repeat_key = event['repeat_key']
-            event_key = f"{subject_key}__{emx.get_indexed_name(event_oid, event_repeat_key)}"
-            for form in event['form_data']:
-                form_oid = form['oid']
-                form_row = {'id': f"{event_key}__{form_oid}"}
-                tables[form_oid].append(form_row)
-                event_attribute_name = emx.get_indexed_name(form_oid, event_repeat_key)
-                # reference the form row in the event
-                event_row[event_attribute_name] = form_row['id']
-                for item_group in form['item_groups']:
-                    item_group_repeat_key = item_group['repeatKey']
-                    for key, value in item_group['values'].items():
-                        form_key = emx.get_indexed_name(key, item_group_repeat_key)
-                        form_row[form_key] = value  pipeline {
+pipeline {
     agent {
         kubernetes {
             label 'node-carbon'
