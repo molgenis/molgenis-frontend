@@ -14,7 +14,7 @@ describe('CardView.vue', () => {
   beforeEach(() => {
     state = {
       shoppingFilter: false,
-      tableMeta: { idAttribute: 'tableID', labelAttribute: 'label' },
+      tableMeta: { idAttribute: 'tableID', labelAttribute: 'label', attributes: [{fieldType: 'COMPOUND'}, {fieldType: 'string'}, {fieldType: 'string'}] },
       dataDisplayLayout: 'ClipboardView',
       shoppedEntityItems: ['1', '3']
     }
@@ -53,6 +53,16 @@ describe('CardView.vue', () => {
     const entity = { tableID: '1', label: 'blaat1' }
     // @ts-ignore
     expect(wrapper.vm.getEntityId(entity)).toBe('1')
+  })
+
+  it('the number of attributes, excluding the compounds', () => {
+    const wrapper = shallowMount(CardView, {
+      store,
+      localVue,
+      propsData: { entitiesToShow: [] }
+    })
+    // @ts-ignore
+    expect(wrapper.vm.numberOfAttributes).toBe(2)
   })
 
   it('returns label of entity', () => {

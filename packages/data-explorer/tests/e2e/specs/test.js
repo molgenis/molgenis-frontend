@@ -43,7 +43,7 @@ module.exports = {
   },
   'should display custom card': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL+'TableWithCustomCard')
+      .url(process.env.VUE_DEV_SERVER_URL + 'TableWithCustomCard')
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
@@ -53,7 +53,7 @@ module.exports = {
   },
   'expand and collapse default card in card layout': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL+'TableWithMoreColumns')
+      .url(process.env.VUE_DEV_SERVER_URL + 'TableWithMoreColumns')
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)

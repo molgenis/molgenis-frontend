@@ -97,9 +97,9 @@ module.exports = {
         res.json(schemas.TableData)
       })
       app.get('/api/data/de_dataexplorer_table_settings', function (req, res) {
-        if(req.url.includes('TableWithMoreColumns')){
-          res.json({items: []})
-        } else if (req.url.includes('TableWithCustomCard')){
+        if (req.url.includes('TableWithMoreColumns')) {
+          res.json({ items: [] })
+        } else if (req.url.includes('TableWithCustomCard')) {
           res.json(schemas.TableSettingsWithCustom)
         } else {
           res.json(schemas.TableSettings)

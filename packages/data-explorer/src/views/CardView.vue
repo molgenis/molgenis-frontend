@@ -10,7 +10,7 @@
       :collapseLimit="tableSettings.collapseLimit"
       :dataLabel="getEntityLabel(entity)"
       :dataContents="entity"
-      :numberOfAttributes="tableMeta.attributes.length"
+      :numberOfAttributes="numberOfAttributes"
       :customCode="tableSettings.customCardCode"
       @expandCard="handleExpandCard(entity)">
     </explorer-card>
@@ -37,6 +37,9 @@ export default {
     },
     labelAttribute () {
       return this.tableMeta.labelAttribute
+    },
+    numberOfAttributes () {
+      return this.tableMeta.attributes.filter((attr) => { return attr.fieldType !== 'COMPOUND' }).length
     }
   },
   methods: {
