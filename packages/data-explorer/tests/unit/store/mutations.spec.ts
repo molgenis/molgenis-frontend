@@ -2,6 +2,65 @@ import mutations from '@/store/mutations'
 import state from '@/store/state'
 
 describe('mutations', () => {
+  const entityMetaData = {
+    'href': '/api/v2/test',
+    'hrefCollection': '/api/v2/test',
+    'name': 'test',
+    'label': 'Test',
+    'description': 'Beautiful description',
+    'attributes': [
+      {
+        'href': '/api/v2/test/meta/id',
+        'fieldType': 'INT',
+        'name': 'id',
+        'label': 'id',
+        'attributes': [],
+        'auto': false,
+        'nillable': false,
+        'readOnly': true,
+        'labelAttribute': false,
+        'unique': true,
+        'visible': true,
+        'lookupAttribute': true,
+        'isAggregatable': false
+      },
+      {
+        'href': '/api/v2/test/meta/label',
+        'fieldType': 'STRING',
+        'name': 'label',
+        'label': 'label',
+        'attributes': [],
+        'auto': false,
+        'nillable': false,
+        'readOnly': true,
+        'labelAttribute': true,
+        'unique': true,
+        'visible': true,
+        'lookupAttribute': true,
+        'isAggregatable': false
+      }
+    ],
+    'labelAttribute': 'label',
+    'idAttribute': 'id',
+    'lookupAttributes': [
+      'id'
+    ],
+    'isAbstract': false,
+    'writable': true,
+    'languageCode': 'en',
+    'permissions': [
+      'DELETE_DATA',
+      'READ_METADATA',
+      'READ_DATA',
+      'UPDATE_METADATA',
+      'AGGREGATE_DATA',
+      'DELETE_METADATA',
+      'UPDATE_DATA',
+      'COUNT_DATA',
+      'ADD_DATA'
+    ]
+  }
+
   describe('setToast', () => {
     it('replace the toast with the passed toast', () => {
       let baseAppState = Object.assign({}, state)
@@ -65,6 +124,14 @@ describe('mutations', () => {
     })
   })
 
+  describe('setMetaData', () => {
+    it('sets the metadata', () => {
+      let baseAppState = Object.assign({}, state)
+      mutations.setMetaData(baseAppState, entityMetaData)
+      expect(baseAppState.tableMeta).toEqual(entityMetaData)
+    })
+  })
+
   describe('setShowShoppingCart', () => {
     it('sets if the table is a store', () => {
       let baseAppState = Object.assign({}, state)
@@ -90,68 +157,9 @@ describe('mutations', () => {
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
     })
   })
-
-  describe('setMetaData', () => {
+  describe('setTableMetaData', () => {
     it('sets the meta data', () => {
       let baseAppState = Object.assign({}, state)
-      const entityMetaData = {
-        'href': '/api/v2/test',
-        'hrefCollection': '/api/v2/test',
-        'name': 'test',
-        'label': 'Test',
-        'description': 'Beautiful description',
-        'attributes': [
-          {
-            'href': '/api/v2/test/meta/id',
-            'fieldType': 'INT',
-            'name': 'id',
-            'label': 'id',
-            'attributes': [],
-            'auto': false,
-            'nillable': false,
-            'readOnly': true,
-            'labelAttribute': false,
-            'unique': true,
-            'visible': true,
-            'lookupAttribute': true,
-            'isAggregatable': false
-          },
-          {
-            'href': '/api/v2/test/meta/label',
-            'fieldType': 'STRING',
-            'name': 'label',
-            'label': 'label',
-            'attributes': [],
-            'auto': false,
-            'nillable': false,
-            'readOnly': true,
-            'labelAttribute': true,
-            'unique': true,
-            'visible': true,
-            'lookupAttribute': true,
-            'isAggregatable': false
-          }
-        ],
-        'labelAttribute': 'label',
-        'idAttribute': 'id',
-        'lookupAttributes': [
-          'id'
-        ],
-        'isAbstract': false,
-        'writable': true,
-        'languageCode': 'en',
-        'permissions': [
-          'DELETE_DATA',
-          'READ_METADATA',
-          'READ_DATA',
-          'UPDATE_METADATA',
-          'AGGREGATE_DATA',
-          'DELETE_METADATA',
-          'UPDATE_DATA',
-          'COUNT_DATA',
-          'ADD_DATA'
-        ]
-      }
       mutations.setTableMetaData(baseAppState, entityMetaData)
       expect(baseAppState.tableMeta).toEqual(entityMetaData)
     })
@@ -168,139 +176,18 @@ describe('mutations', () => {
   describe('setMetaDataRefLabels', () => {
     it('sets the object with the labels for all ref entities', () => {
       let baseAppState = Object.assign({}, state)
-      const entityMetaData = {
-        'href': '/api/v2/test',
-        'hrefCollection': '/api/v2/test',
-        'name': 'test',
-        'label': 'Test',
-        'description': 'Beautiful description',
-        'attributes': [
-          {
-            'href': '/api/v2/test/meta/id',
-            'fieldType': 'INT',
-            'name': 'id',
-            'label': 'id',
-            'attributes': [],
-            'auto': false,
-            'nillable': false,
-            'readOnly': true,
-            'labelAttribute': false,
-            'unique': true,
-            'visible': true,
-            'lookupAttribute': true,
-            'isAggregatable': false
-          },
-          {
-            'href': '/api/v2/test/meta/label',
-            'fieldType': 'STRING',
-            'name': 'label',
-            'label': 'label',
-            'attributes': [],
-            'auto': false,
-            'nillable': false,
-            'readOnly': true,
-            'labelAttribute': true,
-            'unique': true,
-            'visible': true,
-            'lookupAttribute': true,
-            'isAggregatable': false
-          },
-          {
-            'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xmrefnillable_value',
-            'fieldType': 'MREF',
-            'name': 'xmrefnillable_value',
-            'label': 'xmrefnillable_value',
-            'attributes': [],
-            'refEntity': {
-              'href': '/api/v2/it_emx_datatypes_TypeTestRef',
-              'hrefCollection': '/api/v2/it_emx_datatypes_TypeTestRef',
-              'name': 'it_emx_datatypes_TypeTestRef',
-              'label': 'TypeTestRef',
-              'description': 'MOLGENIS Data types test ref entity',
-              'attributes': [
-                {
-                  'href': '/api/v2/it_emx_datatypes_TypeTestRef/meta/value',
-                  'fieldType': 'STRING',
-                  'name': 'value',
-                  'label': 'value label',
-                  'description': 'TypeTestRef value attribute',
-                  'attributes': [],
-                  'maxLength': 255,
-                  'auto': false,
-                  'nillable': false,
-                  'readOnly': true,
-                  'labelAttribute': false,
-                  'unique': true,
-                  'visible': true,
-                  'lookupAttribute': true,
-                  'isAggregatable': false
-                },
-                {
-                  'href': '/api/v2/it_emx_datatypes_TypeTestRef/meta/label',
-                  'fieldType': 'STRING',
-                  'name': 'label',
-                  'label': 'label label',
-                  'description': 'TypeTestRef label attribute',
-                  'attributes': [],
-                  'maxLength': 255,
-                  'auto': false,
-                  'nillable': false,
-                  'readOnly': false,
-                  'labelAttribute': true,
-                  'unique': false,
-                  'visible': true,
-                  'lookupAttribute': true,
-                  'isAggregatable': false
-                }
-              ],
-              'labelAttribute': 'label',
-              'idAttribute': 'value',
-              'lookupAttributes': [
-                'value',
-                'label'
-              ],
-              'isAbstract': false,
-              'writable': false,
-              'languageCode': 'en',
-              'permissions': [
-                'READ_METADATA',
-                'COUNT_DATA',
-                'AGGREGATE_DATA',
-                'READ_DATA'
-              ]
-            },
-            'auto': false,
-            'nillable': true,
-            'readOnly': false,
-            'labelAttribute': false,
-            'unique': false,
-            'visible': true,
-            'lookupAttribute': false,
-            'isAggregatable': false
-          }
-        ],
-        'labelAttribute': 'label',
-        'idAttribute': 'id',
-        'lookupAttributes': [
-          'id'
-        ],
-        'isAbstract': false,
-        'writable': true,
-        'languageCode': 'en',
-        'permissions': [
-          'DELETE_DATA',
-          'READ_METADATA',
-          'READ_DATA',
-          'UPDATE_METADATA',
-          'AGGREGATE_DATA',
-          'DELETE_METADATA',
-          'UPDATE_DATA',
-          'COUNT_DATA',
-          'ADD_DATA'
-        ]
-      }
       mutations.setMetaDataRefLabels(baseAppState, entityMetaData)
       // expect(baseAppState.entityMetaRefLabels).toEqual({'it_emx_datatypes_TypeTestRef': 'label'})
+    })
+  })
+  describe('updateRowData', () => {
+    it('trows error ont empty table', () => {
+      let baseAppState = Object.assign({}, state)
+      try {
+        mutations.updateRowData(baseAppState, { rowId: 'id', rowData: {} })
+      } catch (err) {
+        expect(err.toString()).toEqual('Error: cannot update empty table data')
+      }
     })
   })
 })
