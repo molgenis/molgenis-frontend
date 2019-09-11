@@ -181,7 +181,7 @@ describe('mutations', () => {
     })
   })
   describe('updateRowData', () => {
-    it('trows error ont empty table', () => {
+    it('throws error on empty table', () => {
       let baseAppState = Object.assign({}, state)
       try {
         mutations.updateRowData(baseAppState, { rowId: 'id', rowData: {} })
