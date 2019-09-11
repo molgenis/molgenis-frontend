@@ -10,6 +10,8 @@ const previousChapterButton = '#prev-chapter-btn'
 const currentChapterSpan = '#current-chapter-label'
 const submitButton = '#submit-questionnaire-btn'
 
+const timeAllowedForProgressBarUpdate = 500
+
 module.exports = {
   before: function (browser) {
     browser.url(browser.globals.devServerURL)
@@ -111,16 +113,20 @@ module.exports = {
     browser.expect.element(chapterOneProgressBar).to.have.attribute('aria-valuenow').which.contains('0')
 
     browser.setValue(chapterOneNameQuestion, 'Nightwatch test')
+    browser.pause(timeAllowedForProgressBarUpdate)
     browser.expect.element(chapterOneProgressBar).to.have.attribute('aria-valuenow').which.contains('33')
 
     browser.setValue(chapterOneAgeQuestion, 20)
+    browser.pause(timeAllowedForProgressBarUpdate)
     browser.expect.element(chapterOneProgressBar).to.have.attribute('aria-valuenow').which.contains('67')
 
     // this question is nillable and should not update progress
     browser.click(chapterOneBoolQuestion)
+    browser.pause(timeAllowedForProgressBarUpdate)
     browser.expect.element(chapterOneProgressBar).to.have.attribute('aria-valuenow').which.contains('67')
 
     browser.setValue(chapterOneRequiredQuestion, 'A nightwatch generated text')
+    browser.pause(timeAllowedForProgressBarUpdate)
     browser.expect.element(chapterOneProgressBar).to.have.attribute('aria-valuenow').which.contains('100')
 
     browser.expect.element(chapterOneProgressBar).to.have.attribute('class').which.contains('bg-success')
