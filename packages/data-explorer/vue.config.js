@@ -11,6 +11,8 @@ const bannerText = `package-name: ${pkgName}
 package-version: ${pkgVersion}
 build-date: ${buildDate}`
 
+const PROXY_TARGET = 'https://master.dev.molgenis.org'
+
 module.exports = {
   runtimeCompiler: true,
   outputDir: 'dist',
@@ -36,35 +38,35 @@ module.exports = {
     // Used to proxy a external API server to have someone to talk to during development
     proxy: process.env.NODE_ENV !== 'development' ? undefined : {
       '^/api': {
-        'target': 'https://data-v3.test.molgenis.org',
+        'target': PROXY_TARGET,
         'keepOrigin': true
       },
       '^/fonts': {
-        'target': 'https://data-v3.test.molgenis.org',
+        'target': PROXY_TARGET,
         'keepOrigin': true
       },
       '^/img': {
-        'target': 'https://data-v3.test.molgenis.org',
+        'target': PROXY_TARGET,
         'keepOrigin': true
       },
       '^/app-ui-context': {
-        'target': 'https://data-v3.test.molgenis.org',
+        'target': PROXY_TARGET,
         'keepOrigin': true
       },
       '^/menu/main/dataexplorer/details': {
-        'target': 'https://data-v3.test.molgenis.org',
+        'target': PROXY_TARGET,
         'changeOrigin': true
       },
       '^/css': {
-        'target': 'https://data-v3.test.molgenis.org',
+        'target': PROXY_TARGET,
         'changeOrigin': true
       },
       '^/js': {
-        'target': 'https://data-v3.test.molgenis.org',
+        'target': PROXY_TARGET,
         'changeOrigin': true
       },
       '^/@molgenis-ui': {
-        'target': 'https://data-v3.test.molgenis.org',
+        'target': PROXY_TARGET,
         'changeOrigin': true
       }
     },

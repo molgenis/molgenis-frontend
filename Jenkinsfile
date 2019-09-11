@@ -90,7 +90,6 @@ pipeline {
                     sh 'vault read -field=value secret/ops/jenkins/rancher/cli2.json > /home/jenkins/.rancher/cli2.json'
                 }
                 container('rancher') {
-                    sh "rancher context switch dev-molgenis"
                     sh "rancher apps install " +
                         "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +

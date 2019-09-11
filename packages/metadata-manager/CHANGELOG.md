@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.4...@molgenis-ui/metadata-manager@0.1.5) (2019-09-11)
+
+
+### Bug Fixes
+
+* **metadata-manager:** fix 8468 ([52fcca2](https://github.com/molgenis/molgenis-frontend/commit/52fcca2))
+
+
+
+
+
 ## [0.1.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.3...@molgenis-ui/metadata-manager@0.1.4) (2019-06-14)
 
 

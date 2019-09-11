@@ -211,10 +211,19 @@ export default {
     withSpinner(commit,
       api.post('/plugin/metadata-manager/entityType', options).then(
         response => {
+          const msgParts = []
+          if (response.statusText) {
+            msgParts.push(response.statusText)
+          }
+          if (t('save-succes-message')) {
+            msgParts.push(t('save-succes-message'))
+          }
+          if (state.editorEntityType.label) {
+            msgParts.push(state.editorEntityType.label)
+          }
           commit(CREATE_ALERT, {
             type: 'success',
-            message: response.statusText + ': ' + t('save-succes-message') +
-            ': ' + state.editorEntityType.label
+            message: msgParts.join(': ')
           })
 
           if (state.editorEntityType.isNew) {
