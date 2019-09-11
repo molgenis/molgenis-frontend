@@ -37,8 +37,8 @@ module.exports = {
       selenium_port: 80,
       selenium_host: 'ondemand.saucelabs.com',
       silent: true,
-      username: process.env.SAUCE_USERNAME,
-      access_key: process.env.SAUCE_ACCESS_KEY,
+      username: process.env.SAUCE_CRED_USR,
+      access_key: process.env.SAUCE_CRED_PSW,
       desiredCapabilities: {
         name: packageJson.name,
         build: 'build-${TRAVIS_JOB_NUMBER}',
@@ -56,8 +56,8 @@ module.exports = {
       selenium_port: 80,
       selenium_host: 'ondemand.saucelabs.com',
       silent: true,
-      username: process.env.SAUCE_USERNAME,
-      access_key: process.env.SAUCE_ACCESS_KEY,
+      username: process.env.SAUCE_CRED_USR,
+      access_key: process.env.SAUCE_CRED_PSW,
       desiredCapabilities: {
         name: packageJson.name,
         build: 'build-${TRAVIS_JOB_NUMBER}',
@@ -75,8 +75,8 @@ module.exports = {
       selenium_port: 80,
       selenium_host: 'ondemand.saucelabs.com',
       silent: true,
-      username: process.env.SAUCE_USERNAME,
-      access_key: process.env.SAUCE_ACCESS_KEY,
+      username: process.env.SAUCE_CRED_USR,
+      access_key: process.env.SAUCE_CRED_PSW,
       desiredCapabilities: {
         name: packageJson.name,
         build: 'build-${TRAVIS_JOB_NUMBER}',
@@ -96,8 +96,8 @@ module.exports = {
       selenium_port: 80,
       selenium_host: 'ondemand.saucelabs.com',
       silent: true,
-      username: process.env.SAUCE_USERNAME,
-      access_key: process.env.SAUCE_ACCESS_KEY,
+      username: process.env.SAUCE_CRED_USR,
+      access_key: process.env.SAUCE_CRED_PSW,
       desiredCapabilities: {
         name: packageJson.name,
         build: 'build-${TRAVIS_JOB_NUMBER}',
