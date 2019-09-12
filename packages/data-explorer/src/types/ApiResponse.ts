@@ -3,7 +3,7 @@ import { StringMap } from '@/types/GeneralTypes'
 export type DataApiResponseItem = {
   links: { self: string },
   items?:[],
-  data: {[key:string]: string | DataApiResponseItem}
+  data?: {[key:string]: string | DataApiResponseItem}
 }
 
 type DataApiResponsePage = {
