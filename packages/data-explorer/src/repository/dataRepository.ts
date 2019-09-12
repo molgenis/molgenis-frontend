@@ -8,42 +8,46 @@ import { StringMap } from '@/types/GeneralTypes'
 import { EntityMetaRefs, TableSetting } from '@/types/ApplicationState'
 
 const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs) => {
-  const row = rowData.data
-  return Object.keys(row).reduce((accum, key) => {
-    const value = row[key]
-    const isReference = (key: string): boolean => Object.keys(metaDataRefs).includes(key)
-    const isMref = (key: string): boolean => metaDataRefs[key].fieldType.includes('MREF')
-    let resolvedValue
-    if (isReference(key)) {
-      if (isMref(key)) {
-        // The isMref already checks if the value.items is available
-        // @ts-ignore
-        resolvedValue = value.items.map((mrefValue) => mrefValue.data[metaDataRefs[key].labelAttribute]).join(', ')
+  if (rowData.data) {
+    const row: { [key: string]: string | DataApiResponseItem } = rowData.data
+    return Object.keys(row).reduce((accum, key) => {
+      const value = row[key]
+      const isReference = (key: string): boolean => Object.keys(metaDataRefs).includes(key)
+      const isMref = (key: string): boolean => metaDataRefs[key].fieldType.includes('MREF')
+      let resolvedValue
+      if (isReference(key)) {
+        if (isMref(key)) {
+          // The isMref already checks if the value.items is available
+          // @ts-ignore
+          resolvedValue = value.items.map((mrefValue) => mrefValue.data[metaDataRefs[key].labelAttribute]).join(', ')
+        } else {
+          // This is checked by isReference
+          // @ts-ignore
+          resolvedValue = value.data[metaDataRefs[key].labelAttribute]
+        }
       } else {
-        // This is checked by isReference
-        // @ts-ignore
-        resolvedValue = value.data[metaDataRefs[key].labelAttribute]
+        resolvedValue = value
       }
-    } else {
-      resolvedValue = value
-    }
-    accum[key] = resolvedValue
-    return accum
-  }, <StringMap>{})
+      accum[key] = resolvedValue
+      return accum
+    }, <StringMap>{})
+  }
 }
 
 const apiResponseMapper = (rowData: DataApiResponseItem) => {
-  const row = rowData.data
-  return Object.keys(row).reduce((accum: { [s: string]: string | object }, key) => {
-    if (typeof row[key] === 'object') {
-      // This is checked by the line above
-      // @ts-ignore
-      accum[key] = levelNRowMapper(row[key])
-    } else {
-      accum[key] = row[key]
-    }
-    return accum
-  }, {})
+  if (rowData.data) {
+    const row: any = rowData.data
+    return Object.keys(row).reduce((accum: { [s: string]: string | object }, key) => {
+      if (typeof row[key] === 'object') {
+        // This is checked by the line above
+        // @ts-ignore
+        accum[key] = levelNRowMapper(row[key])
+      } else {
+        accum[key] = row[key]
+      }
+      return accum
+    }, {})
+  }
 }
 
 const levelNRowMapper = (rowData: DataApiResponseItem) => {

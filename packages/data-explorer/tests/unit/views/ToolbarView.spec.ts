@@ -67,7 +67,6 @@ describe('ToolbarView.vue', () => {
   it('opens shoppingcart', () => {
     const wrapper = shallowMount(ToolbarView, { store, localVue })
     const button = wrapper.find('button.show-cart')
-    console.log(button)
     button.trigger('click')
     expect(mutations.setShowShoppingCart).toHaveBeenCalledWith(state, true)
     expect(mutations.setHideFilters).toHaveBeenCalledWith(state, true)
