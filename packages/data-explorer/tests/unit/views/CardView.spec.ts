@@ -14,7 +14,7 @@ describe('CardView.vue', () => {
   beforeEach(() => {
     state = {
       shoppingFilter: false,
-      tableMeta: { idAttribute: 'tableID', labelAttribute: 'label', attributes: [{fieldType: 'COMPOUND'}, {fieldType: 'string'}, {fieldType: 'string'}] },
+      tableMeta: { idAttribute: 'tableID', labelAttribute: 'label', attributes: [{ fieldType: 'COMPOUND' }, { fieldType: 'string' }, { fieldType: 'string' }] },
       dataDisplayLayout: 'ClipboardView',
       shoppedEntityItems: ['1', '3']
     }
