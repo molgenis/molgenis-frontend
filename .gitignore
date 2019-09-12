@@ -4,3 +4,5 @@
 
 .idea
 *.iml
+**/selenium-debug.log
+**/*.spec.xml
