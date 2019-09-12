@@ -1,19 +1,18 @@
-
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta, getRefsFromMeta } from './metaDataService'
 
-import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse } from '../types/ApiResponse'
-import { StringMap } from '../types/GeneralTypes'
+import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse } from '@/types/ApiResponse'
+import { StringMap } from '@/types/GeneralTypes'
 import { EntityMetaRefs, TableSetting } from '@/types/ApplicationState'
 
 const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs) => {
   const row = rowData.data
   return Object.keys(row).reduce((accum, key) => {
     const value = row[key]
-    const isReference = (key : string) : boolean => Object.keys(metaDataRefs).includes(key)
-    const isMref = (key: string) : boolean => metaDataRefs[key].fieldType.includes('MREF')
+    const isReference = (key: string): boolean => Object.keys(metaDataRefs).includes(key)
+    const isMref = (key: string): boolean => metaDataRefs[key].fieldType.includes('MREF')
     let resolvedValue
     if (isReference(key)) {
       if (isMref(key)) {
@@ -35,7 +34,7 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMet
 
 const apiResponseMapper = (rowData: DataApiResponseItem) => {
   const row = rowData.data
-  return Object.keys(row).reduce((accum:{[s: string]: string|object}, key) => {
+  return Object.keys(row).reduce((accum: { [s: string]: string | object }, key) => {
     if (typeof row[key] === 'object') {
       // This is checked by the line above
       // @ts-ignore
@@ -58,8 +57,8 @@ const levelNRowMapper = (rowData: DataApiResponseItem) => {
   }
 }
 
-const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiResponse, tableSetting: TableSetting, isCustomCard:boolean) => {
-  let attributes:string[]
+const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiResponse, tableSetting: TableSetting, isCustomCard: boolean) => {
+  let attributes: string[]
   if (isCustomCard) {
     attributes = tableSetting.customCardAttrs.split(',').map(attribute => attribute.trim())
   } else {
@@ -75,16 +74,16 @@ const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiR
   return response
 }
 
-const getMappedData = (response: any, metaDataRefs: any, isCustomCard: boolean) => {
+const getMappedData = (response: DataApiResponse, metaDataRefs: EntityMetaRefs, isCustomCard: boolean) => {
   if (!isCustomCard) {
-    return response.items.map((item:DataApiResponseItem) => levelOneRowMapper(item, metaDataRefs))
+    return response.items.map((item: DataApiResponseItem) => levelOneRowMapper(item, metaDataRefs))
   } else {
-    return response.items.map((item:DataApiResponseItem) => levelNRowMapper(item))
+    return response.items.map((item: DataApiResponseItem) => levelNRowMapper(item))
   }
 }
 
 const getRowDataWithReference = async (tableId: string, rowId: string, metaData: MetaDataApiResponse) => {
-  const attributes:string[] = getAttributesfromMeta(metaData)
+  const attributes: string[] = getAttributesfromMeta(metaData)
   const metaDataRefs = getRefsFromMeta(metaData)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes, true)
   const response = await api.get(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
