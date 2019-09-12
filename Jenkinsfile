@@ -44,7 +44,8 @@ pipeline {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
-                    sh "yarn lerna run e2e -- --scope {@molgenis-experimental/data-explorer,@molgenis-ui/questionnaires} -- --env ci_chrome,ci_safari,ci_ie11,ci_firefox"
+                    sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_safari,ci_ie11,ci_firefox"
+                    sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --env ci_chrome,ci_safari,ci_ie11,ci_firefox"
                     sh "yarn lerna run build"
                 }
                 container('sonar') {
