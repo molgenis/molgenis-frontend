@@ -1,5 +1,5 @@
 <template>
-  <table class="table">
+  <table class="table" v-if="entitiesToShow.length">
     <table-header :header="tableHeaderToShow" :isShop="isShop"></table-header>
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"
@@ -15,7 +15,7 @@
 <script>
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 library.add(faShoppingBag)
@@ -38,7 +38,11 @@ export default {
       return Object.keys(this.entitiesToShow[0])
     }
   },
+  mounted: function () {
+    this.getTableData()
+  },
   methods: {
+    ...mapActions(['getTableData']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
     },
