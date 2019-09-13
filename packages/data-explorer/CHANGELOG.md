@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.3...@molgenis-experimental/data-explorer@0.9.4) (2019-09-13)
+
+
+### Bug Fixes
+
+* **CardView:** Fix cards broken for tables consisting of compounds only ([91ce318](https://github.com/molgenis/molgenis-frontend/commit/91ce318))
+* **CardView:** Fix expand card for cards with id other than "id" ([3edc1bd](https://github.com/molgenis/molgenis-frontend/commit/3edc1bd))
+* **CardViewTest:** Fix linting ([0103bec](https://github.com/molgenis/molgenis-frontend/commit/0103bec))
+* **config:** Fix config for new server ([10c882d](https://github.com/molgenis/molgenis-frontend/commit/10c882d))
+* **data-explorer:** Added simple html template ([7545201](https://github.com/molgenis/molgenis-frontend/commit/7545201))
+* **data-explorer:** Added simple html template ([a3d447e](https://github.com/molgenis/molgenis-frontend/commit/a3d447e))
+* **dataRepository:** Fix typing ([5910320](https://github.com/molgenis/molgenis-frontend/commit/5910320))
+* **DefaultCard:** Make info link generic ([27aa622](https://github.com/molgenis/molgenis-frontend/commit/27aa622))
+* **ExplorerCardTest:** Fix warning ([43ef39d](https://github.com/molgenis/molgenis-frontend/commit/43ef39d))
+* **Typing:** Fix typing ([98e9a77](https://github.com/molgenis/molgenis-frontend/commit/98e9a77))
+
+
+
+
+
 ## [0.9.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.2...@molgenis-experimental/data-explorer@0.9.3) (2019-09-11)
 
 **Note:** Version bump only for package @molgenis-experimental/data-explorer
