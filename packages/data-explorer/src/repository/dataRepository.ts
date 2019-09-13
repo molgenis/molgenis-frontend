@@ -1,38 +1,40 @@
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import { buildExpandedAttributesQuery } from './queryBuilder'
-import { getAttributesfromMeta, getRefsFromMeta } from './metaDataService'
+import {buildExpandedAttributesQuery} from './queryBuilder'
+import {getAttributesfromMeta, getRefsFromMeta} from './metaDataService'
 
-import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse, DataObject } from '@/types/ApiResponse'
-import { StringMap } from '@/types/GeneralTypes'
-import { EntityMetaRefs, TableSetting } from '@/types/ApplicationState'
+import {DataApiResponseItem, MetaDataApiResponse, DataApiResponse, DataObject} from '@/types/ApiResponse'
+import {StringMap} from '@/types/GeneralTypes'
+import {EntityMetaRefs, TableSetting} from '@/types/ApplicationState'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
-const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs) => {
-  if (rowData.data) {
-    const row: DataObject = rowData.data
-    return Object.keys(row).reduce((accum, key) => {
-      const value = row[key]
-      const isReference = (key: string): boolean => Object.keys(metaDataRefs).includes(key)
-      const isMref = (key: string): boolean => metaDataRefs[key].fieldType.includes('MREF')
-      let resolvedValue
-      if (isReference(key)) {
-        if (isMref(key)) {
-          // The isMref already checks if the value.items is available
-          // @ts-ignore
-          resolvedValue = value.items.map((mrefValue) => mrefValue.data[metaDataRefs[key].labelAttribute]).join(', ')
-        } else {
-          // This is checked by isReference
-          // @ts-ignore
-          resolvedValue = value.data[metaDataRefs[key].labelAttribute]
-        }
-      } else {
-        resolvedValue = value
-      }
-      accum[key] = resolvedValue
-      return accum
-    }, <StringMap>{})
+const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs): StringMap => {
+  if (!rowData.data) {
+    throw new Error('invalid input: row data must have data property')
   }
+  const row: DataObject = rowData.data
+  return Object.keys(row).reduce((accum, key) => {
+    const value = row[key]
+    const isReference = (key: string): boolean => Object.keys(metaDataRefs).includes(key)
+    const isMref = (key: string): boolean => metaDataRefs[key].fieldType.includes('MREF')
+    let resolvedValue
+    if (isReference(key)) {
+      if (isMref(key)) {
+        // The isMref already checks if the value.items is available
+        // @ts-ignore
+        resolvedValue = value.items.map((mrefValue) => mrefValue.data[metaDataRefs[key].labelAttribute]).join(', ')
+      } else {
+        // This is checked by isReference
+        // @ts-ignore
+        resolvedValue = value.data[metaDataRefs[key].labelAttribute]
+      }
+    } else {
+      resolvedValue = value
+    }
+    accum[key] = resolvedValue
+    return accum
+  }, <StringMap>{})
+
 }
 
 const apiResponseMapper = (rowData: DataApiResponseItem) => {
