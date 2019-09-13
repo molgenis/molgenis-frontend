@@ -3,14 +3,14 @@ import api from '@molgenis/molgenis-api-client'
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta, getRefsFromMeta } from './metaDataService'
 
-import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse } from '@/types/ApiResponse'
+import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse, DataObject } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import { EntityMetaRefs, TableSetting } from '@/types/ApplicationState'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs) => {
   if (rowData.data) {
-    const row: { [key: string]: string | DataApiResponseItem } = rowData.data
+    const row: DataObject = rowData.data
     return Object.keys(row).reduce((accum, key) => {
       const value = row[key]
       const isReference = (key: string): boolean => Object.keys(metaDataRefs).includes(key)
@@ -55,7 +55,7 @@ const apiResponseMapper = (rowData: DataApiResponseItem) => {
 const levelNRowMapper = (rowData: DataApiResponseItem) => {
   // check if mref
   if (rowData.items) {
-    const rows: [] = rowData.items
+    const rows: DataApiResponseItem[] = rowData.items
     return rows.map((rowData) => {
       return apiResponseMapper(rowData)
     })

@@ -1,4 +1,5 @@
-export default {
+import { DataApiResponse } from '@/types/ApiResponse'
+const mappedDataResponseMock:DataApiResponse = {
   'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees?expand=department, user, function_description&filter=birthdate, department, user, function_description, id, firstName, lastName' },
   'items': [{
     'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000000' },
@@ -451,3 +452,5 @@ export default {
   }],
   'page': { 'size': 14, 'totalElements': 14, 'totalPages': 1, 'number': 0 }
 }
+
+export default mappedDataResponseMock

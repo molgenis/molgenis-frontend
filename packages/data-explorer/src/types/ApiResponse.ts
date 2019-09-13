@@ -2,9 +2,11 @@ import { StringMap } from '@/types/GeneralTypes'
 
 export type DataApiResponseItem = {
   links: { self: string },
-  items?: [],
-  data?: { [key: string]: string | DataApiResponseItem } // Any should be DataApiResponseItem but will not build
+  items?: DataApiResponseItem[],
+  data?: DataObject // Any should be DataApiResponseItem but will not build
 }
+
+export type DataObject = {[key: string]: DataApiResponseItem | string | boolean | number}
 
 type DataApiResponsePage = {
   size: number,

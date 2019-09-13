@@ -1,16 +1,16 @@
 export default {
-  'links': {
-    'self': ''
+  links: {
+    self: ''
   },
-  'data': {
+  data: {
     'function_description': {
-      'links': {
-        'self': ''
+      links: {
+        self: ''
       },
-      'items': [
+      items: [
         {
-          'links': {
-            'self': ''
+          links: {
+            self: ''
           },
           'data': {
             'id': 'it',
@@ -20,10 +20,10 @@ export default {
       ]
     },
     'department': {
-      'links': {
-        'self': ''
+      links: {
+        self: ''
       },
-      'data': {
+      data: {
         'id': 'it',
         'label': 'IT'
       }
@@ -33,10 +33,10 @@ export default {
     'lastName': 'Finch',
     'birthdate': '1962-09-22',
     'user': {
-      'links': {
-        'self': ''
+      links: {
+        self: ''
       },
-      'data': {
+      data: {
         'displayName': 'admin',
         'userName': 'admin',
         'active': true,
