@@ -10,7 +10,7 @@ const previousChapterButton = '#prev-chapter-btn'
 const currentChapterSpan = '#current-chapter-label'
 const submitButton = '#submit-questionnaire-btn'
 
-const timeAllowedForProgressBarUpdate = 500
+const timeAllowedForProgressBarUpdate = 2000
 
 module.exports = {
   before: function (browser) {
