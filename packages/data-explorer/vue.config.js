@@ -65,6 +65,10 @@ module.exports = {
         'target': PROXY_TARGET,
         'changeOrigin': true
       },
+      '^/login': {
+        'target': PROXY_TARGET,
+        'changeOrigin': true
+      },
       '^/@molgenis-ui': {
         'target': PROXY_TARGET,
         'changeOrigin': true
