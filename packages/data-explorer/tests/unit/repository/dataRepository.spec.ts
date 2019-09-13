@@ -63,7 +63,7 @@ describe('dataRepository', () => {
       const tableId = 'books'
       const rowId = '101'
       api.get.mockResolvedValue(mockRowResponse)
-      const resp = await dataRepository.getRowDataWithReference(tableId, rowId, meta)
+      const resp = await dataRepository.getRowDataWithReferenceLabels(tableId, rowId, meta)
       expect(resp).toEqual({
         id: 1,
         label: 'my label row data'

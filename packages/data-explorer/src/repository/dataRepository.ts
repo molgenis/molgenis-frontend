@@ -7,6 +7,7 @@ import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse } from '@/typ
 import { StringMap } from '@/types/GeneralTypes'
 import { EntityMetaRefs, TableSetting } from '@/types/ApplicationState'
 
+// maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs) => {
   if (rowData.data) {
     const row: { [key: string]: string | DataApiResponseItem } = rowData.data
@@ -38,6 +39,7 @@ const apiResponseMapper = (rowData: DataApiResponseItem) => {
   if (rowData.data) {
     const row: any = rowData.data
     return Object.keys(row).reduce((accum: { [s: string]: string | object }, key) => {
+      // check if ref
       if (typeof row[key] === 'object') {
         // This is checked by the line above
         // @ts-ignore
@@ -51,6 +53,7 @@ const apiResponseMapper = (rowData: DataApiResponseItem) => {
 }
 
 const levelNRowMapper = (rowData: DataApiResponseItem) => {
+  // check if mref
   if (rowData.items) {
     const rows: [] = rowData.items
     return rows.map((rowData) => {
@@ -78,6 +81,7 @@ const getTableDataWithReference = async (tableId: string, metaData: MetaDataApiR
   return response
 }
 
+// maps data to list of objects in which only the data is presented
 const getMappedData = (response: DataApiResponse, metaDataRefs: EntityMetaRefs, isCustomCard: boolean) => {
   if (!isCustomCard) {
     return response.items.map((item: DataApiResponseItem) => levelOneRowMapper(item, metaDataRefs))
@@ -86,7 +90,8 @@ const getMappedData = (response: DataApiResponse, metaDataRefs: EntityMetaRefs, 
   }
 }
 
-const getRowDataWithReference = async (tableId: string, rowId: string, metaData: MetaDataApiResponse) => {
+// called on row expand
+const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaDataApiResponse) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
   const metaDataRefs = getRefsFromMeta(metaData)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes, true)
@@ -96,7 +101,7 @@ const getRowDataWithReference = async (tableId: string, rowId: string, metaData:
 
 export {
   getTableDataWithReference,
-  getRowDataWithReference,
+  getRowDataWithReferenceLabels,
   levelNRowMapper,
   getMappedData
 }

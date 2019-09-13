@@ -220,7 +220,7 @@ jest.mock('@/repository/metaDataRepository', () => {
 jest.mock('@/repository/dataRepository', () => {
   return {
     getTableDataWithReference: jest.fn(),
-    getRowDataWithReference: jest.fn()
+    getRowDataWithReferenceLabels: jest.fn()
   }
 })
 
@@ -296,7 +296,7 @@ describe('actions', () => {
       const commit = jest.fn()
       // @ts-ignore ts does not know its a mock
       metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
-      await actions.fetchRowData({ commit, state }, { rowId: 'rowId' })
+      await actions.fetchRowDataLabels({ commit, state }, { rowId: 'rowId' })
       expect(commit).toBeCalledWith('setMetaData', { meta: 'data' })
     })
   })

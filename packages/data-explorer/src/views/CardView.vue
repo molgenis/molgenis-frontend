@@ -43,7 +43,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchRowData']),
+    ...mapActions(['fetchRowDataLabels']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
     },
@@ -54,7 +54,8 @@ export default {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     },
     handleExpandCard (entity) {
-      this.fetchRowData({ rowId: this.getEntityId(entity) })
+      console.log(entity)
+      this.fetchRowDataLabels({ rowId: this.getEntityId(entity) })
     }
   }
 }

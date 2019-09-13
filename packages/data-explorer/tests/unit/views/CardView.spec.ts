@@ -22,7 +22,7 @@ describe('CardView.vue', () => {
       toggleShoppingItems: jest.fn()
     }
     actions = {
-      fetchRowData: jest.fn()
+      fetchRowDataLabels: jest.fn()
     }
     getters = {
       activeEntityData: jest.fn().mockReturnValue({
@@ -127,6 +127,6 @@ describe('CardView.vue', () => {
     const entity = { tableID: '2', label: 'blaat2' }
     // @ts-ignore
     wrapper.vm.handleExpandCard(entity)
-    expect(actions.fetchRowData).toBeCalled()
+    expect(actions.fetchRowDataLabels).toBeCalled()
   })
 })
