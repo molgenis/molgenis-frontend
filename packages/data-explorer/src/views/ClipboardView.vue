@@ -34,7 +34,7 @@
 <script>
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -56,6 +56,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setShowShoppingCart', 'setHideFilters']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
     },
@@ -63,8 +64,8 @@ export default {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     },
     closeShoppingCart () {
-      this.$store.commit('setShowShoppingCart', false)
-      this.$store.commit('setHideFilters', false)
+      this.setShowShoppingCart(false)
+      this.setHideFilters(false)
     }
   }
 }

@@ -19,23 +19,24 @@ export default {
       return id
     }
   }),
+  // on create DataView
   getTableData: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
     if (state.tableName === null) {
       throw new Error('cannot load table data for non string table id')
     }
     const metaData = await metaDataRepository.fetchMetaData(state.tableName)
     commit('setMetaData', metaData)
-    const tableData = await dataRepository.getTableDataWithReference(state.tableName, metaData, state.tableSettings.collapseLimit)
+    const tableData = await dataRepository.getTableDataWithReference(state.tableName, metaData, state.tableSettings, !!(state.dataDisplayLayout === 'CardView' && state.tableSettings.customCardCode))
     commit('setTableData', tableData)
   },
-  fetchRowData: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: {rowId: string}) => {
+  // expanded default card
+  fetchRowDataLabels: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: {rowId: string}) => {
     if (typeof state.tableName !== 'string') {
       throw new Error('cannot load table data for non string table id')
     }
     const metaData = await metaDataRepository.fetchMetaData(state.tableName)
     commit('setMetaData', metaData)
-    const rowData = await dataRepository.getRowDataWithReference(state.tableName, payload.rowId, metaData)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, metaData)
     commit('updateRowData', { rowId: payload.rowId, rowData })
   }
-
 }

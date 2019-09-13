@@ -3,14 +3,16 @@
     <explorer-card
       v-for="(entity, index) in entitiesToShow"
       :key="index"
-      :id="getEntityId(entity)"
+      :dataId="getEntityId(entity)"
+      :dataTable="tableName"
       :isSelected="isSelected(entity)"
       :isShop="tableSettings.isShop"
       :collapseLimit="tableSettings.collapseLimit"
       :dataLabel="getEntityLabel(entity)"
       :dataContents="entity"
-      :numberOfAttributes="tableMeta.attributes.length"
-      @expandCard="handleExpandCard">
+      :numberOfAttributes="numberOfAttributes"
+      :customCode="tableSettings.customCardCode"
+      @expandCard="handleExpandCard(entity)">
     </explorer-card>
   </div>
 </template>
@@ -18,9 +20,6 @@
 <script>
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import { mapState, mapActions } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag, faPlay } from '@fortawesome/free-solid-svg-icons'
-library.add(faShoppingBag)
 
 export default {
   name: 'CardView',
@@ -32,27 +31,31 @@ export default {
   },
   components: { ExplorerCard },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings']),
+    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings', 'tableName']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
     labelAttribute () {
       return this.tableMeta.labelAttribute
+    },
+    numberOfAttributes () {
+      return this.tableMeta.attributes.filter((attr) => { return attr.fieldType !== 'COMPOUND' }).length
     }
   },
   methods: {
-    ...mapActions(['fetchRowData']),
+    ...mapActions(['fetchRowDataLabels']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
     },
     getEntityLabel (entity) {
-      return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
+      return this.labelAttribute ? entity[this.labelAttribute].toString() : this.getEntityId(entity).toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     },
-    handleExpandCard (payload) {
-      this.fetchRowData({ rowId: payload.id })
+    handleExpandCard (entity) {
+      console.log(entity)
+      this.fetchRowDataLabels({ rowId: this.getEntityId(entity) })
     }
   }
 }

@@ -2,9 +2,11 @@ import { StringMap } from '@/types/GeneralTypes'
 
 export type DataApiResponseItem = {
   links: { self: string },
-  items?:[],
-  data: {[key:string]: string | DataApiResponseItem}
+  items?: DataApiResponseItem[],
+  data?: DataObject
 }
+
+export type DataObject = {[key: string]: DataApiResponseItem | string | boolean | number}
 
 type DataApiResponsePage = {
   size: number,
@@ -35,7 +37,7 @@ export type MetaDataAttribute = {
   visible: boolean,
   lookupAttribute: boolean,
   isAggregatable: boolean,
-  refEntity?: {name: string, labelAttribute: string}
+  refEntity?: { name: string, labelAttribute: string }
 }
 
 export type MetaDataApiResponse = {

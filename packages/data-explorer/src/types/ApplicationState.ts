@@ -13,6 +13,15 @@ export type EntityMetaRefs = {
   }
 }
 
+export type TableSetting = {
+  settingsTable: string,
+  customCardCode: string | null,
+  customCardAttrs: string
+  settingsRowId: string | null,
+  collapseLimit: number,
+  isShop: boolean,
+}
+
 export default interface ApplicationState {
   toast: Toast | null,
   dataDisplayLayout: 'CardView' | 'TableView'
@@ -24,10 +33,5 @@ export default interface ApplicationState {
   shoppedEntityItems: string[]
   hideFilters: boolean,
   showShoppingCart: boolean
-  tableSettings: {
-    settingsTable: string,
-    settingsRowId: string | null,
-    collapseLimit: number,
-    isShop: boolean
-  }
+  tableSettings: TableSetting
 }
