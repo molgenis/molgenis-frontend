@@ -4,18 +4,16 @@ import api from '@molgenis/molgenis-api-client'
 
 import meta from '../mocks/metaDataResponseMock'
 import mockRowResponse from '../mocks/rowDataResponseMock'
-import tableDataResponseMock from '../mocks/tableDataResponseMock'
-import complexRowDataResponseMock from '../mocks/complexRowDataResponseMock'
-import complexRowLevelNMapperResponse from '../mocks/complexRowLevelNMapperResponse'
-import getMappedDataMetaMock from '../mocks/getMappedDataMetaMock'
-import getMappedDataResponseMock from '../mocks/getMappedDataResponseMock'
-import getMappedDataResultLevel1 from '../mocks/getMappedDataResultLevel1'
-import getMappedDataResultLevelN from '../mocks/getMappedDataResultLevelN'
 
 jest.mock('@molgenis/molgenis-api-client', () => ({
   get: jest.fn()
 }))
+
 describe('dataRepository', () => {
+  beforeEach(() => {
+    api.get.mockReset()
+  })
+
   describe('getRowDataWithReference', () => {
     it('should fetch the row data and transform the result', async () => {
       const tableId = 'books'
@@ -26,6 +24,16 @@ describe('dataRepository', () => {
         id: 1,
         label: 'my label row data'
       })
+    })
+  })
+
+  describe('getTableDataWithLabel', () => {
+    it('should fetch the table data and expand the query for the label data ', async () => {
+      api.get.mockResolvedValue({ items: [
+        mockRowResponse
+      ] })
+      await dataRepository.getTableDataWithLabel('tableId', meta, ['foo'])
+      expect(api.get).toBeCalledWith('/api/data/tableId?expand=&filter=foo,id,label')
     })
   })
 })
