@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.4...@molgenis-experimental/data-explorer@0.10.0) (2019-09-16)
+
+
+### Features
+
+* **data-explorer:** Fix login ([#132](https://github.com/molgenis/molgenis-frontend/issues/132)) ([91c028f](https://github.com/molgenis/molgenis-frontend/commit/91c028f))
+
+
+
+
+
 ## [0.9.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.3...@molgenis-experimental/data-explorer@0.9.4) (2019-09-13)
 
 
