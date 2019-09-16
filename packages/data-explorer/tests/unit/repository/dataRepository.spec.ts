@@ -16,48 +16,6 @@ jest.mock('@molgenis/molgenis-api-client', () => ({
   get: jest.fn()
 }))
 describe('dataRepository', () => {
-  describe('levelNRowMapper', () => {
-    it('should remove items & data attributes', async () => {
-      expect(dataRepository.levelNRowMapper(complexRowDataResponseMock)).toEqual(complexRowLevelNMapperResponse)
-    })
-  })
-
-  describe('getMappedData', () => {
-    it('should remap data to remove "data" and "items" attributes 1 level deep', () => {
-      expect(
-        dataRepository.getMappedData(getMappedDataResponseMock, getMappedDataMetaMock, false)
-      ).toEqual(
-        getMappedDataResultLevel1.items
-      )
-    })
-    it('should remap data to remove "data" and "items" attributes multiple levels deep', () => {
-      expect(
-        dataRepository.getMappedData(getMappedDataResponseMock, getMappedDataMetaMock, true)
-      ).toEqual(
-        getMappedDataResultLevelN.items
-      )
-    })
-  })
-
-  describe('getTableDataWithReference', () => {
-    api.get.mockResolvedValue(tableDataResponseMock)
-    it('should prepare data to be used', async () => {
-      const response = await dataRepository.getTableDataWithReference('id', meta,
-        {
-          settingsTable: '',
-          customCardCode: '',
-          customCardAttrs: '',
-          settingsRowId: 'id',
-          collapseLimit: 5,
-          isShop: true
-        }, false)
-      expect(response.items[0]).toEqual({
-        id: 1,
-        label: 'my label table data'
-      })
-    })
-  })
-
   describe('getRowDataWithReference', () => {
     it('should fetch the row data and transform the result', async () => {
       const tableId = 'books'

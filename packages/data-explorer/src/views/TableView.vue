@@ -30,7 +30,7 @@ export default {
   },
   components: { TableRow, TableHeader },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'isShop']),
+    ...mapState(['tableName', 'tableMeta', 'shoppedEntityItems', 'isShop']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -38,17 +38,17 @@ export default {
       return Object.keys(this.entitiesToShow[0])
     }
   },
-  mounted: function () {
-    this.getTableData()
-  },
   methods: {
-    ...mapActions(['getTableData']),
+    ...mapActions(['fetchTableViewData']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     }
+  },
+  mounted: function () {
+    this.fetchTableViewData({ tableName: this.tableName })
   }
 }
 </script>

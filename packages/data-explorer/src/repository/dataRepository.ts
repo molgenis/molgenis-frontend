@@ -5,7 +5,7 @@ import { getAttributesfromMeta, getRefsFromMeta } from './metaDataService'
 
 import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse, DataObject } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
-import { EntityMetaRefs, TableSetting } from '@/types/ApplicationState'
+import { EntityMetaRefs } from '@/types/ApplicationState'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs): StringMap => {
@@ -72,28 +72,20 @@ const getTableDataDeepReference = async (tableId: string, metaData: MetaDataApiR
   const metaDataRefs = getRefsFromMeta(metaData)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, coloms, false)
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)
-  response.items = getMappedData(response, metaDataRefs, true)
+  response.items = response.items.map((item: DataApiResponseItem) => levelNRowMapper(item))
   return response
 }
 
-const getTableDataWithLabel = async (tableId: string, metaData: MetaDataApiResponse, coloms: string[]) => {
-  if (!coloms.includes(metaData.idAttribute)) coloms.push(metaData.idAttribute)
-  if (!coloms.includes(metaData.labelAttribute)) coloms.push(metaData.labelAttribute)
+const getTableDataWithLabel = async (tableId: string, metaData: MetaDataApiResponse, columns: string[]) => {
+  const columnSet = new Set([...columns])
+  columnSet.add(metaData.idAttribute)
+  columnSet.add(metaData.labelAttribute)
 
   const metaDataRefs = getRefsFromMeta(metaData)
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, coloms, false)
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, [...columnSet], false)
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)
-  response.items = getMappedData(response, metaDataRefs, true)
+  response.items = response.items.map((item: DataApiResponseItem) => levelOneRowMapper(item, metaDataRefs))
   return response
-}
-
-// maps data to list of objects in which only the data is presented
-const getMappedData = (response: DataApiResponse, metaDataRefs: EntityMetaRefs, isCustomCard: boolean) => {
-  if (!isCustomCard) {
-    return response.items.map((item: DataApiResponseItem) => levelOneRowMapper(item, metaDataRefs))
-  } else {
-    return response.items.map((item: DataApiResponseItem) => levelNRowMapper(item))
-  }
 }
 
 // called on row expand

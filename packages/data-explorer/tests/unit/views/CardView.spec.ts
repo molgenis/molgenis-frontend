@@ -22,7 +22,8 @@ describe('CardView.vue', () => {
       toggleShoppingItems: jest.fn()
     }
     actions = {
-      fetchRowDataLabels: jest.fn()
+      fetchRowDataLabels: jest.fn(),
+      fetchCardViewData: jest.fn()
     }
     getters = {
       activeEntityData: jest.fn().mockReturnValue({
@@ -84,7 +85,7 @@ describe('CardView.vue', () => {
       shoppedEntityItems: [1, 3]
     }
     store = new Vuex.Store({
-      state, mutations, getters
+      state, mutations, getters, actions
     })
     const wrapper = shallowMount(CardView, {
       store,
