@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.0...@molgenis-experimental/data-explorer@0.10.1) (2019-09-25)
+
+**Note:** Version bump only for package @molgenis-experimental/data-explorer
+
+
+
+
+
 # [0.10.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.4...@molgenis-experimental/data-explorer@0.10.0) (2019-09-16)
 
 
