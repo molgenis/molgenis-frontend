@@ -8,6 +8,7 @@ describe('TableView.vue', () => {
   let store: any
   let state: any
   let mutations: any
+  let actions: any
 
   beforeEach(() => {
     state = {
@@ -19,8 +20,11 @@ describe('TableView.vue', () => {
     mutations = {
       toggleShoppingItems: jest.fn()
     }
+    actions = {
+      fetchTableViewData: jest.fn()
+    }
     store = new Vuex.Store({
-      state, mutations
+      state, mutations, actions
     })
   })
 

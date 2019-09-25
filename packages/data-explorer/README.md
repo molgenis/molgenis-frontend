@@ -8,6 +8,8 @@ yarn install
 ### Compiles and hot-reloads for development
 ```
 yarn run serve
+
+note: visit '[dev-server]/login' to signin, after sigin navigate back to [dev-server]/ to view app on local dev server 
 ```
 
 ### Compiles and minifies for production

@@ -1,5 +1,5 @@
 <template>
-  <table class="table">
+  <table class="table" v-if="entitiesToShow.length">
     <table-header :header="tableHeaderToShow" :isShop="isShop"></table-header>
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"
@@ -15,7 +15,7 @@
 <script>
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 library.add(faShoppingBag)
@@ -30,7 +30,7 @@ export default {
   },
   components: { TableRow, TableHeader },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'isShop']),
+    ...mapState(['tableName', 'tableMeta', 'shoppedEntityItems', 'isShop']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -39,12 +39,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['fetchTableViewData']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     }
+  },
+  mounted: function () {
+    this.fetchTableViewData({ tableName: this.tableName })
   }
 }
 </script>
