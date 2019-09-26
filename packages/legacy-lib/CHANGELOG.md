@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/legacy-lib@1.1.0...@molgenis-ui/legacy-lib@1.1.1) (2019-09-26)
+
+
+### Bug Fixes
+
+* **data-explorer)(legacy-lib:** bump version to 1.3.4 to fix fallback link ([#139](https://github.com/molgenis/molgenis-frontend/issues/139)) ([48b51f8](https://github.com/molgenis/molgenis-frontend/commit/48b51f8))
+
+
+
+
+
 # 1.1.0 (2019-08-30)
 
 
