@@ -1,4 +1,4 @@
-import ApplicationState, { Toast, EntityMetaRefs } from '@/types/ApplicationState'
+import ApplicationState, { Toast, EntityMetaRefs, FilterDefinition } from '@/types/ApplicationState'
 import { DataApiResponse, MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
@@ -17,7 +17,7 @@ export default {
     state.tableData = data
   },
   setHideFilters (state: ApplicationState, hideFilters: boolean) {
-    state.hideFilters = hideFilters
+    state.filters.hideSidebar = hideFilters
   },
   setTableName (state: ApplicationState, entity: string) {
     state.tableName = entity
@@ -58,6 +58,10 @@ export default {
   },
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
+  },
+  setFilters (state: ApplicationState, filters: { definition: FilterDefinition[], shown: string[]}) {
+    state.filters.definition = filters.definition
+    state.filters.shown = filters.shown
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: {rowId: string, rowData: StringMap}) {
     if (!state.tableData) {

@@ -23,6 +23,7 @@ export default {
 
     const metaData = await metaDataRepository.fetchMetaData(state.tableName)
     commit('setMetaData', metaData)
+    commit('setFilters', metaDataRepository.mapMetaToFilters(metaData))
 
     let columns: string[]
     let tableData
