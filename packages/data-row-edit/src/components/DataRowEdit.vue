@@ -51,7 +51,7 @@
             type="button"
             disabled="disabled">
             {{ 'data-row-edit-save-busy-state-label' | i18n }} <i
-            class="fa fa-spinner fa-spin "></i>
+            class="fa fa-spinner fa-spin " aria-hidden="true"></i>
           </button>
 
           <span v-if="!isSaving && formState.$invalid && formState.$touched"
@@ -62,7 +62,7 @@
       </div>
 
     </div>
-    <div v-else class=""><i class="fa fa-spinner fa-spin fa-3x"></i></div>
+    <div v-else class=""><i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i></div>
 
   </div>
 
