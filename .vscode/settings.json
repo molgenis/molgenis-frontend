@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "serverId": "sonarcloud_molgenis",
+        "projectKey": "molgenis_molgenis-frontend"
+    }
+}
