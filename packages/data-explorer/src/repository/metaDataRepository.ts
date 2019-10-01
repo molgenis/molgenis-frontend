@@ -17,23 +17,35 @@ const fetchMetaData = async (entityId: string) => {
 }
 
 const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
-  console.log(meta)
+  // console.log(meta)
   // map string to string filter
   // map something to checkboxes
-  meta.attributes.map((item) => {
-    // item.name
-    // item.label
-    // item.fieldType
-  })
 
-  return {
-    definition: {
-      name: 'search',
-      label: 'Search',
-      type: 'string-filter'
-    },
-    shown: ['search']
-  }
+  const categoricals = meta.attributes.filter(item => item.fieldType.includes('CATEGORICAL')).map(item => {
+    console.log(item)
+
+    const href = item && item.refEntity && item.refEntity.href
+
+    if (!href) return
+
+    const options = getOptions(href)
+
+    return {
+      definition: {
+        name: item.name,
+        label: item.label,
+        type: 'checkbox-filter',
+        options: options
+      },
+      shown: ['search']
+    }
+  })
+  return categoricals
+}
+
+const getOptions = async (href: String) => {
+  const resp = await api.get(href)
+  return resp.items.map((item: any) => ({ id: item.id, label: item.label }))
 }
 
 /*
