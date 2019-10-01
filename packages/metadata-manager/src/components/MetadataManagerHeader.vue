@@ -11,8 +11,8 @@
     </div>
 
     <div class="col-md-4 col-sm-2 col-xs-2">
-      <button @click="createNewEntityType" class="btn btn-primary">
-        <i class="fa fa-plus"></i>
+      <button @click="createNewEntityType" class="btn btn-primary" aria-label="create new entity type">
+        <i class="fa fa-plus" aria-hidden="true"></i>
       </button>
     </div>
   </div>
