@@ -50,11 +50,23 @@ export default {
     state.entityMetaRefs = refItems
   },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {
-    state.tableSettings.isShop = Boolean(tableSettings.shop)
-    state.tableSettings.collapseLimit = parseInt(tableSettings.collapse_limit)
-    state.tableSettings.settingsRowId = tableSettings.id
-    state.tableSettings.customCardCode = tableSettings.card_template
-    state.tableSettings.customCardAttrs = tableSettings.template_attrs
+    const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'
+
+    if (isPropSet('shop')) {
+      state.tableSettings.isShop = Boolean(tableSettings.shop)
+    }
+    if (isPropSet('collapse_limit')) {
+      state.tableSettings.collapseLimit = parseInt(tableSettings.collapse_limit)
+    }
+    if (isPropSet('id')) {
+      state.tableSettings.settingsRowId = tableSettings.id
+    }
+    if (isPropSet('card_template')) {
+      state.tableSettings.customCardCode = tableSettings.card_template
+    }
+    if (isPropSet('template_attrs')) {
+      state.tableSettings.customCardAttrs = tableSettings.template_attrs
+    }
   },
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
