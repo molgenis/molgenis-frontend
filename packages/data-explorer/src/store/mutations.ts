@@ -19,6 +19,9 @@ export default {
   setHideFilters (state: ApplicationState, hideFilters: boolean) {
     state.filters.hideSidebar = hideFilters
   },
+  setFiltersShown (state: ApplicationState, shown: string[]) {
+    Vue.set(state.filters, 'shown', shown)
+  },
   setTableName (state: ApplicationState, entity: string) {
     state.tableName = entity
   },
