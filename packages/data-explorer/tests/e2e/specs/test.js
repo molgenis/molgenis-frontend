@@ -32,15 +32,6 @@ module.exports = {
       .waitForElementVisible('.alert.alert-warning', timeOutDelay)
       .end()
   },
-  'expand card button is not present for cards with less than 5 elements': browser => {
-    browser
-      .url(process.env.VUE_DEV_SERVER_URL)
-      .waitForElementVisible('#app', timeOutDelay)
-      .click('.jumbotron .btn.btn-primary.btn-lg')
-      .pause(animationDelay)
-      .assert.elementNotPresent('.mg-card-expand')
-      .end()
-  },
   'should display custom card': browser => {
     browser
       .url(process.env.VUE_DEV_SERVER_URL + 'TableWithCustomCard')
