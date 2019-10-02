@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.2...@molgenis-experimental/data-explorer@0.10.3) (2019-10-02)
+
+
+### Bug Fixes
+
+* **data-explorer:** fix issue due to not checking for non mref reference types ([#145](https://github.com/molgenis/molgenis-frontend/issues/145)) ([217d4e0](https://github.com/molgenis/molgenis-frontend/commit/217d4e0))
+
+
+
+
+
 ## [0.10.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.1...@molgenis-experimental/data-explorer@0.10.2) (2019-09-26)
 
 
