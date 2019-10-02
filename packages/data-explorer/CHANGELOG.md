@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.4...@molgenis-experimental/data-explorer@0.10.5) (2019-10-02)
+
+
+### Bug Fixes
+
+* **data-explorer:** Always ask for id and label attrs as these are expected to always be present. ([1ed6b9c](https://github.com/molgenis/molgenis-frontend/commit/1ed6b9c))
+
+
+
+
+
 ## [0.10.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.3...@molgenis-experimental/data-explorer@0.10.4) (2019-10-02)
 
 
