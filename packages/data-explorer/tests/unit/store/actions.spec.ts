@@ -240,7 +240,8 @@ describe('actions', () => {
       filters: {
         hideSidebar: false,
         definition: [],
-        shown: []
+        shown: [],
+        selections: {}
       },
       showShoppingCart: false,
       shoppedEntityItems: [],

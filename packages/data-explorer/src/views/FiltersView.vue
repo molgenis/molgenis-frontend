@@ -16,9 +16,9 @@
       </div>
       <div class="p-2">
         <filter-container
-          v-model="selections"
-          :filters="filters"
-          :filters-shown="filtersShown"
+          v-model="filters.selections"
+          :filters="filters.definition"
+          :filters-shown="filters.shown"
           :can-edit="true"
           @update="updateState"
         ></filter-container>
@@ -41,22 +41,14 @@ library.add(faChevronLeft)
 export default Vue.extend({
   name: 'FiltersView',
   components: { FilterContainer, FontAwesomeIcon },
-  data () {
-    return {
-      selections: {
-        search: 'test'
-      },
-      filtersShown: [],
-      filters: []
-    }
-  },
   computed: {
-    ...mapState(['hideFilters'])
+    ...mapState(['filters'])
   },
   methods: {
     ...mapMutations([ 'setHideFilters' ]),
     updateState (newState) {
-      this.filtersShown = newState
+      console.log('update state')
+      // this.filtersShown = newState
     }
   }
 })

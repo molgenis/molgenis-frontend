@@ -1,4 +1,5 @@
 import { DataApiResponse, MetaDataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
+import { StringMap } from '@/types/GeneralTypes'
 
 export type Toast = {
   type: 'danger' | 'success',
@@ -49,5 +50,6 @@ export default interface ApplicationState {
     hideSidebar: boolean
     definition: FilterDefinition[]
     shown: string[]
+    selections: StringMap
   }
 }

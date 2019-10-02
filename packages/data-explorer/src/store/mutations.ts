@@ -59,9 +59,9 @@ export default {
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
   },
-  setFilters (state: ApplicationState, filters: { definition: FilterDefinition[], shown: string[]}) {
-    state.filters.definition = filters.definition
-    state.filters.shown = filters.shown
+  setFilters (state: ApplicationState, { definition, shown }: { definition: FilterDefinition[], shown: string[] }) {
+    Vue.set(state.filters, 'definition', definition)
+    Vue.set(state.filters, 'shown', shown)
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: {rowId: string, rowData: StringMap}) {
     if (!state.tableData) {

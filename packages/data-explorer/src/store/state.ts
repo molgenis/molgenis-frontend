@@ -21,7 +21,8 @@ const state: ApplicationState = {
   filters: {
     hideSidebar: false,
     definition: [],
-    shown: []
+    shown: [],
+    selections: {}
   }
 }
 
