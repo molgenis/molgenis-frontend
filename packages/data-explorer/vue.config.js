@@ -100,6 +100,21 @@ module.exports = {
       app.get('/api/data/root_hospital_patients', function (req, res) {
         res.json(schemas.TableData)
       })
+      app.get('/api/v2/root_hospital_diagnosis', function (req, res) {
+        res.json(schemas.DiagnosisOptions)
+      })
+      app.get('/api/v2/root_cities', function (req, res) {
+        res.json(schemas.CityOptions)
+      })
+      app.get('/api/v2/root_gender', function (req, res) {
+        res.json(schemas.GenderOptions)
+      })
+      app.get('/api/v2/it_emx_datatypes_TypeTestRef', function (req, res) {
+        res.json(schemas.MetaData)
+      })
+      app.get('/api/v2/root_hospital_sample_types', function (req, res) {
+        res.json(schemas.MetaData)
+      })
       app.get('/api/data/de_dataexplorer_table_settings', function (req, res) {
         if (req.url.includes('TableWithMoreColumns')) {
           res.json({ items: [] })

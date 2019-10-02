@@ -11,12 +11,16 @@ describe('FiltersView.vue', () => {
 
   beforeEach(() => {
     state = {
-      dataDisplayLayout: 'cards',
-      hideFilters: true
+      filters: {
+        hideSidebar: false,
+        definition: [],
+        shown: [],
+        selections: {}
+      }
     }
     mutations = {
       setHideFilters: jest.fn(),
-      setDataDisplayLayout: jest.fn()
+      setFiltersShown: jest.fn()
     }
     store = new Vuex.Store({
       state, mutations
@@ -24,7 +28,7 @@ describe('FiltersView.vue', () => {
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(FiltersView)
+    const wrapper = shallowMount(FiltersView, { store, localVue })
     expect(wrapper.exists()).toBeTruthy()
   })
 

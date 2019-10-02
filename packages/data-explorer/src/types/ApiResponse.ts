@@ -37,7 +37,7 @@ export type MetaDataAttribute = {
   visible: boolean,
   lookupAttribute: boolean,
   isAggregatable: boolean,
-  refEntity?: { name: string, labelAttribute: string }
+  refEntity?: { name: string, labelAttribute: string, href?: string }
 }
 
 export type MetaDataApiResponse = {

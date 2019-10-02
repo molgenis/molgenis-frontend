@@ -5,6 +5,7 @@ import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
+import * as metaFilterMapper from '@/repository/metaFilterMapper'
 
 export default {
   getTableSettings: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState },
@@ -23,6 +24,7 @@ export default {
 
     const metaData = await metaDataRepository.fetchMetaData(state.tableName)
     commit('setMetaData', metaData)
+    commit('setFilters', await metaFilterMapper.mapMetaToFilters(metaData))
 
     let columns: string[]
     let tableData

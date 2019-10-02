@@ -8,7 +8,6 @@ const state: ApplicationState = {
   dataDisplayLayout: 'CardView',
   defaultEntityData: null,
   entityMetaRefs: {},
-  hideFilters: false,
   showShoppingCart: false,
   shoppedEntityItems: [],
   tableSettings: {
@@ -18,6 +17,12 @@ const state: ApplicationState = {
     customCardCode: null,
     customCardAttrs: '',
     isShop: false
+  },
+  filters: {
+    hideSidebar: false,
+    definition: [],
+    shown: [],
+    selections: {}
   }
 }
 
