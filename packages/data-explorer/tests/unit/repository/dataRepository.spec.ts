@@ -10,18 +10,30 @@ jest.mock('@molgenis/molgenis-api-client', () => ({
 }))
 
 describe('dataRepository', () => {
+  beforeEach(() => {
+    api.get.mockReset()
+  })
+
   describe('getRowDataWithReference', () => {
-    const tableId = 'books'
-    const rowId = '101'
-
-    api.get.mockResolvedValue(mockRowResponse)
-
     it('should fetch the row data and transform the result', async () => {
-      const resp = await dataRepository.getRowDataWithReference(tableId, rowId, meta)
+      const tableId = 'books'
+      const rowId = '101'
+      api.get.mockResolvedValue(mockRowResponse)
+      const resp = await dataRepository.getRowDataWithReferenceLabels(tableId, rowId, meta)
       expect(resp).toEqual({
         id: 1,
-        label: 'my label'
+        label: 'my label row data'
       })
+    })
+  })
+
+  describe('getTableDataWithLabel', () => {
+    it('should fetch the table data and expand the query for the label data ', async () => {
+      api.get.mockResolvedValue({ items: [
+        mockRowResponse
+      ] })
+      await dataRepository.getTableDataWithLabel('tableId', meta, ['foo'])
+      expect(api.get).toBeCalledWith('/api/data/tableId?expand=&filter=foo,id,label')
     })
   })
 })

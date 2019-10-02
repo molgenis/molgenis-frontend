@@ -1,4 +1,4 @@
-import ApplicationState, { Toast, EntityMetaRefs } from '@/types/ApplicationState'
+import ApplicationState, { Toast, EntityMetaRefs, FilterDefinition } from '@/types/ApplicationState'
 import { DataApiResponse, MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
@@ -17,7 +17,10 @@ export default {
     state.tableData = data
   },
   setHideFilters (state: ApplicationState, hideFilters: boolean) {
-    state.hideFilters = hideFilters
+    state.filters.hideSidebar = hideFilters
+  },
+  setFiltersShown (state: ApplicationState, shown: string[]) {
+    Vue.set(state.filters, 'shown', shown)
   },
   setTableName (state: ApplicationState, entity: string) {
     state.tableName = entity
@@ -50,12 +53,30 @@ export default {
     state.entityMetaRefs = refItems
   },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {
-    state.tableSettings.isShop = Boolean(tableSettings.shop)
-    state.tableSettings.collapseLimit = parseInt(tableSettings.collapse_limit)
-    state.tableSettings.settingsRowId = tableSettings.id
+    const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'
+
+    if (isPropSet('shop')) {
+      state.tableSettings.isShop = Boolean(tableSettings.shop)
+    }
+    if (isPropSet('collapse_limit')) {
+      state.tableSettings.collapseLimit = parseInt(tableSettings.collapse_limit)
+    }
+    if (isPropSet('id')) {
+      state.tableSettings.settingsRowId = tableSettings.id
+    }
+    if (isPropSet('card_template')) {
+      state.tableSettings.customCardCode = tableSettings.card_template
+    }
+    if (isPropSet('template_attrs')) {
+      state.tableSettings.customCardAttrs = tableSettings.template_attrs
+    }
   },
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
+  },
+  setFilters (state: ApplicationState, { definition, shown }: { definition: FilterDefinition[], shown: string[] }) {
+    Vue.set(state.filters, 'definition', definition)
+    Vue.set(state.filters, 'shown', shown)
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: {rowId: string, rowData: StringMap}) {
     if (!state.tableData) {

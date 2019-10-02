@@ -1,4 +1,5 @@
 import { DataApiResponse, MetaDataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
+import { StringMap } from '@/types/GeneralTypes'
 
 export type Toast = {
   type: 'danger' | 'success',
@@ -13,6 +14,27 @@ export type EntityMetaRefs = {
   }
 }
 
+export type TableSetting = {
+  settingsTable: string,
+  customCardCode: string | null,
+  customCardAttrs: string
+  settingsRowId: string | null,
+  collapseLimit: number,
+  isShop: boolean,
+}
+
+export type FilterDefinition = {
+  name: string,
+  label: string,
+  type: string,
+  description?: string,
+  placeholder?: string,
+  bulkOperation?: boolean,
+  options?: [{ value: string, text: string }],
+  collapsable?: boolean,
+  collapsed?: boolean
+}
+
 export default interface ApplicationState {
   toast: Toast | null,
   dataDisplayLayout: 'CardView' | 'TableView'
@@ -22,12 +44,12 @@ export default interface ApplicationState {
   defaultEntityData: DataApiResponseItem[] | null,
   entityMetaRefs: EntityMetaRefs,
   shoppedEntityItems: string[]
-  hideFilters: boolean,
   showShoppingCart: boolean
-  tableSettings: {
-    settingsTable: string,
-    settingsRowId: string | null,
-    collapseLimit: number,
-    isShop: boolean
+  tableSettings: TableSetting
+  filters: {
+    hideSidebar: boolean
+    definition: FilterDefinition[]
+    shown: string[]
+    selections: StringMap
   }
 }

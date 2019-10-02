@@ -11,7 +11,10 @@ const bannerText = `package-name: ${pkgName}
 package-version: ${pkgVersion}
 build-date: ${buildDate}`
 
+const PROXY_TARGET = 'https://master.dev.molgenis.org'
+
 module.exports = {
+  runtimeCompiler: true,
   outputDir: 'dist',
   publicPath: process.env.NODE_ENV === 'production'
     ? pkgName + '/dist/'
@@ -35,35 +38,39 @@ module.exports = {
     // Used to proxy a external API server to have someone to talk to during development
     proxy: process.env.NODE_ENV !== 'development' ? undefined : {
       '^/api': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': PROXY_TARGET,
         'keepOrigin': true
       },
       '^/fonts': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': PROXY_TARGET,
         'keepOrigin': true
       },
       '^/img': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': PROXY_TARGET,
         'keepOrigin': true
       },
       '^/app-ui-context': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': PROXY_TARGET,
         'keepOrigin': true
       },
       '^/menu/main/dataexplorer/details': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': PROXY_TARGET,
         'changeOrigin': true
       },
       '^/css': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': PROXY_TARGET,
         'changeOrigin': true
       },
       '^/js': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': PROXY_TARGET,
+        'changeOrigin': true
+      },
+      '^/login': {
+        'target': PROXY_TARGET,
         'changeOrigin': true
       },
       '^/@molgenis-ui': {
-        'target': 'https://data-v3.dev.molgenis.org',
+        'target': PROXY_TARGET,
         'changeOrigin': true
       }
     },
@@ -72,14 +79,50 @@ module.exports = {
       app.get('/app-ui-context', function (req, res) {
         res.json(schemas.UIContext)
       })
-      app.get('/api/v2/it_emx_datatypes_TypeTest', function (req, res) {
+      app.get('/api/v2/root_hospital_patients', function (req, res) {
         res.json(schemas.MetaData)
       })
-      app.get('/api/data/it_emx_datatypes_TypeTest', function (req, res) {
+      app.get('/api/data/TableWithMoreColumns', function (req, res) {
+        res.json(schemas.TableWithMoreColumns)
+      })
+      app.get('/api/data/TableWithCustomCard', function (req, res) {
+        res.json(schemas.TableWithMoreColumns)
+      })
+      app.get('/api/data/TableWithMoreColumns/p000000001_2014_11_11', function (req, res) {
+        res.json(schemas.TableWithMoreColumnsExpanded)
+      })
+      app.get('/api/v2/TableWithCustomCard', function (req, res) {
+        res.json(schemas.TableWithMoreColumnsMeta)
+      })
+      app.get('/api/v2/TableWithMoreColumns', function (req, res) {
+        res.json(schemas.TableWithMoreColumnsMeta)
+      })
+      app.get('/api/data/root_hospital_patients', function (req, res) {
         res.json(schemas.TableData)
       })
+      app.get('/api/v2/root_hospital_diagnosis', function (req, res) {
+        res.json(schemas.DiagnosisOptions)
+      })
+      app.get('/api/v2/root_cities', function (req, res) {
+        res.json(schemas.CityOptions)
+      })
+      app.get('/api/v2/root_gender', function (req, res) {
+        res.json(schemas.GenderOptions)
+      })
+      app.get('/api/v2/it_emx_datatypes_TypeTestRef', function (req, res) {
+        res.json(schemas.MetaData)
+      })
+      app.get('/api/v2/root_hospital_sample_types', function (req, res) {
+        res.json(schemas.MetaData)
+      })
       app.get('/api/data/de_dataexplorer_table_settings', function (req, res) {
-        res.json(schemas.TableSettings)
+        if (req.url.includes('TableWithMoreColumns')) {
+          res.json({ items: [] })
+        } else if (req.url.includes('TableWithCustomCard')) {
+          res.json(schemas.TableSettingsWithCustom)
+        } else {
+          res.json(schemas.TableSettings)
+        }
       })
     }
   }

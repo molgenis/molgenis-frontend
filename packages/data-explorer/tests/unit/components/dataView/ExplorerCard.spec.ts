@@ -6,6 +6,8 @@ describe('ExplorerCard.vue', () => {
     const propsData = {
       id: 'none',
       dataLabel: 'dataLabel',
+      dataTable: 'myTable',
+      dataId: 'myId',
       dataContents: {
         id: 155143544,
         myField: 'myValue'
@@ -15,5 +17,20 @@ describe('ExplorerCard.vue', () => {
     }
     const wrapper = shallowMount(EntityCard, { propsData })
     expect(wrapper.exists()).toBeTruthy()
+  })
+  it('has default collapseLimit of 5', () => {
+    const propsData = {
+      id: 'none',
+      dataLabel: 'dataLabel',
+      dataTable: 'myTable',
+      dataId: 'myId',
+      dataContents: {
+        id: 155143544,
+        myField: 'myValue'
+      },
+      numberOfAttributes: 3
+    }
+    const wrapper = shallowMount(EntityCard, { propsData })
+    expect(wrapper.vm.$props.collapseLimit).toBe(5)
   })
 })

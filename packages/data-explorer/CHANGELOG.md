@@ -3,6 +3,117 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.5...@molgenis-experimental/data-explorer@0.10.6) (2019-10-02)
+
+
+### Bug Fixes
+
+* **data-explorer:** load deep data when showing clipboard  ([#148](https://github.com/molgenis/molgenis-frontend/issues/148)) ([14d185a](https://github.com/molgenis/molgenis-frontend/commit/14d185a))
+
+
+
+
+
+## [0.10.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.4...@molgenis-experimental/data-explorer@0.10.5) (2019-10-02)
+
+
+### Bug Fixes
+
+* **data-explorer:** Always ask for id and label attrs as these are expected to always be present. ([1ed6b9c](https://github.com/molgenis/molgenis-frontend/commit/1ed6b9c))
+
+
+
+
+
+## [0.10.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.3...@molgenis-experimental/data-explorer@0.10.4) (2019-10-02)
+
+
+### Bug Fixes
+
+* **data-explorer:** default store settings get overridden by non-existing props from server. ([d236196](https://github.com/molgenis/molgenis-frontend/commit/d236196))
+* **data-explorer:** Remove e2e test as it is not really testing end use feature. ([19f89c4](https://github.com/molgenis/molgenis-frontend/commit/19f89c4))
+
+
+
+
+
+## [0.10.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.2...@molgenis-experimental/data-explorer@0.10.3) (2019-10-02)
+
+
+### Bug Fixes
+
+* **data-explorer:** fix issue due to not checking for non mref reference types ([#145](https://github.com/molgenis/molgenis-frontend/issues/145)) ([217d4e0](https://github.com/molgenis/molgenis-frontend/commit/217d4e0))
+
+
+
+
+
+## [0.10.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.1...@molgenis-experimental/data-explorer@0.10.2) (2019-09-26)
+
+
+### Bug Fixes
+
+* **data-explorer)(legacy-lib:** bump version to 1.3.4 to fix fallback link ([#139](https://github.com/molgenis/molgenis-frontend/issues/139)) ([48b51f8](https://github.com/molgenis/molgenis-frontend/commit/48b51f8))
+
+
+
+
+
+## [0.10.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.0...@molgenis-experimental/data-explorer@0.10.1) (2019-09-25)
+
+**Note:** Version bump only for package @molgenis-experimental/data-explorer
+
+
+
+
+
+# [0.10.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.4...@molgenis-experimental/data-explorer@0.10.0) (2019-09-16)
+
+
+### Features
+
+* **data-explorer:** Fix login ([#132](https://github.com/molgenis/molgenis-frontend/issues/132)) ([91c028f](https://github.com/molgenis/molgenis-frontend/commit/91c028f))
+
+
+
+
+
+## [0.9.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.3...@molgenis-experimental/data-explorer@0.9.4) (2019-09-13)
+
+
+### Bug Fixes
+
+* **CardView:** Fix cards broken for tables consisting of compounds only ([91ce318](https://github.com/molgenis/molgenis-frontend/commit/91ce318))
+* **CardView:** Fix expand card for cards with id other than "id" ([3edc1bd](https://github.com/molgenis/molgenis-frontend/commit/3edc1bd))
+* **CardViewTest:** Fix linting ([0103bec](https://github.com/molgenis/molgenis-frontend/commit/0103bec))
+* **config:** Fix config for new server ([10c882d](https://github.com/molgenis/molgenis-frontend/commit/10c882d))
+* **data-explorer:** Added simple html template ([7545201](https://github.com/molgenis/molgenis-frontend/commit/7545201))
+* **data-explorer:** Added simple html template ([a3d447e](https://github.com/molgenis/molgenis-frontend/commit/a3d447e))
+* **dataRepository:** Fix typing ([5910320](https://github.com/molgenis/molgenis-frontend/commit/5910320))
+* **DefaultCard:** Make info link generic ([27aa622](https://github.com/molgenis/molgenis-frontend/commit/27aa622))
+* **ExplorerCardTest:** Fix warning ([43ef39d](https://github.com/molgenis/molgenis-frontend/commit/43ef39d))
+* **Typing:** Fix typing ([98e9a77](https://github.com/molgenis/molgenis-frontend/commit/98e9a77))
+
+
+
+
+
+## [0.9.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.2...@molgenis-experimental/data-explorer@0.9.3) (2019-09-11)
+
+**Note:** Version bump only for package @molgenis-experimental/data-explorer
+
+
+
+
+
+## [0.9.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.1...@molgenis-experimental/data-explorer@0.9.2) (2019-08-30)
+
+**Note:** Version bump only for package @molgenis-experimental/data-explorer
+
+
+
+
+
 ## [0.9.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.9.0...@molgenis-experimental/data-explorer@0.9.1) (2019-08-30)
 
 **Note:** Version bump only for package @molgenis-experimental/data-explorer

@@ -1,7 +1,7 @@
 <template>
   <li>
     <span v-bind:class="{ 'selected-attribute-node': attribute.selected, 'node-content': true }" @click="onAttributeSelect(attribute)">
-      <i v-bind:class="['fa', isFolder ? 'fa-folder-o' : 'fa-columns']"></i> {{attribute.label}}
+      <i v-bind:class="['fa', isFolder ? 'fa-folder-o' : 'fa-columns']" aria-hidden="true"></i> {{attribute.label}}
     </span>
     <ul v-if="isFolder">
       <attribute-tree-node v-for="child in attribute.children" :attribute="child" :onAttributeSelect="onAttributeSelect"></attribute-tree-node>

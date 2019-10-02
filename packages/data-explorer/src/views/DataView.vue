@@ -33,10 +33,9 @@ export default Vue.extend({
     ...mapState(['showShoppingCart', 'tableName', 'tableMeta', 'openTableSettings', 'settingsRowId', 'isShop'])
   },
   methods: {
-    ...mapActions(['getTableData', 'getTableSettings'])
+    ...mapActions(['getTableSettings'])
   },
   created () {
-    this.getTableData()
     this.getTableSettings({ tableName: this.tableName })
   },
   components: { ToolbarView, SelectLayoutView, TableSettingsButton, ClipboardView }

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/core-ui@0.3.0...@molgenis-ui/core-ui@0.3.1) (2019-09-12)
+
+
+### Bug Fixes
+
+* **core-ui:** use promise for localization call ([#127](https://github.com/molgenis/molgenis-frontend/issues/127)) ([3ad6f32](https://github.com/molgenis/molgenis-frontend/commit/3ad6f32)), closes [#126](https://github.com/molgenis/molgenis-frontend/issues/126)
+
+
+
+
+
 # 0.3.0 (2019-06-06)
 
 

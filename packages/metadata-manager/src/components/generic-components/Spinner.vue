@@ -1,3 +1,3 @@
 <template>
-  <i class="fa fa-spinner fa-spin fa-3x"></i>
+  <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
 </template>

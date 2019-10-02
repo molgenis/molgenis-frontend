@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@3.0.3...@molgenis-ui/data-row-edit@3.0.4) (2019-10-02)
+
+**Note:** Version bump only for package @molgenis-ui/data-row-edit
+
+
+
+
+
+## [3.0.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@3.0.2...@molgenis-ui/data-row-edit@3.0.3) (2019-09-24)
+
+
+### Bug Fixes
+
+* **data-row-edit, questionnaires, settings:** bump molgenis-ui-form runtime dependancy to 4.0.3 ([b593c45](https://github.com/molgenis/molgenis-frontend/commit/b593c45))
+
+
+
+
+
 ## [3.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@3.0.1...@molgenis-ui/data-row-edit@3.0.2) (2019-08-21)
 
 **Note:** Version bump only for package @molgenis-ui/data-row-edit

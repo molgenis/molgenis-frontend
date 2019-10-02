@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@2.0.1...@molgenis-ui/settings@2.0.2) (2019-09-24)
+
+
+### Bug Fixes
+
+* **data-row-edit, questionnaires, settings:** bump molgenis-ui-form runtime dependancy to 4.0.3 ([b593c45](https://github.com/molgenis/molgenis-frontend/commit/b593c45))
+
+
+
+
+
 ## [2.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@2.0.0...@molgenis-ui/settings@2.0.1) (2019-06-14)
 
 

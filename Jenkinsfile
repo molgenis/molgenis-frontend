@@ -44,11 +44,14 @@ pipeline {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
+                    sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_safari,ci_ie11,ci_firefox"
                     sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --env ci_chrome,ci_safari,ci_ie11,ci_firefox"
                     sh "yarn lerna run build"
                 }
                 container('sonar') {
-                    sh "sonar-scanner -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                    // Fetch the target branch, sonar likes to take a look at it
+                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                    sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
                 }
             }
             post {
@@ -90,7 +93,6 @@ pipeline {
                     sh 'vault read -field=value secret/ops/jenkins/rancher/cli2.json > /home/jenkins/.rancher/cli2.json'
                 }
                 container('rancher') {
-                    sh "rancher context switch dev-molgenis"
                     sh "rancher apps install " +
                         "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +

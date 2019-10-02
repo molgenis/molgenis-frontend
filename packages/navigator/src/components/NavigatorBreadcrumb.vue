@@ -26,7 +26,7 @@
         <li
           v-show="query"
           class="breadcrumb-item">
-          <span>{{ 'search-query-label' | i18n }}: <b>{{ query }}</b></span>
+          <span>{{ 'search-query-label' | i18n }}: <strong>{{ query }}</strong></span>
         </li>
       </ol>
     </div>

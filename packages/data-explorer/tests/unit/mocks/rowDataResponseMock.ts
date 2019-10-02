@@ -4,6 +4,6 @@ export default {
   },
   data: {
     id: 1,
-    label: 'my label'
+    label: 'my label row data'
   }
 }
