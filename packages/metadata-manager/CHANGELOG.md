@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.5...@molgenis-ui/metadata-manager@0.1.6) (2019-10-02)
+
+
+### Bug Fixes
+
+* **metadata-manager:** icon button accessibility ([f54054d](https://github.com/molgenis/molgenis-frontend/commit/f54054d))
+
+
+
+
+
 ## [0.1.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.4...@molgenis-ui/metadata-manager@0.1.5) (2019-09-11)
 
 
