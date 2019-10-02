@@ -30,7 +30,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
   }
 }
 
-const getOptions = async (href: String) => {
+const getOptions = async (href: string) => {
   const resp = await api.get(href)
   console.log()
 
