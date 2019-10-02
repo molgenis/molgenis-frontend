@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.3...@molgenis-experimental/data-explorer@0.10.4) (2019-10-02)
+
+
+### Bug Fixes
+
+* **data-explorer:** default store settings get overridden by non-existing props from server. ([d236196](https://github.com/molgenis/molgenis-frontend/commit/d236196))
+* **data-explorer:** Remove e2e test as it is not really testing end use feature. ([19f89c4](https://github.com/molgenis/molgenis-frontend/commit/19f89c4))
+
+
+
+
+
 ## [0.10.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.2...@molgenis-experimental/data-explorer@0.10.3) (2019-10-02)
 
 
