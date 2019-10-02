@@ -91,8 +91,13 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaDataApiRespo
 // called on row expand
 const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaDataApiResponse) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
+  // Todo: remove work around, needed as compounds are not pased by getAttributesfromMeta.
+  // Addding id and label makes sure we get these fields.
+  const columnSet = new Set([...attributes])
+  columnSet.add(metaData.idAttribute)
+  columnSet.add(metaData.labelAttribute)
   const metaDataRefs = getRefsFromMeta(metaData)
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, attributes, true)
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, [...columnSet], true)
   const response = await api.get(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
   return levelOneRowMapper(response, metaDataRefs)
 }
