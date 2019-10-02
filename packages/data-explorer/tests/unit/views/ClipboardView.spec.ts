@@ -20,7 +20,8 @@ describe('ClipboardView.vue', () => {
           { tableID: '2' },
           { tableID: '3' }
         ]
-      }
+      },
+      tableName: 'tableID'
     }
     mutations = {
       setShowShoppingCart: jest.fn(),
