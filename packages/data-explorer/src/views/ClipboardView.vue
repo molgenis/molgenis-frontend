@@ -34,7 +34,7 @@
 <script>
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -44,7 +44,7 @@ export default {
   name: 'ClipboardView',
   components: { TableRow, TableHeader, FontAwesomeIcon },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableData']),
+    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableData', 'tableName']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -56,6 +56,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['fetchTableViewData']),
     ...mapMutations(['setShowShoppingCart', 'setHideFilters']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
@@ -67,6 +68,9 @@ export default {
       this.setShowShoppingCart(false)
       this.setHideFilters(false)
     }
+  },
+  mounted: function () {
+    this.fetchTableViewData({ tableName: this.tableName })
   }
 }
 </script>
