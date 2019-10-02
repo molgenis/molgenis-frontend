@@ -16,10 +16,10 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMet
   return Object.keys(row).reduce((accum, key) => {
     const value = row[key]
     const isReference = (key: string): boolean => Object.keys(metaDataRefs).includes(key)
-    const isMref = (key: string): boolean => metaDataRefs[key].fieldType.includes('MREF')
     let resolvedValue
     if (isReference(key)) {
-      if (isMref(key)) {
+      // @ts-ignore
+      if (value.items) {
         // The isMref already checks if the value.items is available
         // @ts-ignore
         resolvedValue = value.items.map((mrefValue) => mrefValue.data[metaDataRefs[key].labelAttribute]).join(', ')
