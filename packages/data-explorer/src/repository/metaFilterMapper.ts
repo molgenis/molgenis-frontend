@@ -1,6 +1,7 @@
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
 import { MetaDataApiResponse } from '@/types/ApiResponse'
+import { FilterDefinition } from '@/types/ApplicationState'
 
 const fieldTypeToFilterType:any = {
   'STRING': 'string-filter',
@@ -10,6 +11,9 @@ const fieldTypeToFilterType:any = {
   'DECIMAL': 'string-filter',
   'BOOL': 'string-filter',
   'DATE': 'string-filter',
+  'datetime': 'string-filter',
+  'email': 'string-filter',
+  'hyperlink': 'string-filter',
   'CATEGORICAL': 'checkbox-filter'
 }
 
@@ -22,7 +26,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
     return fieldTypeToFilterType[item.fieldType]
   }).map(async (item) => {
     // BASE filter configuration
-    let filter:any = {
+    let filter:FilterDefinition = {
       name: item.name,
       label: item.label,
       type: fieldTypeToFilterType[item.fieldType],
