@@ -32,6 +32,12 @@ yarn run lint
 yarn run test:e2e
 ```
 
+### Debug your end-to-end tests 
+```
+yarn run serve --mode test
+```
+This runs the dev server with the e2e mock backend.
+
 ### Run your unit tests
 ```
 yarn run test:unit

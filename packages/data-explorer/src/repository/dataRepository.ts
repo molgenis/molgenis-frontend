@@ -3,60 +3,62 @@ import api from '@molgenis/molgenis-api-client'
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta, getRefsFromMeta } from './metaDataService'
 
-import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse, DataObject } from '@/types/ApiResponse'
-import { StringMap } from '@/types/GeneralTypes'
+import { MetaDataApiResponse } from '@/types/ApiResponse'
 import { EntityMetaRefs } from '@/types/ApplicationState'
+import { ResourceCollection } from '@/types/ResourceCollection'
+import { Resource } from '@/types/Resource'
+
+const getReferenceLabel = (itemKey: string, reference: Resource, metaDataRefs: EntityMetaRefs) => {
+  return reference.data ? reference.data[metaDataRefs[itemKey].labelAttribute] : ''
+}
+
+const getReferenceCollectionLabel = (itemKey: string, references: ResourceCollection, metaDataRefs: EntityMetaRefs) => {
+  return references.items
+    .map((mrefValue) => getReferenceLabel(itemKey, mrefValue, metaDataRefs))
+    .join(', ')
+}
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
-const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs): StringMap => {
-  if (!rowData.data) {
-    throw new Error('invalid input: row data must have data property')
+const levelOneRowMapper = (rowData: Resource, metaDataRefs: EntityMetaRefs) => {
+  if(!rowData.data) {
+    return
   }
-  const row: DataObject = rowData.data
+  const row = rowData.data
   return Object.keys(row).reduce((accum, key) => {
     const value = row[key]
-    const isReference = (key: string): boolean => Object.keys(metaDataRefs).includes(key)
     let resolvedValue
-    if (isReference(key)) {
-      // @ts-ignore
-      if (value.items) {
-        // The isMref already checks if the value.items is available
-        // @ts-ignore
-        resolvedValue = value.items.map((mrefValue) => mrefValue.data[metaDataRefs[key].labelAttribute]).join(', ')
-      } else {
-        // This is checked by isReference
-        // @ts-ignore
-        resolvedValue = value.data[metaDataRefs[key].labelAttribute]
-      }
+    if ((value as Resource).data) {
+      resolvedValue = getReferenceLabel(key, (value as Resource), metaDataRefs)
+    } else if ((value as ResourceCollection).items) {
+      resolvedValue = getReferenceCollectionLabel(key, (value as ResourceCollection), metaDataRefs) // (value as ResourceCollection).items.map((mrefValue) => mrefValue.data[metaDataRefs[key].labelAttribute]).join(', ')
     } else {
       resolvedValue = value
     }
+
     accum[key] = resolvedValue
     return accum
-  }, <StringMap>{})
+  }, <Record<string, string | number | boolean | object | null >>{})
 }
 
-const apiResponseMapper = (rowData: DataApiResponseItem) => {
-  if (rowData.data) {
-    const row: any = rowData.data
-    return Object.keys(row).reduce((accum: { [s: string]: string | object }, key) => {
-      // check if ref
-      if (typeof row[key] === 'object') {
-        // This is checked by the line above
-        // @ts-ignore
-        accum[key] = levelNRowMapper(row[key])
-      } else {
-        accum[key] = row[key]
-      }
-      return accum
-    }, {})
+const apiResponseMapper = (rowData: Resource) => {
+  if (!rowData.data) {
+    return
   }
+  const row: any = rowData.data
+  return Object.keys(row).reduce((accum: { [s: string]: string | object| undefined }, key) => {
+    // check if ref
+    if (typeof row[key] === 'object') {
+      accum[key] = levelNRowMapper(row[key])
+    } else {
+      accum[key] = row[key]
+    }
+    return accum
+  }, {})
 }
 
-const levelNRowMapper = (rowData: DataApiResponseItem) => {
-  // check if mref
-  if (rowData.items) {
-    const rows: DataApiResponseItem[] = rowData.items
+const levelNRowMapper = (rowData: ResourceCollection | Resource) => {
+  if ('items' in rowData) {
+    const rows = rowData.items
     return rows.map((rowData) => {
       return apiResponseMapper(rowData)
     })
@@ -72,7 +74,7 @@ const getTableDataDeepReference = async (tableId: string, metaData: MetaDataApiR
   const metaDataRefs = getRefsFromMeta(metaData)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, coloms, false)
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)
-  response.items = response.items.map((item: DataApiResponseItem) => levelNRowMapper(item))
+  response.items = response.items.map((item: Resource) => levelNRowMapper(item))
   return response
 }
 
@@ -84,7 +86,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaDataApiRespo
   const metaDataRefs = getRefsFromMeta(metaData)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, [...columnSet], false)
   const response = await api.get(`/api/data/${tableId}?${expandReferencesQuery}`)
-  response.items = response.items.map((item: DataApiResponseItem) => levelOneRowMapper(item, metaDataRefs))
+  response.items = response.items.map((item: Resource) => levelOneRowMapper(item, metaDataRefs))
   return response
 }
 

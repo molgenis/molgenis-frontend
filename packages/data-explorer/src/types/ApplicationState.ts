@@ -1,4 +1,5 @@
 import { DataApiResponse, MetaDataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
+import { ResourceCollection } from '@/types/ResourceCollection.ts'
 
 export type Toast = {
   type: 'danger' | 'success',
@@ -28,7 +29,7 @@ export default interface ApplicationState {
   tableName: string | null
   tableData: DataApiResponse | null
   tableMeta: MetaDataApiResponse | null
-  defaultEntityData: DataApiResponseItem[] | null,
+  defaultEntityData: ResourceCollection[] | null,
   entityMetaRefs: EntityMetaRefs,
   shoppedEntityItems: string[]
   hideFilters: boolean,
