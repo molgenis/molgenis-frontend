@@ -3,6 +3,8 @@ import api from '@molgenis/molgenis-api-client'
 import { MetaDataApiResponse } from '@/types/ApiResponse'
 import { FilterDefinition } from '@/types/ApplicationState'
 
+const MaxVisibleOptions = 10
+
 const fieldTypeToFilterType:any = {
   'STRING': 'string-filter',
   'TEXT': 'string-filter',
@@ -42,6 +44,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
     // CATEGORICAL
     if (item.fieldType === 'CATEGORICAL') {
       const href = item && item.refEntity && item.refEntity.href
+      filter.maxVisibleOptions = MaxVisibleOptions
       if (href) {
         filter.options = await getOptions(href)
       }
