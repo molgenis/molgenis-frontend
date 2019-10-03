@@ -2,26 +2,49 @@
 import api from '@molgenis/molgenis-api-client'
 import { MetaDataApiResponse } from '@/types/ApiResponse'
 
+const fieldTypeToFilterType:any = {
+  'STRING': 'string-filter',
+  'TEXT': 'string-filter',
+  'INT': 'string-filter',
+  'LONG': 'string-filter',
+  'DECIMAL': 'string-filter',
+  'BOOL': 'string-filter',
+  'DATE': 'string-filter',
+  'CATEGORICAL': 'checkbox-filter'
+}
+
 const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
   let shownFilters:string[] = []
+  let count = 0
 
-  // TODO: map all filters
-  const categoricals = await Promise.all(meta.attributes.filter(item => item.fieldType.includes('CATEGORICAL')).map(async (item) => {
-    const href = item && item.refEntity && item.refEntity.href
-
-    if (!href) return
-
-    const options = await getOptions(href)
-    shownFilters.push(item.name)
-
-    return {
+  const categoricals = await Promise.all(meta.attributes.filter(item => {
+    // Filter out undefined datatypes
+    return fieldTypeToFilterType[item.fieldType]
+  }).map(async (item) => {
+    // BASE filter configuration
+    let filter:any = {
       name: item.name,
       label: item.label,
-      type: 'checkbox-filter',
-      options: options,
+      type: fieldTypeToFilterType[item.fieldType],
       collapsable: true,
       collapsed: false
     }
+
+    // Only add first 10 filters for now
+    if (count < 10) shownFilters.push(item.name)
+    // Collapse the later 5
+    if (count > 5 && count <= 10) filter.collapsed = true
+
+    // CATEGORICAL
+    if (item.fieldType === 'CATEGORICAL'){
+      const href = item && item.refEntity && item.refEntity.href
+      if (href) {
+        filter.options = await getOptions(href)
+      }
+    }
+
+    count++
+    return filter
   }))
 
   return {
