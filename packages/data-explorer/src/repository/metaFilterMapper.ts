@@ -40,7 +40,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
     if (count > 5 && count <= 10) filter.collapsed = true
 
     // CATEGORICAL
-    if (item.fieldType === 'CATEGORICAL'){
+    if (item.fieldType === 'CATEGORICAL') {
       const href = item && item.refEntity && item.refEntity.href
       if (href) {
         filter.options = await getOptions(href)
