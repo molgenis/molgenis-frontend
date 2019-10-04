@@ -226,6 +226,7 @@ jest.mock('@/repository/dataRepository', () => {
 })
 
 let state: ApplicationState
+let getters: any
 
 describe('actions', () => {
   beforeEach(() => {
@@ -249,6 +250,10 @@ describe('actions', () => {
         collapseLimit: 5
       }
     }
+
+    getters = {
+      filterRsql: jest.fn()
+    }
   })
 
   describe('getTableSettings', () => {
@@ -269,7 +274,7 @@ describe('actions', () => {
       metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
-      await actions.fetchCardViewData({ commit, state })
+      await actions.fetchCardViewData({ commit, state, getters })
       expect(commit).toHaveBeenCalledWith('setMetaData', { attributes: [] })
       expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
     })
@@ -278,7 +283,7 @@ describe('actions', () => {
       const commit = jest.fn()
       state.tableName = null
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchCardViewData({ commit, state })).rejects.toEqual(new Error('cannot load table data for non string table id'))
+      expect(actions.fetchCardViewData({ commit, state, getters })).rejects.toEqual(new Error('cannot load table data for non string table id'))
     })
   })
 
@@ -288,8 +293,22 @@ describe('actions', () => {
       const commit = jest.fn()
       // @ts-ignore ts does not know its a mock
       metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
-      await actions.fetchRowDataLabels({ commit, state }, { rowId: 'rowId' })
+      await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
       expect(commit).toBeCalledWith('setMetaData', { meta: 'data' })
+    })
+  })
+
+  describe('fetch filtered data ', () => {
+    it('should addd the filter if its set', async () => {
+      state.tableName = 'tableName'
+      const commit = jest.fn()
+      const mockFilterGetter = jest.fn()
+      mockFilterGetter.mockReturnValue('q=a==b')
+      getters.filterRsql = mockFilterGetter
+      // @ts-ignore ts does not know its a mock
+      metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
+      await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
+      expect(dataRepository.getRowDataWithReferenceLabels).toHaveBeenCalledWith('tableName', 'rowId', { meta: 'data' }, getters.filterRsql)
     })
   })
 })
