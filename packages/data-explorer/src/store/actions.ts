@@ -5,7 +5,7 @@ import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
-import * as metaFilterMapper from '@/repository/metaFilterMapper'
+import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 export default {
   getTableSettings: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState },

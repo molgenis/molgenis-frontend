@@ -1,4 +1,4 @@
-import * as metaFilterMapper from '../../../src/repository/metaFilterMapper'
+import * as metaFilterMapper from '../../../src/mappers/metaFilterMapper'
 
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'

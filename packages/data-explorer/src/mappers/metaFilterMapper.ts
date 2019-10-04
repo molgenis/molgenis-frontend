@@ -1,12 +1,13 @@
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
 import { MetaDataApiResponse } from '@/types/ApiResponse'
+import { getCategoricals } from './utils'
 
 const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
   let shownFilters:string[] = []
 
   // TODO: map all filters
-  const categoricals = await Promise.all(meta.attributes.filter(item => item.fieldType.includes('CATEGORICAL')).map(async (item) => {
+  const categoricals = await Promise.all(getCategoricals(meta).map(async (item) => {
     const href = item && item.refEntity && item.refEntity.href
 
     if (!href) return

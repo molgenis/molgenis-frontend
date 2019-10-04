@@ -4,7 +4,8 @@
     <div>
       <div class="p-0 pl-3 d-flex justify-content-between align-items-center">
         <h2>
-          Filters
+          Filters2
+          {{ rsql | 'empty' }}
         </h2>
         <button
           type="button"
@@ -30,7 +31,7 @@
 
 <script>
 import Vue from 'vue'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -42,7 +43,8 @@ export default Vue.extend({
   name: 'FiltersView',
   components: { FilterContainer, FontAwesomeIcon },
   computed: {
-    ...mapState(['filters'])
+    ...mapState(['filters']),
+    ...mapGetters(['rsql'])
   },
   methods: {
     ...mapMutations([ 'setHideFilters', 'setFiltersShown' ]),

@@ -23,6 +23,10 @@ export type TableSetting = {
   isShop: boolean,
 }
 
+export type FilterSelections = {
+  [s: string]: string | string[]
+}
+
 export type FilterDefinition = {
   name: string,
   label: string,
@@ -50,6 +54,6 @@ export default interface ApplicationState {
     hideSidebar: boolean
     definition: FilterDefinition[]
     shown: string[]
-    selections: StringMap
+    selections: FilterSelections
   }
 }
