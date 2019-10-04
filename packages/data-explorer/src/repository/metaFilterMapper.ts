@@ -15,7 +15,10 @@ const fieldTypeToFilterType:any = {
   'DATE': 'string-filter',
   'EMAIL': 'string-filter',
   'HYPERLINK': 'string-filter',
-  'CATEGORICAL': 'checkbox-filter'
+  'CATEGORICAL': 'checkbox-filter',
+  'CATEGORICAL_MREF': 'checkbox-filter',
+  'XREF': 'checkbox-filter',
+  'MREF': 'checkbox-filter'
 }
 
 const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
