@@ -20,7 +20,6 @@ const fieldTypeToFilterType:any = {
 
 const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
   let shownFilters:string[] = []
-  let count = 0
 
   const categoricals = await Promise.all(meta.attributes.filter(item => {
     // Filter out undefined datatypes
@@ -35,11 +34,6 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
       collapsed: false
     }
 
-    // Only add first 10 filters for now
-    if (count < 10) shownFilters.push(item.name)
-    // Collapse the later 5
-    if (count > 5 && count <= 10) filter.collapsed = true
-
     // CATEGORICAL
     if (item.fieldType === 'CATEGORICAL') {
       const href = item && item.refEntity && item.refEntity.href
@@ -49,7 +43,6 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
       }
     }
 
-    count++
     return filter
   }))
 
@@ -61,7 +54,6 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
 
 const getOptions = async (href: string) => {
   const resp = await api.get(href)
-  console.log()
 
   return resp.items.map((item: any) => ({ value: item.id, text: item[resp.meta.labelAttribute] }))
 }
