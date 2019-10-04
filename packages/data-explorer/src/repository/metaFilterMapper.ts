@@ -13,9 +13,8 @@ const fieldTypeToFilterType:any = {
   'DECIMAL': 'string-filter',
   'BOOL': 'string-filter',
   'DATE': 'string-filter',
-  'datetime': 'string-filter',
-  'email': 'string-filter',
-  'hyperlink': 'string-filter',
+  'EMAIL': 'string-filter',
+  'HYPERLINK': 'string-filter',
   'CATEGORICAL': 'checkbox-filter'
 }
 
