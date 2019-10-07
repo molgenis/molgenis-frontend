@@ -332,17 +332,14 @@ describe('actions', () => {
     it('should addd the filter if its set', async () => {
       state.tableName = 'tableName'
       const commit = jest.fn()
-       // @ts-ignore ts does not know its a mock
+      // @ts-ignore ts does not know its a mock
       metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
-     
+
       await actions.fetchTableViewData({ commit, getters }, { tableName: 'entity' })
       expect(commit).toHaveBeenCalledWith('setMetaData', { attributes: [] })
       expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
-
-      
-   
     })
   })
 })

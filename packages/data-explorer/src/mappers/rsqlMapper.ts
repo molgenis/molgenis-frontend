@@ -10,12 +10,12 @@ import { FilterSelections } from '@/types/ApplicationState'
  * @example in query for a country filter
  * country=in=(NL,BE,DE)
  */
-export const createInQuery = (attributeName: string, selection: Value[]): Constraint => ({selector: attributeName, comparison: ComparisonOperator.In, arguments: selection})
+export const createInQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.In, arguments: selection })
 
 /**
- * 
+ *
  * Transform to RSQL
- * 
+ *
  * @example queries
  * q=country.id=in=(NL,BE)
  * q=materials.id=in=(RNA,DNA)
@@ -23,7 +23,6 @@ export const createInQuery = (attributeName: string, selection: Value[]): Constr
  * q=standards.id=in=(cen-ts-16835-1-2015,cen-ts-16827-1-2015)
  */
 export const createRSQLQuery = (selections: FilterSelections, metaData: MetaDataApiResponse): string | null => {
-  
   const categoricals: MetaDataAttribute[] = getCategoricals(metaData)
 
   console.log(selections)
@@ -33,9 +32,10 @@ export const createRSQLQuery = (selections: FilterSelections, metaData: MetaData
     .filter(name => selections.hasOwnProperty(name))
     .map(name => createInQuery(name, selections[name] as string[]))
 
-  if(operands === []) return null
+  if (operands === []) return null
 
   return transformToRSQL({
     operator: Operator.And,
     operands: operands
-})}
+  })
+}
