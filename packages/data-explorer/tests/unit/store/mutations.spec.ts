@@ -112,7 +112,7 @@ describe('mutations', () => {
     it('sets if the filters should be shown', () => {
       let baseAppState = Object.assign({}, state)
       mutations.setHideFilters(baseAppState, false)
-      expect(baseAppState.hideFilters).toEqual(false)
+      expect(baseAppState.filters.hideSidebar).toEqual(false)
     })
   })
 

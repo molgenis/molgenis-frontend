@@ -5,6 +5,7 @@ import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
+import * as metaFilterMapper from '@/repository/metaFilterMapper'
 
 export default {
   getTableSettings: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState },
@@ -16,44 +17,50 @@ export default {
       return id
     }
   }),
-  fetchCardViewData: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
+  fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
       throw new Error('cannot load table data for non string table id')
     }
 
     const metaData = await metaDataRepository.fetchMetaData(state.tableName)
     commit('setMetaData', metaData)
+    commit('setFilters', await metaFilterMapper.mapMetaToFilters(metaData))
 
     let columns: string[]
     let tableData
     const isCustomCard = state.dataDisplayLayout === 'CardView' && state.tableSettings.customCardCode
 
+    const rsqlQuery = getters.filterRsql
+
     if (isCustomCard) {
       columns = state.tableSettings.customCardAttrs.split(',').map(attribute => attribute.trim())
-      tableData = await dataRepository.getTableDataDeepReference(state.tableName, metaData, columns)
+      tableData = await dataRepository.getTableDataDeepReference(state.tableName, metaData, columns, rsqlQuery)
     } else {
       columns = metaDataService.getAttributesfromMeta(metaData).splice(0, state.tableSettings.collapseLimit)
-      tableData = await dataRepository.getTableDataWithLabel(state.tableName, metaData, columns)
+      tableData = await dataRepository.getTableDataWithLabel(state.tableName, metaData, columns, rsqlQuery)
     }
 
     commit('setTableData', tableData)
   },
-  fetchTableViewData: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: {tableName: string}) => {
+  fetchTableViewData: async ({ commit, getters }: { commit: any, getters: any }, payload: {tableName: string}) => {
     const tableName = payload.tableName
     const metaData = await metaDataRepository.fetchMetaData(tableName)
     commit('setMetaData', metaData)
 
-    const tableData = await dataRepository.getTableDataWithLabel(tableName, metaData, metaDataService.getAttributesfromMeta(metaData))
+    const rsqlQuery = getters.filterRsql
+
+    const tableData = await dataRepository.getTableDataWithLabel(tableName, metaData, metaDataService.getAttributesfromMeta(metaData), rsqlQuery)
     commit('setTableData', tableData)
   },
   // expanded default card
-  fetchRowDataLabels: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: {rowId: string}) => {
+  fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {rowId: string}) => {
     if (typeof state.tableName !== 'string') {
       throw new Error('cannot load table data for non string table id')
     }
     const metaData = await metaDataRepository.fetchMetaData(state.tableName)
     commit('setMetaData', metaData)
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, metaData)
+    const rsqlQuery = getters.filterRsql
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, metaData, rsqlQuery)
     commit('updateRowData', { rowId: payload.rowId, rowData })
   }
 }

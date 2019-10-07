@@ -2,6 +2,7 @@ import actions from '@/store/actions'
 import ApplicationState from '@/types/ApplicationState'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
+import * as metaDataService from '@/repository/metaDataService'
 
 const metaResponse = {
   meta: {
@@ -225,7 +226,15 @@ jest.mock('@/repository/dataRepository', () => {
   }
 })
 
+jest.mock('@/repository/metaDataService', () => {
+  return {
+    getRefsFromMeta: jest.fn(),
+    getAttributesfromMeta: jest.fn()
+  }
+})
+
 let state: ApplicationState
+let getters: any
 
 describe('actions', () => {
   beforeEach(() => {
@@ -237,7 +246,12 @@ describe('actions', () => {
       dataDisplayLayout: 'CardView',
       defaultEntityData: null,
       entityMetaRefs: {},
-      hideFilters: true,
+      filters: {
+        hideSidebar: false,
+        definition: [],
+        shown: [],
+        selections: {}
+      },
       showShoppingCart: false,
       shoppedEntityItems: [],
       tableSettings: {
@@ -248,6 +262,10 @@ describe('actions', () => {
         settingsTable: 'de_dataexplorer_table_settings',
         collapseLimit: 5
       }
+    }
+
+    getters = {
+      filterRsql: jest.fn()
     }
   })
 
@@ -266,10 +284,13 @@ describe('actions', () => {
       const commit = jest.fn()
       state.tableName = 'entity'
       // @ts-ignore ts does not know its a mock
+      metaDataService.getAttributesfromMeta.mockReturnValue([])
+
+      // @ts-ignore ts does not know its a mock
       metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
-      await actions.fetchCardViewData({ commit, state })
+      await actions.fetchCardViewData({ commit, state, getters })
       expect(commit).toHaveBeenCalledWith('setMetaData', { attributes: [] })
       expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
     })
@@ -278,7 +299,7 @@ describe('actions', () => {
       const commit = jest.fn()
       state.tableName = null
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchCardViewData({ commit, state })).rejects.toEqual(new Error('cannot load table data for non string table id'))
+      expect(actions.fetchCardViewData({ commit, state, getters })).rejects.toEqual(new Error('cannot load table data for non string table id'))
     })
   })
 
@@ -288,8 +309,40 @@ describe('actions', () => {
       const commit = jest.fn()
       // @ts-ignore ts does not know its a mock
       metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
-      await actions.fetchRowDataLabels({ commit, state }, { rowId: 'rowId' })
+      await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
       expect(commit).toBeCalledWith('setMetaData', { meta: 'data' })
+    })
+  })
+
+  describe('fetch filtered data ', () => {
+    it('should addd the filter if its set', async () => {
+      state.tableName = 'tableName'
+      const commit = jest.fn()
+      const mockFilterGetter = jest.fn()
+      mockFilterGetter.mockReturnValue('q=a==b')
+      getters.filterRsql = mockFilterGetter
+      // @ts-ignore ts does not know its a mock
+      metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
+      await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
+      expect(dataRepository.getRowDataWithReferenceLabels).toHaveBeenCalledWith('tableName', 'rowId', { meta: 'data' }, getters.filterRsql)
+    })
+  })
+
+  describe('fetch fetchTableViewData', () => {
+    it('should addd the filter if its set', async () => {
+      state.tableName = 'tableName'
+      const commit = jest.fn()
+       // @ts-ignore ts does not know its a mock
+      metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
+      // @ts-ignore ts does not know its a mock
+      dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
+     
+      await actions.fetchTableViewData({ commit, getters }, { tableName: 'entity' })
+      expect(commit).toHaveBeenCalledWith('setMetaData', { attributes: [] })
+      expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
+
+      
+   
     })
   })
 })

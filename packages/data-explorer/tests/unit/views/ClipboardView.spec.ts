@@ -9,6 +9,7 @@ describe('ClipboardView.vue', () => {
   let store: any
   let state: any
   let mutations: any
+  let actions: any
 
   beforeEach(() => {
     state = {
@@ -20,13 +21,18 @@ describe('ClipboardView.vue', () => {
           { tableID: '2' },
           { tableID: '3' }
         ]
-      }
+      },
+      tableName: 'tableID'
     }
     mutations = {
       setShowShoppingCart: jest.fn(),
       setHideFilters: jest.fn()
     }
-    store = new Vuex.Store({ state, mutations })
+
+    actions = {
+      fetchTableViewData: jest.fn()
+    }
+    store = new Vuex.Store({ state, mutations, actions })
   })
 
   it('exists', () => {
