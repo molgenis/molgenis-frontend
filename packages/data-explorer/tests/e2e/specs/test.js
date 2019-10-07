@@ -29,13 +29,11 @@ describe('Data explorer', () => {
 
   it('should display custom card', () => {
     cy.entity('TableWithCustomCard')
-    cy.get('div.jumbotron >> button').click()
     cy.contains('p', 'The custom card works')
   })
 
   it('lets you expand and collapse the default card in card layout', () => {
     cy.entity('TableWithMoreColumns')
-    cy.get('div.jumbotron >> button').click()
     cy.contains('.card-body', 'hematocrit')
     cy.get('.card-body .card-text').first().children('.row').should('have.length', 6)
     cy.get('.mg-card-expand').first().should('contain', 'Expand').click()
