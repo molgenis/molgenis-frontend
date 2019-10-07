@@ -25,7 +25,7 @@ describe('TableView.vue', () => {
       fetchTableViewData: jest.fn()
     }
     getters = {
-      filterRsql: jest.fn().mockReturnValue(null),
+      filterRsql: jest.fn().mockReturnValue(null)
     }
     store = new Vuex.Store({
       state, mutations, actions, getters
