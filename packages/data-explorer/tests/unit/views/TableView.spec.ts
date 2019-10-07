@@ -9,6 +9,7 @@ describe('TableView.vue', () => {
   let state: any
   let mutations: any
   let actions: any
+  let getters: any
 
   beforeEach(() => {
     state = {
@@ -23,8 +24,11 @@ describe('TableView.vue', () => {
     actions = {
       fetchTableViewData: jest.fn()
     }
+    getters = {
+      filterRsql: jest.fn().mockReturnValue(null),
+    }
     store = new Vuex.Store({
-      state, mutations, actions
+      state, mutations, actions, getters
     })
   })
 
