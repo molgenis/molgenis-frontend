@@ -1,5 +1,4 @@
-import { Operator, ComparisonOperator, Value, Constraint } from '@molgenis/molgenis-js-rsql/dist/types/types.d'
-import { transformToRSQL } from '@molgenis/molgenis-js-rsql'
+import { Operator, ComparisonOperator, Value, Constraint, transformToRSQL } from '@molgenis/rsql'
 import { MetaDataAttribute, MetaDataApiResponse } from '@/types/ApiResponse'
 import { getCategoricals } from './utils'
 import { FilterSelections } from '@/types/ApplicationState'
@@ -25,11 +24,9 @@ export const createInQuery = (attributeName: string, selection: Value[]): Constr
 export const createRSQLQuery = (selections: FilterSelections, metaData: MetaDataApiResponse): string | null => {
   const categoricals: MetaDataAttribute[] = getCategoricals(metaData)
 
-  console.log(selections)
-
   const operands: Constraint[] = categoricals
     .map(cat => cat.name)
-    .filter(name => selections.hasOwnProperty(name))
+    .filter(name => !!selections[name])
     .map(name => createInQuery(name, selections[name] as string[]))
 
   if (operands === []) return null

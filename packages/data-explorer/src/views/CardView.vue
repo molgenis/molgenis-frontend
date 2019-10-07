@@ -19,6 +19,7 @@
 
 <script>
 import ExplorerCard from '../components/DataView/ExplorerCard'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'CardView',
@@ -31,6 +32,7 @@ export default {
   components: { ExplorerCard },
   computed: {
     ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings', 'tableName']),
+    ...mapGetters(['filterRsql']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -56,8 +58,13 @@ export default {
       this.fetchRowDataLabels({ rowId: this.getEntityId(entity) })
     }
   },
-  mounted: function () {
-    this.fetchCardViewData()
+  watch: {
+    filterRsql: {
+      handler: function () {
+        this.fetchCardViewData()
+      },
+      immediate: true
+    }
   }
 }
 </script>

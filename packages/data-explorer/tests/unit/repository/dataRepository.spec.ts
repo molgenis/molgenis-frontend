@@ -25,14 +25,6 @@ describe('dataRepository', () => {
         label: 'my label row data'
       })
     })
-
-    it('should include the filter if set', async () => {
-      const tableId = 'books'
-      const rowId = '101'
-      api.get.mockResolvedValue(mockRowResponse)
-      await dataRepository.getRowDataWithReferenceLabels(tableId, rowId, meta, 'q=a!=b')
-      expect(api.get).toHaveBeenLastCalledWith('/api/data/books/101?expand=&filter=id,label&q=a!=b')
-    })
   })
 
   describe('getTableDataWithLabel', () => {

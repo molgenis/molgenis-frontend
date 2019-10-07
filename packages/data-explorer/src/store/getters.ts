@@ -1,6 +1,5 @@
 import ApplicationState from '@/types/ApplicationState'
 import { DataApiResponse } from '@/types/ApiResponse'
-import { transformToRSQL } from '@molgenis/molgenis-js-rsql'
 import { createRSQLQuery } from '@/mappers/rsqlMapper'
 
 export default {

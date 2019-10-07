@@ -4,8 +4,7 @@
     <div>
       <div class="p-0 pl-3 d-flex justify-content-between align-items-center">
         <h2>
-          Filters2
-          {{ rsql | 'empty' }}
+          Filters
         </h2>
         <button
           type="button"
@@ -43,8 +42,7 @@ export default Vue.extend({
   name: 'FiltersView',
   components: { FilterContainer, FontAwesomeIcon },
   computed: {
-    ...mapState(['filters']),
-    ...mapGetters(['rsql'])
+    ...mapState(['filters'])
   },
   methods: {
     ...mapMutations([ 'setHideFilters', 'setFiltersShown' ]),

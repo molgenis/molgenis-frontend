@@ -315,11 +315,11 @@ describe('actions', () => {
   })
 
   describe('fetch filtered data ', () => {
-    it('should addd the filter if its set', async () => {
+    it('should add the filter if it is set', async () => {
       state.tableName = 'tableName'
       const commit = jest.fn()
       const mockFilterGetter = jest.fn()
-      mockFilterGetter.mockReturnValue('q=a==b')
+      mockFilterGetter.mockReturnValue('a==b')
       getters.filterRsql = mockFilterGetter
       // @ts-ignore ts does not know its a mock
       metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
