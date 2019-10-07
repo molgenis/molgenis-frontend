@@ -23,7 +23,7 @@
 import Vue from 'vue'
 import ToolbarView from './ToolbarView'
 import SelectLayoutView from './SelectLayoutView'
-import TableSettingsButton from '../components/utils/TableSettingsButton'
+import TableSettingsButton from '../components/Utils/TableSettingsButton'
 import { mapState, mapActions } from 'vuex'
 import ClipboardView from './ClipboardView'
 

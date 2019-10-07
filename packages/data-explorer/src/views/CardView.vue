@@ -18,8 +18,7 @@
 </template>
 
 <script>
-import ExplorerCard from '../components/dataView/ExplorerCard'
-import { mapState, mapActions } from 'vuex'
+import ExplorerCard from '../components/DataView/ExplorerCard'
 
 export default {
   name: 'CardView',
