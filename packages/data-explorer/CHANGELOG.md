@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.12.0...@molgenis-experimental/data-explorer@0.12.1) (2019-10-07)
+
+
+### Bug Fixes
+
+* **data-explorer:** no history mode for router ([fb1a1f3](https://github.com/molgenis/molgenis-frontend/commit/fb1a1f3))
+
+
+
+
+
 # [0.12.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.11.0...@molgenis-experimental/data-explorer@0.12.0) (2019-10-07)
 
 
