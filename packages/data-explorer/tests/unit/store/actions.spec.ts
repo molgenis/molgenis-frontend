@@ -2,6 +2,7 @@ import actions from '@/store/actions'
 import ApplicationState from '@/types/ApplicationState'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
+import * as metaDataService from '@/repository/metaDataService'
 
 const metaResponse = {
   meta: {
@@ -225,6 +226,13 @@ jest.mock('@/repository/dataRepository', () => {
   }
 })
 
+jest.mock('@/repository/metaDataService', () => {
+  return {
+    getRefsFromMeta: jest.fn(),
+    getAttributesfromMeta: jest.fn()
+  }
+})
+
 let state: ApplicationState
 let getters: any
 
@@ -271,6 +279,9 @@ describe('actions', () => {
       const commit = jest.fn()
       state.tableName = 'entity'
       // @ts-ignore ts does not know its a mock
+      metaDataService.getAttributesfromMeta.mockReturnValue([])
+
+      // @ts-ignore ts does not know its a mock
       metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
@@ -309,6 +320,24 @@ describe('actions', () => {
       metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
       await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
       expect(dataRepository.getRowDataWithReferenceLabels).toHaveBeenCalledWith('tableName', 'rowId', { meta: 'data' }, getters.filterRsql)
+    })
+  })
+
+  describe('fetch fetchTableViewData', () => {
+    it('should addd the filter if its set', async () => {
+      state.tableName = 'tableName'
+      const commit = jest.fn()
+       // @ts-ignore ts does not know its a mock
+      metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
+      // @ts-ignore ts does not know its a mock
+      dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
+     
+      await actions.fetchTableViewData({ commit, getters }, { tableName: 'entity' })
+      expect(commit).toHaveBeenCalledWith('setMetaData', { attributes: [] })
+      expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
+
+      
+   
     })
   })
 })
