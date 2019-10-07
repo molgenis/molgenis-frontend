@@ -34,7 +34,7 @@ module.exports = {
   },
   'should display custom card': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + 'TableWithCustomCard')
+      .url(process.env.VUE_DEV_SERVER_URL + '#/TableWithCustomCard')
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
@@ -44,7 +44,7 @@ module.exports = {
   },
   'expand and collapse default card in card layout': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + 'TableWithMoreColumns')
+      .url(process.env.VUE_DEV_SERVER_URL + '#/TableWithMoreColumns')
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
@@ -57,7 +57,7 @@ module.exports = {
       .click('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand')
       .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
       .end()
-  },
+  }
   /*
   // Disabled until filters in the sidebar are working with the new life (api based) components
 
