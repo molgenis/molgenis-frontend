@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import TableRow from '../components/DataView/TableRow'
-import TableHeader from '../components/DataView/TableHeader'
+import TableRow from '../components/dataView/TableRow'
+import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag, faChevronLeft } from '@fortawesome/free-solid-svg-icons'

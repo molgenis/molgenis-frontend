@@ -31,7 +31,7 @@
 
 <script>
 import Vue from 'vue'
-import ShoppingButton from '../Utils/ShoppingButton'
+import ShoppingButton from '../utils/ShoppingButton'
 import DefaultCardContent from './DefaultCardContent'
 import CustomCardContent from './CustomCardContent'
 

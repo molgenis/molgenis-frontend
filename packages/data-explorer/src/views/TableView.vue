@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import TableRow from '../components/DataView/TableRow'
-import TableHeader from '../components/DataView/TableHeader'
+import TableRow from '../components/dataView/TableRow'
+import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
