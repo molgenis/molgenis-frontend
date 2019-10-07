@@ -4,14 +4,14 @@ const buildFilterQuery = (entityMetaRefs: EntityMetaRefs, attributes:string[], u
   const filterQuery = attributes.reduce((query: string, attribute: string) => {
     const metaRefs = useMetaRefs && entityMetaRefs[attribute] ? `(${entityMetaRefs[attribute].labelAttribute})` : ''
     return `${query},${attribute}${metaRefs}`
-  }, <string>'').replace(',', '')
+  }, '').replace(',', '')
   return filterQuery
 }
 
 const buildExpandQuery = (entityMetaRefs: EntityMetaRefs, attributes:string[]) => {
   const expandQuery = attributes.reduce((query: string, attribute: string) => {
     return entityMetaRefs[attribute] ? `${query},${attribute}` : `${query}`
-  }, <string>'').replace(',', '')
+  }, '').replace(',', '')
   return expandQuery
 }
 
