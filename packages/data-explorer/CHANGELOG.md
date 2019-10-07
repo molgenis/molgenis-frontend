@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.11.0...@molgenis-experimental/data-explorer@0.12.0) (2019-10-07)
+
+
+### Features
+
+* **data-explorer:** add rsql filter to data request if set ([#151](https://github.com/molgenis/molgenis-frontend/issues/151)) ([750c24d](https://github.com/molgenis/molgenis-frontend/commit/750c24d))
+
+
+
+
+
 # [0.11.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.6...@molgenis-experimental/data-explorer@0.11.0) (2019-10-02)
 
 
