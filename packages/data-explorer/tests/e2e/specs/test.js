@@ -57,7 +57,7 @@ module.exports = {
       .click('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand')
       .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
       .end()
-  },
+  }
   /*
   // Disabled until filters in the sidebar are working with the new life (api based) components
 

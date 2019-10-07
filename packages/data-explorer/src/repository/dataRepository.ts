@@ -20,7 +20,7 @@ const getReferenceCollectionLabel = (itemKey: string, references: ResourceCollec
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = (rowData: Resource, metaDataRefs: EntityMetaRefs) => {
-  if(!rowData.data) {
+  if (!rowData.data) {
     return
   }
   const row = rowData.data
