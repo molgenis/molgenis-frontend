@@ -1,94 +1,46 @@
-// For authoring Nightwatch tests, see
-// http://nightwatchjs.org/guide#usage
-const timeOutDelay = 5000
-const animationDelay = 300
+// https://docs.cypress.io/api/introduction/api.html
 
-module.exports = {
-  'show table layout and card layout': browser => {
-    browser
-      .url(process.env.VUE_DEV_SERVER_URL)
-      .waitForElementVisible('#app', timeOutDelay)
-      .click('.jumbotron .btn.btn-primary.btn-lg')
-      .pause(animationDelay)
-      .waitForElementVisible('.card-deck', timeOutDelay)
-      .click('.table-layout')
-      .waitForElementVisible('table.table', timeOutDelay)
-      .click('.card-layout')
-      .waitForElementVisible('.card-deck', timeOutDelay)
-      .end()
-  },
-  'add and remove items from shoppingcart': browser => {
-    browser
-      .url(process.env.VUE_DEV_SERVER_URL)
-      .waitForElementVisible('#app', timeOutDelay)
-      .click('.jumbotron .btn.btn-primary.btn-lg')
-      .pause(animationDelay)
-      .waitForElementVisible('.shopping-button', timeOutDelay)
-      .click('.shopping-button')
-      .click('.show-cart')
-      .waitForElementVisible('.cart-order', timeOutDelay)
-      .assert.elementNotPresent('.alert.alert-warning')
-      .click('.shopping-button')
-      .waitForElementVisible('.alert.alert-warning', timeOutDelay)
-      .end()
-  },
-  'should display custom card': browser => {
-    browser
-      .url(process.env.VUE_DEV_SERVER_URL + '#/TableWithCustomCard')
-      .waitForElementVisible('#app', timeOutDelay)
-      .click('.jumbotron .btn.btn-primary.btn-lg')
-      .pause(animationDelay)
-      .waitForElementVisible('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > p', timeOutDelay)
-      .assert.containsText('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > p', 'The custom card works')
-      .end()
-  },
-  'expand and collapse default card in card layout': browser => {
-    browser
-      .url(process.env.VUE_DEV_SERVER_URL + '#/TableWithMoreColumns')
-      .waitForElementVisible('#app', timeOutDelay)
-      .click('.jumbotron .btn.btn-primary.btn-lg')
-      .pause(animationDelay)
-      .assert.visible('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(5)')
-      .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
-      .waitForElementVisible('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand', timeOutDelay)
-      .click('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand')
-      .assert.visible('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
-      .waitForElementVisible('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand', timeOutDelay)
-      .click('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand')
-      .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
-      .end()
-  }
-  /*
-  // Disabled until filters in the sidebar are working with the new life (api based) components
+describe('Data explorer', () => {
+  it('Contains a cookie banner that you can click away', () => {
+    cy.visit('/')
+    cy.contains('div.jumbotron', 'Accept Cookies')
+    cy.get('div.jumbotron >> button').click()
+    cy.get('div.jumbotron').should('not.exist')
+  })
 
-  'open/close filters sidebar': browser => {
-    browser
-      .url(process.env.VUE_DEV_SERVER_URL)
-      .waitForElementVisible('#app', timeOutDelay)
-      .click('.jumbotron .btn.btn-primary.btn-lg')
-      .pause(animationDelay)
-      .waitForElementVisible('.btn.hide-filters', timeOutDelay)
-      .assert.elementNotPresent('show-filters-button')
-      .assert.cssClassNotPresent('.flex-mainview', 'hidefilters')
-      .click('.btn.hide-filters')
-      .assert.cssClassPresent('.flex-mainview', 'hidefilters')
-      .waitForElementVisible('.btn.show-filters-button', timeOutDelay)
-      .click('.btn.show-filters-button')
-      .assert.elementNotPresent('show-filters-button')
-      .assert.cssClassNotPresent('.flex-mainview', 'hidefilters')
-      .end()
-  },
-  'Add and remove filters': browser => {
-    browser
-      .url(process.env.VUE_DEV_SERVER_URL)
-      .waitForElementVisible('#app', timeOutDelay)
-      .click('.jumbotron .btn.btn-primary.btn-lg')
-      .pause(animationDelay)
-      .click('.remove-button')
-      .click('.add-button')
-      .assert.elementPresent('#modal-add-filter')
-      .click('.btn.btn-primary')
-      .end()
-  }
-  */
-}
+  it('shows cards and table', () => {
+    cy.entity()
+    cy.get('div.card-deck').should('exist')
+    cy.get('.table-layout').click()
+    cy.get('table.table').should('exist')
+    cy.get('.card-layout').click()
+    cy.get('div.card-deck').should('exist')
+  })
+
+  it('allows you to add and remove items from shopping cart', () => {
+    cy.entity()
+    cy.get('.shopping-button').eq(0).click()
+    cy.get('.show-cart').click()
+    cy.get('.cart-order').should('exist')
+    cy.get('.alert.alert-warning').should('not.exist')
+    cy.get('.shopping-button').click()
+    cy.get('.alert.alert-warning').should('exist')
+  })
+
+  it('should display custom card', () => {
+    cy.entity('TableWithCustomCard')
+    cy.get('div.jumbotron >> button').click()
+    cy.contains('p', 'The custom card works')
+  })
+
+  it('lets you expand and collapse the default card in card layout', () => {
+    cy.entity('TableWithMoreColumns')
+    cy.get('div.jumbotron >> button').click()
+    cy.contains('.card-body', 'hematocrit')
+    cy.get('.card-body .card-text').first().children('.row').should('have.length', 6)
+    cy.get('.mg-card-expand').first().should('contain', 'Expand').click()
+    cy.get('.card-body .card-text').first().children('.row').should('have.length', 9)
+    cy.get('.mg-card-expand').first().should('contain', 'Collapse').click()
+    cy.get('.card-body .card-text').first().children('.row').should('have.length', 6)
+  })
+})
