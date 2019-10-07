@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.12.1...@molgenis-experimental/data-explorer@0.12.2) (2019-10-07)
+
+**Note:** Version bump only for package @molgenis-experimental/data-explorer
+
+
+
+
+
+## [0.12.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.12.0...@molgenis-experimental/data-explorer@0.12.1) (2019-10-07)
+
+
+### Bug Fixes
+
+* **data-explorer:** no history mode for router ([fb1a1f3](https://github.com/molgenis/molgenis-frontend/commit/fb1a1f3))
+
+
+
+
+
+# [0.12.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.11.0...@molgenis-experimental/data-explorer@0.12.0) (2019-10-07)
+
+
+### Features
+
+* **data-explorer:** add rsql filter to data request if set ([#151](https://github.com/molgenis/molgenis-frontend/issues/151)) ([750c24d](https://github.com/molgenis/molgenis-frontend/commit/750c24d))
+
+
+
+
+
 # [0.11.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.10.6...@molgenis-experimental/data-explorer@0.11.0) (2019-10-02)
 
 
