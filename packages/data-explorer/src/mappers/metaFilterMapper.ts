@@ -7,7 +7,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
   let shownFilters:string[] = []
 
   // TODO: map all filters
-  const categoricals = await Promise.all(getCategoricals(meta).map(async (item) => {
+  const categoricals = await Promise.all(getCategoricals(meta.attributes).map(async (item) => {
     const href = item && item.refEntity && item.refEntity.href
 
     if (!href) return
@@ -33,8 +33,6 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
 
 const getOptions = async (href: string) => {
   const resp = await api.get(href)
-  console.log()
-
   return resp.items.map((item: any) => ({ value: item.id, text: item[resp.meta.labelAttribute] }))
 }
 

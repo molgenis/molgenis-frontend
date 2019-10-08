@@ -16,12 +16,9 @@ export const createInQuery = (attributeName: string, selection: Value[]): Constr
  * Transform to RSQL
  *
  * @example queries
- * q=country.id=in=(NL,BE)
- * q=materials.id=in=(RNA,DNA)
- * q=diagnosis_available.code=in=(C18,L40)
- * q=standards.id=in=(cen-ts-16835-1-2015,cen-ts-16827-1-2015)
+ * country=in=(NL,BE)
  */
-export const createRSQLQuery = (selections: FilterSelections, metaData: MetaDataApiResponse): string | null => {
+export const createRSQLQuery = (selections: FilterSelections, metaData: MetaDataAttribute[]): string | null => {
   const categoricals: MetaDataAttribute[] = getCategoricals(metaData)
 
   const operands: Constraint[] = categoricals
@@ -29,7 +26,7 @@ export const createRSQLQuery = (selections: FilterSelections, metaData: MetaData
     .filter(name => !!selections[name])
     .map(name => createInQuery(name, selections[name] as string[]))
 
-  if (operands === []) return null
+  if (operands.length === 0) return null
 
   return transformToRSQL({
     operator: Operator.And,
