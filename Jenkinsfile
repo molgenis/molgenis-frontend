@@ -46,7 +46,7 @@ pipeline {
                     sh "yarn lerna run unit"
                 }
                 container('cypress') {
-                    sh "yarn lerna run e2e --scope @molgenis-experimental/data-explorer"
+                    sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --headless"
                 }
                 container('node') {
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
@@ -132,7 +132,7 @@ pipeline {
                     sh "yarn lerna run unit"
                 }
                 container('cypress') {
-                    sh "yarn lerna run e2e --scope @molgenis-experimental/data-explorer"
+                    sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --headless"
                 }
                 container('node') {
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
