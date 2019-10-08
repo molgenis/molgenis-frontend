@@ -47,10 +47,9 @@ pipeline {
                 }
                 container('cypress') {
                     sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --headless"
+                    sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires"
                 }
                 container('node') {
-                    // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
                     sh "yarn lerna run build"
                 }
                 container('sonar') {
