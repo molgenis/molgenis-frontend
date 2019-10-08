@@ -29,7 +29,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
     return fieldTypeToFilterType[item.fieldType]
   }).map(async (item) => {
     // BASE filter configuration
-    let filter:FilterDefinition = {
+    let filter: FilterDefinition = {
       name: item.name,
       label: item.label,
       type: fieldTypeToFilterType[item.fieldType],
@@ -38,7 +38,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
     }
 
     // CATEGORICAL
-    if (item.fieldType === 'CATEGORICAL') {
+    if (item.fieldType.includes('CATEGORICAL')) {
       const href = item && item.refEntity && item.refEntity.href
       filter.maxVisibleOptions = MaxVisibleOptions
       if (href) {
@@ -58,7 +58,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
 const getOptions = async (href: string) => {
   const resp = await api.get(href)
 
-  return resp.items.map((item: any) => ({ value: item.id, text: item[resp.meta.labelAttribute] }))
+  return resp.items.map((item: any) => ({ value: item[resp.meta.idAttribute], text: item[resp.meta.labelAttribute] }))
 }
 
 export {

@@ -43,7 +43,7 @@ describe('metaFilterMapper', () => {
 
   describe('mapMetaToFilters', () => {
     it('create an empty filter definition from metadata', async () => {
-      const resp = await metaFilterMapper.mapMetaToFilters({ ...meta, attributes: meta.attributes.filter(it => it.fieldType === 'STRING') })
+      const resp = await metaFilterMapper.mapMetaToFilters({ ...meta, attributes: []})
       expect(resp).toEqual({ 'definition': [], 'shown': [] })
     })
     it('create an filter definition from metadata', async () => {
@@ -56,6 +56,7 @@ describe('metaFilterMapper', () => {
           collapsed: false,
           label: 'country',
           name: 'country',
+          maxVisibleOptions: 10,
           options: [
             {
               text: 'Germany',
@@ -73,6 +74,7 @@ describe('metaFilterMapper', () => {
           collapsed: false,
           label: 'age_groups',
           name: 'age_groups',
+          maxVisibleOptions: 10, 
           options: [
             {
               text: '1',
@@ -82,10 +84,7 @@ describe('metaFilterMapper', () => {
           type: 'checkbox-filter'
         }
       ],
-      shown: [
-        'country',
-        'age_groups'
-      ]
+      shown: []
       })
     })
   })

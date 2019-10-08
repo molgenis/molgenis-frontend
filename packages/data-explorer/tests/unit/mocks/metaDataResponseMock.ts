@@ -1,36 +1,6 @@
 export default {
   attributes: [
     {
-      href: '/api/v2/test/meta/id',
-      fieldType: 'INT',
-      name: 'id',
-      label: 'id',
-      attributes: [],
-      auto: false,
-      nillable: false,
-      readOnly: true,
-      labelAttribute: false,
-      unique: true,
-      visible: true,
-      lookupAttribute: true,
-      isAggregatable: false
-    },
-    {
-      href: '/api/v2/test/meta/label',
-      fieldType: 'STRING',
-      name: 'label',
-      label: 'label',
-      attributes: [],
-      auto: false,
-      nillable: false,
-      readOnly: true,
-      labelAttribute: true,
-      unique: true,
-      visible: true,
-      lookupAttribute: true,
-      isAggregatable: false
-    },
-    {
       href: '/api/v2/test/meta/country',
       fieldType: 'CATEGORICAL',
       name: 'country',
@@ -69,21 +39,6 @@ export default {
         labelAttribute: 'age_groups',
         href: '/api/v2/age_groups'
       }
-    },
-    {
-      href: '/api/v2/test/meta/name',
-      fieldType: 'STRING',
-      name: 'name',
-      label: 'name',
-      attributes: [],
-      auto: false,
-      nillable: false,
-      readOnly: true,
-      labelAttribute: false,
-      unique: true,
-      visible: true,
-      lookupAttribute: true,
-      isAggregatable: false
     }
   ],
   description: 'Beautiful description',
