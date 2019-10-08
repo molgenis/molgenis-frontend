@@ -37,6 +37,7 @@ export type MetaDataAttribute = {
   visible: boolean,
   lookupAttribute: boolean,
   isAggregatable: boolean,
+  range?: { max?:number, min?:number },
   refEntity?: { name: string, labelAttribute: string, href?: string }
 }
 

@@ -8,17 +8,14 @@ const MaxVisibleOptions = 10
 const fieldTypeToFilterType:any = {
   'STRING': 'string-filter',
   'TEXT': 'string-filter',
-  'INT': 'string-filter',
-  'LONG': 'string-filter',
-  'DECIMAL': 'string-filter',
-  'BOOL': 'string-filter',
-  'DATE': 'string-filter',
+  'INT': 'range-filter',
+  'LONG': 'range-filter',
+  'DECIMAL': 'range-filter',
+  'BOOL': 'checkbox-filter',
   'EMAIL': 'string-filter',
   'HYPERLINK': 'string-filter',
   'CATEGORICAL': 'checkbox-filter',
-  'CATEGORICAL_MREF': 'checkbox-filter',
-  'XREF': 'checkbox-filter',
-  'MREF': 'checkbox-filter'
+  'CATEGORICAL_MREF': 'checkbox-filter'
 }
 
 const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
@@ -28,6 +25,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
     // Filter out undefined datatypes
     return fieldTypeToFilterType[item.fieldType]
   }).map(async (item) => {
+    console.log(item)
     // BASE filter configuration
     let filter: FilterDefinition = {
       name: item.name,
@@ -46,6 +44,28 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
       }
     }
 
+    // BOOL
+    if (item.fieldType.includes('BOOL')) {
+      filter.options = [{ value: 'yes', text: 'Yes' }, { value: 'TRUE', text: 'FALSE' }]
+    }
+
+    // DECIMAL
+    if (item.fieldType.includes('DECIMAL')) {
+      filter.step = 0.1
+    }
+
+    // RANGE
+    if (filter.type === 'range-filter') {
+      if (item.range && item.range.max) {
+        filter.max = item.range.max
+      }
+      if (item.range && item.range.min) {
+        filter.min = item.range.min
+      }
+      if (item.range && item.range.max && item.range.min) {
+        filter.useSlider = true
+      }
+    }
     return filter
   }))
 

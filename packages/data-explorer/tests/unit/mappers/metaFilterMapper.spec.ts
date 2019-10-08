@@ -43,7 +43,7 @@ describe('metaFilterMapper', () => {
 
   describe('mapMetaToFilters', () => {
     it('create an empty filter definition from metadata', async () => {
-      const resp = await metaFilterMapper.mapMetaToFilters({ ...meta, attributes: []})
+      const resp = await metaFilterMapper.mapMetaToFilters({ ...meta, attributes: [] })
       expect(resp).toEqual({ 'definition': [], 'shown': [] })
     })
     it('create an filter definition from metadata', async () => {
@@ -74,7 +74,7 @@ describe('metaFilterMapper', () => {
           collapsed: false,
           label: 'age_groups',
           name: 'age_groups',
-          maxVisibleOptions: 10, 
+          maxVisibleOptions: 10,
           options: [
             {
               text: '1',

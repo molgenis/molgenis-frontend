@@ -34,10 +34,14 @@ export type FilterDefinition = {
   description?: string,
   placeholder?: string,
   bulkOperation?: boolean,
-  options?: [{ value: string, text: string }],
+  options?: { value: string, text: string }[],
   collapsable?: boolean,
   collapsed?: boolean,
-  maxVisibleOptions?: number
+  maxVisibleOptions?: number,
+  max?: number,
+  min?: number,
+  step?: number,
+  useSlider?: boolean
 }
 
 export default interface ApplicationState {
