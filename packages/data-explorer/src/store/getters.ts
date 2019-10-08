@@ -3,5 +3,5 @@ import { createRSQLQuery } from '@/mappers/rsqlMapper'
 
 export default {
   filterRsql: (state: ApplicationState): string | null =>
-    state.tableMeta && createRSQLQuery(state.filters.selections, state.tableMeta)
+    state.tableMeta && createRSQLQuery(state.filters.selections, state.tableMeta.attributes)
 }
