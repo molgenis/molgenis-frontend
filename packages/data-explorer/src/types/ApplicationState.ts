@@ -36,7 +36,8 @@ export type FilterDefinition = {
   bulkOperation?: boolean,
   options?: [{ value: string, text: string }],
   collapsable?: boolean,
-  collapsed?: boolean
+  collapsed?: boolean,
+  maxVisibleOptions?: number
 }
 
 export default interface ApplicationState {

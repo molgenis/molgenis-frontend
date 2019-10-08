@@ -1,29 +1,52 @@
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import { MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
-import { getCategoricals } from './utils'
+import { MetaDataApiResponse } from '@/types/ApiResponse'
 import { FilterDefinition } from '@/types/ApplicationState'
+
+const MaxVisibleOptions = 10
+
+const fieldTypeToFilterType:any = {
+  'STRING': 'string-filter',
+  'TEXT': 'string-filter',
+  'INT': 'string-filter',
+  'LONG': 'string-filter',
+  'DECIMAL': 'string-filter',
+  'BOOL': 'string-filter',
+  'DATE': 'string-filter',
+  'EMAIL': 'string-filter',
+  'HYPERLINK': 'string-filter',
+  'CATEGORICAL': 'checkbox-filter',
+  'CATEGORICAL_MREF': 'checkbox-filter',
+  'XREF': 'checkbox-filter',
+  'MREF': 'checkbox-filter'
+}
 
 const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
   let shownFilters:string[] = []
 
-  // TODO: map all filters
-  const categoricals = await Promise.all(getCategoricals(meta.attributes).map(async (item) => {
-    const href = item && item.refEntity && item.refEntity.href
-
-    if (!href) throw new Error('categorical without href')
-
-    const options = await getOptions(href)
-    shownFilters.push(item.name)
-
-    return {
+  const categoricals = await Promise.all(meta.attributes.filter(item => {
+    // Filter out undefined datatypes
+    return fieldTypeToFilterType[item.fieldType]
+  }).map(async (item) => {
+    // BASE filter configuration
+    let filter:FilterDefinition = {
       name: item.name,
       label: item.label,
-      type: 'checkbox-filter',
-      options: options,
+      type: fieldTypeToFilterType[item.fieldType],
       collapsable: true,
       collapsed: false
     }
+
+    // CATEGORICAL
+    if (item.fieldType === 'CATEGORICAL') {
+      const href = item && item.refEntity && item.refEntity.href
+      filter.maxVisibleOptions = MaxVisibleOptions
+      if (href) {
+        filter.options = await getOptions(href)
+      }
+    }
+
+    return filter
   }))
 
   return {
@@ -34,7 +57,8 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
 
 const getOptions = async (href: string) => {
   const resp = await api.get(href)
-  return resp.items.map((item: any) => ({ value: item[resp.meta.idAttribute], text: item[resp.meta.labelAttribute] }))
+
+  return resp.items.map((item: any) => ({ value: item.id, text: item[resp.meta.labelAttribute] }))
 }
 
 export {
