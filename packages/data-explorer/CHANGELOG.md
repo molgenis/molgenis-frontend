@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.12.2...@molgenis-experimental/data-explorer@0.13.0) (2019-10-08)
+
+
+### Bug Fixes
+
+* **data-explorer:** change meta to attributes in getters ([be6ec2f](https://github.com/molgenis/molgenis-frontend/commit/be6ec2f))
+
+
+### Features
+
+* **data-explorer:** retrieve filtered data ([9efab2b](https://github.com/molgenis/molgenis-frontend/commit/9efab2b))
+* **filters:** add rsql query based upon filters ([8f9d2c3](https://github.com/molgenis/molgenis-frontend/commit/8f9d2c3))
+
+
+
+
+
 ## [0.12.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.12.1...@molgenis-experimental/data-explorer@0.12.2) (2019-10-07)
 
 **Note:** Version bump only for package @molgenis-experimental/data-explorer
