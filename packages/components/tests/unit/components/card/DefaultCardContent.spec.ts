@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import DefaultCardContent from '@/components/dataView/DefaultCardContent.vue'
+import DefaultCardContent from '@/components/DefaultCardContent.vue'
 
 describe('DefaultCardContent.vue', () => {
   const propsData = {
