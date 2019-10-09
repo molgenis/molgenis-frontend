@@ -36,7 +36,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
     }
 
     // CATEGORICAL
-    if (item.fieldType.includes('CATEGORICAL')) {
+    if (item.fieldType.includes('CATEGORICAL') || item.fieldType.includes('CATEGORICAL_MREF')) {
       const href = item && item.refEntity && item.refEntity.href
       filter.maxVisibleOptions = MaxVisibleOptions
       if (href) {
@@ -46,7 +46,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
 
     // BOOL
     if (item.fieldType.includes('BOOL')) {
-      filter.options = [{ value: 'yes', text: 'Yes' }, { value: 'TRUE', text: 'FALSE' }]
+      filter.options = [{ value: 'TRUE', text: 'Yes' }, { value: 'False', text: 'No' }]
     }
 
     // DECIMAL
