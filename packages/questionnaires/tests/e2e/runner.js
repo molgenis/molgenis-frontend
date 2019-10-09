@@ -1,3 +1,5 @@
+var waitOn = require('wait-on')
+
 // 1. start the dev server using production config
 process.env.NODE_ENV = 'testing'
 
@@ -17,7 +19,13 @@ devConfigPromise.then(devConfig => {
   const host = devServerOptions.host
   return server.listen(port, host)
 }).then(() => {
-  // 2. run the nightwatch test suite against it
+  console.log('waiting for dev server...')
+}).then(() => waitOn({
+  resources: ['http-get://localhost:8080'],
+  timeout: 360000
+})).then(() => {
+  console.log('starting tests...')
+  // 2. run the e2e test suite against it
   // to run in additional browsers:
   //    1. add an entry in test/e2e/nightwatch.conf.js under "test_settings"
   //    2. add it to the --env flag below
