@@ -27,6 +27,13 @@ export type FilterSelections = {
   [s: string]: string | string[]
 }
 
+export type FilterOptionsPromise = Promise<FilterOption[]>
+
+export type FilterOption = {
+  value: string | number | boolean,
+  text?: string
+}
+
 export type FilterDefinition = {
   name: string,
   label: string,
@@ -34,7 +41,7 @@ export type FilterDefinition = {
   description?: string,
   placeholder?: string,
   bulkOperation?: boolean,
-  options?: { value: string, text: string }[],
+  options?: FilterOption[]
   collapsable?: boolean,
   collapsed?: boolean,
   maxVisibleOptions?: number,

@@ -38,7 +38,9 @@ describe('metaDataService', () => {
         readOnly: false,
         refEntity: {
           name: 'pkg_refTable',
-          labelAttribute: 'label'
+          idAttribute: 'label',
+          labelAttribute: 'label',
+          hrefCollection: '/api/v2/pkg_refTables'
         },
         fieldType: 'CATEGORICAL',
         unique: false,
@@ -56,7 +58,9 @@ describe('metaDataService', () => {
         readOnly: false,
         refEntity: {
           name: 'pkg_anotherRefTable',
-          labelAttribute: 'label'
+          idAttribute: 'label',
+          labelAttribute: 'label',
+          hrefCollection: '/api/v2/pkg_otherRefTables'
         },
         fieldType: 'CATEGORICAL_MREF',
         unique: false,

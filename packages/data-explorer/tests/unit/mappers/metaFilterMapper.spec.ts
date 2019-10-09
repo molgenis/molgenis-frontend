@@ -4,37 +4,15 @@ import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 import api from '@molgenis/molgenis-api-client'
 import meta from '../mocks/metaDataResponseMock'
 
-const ageGroupOptions = {
-  meta: {
-    idAttribute: 'age_group_id',
-    labelAttribute: 'age_group_label'
-  },
-  items: [{
-    age_group_id: 1,
-    age_group_label: '1'
-  }]
-}
-
-const countryOptions = {
-  meta: {
-    idAttribute: 'country_id',
-    labelAttribute: 'country_label'
-  },
-  items: [
-    {
-      country_id: 'DE',
-      country_label: 'Germany'
-    },
-    {
-      country_id: 'NL',
-      country_label: 'Netherlands'
-    }
-  ]
-}
-
 jest.mock('@molgenis/molgenis-api-client', () => ({
   get: jest.fn()
 }))
+
+const fetchOptionsFunction = () => {}
+
+// jest.mock('./utils/mapperUtils', () => ({
+//   fetchFieldOptions: jest.fn()
+// }))
 
 describe('metaFilterMapper', () => {
   beforeEach(() => {
@@ -47,8 +25,6 @@ describe('metaFilterMapper', () => {
       expect(resp).toEqual({ 'definition': [], 'shown': [] })
     })
     it('create an filter definition from metadata', async () => {
-      api.get.mockReturnValueOnce(countryOptions)
-      api.get.mockReturnValueOnce(ageGroupOptions)
       const resp = await metaFilterMapper.mapMetaToFilters(meta)
       expect(resp).toEqual({ definition: [
         {
@@ -57,16 +33,7 @@ describe('metaFilterMapper', () => {
           label: 'country',
           name: 'country',
           maxVisibleOptions: 10,
-          options: [
-            {
-              text: 'Germany',
-              value: 'DE'
-            },
-            {
-              text: 'Netherlands',
-              value: 'NL'
-            }
-          ],
+          options: fetchOptionsFunction,
           type: 'checkbox-filter'
         },
         {
@@ -75,12 +42,7 @@ describe('metaFilterMapper', () => {
           label: 'age_groups',
           name: 'age_groups',
           maxVisibleOptions: 10,
-          options: [
-            {
-              text: '1',
-              value: 1
-            }
-          ],
+          options: fetchOptionsFunction,
           type: 'checkbox-filter'
         }
       ],

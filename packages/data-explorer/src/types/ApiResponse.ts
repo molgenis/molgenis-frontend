@@ -23,6 +23,19 @@ export type DataApiResponse = {
   page: DataApiResponsePage
 }
 
+export type MetaDataRefEntity = {
+  name: string,
+  idAttribute: string,
+  labelAttribute: string,
+  hrefCollection: string,
+  href?: string
+}
+
+export type MetaDataCategoricalOption = {
+  label: string,
+  id: string
+}
+
 export type MetaDataAttribute = {
   href: string,
   fieldType: string,
@@ -37,8 +50,10 @@ export type MetaDataAttribute = {
   visible: boolean,
   lookupAttribute: boolean,
   isAggregatable: boolean,
+  categoricalOptions?: MetaDataCategoricalOption[],
+  enumOptions?: [],
   range?: { max?:number, min?:number },
-  refEntity?: { name: string, labelAttribute: string, href?: string }
+  refEntity?: MetaDataRefEntity
 }
 
 export type MetaDataApiResponse = {
