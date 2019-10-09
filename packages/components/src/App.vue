@@ -14,7 +14,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import MyComponent from './components/MyComponent.vue'
-import DefaultCardContent from './components/DefaultCardContent.vue'
+import DefaultCardContent from './components/card/DefaultCardContent.vue'
 
 export default Vue.extend({
   name: 'app',

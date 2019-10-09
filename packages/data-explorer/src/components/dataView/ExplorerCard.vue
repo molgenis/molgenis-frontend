@@ -32,7 +32,7 @@
 <script>
 import Vue from 'vue'
 import ShoppingButton from '../utils/ShoppingButton'
-import DefaultCardContent from '../../../../components/src/components/DefaultCardContent.vue'
+import DefaultCardContent from '../../../../components/src/components/card/DefaultCardContent.vue'
 import CustomCardContent from './CustomCardContent'
 
 export default Vue.extend({

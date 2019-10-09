@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import DefaultCardContent from '@/components/DefaultCardContent.vue'
+import DefaultCardContent from '@/components/card/DefaultCardContent.vue'
 
 describe('DefaultCardContent.vue', () => {
   const propsData = {
@@ -51,5 +51,14 @@ describe('DefaultCardContent.vue', () => {
     const button = wrapper.find('button.mg-info-btn')
     button.trigger('click')
     expect(window.location.assign).toBeCalledWith('/menu/main/dataexplorer/details/myTable/dataId')
+  })
+
+  describe('when the card is closed', () => {
+  
+    const wrapper = shallowMount(DefaultCardContent, { propsData })
+    wrapper.vm.$data.cardState = 'open'
+    it('do something', () => {
+      expect(wrapper.exists()).toBeTruthy()
+    })
   })
 })

@@ -60,9 +60,6 @@ export default {
     }
   },
   computed: {
-    expandBtnText () {
-      return this.cardState === 'closed' ? 'Expand' : 'Collapse'
-    },
     dataToShow () {
       if (this.cardState === 'closed') {
         const elementsToShow = Object.keys(this.dataContents).slice(0, this.collapseLimit)
