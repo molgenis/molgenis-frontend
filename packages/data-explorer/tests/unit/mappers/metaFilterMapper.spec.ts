@@ -8,12 +8,6 @@ jest.mock('@molgenis/molgenis-api-client', () => ({
   get: jest.fn()
 }))
 
-const fetchOptionsFunction = () => {}
-
-// jest.mock('./utils/mapperUtils', () => ({
-//   fetchFieldOptions: jest.fn()
-// }))
-
 describe('metaFilterMapper', () => {
   beforeEach(() => {
     api.get.mockReset()
@@ -26,28 +20,7 @@ describe('metaFilterMapper', () => {
     })
     it('create an filter definition from metadata', async () => {
       const resp = await metaFilterMapper.mapMetaToFilters(meta)
-      expect(resp).toEqual({ definition: [
-        {
-          collapsable: true,
-          collapsed: false,
-          label: 'country',
-          name: 'country',
-          maxVisibleOptions: 10,
-          options: fetchOptionsFunction,
-          type: 'checkbox-filter'
-        },
-        {
-          collapsable: true,
-          collapsed: false,
-          label: 'age_groups',
-          name: 'age_groups',
-          maxVisibleOptions: 10,
-          options: fetchOptionsFunction,
-          type: 'checkbox-filter'
-        }
-      ],
-      shown: []
-      })
+      expect(JSON.stringify(resp)).toEqual('{"definition":[{"name":"country","label":"country","type":"checkbox-filter","collapsable":true,"collapsed":false,"maxVisibleOptions":10},{"name":"age_groups","label":"age_groups","type":"checkbox-filter","collapsable":true,"collapsed":false,"maxVisibleOptions":10}],"shown":[]}')
     })
   })
 })
