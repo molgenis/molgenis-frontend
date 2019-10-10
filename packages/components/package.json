@@ -5,7 +5,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name components ./src/components/index.ts",
