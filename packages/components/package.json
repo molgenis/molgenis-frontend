@@ -1,6 +1,10 @@
 {
   "name": "@molgenis-ui/components",
   "version": "0.1.0",
+  "license": "LGPL-3.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,6 +12,10 @@
     "lint": "vue-cli-service lint",
     "unit": "vue-cli-service test:unit"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "dependencies": {
     "core-js": "^2.6.5",
     "vue": "^2.6.10"
