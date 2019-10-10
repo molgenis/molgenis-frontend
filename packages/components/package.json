@@ -1,18 +1,27 @@
 {
   "name": "@molgenis-ui/components",
   "version": "0.1.0",
-  "private": true,
+  "license": "LGPL-3.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name components ./src/components/index.js",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "unit": "vue-cli-service test:unit"
   },
+  "main": "./dist/components.common.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.25",
-    "@fortawesome/free-solid-svg-icons": "^5.11.2",
-    "@fortawesome/vue-fontawesome": "^0.1.7",
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/vue-fontawesome": "^0.1.6",
     "core-js": "^2.6.5",
+    "v-runtime-template": "^1.10.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {

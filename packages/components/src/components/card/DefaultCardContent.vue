@@ -15,8 +15,11 @@
       <div class="row">
         <div class="col mt-2">
           <button v-if="numberOfAttributes > collapseLimit" class="btn btn-outline-info btn-sm mr-1 mg-card-expand" @click="handleExpandBtnClicked">
-            </button>
+            <font-awesome-icon icon="chevron-up" v-if="cardState==='open'"></font-awesome-icon>
+            <font-awesome-icon icon="chevron-right" v-if="cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
+          </button>
           <button class="btn btn-outline-info btn-sm mg-info-btn" @click="goToDetails">
+            <font-awesome-icon icon="search"></font-awesome-icon> Info
           </button>
         </div>
       </div>
@@ -25,9 +28,14 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSearch, faChevronUp, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+library.add(faSearch, faChevronRight, faChevronUp)
 
-export default {
+export default Vue.extend({
   name: 'DefaultCardContent',
   data: () => {
     return {
@@ -60,6 +68,7 @@ export default {
       default: () => 5
     }
   },
+  components: { FontAwesomeIcon },
   computed: {
     expandBtnText () {
       return this.cardState === 'closed' ? 'Expand' : 'Collapse'
@@ -92,7 +101,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style scoped>
