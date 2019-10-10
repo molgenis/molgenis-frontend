@@ -123,6 +123,8 @@ const generateUri = (
   return uri
 }
 
+export const getCategoricals = (attributes: MetaDataAttribute[]): MetaDataAttribute[] => attributes.filter(item => item.fieldType.includes('CATEGORICAL'))
+
 export {
   getFieldOptions
 }

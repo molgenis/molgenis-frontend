@@ -2,7 +2,7 @@
 import api from '@molgenis/molgenis-api-client'
 import { MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
 import { FilterDefinition } from '@/types/ApplicationState'
-import { getFieldOptions } from '@/utils/mapperUtils'
+import { getFieldOptions } from '@/mappers/mapperUtils'
 
 const MaxVisibleOptions = 10
 

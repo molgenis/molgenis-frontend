@@ -1,4 +1,4 @@
-import { getCategoricals } from '@/mappers/utils'
+import { getCategoricals } from '@/mappers/mapperUtils'
 import meta from '../mocks/metaDataResponseMock'
 import { MetaDataAttribute } from '@/types/ApiResponse'
 
