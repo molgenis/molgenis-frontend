@@ -1,5 +1,5 @@
 import { Operator, ComparisonOperator, Value, Constraint, transformToRSQL } from '@molgenis/rsql'
-import { MetaDataAttribute, MetaDataApiResponse } from '@/types/ApiResponse'
+import { MetaDataAttribute } from '@/types/ApiResponse'
 import { getCategoricals } from './utils'
 import { FilterSelections } from '@/types/ApplicationState'
 

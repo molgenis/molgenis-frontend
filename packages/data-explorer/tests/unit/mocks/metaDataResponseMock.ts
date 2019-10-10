@@ -21,8 +21,32 @@ export default {
         hrefCollection: '/api/v2/countries',
         href: '/api/v2/countries'
       }
-    },
-    {
+    }, {
+      href: '/api/v2/test/meta/test',
+      fieldType: 'INT',
+      name: 'test',
+      label: 'test',
+      attributes: [],
+      auto: false,
+      nillable: false,
+      readOnly: true,
+      labelAttribute: false,
+      unique: true,
+      visible: true,
+      lookupAttribute: true,
+      isAggregatable: false,
+      range: {
+        min: -10,
+        max: 10
+      },
+      refEntity: {
+        name: 'test',
+        idAttribute: 'test',
+        labelAttribute: 'test',
+        hrefCollection: '/api/v2/test',
+        href: '/api/v2/test'
+      }
+    }, {
       href: '/api/v2/test/meta/age_groups',
       fieldType: 'CATEGORICAL_MREF',
       name: 'age_groups',

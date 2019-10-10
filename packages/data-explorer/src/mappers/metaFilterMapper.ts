@@ -16,7 +16,11 @@ const fieldTypeToFilterType:any = {
   'EMAIL': 'string-filter',
   'HYPERLINK': 'string-filter',
   'CATEGORICAL': 'checkbox-filter',
-  'CATEGORICAL_MREF': 'checkbox-filter'
+  'CATEGORICAL_MREF': 'checkbox-filter',
+  'MREF': 'checkbox-filter',
+  'XREF': 'checkbox-filter',
+  'ONE_TO_MANY': 'checkbox-filter',
+  'ENUM': 'checkbox-filter'
 }
 
 const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
@@ -26,7 +30,9 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
     // Filter out undefined datatypes
     return fieldTypeToFilterType[item.fieldType]
   }).map(async (item) => {
+    // Handle all filters that have options
     const options = getFieldOptions(item)
+
     // BASE filter configuration
     let filterDefinition: FilterDefinition = {
       name: item.name,
@@ -42,17 +48,21 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
     }
 
     // RANGE
-    if (filterDefinition.type === 'range-filter') {
-      if (item.range && item.range.max) {
+    if (filterDefinition.type === 'range-filter' && 'range' in item) {
+      // @ts-ignore
+      if ('max' in item.range) {
         filterDefinition.max = item.range.max
       }
-      if (item.range && item.range.min) {
+      // @ts-ignore
+      if ('min' in item.range) {
         filterDefinition.min = item.range.min
       }
-      if (item.range && item.range.max && item.range.min) {
+      // @ts-ignore
+      if ('max' in item.range && 'min' in item.range) {
         filterDefinition.useSlider = true
       }
     }
+
     return options ? { ...filterDefinition, options, maxVisibleOptions: MaxVisibleOptions } : filterDefinition
   }))
 
