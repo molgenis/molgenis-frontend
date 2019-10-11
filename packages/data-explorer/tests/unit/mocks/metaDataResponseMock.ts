@@ -16,8 +16,8 @@ export default {
       isAggregatable: false,
       refEntity: {
         name: 'countries',
-        idAttribute: 'countries',
-        labelAttribute: 'countries',
+        idAttribute: 'id',
+        labelAttribute: 'label',
         hrefCollection: '/api/v2/countries',
         href: '/api/v2/countries'
       }
@@ -41,8 +41,8 @@ export default {
       },
       refEntity: {
         name: 'test',
-        idAttribute: 'test',
-        labelAttribute: 'test',
+        idAttribute: 'id',
+        labelAttribute: 'label',
         hrefCollection: '/api/v2/test',
         href: '/api/v2/test'
       }
@@ -62,8 +62,8 @@ export default {
       isAggregatable: false,
       refEntity: {
         name: 'age_groups',
-        idAttribute: 'age_groups',
-        labelAttribute: 'age_groups',
+        idAttribute: 'id',
+        labelAttribute: 'label',
         hrefCollection: '/api/v2/age_groups',
         href: '/api/v2/age_groups'
       }

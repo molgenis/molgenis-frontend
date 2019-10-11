@@ -108,7 +108,7 @@ const fetchFieldOptions = (refEntity: MetaDataRefEntity | undefined, search?: st
 }
 
 const generateUri = (
-  uri: string, idAttribute: string, labelAttribute: string, search?: string | Array<string>) => {
+  uri: string, idAttribute: string, labelAttribute: string, search?: string | Array<string> | null) => {
   if (search) {
     if (Array.isArray(search) && search.length > 0) {
       // Join array into a string
@@ -123,8 +123,8 @@ const generateUri = (
   return uri
 }
 
-export const getCategoricals = (attributes: MetaDataAttribute[]): MetaDataAttribute[] => attributes.filter(item => item.fieldType.includes('CATEGORICAL'))
+const getCategoricals = (attributes: MetaDataAttribute[]): MetaDataAttribute[] => attributes.filter(item => item.fieldType.includes('CATEGORICAL'))
 
 export {
-  getFieldOptions
+  getFieldOptions, generateUri, getCategoricals
 }
