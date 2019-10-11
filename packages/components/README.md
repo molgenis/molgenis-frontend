@@ -1,5 +1,15 @@
 # components
 
+## Usage
+Add module using 
+```
+yarn add @molgenis-ui/components
+```
+Then in your vue app 
+```
+import { [MyComponent] } from '@molgenis-ui/components'
+```
+
 ## Project setup
 ```
 yarn install
