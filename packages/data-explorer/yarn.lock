@@ -759,7 +759,7 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@molgenis-ui/components@^0.3.0":
+"@molgenis-ui/components@0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@molgenis-ui/components/-/components-0.3.0.tgz#83fef3befa38fb687094f14c9def7471de8537d6"
   integrity sha512-j5GwCYL19bqnpOmPehWSQq6ujbsQ0AIqICQ4JYb/vjt4DxnrSM/LVA9CVyQPBb8ojoulpoJPC2JF5pI6nP54rQ==
