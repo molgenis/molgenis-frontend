@@ -759,10 +759,10 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@molgenis-ui/components@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@molgenis-ui/components/-/components-0.2.1.tgz#b6735e18046f28e25afadef3dd2424782d48e0fc"
-  integrity sha512-LJSEKH61zVeQ7UM7PihlHoW9f7xE1qxBvujDvfaAxsqiONDrlown29j8hBZtkzMfTfllOiA0a+H7gWfpNpa9xQ==
+"@molgenis-ui/components@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@molgenis-ui/components/-/components-0.3.0.tgz#83fef3befa38fb687094f14c9def7471de8537d6"
+  integrity sha512-j5GwCYL19bqnpOmPehWSQq6ujbsQ0AIqICQ4JYb/vjt4DxnrSM/LVA9CVyQPBb8ojoulpoJPC2JF5pI6nP54rQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.25"
     "@fortawesome/free-solid-svg-icons" "^5.11.2"
