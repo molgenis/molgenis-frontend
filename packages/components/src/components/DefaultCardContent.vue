@@ -28,12 +28,14 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch, faChevronUp, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faSearch, faChevronRight, faChevronUp)
-export default {
+
+export default Vue.extend({
   name: 'DefaultCardContent',
   data: () => {
     return {
@@ -99,7 +101,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style scoped>
