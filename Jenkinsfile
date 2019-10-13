@@ -42,9 +42,6 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn install"
-                    sh "yarn cache dir"
-                    sh "yarn cache list"
-                    sh "yarn cache clean"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
@@ -128,9 +125,6 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn install"
-                    sh "yarn cache dir"
-                    sh "yarn cache list"
-                    sh "yarn cache clean"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
