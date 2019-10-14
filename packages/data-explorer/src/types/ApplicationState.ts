@@ -21,6 +21,7 @@ export type TableSetting = {
   settingsRowId: string | null,
   collapseLimit: number,
   isShop: boolean,
+  defaultFilters: string []
 }
 
 export type FilterSelections = {

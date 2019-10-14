@@ -16,7 +16,8 @@ const state: ApplicationState = {
     collapseLimit: 5,
     customCardCode: null,
     customCardAttrs: '',
-    isShop: false
+    isShop: false,
+    defaultFilters: []
   },
   filters: {
     hideSidebar: false,

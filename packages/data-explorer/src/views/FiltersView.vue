@@ -47,6 +47,8 @@ export default Vue.extend({
   methods: {
     ...mapMutations([ 'setHideFilters', 'setFiltersShown' ]),
     updateState (newState) {
+      console.log('updateState setFiltersShown')
+      console.log(newState)
       this.setFiltersShown(newState)
     }
   }
