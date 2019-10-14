@@ -1,24 +1,29 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import ShoppingButton from '@/components/utils/TableSettingsButton.vue'
+import TableSettingsButton from '@/components/utils/TableSettingsButton.vue'
 import Vuex from 'vuex'
 
 describe('TableSettingsButton.vue', () => {
-  const localVue = createLocalVue()
-  localVue.use(Vuex)
-  let store: any
-  let mutations: any
+  describe('when row settings row has previously been created', () => {
+    let wrapper:any
 
-  beforeEach(() => {
-    mutations = {
-      // Add mutations here
-    }
-    store = new Vuex.Store({
-      // Add relevant store items
+    beforeEach(() => {
+      wrapper = shallowMount(TableSettingsButton, { propsData: { selectedTable: 'test' } })
+    })
+
+    it('the button should link to datarow plugin in add mode', () => {
+      expect(wrapper.attributes('href')).toBe('/plugin/data-row-edit/test')
     })
   })
 
-  it('loads button', () => {
-    const wrapper = shallowMount(ShoppingButton, { store, localVue, propsData: { selectedTable: 'test', selectedRowId: 'testRow' } })
-    expect(wrapper.classes()).toContain('btn-light')
+  describe('when there already is a settings row.vue', () => {
+    let wrapper:any
+
+    beforeEach(() => {
+      wrapper = shallowMount(TableSettingsButton, { propsData: { selectedTable: 'test', selectedRowId: 'testRow' } })
+    })
+
+    it('the button should link to datarow plugin in edit mode', () => {
+      expect(wrapper.attributes('href')).toBe('/plugin/data-row-edit/test/testRow')
+    })
   })
 })
