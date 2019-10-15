@@ -77,6 +77,7 @@ export default {
       visible: true,
       lookupAttribute: true,
       isAggregatable: false,
+      enumOptions: ['chair', 'table'],
       refEntity: {
         name: 'age_groups',
         idAttribute: 'id',

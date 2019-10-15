@@ -51,9 +51,9 @@ export type MetaDataAttribute = {
   lookupAttribute: boolean,
   isAggregatable: boolean,
   categoricalOptions?: MetaDataCategoricalOption[],
-  enumOptions?: [],
   range?: { max?:number, min?:number },
-  refEntity?: MetaDataRefEntity
+  refEntity?: MetaDataRefEntity,
+  enumOptions?: string[]
 }
 
 export type MetaDataApiResponse = {
