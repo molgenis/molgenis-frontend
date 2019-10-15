@@ -1,5 +1,6 @@
 import { getCategoricals, generateUri, getFieldOptions } from '@/mappers/mapperUtils'
 import meta from '../mocks/metaDataResponseMock'
+import metatypes from '../mocks/metaDataTypesResponseMock'
 import { MetaDataAttribute } from '@/types/ApiResponse'
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
@@ -55,12 +56,48 @@ describe('uriGenerator', () => {
 describe('getFieldOptions', () => {
   it('-',
     (done) => {
-      const option = getFieldOptions(meta.attributes[0])
-      if (option) {
-        option().then((response:any) => {
-          expect(response).toEqual([ { value: 'f', text: 'Female' }, { value: 'm', text: 'Male' } ])
-          done()
-        })
+      // Canonical
+      {
+        const option = getFieldOptions(metatypes.attributes[0])
+        if (option) {
+          option().then((response: any) => {
+            expect(response).toEqual([{ value: 'f', text: 'Female' }, { value: 'm', text: 'Male' }])
+            done()
+          })
+        }
+      }
+
+      // Bool
+      {
+        const option = getFieldOptions(metatypes.attributes[1])
+        if (option) {
+          option().then((response: any) => {
+            expect(response).toEqual([{ text: 'Yes', value: true }, { text: 'No', value: false }])
+            done()
+          })
+        }
+      }
+
+      // MREF
+      {
+        const option = getFieldOptions(metatypes.attributes[2])
+        if (option) {
+          option().then((response: any) => {
+            expect(response).toEqual([{ value: 'f', text: 'Female' }, { value: 'm', text: 'Male' }])
+            done()
+          })
+        }
+      }
+
+      // Enum
+      {
+        const option = getFieldOptions(metatypes.attributes[3])
+        if (option) {
+          option().then((response: any) => {
+            expect(response).toEqual([{ value: 'f', text: 'Female' }, { value: 'm', text: 'Male' }])
+            done()
+          })
+        }
       }
     })
 })

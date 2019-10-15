@@ -23,7 +23,7 @@ export default {
       }
     }, {
       href: '/api/v2/test/meta/test',
-      fieldType: 'INT',
+      fieldType: 'BOOL',
       name: 'test',
       label: 'test',
       attributes: [],
@@ -35,10 +35,6 @@ export default {
       visible: true,
       lookupAttribute: true,
       isAggregatable: false,
-      range: {
-        min: -10,
-        max: 10
-      },
       refEntity: {
         name: 'test',
         idAttribute: 'id',
@@ -48,7 +44,28 @@ export default {
       }
     }, {
       href: '/api/v2/test/meta/age_groups',
-      fieldType: 'CATEGORICAL_MREF',
+      fieldType: 'MREF',
+      name: 'age_groups',
+      label: 'age_groups',
+      attributes: [],
+      auto: false,
+      nillable: false,
+      readOnly: true,
+      labelAttribute: false,
+      unique: true,
+      visible: true,
+      lookupAttribute: true,
+      isAggregatable: false,
+      refEntity: {
+        name: 'age_groups',
+        idAttribute: 'id',
+        labelAttribute: 'label',
+        hrefCollection: '/api/v2/age_groups',
+        href: '/api/v2/age_groups'
+      }
+    }, {
+      href: '/api/v2/test/meta/age_groups',
+      fieldType: 'ENUM',
       name: 'age_groups',
       label: 'age_groups',
       attributes: [],
