@@ -15,7 +15,7 @@
 <script>
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 library.add(faShoppingBag)
@@ -31,6 +31,7 @@ export default {
   components: { TableRow, TableHeader },
   computed: {
     ...mapState(['tableName', 'tableMeta', 'shoppedEntityItems', 'isShop']),
+    ...mapGetters(['filterRsql']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -47,8 +48,13 @@ export default {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     }
   },
-  mounted: function () {
-    this.fetchTableViewData({ tableName: this.tableName })
+  watch: {
+    filterRsql: {
+      handler: function () {
+        this.fetchTableViewData({ tableName: this.tableName })
+      },
+      immediate: true
+    }
   }
 }
 </script>

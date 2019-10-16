@@ -7,7 +7,7 @@
       :message="toast.message"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
-    <div class="flex-mainview d-flex" :class="{'hidefilters': hideFilters}">
+    <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
       <div class="flex-filter">
         <filters-view></filters-view>
       </div>
@@ -16,7 +16,7 @@
           type="button"
           class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
           title="Show Filters"
-          v-if="hideFilters && !showShoppingCart"
+          v-if="filters.hideSidebar && !showShoppingCart"
           @click="setHideFilters(false)">
           <font-awesome-icon icon="chevron-up"></font-awesome-icon>
           <span class="ml-2">Filters</span>
@@ -44,7 +44,7 @@ library.add(faChevronUp)
 export default Vue.extend({
   name: 'MainView',
   computed: {
-    ...mapState(['hideFilters', 'toast', 'showShoppingCart'])
+    ...mapState(['filters', 'toast', 'showShoppingCart'])
   },
   methods: {
     ...mapMutations([ 'clearToast', 'setHideFilters' ])

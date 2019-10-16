@@ -26,6 +26,7 @@ describe('CardView.vue', () => {
       fetchCardViewData: jest.fn()
     }
     getters = {
+      filterRsql: jest.fn().mockReturnValue(null),
       activeEntityData: jest.fn().mockReturnValue({
         items: [
           { tableID: '1', label: 'blaat1' },

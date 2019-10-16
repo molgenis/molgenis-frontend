@@ -28,13 +28,15 @@ module.exports = {
       .click('.show-cart')
       .waitForElementVisible('.cart-order', timeOutDelay)
       .assert.elementNotPresent('.alert.alert-warning')
+      .waitForElementVisible('.shopping-button', timeOutDelay)
       .click('.shopping-button')
+      .pause(animationDelay)
       .waitForElementVisible('.alert.alert-warning', timeOutDelay)
       .end()
   },
   'should display custom card': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + 'TableWithCustomCard')
+      .url(process.env.VUE_DEV_SERVER_URL + '#/TableWithCustomCard')
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
@@ -44,7 +46,7 @@ module.exports = {
   },
   'expand and collapse default card in card layout': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + 'TableWithMoreColumns')
+      .url(process.env.VUE_DEV_SERVER_URL + '#/TableWithMoreColumns')
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
@@ -60,7 +62,7 @@ module.exports = {
   }
   /*
   // Disabled until filters in the sidebar are working with the new life (api based) components
-
+  },
   'open/close filters sidebar': browser => {
     browser
       .url(process.env.VUE_DEV_SERVER_URL)
@@ -84,11 +86,14 @@ module.exports = {
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
-      .click('.remove-button')
       .click('.add-button')
+      .waitForElementVisible('#modal-add-filter', timeOutDelay)
       .assert.elementPresent('#modal-add-filter')
       .click('.btn.btn-primary')
+      .pause(animationDelay)
+      .click('.remove-button')
+      .pause(animationDelay)
+      .assert.elementNotPresent('.remove-button')
       .end()
   }
-  */
 }

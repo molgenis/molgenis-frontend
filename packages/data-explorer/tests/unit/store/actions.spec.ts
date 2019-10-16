@@ -265,7 +265,7 @@ describe('actions', () => {
     }
 
     getters = {
-      filterRsql: jest.fn()
+      filterRsql: null
     }
   })
 
@@ -314,32 +314,22 @@ describe('actions', () => {
     })
   })
 
-  describe('fetch filtered data ', () => {
-    it('should addd the filter if its set', async () => {
-      state.tableName = 'tableName'
-      const commit = jest.fn()
-      const mockFilterGetter = jest.fn()
-      mockFilterGetter.mockReturnValue('q=a==b')
-      getters.filterRsql = mockFilterGetter
-      // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
-      await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
-      expect(dataRepository.getRowDataWithReferenceLabels).toHaveBeenCalledWith('tableName', 'rowId', { meta: 'data' }, getters.filterRsql)
-    })
-  })
-
   describe('fetch fetchTableViewData', () => {
-    it('should addd the filter if its set', async () => {
+    it('should add the filter if it is set', async () => {
       state.tableName = 'tableName'
       const commit = jest.fn()
+      getters.filterRsql = 'a==b'
       // @ts-ignore ts does not know its a mock
       metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
 
       await actions.fetchTableViewData({ commit, getters }, { tableName: 'entity' })
+
       expect(commit).toHaveBeenCalledWith('setMetaData', { attributes: [] })
+      expect(commit).toHaveBeenCalledWith('setTableData', [])
       expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
+      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('entity', { attributes: [] }, [], 'a==b')
     })
   })
 })

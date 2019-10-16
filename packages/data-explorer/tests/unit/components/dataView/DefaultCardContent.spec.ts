@@ -52,4 +52,12 @@ describe('DefaultCardContent.vue', () => {
     button.trigger('click')
     expect(window.location.assign).toBeCalledWith('/menu/main/dataexplorer/details/myTable/dataId')
   })
+
+  describe('when the card is closed', () => {
+    const wrapper = shallowMount(DefaultCardContent, { propsData })
+    wrapper.vm.$data.cardState = 'open'
+    it('do something', () => {
+      expect(wrapper.exists()).toBeTruthy()
+    })
+  })
 })

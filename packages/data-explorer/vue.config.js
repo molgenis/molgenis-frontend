@@ -1,4 +1,3 @@
-const schemas = require('./tests/test-schemas.js')
 const webpack = require('webpack')
 const BannerPlugin = require('webpack').BannerPlugin
 const packageJson = require('./package.json')
@@ -77,36 +76,51 @@ module.exports = {
     // Used as mock in e2e tests
     before: process.env.NODE_ENV !== 'test' ? undefined : function (app) {
       app.get('/app-ui-context', function (req, res) {
-        res.json(schemas.UIContext)
+        res.json(require('./tests/e2e/resources/uiContext.js'))
       })
       app.get('/api/v2/root_hospital_patients', function (req, res) {
-        res.json(schemas.MetaData)
+        res.json(require('./tests/e2e/resources/typeTestMetaData.js'))
       })
       app.get('/api/data/TableWithMoreColumns', function (req, res) {
-        res.json(schemas.TableWithMoreColumns)
+        res.json(require('./tests/e2e/resources/tableWithMoreColumns.js'))
       })
       app.get('/api/data/TableWithCustomCard', function (req, res) {
-        res.json(schemas.TableWithMoreColumns)
+        res.json(require('./tests/e2e/resources/tableWithMoreColumns.js'))
       })
       app.get('/api/data/TableWithMoreColumns/p000000001_2014_11_11', function (req, res) {
-        res.json(schemas.TableWithMoreColumnsExpanded)
+        res.json(require('./tests/e2e/resources/tableWithMoreColumnsExpanded.js'))
       })
       app.get('/api/v2/TableWithCustomCard', function (req, res) {
-        res.json(schemas.TableWithMoreColumnsMeta)
+        res.json(require('./tests/e2e/resources/tableWithMoreColumnsMeta'))
       })
       app.get('/api/v2/TableWithMoreColumns', function (req, res) {
-        res.json(schemas.TableWithMoreColumnsMeta)
+        res.json(require('./tests/e2e/resources/tableWithMoreColumnsMeta'))
       })
       app.get('/api/data/root_hospital_patients', function (req, res) {
-        res.json(schemas.TableData)
+        res.json(require('./tests/e2e/resources/typeTestData.js'))
+      })
+      app.get('/api/v2/root_hospital_diagnosis', function (req, res) {
+        res.json(require('./tests/e2e/resources/diagnosisOptions.js'))
+      })
+      app.get('/api/v2/root_cities', function (req, res) {
+        res.json(require('./tests/e2e/resources/cityOptions.js'))
+      })
+      app.get('/api/v2/root_gender', function (req, res) {
+        res.json(require('./tests/e2e/resources/genderOptions.js.js'))
+      })
+      app.get('/api/v2/it_emx_datatypes_TypeTestRef', function (req, res) {
+        res.json(require('./tests/e2e/resources/typeTestMetaData.js'))
+      })
+      app.get('/api/v2/root_hospital_sample_types', function (req, res) {
+        res.json(require('./tests/e2e/resources/typeTestMetaData.js'))
       })
       app.get('/api/data/de_dataexplorer_table_settings', function (req, res) {
         if (req.url.includes('TableWithMoreColumns')) {
           res.json({ items: [] })
         } else if (req.url.includes('TableWithCustomCard')) {
-          res.json(schemas.TableSettingsWithCustom)
+          res.json(require('./tests/e2e/resources/tableSettingsWithCustom'))
         } else {
-          res.json(schemas.TableSettings)
+          res.json(require('./tests/e2e/resources/tableSettings.js'))
         }
       })
     }
