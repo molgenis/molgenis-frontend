@@ -13,7 +13,9 @@ describe('MainView.vue', () => {
   beforeEach(() => {
     state = {
       activeEntity: 'it_emx_datatypes_TypeTest',
-      hideFilters: true
+      filters: {
+        hideSidebar: false
+      }
     }
     mutations = {
       setActiveEntity: jest.fn()
