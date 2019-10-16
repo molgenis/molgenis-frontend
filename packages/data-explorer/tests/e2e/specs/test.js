@@ -28,7 +28,7 @@ module.exports = {
       .click('.show-cart')
       .waitForElementVisible('.cart-order', timeOutDelay)
       .assert.elementNotPresent('.alert.alert-warning')
-      .pause(animationDelay)
+      .waitForElementVisible('.shopping-button', timeOutDelay)
       .click('.shopping-button')
       .pause(animationDelay)
       .waitForElementVisible('.alert.alert-warning', timeOutDelay)
@@ -84,11 +84,13 @@ module.exports = {
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
       .click('.add-button')
-      .pause(animationDelay)
+      .waitForElementVisible('#modal-add-filter', timeOutDelay)
       .assert.elementPresent('#modal-add-filter')
       .click('.btn.btn-primary')
       .pause(animationDelay)
       .click('.remove-button')
+      .pause(animationDelay)
+      .assert.elementNotPresent('.remove-button')
       .end()
   }
 }
