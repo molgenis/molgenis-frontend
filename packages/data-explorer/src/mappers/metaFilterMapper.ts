@@ -3,10 +3,11 @@ import api from '@molgenis/molgenis-api-client'
 import { MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
 import { FilterDefinition } from '@/types/ApplicationState'
 import { getFieldOptions } from '@/mappers/mapperUtils'
+import { StringMap } from '@/types/GeneralTypes'
 
 const MaxVisibleOptions = 10
 
-const fieldTypeToFilterType:any = {
+const fieldTypeToFilterType:StringMap = {
   'STRING': 'string-filter',
   'TEXT': 'string-filter',
   'INT': 'range-filter',
