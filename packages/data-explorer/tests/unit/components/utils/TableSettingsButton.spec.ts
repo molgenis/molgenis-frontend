@@ -1,17 +1,16 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import TableSettingsButton from '@/components/utils/TableSettingsButton.vue'
-import Vuex from 'vuex'
 
 describe('TableSettingsButton.vue', () => {
-  describe('when row settings row has previously been created', () => {
+  describe('when no settings row has previously been created', () => {
     let wrapper:any
 
     beforeEach(() => {
-      wrapper = shallowMount(TableSettingsButton, { propsData: { selectedTable: 'test' } })
+      wrapper = shallowMount(TableSettingsButton, { propsData: { tableSettings: {settingsTable: 'my-settings-table'}} } )
     })
 
     it('the button should link to datarow plugin in add mode', () => {
-      expect(wrapper.attributes('href')).toBe('/plugin/data-row-edit/test')
+      expect(wrapper.attributes('href')).toBe('/plugin/data-row-edit/my-settings-table')
     })
   })
 
@@ -19,11 +18,11 @@ describe('TableSettingsButton.vue', () => {
     let wrapper:any
 
     beforeEach(() => {
-      wrapper = shallowMount(TableSettingsButton, { propsData: { selectedTable: 'test', selectedRowId: 'testRow' } })
+      wrapper = shallowMount(TableSettingsButton, { propsData: { tableSettings: {settingsTable: 'my-settings-table', settingsRowId: 'settings-row-id'} } })
     })
 
     it('the button should link to datarow plugin in edit mode', () => {
-      expect(wrapper.attributes('href')).toBe('/plugin/data-row-edit/test/testRow')
+      expect(wrapper.attributes('href')).toBe('/plugin/data-row-edit/my-settings-table/settings-row-id')
     })
   })
 })

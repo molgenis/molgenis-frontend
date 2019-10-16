@@ -1,5 +1,5 @@
 <template>
-  <a :href="settingHref"
+  <a :href="href"
     type="button"
     class="btn btn-sm m-2 text-nowrap btn-light"
     title="Table settings">
@@ -22,22 +22,15 @@ export default {
   name: 'TableSettingsButton',
   components: { FontAwesomeIcon },
   props: {
-    selectedTable: {
-      type: String,
+    tableSettings: {
+      type: Object,
       required: true
-    },
-    selectedRowId: {
-      type: String,
-      required: false
     }
   },
   computed: {
-    settingHref () {
-      if (this.selectedRowId) {
-        return `${SETTINGS_APP_URL}/${this.selectedTable}/${this.selectedRowId}`
-      } else {
-        return `${SETTINGS_APP_URL}/${this.selectedTable}`
-      }
+    href () {
+      const href = `${SETTINGS_APP_URL}/${this.tableSettings.settingsTable}`
+      return this.tableSettings.settingsRowId ? `${href}/${this.tableSettings.settingsRowId}` : href
     }
   }
 }
