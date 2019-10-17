@@ -32,7 +32,7 @@
 <script>
 import Vue from 'vue'
 import FiltersView from './FiltersView'
-import ToastComponent from '../components/utils/ToastComponent'
+import ToastComponent from '@molgenis-ui/components'
 import DataView from './DataView'
 import { mapState, mapMutations } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
