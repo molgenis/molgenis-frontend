@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components@0.3.0...@molgenis-ui/components@0.4.0) (2019-10-17)
+
+
+### Features
+
+* **components:** Add toast component ([e688989](https://github.com/molgenis/molgenis-frontend/commit/e688989))
+
+
+
+
+
 # [0.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components@0.2.1...@molgenis-ui/components@0.3.0) (2019-10-11)
 
 
