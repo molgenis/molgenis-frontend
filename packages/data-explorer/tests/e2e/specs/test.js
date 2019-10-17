@@ -28,7 +28,9 @@ module.exports = {
       .click('.show-cart')
       .waitForElementVisible('.cart-order', timeOutDelay)
       .assert.elementNotPresent('.alert.alert-warning')
+      .waitForElementVisible('.shopping-button', timeOutDelay)
       .click('.shopping-button')
+      .pause(animationDelay)
       .waitForElementVisible('.alert.alert-warning', timeOutDelay)
       .end()
   },
@@ -57,10 +59,7 @@ module.exports = {
       .click('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand')
       .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
       .end()
-  }
-  /*
-  // Disabled until filters in the sidebar are working with the new life (api based) components
-
+  },
   'open/close filters sidebar': browser => {
     browser
       .url(process.env.VUE_DEV_SERVER_URL)
@@ -84,11 +83,14 @@ module.exports = {
       .waitForElementVisible('#app', timeOutDelay)
       .click('.jumbotron .btn.btn-primary.btn-lg')
       .pause(animationDelay)
-      .click('.remove-button')
       .click('.add-button')
+      .waitForElementVisible('#modal-add-filter', timeOutDelay)
       .assert.elementPresent('#modal-add-filter')
       .click('.btn.btn-primary')
+      .pause(animationDelay)
+      .click('.remove-button')
+      .pause(animationDelay)
+      .assert.elementNotPresent('.remove-button')
       .end()
   }
-  */
 }
