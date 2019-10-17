@@ -5,8 +5,6 @@ import { FilterDefinition } from '@/types/ApplicationState'
 import { getFieldOptions } from '@/mappers/mapperUtils'
 import { StringMap } from '@/types/GeneralTypes'
 
-const MaxVisibleOptions = 10
-
 const fieldTypeToFilterType:StringMap = {
   'STRING': 'string-filter',
   'TEXT': 'string-filter',
@@ -64,7 +62,7 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
       }
     }
 
-    return options ? { ...filterDefinition, options, maxVisibleOptions: MaxVisibleOptions } : filterDefinition
+    return options ? { ...filterDefinition, options } : filterDefinition
   }))
 
   return {

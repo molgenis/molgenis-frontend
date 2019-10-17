@@ -56,12 +56,12 @@ describe('uriGenerator', () => {
 describe('getFieldOptions', () => {
   it('-',
     (done) => {
-      // Canonical
+      // CATEGORICAL
       {
         const option = getFieldOptions(metatypes.attributes[0])
         if (option) {
           option().then((response: any) => {
-            expect(response).toEqual([{ value: 'f', text: 'Female' }, { value: 'm', text: 'Male' }])
+            expect(response).toEqual([{value: 'f', text: 'Female'}, {value: 'm', text: 'Male'}])
             done()
           })
         }
