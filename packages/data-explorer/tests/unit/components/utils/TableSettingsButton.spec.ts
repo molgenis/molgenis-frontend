@@ -6,7 +6,7 @@ describe('TableSettingsButton.vue', () => {
     let wrapper:any
 
     beforeEach(() => {
-      wrapper = shallowMount(TableSettingsButton, { propsData: { tableSettings: {settingsTable: 'my-settings-table'}} } )
+      wrapper = shallowMount(TableSettingsButton, { propsData: { tableSettings: { settingsTable: 'my-settings-table' } } })
     })
 
     it('the button should link to datarow plugin in add mode', () => {
@@ -18,7 +18,7 @@ describe('TableSettingsButton.vue', () => {
     let wrapper:any
 
     beforeEach(() => {
-      wrapper = shallowMount(TableSettingsButton, { propsData: { tableSettings: {settingsTable: 'my-settings-table', settingsRowId: 'settings-row-id'} } })
+      wrapper = shallowMount(TableSettingsButton, { propsData: { tableSettings: { settingsTable: 'my-settings-table', settingsRowId: 'settings-row-id' } } })
     })
 
     it('the button should link to datarow plugin in edit mode', () => {
