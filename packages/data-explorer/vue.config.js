@@ -12,6 +12,15 @@ build-date: ${buildDate}`
 
 const PROXY_TARGET = 'https://master.dev.molgenis.org'
 
+let apiDevServerProxyConf = {
+  target: PROXY_TARGET,
+  keepOrigin: true
+}
+
+if (process.env.DATA_EXPLORER_DEV_PW) {
+  apiDevServerProxyConf.auth = 'admin:' + process.env.DATA_EXPLORER_DEV_PW
+}
+
 module.exports = {
   runtimeCompiler: true,
   outputDir: 'dist',
@@ -36,41 +45,38 @@ module.exports = {
     host: process.env.JENKINS_AGENT_NAME || 'localhost',
     // Used to proxy a external API server to have someone to talk to during development
     proxy: process.env.NODE_ENV !== 'development' ? undefined : {
-      '^/api': {
-        'target': PROXY_TARGET,
-        'keepOrigin': true
-      },
+      '^/api': apiDevServerProxyConf,
       '^/fonts': {
-        'target': PROXY_TARGET,
-        'keepOrigin': true
+        target: PROXY_TARGET,
+        keepOrigin: true
       },
       '^/img': {
-        'target': PROXY_TARGET,
-        'keepOrigin': true
+        target: PROXY_TARGET,
+        keepOrigin: true
       },
       '^/app-ui-context': {
-        'target': PROXY_TARGET,
-        'keepOrigin': true
+        target: PROXY_TARGET,
+        keepOrigin: true
       },
       '^/menu/main/dataexplorer/details': {
-        'target': PROXY_TARGET,
-        'changeOrigin': true
+        target: PROXY_TARGET,
+        changeOrigin: true
       },
       '^/css': {
-        'target': PROXY_TARGET,
-        'changeOrigin': true
+        target: PROXY_TARGET,
+        changeOrigin: true
       },
       '^/js': {
-        'target': PROXY_TARGET,
-        'changeOrigin': true
+        target: PROXY_TARGET,
+        changeOrigin: true
       },
       '^/login': {
-        'target': PROXY_TARGET,
-        'changeOrigin': true
+        target: PROXY_TARGET,
+        changeOrigin: true
       },
       '^/@molgenis-ui': {
-        'target': PROXY_TARGET,
-        'changeOrigin': true
+        target: PROXY_TARGET,
+        changeOrigin: true
       }
     },
     // Used as mock in e2e tests
