@@ -770,10 +770,10 @@
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 
-"@molgenis/molgenis-ui-filter@^1.1.2":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-filter/-/molgenis-ui-filter-1.2.0.tgz#6e2f26a7f4173d7c3a98c4935d07f1c713da2b57"
-  integrity sha512-kGsOPe/On7QT6KmGX2d01wGIOK4oJ3xOhJssPS7MvU0XaqtVryM6hXJV/QwOmuOCm3Lnx9ZgjOsWmDbDehG3hw==
+"@molgenis/molgenis-ui-filter@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-filter/-/molgenis-ui-filter-1.4.1.tgz#8c50f36cf12d9a9aaf404012928a308f29719d51"
+  integrity sha512-nXIr1vo3yJQFfJegvAMYKUrqwRR+GXUGzGTgPY+vyet0imSGXLfn3PXIZskw0RA3jnJKSdRkxs0UWGbD7U3JlQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.17"
     "@fortawesome/free-solid-svg-icons" "^5.8.1"
@@ -783,6 +783,7 @@
     bootstrap-vue "^2.0.0-rc.19"
     core-js "^2.6.5"
     vue "^2.6.10"
+    vue-slider-component "^3.0.41"
     vuedraggable "^2.21.0"
 
 "@molgenis/rsql@^0.2.5":
@@ -10684,6 +10685,11 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.0.tgz#bd76d6a23323e2ca8ffa12028dc04559c75f9019"
   integrity sha512-iq+S7vZJE60yejDYM0ek6zg308+UZsdtPExWP9VZoCFCz1zkJoXFnAX7aZfd/ZwrkidzdUZL0C/ryW+JwAiIGw==
 
+vue-class-component@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-7.1.0.tgz#b33efcb10e17236d684f70b1e96f1946ec793e87"
+  integrity sha512-G9152NzUkz0i0xTfhk0Afc8vzdXxDR1pfN4dTwE72cskkgJtdXfrKBkMfGvDuxUh35U500g5Ve4xL8PEGdWeHg==
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
@@ -10745,10 +10751,24 @@ vue-loader@^15.7.0:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-property-decorator@^8.0.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.3.0.tgz#536f027dc7d626f37c8d85a2dc02f0a6cb979440"
+  integrity sha512-77YtTbZHd5CNiPzbqv51kEgL48yvD2dUDfF28vEyw3MbQ9bBAb/tDyFzskcqjNRbWyXk1vq4oM2CK/LfhxuIBg==
+  dependencies:
+    vue-class-component "^7.1.0"
+
 vue-router@^3.0.7:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.2.tgz#2e0904703545dabdd42b2b7a2e617f02f99a1969"
   integrity sha512-WssQEHSEvIS1/CI4CO2T8LJdoK4Q9Ngox28K7FDNMTfzNTk2WS5D0dDlqYCaPG+AG4Z8wJkn1KrBc7AhspZJUQ==
+
+vue-slider-component@^3.0.41:
+  version "3.0.41"
+  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-3.0.41.tgz#dd97f51347b200fc56b05789263b2f02ad5016f9"
+  integrity sha512-TVLwAJtDInkYp3KYUqptvyLg9Ppx4WqCeVlbbqCS10MpLItq10yRhObWVAGcN07n2++Vv7h5y//4hLGZkauBZA==
+  dependencies:
+    vue-property-decorator "^8.0.0"
 
 vue-style-loader@^4.1.0:
   version "4.1.2"
