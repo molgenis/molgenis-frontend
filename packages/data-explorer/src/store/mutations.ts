@@ -72,7 +72,7 @@ export default {
     }
     if (isPropSet('default_filters')) {
       state.tableSettings.defaultFilters = tableSettings.default_filters.split(',').map(f => f.trim())
-      Vue.set(state.filters, 'shown', state.tableSettings.defaultFilters)
+      state.filters.shown = state.tableSettings.defaultFilters
     }
 
     state.isSettingsLoaded = true
