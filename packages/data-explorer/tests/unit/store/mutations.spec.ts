@@ -116,6 +116,14 @@ describe('mutations', () => {
     })
   })
 
+  describe('setFiltersShown', () => {
+    it('sets the filters to be shown', () => {
+      let baseAppState = Object.assign({}, state)
+      mutations.setFiltersShown(baseAppState, ['filtera', 'filterb'])
+      expect(baseAppState.filters.shown).toEqual(['filtera', 'filterb'])
+    })
+  })
+
   describe('setTableName', () => {
     it('sets the active entity', () => {
       let baseAppState = Object.assign({}, state)
@@ -167,10 +175,16 @@ describe('mutations', () => {
   describe('setTableSettings', () => {
     it('sets the tableSettings', () => {
       let baseAppState = Object.assign({}, state)
-      mutations.setTableSettings(baseAppState, { shop: 'true', collapse_limit: '5', id: 'blaat' })
+      mutations.setTableSettings(baseAppState, { 
+        shop: 'true',
+        collapse_limit: '5',
+        id: 'blaat',
+        default_filters: 'df-1, df-2'
+      })
       expect(baseAppState.tableSettings.isShop).toEqual(true)
       expect(baseAppState.tableSettings.collapseLimit).toEqual(5)
       expect(baseAppState.tableSettings.settingsRowId).toEqual('blaat')
+      expect(baseAppState.tableSettings.defaultFilters).toEqual(['df-1', 'df-2'])
     })
   })
   describe('setMetaDataRefLabels', () => {
