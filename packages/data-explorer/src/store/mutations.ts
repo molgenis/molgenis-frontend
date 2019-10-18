@@ -74,8 +74,6 @@ export default {
       state.tableSettings.defaultFilters = tableSettings.default_filters.split(',').map(f => f.trim())
       state.filters.shown = state.tableSettings.defaultFilters
     }
-
-    state.isSettingsLoaded = true
   },
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
@@ -96,5 +94,8 @@ export default {
         Vue.set(state.tableData.items, index, rowData)
       }
     })
+  },
+  setIsSettingsLoaded (state: ApplicationState) {
+    state.isSettingsLoaded = true
   }
 }

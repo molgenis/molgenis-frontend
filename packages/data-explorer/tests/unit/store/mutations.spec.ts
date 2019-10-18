@@ -238,4 +238,10 @@ describe('mutations', () => {
       }
     })
   })
+  describe('setIsSettingsLoaded', () => {
+    it('sets isSettingsLoaded to treu', () => {
+      mutations.setIsSettingsLoaded(baseAppState)
+      expect(baseAppState.isSettingsLoaded).toEqual(true)
+    })
+  })
 })

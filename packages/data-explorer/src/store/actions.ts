@@ -12,10 +12,9 @@ export default {
     payload: { tableName: string }) => {
     const response = await api.get(`/api/data/${state.tableSettings.settingsTable}?q=table=="${payload.tableName}"`)
     if (response.items.length > 0) {
-      const id = response.items[0].data.id
       commit('setTableSettings', response.items[0].data)
-      return id
     }
+    commit('setIsSettingsLoaded')
   }),
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
