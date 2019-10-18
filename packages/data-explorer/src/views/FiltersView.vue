@@ -16,6 +16,7 @@
       </div>
       <div class="p-2">
         <filter-container
+          v-if="isFilterDataLoaded"
           v-model="filters.selections"
           :filters="filters.definition"
           :filters-shown="filters.shown"
@@ -42,13 +43,12 @@ export default Vue.extend({
   name: 'FiltersView',
   components: { FilterContainer, FontAwesomeIcon },
   computed: {
-    ...mapState(['filters'])
+    ...mapState(['filters', 'tableMeta', 'isSettingsLoaded']),
+    isFilterDataLoaded: vm => !!vm.tableMeta && vm.isSettingsLoaded
   },
   methods: {
     ...mapMutations([ 'setHideFilters', 'setFiltersShown' ]),
     updateState (newState) {
-      console.log('updateState setFiltersShown')
-      console.log(newState)
       this.setFiltersShown(newState)
     }
   }

@@ -19,6 +19,7 @@ const state: ApplicationState = {
     isShop: false,
     defaultFilters: []
   },
+  isSettingsLoaded: false,
   filters: {
     hideSidebar: false,
     definition: [],

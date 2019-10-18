@@ -20,8 +20,6 @@ export default {
     state.filters.hideSidebar = hideFilters
   },
   setFiltersShown (state: ApplicationState, shown: string[]) {
-    console.log('set filters show')
-    console.log(shown)
     Vue.set(state.filters, 'shown', shown)
   },
   setTableName (state: ApplicationState, entity: string) {
@@ -76,12 +74,13 @@ export default {
       state.tableSettings.defaultFilters = tableSettings.default_filters.split(',').map(f => f.trim())
       Vue.set(state.filters, 'shown', state.tableSettings.defaultFilters)
     }
+
+    state.isSettingsLoaded = true
   },
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
   },
   setFilters (state: ApplicationState, { definition, shown }: { definition: FilterDefinition[], shown: string[] }) {
-    console.log('mutaions.setFilter, show: ' + shown)
     Vue.set(state.filters, 'definition', definition)
     Vue.set(state.filters, 'shown', shown)
   },

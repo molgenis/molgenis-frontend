@@ -262,7 +262,8 @@ describe('actions', () => {
         settingsTable: 'de_dataexplorer_table_settings',
         collapseLimit: 5,
         defaultFilters: []
-      }
+      },
+      isSettingsLoaded: true
     }
 
     getters = {
