@@ -21,9 +21,9 @@
       <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
       Show cart
     </button>
-
     <active-filters
-      v-model="filters.selections"
+      @input="saveFilterState"
+      :value="filters.selections"
       :filters="filters.definition"
     ></active-filters>
   </div>
@@ -45,7 +45,7 @@ export default Vue.extend({
     ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'tableSettings', 'filters'])
   },
   methods: {
-    ...mapMutations(['setDataDisplayLayout', 'setShowShoppingCart', 'setHideFilters']),
+    ...mapMutations(['setDataDisplayLayout', 'setShowShoppingCart', 'setHideFilters', 'setFilterSelection']),
     toggleDataDisplayLayout () {
       const value = this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.setDataDisplayLayout(value)
@@ -53,6 +53,9 @@ export default Vue.extend({
     openShoppingCart () {
       this.setShowShoppingCart(true)
       this.setHideFilters(true)
+    },
+    saveFilterState (newSelections) {
+      this.setFilterSelection(newSelections)
     }
   },
   components: { ActiveFilters, FontAwesomeIcon }
