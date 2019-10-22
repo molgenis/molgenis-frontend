@@ -78,6 +78,9 @@ export default {
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
   },
+  setFilterSelection (state: ApplicationState, selections: StringMap) {
+    Vue.set(state.filters, 'selections', selections)
+  },
   setFilters (state: ApplicationState, { definition, shown }: { definition: FilterDefinition[], shown: string[] }) {
     Vue.set(state.filters, 'definition', definition)
     Vue.set(state.filters, 'shown', shown)
