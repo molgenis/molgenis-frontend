@@ -1,6 +1,36 @@
 export default {
   attributes: [
     {
+      href: '/api/v2/test/meta/id',
+      fieldType: 'INT',
+      name: 'id',
+      label: 'id',
+      attributes: [],
+      auto: false,
+      nillable: false,
+      readOnly: true,
+      labelAttribute: false,
+      unique: true,
+      visible: true,
+      lookupAttribute: true,
+      isAggregatable: false
+    },
+    {
+      href: '/api/v2/test/meta/label',
+      fieldType: 'STRING',
+      name: 'label',
+      label: 'label',
+      attributes: [],
+      auto: false,
+      nillable: false,
+      readOnly: true,
+      labelAttribute: true,
+      unique: true,
+      visible: true,
+      lookupAttribute: true,
+      isAggregatable: false
+    },
+    {
       href: '/api/v2/test/meta/country',
       fieldType: 'CATEGORICAL',
       name: 'country',
@@ -21,11 +51,12 @@ export default {
         hrefCollection: '/api/v2/countries',
         href: '/api/v2/countries'
       }
-    }, {
-      href: '/api/v2/test/meta/test',
-      fieldType: 'INT',
-      name: 'test',
-      label: 'test',
+    },
+    {
+      href: '/api/v2/test/meta/age_groups',
+      fieldType: 'CATEGORICAL_MREF',
+      name: 'age_groups',
+      label: 'age_groups',
       attributes: [],
       auto: false,
       nillable: false,
@@ -40,31 +71,10 @@ export default {
         max: 10
       },
       refEntity: {
-        name: 'test',
-        idAttribute: 'id',
-        labelAttribute: 'label',
-        hrefCollection: '/api/v2/test',
-        href: '/api/v2/test'
-      }
-    }, {
-      href: '/api/v2/test/meta/age_groups',
-      fieldType: 'CATEGORICAL_MREF',
-      name: 'age_groups',
-      label: 'age_groups',
-      attributes: [],
-      auto: false,
-      nillable: false,
-      readOnly: true,
-      labelAttribute: false,
-      unique: true,
-      visible: true,
-      lookupAttribute: true,
-      isAggregatable: false,
-      refEntity: {
         name: 'age_groups',
         idAttribute: 'id',
-        labelAttribute: 'label',
-        hrefCollection: '/api/v2/age_groups',
+        labelAttribute: 'age_groups',
+        hrefCollection: '/api/v2/test',
         href: '/api/v2/age_groups'
       }
     }
