@@ -13,7 +13,11 @@ export default {
       unique: true,
       visible: true,
       lookupAttribute: true,
-      isAggregatable: false
+      isAggregatable: false,
+      range: {
+        min: -10,
+        max: 10
+      }
     },
     {
       href: '/api/v2/test/meta/label',
@@ -66,10 +70,6 @@ export default {
       visible: true,
       lookupAttribute: true,
       isAggregatable: false,
-      range: {
-        min: -10,
-        max: 10
-      },
       refEntity: {
         name: 'age_groups',
         idAttribute: 'id',

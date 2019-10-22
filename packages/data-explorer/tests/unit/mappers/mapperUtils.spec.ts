@@ -17,7 +17,6 @@ describe('getCategoricals', () => {
     expect(categoricals[1].fieldType).toEqual('CATEGORICAL_MREF')
     expect(categoricals[0].name).toEqual('country')
     expect(categoricals[1].name).toEqual('age_groups')
-    expect(categoricals[1].range).toEqual({ min: -10, max: 10 })
   })
 })
 
