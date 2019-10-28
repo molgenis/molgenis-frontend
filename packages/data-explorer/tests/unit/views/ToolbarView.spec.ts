@@ -21,7 +21,9 @@ describe('ToolbarView.vue', () => {
       entityMetaRefs: {},
       showShoppingCart: false,
       shoppedEntityItems: [],
+      isSettingsLoaded: true,
       tableSettings: {
+        defaultFilters: [],
         settingsTable: 'de_dataexplorer_table_settings',
         settingsRowId: null,
         collapseLimit: 5,
