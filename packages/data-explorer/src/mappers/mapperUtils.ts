@@ -2,6 +2,7 @@
 import api from '@molgenis/molgenis-api-client'
 import { MetaDataRefEntity, DataApiResponse, MetaDataAttribute, MetaDataCategoricalOption } from '@/types/ApiResponse'
 import { FilterOption, FilterOptionsPromise } from '@/types/ApplicationState'
+import { encodeRsqlValue, transformToRSQL, Operator, ComparisonOperator } from '@molgenis/rsql'
 
 /**
  * Build a function that returns a Promise of an array containing objects of type FieldOption
@@ -92,10 +93,11 @@ const fetchFieldOptions = (refEntity: MetaDataRefEntity | undefined, search?: st
 
   const idAttribute = refEntity.idAttribute
   const labelAttribute = refEntity.labelAttribute ? refEntity.labelAttribute : refEntity.idAttribute
+  const lookupAttributes = refEntity.lookupAttributes && refEntity.lookupAttributes.length ? refEntity.lookupAttributes : [labelAttribute]
 
   // map refEntity.hrefCollection v1 URLs to v2 to enable the use of RSQL queries
   const uri = refEntity.hrefCollection.replace('/v1/', '/v2/')
-  const href = generateUri(uri, idAttribute, labelAttribute, search)
+  const href = generateUri(uri, idAttribute, lookupAttributes, search)
 
   return api.get(href).then((response: DataApiResponse) => {
     return response.items.map((item: any): FilterOption => {
@@ -108,16 +110,35 @@ const fetchFieldOptions = (refEntity: MetaDataRefEntity | undefined, search?: st
 }
 
 const generateUri = (
-  uri: string, idAttribute: string, labelAttribute: string, search?: string | Array<string> | null) => {
+  uri: string, idAttribute: string, lookupAttributes: string[], search?: string | Array<string> | null) => {
   if (search) {
     if (Array.isArray(search) && search.length > 0) {
-      // Join array into a string
-      const value = search.join(',')
-      // Use =in= query
-      uri = `${uri}?q=${idAttribute}=in=(${value}),${labelAttribute}=in=(${value})`
+      const value = search
+      const constraint = {
+        operator: Operator.Or,
+        operands: [
+          {
+            selector: idAttribute,
+            comparison: ComparisonOperator.In,
+            arguments: value
+          }
+        ]
+      }
+      const q = transformToRSQL(constraint)
+      uri = `${uri}?q=${encodeRsqlValue(q)}`
     } else if (typeof search === 'string') {
       const value = search
-      uri = `${uri}?q=${idAttribute}=like=${value},${labelAttribute}=like=${value}`
+      const constraint = {
+        operator: Operator.Or,
+        operands: lookupAttributes.map((lookupAttribute) =>
+          ({
+            selector: lookupAttribute,
+            comparison: ComparisonOperator.Search,
+            arguments: value
+          }))
+      }
+      const q = transformToRSQL(constraint)
+      uri = `${uri}?q=${encodeRsqlValue(q)}`
     }
   }
   return uri

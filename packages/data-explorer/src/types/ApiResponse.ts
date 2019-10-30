@@ -27,6 +27,7 @@ export type MetaDataRefEntity = {
   name: string,
   idAttribute: string,
   labelAttribute: string,
+  lookupAttributes: string[],
   hrefCollection: string,
   href?: string
 }

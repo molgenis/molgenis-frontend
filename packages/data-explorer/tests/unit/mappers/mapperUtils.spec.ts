@@ -23,7 +23,7 @@ describe('getCategoricals', () => {
 describe('uriGenerator', () => {
   const uri = '/api/v2/tablename'
   const id = 'idAttr'
-  const label = 'labelAttr'
+  const label = ['labelAttr']
 
   it('should generate an uri without query when there is no search string',
     () => {
@@ -36,7 +36,7 @@ describe('uriGenerator', () => {
     () => {
       const search = 'blaat'
       const result = generateUri(uri, id, label, search)
-      const expected = `${uri}?q=${id}=like=${search},${label}=like=${search}`
+      const expected = `/api/v2/tablename?q=labelAttr=q=blaat`
       expect(result).toEqual(expected)
     })
 
@@ -44,7 +44,7 @@ describe('uriGenerator', () => {
     () => {
       const search = ['blaat1', 'blaat2']
       const result = generateUri(uri, id, label, search)
-      const expected = `/api/v2/tablename?q=idAttr=in=(blaat1,blaat2),labelAttr=in=(blaat1,blaat2)`
+      const expected = `/api/v2/tablename?q=idAttr=in=(blaat1,blaat2)`
       expect(result).toEqual(expected)
     })
 

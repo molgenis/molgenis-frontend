@@ -40,6 +40,7 @@ describe('metaDataService', () => {
           name: 'pkg_refTable',
           idAttribute: 'label',
           labelAttribute: 'label',
+          lookupAttributes: [],
           hrefCollection: '/api/v2/pkg_refTables'
         },
         fieldType: 'CATEGORICAL',
@@ -59,6 +60,7 @@ describe('metaDataService', () => {
         refEntity: {
           name: 'pkg_anotherRefTable',
           idAttribute: 'label',
+          lookupAttributes: [],
           labelAttribute: 'label',
           hrefCollection: '/api/v2/pkg_otherRefTables'
         },

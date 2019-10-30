@@ -15,6 +15,7 @@ export default {
       lookupAttribute: true,
       isAggregatable: false,
       refEntity: {
+        lookupAttributes: [],
         name: 'countries',
         idAttribute: 'id',
         labelAttribute: 'label',
@@ -36,6 +37,7 @@ export default {
       lookupAttribute: true,
       isAggregatable: false,
       refEntity: {
+        lookupAttributes: [],
         name: 'test',
         idAttribute: 'id',
         labelAttribute: 'label',
@@ -57,6 +59,7 @@ export default {
       lookupAttribute: true,
       isAggregatable: false,
       refEntity: {
+        lookupAttributes: [],
         name: 'age_groups',
         idAttribute: 'id',
         labelAttribute: 'label',
@@ -79,6 +82,7 @@ export default {
       isAggregatable: false,
       enumOptions: ['chair', 'table'],
       refEntity: {
+        lookupAttributes: [],
         name: 'age_groups',
         idAttribute: 'id',
         labelAttribute: 'label',
