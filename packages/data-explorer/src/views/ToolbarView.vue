@@ -21,14 +21,17 @@
       <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
       Show cart
     </button>
-
-    <active-filters></active-filters>
+    <active-filters
+      @input="saveFilterState"
+      :value="filters.selections"
+      :filters="filters.definition"
+    ></active-filters>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import ActiveFilters from '../components/toolbarView/ActiveFilters'
+import ActiveFilters from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/ActiveFilters.vue'
 import { mapState, mapMutations } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag } from '@fortawesome/free-solid-svg-icons'
@@ -39,10 +42,10 @@ library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag)
 export default Vue.extend({
   name: 'ToolbarView',
   computed: {
-    ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'tableSettings'])
+    ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'tableSettings', 'filters'])
   },
   methods: {
-    ...mapMutations(['setDataDisplayLayout', 'setShowShoppingCart', 'setHideFilters']),
+    ...mapMutations(['setDataDisplayLayout', 'setShowShoppingCart', 'setHideFilters', 'setFilterSelection']),
     toggleDataDisplayLayout () {
       const value = this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.setDataDisplayLayout(value)
@@ -50,6 +53,9 @@ export default Vue.extend({
     openShoppingCart () {
       this.setShowShoppingCart(true)
       this.setHideFilters(true)
+    },
+    saveFilterState (newSelections) {
+      this.setFilterSelection(newSelections)
     }
   },
   components: { ActiveFilters, FontAwesomeIcon }

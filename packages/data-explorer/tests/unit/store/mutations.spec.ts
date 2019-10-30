@@ -196,7 +196,7 @@ describe('mutations', () => {
   })
   describe('setTableSettings', () => {
     it('sets the tableSettings', () => {
-      mutations.setTableSettings(baseAppState, { 
+      mutations.setTableSettings(baseAppState, {
         shop: 'true',
         collapse_limit: '5',
         id: 'blaat',

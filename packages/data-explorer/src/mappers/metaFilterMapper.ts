@@ -34,7 +34,11 @@ const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
 
 const getOptions = async (href: string) => {
   const resp = await api.get(href)
-  return resp.items.map((item: any) => ({ value: item[resp.meta.idAttribute], text: item[resp.meta.labelAttribute] }))
+  return () => {
+    return Promise.resolve(
+      resp.items.map((item: any) => ({ value: item[resp.meta.idAttribute], text: item[resp.meta.labelAttribute] }))
+    )
+  }
 }
 
 export {

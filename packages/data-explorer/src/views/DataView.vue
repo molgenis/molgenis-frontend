@@ -12,6 +12,10 @@
     <div class="row">
       <div class="col">
         <toolbar-view></toolbar-view>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <clipboard-view v-if="showShoppingCart"></clipboard-view>
         <select-layout-view v-else></select-layout-view>
       </div>
