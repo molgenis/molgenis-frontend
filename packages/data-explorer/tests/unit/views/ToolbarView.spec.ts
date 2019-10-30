@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ToolbarView from '@/views/ToolbarView.vue'
 import Vuex from 'vuex'
-import ApplicationState from "@/types/ApplicationState";
+import ApplicationState from '@/types/ApplicationState'
 
 describe('ToolbarView.vue', () => {
   const localVue = createLocalVue()
@@ -21,7 +21,9 @@ describe('ToolbarView.vue', () => {
       entityMetaRefs: {},
       showShoppingCart: false,
       shoppedEntityItems: [],
+      isSettingsLoaded: false,
       tableSettings: {
+        defaultFilters: [],
         settingsTable: 'de_dataexplorer_table_settings',
         settingsRowId: null,
         collapseLimit: 5,
