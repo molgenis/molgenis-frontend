@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.14.3...@molgenis-experimental/data-explorer@0.15.0) (2019-10-30)
+
+
+### Bug Fixes
+
+* **filters:** updated to 1.4.2 ([0672c53](https://github.com/molgenis/molgenis-frontend/commit/0672c53))
+
+
+### Features
+
+* add active filters ([d0ed2b1](https://github.com/molgenis/molgenis-frontend/commit/d0ed2b1))
+* **data-explorer:** add active filters ([d452327](https://github.com/molgenis/molgenis-frontend/commit/d452327))
+* **data-explorer:** fixed tests ([ded22b9](https://github.com/molgenis/molgenis-frontend/commit/ded22b9))
+
+
+
+
+
 ## [0.14.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.14.2...@molgenis-experimental/data-explorer@0.14.3) (2019-10-22)
 
 
