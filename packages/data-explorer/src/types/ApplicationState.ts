@@ -21,6 +21,7 @@ export type TableSetting = {
   settingsRowId: string | null,
   collapseLimit: number,
   isShop: boolean,
+  defaultFilters: string []
 }
 
 export type FilterSelections = {
@@ -62,6 +63,7 @@ export default interface ApplicationState {
   shoppedEntityItems: string[]
   showShoppingCart: boolean
   tableSettings: TableSetting
+  isSettingsLoaded: boolean
   filters: {
     hideSidebar: boolean
     definition: FilterDefinition[]

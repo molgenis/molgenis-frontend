@@ -70,9 +70,16 @@ export default {
     if (isPropSet('template_attrs')) {
       state.tableSettings.customCardAttrs = tableSettings.template_attrs
     }
+    if (isPropSet('default_filters')) {
+      state.tableSettings.defaultFilters = tableSettings.default_filters.split(',').map(f => f.trim())
+      state.filters.shown = state.tableSettings.defaultFilters
+    }
   },
   setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
     state.tableMeta = meta
+  },
+  setFilterSelection (state: ApplicationState, selections: StringMap) {
+    Vue.set(state.filters, 'selections', selections)
   },
   setFilters (state: ApplicationState, { definition, shown }: { definition: FilterDefinition[], shown: string[] }) {
     Vue.set(state.filters, 'definition', definition)
@@ -90,5 +97,8 @@ export default {
         Vue.set(state.tableData.items, index, rowData)
       }
     })
+  },
+  setIsSettingsLoaded (state: ApplicationState) {
+    state.isSettingsLoaded = true
   }
 }

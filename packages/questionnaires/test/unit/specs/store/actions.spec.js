@@ -100,13 +100,13 @@ describe('actions', () => {
     })
 
     it('should commit any errors to the store', done => {
-      const error = 'error'
+      const error = { errors: [ { message: 'error' } ] }
       mockApiGetError('/menu/plugins/questionnaires/list', error)
 
       const expectedMutations = [
         {type: 'SET_ERROR', payload: ''},
         {type: 'SET_LOADING', payload: true},
-        {type: 'SET_ERROR', payload: error},
+        {type: 'SET_ERROR', payload: 'error'},
         {type: 'SET_LOADING', payload: false}
       ]
 
@@ -193,13 +193,13 @@ describe('actions', () => {
 
     it('should commit any errors to the store', done => {
       const questionnaireId = 'test_quest'
-      const error = 'error'
+      const error = { errors: [ { message: 'error' } ] }
       mockApiGetError('/menu/plugins/questionnaires/start/test_quest', error)
 
       const expectedMutations = [
         {type: 'SET_ERROR', payload: ''},
         {type: 'SET_LOADING', payload: true},
-        {type: 'SET_ERROR', payload: error},
+        {type: 'SET_ERROR', payload: 'error'},
         {type: 'SET_LOADING', payload: false}
       ]
 
@@ -301,7 +301,7 @@ describe('actions', () => {
 
     it('should commit any errors to the store', done => {
       const questionnaireId = 'other_test_quest'
-      const error = 'error'
+      const error = { errors: [ { message: 'error' } ] }
       const state = {
         username: 'testuser'
       }
@@ -310,7 +310,7 @@ describe('actions', () => {
       const expectedMutations = [
         {type: 'SET_ERROR', payload: ''},
         {type: 'SET_LOADING', payload: true},
-        {type: 'SET_ERROR', payload: error},
+        {type: 'SET_ERROR', payload: 'error'},
         {type: 'SET_LOADING', payload: false}
       ]
 
@@ -377,13 +377,13 @@ describe('actions', () => {
 
     it('should commit any errors to the store', done => {
       const questionnaireId = 'test_quest'
-      const error = 'error'
+      const error = { errors: [ { message: 'error' } ] }
       mockApiGetError('/api/v2/test_quest', error)
 
       const expectedMutations = [
         {type: 'SET_ERROR', payload: ''},
         {type: 'SET_LOADING', payload: true},
-        {type: 'SET_ERROR', payload: error},
+        {type: 'SET_ERROR', payload: 'error'},
         {type: 'SET_LOADING', payload: false}
       ]
 
@@ -409,13 +409,13 @@ describe('actions', () => {
 
     it('should commit any errors to the store', done => {
       const questionnaireId = 'test_quest'
-      const error = 'error'
+      const error = new Error('error')
       mockApiGetError('/menu/plugins/questionnaires/submission-text/test_quest', error)
 
       const expectedMutations = [
         {type: 'SET_ERROR', payload: ''},
         {type: 'SET_LOADING', payload: true},
-        {type: 'SET_ERROR', payload: error},
+        {type: 'SET_ERROR', payload: 'error'},
         {type: 'SET_LOADING', payload: false}
       ]
 

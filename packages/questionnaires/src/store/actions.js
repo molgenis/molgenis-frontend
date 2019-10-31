@@ -5,8 +5,12 @@ import type { VuexContext, QuestionnaireType } from '../flow.types.js'
 import Vue from 'vue'
 import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 
-const handleError = (commit: Function, error: Error) => {
-  commit('SET_ERROR', error)
+const handleError = (commit: Function, error) => {
+  if (Array.isArray(error.errors)) {
+    commit('SET_ERROR', error.errors[0].message)
+  } else {
+    commit('SET_ERROR', error.message)
+  }
   commit('SET_LOADING', false)
 }
 

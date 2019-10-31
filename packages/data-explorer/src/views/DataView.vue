@@ -6,12 +6,16 @@
         <small v-if="tableMeta && tableMeta.description" class="text-secondary"><em>{{tableMeta.description}}</em></small>
       </div>
       <div class="col-2" v-if="tableName">
-        <table-settings-button class="float-right" :selectedTable="tableName" :selectedRowId="settingsRowId"></table-settings-button>
+        <table-settings-button class="float-right" :tableSettings="tableSettings"></table-settings-button>
       </div>
     </div>
     <div class="row">
       <div class="col">
         <toolbar-view></toolbar-view>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <clipboard-view v-if="showShoppingCart"></clipboard-view>
         <select-layout-view v-else></select-layout-view>
       </div>
@@ -30,7 +34,7 @@ import ClipboardView from './ClipboardView'
 export default Vue.extend({
   name: 'DataView',
   computed: {
-    ...mapState(['showShoppingCart', 'tableName', 'tableMeta', 'openTableSettings', 'settingsRowId', 'isShop'])
+    ...mapState(['showShoppingCart', 'tableName', 'tableMeta', 'tableSettings'])
   },
   methods: {
     ...mapActions(['getTableSettings'])

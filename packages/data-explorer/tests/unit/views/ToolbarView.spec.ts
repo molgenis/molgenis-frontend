@@ -1,25 +1,42 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ToolbarView from '@/views/ToolbarView.vue'
 import Vuex from 'vuex'
+import ApplicationState from '@/types/ApplicationState'
 
 describe('ToolbarView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store: any
-  let state: any
+  let state: ApplicationState
   let mutations: any
 
   beforeEach(() => {
     state = {
+      toast: null,
+      tableName: 'root_hospital_patients',
+      tableData: null,
+      tableMeta: null,
       dataDisplayLayout: 'CardView',
-      hideFilters: true,
+      defaultEntityData: null,
+      entityMetaRefs: {},
+      showShoppingCart: false,
+      shoppedEntityItems: [],
+      isSettingsLoaded: false,
       tableSettings: {
+        defaultFilters: [],
         settingsTable: 'de_dataexplorer_table_settings',
         settingsRowId: null,
         collapseLimit: 5,
-        isShop: true
+        customCardCode: null,
+        customCardAttrs: '',
+        isShop: false
       },
-      showShoppingCart: false
+      filters: {
+        hideSidebar: false,
+        definition: [],
+        shown: [],
+        selections: {}
+      }
     }
     mutations = {
       setHideFilters: jest.fn(),
@@ -44,17 +61,7 @@ describe('ToolbarView.vue', () => {
   })
 
   it('can change to card layout', () => {
-    state = {
-      dataDisplayLayout: 'TableView',
-      hideFilters: true,
-      tableSettings: {
-        settingsTable: 'de_dataexplorer_table_settings',
-        settingsRowId: null,
-        collapseLimit: 5,
-        isShop: true
-      },
-      showShoppingCart: false
-    }
+    state.dataDisplayLayout = 'TableView'
     store = new Vuex.Store({
       state, mutations
     })
@@ -65,6 +72,7 @@ describe('ToolbarView.vue', () => {
   })
 
   it('opens shoppingcart', () => {
+    state.tableSettings.isShop = true
     const wrapper = shallowMount(ToolbarView, { store, localVue })
     const button = wrapper.find('button.show-cart')
     button.trigger('click')

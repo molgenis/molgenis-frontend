@@ -1,5 +1,5 @@
 import mutations from '@/store/mutations'
-import state from '@/store/state'
+import ApplicationState from '@/types/ApplicationState'
 
 describe('mutations', () => {
   const entityMetaData = {
@@ -61,9 +61,40 @@ describe('mutations', () => {
     ]
   }
 
+  let baseAppState: ApplicationState
+
+  beforeEach(() => {
+    baseAppState = {
+      toast: null,
+      tableName: 'root_hospital_patients',
+      tableData: null,
+      tableMeta: null,
+      dataDisplayLayout: 'CardView',
+      defaultEntityData: null,
+      entityMetaRefs: {},
+      showShoppingCart: false,
+      shoppedEntityItems: [],
+      tableSettings: {
+        settingsTable: 'de_dataexplorer_table_settings',
+        settingsRowId: null,
+        collapseLimit: 5,
+        customCardCode: null,
+        customCardAttrs: '',
+        isShop: false,
+        defaultFilters: []
+      },
+      isSettingsLoaded: false,
+      filters: {
+        hideSidebar: false,
+        definition: [],
+        shown: [],
+        selections: {}
+      }
+    }
+  })
+
   describe('setToast', () => {
     it('replace the toast with the passed toast', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
       expect(baseAppState.toast).toEqual({ type: 'danger', message: 'message' })
     })
@@ -71,7 +102,6 @@ describe('mutations', () => {
 
   describe('clearToast', () => {
     it('clears the toast', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
       mutations.clearToast(baseAppState)
       expect(baseAppState.toast).toEqual(null)
@@ -80,7 +110,6 @@ describe('mutations', () => {
 
   describe('setDataDisplayLayout', () => {
     it('sets the display layout', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.setDataDisplayLayout(baseAppState, 'TableView')
       expect(baseAppState.dataDisplayLayout).toEqual('TableView')
     })
@@ -88,7 +117,6 @@ describe('mutations', () => {
 
   describe('setTableData', () => {
     it('sets the entity data', () => {
-      let baseAppState = Object.assign({}, state)
       const entityData = {
         items: [
           {
@@ -110,15 +138,20 @@ describe('mutations', () => {
 
   describe('setHideFilters', () => {
     it('sets if the filters should be shown', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.setHideFilters(baseAppState, false)
       expect(baseAppState.filters.hideSidebar).toEqual(false)
     })
   })
 
+  describe('setFiltersShown', () => {
+    it('sets the filters to be shown', () => {
+      mutations.setFiltersShown(baseAppState, ['filtera', 'filterb'])
+      expect(baseAppState.filters.shown).toEqual(['filtera', 'filterb'])
+    })
+  })
+
   describe('setTableName', () => {
     it('sets the active entity', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.setTableName(baseAppState, 'table')
       expect(baseAppState.tableName).toEqual('table')
     })
@@ -126,7 +159,6 @@ describe('mutations', () => {
 
   describe('setMetaData', () => {
     it('sets the metadata', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.setMetaData(baseAppState, entityMetaData)
       expect(baseAppState.tableMeta).toEqual(entityMetaData)
     })
@@ -134,7 +166,6 @@ describe('mutations', () => {
 
   describe('setShowShoppingCart', () => {
     it('sets if the table is a store', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.setShowShoppingCart(baseAppState, true)
       expect(baseAppState.showShoppingCart).toEqual(true)
     })
@@ -142,52 +173,75 @@ describe('mutations', () => {
 
   describe('toggleShoppingItems', () => {
     it('adds item to shopping cart', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.toggleShoppingItems(baseAppState, 'item1')
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
     })
     it('adds another item to shopping cart', () => {
-      let baseAppState = Object.assign({ shoppedEntityItems: ['item1'] }, state)
+      mutations.toggleShoppingItems(baseAppState, 'item1')
       mutations.toggleShoppingItems(baseAppState, 'item2')
       expect(baseAppState.shoppedEntityItems).toEqual(['item1', 'item2'])
     })
     it('removes an existing item from shopping cart', () => {
-      let baseAppState = Object.assign({ shoppedEntityItems: ['item1', 'item2'] }, state)
+      mutations.toggleShoppingItems(baseAppState, 'item1')
+      mutations.toggleShoppingItems(baseAppState, 'item2')
       mutations.toggleShoppingItems(baseAppState, 'item2')
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
     })
   })
   describe('setTableMetaData', () => {
     it('sets the meta data', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.setTableMetaData(baseAppState, entityMetaData)
       expect(baseAppState.tableMeta).toEqual(entityMetaData)
     })
   })
   describe('setTableSettings', () => {
     it('sets the tableSettings', () => {
-      let baseAppState = Object.assign({}, state)
-      mutations.setTableSettings(baseAppState, { shop: 'true', collapse_limit: '5', id: 'blaat' })
+      mutations.setTableSettings(baseAppState, {
+        shop: 'true',
+        collapse_limit: '5',
+        id: 'blaat',
+        default_filters: 'df-1, df-2',
+        card_template: 'myTemplate',
+        template_attrs: 'templateAttrs'
+      })
       expect(baseAppState.tableSettings.isShop).toEqual(true)
       expect(baseAppState.tableSettings.collapseLimit).toEqual(5)
       expect(baseAppState.tableSettings.settingsRowId).toEqual('blaat')
+      expect(baseAppState.tableSettings.defaultFilters).toEqual(['df-1', 'df-2'])
+    })
+
+    it('should keep the defaults if no overrides are passed', () => {
+      mutations.setTableSettings(baseAppState, {})
+      expect(baseAppState.tableSettings).toEqual({
+        settingsTable: 'de_dataexplorer_table_settings',
+        settingsRowId: null,
+        collapseLimit: 5,
+        customCardCode: null,
+        customCardAttrs: '',
+        isShop: false,
+        defaultFilters: []
+      })
     })
   })
   describe('setMetaDataRefLabels', () => {
     it('sets the object with the labels for all ref entities', () => {
-      let baseAppState = Object.assign({}, state)
       mutations.setMetaDataRefLabels(baseAppState, entityMetaData)
       // expect(baseAppState.entityMetaRefLabels).toEqual({'it_emx_datatypes_TypeTestRef': 'label'})
     })
   })
   describe('updateRowData', () => {
     it('throws error on empty table', () => {
-      let baseAppState = Object.assign({}, state)
       try {
         mutations.updateRowData(baseAppState, { rowId: 'id', rowData: {} })
       } catch (err) {
         expect(err.toString()).toEqual('Error: cannot update empty table data')
       }
+    })
+  })
+  describe('setIsSettingsLoaded', () => {
+    it('sets isSettingsLoaded to treu', () => {
+      mutations.setIsSettingsLoaded(baseAppState)
+      expect(baseAppState.isSettingsLoaded).toEqual(true)
     })
   })
 })

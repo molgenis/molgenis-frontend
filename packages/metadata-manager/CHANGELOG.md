@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.6...@molgenis-ui/metadata-manager@0.1.7) (2019-10-25)
+
+
+### Bug Fixes
+
+* **metadata-manager:** persist metadata-manager attribute in url ([5c32db0](https://github.com/molgenis/molgenis-frontend/commit/5c32db0)), closes [#8732](https://github.com/molgenis/molgenis-frontend/issues/8732)
+
+
+
+
+
 ## [0.1.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.5...@molgenis-ui/metadata-manager@0.1.6) (2019-10-02)
 
 

@@ -1,12 +1,11 @@
 <template>
-  <button
+  <a :href="href"
     type="button"
     class="btn btn-sm m-2 text-nowrap btn-light"
-    title="Table settings"
-    @click="alterSettings">
+    title="Table settings">
     <font-awesome-icon icon="cog"></font-awesome-icon>
     Table settings
-  </button>
+  </a>
 </template>
 
 <script>
@@ -17,31 +16,22 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faCog)
 
+const SETTINGS_APP_URL = '/plugin/data-row-edit'
+
 export default {
   name: 'TableSettingsButton',
   components: { FontAwesomeIcon },
   props: {
-    selectedTable: {
-      type: String,
+    tableSettings: {
+      type: Object,
       required: true
-    },
-    selectedRowId: {
-      type: String,
-      required: false
     }
   },
-  methods: {
-    alterSettings () {
-      if (this.selectedRowId) {
-        console.log('id', this.selectedRowId, 'will be updated')
-      } else {
-        console.log('Settings will be created for', this.selectedTable)
-      }
+  computed: {
+    href () {
+      const href = `${SETTINGS_APP_URL}/${this.tableSettings.settingsTable}`
+      return this.tableSettings.settingsRowId ? `${href}/${this.tableSettings.settingsRowId}` : href
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

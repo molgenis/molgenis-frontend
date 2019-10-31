@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.14.2...@molgenis-experimental/data-explorer@0.14.3) (2019-10-22)
+
+
+### Bug Fixes
+
+* **data-explorer:** show default filters ([5f43c96](https://github.com/molgenis/molgenis-frontend/commit/5f43c96))
+
+
+
+
+
+## [0.14.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.14.1...@molgenis-experimental/data-explorer@0.14.2) (2019-10-17)
+
+**Note:** Version bump only for package @molgenis-experimental/data-explorer
+
+
+
+
+
+## [0.14.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.14.0...@molgenis-experimental/data-explorer@0.14.1) (2019-10-16)
+
+
+### Bug Fixes
+
+* **e2e:** Fix e2e timing ([b0e02bf](https://github.com/molgenis/molgenis-frontend/commit/b0e02bf))
+* **SideBar:** Fix sidebar button ([474a6bf](https://github.com/molgenis/molgenis-frontend/commit/474a6bf))
+
+
+
+
+
+# [0.14.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.13.1...@molgenis-experimental/data-explorer@0.14.0) (2019-10-16)
+
+
+### Features
+
+* **data-explorer:** Linkup tableSettings btn with data-row edit plugin ([cb90bcb](https://github.com/molgenis/molgenis-frontend/commit/cb90bcb))
+
+
+
+
+
 ## [0.13.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.13.0...@molgenis-experimental/data-explorer@0.13.1) (2019-10-16)
 
 **Note:** Version bump only for package @molgenis-experimental/data-explorer

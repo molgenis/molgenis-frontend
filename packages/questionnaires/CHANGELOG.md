@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@2.0.4...@molgenis-ui/questionnaires@2.0.5) (2019-10-28)
+
+
+### Bug Fixes
+
+* **questionnaires:** handle error response ([8cf5e61](https://github.com/molgenis/molgenis-frontend/commit/8cf5e61)), closes [#180](https://github.com/molgenis/molgenis-frontend/issues/180)
+
+
+
+
+
 ## [2.0.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@2.0.3...@molgenis-ui/questionnaires@2.0.4) (2019-09-24)
 
 
