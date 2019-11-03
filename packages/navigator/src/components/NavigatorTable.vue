@@ -34,7 +34,7 @@
         slot="label"
         slot-scope="label">
         <span v-if="label.item.type === 'ENTITY_TYPE' && dataExplorerUrl">
-          <a :href="dataExplorerUrl + '?entity=' + label.item.id + '&hideselect=true'">
+          <a :href="dataExplorerUrl + '?entity=' + label.item.id">
             <font-awesome-icon
               icon="list"
               fixed-width/> {{ label.item.label }}
