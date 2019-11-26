@@ -9,3 +9,14 @@ describe('ToastComponent.vue', () => {
     expect(wrapper.find('#alert-message').classes()).toContain('alert-warning')
   })
 })
+
+describe('ToastComponent.vue', () => {
+  it('can hide after some set time', (done) => {
+    const wrapper = shallowMount(ToastComponent, { propsData: { type: 'warning', message: 'time test', autoHideOnType: ['warning'], autoHideTime: 10 } })
+    expect(wrapper.emitted().toastCloseBtnClicked).not.toBeDefined()
+    setTimeout(() => {
+      expect(wrapper.emitted().toastCloseBtnClicked).toBeDefined()
+      done()
+    }, 15)
+  })
+})

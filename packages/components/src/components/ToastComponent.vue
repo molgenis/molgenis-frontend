@@ -27,6 +27,23 @@ export default Vue.extend({
     message: {
       type: String,
       required: true
+    },
+    autoHideOnType: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    autoHideTime: {
+      type: Number,
+      required: false,
+      default: () => 10000
+    }
+  },
+  mounted () {
+    if (this.autoHideOnType.includes(this.type)) {
+      setTimeout(() => {
+        this.$emit('toastCloseBtnClicked')
+      }, this.autoHideTime)
     }
   }
 })
