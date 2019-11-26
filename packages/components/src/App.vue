@@ -19,11 +19,19 @@
         <h3>Toast</h3>
         <button type="button" @click="isToastShown = !isToastShown">Toggle toast</button>
         <toast-component
-        v-show="isToastShown"
-        class="m-3"
-        message="Message from toast"
-        type="warning"
-        @toastCloseBtnClicked="isToastShown = false"></toast-component>
+          v-show="isToastShown"
+          class="m-3"
+          message="Message from toast"
+          type="warning"
+          @toastCloseBtnClicked="isToastShown = false"></toast-component>
+        <toast-component
+          v-show="isAutoHideToastShown"
+          class="m-3"
+          message="This will hide in about 5 seconds"
+          type="info"
+          :autoHideOnType="['info', 'succes']"
+          :autoHideTime="5000"
+          @toastCloseBtnClicked="isAutoHideToastShown = false"></toast-component>
       </div>
     </div>
   </div>
@@ -43,6 +51,7 @@ export default Vue.extend({
   data: () => {
     return {
       isToastShown: true,
+      isAutoHideToastShown: true,
       dataContents: {
         field1: 'value 1',
         field2: 2,
