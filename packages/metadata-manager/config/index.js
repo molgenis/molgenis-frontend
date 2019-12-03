@@ -1,5 +1,12 @@
 var path = require('path')
 
+const config = require('rc')('metadata-manager', {
+  development: {
+    changeOrigin: true,
+    proxy: 'http://localhost:8080'
+  }
+})
+
 module.exports = {
   build: {
     env: require('./prod.env'),
@@ -20,13 +27,16 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/login': {
-        target: 'http://localhost:8080'
+        changeOrigin: config.development.changeOrigin,
+        target: config.development.proxy
       },
       '/api': {
-        target: 'http://localhost:8080'
+        changeOrigin: config.development.changeOrigin,
+        target: config.development.proxy
       },
       '/plugin/metadata-manager': {
-        target: 'http://localhost:8080'
+        changeOrigin: config.development.changeOrigin,
+        target: config.development.proxy
       }
     },
     cssSourceMap: false
