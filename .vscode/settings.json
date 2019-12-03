@@ -1,4 +1,16 @@
 {
+    "eslint.enable": true,
+    "eslint.validate": [
+        { "language": "javascript", "autoFix": true },
+        { "language": "vue", "autoFix": true },
+        { "language": "typescript", "autoFix": true }
+    ],
+    "eslint.options": {
+        "extensions": [".ts", ".js"]
+    },
+    "vetur.validation.template": false,
+    "eslint.autoFixOnSave": true,
+    "stylelint.autoFixOnSave": true,
     "sonarlint.connectedMode.project": {
         "serverId": "sonarcloud_molgenis",
         "projectKey": "molgenis_molgenis-frontend"
