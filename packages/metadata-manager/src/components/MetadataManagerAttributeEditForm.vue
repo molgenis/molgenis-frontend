@@ -73,7 +73,7 @@
             <label class="col-3 col-form-label text-muted">{{ 'attribute-edit-form-name-label' |
               i18n }}</label>
             <div class="col">
-              <input v-model="name" class="form-control" type="text"
+              <input v-model="name" :disabled="!selectedAttribute.isNew" class="form-control" type="text"
                      :placeholder="$t('attribute-edit-form-name-placeholder')">
             </div>
           </div>
