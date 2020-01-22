@@ -92,7 +92,7 @@ pipeline {
             steps {
                 container('vault') {
                     sh "mkdir ${JENKINS_AGENT_WORKDIR}/.rancher"
-                    sh 'vault read -field=value secret/ops/jenkins/rancher/cli2.json > ${JENKINS_AGENT_WORKDIR}/.rancher/cli2.json'
+                    sh "vault read -field=value secret/ops/jenkins/rancher/cli2.json > ${JENKINS_AGENT_WORKDIR}/.rancher/cli2.json"
                 }
                 container('rancher') {
                     sh "rancher apps install " +
