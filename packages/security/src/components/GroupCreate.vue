@@ -107,8 +107,7 @@
           })
       },
       checkGroupName: _.throttle(function () {
-        const pipesRegEx = '/-/g'
-        const packageName = this.groupIdentifier.replace(pipesRegEx, '_')
+        const packageName = this.groupIdentifier
         this.$store.dispatch('checkRootPackageExists', packageName).then((exists) => {
           this.isGroupNameAvailable = !exists
         })
