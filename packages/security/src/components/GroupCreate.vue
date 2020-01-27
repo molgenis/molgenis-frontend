@@ -28,7 +28,7 @@
 
           <div class="form-group">
             <label for="groupIdentifierInput">{{'security-ui-group-attribute-name-name' | i18n}}</label>
-            <input v-model="groupIdentifier" readonly type="text" class="form-control" id="groupIdentifierInput"
+            <input v-model="groupIdentifier" type="text" class="form-control" id="groupIdentifierInput"
                    :placeholder="'security-ui-group-attribute-name-placeholder'|i18n">
             <small id="groupIdentifierHelp" class="form-text text-muted">
               {{'security-ui-group-attribute-name-description' | i18n}}
@@ -76,13 +76,14 @@
     data () {
       return {
         groupName: '',
+        groupIdentifier: '',
         isCreating: false,
         isGroupNameAvailable: true,
         isCheckingGroupName: true
       }
     },
     computed: {
-      groupIdentifier () {
+      groupNameSlug () {
         return slugService.slugify(this.groupName)
       }
     },
@@ -91,6 +92,7 @@
         if (newVal) {
           this.checkGroupName()
         }
+        this.groupIdentifier = this.groupNameSlug
       }
     },
     methods: {
@@ -104,10 +106,8 @@
             this.isCreating = !this.isCreating
           })
       },
-
       checkGroupName: _.throttle(function () {
-        const pipesRegEx = '/-/g'
-        const packageName = this.groupIdentifier.replace(pipesRegEx, '_')
+        const packageName = this.groupIdentifier
         this.$store.dispatch('checkRootPackageExists', packageName).then((exists) => {
           this.isGroupNameAvailable = !exists
         })
