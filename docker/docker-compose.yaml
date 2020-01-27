@@ -1,15 +1,12 @@
-version: "3.0"
+version: "3.4"
 services:
   frontend:
-    image: ${FRONTEND_REPOSITORY}:${FRONTEND_TAG}
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./wait-for-it.sh:/bin/wait-for-it.sh:ro
+    build: 
+      context: ./proxy-config
     depends_on:
       - molgenis
     ports:
-      - "80"
-    command: ["/bin/wait-for-it.sh", "molgenis:8080", "--", "nginx", "-g", "daemon off;"]
+      - "80:80"
   molgenis:
     image: ${MOLGENIS_REPOSITORY}:${MOLGENIS_TAG}
     environment:
@@ -32,9 +29,15 @@ services:
       - elasticsearch
       - minio
     volumes:
-      - app-data:/opt/molgenis
+      - app-data:/home/molgenis
     depends_on:
       - elasticsearch
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 2m
   postgres:
     image: postgres:11-alpine
     environment:

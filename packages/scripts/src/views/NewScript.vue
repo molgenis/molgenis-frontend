@@ -18,7 +18,7 @@
         </b-form-select>
       </b-col>
     </b-row>
-    <CodeEditor @valueChange="onValueChange" />
+    <CodeEditor @valueChange="onValueChange" :scriptType="form.type"/>
     <b-row class="mb-3">
       <b-col sm="4" class="border-right">
         <label>{{ 'scripts-result-file-extension' | i18n }}</label>
@@ -37,7 +37,7 @@
     </b-row>
     <div class="mb-4">
       <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">{{ 'scripts-cancel-label' | i18n }}</button>
-      <button :disabled="(!nameValidation || !contentValidation)" id="save-btn" class="btn btn-primary" type="submit" @click.prevent="onSubmit">{{ 'scripts-save-label' | i18n }}</button>
+      <button :disabled="(!nameValidation || !contentValidation)" id="save-btn" class="btn btn-primary" type="button" @click.prevent="onSubmit">{{ 'scripts-save-label' | i18n }}</button>
     </div>
   </div>
 </template>

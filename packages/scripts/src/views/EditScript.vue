@@ -4,7 +4,7 @@
       {{ 'scripts-save-error' | i18n }}
     </b-alert>
     <h1>{{form.name}}</h1>
-    <CodeEditor v-if="loaded" @valueChange="onValueChange" :initialData="form.content">
+    <CodeEditor v-if="loaded" @valueChange="onValueChange" :initialData="form.content" :scriptType="form.type">
       <ExecuteButton :disabled="(!contentValidation)" :doSave="true" :form="form" size="sm" :parameters="form.parameters" :name="form.name">{{ 'scripts-save-and-run' | i18n }}</ExecuteButton>
     </CodeEditor>
     <b-row class="mb-3">
@@ -29,7 +29,7 @@
     </b-row>
     <div class="mb-4">
       <button id="cancel-btn" class="btn btn-secondary mr-3" type="reset" @click.prevent="onCancel">{{ 'scripts-cancel-label' | i18n }}</button>
-      <button :disabled="(!contentValidation)" id="save-btn" class="btn btn-primary mr-3" type="submit" @click.prevent="onSubmit">{{ 'scripts-save-label' | i18n }}</button>
+      <button :disabled="(!contentValidation)" id="save-btn" class="btn btn-primary mr-3" type="button" @click.prevent="onSubmit">{{ 'scripts-save-label' | i18n }}</button>
     </div>
   </div>
 </template>

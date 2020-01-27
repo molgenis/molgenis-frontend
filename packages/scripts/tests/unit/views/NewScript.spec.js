@@ -62,7 +62,6 @@ describe('views/NewScript.vue', () => {
   })
 })
 
-
 describe('views/NewScript.vue', () => {
   let actions
   let store

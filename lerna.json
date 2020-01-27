@@ -6,13 +6,9 @@
   ],
   "version": "independent",
   "yes": true,
-  "registry": "https://registry.molgenis.org/repository/npm-group/",
   "command": {
     "version": {
       "conventionalCommits": true
-    },
-    "publish": {
-      "verifyAccess": false
     }
   }
 }

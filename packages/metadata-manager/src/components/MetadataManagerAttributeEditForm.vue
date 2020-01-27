@@ -5,8 +5,8 @@
       <div class="row">
         <div class="col">
           <strong>{{ 'attribute-tree-title' | i18n }}</strong>
-          <button @click="addAttribute" class="btn btn-primary btn-sm float-right"><i
-            class="fa fa-plus"></i></button>
+          <button @click="addAttribute" class="btn btn-primary btn-sm float-right" aria-label="add attribute"><i
+            class="fa fa-plus" aria-hidden="true"></i></button>
         </div>
       </div>
 
@@ -18,22 +18,23 @@
                :aria-label="$t('button-group-aria-label')">
             <div class="btn-group mr-2" role="group">
               <button @click="moveAttribute('up')" class="btn btn-secondary btn-sm"
-                      :disabled="!selectedAttribute || selectedAttributeIndex === 0">
+                      :disabled="!selectedAttribute || selectedAttributeIndex === 0" aria-label="move up">
 
-                <i class="fa fa-chevron-up"></i>
+                <i class="fa fa-chevron-up" aria-hidden="true"></i>
               </button>
               <button @click="moveAttribute('down')" class="btn btn-secondary btn-sm"
-                      :disabled="!selectedAttribute || selectedAttributeIndex === editorEntityType.attributes.length - 1">
+                      :disabled="!selectedAttribute || selectedAttributeIndex === editorEntityType.attributes.length - 1" aria-label="move down">
 
-                <i class="fa fa-chevron-down"></i>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
               </button>
             </div>
             <div class="btn-group" role="group">
               <button @click="deleteAttribute(selectedAttribute)"
                       class="btn btn-danger float-right btn-sm"
-                      :disabled="!selectedAttribute">
+                      :disabled="!selectedAttribute"
+                      aria-label="delete">
 
-                <i class="fa fa-trash-o"></i>
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -72,7 +73,7 @@
             <label class="col-3 col-form-label text-muted">{{ 'attribute-edit-form-name-label' |
               i18n }}</label>
             <div class="col">
-              <input v-model="name" class="form-control" type="text"
+              <input v-model="name" :disabled="!selectedAttribute.isNew" class="form-control" type="text"
                      :placeholder="$t('attribute-edit-form-name-placeholder')">
             </div>
           </div>
@@ -85,7 +86,7 @@
                      :placeholder="$t('attribute-edit-form-label-placeholder')">
               <div class="input-group-append">
                 <button @click="showLabelLanguageInputs = !showLabelLanguageInputs" class="btn btn-outline-secondary"><i
-                  class="fa fa-language fa-lg"></i></button>
+                  class="fa fa-language fa-lg" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
@@ -110,7 +111,7 @@
                      :placeholder="$t('attribute-edit-form-description-placeholder')">
               <div class="input-group-append">
                 <button @click="showDescriptionLanguageInputs = !showDescriptionLanguageInputs" class="btn btn-outline-secondary"><i
-                  class="fa fa-language fa-lg"></i></button>
+                  class="fa fa-language fa-lg" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
@@ -228,6 +229,7 @@
                 <p class="form-control-static">
                   <span v-for="o in orderBy.orders"> {{o.attributeName}}
                   <i class="fa"
+                    aria-hidden="true"
                      :class="{'fa-sort-amount-asc': o.direction === 'ASC', 'fa-sort-amount-desc': o.direction === 'DESC'}"></i>
                   </span>
                 </p>

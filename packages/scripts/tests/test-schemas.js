@@ -5,12 +5,14 @@ const Script = { 'href': '/api/v2/sys_scr_Script', 'meta': { 'href': '/api/v2/sy
 const NoPermission = { 'errors': [{ 'message': "No 'Read metadata' permission on entity type 'Script' with id 'sys_scr_Script'.", 'code': 'DS04' }] }
 const ScriptParameter = {"href":"/api/v2/sys_scr_ScriptParameter","meta":{"href":"/api/v2/sys_scr_ScriptParameter","hrefCollection":"/api/v2/sys_scr_ScriptParameter","name":"sys_scr_ScriptParameter","label":"Script parameter","attributes":[{"href":"/api/v2/sys_scr_ScriptParameter/meta/name","fieldType":"STRING","name":"name","label":"Name label","attributes":[],"maxLength":255,"auto":false,"nillable":false,"readOnly":true,"labelAttribute":true,"unique":true,"visible":true,"lookupAttribute":false,"isAggregatable":false}],"labelAttribute":"name","idAttribute":"name","lookupAttributes":[],"isAbstract":false,"writable":true,"languageCode":"nl","permissions":["COUNT_DATA","AGGREGATE_DATA","ADD_DATA","UPDATE_DATA","DELETE_DATA","DELETE_METADATA","UPDATE_METADATA","READ_METADATA","READ_DATA"]},"start":0,"num":10000,"total":3,"items":[{"_href":"/api/v2/sys_scr_ScriptParameter/x","name":"x"},{"_href":"/api/v2/sys_scr_ScriptParameter/y","name":"y"},{"_href":"/api/v2/sys_scr_ScriptParameter/z","name":"z"}]}
 const Created = {"location":"/api/v2/sys_scr_Script?q=name=in=(\"HalloWorld\")","resources":[{"href":"/api/v2/sys_scr_Script/HalloWorld"}]}
+const i18n = {"scripts-delete-script":"Delete script","scripts-please-use":"Please use","scripts-save-label":"Save","scripts-cancel-label":"Cancel","scripts-parameters-label":"Parameters","scripts-name-label":"Name","scripts-save-and-run":"Save and Run","scripts-true-label":"Yes","scripts-connection-error":"Error: Can't connect to molgenis","scripts-exposed-parameters":"Exposed Parameters","scripts-unique-error":"This field is required, and needs to be unique.","scripts-edit-script":"Edit script","scripts-add-new-script":"Add new script","scripts-new-script":"New Script","scripts-remove-script":"Are you sure you want to remove this script?","scripts-type-label":"Type","scripts-save-error":"Error on saving data","scripts-delete-label":"Delete","scripts-run-label":"Run","scripts-generate-security-token":"Generate security token","scripts-confirm-deletion":"Confirm Deletion","scripts-false-label":"No","scripts-result-file-extension":"Result file extension","scripts-run-script":"Run script"}
 
 module.exports = {
   ScriptType,
   Script,
   NoPermission,
   ScriptParameter,
-  Created
+  Created,
+  i18n
 }
 

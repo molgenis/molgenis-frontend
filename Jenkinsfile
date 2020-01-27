@@ -7,6 +7,7 @@ pipeline {
     environment {
         REPOSITORY = 'molgenis/molgenis-frontend'
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
+        npm_config_registry = "https://registry.npmjs.org"
     }
     stages {
         stage('Prepare') {
@@ -16,11 +17,19 @@ pipeline {
                 }
                 container('vault') {
                     script {
+                        env.TUNNEL_IDENTIFIER = sh(script: 'echo ${GIT_COMMIT}-${BUILD_NUMBER}', returnStdout: true)
                         env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
                         env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-frontend secret/ops/token/codecov', returnStdout: true)
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
-                        sh "set +x; echo '_auth=${NEXUS_AUTH}' > ~/.npmrc"
+                        env.DOCKERHUB_AUTH = sh(script: 'vault read -field=value secret/gcc/token/dockerhub', returnStdout: true)
+                        env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
+                        env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
+                        env.SAUCE_CRED_USR = sh(script: 'vault read -field=username secret/ops/token/saucelabs', returnStdout: true)
+                        env.SAUCE_CRED_PSW = sh(script: 'vault read -field=value secret/ops/token/saucelabs', returnStdout: true)
                     }
+                }
+                container('node') {
+                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
@@ -35,7 +44,16 @@ pipeline {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
+                    // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
+                    sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
+                    // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
+                    sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --env ci_chrome,ci_ie11,ci_firefox"
                     sh "yarn lerna run build"
+                }
+                container('sonar') {
+                    // Fetch the target branch, sonar likes to take a look at it
+                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                    sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
                 }
             }
             post {
@@ -46,7 +64,7 @@ pipeline {
                 }
             }
         }
-        stage('Push to registries [ PR ]') {
+        stage('Build container serving the artifacts [ PR ]') {
             when {
                 changeRequest()
             }
@@ -56,11 +74,10 @@ pipeline {
             }
             steps {
                 container (name: 'kaniko', shell: '/busybox/sh') {
-                    sh "#!/busybox/sh\nmkdir -p /root/.docker/"
-                    sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > /root/.docker/config.json"
-                    sh "#!/busybox/sh\nrm -rf docker/dist&&mkdir docker/dist&&cp -rf packages/*/dist/* docker/dist"
-                    sh "#!/busybox/sh\nrm -rf docker/dist/index.htm*"
-                    sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker --destination ${LOCAL_REPOSITORY}:${TAG}"
+                    sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
+                    sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
+                    sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview-config/copy_package_dist_dirs.sh"
+                    sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/preview-config --destination ${LOCAL_REPOSITORY}:${TAG}"
                 }
             }
         }
@@ -74,19 +91,19 @@ pipeline {
             }
             steps {
                 container('vault') {
-                    sh "mkdir /home/jenkins/.rancher"
-                    sh 'vault read -field=value secret/ops/jenkins/rancher/cli2.json > /home/jenkins/.rancher/cli2.json'
+                    sh "mkdir ${JENKINS_AGENT_WORKDIR}/.rancher"
+                    sh "vault read -field=value secret/ops/jenkins/rancher/cli2.json > ${JENKINS_AGENT_WORKDIR}/.rancher/cli2.json"
                 }
                 container('rancher') {
-                    sh "rancher context switch dev-molgenis"
                     sh "rancher apps install " +
-                        "molgenis-frontend " +
+                        "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +
                         "--no-prompt " +
                         "--set environment=dev " +
                         "--set image.tag=${TAG} " +
                         "--set image.repository=${LOCAL_REGISTRY} " +
-                        "--set backend.url=https://latest.test.molgenis.org " +
+                        "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
+                        "--set proxy.backend.service.targetRelease=master " +
                         "--set image.pullPolicy=Always"
                 }
             }
@@ -110,7 +127,15 @@ pipeline {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run unit"
+                    // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
+                    sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
+                    // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
+                    sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --env ci_chrome,ci_ie11,ci_firefox"
+                    
                     sh "yarn lerna run build"
+                }
+                container('sonar') {
+                    sh "sonar-scanner"
                 }
             }
             post {
@@ -121,41 +146,53 @@ pipeline {
                 }
             }
         }
-        stage('Release canary: [ master ]'){
-            when {
-                branch 'master'
-            }
-            steps {
-                lock("Tags"){
-                    sh "git fetch --tags"
-                    container('node') {
-                        sh "yarn lerna publish --canary"
-                    }
-                }
-            }
-        }
         stage('Release: [ master ]') {
             when {
-                branch 'master'
-            }
-            steps {
-                milestone 1
-                timeout(time: 30, unit: 'MINUTES') {
-                    script {
-                        env.RELEASE_SCOPE = input(
-                                message: 'Do you want to release?',
-                                ok: 'Release'
-                        )
+                allOf {
+                    branch 'master'
+                    not {
+                        changelog '.*\\[skip ci\\]$'
                     }
                 }
-                container('node') {
-                    sh "yarn lerna publish"
-                    hubotSend(message: "${env.REPOSITORY} has been successfully deployed.", status:'SUCCESS')
+            }
+            environment {
+                GIT_AUTHOR_EMAIL = 'molgenis+ci@gmail.com'
+                GIT_AUTHOR_NAME = 'molgenis-jenkins'
+                GIT_COMMITTER_EMAIL = 'molgenis+ci@gmail.com'
+                GIT_COMMITTER_NAME = 'molgenis-jenkins'
+                TAG = '8'
+                DOCKER_CONFIG='/root/.docker'
+            }
+            stages {
+                stage('Build and publish: [master]') {
+                    steps {
+                        milestone 1
+                        container('node') {
+                            sh "set +x; npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN}"
+                            sh "yarn lerna publish"
+                        }
+                    }
+                }
+                stage('Release docker image: [ master ]') {
+                    steps {
+                        container (name: 'kaniko', shell: '/busybox/sh') {
+                            sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
+                            sh "#!/busybox/sh\necho '{\"auths\": {\"https://index.docker.io/v1/\": {\"auth\": \"${DOCKERHUB_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
+                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/proxy-config --build-arg MOLGENIS_VERSION=lts --destination ${REPOSITORY}:${TAG}-lts"
+                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/proxy-config --build-arg MOLGENIS_VERSION=stable --destination ${REPOSITORY}:${TAG}-stable"
+                            sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/proxy-config --build-arg MOLGENIS_VERSION=latest --destination ${REPOSITORY}:latest"
+                        }
+                    }
                 }
             }
         }
     }
-    post{
+    post {
+        always {
+            container('node') {
+                sh "daemon --name=sauceconnect --stop"
+            }
+        }
         success {
             hubotSend(message: 'Build success', status:'INFO', site: 'slack-pr-app-team')
         }

@@ -25,9 +25,9 @@ var configuration = {
 		'vendor-bundle' : [ 'molgenis-vendor-webpack' ]
 	},
 	output : {
-		path : 'dist/js/dist',
+		path : 'dist/js/',
 		filename : 'molgenis-[name].js',
-		publicPath : '/js/dist/'
+		publicPath : '/@molgenis-ui/core-ui/dist/js/'
 	},
 	plugins : [ new webpack.PrefetchPlugin('react/lib/React'), new webpack.PrefetchPlugin('react/lib/ReactWithAddons'),
 			new webpack.PrefetchPlugin('react/lib/DOMChildrenOperations.js'), new webpack.PrefetchPlugin('react/lib/ReactDOMComponent'),

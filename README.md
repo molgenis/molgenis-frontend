@@ -1,8 +1,8 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=molgenis_molgenis-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=molgenis_molgenis-frontend)
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/dashboard?id=molgenis_molgenis-frontend)
 [![Code Coverage](https://codecov.io/gh/molgenis/molgenis-frontend/branch/master/graph/badge.svg)](https://codecov.io/gh/molgenis/molgenis-frontend/branch/master)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 # molgenis-frontend
-These are *stable* apps for MOLGENIS. The *stable* apps will compose the MOLGENIS frontend. These are used in the [molgenis/molgenis repository](https://github.com/molgenis/molgenis)
+These are *stable* packages for MOLGENIS. The *stable* packages will compose the MOLGENIS frontend. These are used in the [molgenis/molgenis repository](https://github.com/molgenis/molgenis)
 
 The following will be addressed:
 
@@ -13,10 +13,12 @@ The following will be addressed:
 
 ## Environment
 When developing client code, you will need to following tools:
- - Node v8.9.0 (LTS version) and included NPM version
+ - Node v8.11.3 (LTS version) and included NPM version
  - Yarn v1.10.3 or greater
 
-The project is built using [lerna](https://lernajs.io/) to manage the monorepo and [yarn](https://yarnpkg.com/) as the npm client.
+The project is built using [lerna](https://lerna.js.org/) to manage the monorepo and [yarn](https://yarnpkg.com/) as the npm client.
+
+> note: It can be hard to migrate from old to new versions. Please check the [troubleshooting guide](TROUBLESHOOTING.md) if you have trouble setting up the environment.
 
 ## Developing
 To get started run
@@ -28,13 +30,13 @@ To get started run
 The following will be addressed:
 
 - [Commits](#commits)
-- [Usage of yarn with Vue](#usage-of-yarn-with-vue)
-- [Using yarn link for live editing](#using-yarn-link-for-live-editing)
-- [Update existing stable apps](#update-existing-stable-apps)
-- [Create new stable apps](#create-new-stable-apps)
+- [Usage of yarn](#usage-of-yarn)
+- [Create new stable packages](#create-new-stable-packages)
+- [Update existing stable packages](#update-existing-stable-packages)
+- [Testing packages](#testing-packages)
 
 ### Commits
-We use independent versioning for the apps. This makes it hard to interactively specify at release
+We use independent versioning for the packages. This makes it hard to interactively specify at release
 time what type of upgrade each app needs.
 
 So please specify your changes using [conventional commits](https://www.conventionalcommits.org).
@@ -55,20 +57,39 @@ The [Angular conventional commit types](https://github.com/angular/angular/blob/
 When merging a pull request that does not use conventional commits you can squash the commits
 into a single conventional commit.
 
-### Usage of yarn with Vue
+### Usage of yarn
 The following three commands can be used to install, develop and test client code:
+
+#### cli2
+
+```bash
+> yarn install
+> yarn dev
+> yarn unit
+> yarn e2e
+// (to run unit and e2e together)
+> yarn test 
+> yarn build
+```
+#### cli3
 
 ```bash
 > yarn install
 > yarn serve
-> yarn test
+> yarn test:unit
+> yarn test:e2e
+> yarn build
 ```
+
+#### Global commands
 
 Third party dependencies can be added: 
 
 ```bash
 > yarn add <library_name>
 ```
+
+
 
 Third party development dependencies can be added: 
 
@@ -90,60 +111,7 @@ Commit this file to your Git repository as it ensures future builds to use the v
 When running your client code in development on port 8081, it will help to run the MOLGENIS locally on port 8080. 
 The vue-cli comes with a proxy table that will redirect any REST calls to localhost:8080.
 
-### Using yarn link for live editing
-You can use [`yarn link`](https://yarnpkg.com/lang/en/docs/cli/link/) while developing to view the
-results directly in MOLGENIS.
-
-Assuming you've checked out `molgenis/molgenis` and `molgenis/molgenis-frontend` repositories to directory `~/git`,
-and want to get started working on module `scripts`, do this once:
-
-* Open both projects in IntelliJ.
-* In the molgenis project, go to the molgenis-frontend module and mark the 
-`node_modules/@molgenis/scripts/dist` directory as resources root. (Does not happen automatically even
-though the pom.xml lists it as such.)
-* Start `molgenis` webapp in exploded mode using IntelliJ IDEA
-* Run `yarn link` in `~/git/molgenis-frontend/packages/scripts`.
-* Run `yarn link "@molgenis/scripts"` in `~/git/molgenis/molgenis-frontend/`
-* If the project supports webpack watch modus, start it: `yarn watch`
-
-Now for each change:
-* make change in `molgenis-frontend`
-* (If the project does not support webpack watch modus) Manually run `yarn build`.
-* Wait for webpack to finish
-* Tab out to the browser. You should see a tiny progress bar in the molgenis window of IntelliJ.
-* Wait for the popup saying `Compilation finished` to appear.
-* Reload the browser window to see the changes 
-
-### Update existing stable apps
-**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable apps. The version of the app you start to develop has to be updated to [ *canary* ]**. 
-
-That way each merge with the master on this repository will be automatically picked up by the main MOLGENIS repository.
-
-The whole development flow is working as follows. 
-
-- [PR's](#pull-requests)
-- [Merges with master](#merges-with-master)
-- [Releases](#Releases)
-
-#### Pull request
-When you start developing and define a set of changes to be a pull-request it is not published on the [stable appstore](https://registry.molgenis.org/#browse/browse:npm-stable) by default. 
-The changes have to be tested by hand. You test the changes by proxying the app to MOLGENIS and see if it works.
-
-#### Merges with master
-When you merge a pull-request it produces a fixed number (an alpha release) and a 'canary-tag' on the [stable appstore](https://registry.molgenis.org/#browse/browse:npm-stable).
-By setting the canary-tag in the MOLGENIS repository you automatically pickup new changes from the MOLGENIS frontend when you build the MOLGENIS repository.
-
-#### Releases
-You can manually perform a release on Jenkins.
-Lerna will determine which modules need to be released and what type of increment is needed based
-on the git log. Please use conventional commits so that this is determined correctly.
-
-For more information, see the `lerna version` [command documentation](https://github.com/lerna/lerna/tree/master/commands/version#readme).
-
-The modules are published to our [stable appstore](https://registry.molgenis.org/#browse/browse:npm-stable) 
-`https://registry.molgenis.org/repository/npm-stable/`
-
-### Create new stable apps
+### Create new stable packages
 If you do not have the vue-cli (version 3), please check [vue-cli](https://cli.vuejs.org/). 
 
 If you have the vue-cli installed you can use the following steps to quickly install a working Vue template.
@@ -155,10 +123,253 @@ If you have the vue-cli installed you can use the following steps to quickly ins
 
 Using the ```preset.json``` is recommended. If you need specific tooling you can also choose manual.
 
->note: Make sure you update the project-name to @molgenis/#new-app# for publishing purposes
+>note: Make sure you update the project-name to @molgenis-ui/#new-app# for publishing purposes in the ```package.json``` *name-key* of the package you created.
+
+### Update existing stable packages
+**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable packages. The version of the app you start to develop has to be updated to [ *canary* ]**. 
+
+That way each merge with the master on this repository will be automatically picked up by the main MOLGENIS repository.
+
+The whole development flow is working as follows. 
+
+- [PR's](#pull-requests)
+- [Merges with master](#merges-with-master)
+- [Releases](#Releases)
+- [Deployment](#Deployment)
+
+#### Pull requests
+PR's will build locally and will be packaged locally in a docker. The docker will be proxied in front of the https://master.dev.molgenis.org as a preview on kubernetes. 
+
+#### Merges with master
+Merges with the master automatically will deploy on npmjs.org.
+
+#### Releases
+A release will automatically be done when an app is merged with the master.
+Lerna will determine which modules need to be released and what type of increment is needed based
+on the git log. Please use conventional commits so that this is determined correctly.
+
+For more information, see the `lerna version` [command documentation](https://github.com/lerna/lerna/tree/master/commands/version#readme).
+
+The modules are published to our [stable repository](https://registry.npmjs.org/molgenis-ui)
+
+#### Deployment
+When the packages are published they will be automatically deployed based upon the app-configuration in each MOLGENIS instance. The service which serves the packages is at the moment https://unpkg.com. This service serves and NPM bundle as a bundle of files.
+
+Unpackage fetches tgz packages from npm ( @molgenis-ui ) and unzips and serves them.
+unpkg.com forwards requests to versioned requests.
+
+**Example configuration:**
+
+@molgenis-ui/navigator has versions: 1.0.0 , 2.0.1, 2.1.2
+
+```unpkg/@molgenis-ui/navigator```
+ is forwarded to 
+```unpkg/@molgenis-ui/navigator@2.1.2 ( latest )```
+
+```unpkg/@molgenis-ui/navigator@2.0.1```
+ Is not  forwarded ( version request )
+
+```unpkg/@molgenis-ui/navigator@~2```
+ is forwarded to 
+```unpkg/@molgenis-ui/navigator@2.0.1 ( latest within major )```
+
+### Testing packages
+There are three ways to test a package:
+
+1. [Make a standalone setup and mock the API responses](#make-a-standalone-setup)
+2. [Proxy the MOLGENIS backend in front of the package](#proxying-molgenis-backend)
+3. [Link the package in the MOLGENIS backend for full integration](#using-yarn-link-for-live-editing) 
+
+> **note: the ordering of the ways to test the packages is important.**
+>
+>The first and second test manners should be sufficient to actually be confident that your application works. In the preview mode, 
+where you already integrated the artifact in MOLGENIS you also test the integration. 
+
+#### Make a standalone setup
+You always want to start with an offline setup for the package. You then need to define the state and mock 
+responses first and have to think about the API you want to use. In cli2 and cli3 the setup is different so 
+both are described.  
+
+##### cli2
+When you are creating a standalone setup in cli2 you need to add an ```index.html``` file (is generated automatically).
+Besides this you need to add mock responses to supply you **store**. You can add them in ```#package#/config/index.js```. 
+
+*Example:*
+
+```javascript
+...
+const listOfItems = require('./dev-responses/list.js')
+...
+  before (app) {
+      app.get('#apipath#', function (req, res) {
+        res.json(listOfItems)
+      })
+...
+```
+
+This before block is used by the **store** instead of accessing the real end-points. This is also used by the end-to-end tests to test the ui.
+
+> note: You need to use yarn to install, test, serve and develop the package. Check: [Usage of yarn](#usage-of-yarn) (cli2).
+
+##### cli3
+When you are creating a standalone setup in cli3 you need to add an ```index.html``` file (is generated automatically).
+Besides this you need to add mock responses to supply you **store**. You can add them in ```vue.config.js```.
+
+A template of ```vue.config.js``` can be found here:
+
+```javascript
+// vue.config.js
+module.exports = {
+  chainWebpack: config => {
+    config.externals({
+      '#external library key#': '#library name#'
+    })
+  },
+  devServer: {
+    // In CI mode, Safari cannot contact "localhost", so as a workaround, run the dev server using the jenkins agent pod dns instead.
+    host: process.env.JENKINS_AGENT_NAME || 'localhost',
+    // Do not proxy in production to allow for mocking api response in e2e test ( e2e tests are run in production mode)
+    proxy: process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:8080',
+    before: function (app, server) {
+      app.get('#api path#', function (req, res) {
+        res.json({
+          href: '#href api#',
+          items: [
+            {
+              _href: '#item href#',
+              code: '#item code#',
+            },
+          ]
+        })
+      })
+    }
+  }
+}
+```
+
+ 
+*Example:* 
+ 
+```javascript
+...
+const listOfItems = require('./dev-responses/list.js')
+...
+  before: function (app, server) {
+      app.get('#api path#', function (req, res) {
+        res.json(listOfItems)
+      })      
+...
+``` 
+
+This before block is used by the **store** instead of accessing the real end-points. This is also used by the end-to-end tests to test the ui.
+
+> note: You need to use yarn to install, test, serve and develop the package. Check: [Usage of yarn](#usage-of-yarn) (cli3). 
+
+
+
+#### Proxying MOLGENIS backend
+We now have two configurations for the VUE packages. One based on [vue-cli2](https://cli.vuejs.org/guide/creating-a-project.html#using-the-gui) and one based on [vue-cli3](https://cli.vuejs.org/guide/creating-a-project.html#vue-create).
+
+##### cli2
+You need to configure the MOLGENIS backend in the index.js of the vue configuration. It is usually placed here: ```#package#/config/index.js```
+
+You need to: 'add, change or leave it as it is', this configuration block:
+
+*Example:*
+
+```javascript
+...
+dev: {
+    ...
+    proxyTable: {
+      '/login': {
+        target: 'http://localhost:8080'
+      },
+      '/api': {
+        target: 'http://localhost:8080'
+      },
+      '/plugin/#package#': {
+        target: 'http://localhost:8080'
+      }
+    },
+...
+```
+
+You need to add the paths that are used by the package. In this case:
+
+```javascript
+- '/login'
+- '/api'
+- '/plugin'
+```
+
+The idea is that we lean as much on public API's as possible. Then we do not need lot's of specific webservices for plugins.
+
+> note: You need to disable the ```before```-block in the ```#package#/config/index.js```. This way you are making sure that 
+the package is not using the mock responses.
+
+
+##### cli3
+In cli3 you have a lot less configuration. Default the vue configuration is located partially in the ```package.json``` and in ```vue.config.js```. 
+To proxy we need to amend the ```vue.config.js```.
+
+*Example:*
+
+```javascript
+...
+ 'devServer': {
+    proxy: process.env.NODE_ENV === 'production' ? undefined : {
+      '^/login': {
+        'target': 'http://localhost:8080'
+      },
+      '^/api': {
+        'target': 'http://localhost:8080'
+      },
+      '^/plugin/#package#': {
+        'target': 'http://localhost:8080'
+      },
+...
+```
+
+You need to add the paths that are used by the package. In this case:
+
+```javascript
+- '/login'
+- '/api'
+- '/plugin'
+```
+
+The idea is that we lean as much on public API's as possible. That we do not need lot's of specific webservices for plugins.
+
+> note: You need to disable the ```before```-block in the ```vue.config.js```. This way you are making sure that 
+the package is not using the mock responses.
+
+#### Using yarn link for live editing
+You can use [`yarn link`](https://yarnpkg.com/lang/en/docs/cli/link/) while developing to view the
+results directly in MOLGENIS.
+
+Assuming you've checked out `molgenis/molgenis` and `molgenis/molgenis-frontend` repositories to directory `~/git`,
+and want to get started working on module `scripts`, do this once:
+
+* Open both projects in IntelliJ.
+* In the molgenis project, go to the molgenis-frontend module and mark the 
+`node_modules/@molgenis-ui/scripts/dist` directory as resources root. (Does not happen automatically even
+though the pom.xml lists it as such.)
+* Start `molgenis` webapp in exploded mode using IntelliJ IDEA
+* Run `yarn link` in `~/git/molgenis-frontend/packages/scripts`.
+* Run `yarn link "@molgenis-ui/scripts"` in `~/git/molgenis/molgenis-frontend/`
+* If the project supports webpack watch modus, start it: `yarn watch`
+
+Now for each change:
+* make change in `molgenis-frontend`
+* (If the project does not support webpack watch modus) Manually run `yarn build`.
+* Wait for webpack to finish
+* Tab out to the browser. You should see a tiny progress bar in the molgenis window of IntelliJ.
+* Wait for the popup saying `Compilation finished` to appear.
+* Reload the browser window to see the changes 
 
 ## Integrate with MOLGENIS
-There is a workflow you have to follow to implement new frontend code in [molgenis/molgenis-frontend](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/).
+There is a workflow you have to follow to implement new frontend code in [molgenis/molgenis/molgenis-frontend](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/).
 
 ### Add to [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json)
 Make sure you add the new app to the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json).
@@ -179,7 +390,7 @@ You have to include the package in the [pom.xml](https://github.com/molgenis/mol
 <build>
   <resources>
     <resource>
-      <directory>node_modules/@molgenis/##new-app##/dist</directory>
+      <directory>node_modules/@molgenis-ui/##new-app##/dist</directory>
     </resource>
 ...
 ```

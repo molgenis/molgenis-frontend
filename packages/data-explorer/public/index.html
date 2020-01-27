@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>data-explorer</title>
+    <!-- Molgenis stylesheet -->
+    <link rel="stylesheet" href="<%= BASE_URL %>bootstrap-molgenis-blue.min.css">
+    <style>
+      /* concept 7 styled card -> add to molgenis default style sheet? */
+      .flex-filter .card-header {
+        background-color: #d4ecff; /* light variant of molgenis color */
+      }
+      .flex-filter .card {
+        border: none;
+        box-shadow: 1px 1px 3px lightgrey;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but data-explorer doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

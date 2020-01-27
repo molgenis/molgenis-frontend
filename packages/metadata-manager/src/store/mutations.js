@@ -118,7 +118,6 @@ export default {
   [SET_EDITOR_ENTITY_TYPE] (state: State, editorEntityType: EditorEntityType) {
     state.editorEntityType = editorEntityType
     state.initialEditorEntityType = JSON.parse(JSON.stringify(editorEntityType))
-    state.selectedAttributeId = null
   },
   /**
    * Update currently selected EditorEntityType
