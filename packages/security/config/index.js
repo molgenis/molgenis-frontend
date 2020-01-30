@@ -23,10 +23,12 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/login': {
-        target: 'http://localhost:8080'
+        target: 'https://latest.dev.molgenis.org',
+        changeOrigin: 'true'
       },
       '/api': {
-        target: 'http://localhost:8080'
+        target: 'https://latest.dev.molgenis.org',
+        changeOrigin: 'true'
       }
     },
 
