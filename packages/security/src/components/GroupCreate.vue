@@ -17,10 +17,7 @@
             <label for="groupNameInput">{{'security-ui-group-attribute-label-name' | i18n}}</label>
             <input v-model="groupName" type="text" class="form-control" id="groupNameInput" aria-describedby="groupName"
                    :placeholder="'security-ui-group-attribute-label-placeholder' | i18n">
-            <small v-if="!isGroupNameAvailable" class="form-text text-danger ">
-              {{'security-ui-group-attribute-name-taken-message' | i18n}}
-            </small>
-            <small v-else id="groupNameHelp" class="form-text text-muted">
+            <small id="groupNameHelp" class="form-text text-muted">
               {{'security-ui-group-attribute-label-description' |
               i18n}}
             </small>
@@ -30,7 +27,10 @@
             <label for="groupIdentifierInput">{{'security-ui-group-attribute-name-name' | i18n}}</label>
             <input v-model="groupIdentifier" type="text" class="form-control" id="groupIdentifierInput"
                    :placeholder="'security-ui-group-attribute-name-placeholder'|i18n">
-            <small id="groupIdentifierHelp" class="form-text text-muted">
+            <small v-if="!isGroupIdentifierAvailable" class="form-text text-danger ">
+              {{'security-ui-group-attribute-name-taken-message' | i18n}}
+            </small>
+            <small v-else id="groupIdentifierHelp" class="form-text text-muted">
               {{'security-ui-group-attribute-name-description' | i18n}}
             </small>
           </div>
@@ -45,7 +45,7 @@
             class="btn btn-success"
             type="submit"
             @click.prevent="onSubmit"
-            :disabled="!groupName || !isGroupNameAvailable">
+            :disabled="!groupName || !isGroupIdentifierAvailable">
             {{'security-ui-group-btn-create-group' | i18n}}
           </button>
 
@@ -78,21 +78,23 @@
         groupName: '',
         groupIdentifier: '',
         isCreating: false,
-        isGroupNameAvailable: true,
-        isCheckingGroupName: true
+        isGroupIdentifierAvailable: true,
+        isCheckingGroupIdentifier: true
       }
     },
     computed: {
-      groupNameSlug () {
+      groupIdentifierSlug () {
         return slugService.slugify(this.groupName)
       }
     },
     watch: {
       groupName (newVal) {
+        this.groupIdentifier = this.groupIdentifierSlug
+      },
+      groupIdentifier (newVal) {
         if (newVal) {
-          this.checkGroupName()
+          this.checkGroupIdentifier()
         }
-        this.groupIdentifier = this.groupNameSlug
       }
     },
     methods: {
@@ -106,10 +108,10 @@
             this.isCreating = !this.isCreating
           })
       },
-      checkGroupName: _.throttle(function () {
-        const packageName = this.groupIdentifier
+      checkGroupIdentifier: _.throttle(function () {
+        const packageName = this.groupIdentifier.replace(/-/g, '_')
         this.$store.dispatch('checkRootPackageExists', packageName).then((exists) => {
-          this.isGroupNameAvailable = !exists
+          this.isGroupIdentifierAvailable = !exists
         })
       }, 300)
     },
