@@ -34,7 +34,7 @@
               {{'security-ui-group-attribute-identifier-valid-message' | i18n}}
             </small>
             <small v-else id="groupIdentifierHelp" class="form-text text-muted">
-              {{'security-ui-group-attribute-identiefier-description' | i18n}}
+              {{'security-ui-group-attribute-identifier-description' | i18n}}
             </small>
           </div>
 
@@ -48,7 +48,7 @@
             class="btn btn-success"
             type="submit"
             @click.prevent="onSubmit"
-            :disabled="!groupName || !isGroupIdentifierAvailable || !isGroupIdentifierValid">
+            :disabled="!groupIdentifier || !isGroupIdentifierAvailable || !isGroupIdentifierValid">
             {{'security-ui-group-btn-create-group' | i18n}}
           </button>
 
