@@ -48,7 +48,7 @@
             class="btn btn-success"
             type="submit"
             @click.prevent="onSubmit"
-            :disabled="!groupName || !isGroupIdentifierAvailable">
+            :disabled="!groupName || !isGroupIdentifierAvailable || !isGroupIdentifierValid">
             {{'security-ui-group-btn-create-group' | i18n}}
           </button>
 
