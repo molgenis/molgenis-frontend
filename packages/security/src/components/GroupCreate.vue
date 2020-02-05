@@ -114,7 +114,7 @@
       },
       checkGroupIdentifier: _.throttle(function () {
         this.isGroupIdentifierValid = true
-        if (!this.groupIdentifier.match(/^[a-zA-Z0-9_#-]+$/)) {
+        if (!this.groupIdentifier.match(/^[a-zA-Z0-9_-]+$/)) {
           this.isGroupIdentifierValid = false
           return
         }
