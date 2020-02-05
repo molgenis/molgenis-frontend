@@ -28,10 +28,13 @@
             <input v-model="groupIdentifier" type="text" class="form-control" id="groupIdentifierInput"
                    :placeholder="'security-ui-group-attribute-name-placeholder'|i18n">
             <small v-if="!isGroupIdentifierAvailable" class="form-text text-danger ">
-              {{'security-ui-group-attribute-name-taken-message' | i18n}}
+              {{'security-ui-group-attribute-identifier-taken-message' | i18n}}
+            </small>
+            <small v-if="!isGroupIdentifierValid" class="form-text text-danger ">
+              {{'security-ui-group-attribute-identifier-valid-message' | i18n}}
             </small>
             <small v-else id="groupIdentifierHelp" class="form-text text-muted">
-              {{'security-ui-group-attribute-name-description' | i18n}}
+              {{'security-ui-group-attribute-identiefier-description' | i18n}}
             </small>
           </div>
 
@@ -79,6 +82,7 @@
         groupIdentifier: '',
         isCreating: false,
         isGroupIdentifierAvailable: true,
+        isGroupIdentifierValid: true,
         isCheckingGroupIdentifier: true
       }
     },
@@ -109,8 +113,12 @@
           })
       },
       checkGroupIdentifier: _.throttle(function () {
-        const packageName = this.groupIdentifier.replace(/-/g, '_')
-        this.$store.dispatch('checkRootPackageExists', packageName).then((exists) => {
+        this.isGroupIdentifierValid = true
+        if (!this.groupIdentifier.match(/^[a-zA-Z0-9_#-]+$/)) {
+          this.isGroupIdentifierValid = false
+          return
+        }
+        this.$store.dispatch('checkRootPackageExists', this.groupIdentifier).then((exists) => {
           this.isGroupIdentifierAvailable = !exists
         })
       }, 300)
