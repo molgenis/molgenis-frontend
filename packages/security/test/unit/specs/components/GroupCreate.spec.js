@@ -67,4 +67,9 @@ describe('GroupCreate component', () => {
       name: 'test group'
     }, undefined))
   })
+  it('should not create a new group because of invalid name', () => {
+    const wrapper = shallowMount(GroupCreate, {mocks: {$router, $route}, store, stubs, localVue})
+    wrapper.find('#groupIdentifierInput').setValue('test group?')
+    expect(wrapper.find('#invalidGroupIdentifierMessage').exists())
+  })
 })

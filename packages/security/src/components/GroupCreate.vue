@@ -27,10 +27,10 @@
             <label for="groupIdentifierInput">{{'security-ui-group-attribute-name-name' | i18n}}</label>
             <input v-model="groupIdentifier" type="text" class="form-control" id="groupIdentifierInput"
                    :placeholder="'security-ui-group-attribute-name-placeholder'|i18n">
-            <small v-if="!isGroupIdentifierAvailable" class="form-text text-danger ">
+            <small v-if="!isGroupIdentifierAvailable" class="form-text text-danger" id="duplicateGroupIdentifierMessage">
               {{'security-ui-group-attribute-identifier-taken-message' | i18n}}
             </small>
-            <small v-if="!isGroupIdentifierValid" class="form-text text-danger ">
+            <small v-if="!isGroupIdentifierValid" class="form-text text-danger" id="invalidGroupIdentifierMessage">
               {{'security-ui-group-attribute-identifier-valid-message' | i18n}}
             </small>
             <small v-else id="groupIdentifierHelp" class="form-text text-muted">
