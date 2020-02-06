@@ -8,7 +8,7 @@ const $t = (key) => {
   return translations[key]
 }
 
-describe('GroupCreate component', () => {
+describe.only('GroupCreate component', () => {
   let getters
   let actions
   let localVue
@@ -58,18 +58,37 @@ describe('GroupCreate component', () => {
     expect(groupIdentifier.element.value).to.equal('test-group')
   })
 
-  it('should create a new group', () => {
+  it('should check if the group identifier is taken', (done) => {
     const wrapper = shallowMount(GroupCreate, {mocks: {$router, $route}, store, stubs, localVue})
-    wrapper.find('#groupNameInput').setValue('test group')
-    wrapper.find('#create-btn').trigger('click')
-    td.verify(actions.createGroup(td.matchers.anything(), {
-      groupIdentifier: 'test-group',
-      name: 'test group'
-    }, undefined))
+    td.when(actions.checkRootPackageExists(td.matchers.anything(), 'test-group', undefined)).thenReturn(Promise.resolve(true))
+    wrapper.find('#groupNameInput').setValue('Test Group')
+    setTimeout(() => {
+      expect(wrapper.vm.groupIdentifierTaken).to.equal(true)
+      expect(wrapper.vm.canSubmit).to.equal(false)
+      done()
+    }, 400)
   })
-  it('should not create a new group because of invalid name', () => {
+
+  it('should check if the group identifier is invalid', () => {
     const wrapper = shallowMount(GroupCreate, {mocks: {$router, $route}, store, stubs, localVue})
+    wrapper.find('#groupNameInput').setValue('Test Group')
     wrapper.find('#groupIdentifierInput').setValue('test group?')
-    expect(wrapper.find('#invalidGroupIdentifierMessage').exists())
+    expect(wrapper.vm.invalidGroupIdentifier).to.equal(true)
+    expect(wrapper.vm.canSubmit).to.equal(false)
+  })
+
+  it('should create a new group', (done) => {
+    const wrapper = shallowMount(GroupCreate, {mocks: {$router, $route}, store, stubs, localVue})
+    td.when(actions.checkRootPackageExists(td.matchers.anything(), 'test-group', undefined)).thenReturn(Promise.resolve(false))
+    wrapper.find('#groupNameInput').setValue('Test Group')
+    setTimeout(() => {
+      expect(wrapper.vm.canSubmit).to.equal(true)
+      wrapper.find('#create-btn').trigger('click')
+      td.verify(actions.createGroup(td.matchers.anything(), {
+        groupIdentifier: 'test-group',
+        name: 'Test Group'
+      }, undefined))
+      done()
+    }, 400)
   })
 })

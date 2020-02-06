@@ -27,10 +27,10 @@
             <label for="groupIdentifierInput">{{'security-ui-group-attribute-name-name' | i18n}}</label>
             <input v-model="groupIdentifier" type="text" class="form-control" id="groupIdentifierInput"
                    :placeholder="'security-ui-group-attribute-name-placeholder'|i18n">
-            <small v-if="!isGroupIdentifierAvailable" class="form-text text-danger" id="duplicateGroupIdentifierMessage">
+            <small v-if="groupIdentifierTaken" class="form-text text-danger" id="duplicateGroupIdentifierMessage">
               {{'security-ui-group-attribute-identifier-taken-message' | i18n}}
             </small>
-            <small v-if="!isGroupIdentifierValid" class="form-text text-danger" id="invalidGroupIdentifierMessage">
+            <small v-else-if="invalidGroupIdentifier" class="form-text text-danger" id="invalidGroupIdentifierMessage">
               {{'security-ui-group-attribute-identifier-valid-message' | i18n}}
             </small>
             <small v-else id="groupIdentifierHelp" class="form-text text-muted">
@@ -48,7 +48,7 @@
             class="btn btn-success"
             type="submit"
             @click.prevent="onSubmit"
-            :disabled="!groupIdentifier || !isGroupIdentifierAvailable || !isGroupIdentifierValid">
+            :disabled="!canSubmit">
             {{'security-ui-group-btn-create-group' | i18n}}
           </button>
 
@@ -81,14 +81,21 @@
         groupName: '',
         groupIdentifier: '',
         isCreating: false,
-        isGroupIdentifierAvailable: true,
-        isGroupIdentifierValid: true,
-        isCheckingGroupIdentifier: true
+        groupIdentifierTaken: null
       }
     },
     computed: {
       groupIdentifierSlug () {
         return slugService.slugify(this.groupName)
+      },
+      invalidGroupIdentifier () {
+        return this.groupIdentifier && !this.groupIdentifier.match(/^[a-zA-Z0-9_-]+$/)
+      },
+      canSubmit () {
+        return this.groupIdentifier.trim().length &&
+          this.groupName.trim().length &&
+          !this.invalidGroupIdentifier &&
+          this.groupIdentifierTaken === false
       }
     },
     watch: {
@@ -96,8 +103,10 @@
         this.groupIdentifier = this.groupIdentifierSlug
       },
       groupIdentifier (newVal) {
-        if (newVal) {
-          this.checkGroupIdentifier()
+        this.groupIdentifierTaken = null
+        if (newVal && !this.invalidGroupIdentifier) {
+          this.groupIdentifierTaken = null
+          this.checkRootPackageExists()
         }
       }
     },
@@ -112,14 +121,12 @@
             this.isCreating = !this.isCreating
           })
       },
-      checkGroupIdentifier: _.throttle(function () {
-        this.isGroupIdentifierValid = true
-        if (!this.groupIdentifier.match(/^[a-zA-Z0-9_-]+$/)) {
-          this.isGroupIdentifierValid = false
-          return
-        }
-        this.$store.dispatch('checkRootPackageExists', this.groupIdentifier).then((exists) => {
-          this.isGroupIdentifierAvailable = !exists
+      checkRootPackageExists: _.debounce(function () {
+        const groupIdentifier = this.groupIdentifier
+        this.$store.dispatch('checkRootPackageExists', groupIdentifier).then((exists) => {
+          if (this.groupIdentifier === groupIdentifier) {
+            this.groupIdentifierTaken = exists
+          }
         })
       }, 300)
     },
