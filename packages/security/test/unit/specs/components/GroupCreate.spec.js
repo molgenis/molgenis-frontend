@@ -8,7 +8,7 @@ const $t = (key) => {
   return translations[key]
 }
 
-describe.only('GroupCreate component', () => {
+describe('GroupCreate component', () => {
   let getters
   let actions
   let localVue
