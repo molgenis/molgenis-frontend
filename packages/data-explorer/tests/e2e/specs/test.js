@@ -54,7 +54,7 @@ module.exports = {
       .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
       .waitForElementVisible('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand', timeOutDelay)
       .click('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand')
-      .assert.visible('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
+      .waitForElementVisible('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)', timeOutDelay)
       .waitForElementVisible('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand', timeOutDelay)
       .click('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand')
       .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
