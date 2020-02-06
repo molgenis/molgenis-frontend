@@ -104,7 +104,6 @@ pipeline {
                         "--set image.repository=${LOCAL_REGISTRY} " +
                         "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
                         "--set proxy.backend.service.targetRelease=master " +
-                        "--set proxy.frontend.override=false " +
                         "--set image.pullPolicy=Always"
                 }
             }
