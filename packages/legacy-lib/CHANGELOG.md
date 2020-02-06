@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/legacy-lib@1.1.1...@molgenis-ui/legacy-lib@1.1.2) (2020-02-06)
+
+
+### Bug Fixes
+
+* bump version of molgenis-ui-context to fix cookiewall bug ([#266](https://github.com/molgenis/molgenis-frontend/issues/266)) ([d5308a2](https://github.com/molgenis/molgenis-frontend/commit/d5308a2))
+
+
+
+
+
 ## [1.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/legacy-lib@1.1.0...@molgenis-ui/legacy-lib@1.1.1) (2019-09-26)
 
 

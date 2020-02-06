@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.15.0...@molgenis-experimental/data-explorer@0.15.1) (2020-02-06)
+
+
+### Bug Fixes
+
+* bump version of molgenis-ui-context to fix cookiewall bug ([#266](https://github.com/molgenis/molgenis-frontend/issues/266)) ([d5308a2](https://github.com/molgenis/molgenis-frontend/commit/d5308a2))
+
+
+
+
+
 # [0.15.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.14.3...@molgenis-experimental/data-explorer@0.15.0) (2019-10-30)
 
 
