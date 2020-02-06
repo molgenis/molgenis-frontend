@@ -164,7 +164,7 @@ module.exports = {
   loginHref: '/login',
   helpLink: '{label: \'Help\', href: \'https://molgenis.gitbooks.io/molgenis/content/\'}',
   authenticated: false,
-  showCookieWall: false,
+  showCookieWall: true,
   version: '8.2.0-SNAPSHOT-PR-8570-28',
   buildDate: '2019-08-20 13:57 UTC'
 }
