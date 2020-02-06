@@ -23,10 +23,10 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/login': {
-        target: 'https://localhost:8080'
+        target: 'http://localhost:8080'
       },
       '/api': {
-        target: 'https://localhost:8080'
+        target: 'http://localhost:8080'
       }
     },
 
