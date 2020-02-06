@@ -22,6 +22,7 @@ The project is built using [lerna](https://lerna.js.org/) to manage the monorepo
 
 ## Developing
 To get started run
+
 ```bash
 > yarn install
 > yarn lerna bootstrap
