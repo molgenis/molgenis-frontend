@@ -89,7 +89,7 @@
         return slugService.slugify(this.groupName)
       },
       invalidGroupIdentifier () {
-        return this.groupIdentifier && !this.groupIdentifier.match(/^[a-zA-Z0-9_-]+$/)
+        return this.groupIdentifier && !this.groupIdentifier.match(/^(\w|-)+$/)
       },
       canSubmit () {
         return this.groupIdentifier.trim().length &&
