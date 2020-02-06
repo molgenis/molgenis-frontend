@@ -69,10 +69,10 @@
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.4"
 
-"@molgenis/molgenis-ui-context@^1.6.2":
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-1.6.2.tgz#ff266f463318632ee514abc4ccf75e674e880490"
-  integrity sha512-cvvA18VK0mRTT4DakMyezg9XaBrMTI/3RPWEIPLRWCbwDCLQhwErbDarpSEIVtnFB240C+ESYVBc2J5UzK4jDQ==
+"@molgenis/molgenis-ui-context@^1.6.3":
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-1.6.3.tgz#33e621a6f4619082ec5824a022c9f000ed67d07d"
+  integrity sha512-kqfm/Fim7tpvMluco0ApJS/Dh7PKII4XYDWeNpFkvi62pLx1phzilkxEl//dtUyhj1MXGc1RQG4leszEZrmpEQ==
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 
