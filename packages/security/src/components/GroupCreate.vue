@@ -89,6 +89,7 @@
         return slugService.slugify(this.groupName)
       },
       invalidGroupIdentifier () {
+        // See https://regex101.com/r/rpnoM1/3 for the regex
         return this.groupIdentifier && !this.groupIdentifier.match(/^[\w-]+$/)
       },
       canSubmit () {
