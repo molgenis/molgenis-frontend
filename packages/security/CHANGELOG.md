@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.1.6...@molgenis-ui/security@0.2.0) (2020-02-07)
+
+
+### Features
+
+* **create group:** When creating a group, the generated id is now editable ([#258](https://github.com/molgenis/molgenis-frontend/issues/258)) ([7fbcc06](https://github.com/molgenis/molgenis-frontend/commit/7fbcc06))
+
+
+
+
+
 ## [0.1.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.1.5...@molgenis-ui/security@0.1.6) (2019-06-14)
 
 
