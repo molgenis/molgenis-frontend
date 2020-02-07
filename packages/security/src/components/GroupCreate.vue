@@ -28,13 +28,13 @@
             <input v-model="groupIdentifier" type="text" class="form-control" id="groupIdentifierInput"
                    :placeholder="'security-ui-group-attribute-name-placeholder'|i18n">
             <small v-if="groupIdentifierTaken" class="form-text text-danger" id="duplicateGroupIdentifierMessage">
-              {{'security-ui-group-attribute-identifier-taken-message' | i18n}}
+              {{'security-ui-group-attribute-name-taken-message' | i18n}}
             </small>
             <small v-else-if="invalidGroupIdentifier" class="form-text text-danger" id="invalidGroupIdentifierMessage">
-              {{'security-ui-group-attribute-identifier-valid-message' | i18n}}
+              {{'security-ui-group-attribute-name-valid-message' | i18n}}
             </small>
             <small v-else id="groupIdentifierHelp" class="form-text text-muted">
-              {{'security-ui-group-attribute-identifier-description' | i18n}}
+              {{'security-ui-group-attribute-name-description' | i18n}}
             </small>
           </div>
 
