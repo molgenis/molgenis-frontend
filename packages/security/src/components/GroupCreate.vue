@@ -17,10 +17,7 @@
             <label for="groupNameInput">{{'security-ui-group-attribute-label-name' | i18n}}</label>
             <input v-model="groupName" type="text" class="form-control" id="groupNameInput" aria-describedby="groupName"
                    :placeholder="'security-ui-group-attribute-label-placeholder' | i18n">
-            <small v-if="!isGroupNameAvailable" class="form-text text-danger ">
-              {{'security-ui-group-attribute-name-taken-message' | i18n}}
-            </small>
-            <small v-else id="groupNameHelp" class="form-text text-muted">
+            <small id="groupNameHelp" class="form-text text-muted">
               {{'security-ui-group-attribute-label-description' |
               i18n}}
             </small>
@@ -28,9 +25,15 @@
 
           <div class="form-group">
             <label for="groupIdentifierInput">{{'security-ui-group-attribute-name-name' | i18n}}</label>
-            <input v-model="groupIdentifier" readonly type="text" class="form-control" id="groupIdentifierInput"
+            <input v-model="groupIdentifier" type="text" class="form-control" id="groupIdentifierInput"
                    :placeholder="'security-ui-group-attribute-name-placeholder'|i18n">
-            <small id="groupIdentifierHelp" class="form-text text-muted">
+            <small v-if="groupIdentifierTaken" class="form-text text-danger" id="duplicateGroupIdentifierMessage">
+              {{'security-ui-group-attribute-name-taken-message' | i18n}}
+            </small>
+            <small v-else-if="invalidGroupIdentifier" class="form-text text-danger" id="invalidGroupIdentifierMessage">
+              {{'security-ui-group-attribute-name-valid-message' | i18n}}
+            </small>
+            <small v-else id="groupIdentifierHelp" class="form-text text-muted">
               {{'security-ui-group-attribute-name-description' | i18n}}
             </small>
           </div>
@@ -45,7 +48,7 @@
             class="btn btn-success"
             type="submit"
             @click.prevent="onSubmit"
-            :disabled="!groupName || !isGroupNameAvailable">
+            :disabled="!canSubmit">
             {{'security-ui-group-btn-create-group' | i18n}}
           </button>
 
@@ -76,20 +79,35 @@
     data () {
       return {
         groupName: '',
+        groupIdentifier: '',
         isCreating: false,
-        isGroupNameAvailable: true,
-        isCheckingGroupName: true
+        groupIdentifierTaken: null
       }
     },
     computed: {
-      groupIdentifier () {
+      groupIdentifierSlug () {
         return slugService.slugify(this.groupName)
+      },
+      invalidGroupIdentifier () {
+        // See https://regex101.com/r/rpnoM1/3 for the regex
+        return this.groupIdentifier && !this.groupIdentifier.match(/^[\w-]+$/)
+      },
+      canSubmit () {
+        return this.groupIdentifier.trim().length &&
+          this.groupName.trim().length &&
+          !this.invalidGroupIdentifier &&
+          this.groupIdentifierTaken === false
       }
     },
     watch: {
       groupName (newVal) {
-        if (newVal) {
-          this.checkGroupName()
+        this.groupIdentifier = this.groupIdentifierSlug
+      },
+      groupIdentifier (newVal) {
+        this.groupIdentifierTaken = null
+        if (newVal && !this.invalidGroupIdentifier) {
+          this.groupIdentifierTaken = null
+          this.checkRootPackageExists()
         }
       }
     },
@@ -104,12 +122,12 @@
             this.isCreating = !this.isCreating
           })
       },
-
-      checkGroupName: _.throttle(function () {
-        const pipesRegEx = '/-/g'
-        const packageName = this.groupIdentifier.replace(pipesRegEx, '_')
-        this.$store.dispatch('checkRootPackageExists', packageName).then((exists) => {
-          this.isGroupNameAvailable = !exists
+      checkRootPackageExists: _.debounce(function () {
+        const groupIdentifier = this.groupIdentifier
+        this.$store.dispatch('checkRootPackageExists', groupIdentifier).then((exists) => {
+          if (this.groupIdentifier === groupIdentifier) {
+            this.groupIdentifierTaken = exists
+          }
         })
       }, 300)
     },
