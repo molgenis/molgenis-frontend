@@ -8,19 +8,26 @@ import { StringMap } from '@/types/GeneralTypes'
 const fieldTypeToFilterType:StringMap = {
   'STRING': 'string-filter',
   'TEXT': 'string-filter',
+  'HTML': 'string-filter',
   'INT': 'range-filter',
   'LONG': 'range-filter',
   'DECIMAL': 'range-filter',
-  'BOOL': 'checkbox-filter',
+  'BOOL': 'string-filter', // TODO: create boolean filter
+  'DATE': 'string-filter', // TODO: create time filter
+  'DATE_TIME': 'string-filter', // TODO: create time filter
   'EMAIL': 'string-filter',
   'HYPERLINK': 'string-filter',
   'CATEGORICAL': 'checkbox-filter',
   'CATEGORICAL_MREF': 'checkbox-filter',
-  'MREF': 'checkbox-filter',
-  'XREF': 'checkbox-filter',
-  'ONE_TO_MANY': 'checkbox-filter',
-  'ENUM': 'checkbox-filter'
+  'MREF': 'checkbox-filter', // TODO: create multiselect filter
+  'XREF': 'checkbox-filter', // TODO: create multiselect filter
+  'ONE_TO_MANY': 'checkbox-filter', // TODO: create multiselect filter
+  'ENUM': 'checkbox-filter',
+  'FILE': 'string-filter'
 }
+
+// Unused molgenis datatypes:
+// COMPOUND
 
 const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
   let shownFilters:string[] = []
