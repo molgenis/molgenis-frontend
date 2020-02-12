@@ -25,7 +25,6 @@ const fieldTypeToFilterType:StringMap = {
   'ENUM': 'checkbox-filter',
   'FILE': 'string-filter'
 }
-
 // Unused molgenis datatypes:
 // COMPOUND
 
