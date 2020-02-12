@@ -39,13 +39,19 @@ export type MetaDataAttribute = {
   isAggregatable: boolean,
   refEntity?: { name: string, labelAttribute: string, href?: string }
 }
+export type i18nValue = {
+  defaultValue: string
+  translations: StringMap[]
+}
 
 export type MetaDataApiResponse = {
   links: MetaDataApiResponseLink
   data: {
     id: string,
     label: string,
+    label_i18n: i18nValue, // ?
     description: string,
+    description_i18n: i18nValue, // ?
     package: {
       links: MetaDataApiResponseLink
     },
@@ -55,6 +61,10 @@ export type MetaDataApiResponse = {
     indexingDepth: number,
     abstract: boolean,
     attributes: MetaDataApiResponseAttributes
+
+    idAttribute: MetaDataApiResponseAttribute // ?
+    labelAttribute: MetaDataApiResponseAttribute // ?
+    lookupAttributes: [MetaDataApiResponseAttribute]
   }
 }
 
@@ -64,27 +74,45 @@ export type MetaDataApiResponseLink = {
 
 export type MetaDataApiResponseAttributes = {
   links: MetaDataApiResponseLink
-  items: [{
-    link: MetaDataApiResponseLink
-    data: MetaDataApiResponseAttribute
-  }]
+  items: MetaDataApiResponseAttribute[]
 }
 
 export type MetaDataApiResponseAttribute = {
+  link: MetaDataApiResponseLink
+  data: MetaDataApiResponseAttributeData
+}
+
+export type MetaDataApiResponseAttributeData = {
   id: string
-  label: string,
-  description: string,
   name: string,
   sequenceNr: number,
-  type: string,
-  idAttribute: string,
-  labelAttribute: string,
-  refEntityType: MetaDataApiResponseLink,
-  cascadeDelete: boolean,
+  type: 'bool' | 'categorical' | 'categorical_mref' | 'compound' | 'date' | 'date_time' | 'decimal' | 'email' | 'enum' | 'file' | 'html' | 'hyperlink' | 'int' | 'long' | 'mref' | 'one_to_many' | 'script' | 'string' | 'text' | 'xref',
+  mappedBy: MetaDataApiResponseAttribute, // ?
+  lookupAttribute: boolean, // ?
+  refEntityTypeId?: string,
+  label: string,
+  label_i18n: i18nValue, // ?
+  description: string,
+  description_i18n: i18nValue, // ?
+
   nullable: boolean,
   auto: boolean,
   visible: boolean,
   unique: boolean,
   readOnly: boolean,
-  aggregatable: boolean
+  aggregatable: boolean,
+
+  options: []
+
+  defaultValue?: string,
+  cascadeDelete?: boolean,
+  parentAttribute?: MetaDataApiResponseAttribute,
+  nullableExpression?: string,
+  visibleExpression?: string,
+  validationExpression?: string,
+
+  idAttribute: string,
+  labelAttribute: string,
+  refEntityType: MetaDataApiResponseLink,
+
 }
