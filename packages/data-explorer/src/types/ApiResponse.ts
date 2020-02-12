@@ -41,17 +41,50 @@ export type MetaDataAttribute = {
 }
 
 export type MetaDataApiResponse = {
-  attributes: MetaDataAttribute[],
-  description: string,
-  href: string,
-  hrefCollection: string,
-  idAttribute: string,
-  isAbstract: boolean,
+  links: MetaDataApiResponseLink
+  data: {
+    id: string,
+    label: string,
+    description: string,
+    package: {
+      links: MetaDataApiResponseLink
+    },
+    extends: {
+      links: MetaDataApiResponseLink
+    },
+    indexingDepth: number,
+    abstract: boolean,
+    attributes: MetaDataApiResponseAttributes
+  }
+}
+
+export type MetaDataApiResponseLink = {
+  self: string
+}
+
+export type MetaDataApiResponseAttributes = {
+  links: MetaDataApiResponseLink
+  items: [{
+    link: MetaDataApiResponseLink
+    data: MetaDataApiResponseAttribute
+  }]
+}
+
+export type MetaDataApiResponseAttribute = {
+  id: string
   label: string,
-  labelAttribute: string,
-  languageCode: string,
-  lookupAttributes: string[],
+  description: string,
   name: string,
-  permissions: string[]
-  writable: boolean,
+  sequenceNr: number,
+  type: string,
+  idAttribute: string,
+  labelAttribute: string,
+  refEntityType: MetaDataApiResponseLink,
+  cascadeDelete: boolean,
+  nullable: boolean,
+  auto: boolean,
+  visible: boolean,
+  unique: boolean,
+  readOnly: boolean,
+  aggregatable: boolean
 }

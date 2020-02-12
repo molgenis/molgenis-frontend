@@ -1,8 +1,7 @@
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
-import { StringMap } from '../types/GeneralTypes'
+import axios from 'axios'
+import { MetaDataApiResponseAttributes } from '@/types/ApiResponse'
 
-const metaDataCache:StringMap = {}
+const metaDataCache: { [s: string]: MetaDataApiResponseAttributes } = {}
 
 // Todo placeholder until we have a metadataApi
 const fetchMetaData = async (entityId: string) => {
@@ -10,9 +9,9 @@ const fetchMetaData = async (entityId: string) => {
     return metaDataCache[entityId]
   }
 
-  const resp = await api.get(`/api/v2/${entityId}?num=0`)
-  metaDataCache[entityId] = resp.meta
-  return resp.meta
+  const response = <MetaDataApiResponseAttributes> await axios.get(`/api/metadata/${entityId}`)
+  metaDataCache[entityId] = response
+  return response
 }
 
 export {
