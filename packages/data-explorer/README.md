@@ -10,6 +10,10 @@ yarn install
 yarn run serve
 
 note: visit '[dev-server]/login' to signin, after sigin navigate back to [dev-server]/ to view app on local dev server 
+
+If the above doesn't work, set a temporary local variable using the terminal:
+
+export DATA_EXPLORER_DEV_PW=PasswordFromTheVault
 ```
 
 ### Compiles and minifies for production
