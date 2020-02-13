@@ -1,18 +1,39 @@
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
-import { StringMap } from '../types/GeneralTypes'
+import axios, { AxiosResponse } from 'axios'
+import { EntityType } from '../types/MetaResponseV3'
+import { MetaData } from '../types/MetaData'
 
-const metaDataCache:StringMap = {}
+const metaDataCache:{ [s: string]: EntityType } = {}
 
-// Todo placeholder until we have a metadataApi
 const fetchMetaData = async (entityId: string) => {
   if (metaDataCache[entityId]) {
     return metaDataCache[entityId]
   }
 
-  const resp = await api.get(`/api/v2/${entityId}?num=0`)
-  metaDataCache[entityId] = resp.meta
-  return resp.meta
+  const response = await axios.get<EntityType>(`/api/metadata/${entityId}`)
+  const entityType = response.data
+  metaDataCache[entityId] = entityType
+  return response.data
+}
+
+const map = (entityType: EntityType): MetaData => {
+  if(!entityType.data) {
+    throw "metadata response is missing expected data property"
+  }
+  const entityTypeData =  entityType.data
+
+  if(entityTypeData.id === undefined || entityTypeData === null) {
+    throw "metadata response is missing expected id property"
+  }
+  
+  return {
+    id: entityTypeData.id
+  package: entityTypeData.package, // url
+  extends?: MetaData,
+  description: string,
+  label: string,
+  abstract: boolean,
+  attributes: Attribute[]
+  }
 }
 
 export {

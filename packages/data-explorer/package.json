@@ -26,6 +26,7 @@
     "@molgenis/molgenis-ui-context": "^1.6.3",
     "@molgenis/molgenis-ui-filter": "^1.4.2",
     "@molgenis/rsql": "^0.2.5",
+    "axios": "^0.19.2",
     "bootstrap": "4",
     "core-js": "^2.6.5",
     "jquery": "^3.4.1",

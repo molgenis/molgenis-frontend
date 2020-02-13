@@ -30,7 +30,7 @@ type EntityTypeData = {
   label_i18n?: I18nValue,
   abstract?: boolean,
   indexingDepth?: number,
-  attributes?: Attribute []
+  attributes?: Attribute[]
 }
 
 type Attribute = {
@@ -60,8 +60,10 @@ type AttributeData = {
   lookupAttributeIndex?: number,
   refEntityTypeId?: string,
   description?: string,
+  // eslint-disable-next-line camelcase
   description_i18n?: I18nValue,
   label?: string,
+  // eslint-disable-next-line camelcase
   label_i18n: I18nValue,
   nullable?: boolean,
   auto?: boolean,
