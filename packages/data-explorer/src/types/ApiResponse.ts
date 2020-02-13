@@ -55,3 +55,28 @@ export type MetaDataApiResponse = {
   permissions: string[]
   writable: boolean,
 }
+
+// {
+//   id: string,
+//   label: string,
+//   label_i18n: i18nValue, // ?
+//   description: string,
+//   description_i18n: i18nValue, // ?
+//   package: {
+//     links: MetaDataApiResponseLink
+//   },
+//   extends: {
+//     links: MetaDataApiResponseLink
+//   },
+//   indexingDepth: number,
+//   abstract: boolean,
+//   attributes: MetaDataApiResponseAttributes
+
+//   idAttribute: MetaDataApiResponseAttribute // ?
+//   labelAttribute: MetaDataApiResponseAttribute // ?
+//   lookupAttributes: [MetaDataApiResponseAttribute]
+// }
+
+export type EntityMetaData = {
+
+}
