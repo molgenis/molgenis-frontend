@@ -1,3 +1,5 @@
+import { TypeEnum } from './TypeEnum'
+
 export type EntityType = {
   href?: Links,
   data?: EntityTypeData
@@ -14,7 +16,7 @@ type I18nValue = {
   translations?: {}
 }
 
-type Package = {
+export type Package = {
   href?: Links
 }
 
@@ -30,11 +32,16 @@ type EntityTypeData = {
   label_i18n?: I18nValue,
   abstract?: boolean,
   indexingDepth?: number,
-  attributes?: Attribute[]
+  attributes?: AttributeItems
 }
 
-type Attribute = {
+type AttributeItems = {
   links?: Links,
+  items?: Attribute[]
+}
+
+export type Attribute = {
+  link?: Links,
   data?: AttributeData
 }
 
@@ -52,7 +59,7 @@ type AttributeData = {
   id?: string,
   name?: string,
   sequenceNr?: number,
-  type?: 'bool' | 'categorical' | 'categorical_mref' | 'compound' | 'date' | 'date_time' | 'decimal' | 'email' | 'enum' | 'file' | 'html' | 'hyperlink' | 'int' | 'long' | 'mref' | 'one_to_many' | 'script' | 'string' | 'text' | 'xref',
+  type?: TypeEnum,
   mappedBy?: Attribute,
   orderBy?: AttributeSort[],
   idAttribute?: boolean,
@@ -64,7 +71,7 @@ type AttributeData = {
   description_i18n?: I18nValue,
   label?: string,
   // eslint-disable-next-line camelcase
-  label_i18n: I18nValue,
+  label_i18n?: I18nValue,
   nullable?: boolean,
   auto?: boolean,
   visible?: boolean,

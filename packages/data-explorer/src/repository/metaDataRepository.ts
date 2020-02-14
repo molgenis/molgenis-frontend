@@ -1,8 +1,10 @@
+/* eslint-disable object-curly-spacing */
 import axios, { AxiosResponse } from 'axios'
+import * as mapper from './metaDataResponseMapper'
 import { EntityType } from '../types/MetaResponseV3'
 import { MetaData } from '../types/MetaData'
 
-const metaDataCache:{ [s: string]: EntityType } = {}
+const metaDataCache:{ [s: string]: MetaData } = {}
 
 const fetchMetaData = async (entityId: string) => {
   if (metaDataCache[entityId]) {
@@ -11,29 +13,9 @@ const fetchMetaData = async (entityId: string) => {
 
   const response = await axios.get<EntityType>(`/api/metadata/${entityId}`)
   const entityType = response.data
-  metaDataCache[entityId] = entityType
+  const metadata = mapper.toMetaData(entityType)
+  metaDataCache[entityId] = metadata
   return response.data
-}
-
-const map = (entityType: EntityType): MetaData => {
-  if(!entityType.data) {
-    throw "metadata response is missing expected data property"
-  }
-  const entityTypeData =  entityType.data
-
-  if(entityTypeData.id === undefined || entityTypeData === null) {
-    throw "metadata response is missing expected id property"
-  }
-  
-  return {
-    id: entityTypeData.id
-  package: entityTypeData.package, // url
-  extends?: MetaData,
-  description: string,
-  label: string,
-  abstract: boolean,
-  attributes: Attribute[]
-  }
 }
 
 export {

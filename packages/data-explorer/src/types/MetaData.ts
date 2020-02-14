@@ -1,6 +1,8 @@
+import { TypeEnum } from './TypeEnum'
+
 export type MetaData = {
   id: string,
-  package: string, // url
+  package: string | null, // url
   extends?: MetaData,
   description: string,
   label: string,
@@ -8,10 +10,10 @@ export type MetaData = {
   attributes: Attribute[]
 }
 
-type Attribute = {
+export type Attribute = {
   id: string,
   name: string,
-  type: 'bool' | 'categorical' | 'categorical_mref' | 'compound' | 'date' | 'date_time' | 'decimal' | 'email' | 'enum' | 'file' | 'html' | 'hyperlink' | 'int' | 'long' | 'mref' | 'one_to_many' | 'script' | 'string' | 'text' | 'xref',
+  type: TypeEnum,
   mappedBy?: Attribute,
   orderBy?: 'ASC' | 'DESC'
   idAttribute: boolean,
