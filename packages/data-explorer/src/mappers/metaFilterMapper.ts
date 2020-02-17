@@ -1,24 +1,24 @@
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import { MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
 import { getCategoricals } from './utils'
-import { FilterDefinition } from '@/types/ApplicationState'
+import { MetaData } from '@/types/MetaData'
 
-const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
+const mapMetaToFilters = async (metaData: MetaData) => {
   let shownFilters:string[] = []
 
   // TODO: map all filters
-  const categoricals = await Promise.all(getCategoricals(meta.attributes).map(async (item) => {
-    const href = item && item.refEntity && item.refEntity.href
+  const categoricalAttrs = getCategoricals(metaData.attributes)
+  const categoricals = await Promise.all(categoricalAttrs.map(async (attribute) => {
+    const href = attribute.refEntityType
 
     if (!href) throw new Error('categorical without href')
 
     const options = await getOptions(href)
-    shownFilters.push(item.name)
+    shownFilters.push(attribute.name)
 
     return {
-      name: item.name,
-      label: item.label,
+      name: attribute.name,
+      label: attribute.label,
       type: 'checkbox-filter',
       options: options,
       collapsable: true,

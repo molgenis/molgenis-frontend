@@ -86,49 +86,15 @@ type AttributeSort = {
 
 type AttributeData = {
   id: string,
-  name: string,
-  sequenceNr?: number,
-  type: TypeEnum,
-  mappedBy?: Attribute,
-  orderBy?: AttributeSort[],
-  idAttribute: boolean,
-  labelAttribute: boolean,
-  lookupAttributeIndex?: number,
-  refEntityTypeId?: string,
-  description?: string,
-  // eslint-disable-next-line camelcase
-  description_i18n?: I18nValue,
-  label?: string,
-  // eslint-disable-next-line camelcase
-  label_i18n?: I18nValue,
-  nullable: boolean,
-  auto: boolean,
-  visible: boolean,
-  unique: boolean,
-  readOnly: boolean,
-  aggregatable: boolean,
-  enumOptions?: string[],
-  categoricalOptions?: CategoricalOption[],
-  defaultValue?: string,
-  cascadeDelete?: boolean,
-  parentAttribute?: Attribute,
-  expression?: string,
-  nullableExpression?: string,
-  visibleExpression?: string,
-  validationExpression?: string
-}
-
-type ResponseAttributeData = AttributeData & {
-  id: string,
   name?: string,
   sequenceNr?: number,
   type?: TypeEnum,
-  mappedBy?: ResponseAttribute,
+  mappedBy?: Attribute,
   orderBy?: AttributeSort[],
   idAttribute?: boolean,
   labelAttribute?: boolean,
   lookupAttributeIndex?: number,
-  refEntityTypeId?: string,
+  refEntityType?: Links,
   description?: string,
   // eslint-disable-next-line camelcase
   description_i18n?: I18nValue,
@@ -145,9 +111,25 @@ type ResponseAttributeData = AttributeData & {
   categoricalOptions?: CategoricalOption[],
   defaultValue?: string,
   cascadeDelete?: boolean,
-  parentAttribute?: ResponseAttribute,
+  parentAttribute?: Attribute,
   expression?: string,
   nullableExpression?: string,
   visibleExpression?: string,
   validationExpression?: string
+}
+
+type ResponseAttributeData = AttributeData & {
+  name: string,
+  type: TypeEnum,
+  mappedBy?: ResponseAttribute,
+  orderBy?: AttributeSort[],
+  idAttribute: boolean,
+  labelAttribute: boolean,
+  nullable: boolean,
+  auto: boolean,
+  visible: boolean,
+  unique: boolean,
+  readOnly: boolean,
+  aggregatable: boolean,
+  parentAttribute?: ResponseAttribute,
 }

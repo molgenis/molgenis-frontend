@@ -1,8 +1,8 @@
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
-
+import * as util from '../../../src/mappers/utils'
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import meta from '../mocks/metaDataResponseMock'
+import { MetaData } from '@/types/MetaData'
 
 const ageGroupOptions = {
   meta: {
@@ -36,20 +36,82 @@ jest.mock('@molgenis/molgenis-api-client', () => ({
   get: jest.fn()
 }))
 
+jest.mock('../mocks/metaDataResponseMock', () => ({
+  getCategoricals: jest.fn()
+}))
+
 describe('metaFilterMapper', () => {
+  let metaData: MetaData
   beforeEach(() => {
+    metaData = {
+      id: 'id',
+      idAttribute: 'id',
+      labelAttribute: 'id',
+      package: null,
+      description: 'desciption',
+      label: 'Test',
+      abstract: false,
+      attributes: [
+        {
+          id: '/api/v2/test/meta/id',
+          name: 'id',
+          type: 'int',
+          description: 'description',
+          label: 'id',
+          auto: false,
+          nullable: false,
+          readOnly: true,
+          labelAttribute: false,
+          unique: true,
+          visible: true,
+          lookupAttributeIndex: 1,
+          aggregatable: false,
+          idAttribute: true
+        },
+        {
+          id: '/api/v2/test/meta/country',
+          type: 'categorical',
+          description: 'description',
+          name: 'country',
+          label: 'country',
+          auto: false,
+          nullable: false,
+          readOnly: true,
+          labelAttribute: false,
+          unique: true,
+          visible: true,
+          lookupAttributeIndex: 2,
+          aggregatable: false,
+          refEntityType: '/api/v2/countries',
+          idAttribute: false
+        },
+        {
+          id: '/api/v2/test/meta/age_groups',
+          type: 'categorical_mref',
+          description: 'description',
+          name: 'age_groups',
+          label: 'age_groups',
+          auto: false,
+          nullable: false,
+          readOnly: true,
+          labelAttribute: false,
+          unique: true,
+          visible: true,
+          lookupAttributeIndex: 3,
+          aggregatable: false,
+          refEntityType: '/api/v2/age_groups',
+          idAttribute: false
+        }
+      ]
+    }
     api.get.mockReset()
   })
 
   describe('mapMetaToFilters', () => {
-    it('create an empty filter definition from metadata', async () => {
-      const resp = await metaFilterMapper.mapMetaToFilters({ ...meta, attributes: meta.attributes.filter(it => it.fieldType === 'STRING') })
-      expect(resp).toEqual({ 'definition': [], 'shown': [] })
-    })
     it('create an filter definition from metadata', async () => {
       api.get.mockReturnValueOnce(countryOptions)
       api.get.mockReturnValueOnce(ageGroupOptions)
-      const resp = await metaFilterMapper.mapMetaToFilters(meta)
+      const resp = await metaFilterMapper.mapMetaToFilters(metaData)
       expect(resp.definition).toBeDefined()
       expect(resp.shown).toEqual([
         'country',

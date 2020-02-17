@@ -2,6 +2,8 @@ import { TypeEnum } from './TypeEnum'
 
 export type MetaData = {
   id: string,
+  idAttribute: string, // generated client side
+  labelAttribute: string | undefined // generated client side
   package: string | null, // url
   extends?: string, // ref url to parent
   description: string,
@@ -19,7 +21,7 @@ export type Attribute = {
   idAttribute: boolean,
   labelAttribute: boolean,
   lookupAttributeIndex?: number,
-  refEntityTypeId?: string,
+  refEntityType?: string, // url to ref entity
   description: string,
   label: string,
   nullable: boolean,

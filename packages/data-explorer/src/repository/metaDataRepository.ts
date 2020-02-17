@@ -6,7 +6,7 @@ import { MetaData } from '../types/MetaData'
 
 const metaDataCache:{ [s: string]: MetaData } = {}
 
-const fetchMetaData = async (entityId: string) => {
+const fetchMetaData = async (entityId: string): Promise<MetaData> => {
   if (metaDataCache[entityId]) {
     return metaDataCache[entityId]
   }
@@ -17,7 +17,7 @@ const fetchMetaData = async (entityId: string) => {
 
   // Cache mapped response to improve speed
   metaDataCache[entityId] = metadata
-  return response.data
+  return metadata
 }
 
 export {

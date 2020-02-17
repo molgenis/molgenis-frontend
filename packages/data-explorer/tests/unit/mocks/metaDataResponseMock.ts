@@ -1,23 +1,27 @@
 export default {
+  id: 'id',
+  package: null,
+  description: 'desciption',
+  label: 'Test',
+  abstract: false,
   attributes: [
     {
-      href: '/api/v2/test/meta/id',
-      fieldType: 'INT',
+      id: '/api/v2/test/meta/id',
       name: 'id',
+      type: 'int',
       label: 'id',
-      attributes: [],
       auto: false,
-      nillable: false,
+      nullable: false,
       readOnly: true,
       labelAttribute: false,
       unique: true,
       visible: true,
-      lookupAttribute: true,
-      isAggregatable: false
+      lookupAttributeIndex: 1,
+      aggregatable: false
     },
     {
-      href: '/api/v2/test/meta/label',
-      fieldType: 'STRING',
+      id: '/api/v2/test/meta/label',
+      type: 'string',
       name: 'label',
       label: 'label',
       attributes: [],
@@ -27,12 +31,12 @@ export default {
       labelAttribute: true,
       unique: true,
       visible: true,
-      lookupAttribute: true,
-      isAggregatable: false
+      lookupAttributeIndex: true,
+      aggregatable: false
     },
     {
-      href: '/api/v2/test/meta/country',
-      fieldType: 'CATEGORICAL',
+      id: '/api/v2/test/meta/country',
+      type: 'categorical',
       name: 'country',
       label: 'country',
       attributes: [],
@@ -43,7 +47,7 @@ export default {
       unique: true,
       visible: true,
       lookupAttribute: true,
-      isAggregatable: false,
+      aggregatable: false,
       refEntity: {
         name: 'countries',
         labelAttribute: 'countries',
@@ -51,8 +55,8 @@ export default {
       }
     },
     {
-      href: '/api/v2/test/meta/age_groups',
-      fieldType: 'CATEGORICAL_MREF',
+      id: '/api/v2/test/meta/age_groups',
+      type: 'categorical_mref',
       name: 'age_groups',
       label: 'age_groups',
       attributes: [],
@@ -63,7 +67,7 @@ export default {
       unique: true,
       visible: true,
       lookupAttribute: true,
-      isAggregatable: false,
+      aggregatable: false,
       refEntity: {
         name: 'age_groups',
         labelAttribute: 'age_groups',
@@ -71,8 +75,8 @@ export default {
       }
     },
     {
-      href: '/api/v2/test/meta/name',
-      fieldType: 'STRING',
+      id: '/api/v2/test/meta/name',
+      type: 'string',
       name: 'name',
       label: 'name',
       attributes: [],
@@ -83,31 +87,7 @@ export default {
       unique: true,
       visible: true,
       lookupAttribute: true,
-      isAggregatable: false
+      aggregatable: false
     }
-  ],
-  description: 'Beautiful description',
-  href: '/api/v2/test',
-  hrefCollection: '/api/v2/test',
-  idAttribute: 'id',
-  isAbstract: false,
-  label: 'Test',
-  labelAttribute: 'label',
-  languageCode: 'en',
-  lookupAttributes: [
-    'id'
-  ],
-  name: 'test',
-  permissions: [
-    'DELETE_DATA',
-    'READ_METADATA',
-    'READ_DATA',
-    'UPDATE_METADATA',
-    'AGGREGATE_DATA',
-    'DELETE_METADATA',
-    'UPDATE_DATA',
-    'COUNT_DATA',
-    'ADD_DATA'
-  ],
-  writable: true
+  ]
 }

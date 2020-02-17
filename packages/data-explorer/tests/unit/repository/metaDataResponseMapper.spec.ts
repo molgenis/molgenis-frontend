@@ -28,14 +28,6 @@ describe('metaDataResponseMapper', () => {
       it('should map attr id', () => expect(metaData.attributes[0].id).toEqual('mock-entity-attribute'))
     })
 
-    describe('when no attribute items are not set', () => {
-      beforeAll(() => {
-        delete apiResponse.data.attributes.items
-        metaData = toMetaData(<ResponseEntityType> apiResponse)
-      })
-      it('should set attribute as empty list', () => expect(metaData.attributes).toEqual([]))
-    })
-
     describe('when not part of a package', () => {
       beforeAll(() => {
         delete apiResponse.data.package

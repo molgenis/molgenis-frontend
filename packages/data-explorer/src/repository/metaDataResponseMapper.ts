@@ -3,14 +3,24 @@ import { MetaData, Attribute } from '../types/MetaData'
 
 const toMetaData = (entityType: ResponseEntityType): MetaData => {
   const data = entityType.data
+  const attributes = data.attributes && data.attributes.items ? data.attributes.items.map(toAttribute) : []
+
+  const idAttribute = attributes.find(a => a.idAttribute)
+  if (idAttribute === undefined) {
+    throw Error('Invalid metadata, metaData must contain a id attribute')
+  }
+
+  const labelAttribute = attributes.find(a => a.labelAttribute)
 
   let metadata: MetaData = {
     id: data.id,
+    labelAttribute: labelAttribute === undefined ? undefined : labelAttribute.id,
+    idAttribute: idAttribute.id,
     package: toPackage(data.package), // url
     description: data.description || '',
     label: data.label || '',
     abstract: data.abstract,
-    attributes: data.attributes && data.attributes.items ? data.attributes.items.map(toAttribute) : []
+    attributes: attributes
   }
 
   if (data.extends) {
@@ -52,7 +62,7 @@ const toAttribute = (responseAttribute: ResponseAttribute): Attribute => {
 
   attribute = addOptional(attribute, 'enumOptions', data.enumOptions)
 
-  attribute = addOptional(attribute, 'refEntityTypeId', data.refEntityTypeId)
+  attribute = addOptional(attribute, 'refEntityType', data.refEntityType)
 
   attribute = addOptional(attribute, 'categoricalOptions', data.categoricalOptions)
 
