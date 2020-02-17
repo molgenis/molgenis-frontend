@@ -14,6 +14,8 @@ const fetchMetaData = async (entityId: string) => {
   const response = await axios.get<ResponseEntityType>(`/api/metadata/${entityId}`)
   const entityType = response.data
   const metadata = mapper.toMetaData(entityType)
+
+  // Cache mapped response to improve speed
   metaDataCache[entityId] = metadata
   return response.data
 }

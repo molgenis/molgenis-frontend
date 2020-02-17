@@ -11,6 +11,7 @@ describe('metaDataResponseMapper', () => {
       console.log(metaData)
     })
 
-    it('should contain a id', () => expect(metaData.id).toEqual('mock-entity'))
+    it('should contain "mock-entity" as id', () => expect(metaData.id).toEqual('mock-entity'))
+    it('should contain "label" a id', () => expect(metaData.label).toEqual('label'))
   })
 })
