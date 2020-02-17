@@ -5,6 +5,10 @@ export type EntityType = {
   data?: EntityTypeData
 }
 
+export type ResponseEntityType = EntityType & {
+  data: ResponseEntityTypeData
+}
+
 type Links = {
   previous?: string, // uri
   self: string, // uri
@@ -18,6 +22,10 @@ type I18nValue = {
 
 export type Package = {
   href?: Links
+}
+
+export type ResponsePackage = Package & {
+  href: Links
 }
 
 type EntityTypeData = {
@@ -35,14 +43,31 @@ type EntityTypeData = {
   attributes?: AttributeItems
 }
 
+type ResponseEntityTypeData = EntityTypeData & {
+  id: string,
+  package?: ResponsePackage,
+  extends?: ResponseEntityType,
+  abstract: boolean,
+  attributes?: ResponseAttributeItems
+}
+
 type AttributeItems = {
   links?: Links,
   items?: Attribute[]
 }
 
+type ResponseAttributeItems = {
+  links?: Links,
+  items?: ResponseAttribute[]
+}
+
 export type Attribute = {
   link?: Links,
   data?: AttributeData
+}
+
+export type ResponseAttribute = Attribute & {
+  data: ResponseAttributeData
 }
 
 type CategoricalOption = {
@@ -56,11 +81,45 @@ type AttributeSort = {
 }
 
 type AttributeData = {
-  id?: string,
+  id: string,
+  name: string,
+  sequenceNr?: number,
+  type: TypeEnum,
+  mappedBy?: Attribute,
+  orderBy?: AttributeSort[],
+  idAttribute: boolean,
+  labelAttribute: boolean,
+  lookupAttributeIndex?: number,
+  refEntityTypeId?: string,
+  description?: string,
+  // eslint-disable-next-line camelcase
+  description_i18n?: I18nValue,
+  label?: string,
+  // eslint-disable-next-line camelcase
+  label_i18n?: I18nValue,
+  nullable: boolean,
+  auto: boolean,
+  visible: boolean,
+  unique: boolean,
+  readOnly: boolean,
+  aggregatable: boolean,
+  enumOptions?: string[],
+  categoricalOptions?: CategoricalOption[],
+  defaultValue?: string,
+  cascadeDelete?: boolean,
+  parentAttribute?: Attribute,
+  expression?: string,
+  nullableExpression?: string,
+  visibleExpression?: string,
+  validationExpression?: string
+}
+
+type ResponseAttributeData = AttributeData & {
+  id: string,
   name?: string,
   sequenceNr?: number,
   type?: TypeEnum,
-  mappedBy?: Attribute,
+  mappedBy?: ResponseAttribute,
   orderBy?: AttributeSort[],
   idAttribute?: boolean,
   labelAttribute?: boolean,
@@ -82,7 +141,7 @@ type AttributeData = {
   categoricalOptions?: CategoricalOption[],
   defaultValue?: string,
   cascadeDelete?: boolean,
-  parentAttribute?: Attribute,
+  parentAttribute?: ResponseAttribute,
   expression?: string,
   nullableExpression?: string,
   visibleExpression?: string,
