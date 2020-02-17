@@ -3,7 +3,7 @@ import { TypeEnum } from './TypeEnum'
 export type MetaData = {
   id: string,
   package: string | null, // url
-  extends?: MetaData,
+  extends?: string, // ref url to parent
   description: string,
   label: string,
   abstract: boolean,

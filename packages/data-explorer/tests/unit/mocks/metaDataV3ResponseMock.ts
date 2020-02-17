@@ -5,6 +5,11 @@ export default {
   data: {
     id: 'mock-entity',
     label: 'label',
+    package: {
+      links: {
+        self: 'https://server/api/data/test-package/test'
+      }
+    },
     attributes: {
       links: {
         self: 'https://server/api/metadata/mock-entity/attributes'
@@ -27,12 +32,18 @@ export default {
             visible: true,
             unique: true,
             readOnly: true,
-            aggregatable: false
+            aggregatable: false,
+            defaultValue: 'default'
           }
         }
       ]
     },
-    'abstract': false,
+    abstract: false,
+    extends: {
+      links: {
+        self: 'https://server/api/api/metadata/root_persons'
+      }
+    },
     indexingDepth: 1
   }
 }

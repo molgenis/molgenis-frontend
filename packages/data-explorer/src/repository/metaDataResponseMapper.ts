@@ -2,19 +2,19 @@ import { ResponseEntityType, ResponsePackage, ResponseAttribute } from '../types
 import { MetaData, Attribute } from '../types/MetaData'
 
 const toMetaData = (entityType: ResponseEntityType): MetaData => {
-  const entityTypeData = entityType.data
+  const data = entityType.data
 
   let metadata: MetaData = {
-    id: entityTypeData.id,
-    package: toPackage(entityTypeData.package), // url
-    description: entityTypeData.description || '',
-    label: entityTypeData.label || '',
-    abstract: entityTypeData.abstract,
-    attributes: entityTypeData.attributes && entityTypeData.attributes.items ? entityTypeData.attributes.items.map(toAttribute) : []
+    id: data.id,
+    package: toPackage(data.package), // url
+    description: data.description || '',
+    label: data.label || '',
+    abstract: data.abstract,
+    attributes: data.attributes && data.attributes.items ? data.attributes.items.map(toAttribute) : []
   }
 
-  if (entityTypeData.extends) {
-    metadata = { ...metadata, extends: toMetaData(entityTypeData.extends) }
+  if (data.extends) {
+    metadata = { ...metadata, extends: data.extends.links.self }
   }
 
   return metadata
@@ -44,55 +44,42 @@ const toAttribute = (responseAttribute: ResponseAttribute): Attribute => {
   }
 
   if (data.orderBy) {
-    // todo
+    // Todo
+    throw new Error('Unhandled metadata Attribute orderBy')
   }
 
-  if (data.lookupAttributeIndex) {
-    attribute = { ...attribute, lookupAttributeIndex: data.lookupAttributeIndex }
-  }
+  attribute = addOptional(attribute, 'lookupAttributeIndex', data.lookupAttributeIndex)
 
-  if (data.enumOptions) {
-    attribute = { ...attribute, enumOptions: data.enumOptions }
-  }
+  attribute = addOptional(attribute, 'enumOptions', data.enumOptions)
 
-  if (data.refEntityTypeId) {
-    attribute = { ...attribute, refEntityTypeId: data.refEntityTypeId }
-  }
+  attribute = addOptional(attribute, 'refEntityTypeId', data.refEntityTypeId)
 
-  if (data.categoricalOptions) {
-    attribute = { ...attribute, categoricalOptions: { ...data.categoricalOptions } }
-  }
+  attribute = addOptional(attribute, 'categoricalOptions', data.categoricalOptions)
 
-  if (data.defaultValue) {
-    attribute = { ...attribute, defaultValue: data.defaultValue }
-  }
+  attribute = addOptional(attribute, 'defaultValue', data.defaultValue)
 
   if (data.parentAttribute) {
     attribute = { ...attribute, parentAttribute: toAttribute(data.parentAttribute) }
   }
 
-  if (data.expression) {
-    attribute = { ...attribute, expression: data.expression }
-  }
+  attribute = addOptional(attribute, 'expression', data.expression)
 
-  if (data.nullableExpression) {
-    attribute = { ...attribute, nullableExpression: data.nullableExpression }
-  }
+  attribute = addOptional(attribute, 'nullableExpression', data.nullableExpression)
 
-  if (data.visibleExpression) {
-    attribute = { ...attribute, visibleExpression: data.visibleExpression }
-  }
+  attribute = addOptional(attribute, 'visibleExpression', data.visibleExpression)
 
-  if (data.validationExpression) {
-    attribute = { ...attribute, validationExpression: data.validationExpression }
-  }
+  attribute = addOptional(attribute, 'validationExpression', data.validationExpression)
 
   return attribute
 }
 
+const addOptional = <T> (base: T, prop: string, value: number | string | boolean | object | null | undefined): T => {
+  return value ? { ...base, [prop]: value } : base
+}
+
 const toPackage = (_package: ResponsePackage | undefined):string | null => {
   if (_package) {
-    return _package.href.self
+    return _package.links.self
   }
 
   return null

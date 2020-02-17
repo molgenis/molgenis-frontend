@@ -21,11 +21,15 @@ type I18nValue = {
 }
 
 export type Package = {
-  href?: Links
+  links?: Links
 }
 
 export type ResponsePackage = Package & {
-  href: Links
+  links: Links
+}
+
+export type ParentRef = {
+  links: Links
 }
 
 type EntityTypeData = {
@@ -46,7 +50,7 @@ type EntityTypeData = {
 type ResponseEntityTypeData = EntityTypeData & {
   id: string,
   package?: ResponsePackage,
-  extends?: ResponseEntityType,
+  extends?: ParentRef,
   abstract: boolean,
   attributes?: ResponseAttributeItems
 }
