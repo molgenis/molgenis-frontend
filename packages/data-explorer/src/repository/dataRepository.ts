@@ -19,7 +19,8 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaData: MetaData): St
   }, {})
 
   const row: DataObject = rowData.data
-  return Object.keys(row).reduce((accum, key) => {
+
+  let bla = Object.keys(row).reduce((accum, key) => {
     const value = row[key]
     const isReference = attributeMap[key].isReference
     let resolvedValue
@@ -28,11 +29,11 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaData: MetaData): St
       if (value.items) {
         // The isMref already checks if the value.items is available
         // @ts-ignore
-        resolvedValue = value.items.map((mrefValue) => mrefValue.data[attributeMap[key].labelAttribute]).join(', ')
+        resolvedValue = value.items.map((mrefValue) => mrefValue.data[attributeMap[key].labelAttribute.name]).join(', ')
       } else {
         // This is checked by isReference
         // @ts-ignore
-        resolvedValue = value.data[metaDataRefs[key].labelAttribute]
+        resolvedValue = value.data[metaDataRefs[key].labelAttribute.name]
       }
     } else {
       resolvedValue = value
@@ -40,6 +41,7 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaData: MetaData): St
     accum[key] = resolvedValue
     return accum
   }, <StringMap>{})
+  return bla
 }
 
 const apiResponseMapper = (rowData: DataApiResponseItem) => {
@@ -76,12 +78,12 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
 }
 
 const getTableDataDeepReference = async (tableId: string, metaData: MetaData, coloms: string[], rsqlQuery?: string) => {
-  if (!coloms.includes(metaData.idAttribute)) {
-    coloms.push(metaData.idAttribute)
+  if (!coloms.includes(metaData.idAttribute.name)) {
+    coloms.push(metaData.idAttribute.name)
   }
 
-  if (metaData.labelAttribute !== undefined && !coloms.includes(metaData.labelAttribute)) {
-    coloms.push(metaData.labelAttribute)
+  if (metaData.labelAttribute !== undefined && !coloms.includes(metaData.labelAttribute.name)) {
+    coloms.push(metaData.labelAttribute.name)
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
@@ -93,9 +95,9 @@ const getTableDataDeepReference = async (tableId: string, metaData: MetaData, co
 
 const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string) => {
   const columnSet = new Set([...columns])
-  columnSet.add(metaData.idAttribute)
+  columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
-    columnSet.add(metaData.labelAttribute)
+    columnSet.add(metaData.labelAttribute.name)
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
@@ -111,9 +113,9 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
   // Todo: remove work around, needed as compounds are not pased by getAttributesfromMeta.
   // Addding id and label makes sure we get these fields.
   const columnSet = new Set([...attributes])
-  columnSet.add(metaData.idAttribute)
+  columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
-    columnSet.add(metaData.labelAttribute)
+    columnSet.add(metaData.labelAttribute.name)
   }
   // const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet], true)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])

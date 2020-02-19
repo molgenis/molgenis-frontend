@@ -1,6 +1,6 @@
 <template>
   <div class="mt-2 entity-table container-fluid"
-       v-if="activeEntityData && activeEntityData.items.length > 0 && entityMeta">
+       v-if="tableData && tableData.items.length > 0 && entityMeta">
     <div class="row" v-if="isShop && entitiesToShow.length === 0">
       <div class="alert alert-warning col">
       </div>
@@ -75,8 +75,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['activeEntityData']),
-    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'entityMeta', 'entityMetaRefs', 'shoppedEntityItems', 'defaultEntityData']),
+    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'entityMeta', 'entityMetaRefs', 'shoppedEntityItems', 'defaultEntityData', 'tableData']),
     idAttribute () {
       return this.entityMeta.idAttribute
     },
@@ -88,9 +87,9 @@ export default {
     },
     entitiesToShow () {
       if (this.shoppingFilter) {
-        return this.activeEntityData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
+        return this.tableData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
       } else {
-        return this.activeEntityData.items
+        return this.tableData.items
       }
     }
   },

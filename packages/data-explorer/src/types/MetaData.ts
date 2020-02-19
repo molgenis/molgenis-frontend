@@ -2,8 +2,8 @@ import { TypeEnum } from './TypeEnum'
 
 export type MetaData = {
   id: string,
-  idAttribute: string, // computed by mapper
-  labelAttribute: string | undefined // computed by mapper
+  idAttribute: Attribute, // computed by mapper
+  labelAttribute: Attribute | undefined // computed by mapper
   package: string | null, // url
   extends?: string, // ref url to parent
   description: string,

@@ -14,8 +14,8 @@ const toMetaData = (entityType: ResponseEntityType): MetaData => {
 
   let metadata: MetaData = {
     id: data.id,
-    labelAttribute: labelAttribute === undefined ? undefined : labelAttribute.id,
-    idAttribute: idAttribute.id,
+    labelAttribute: labelAttribute === undefined ? undefined : labelAttribute,
+    idAttribute: idAttribute,
     package: toPackage(data.package), // url
     description: data.description || '',
     label: data.label || '',

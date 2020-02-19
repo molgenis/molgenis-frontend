@@ -46,10 +46,10 @@ export default {
   methods: {
     ...mapActions(['fetchCardViewData', 'fetchRowDataLabels']),
     getEntityId (entity) {
-      return entity[this.idAttribute].toString()
+      return entity[this.idAttribute.name] ? entity[this.idAttribute.name].toString() : ''
     },
     getEntityLabel (entity) {
-      return this.labelAttribute ? entity[this.labelAttribute].toString() : this.getEntityId(entity).toString()
+      return this.labelAttribute ? entity[this.labelAttribute.name].toString() : this.getEntityId(entity).toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
