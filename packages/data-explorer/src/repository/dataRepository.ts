@@ -19,30 +19,32 @@ const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaDat
   }, {})
 
   const row: DataObject = rowData.data
+  let result:any = {}
+  let keys = Object.keys(row)
 
-  const pendingRowData = Object.keys(row).reduce(async (accum:any, key) => {
-    const value = row[key]
-    const attributeMetadata = metadataAttributeMap[key]
+  for (let i = 0; i < keys.length; i++) {
+    const columnKey = keys[i]
+    const value = row[columnKey]
+    const attributeMetadata = metadataAttributeMap[columnKey]
     const isReference = attributeMetadata.isReference
     let resolvedValue
     if (isReference && attributeMetadata.refEntityType) {
       // @ts-ignore
       if (value.items) {
-        resolvedValue = getMrefLabel(attributeMetadata, value)
+        resolvedValue = await getMrefLabel(attributeMetadata, value)
       } else {
-        resolvedValue = getRefLabel(attributeMetadata, value)
+        resolvedValue = await getRefLabel(attributeMetadata, value)
       }
     } else {
       resolvedValue = value
     }
-    accum[key] = resolvedValue
-    return accum
-  }, <StringMap>{})
+    result[columnKey] = resolvedValue
+  }
 
-  return Promise.all(Object.keys(pendingRowData))
+  return result
 }
 
-const getMrefLabel = async (attributeMetadata: Attribute, rowDataItem:any ) => {
+const getMrefLabel = async (attributeMetadata: Attribute, rowDataItem:any) => {
   // The isMref already checks if the value.items is available
   // @ts-ignore
   const refMetadata = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
@@ -118,9 +120,9 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
   const request = addFilterIfSet(`/api/data/${tableId}?${expandReferencesQuery}`, rsqlQuery)
   const response = await api.get(request)
-  response.items = await response.items.map(async (item: DataApiResponseItem) => {
+  response.items = await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
     return levelOneRowMapper(item, metaData)
-  })
+  }))
   return response
 }
 
