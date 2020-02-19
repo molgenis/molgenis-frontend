@@ -21,7 +21,7 @@ export default {
       throw new Error('cannot load table data for non string table id')
     }
 
-    const metaData = await metaDataRepository.fetchMetaData(state.tableName)
+    const metaData = await metaDataRepository.fetchMetaDataById(state.tableName)
     commit('setMetaData', metaData)
     commit('setFilters', await metaFilterMapper.mapMetaToFilters(metaData))
 
@@ -46,7 +46,7 @@ export default {
   },
   fetchTableViewData: async ({ commit, getters }: { commit: any, getters: any }, payload: {tableName: string}) => {
     const tableName = payload.tableName
-    const metaData = await metaDataRepository.fetchMetaData(tableName)
+    const metaData = await metaDataRepository.fetchMetaDataById(tableName)
     commit('setMetaData', metaData)
 
     const rsqlQuery = getters.filterRsql
@@ -63,7 +63,7 @@ export default {
     if (typeof state.tableName !== 'string') {
       throw new Error('cannot load table data for non string table id')
     }
-    const metaData = await metaDataRepository.fetchMetaData(state.tableName)
+    const metaData = await metaDataRepository.fetchMetaDataById(state.tableName)
     commit('setMetaData', metaData)
     const rsqlQuery = getters.filterRsql
     commit('updateRowData', [])

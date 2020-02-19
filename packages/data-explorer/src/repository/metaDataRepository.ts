@@ -6,7 +6,7 @@ import { MetaData } from '../types/MetaData'
 
 const metaDataCache:{ [s: string]: MetaData } = {}
 
-const fetchMetaData = async (entityId: string): Promise<MetaData> => {
+const fetchMetaDataById = async (entityId: string): Promise<MetaData> => {
   if (metaDataCache[entityId]) {
     return metaDataCache[entityId]
   }
@@ -24,6 +24,13 @@ const fetchMetaData = async (entityId: string): Promise<MetaData> => {
   return metadata
 }
 
+const fetchMetaDataByURL = async (url: string): Promise<MetaData> => {
+  // TODO: refactor to use url, note shared cache
+  // @ts-ignore
+  return fetchMetaDataById(url.split('/').pop())
+}
+
 export {
-  fetchMetaData
+  fetchMetaDataById,
+  fetchMetaDataByURL
 }

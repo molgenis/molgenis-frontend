@@ -289,7 +289,7 @@ describe('actions', () => {
       metaDataService.getAttributesfromMeta.mockReturnValue([])
 
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
+      metaDataRepository.fetchMetaDataById.mockResolvedValue({ attributes: [] })
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
       await actions.fetchCardViewData({ commit, state, getters })
@@ -310,7 +310,7 @@ describe('actions', () => {
       state.tableName = 'tableName'
       const commit = jest.fn()
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
+      metaDataRepository.fetchMetaDataById.mockResolvedValue({ meta: 'data' })
       await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
       expect(commit).toBeCalledWith('setMetaData', { meta: 'data' })
     })
@@ -324,7 +324,7 @@ describe('actions', () => {
       getters.filterRsql = 'a==b'
 
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
+      metaDataRepository.fetchMetaDataById.mockResolvedValue({ attributes: [] })
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
 

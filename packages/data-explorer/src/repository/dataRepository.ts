@@ -2,38 +2,35 @@
 import api from '@molgenis/molgenis-api-client'
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta } from './metaDataService'
-
+import * as metaDataRepository from './metaDataRepository'
 import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse, DataObject } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import { MetaData, Attribute } from '@/types/MetaData'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
-const levelOneRowMapper = (rowData: DataApiResponseItem, metaData: MetaData): StringMap => {
+const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaData) => {
   if (!rowData.data) {
     throw new Error('invalid input: row data must have data property')
   }
 
-  const attributeMap: {[s: string]: Attribute} = metaData.attributes.reduce((accum:any, attr) => {
+  const metadataAttributeMap: {[s: string]: Attribute} = metaData.attributes.reduce((accum:any, attr) => {
     accum[attr.name] = attr
     return accum
   }, {})
 
   const row: DataObject = rowData.data
 
-  let bla = Object.keys(row).reduce((accum, key) => {
+  const pendingRowData = Object.keys(row).reduce(async (accum:any, key) => {
     const value = row[key]
-    const isReference = attributeMap[key].isReference
+    const attributeMetadata = metadataAttributeMap[key]
+    const isReference = attributeMetadata.isReference
     let resolvedValue
-    if (isReference) {
+    if (isReference && attributeMetadata.refEntityType) {
       // @ts-ignore
       if (value.items) {
-        // The isMref already checks if the value.items is available
-        // @ts-ignore
-        resolvedValue = value.items.map((mrefValue) => mrefValue.data[attributeMap[key].labelAttribute.name]).join(', ')
+        resolvedValue = getMrefLabel(attributeMetadata, value)
       } else {
-        // This is checked by isReference
-        // @ts-ignore
-        resolvedValue = value.data[metaDataRefs[key].labelAttribute.name]
+        resolvedValue = getRefLabel(attributeMetadata, value)
       }
     } else {
       resolvedValue = value
@@ -41,9 +38,27 @@ const levelOneRowMapper = (rowData: DataApiResponseItem, metaData: MetaData): St
     accum[key] = resolvedValue
     return accum
   }, <StringMap>{})
-  return bla
+
+  return Promise.all(Object.keys(pendingRowData))
 }
 
+const getMrefLabel = async (attributeMetadata: Attribute, rowDataItem:any ) => {
+  // The isMref already checks if the value.items is available
+  // @ts-ignore
+  const refMetadata = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
+  // @ts-ignore
+  const resolvedValue = rowDataItem.items.map((mrefValue) => mrefValue.data[refMetadata.labelAttribute.name]).join(', ')
+  return resolvedValue
+}
+
+const getRefLabel = async (attributeMetadata: Attribute, rowDataItem:any) => {
+  // This is checked by isReference
+  // @ts-ignore
+  const refMetadata = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
+  // @ts-ignore
+  const resolvedValue = rowDataItem.data[refMetadata.labelAttribute.name]
+  return resolvedValue
+}
 const apiResponseMapper = (rowData: DataApiResponseItem) => {
   if (rowData.data) {
     const row: any = rowData.data
@@ -103,7 +118,9 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
   const request = addFilterIfSet(`/api/data/${tableId}?${expandReferencesQuery}`, rsqlQuery)
   const response = await api.get(request)
-  response.items = response.items.map((item: DataApiResponseItem) => levelOneRowMapper(item, metaData))
+  response.items = await response.items.map(async (item: DataApiResponseItem) => {
+    return levelOneRowMapper(item, metaData)
+  })
   return response
 }
 

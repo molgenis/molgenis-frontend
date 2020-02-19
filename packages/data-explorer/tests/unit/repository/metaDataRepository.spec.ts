@@ -28,14 +28,14 @@ describe('metaDataRepository', () => {
     })
 
     it('should fetch the meta data', async () => {
-      const resp = await metaDataRepository.fetchMetaData(tableId)
+      const resp = await metaDataRepository.fetchMetaDataById(tableId)
       expect(resp).toEqual(mockResponse.data)
       expect(axios.get).toHaveBeenCalled()
     })
 
     it('should cache the results and use the cache', async () => {
-      await metaDataRepository.fetchMetaData(tableId)
-      const resp = await metaDataRepository.fetchMetaData(tableId)
+      await metaDataRepository.fetchMetaDataById(tableId)
+      const resp = await metaDataRepository.fetchMetaDataById(tableId)
       expect(resp).toEqual(mockResponse.data)
       expect(axios.get).toHaveBeenCalledTimes(1)
     })
