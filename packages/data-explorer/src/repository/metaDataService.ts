@@ -1,26 +1,11 @@
-import { EntityMetaRefs } from '@/types/ApplicationState'
-import { MetaDataAttribute, MetaDataApiResponse } from '@/types/ApiResponse'
+import { MetaData, Attribute } from '@/types/MetaData'
 
-const getRefsFromMeta = (meta: MetaDataApiResponse) => {
-  return meta.attributes.reduce((refItems: EntityMetaRefs, attribute: MetaDataAttribute) => {
-    if (attribute.refEntity) {
-      refItems[attribute.name] = {
-        refEntity: attribute.refEntity.name.toString(),
-        fieldType: attribute.fieldType,
-        labelAttribute: attribute.refEntity.labelAttribute.toString()
-      }
-    }
-    return refItems
-  }, <EntityMetaRefs>{})
-}
-
-const getAttributesfromMeta = (metaData: MetaDataApiResponse) => {
+const getAttributesfromMeta = (metaData: MetaData) => {
   return metaData.attributes
-    .filter((attribute: MetaDataAttribute) => attribute.fieldType !== 'COMPOUND') // TODO:Compounds are out of scope for now because they will be treated differently in meta data api v3
-    .map((attribute: MetaDataAttribute) => attribute.name)
+    .filter((attribute) => attribute.type !== 'compound') // TODO:Compounds are out of scope for now because they will be treated differently in meta data api v3
+    .map((attribute) => attribute.name)
 }
 
 export {
-  getRefsFromMeta,
   getAttributesfromMeta
 }

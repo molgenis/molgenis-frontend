@@ -2,6 +2,7 @@ import ApplicationState, { Toast, EntityMetaRefs, FilterDefinition } from '@/typ
 import { DataApiResponse, MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
+import { MetaData } from '@/types/MetaData'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {
@@ -75,8 +76,8 @@ export default {
       state.filters.shown = state.tableSettings.defaultFilters
     }
   },
-  setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
-    state.tableMeta = meta
+  setMetaData (state: ApplicationState, metaData: MetaData) {
+    state.tableMeta = metaData
   },
   setFilterSelection (state: ApplicationState, selections: StringMap) {
     Vue.set(state.filters, 'selections', selections)

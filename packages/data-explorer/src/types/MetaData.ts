@@ -2,8 +2,8 @@ import { TypeEnum } from './TypeEnum'
 
 export type MetaData = {
   id: string,
-  idAttribute: string, // generated client side
-  labelAttribute: string | undefined // generated client side
+  idAttribute: string, // computed by mapper
+  labelAttribute: string | undefined // computed by mapper
   package: string | null, // url
   extends?: string, // ref url to parent
   description: string,
@@ -24,6 +24,7 @@ export type Attribute = {
   refEntityType?: string, // url to ref entity
   description: string,
   label: string,
+  isReference: boolean, // computed by mapper
   nullable: boolean,
   auto: boolean,
   visible: boolean,
@@ -37,7 +38,7 @@ export type Attribute = {
   expression?: string,
   nullableExpression?: string,
   visibleExpression?: string,
-  validationExpression?: string
+  validationExpression?: string,
 }
 
 type CategoricalOption = {

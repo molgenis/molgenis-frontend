@@ -1,8 +1,9 @@
 import { getRefsFromMeta, getAttributesfromMeta } from '@/repository/metaDataService'
 import { MetaDataApiResponse } from '@/types/ApiResponse'
+import { MetaData } from '@/types/MetaData'
 
 describe('metaDataService', () => {
-  const meta:MetaDataApiResponse = {
+  const meta:MetaData = {
     href: 'blaat',
     hrefCollection: 'collection',
     name: 'table',
@@ -17,54 +18,57 @@ describe('metaDataService', () => {
     languageCode: 'en',
     attributes: [
       {
-        href: 'https://someurl.nl/api',
+        id: 'https://someurl.nl/api',
+        idAttribute: true,
+        description: 'the id',
+        isReference: false,
         name: 'id',
-        nillable: false,
+        nullable: false,
         readOnly: false,
         label: 'id',
-        fieldType: 'STRING',
+        type: 'string',
         unique: true,
         auto: true,
         labelAttribute: true,
         visible: true,
-        lookupAttribute: true,
-        isAggregatable: false
+        lookupAttributeIndex: 1,
+        aggregatable: false
       },
       {
-        href: 'https://someurl.nl/api',
+        id: 'https://someurl.nl/api',
         name: 'reference',
+        idAttribute: false,
+        description: 'the ref',
+        isReference: true,
         label: 'reference',
-        nillable: false,
+        nullable: false,
         readOnly: false,
-        refEntity: {
-          name: 'pkg_refTable',
-          labelAttribute: 'label'
-        },
-        fieldType: 'CATEGORICAL',
+        refEntityType: 'https://someurl.nl/ref-id',
+        type: 'categorical',
         unique: false,
         auto: false,
         labelAttribute: false,
         visible: true,
-        lookupAttribute: false,
-        isAggregatable: false
+        lookupAttributeIndex: 2,
+        aggregatable: false
       },
       {
-        href: 'https://someurl.nl/api',
+        id: 'https://someurl.nl/api',
         name: 'multi_reference',
+        idAttribute: false,
+        description: 'the multi',
+        isReference: true,
         label: 'multi reference',
-        nillable: false,
+        nullable: false,
         readOnly: false,
-        refEntity: {
-          name: 'pkg_anotherRefTable',
-          labelAttribute: 'label'
-        },
-        fieldType: 'CATEGORICAL_MREF',
+        refEntityType: 'https://someurl.nl/ref-id',
+        type: 'categorical_mref',
         unique: false,
         auto: false,
         labelAttribute: false,
         visible: true,
-        lookupAttribute: false,
-        isAggregatable: false
+        lookupAttributeIndex: 3,
+        aggregatable: false
       }
     ]
   }

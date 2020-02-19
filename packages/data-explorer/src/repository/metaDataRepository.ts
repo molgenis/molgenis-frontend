@@ -11,7 +11,11 @@ const fetchMetaData = async (entityId: string): Promise<MetaData> => {
     return metaDataCache[entityId]
   }
 
-  const response = await axios.get<ResponseEntityType>(`/api/metadata/${entityId}`)
+  const response = await axios.get<ResponseEntityType>(`/api/metadata/${entityId}`, {
+    params: {
+      flattenAttributes: true
+    }
+  })
   const entityType = response.data
   const metadata = mapper.toMetaData(entityType)
 

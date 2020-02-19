@@ -33,6 +33,8 @@ const toMetaData = (entityType: ResponseEntityType): MetaData => {
 const toAttribute = (responseAttribute: ResponseAttribute): Attribute => {
   const data = responseAttribute.data
 
+  const isReference = responseAttribute.data.refEntityType !== undefined
+
   let attribute: Attribute = {
     id: data.id,
     name: data.name,
@@ -46,7 +48,8 @@ const toAttribute = (responseAttribute: ResponseAttribute): Attribute => {
     visible: data.visible,
     unique: data.unique,
     readOnly: data.readOnly,
-    aggregatable: data.aggregatable
+    aggregatable: data.aggregatable,
+    isReference
   }
 
   if (data.mappedBy) {
@@ -62,7 +65,9 @@ const toAttribute = (responseAttribute: ResponseAttribute): Attribute => {
 
   attribute = addOptional(attribute, 'enumOptions', data.enumOptions)
 
-  attribute = addOptional(attribute, 'refEntityType', data.refEntityType)
+  if (data.refEntityType) {
+    attribute = { ...attribute, refEntityType: data.refEntityType.self }
+  }
 
   attribute = addOptional(attribute, 'categoricalOptions', data.categoricalOptions)
 

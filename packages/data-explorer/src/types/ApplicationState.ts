@@ -1,5 +1,6 @@
 import { DataApiResponse, MetaDataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
+import { MetaData } from './MetaData'
 
 export type Toast = {
   type: 'danger' | 'success',
@@ -45,7 +46,7 @@ export default interface ApplicationState {
   dataDisplayLayout: 'CardView' | 'TableView'
   tableName: string | null
   tableData: DataApiResponse | null
-  tableMeta: MetaDataApiResponse | null
+  tableMeta: MetaData | null
   defaultEntityData: DataApiResponseItem[] | null,
   entityMetaRefs: EntityMetaRefs,
   shoppedEntityItems: string[]

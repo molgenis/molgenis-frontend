@@ -1,23 +1,16 @@
-import { EntityMetaRefs } from '../types/ApplicationState'
+import { MetaData, Attribute } from '@/types/MetaData'
 
-const buildFilterQuery = (entityMetaRefs: EntityMetaRefs, attributes:string[], useMetaRefs:boolean) => {
-  const filterQuery = attributes.reduce((query: string, attribute: string) => {
-    const metaRefs = useMetaRefs && entityMetaRefs[attribute] ? `(${entityMetaRefs[attribute].labelAttribute})` : ''
-    return `${query},${attribute}${metaRefs}`
-  }, '').replace(',', '')
-  return filterQuery
+const buildExpandQuery = (metaData: MetaData, selectedAttributeNames:string[]) => {
+  return metaData.attributes
+    .filter(a => a.isReference)
+    .filter(a => selectedAttributeNames.includes(a.name))
+    .map(a => a.name)
+    .join(',')
 }
 
-const buildExpandQuery = (entityMetaRefs: EntityMetaRefs, attributes:string[]) => {
-  const expandQuery = attributes.reduce((query: string, attribute: string) => {
-    return entityMetaRefs[attribute] ? `${query},${attribute}` : `${query}`
-  }, '').replace(',', '')
-  return expandQuery
-}
-
-const buildExpandedAttributesQuery = (entityMetaRefs: EntityMetaRefs, attributes:string[], useMetaRefs:boolean) => {
-  const expand = buildExpandQuery(entityMetaRefs, attributes)
-  const filter = buildFilterQuery(entityMetaRefs, attributes, useMetaRefs)
+const buildExpandedAttributesQuery = (metaData: MetaData, selectedAttributeNames:string[]) => {
+  const expand = buildExpandQuery(metaData, selectedAttributeNames)
+  const filter = selectedAttributeNames.join(',')
   return `expand=${expand}&filter=${filter}`
 }
 

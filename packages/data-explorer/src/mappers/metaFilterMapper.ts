@@ -10,6 +10,7 @@ const mapMetaToFilters = async (metaData: MetaData) => {
   const categoricalAttrs = getCategoricals(metaData.attributes)
   const categoricals = await Promise.all(categoricalAttrs.map(async (attribute) => {
     const href = attribute.refEntityType
+    console.log(href)
 
     if (!href) throw new Error('categorical without href')
 
@@ -33,11 +34,12 @@ const mapMetaToFilters = async (metaData: MetaData) => {
 }
 
 const getOptions = async (href: string) => {
-  const resp = await api.get(href)
+  // const resp = await api.get(href)
   return () => {
-    return Promise.resolve(
-      resp.items.map((item: any) => ({ value: item[resp.meta.idAttribute], text: item[resp.meta.labelAttribute] }))
-    )
+    // return Promise.resolve(
+    //   resp.items.map((item: any) => ({ value: item[resp.meta.idAttribute], text: item[resp.meta.labelAttribute] }))
+    // )
+    Promise.resolve([])
   }
 }
 
