@@ -10,7 +10,6 @@ const mapMetaToFilters = async (metaData: MetaData) => {
   const categoricalAttrs = getCategoricals(metaData.attributes)
   const categoricals = await Promise.all(categoricalAttrs.map(async (attribute) => {
     const href = attribute.refEntityType
-    console.log(href)
 
     if (!href) throw new Error('categorical without href')
 

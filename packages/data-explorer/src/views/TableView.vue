@@ -42,7 +42,7 @@ export default {
   methods: {
     ...mapActions(['fetchTableViewData']),
     getEntityId (entity) {
-      return entity[this.idAttribute].toString()
+      return entity[this.idAttribute.name].toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
