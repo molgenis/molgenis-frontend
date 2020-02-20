@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2 entity-table" v-if="tableData && tableData.items.length > 0 && tableMeta">
+  <div class="mt-2 entity-table" v-if="tableData && tableData.items && tableData.items.length > 0 && tableMeta">
     <div v-if="entitiesToShow.length === 0" class="alert alert-warning">
       {{ 'dataexplorer_empty_shopping_cart' | i18n}}
     </div>
@@ -59,7 +59,7 @@ export default {
     ...mapActions(['fetchTableViewData']),
     ...mapMutations(['setShowShoppingCart', 'setHideFilters']),
     getEntityId (entity) {
-      return entity[this.idAttribute].toString()
+      return entity[this.idAttribute.name].toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
