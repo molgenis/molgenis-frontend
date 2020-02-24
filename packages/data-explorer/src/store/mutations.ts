@@ -37,7 +37,7 @@ export default {
       state.shoppedEntityItems.push(id)
     }
   },
-  setTableMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
+  setTableMetaData (state: ApplicationState, meta: MetaData) {
     state.tableMeta = meta
   },
   setMetaDataRefLabels (state: ApplicationState, meta: MetaDataApiResponse) {
