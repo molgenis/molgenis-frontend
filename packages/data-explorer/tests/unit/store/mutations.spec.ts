@@ -1,6 +1,6 @@
 import mutations from '@/store/mutations'
 import ApplicationState from '@/types/ApplicationState'
-import {Attribute, MetaData} from '@/types/MetaData'
+import { Attribute, MetaData } from '@/types/MetaData'
 
 describe('mutations', () => {
   const IntAttribute: Attribute = {
@@ -58,7 +58,6 @@ describe('mutations', () => {
       tableMeta: null,
       dataDisplayLayout: 'CardView',
       defaultEntityData: null,
-      entityMetaRefs: {},
       showShoppingCart: false,
       shoppedEntityItems: [],
       tableSettings: {
@@ -208,12 +207,6 @@ describe('mutations', () => {
         isShop: false,
         defaultFilters: []
       })
-    })
-  })
-  describe('setMetaDataRefLabels', () => {
-    it('sets the object with the labels for all ref entities', () => {
-      mutations.setMetaDataRefLabels(baseAppState, entityMetaData)
-      // expect(baseAppState.entityMetaRefLabels).toEqual({'it_emx_datatypes_TypeTestRef': 'label'})
     })
   })
   describe('updateRowData', () => {
