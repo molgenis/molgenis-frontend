@@ -2,7 +2,7 @@ import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 import * as util from '../../../src/mappers/utils'
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import { MetaData } from '@/types/MetaData'
+import { MetaData, Attribute } from '@/types/MetaData'
 
 const ageGroupOptions = {
   meta: {
@@ -43,64 +43,68 @@ jest.mock('../mocks/metaDataResponseMock', () => ({
 describe('metaFilterMapper', () => {
   let metaData: MetaData
   beforeEach(() => {
+    const IdAttribute:Attribute = {
+      id: 'https://someurl.nl/api',
+      name: 'id',
+      idAttribute: true,
+      description: 'the id',
+      isReference: false,
+      label: 'reference',
+      nullable: false,
+      readOnly: false,
+      type: 'string',
+      unique: false,
+      auto: false,
+      labelAttribute: false,
+      visible: true,
+      lookupAttributeIndex: 2,
+      aggregatable: false
+    }
     metaData = {
       id: 'id',
-      idAttribute: 'id',
-      labelAttribute: 'id',
+      idAttribute: IdAttribute,
+      labelAttribute: undefined,
       package: null,
-      description: 'desciption',
+      description: 'description',
       label: 'Test',
       abstract: false,
       attributes: [
+        IdAttribute,
         {
-          id: '/api/v2/test/meta/id',
-          name: 'id',
-          type: 'int',
-          description: 'description',
-          label: 'id',
-          auto: false,
+          id: 'https://someurl.nl/api',
+          name: 'reference',
+          idAttribute: false,
+          description: 'the ref',
+          isReference: true,
+          label: 'reference',
           nullable: false,
-          readOnly: true,
-          labelAttribute: false,
-          unique: true,
-          visible: true,
-          lookupAttributeIndex: 1,
-          aggregatable: false,
-          idAttribute: true
-        },
-        {
-          id: '/api/v2/test/meta/country',
+          readOnly: false,
+          refEntityType: 'https://someurl.nl/ref-id',
           type: 'categorical',
-          description: 'description',
-          name: 'country',
-          label: 'country',
+          unique: false,
           auto: false,
-          nullable: false,
-          readOnly: true,
           labelAttribute: false,
-          unique: true,
           visible: true,
           lookupAttributeIndex: 2,
-          aggregatable: false,
-          refEntityType: '/api/v2/countries',
-          idAttribute: false
+          aggregatable: false
         },
         {
-          id: '/api/v2/test/meta/age_groups',
-          type: 'categorical_mref',
-          description: 'description',
-          name: 'age_groups',
-          label: 'age_groups',
-          auto: false,
+          id: 'https://someurl.nl/api',
+          name: 'multi_reference',
+          idAttribute: false,
+          description: 'the multi',
+          isReference: true,
+          label: 'multi reference',
           nullable: false,
-          readOnly: true,
+          readOnly: false,
+          refEntityType: 'https://someurl.nl/ref-id',
+          type: 'categorical_mref',
+          unique: false,
+          auto: false,
           labelAttribute: false,
-          unique: true,
           visible: true,
           lookupAttributeIndex: 3,
-          aggregatable: false,
-          refEntityType: '/api/v2/age_groups',
-          idAttribute: false
+          aggregatable: false
         }
       ]
     }
