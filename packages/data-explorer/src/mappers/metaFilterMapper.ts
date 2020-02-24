@@ -1,10 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 // @ts-ignore
-import api from '@molgenis/molgenis-api-client'
 import { getCategoricals } from './utils'
 import { MetaData } from '@/types/MetaData'
-import { ResponseEntityType } from '@/types/EntityTypeV3'
-
+import { fetchMetaDataByURL } from '@/repository/metaDataRepository'
 const mapMetaToFilters = async (metaData: MetaData) => {
   let shownFilters:string[] = []
 
@@ -36,12 +34,11 @@ const mapMetaToFilters = async (metaData: MetaData) => {
 
 const getOptions = async (href: string) => {
   let url = href.replace(':443', ':8080') // TODO: issue with double proxy removing port numbers, this is only needed during development, we will need to find a better solution than this
-  const metadata = await axios.get<ResponseEntityType>(url)
+  const metadata = await fetchMetaDataByURL(url)
+
   return async () => {
-    // @ts-ignore
-    const nameAttr = metadata.data.data.attributes.items.filter((i) => i.data.labelAttribute).map((i) => i.data.name)[0]
-    // @ts-ignore
-    const idAttr = metadata.data.data.attributes.items.filter((i) => i.data.idAttribute).map((i) => i.data.name)[0]
+    const nameAttr = metadata.labelAttribute ? metadata.labelAttribute.name : ''
+    const idAttr = metadata.idAttribute.name
 
     url = url.replace('/metadata/', '/data/') // TODO: this needs a backend direct link solution
     const data = await axios.get(url)
