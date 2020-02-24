@@ -7,14 +7,6 @@ export type Toast = {
   message: string
 }
 
-export type EntityMetaRefs = {
-  [s: string]: {
-    refEntity: string,
-    fieldType: string,
-    labelAttribute: string
-  }
-}
-
 export type TableSetting = {
   settingsTable: string,
   customCardCode: string | null,
@@ -48,7 +40,6 @@ export default interface ApplicationState {
   tableData: DataApiResponse | null
   tableMeta: MetaData | null
   defaultEntityData: DataApiResponseItem[] | null,
-  entityMetaRefs: EntityMetaRefs,
   shoppedEntityItems: string[]
   showShoppingCart: boolean
   tableSettings: TableSetting

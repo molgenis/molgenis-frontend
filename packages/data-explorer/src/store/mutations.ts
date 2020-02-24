@@ -1,8 +1,8 @@
-import ApplicationState, { Toast, EntityMetaRefs, FilterDefinition } from '@/types/ApplicationState'
-import { DataApiResponse, MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
+import ApplicationState, { Toast, FilterDefinition } from '@/types/ApplicationState'
+import { DataApiResponse } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
-import { MetaData } from '@/types/MetaData'
+import { MetaData, Attribute } from '@/types/MetaData'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {
@@ -39,19 +39,6 @@ export default {
   },
   setTableMetaData (state: ApplicationState, meta: MetaData) {
     state.tableMeta = meta
-  },
-  setMetaDataRefLabels (state: ApplicationState, meta: MetaDataApiResponse) {
-    const refItems = meta.attributes.reduce((obj : EntityMetaRefs, attribute : MetaDataAttribute) => {
-      if (attribute.refEntity) {
-        obj[attribute.name] = {
-          refEntity: attribute.refEntity.name.toString(),
-          fieldType: attribute.fieldType,
-          labelAttribute: attribute.refEntity.labelAttribute.toString()
-        }
-      }
-      return obj
-    }, <EntityMetaRefs>{})
-    state.entityMetaRefs = refItems
   },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {
     const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'

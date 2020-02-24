@@ -1,6 +1,6 @@
 <template>
   <div class="mt-2 entity-table container-fluid"
-       v-if="tableData && tableData.items.length > 0 && entityMeta">
+       v-if="tableData && tableData.items.length > 0">
     <div class="row" v-if="isShop && entitiesToShow.length === 0">
       <div class="alert alert-warning col">
       </div>
@@ -75,12 +75,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'entityMeta', 'entityMetaRefs', 'shoppedEntityItems', 'defaultEntityData', 'tableData']),
+    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'tableMeta', 'shoppedEntityItems', 'defaultEntityData', 'tableData']),
     idAttribute () {
-      return this.entityMeta.idAttribute
+      return this.tableMeta.idAttribute.name
     },
     labelAttribute () {
-      return this.entityMeta.labelAttribute
+      return this.tableMeta.labelAttribute.name
     },
     tableHeaderToShow () {
       return Object.keys(this.entitiesToShow[0])
@@ -105,9 +105,9 @@ export default {
       return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
     },
     buildQuery () {
-      const attributes = this.entityMeta.attributes.filter((attribute) => attribute.fieldType !== 'COMPOUND').slice(0, 10).map((attribute) => attribute.name)
-      const expand = expandQueryGenerator(this.entityMetaRefs, attributes)
-      const filter = filterQueryGenerator(this.entityMetaRefs, attributes)
+      const attributes = this.tableMeta.attributes.filter((attribute) => attribute.fieldType !== 'COMPOUND').slice(0, 10).map((attribute) => attribute.name)
+      const expand = expandQueryGenerator(this.tableMeta, attributes)
+      const filter = filterQueryGenerator(this.tableMeta, attributes)
       return `expand=${expand}&filter=${filter}`
     }
   }

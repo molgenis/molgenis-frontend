@@ -1,64 +1,51 @@
 import mutations from '@/store/mutations'
 import ApplicationState from '@/types/ApplicationState'
+import {Attribute, MetaData} from '@/types/MetaData'
 
 describe('mutations', () => {
-  const entityMetaData = {
-    'href': '/api/v2/test',
-    'hrefCollection': '/api/v2/test',
-    'name': 'test',
-    'label': 'Test',
-    'description': 'Beautiful description',
-    'attributes': [
-      {
-        'href': '/api/v2/test/meta/id',
-        'fieldType': 'INT',
-        'name': 'id',
-        'label': 'id',
-        'attributes': [],
-        'auto': false,
-        'nillable': false,
-        'readOnly': true,
-        'labelAttribute': false,
-        'unique': true,
-        'visible': true,
-        'lookupAttribute': true,
-        'isAggregatable': false
-      },
-      {
-        'href': '/api/v2/test/meta/label',
-        'fieldType': 'STRING',
-        'name': 'label',
-        'label': 'label',
-        'attributes': [],
-        'auto': false,
-        'nillable': false,
-        'readOnly': true,
-        'labelAttribute': true,
-        'unique': true,
-        'visible': true,
-        'lookupAttribute': true,
-        'isAggregatable': false
-      }
-    ],
-    'labelAttribute': 'label',
-    'idAttribute': 'id',
-    'lookupAttributes': [
-      'id'
-    ],
-    'isAbstract': false,
-    'writable': true,
-    'languageCode': 'en',
-    'permissions': [
-      'DELETE_DATA',
-      'READ_METADATA',
-      'READ_DATA',
-      'UPDATE_METADATA',
-      'AGGREGATE_DATA',
-      'DELETE_METADATA',
-      'UPDATE_DATA',
-      'COUNT_DATA',
-      'ADD_DATA'
-    ]
+  const IntAttribute: Attribute = {
+    id: 'id',
+    name: 'id',
+    idAttribute: true,
+    description: 'the id',
+    isReference: false,
+    label: 'id',
+    nullable: false,
+    readOnly: false,
+    type: 'int',
+    unique: false,
+    auto: false,
+    labelAttribute: false,
+    visible: true,
+    lookupAttributeIndex: 1,
+    aggregatable: false
+  }
+  const StringAttribute: Attribute = {
+    id: 'label',
+    name: 'label',
+    idAttribute: false,
+    description: 'the label',
+    isReference: false,
+    label: 'reference',
+    nullable: false,
+    readOnly: false,
+    type: 'string',
+    unique: false,
+    auto: false,
+    labelAttribute: true,
+    visible: true,
+    lookupAttributeIndex: 2,
+    aggregatable: false
+  }
+  const entityMetaData:MetaData = {
+    id: 'id',
+    idAttribute: IntAttribute,
+    labelAttribute: StringAttribute,
+    package: null,
+    description: 'description',
+    label: 'Test',
+    abstract: false,
+    attributes: [IntAttribute, StringAttribute]
   }
 
   let baseAppState: ApplicationState
