@@ -2,6 +2,8 @@ import * as dataRepository from '../../../src/repository/dataRepository'
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
 
+import { MetaData } from '@/types/MetaData'
+
 import meta from '../mocks/metaDataResponseMock'
 import mockRowResponse from '../mocks/rowDataResponseMock'
 
@@ -19,7 +21,7 @@ describe('dataRepository', () => {
       const tableId = 'books'
       const rowId = '101'
       api.get.mockResolvedValue(mockRowResponse)
-      const resp = await dataRepository.getRowDataWithReferenceLabels(tableId, rowId, meta)
+      const resp = await dataRepository.getRowDataWithReferenceLabels(tableId, rowId, meta as MetaData)
       expect(resp).toEqual({
         id: 1,
         label: 'my label row data'
@@ -32,7 +34,7 @@ describe('dataRepository', () => {
       api.get.mockResolvedValue({ items: [
         mockRowResponse
       ] })
-      await dataRepository.getTableDataWithLabel('tableId', meta, ['foo'])
+      await dataRepository.getTableDataWithLabel('tableId', meta as MetaData, ['foo'])
       expect(api.get).toBeCalledWith('/api/data/tableId?expand=&filter=foo,id,label')
     })
   })

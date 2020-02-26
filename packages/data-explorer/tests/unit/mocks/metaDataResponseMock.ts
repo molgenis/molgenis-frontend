@@ -1,92 +1,99 @@
+import { Attribute } from '@/types/MetaData'
+
+const idAttribute:Attribute = {
+  id: '/api/v2/test/meta/id',
+  name: 'id',
+  type: 'int',
+  label: 'id',
+  description: '',
+  idAttribute: true,
+  labelAttribute: false,
+  auto: false,
+  nullable: false,
+  readOnly: true,
+  unique: true,
+  visible: true,
+  lookupAttributeIndex: 1,
+  aggregatable: false,
+  isReference: false
+}
+const labelAttribute:Attribute = {
+  id: '/api/v2/test/meta/label',
+  type: 'string',
+  name: 'label',
+  label: 'label',
+  description: '',
+  auto: false,
+  nullable: false,
+  readOnly: true,
+  idAttribute: false,
+  labelAttribute: true,
+  unique: true,
+  visible: true,
+  lookupAttributeIndex: 2,
+  isReference: false,
+  aggregatable: false
+}
+
 export default {
   id: 'id',
   package: null,
   description: 'desciption',
+  idAttribute: idAttribute,
+  labelAttribute: labelAttribute,
   label: 'Test',
   abstract: false,
   attributes: [
-    {
-      id: '/api/v2/test/meta/id',
-      name: 'id',
-      type: 'int',
-      label: 'id',
-      auto: false,
-      nullable: false,
-      readOnly: true,
-      labelAttribute: false,
-      unique: true,
-      visible: true,
-      lookupAttributeIndex: 1,
-      aggregatable: false
-    },
-    {
-      id: '/api/v2/test/meta/label',
-      type: 'string',
-      name: 'label',
-      label: 'label',
-      attributes: [],
-      auto: false,
-      nillable: false,
-      readOnly: true,
-      labelAttribute: true,
-      unique: true,
-      visible: true,
-      lookupAttributeIndex: true,
-      aggregatable: false
-    },
+    idAttribute,
+    labelAttribute,
     {
       id: '/api/v2/test/meta/country',
       type: 'categorical',
       name: 'country',
       label: 'country',
-      attributes: [],
+      description: '',
       auto: false,
-      nillable: false,
+      nullable: false,
       readOnly: true,
+      idAttribute: false,
       labelAttribute: false,
       unique: true,
       visible: true,
-      lookupAttribute: true,
+      isReference: false,
       aggregatable: false,
-      refEntity: {
-        name: 'countries',
-        labelAttribute: 'countries',
-        href: '/api/v2/countries'
-      }
+      refEntityType: '/api/v2/country'
     },
     {
       id: '/api/v2/test/meta/age_groups',
       type: 'categorical_mref',
       name: 'age_groups',
       label: 'age_groups',
-      attributes: [],
+      description: '',
       auto: false,
-      nillable: false,
+      nullable: false,
       readOnly: true,
+      idAttribute: false,
       labelAttribute: false,
       unique: true,
+      isReference: false,
       visible: true,
-      lookupAttribute: true,
       aggregatable: false,
-      refEntity: {
-        name: 'age_groups',
-        labelAttribute: 'age_groups',
-        href: '/api/v2/age_groups'
-      }
+      refEntityType: '/api/v2/age_groups'
     },
     {
       id: '/api/v2/test/meta/name',
       type: 'string',
       name: 'name',
       label: 'name',
-      attributes: [],
+      description: '',
       auto: false,
-      nillable: false,
+      nullable: false,
       readOnly: true,
+      idAttribute: false,
       labelAttribute: false,
       unique: true,
+      isReference: false,
       visible: true,
-      lookupAttribute: true,
       aggregatable: false
     }
   ]

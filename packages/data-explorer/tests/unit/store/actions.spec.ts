@@ -214,7 +214,7 @@ jest.mock('@molgenis/molgenis-api-client', () => {
 
 jest.mock('@/repository/metaDataRepository', () => {
   return {
-    fetchMetaData: jest.fn()
+    fetchMetaDataById: jest.fn()
   }
 })
 
@@ -228,7 +228,6 @@ jest.mock('@/repository/dataRepository', () => {
 
 jest.mock('@/repository/metaDataService', () => {
   return {
-    getRefsFromMeta: jest.fn(),
     getAttributesfromMeta: jest.fn()
   }
 })
@@ -245,7 +244,6 @@ describe('actions', () => {
       tableMeta: null,
       dataDisplayLayout: 'CardView',
       defaultEntityData: null,
-      entityMetaRefs: {},
       filters: {
         hideSidebar: false,
         definition: [],
