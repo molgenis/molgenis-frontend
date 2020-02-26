@@ -42,7 +42,7 @@ const metaResponse = {
       },
       {
         'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound',
-        'fieldType': 'COMPOUND',
+        'fieldType': 'compound',
         'name': 'xcompound',
         'label': 'xcompound label',
         'description': 'TypeTest compound attribute',

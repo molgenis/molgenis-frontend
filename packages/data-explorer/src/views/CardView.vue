@@ -40,7 +40,7 @@ export default {
       return this.tableMeta.labelAttribute
     },
     numberOfAttributes () {
-      return this.tableMeta.attributes.filter((attr) => { return attr.fieldType !== 'COMPOUND' }).length
+      return this.tableMeta.attributes.filter((attr) => { return attr.type !== 'compound' }).length
     }
   },
   methods: {

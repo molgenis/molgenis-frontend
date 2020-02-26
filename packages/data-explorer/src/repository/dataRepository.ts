@@ -3,8 +3,7 @@ import api from '@molgenis/molgenis-api-client'
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta } from './metaDataService'
 import * as metaDataRepository from './metaDataRepository'
-import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse, DataObject } from '@/types/ApiResponse'
-import { StringMap } from '@/types/GeneralTypes'
+import { DataApiResponseItem, DataObject } from '@/types/ApiResponse'
 import { MetaData, Attribute } from '@/types/MetaData'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
@@ -129,14 +128,13 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
 // called on row expand
 const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
-  // Todo: remove work around, needed as compounds are not pased by getAttributesfromMeta.
-  // Addding id and label makes sure we get these fields.
+  // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
+  // Adding id and label makes sure we get these fields.
   const columnSet = new Set([...attributes])
   columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
     columnSet.add(metaData.labelAttribute.name)
   }
-  // const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet], true)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
   const response = await api.get(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
   return levelOneRowMapper(response, metaData)

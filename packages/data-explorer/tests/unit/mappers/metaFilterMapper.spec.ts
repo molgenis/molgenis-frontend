@@ -1,7 +1,8 @@
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 import * as util from '../../../src/mappers/utils'
 // @ts-ignore
-import api from '@molgenis/molgenis-api-client'
+// import api from '@molgenis/molgenis-api-client'
+import axios from 'axios'
 import { MetaData, Attribute } from '@/types/MetaData'
 
 const ageGroupOptions = {
@@ -32,7 +33,7 @@ const countryOptions = {
   ]
 }
 
-jest.mock('@molgenis/molgenis-api-client', () => ({
+jest.mock('axios', () => ({
   get: jest.fn()
 }))
 

@@ -105,7 +105,7 @@ export default {
       return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
     },
     buildQuery () {
-      const attributes = this.tableMeta.attributes.filter((attribute) => attribute.fieldType !== 'COMPOUND').slice(0, 10).map((attribute) => attribute.name)
+      const attributes = this.tableMeta.attributes.filter((attribute) => attribute.type !== 'compound').slice(0, 10).map((attribute) => attribute.name)
       const expand = expandQueryGenerator(this.tableMeta, attributes)
       const filter = filterQueryGenerator(this.tableMeta, attributes)
       return `expand=${expand}&filter=${filter}`
