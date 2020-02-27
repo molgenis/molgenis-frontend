@@ -7,6 +7,13 @@ export type Toast = {
   message: string
 }
 
+export type FilterOptionsPromise = Promise<FilterOption[]>
+
+export type FilterOption = {
+  value: string | number | boolean,
+  text?: string
+}
+
 export type TableSetting = {
   settingsTable: string,
   customCardCode: string | null,

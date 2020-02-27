@@ -1,37 +1,61 @@
 import axios, { AxiosResponse } from 'axios'
 // @ts-ignore
-import { getCategoricals } from './utils'
-import { MetaData } from '@/types/MetaData'
+import { getCategoricals, getFieldOptions } from './utils'
 import { fetchMetaDataByURL } from '@/repository/metaDataRepository'
+import { StringMap } from '@/types/GeneralTypes'
+import { MetaData, Attribute } from '../types/MetaData'
+import { FilterDefinition } from '@/types/ApplicationState'
+
+const fieldTypeToFilterType:StringMap = {
+  'string': 'string-filter',
+  'text': 'string-filter',
+  'html': 'string-filter',
+  'int': 'range-filter',
+  'long': 'range-filter',
+  'decimal': 'range-filter',
+  'bool': 'checkbox-filter',
+  'data': 'string-filter', // TODO: create time filter
+  'datatime': 'string-filter', // TODO: create time filter
+  'email': 'string-filter',
+  'hyperlink': 'string-filter',
+  'categorical': 'checkbox-filter',
+  'categorical_mref': 'checkbox-filter',
+  'mref': 'checkbox-filter', // TODO: create multiselect filter
+  'xref': 'checkbox-filter', // TODO: create multiselect filter
+  'one_to_many': 'checkbox-filter', // TODO: create multiselect filter
+  'enum': 'checkbox-filter',
+  'file': 'string-filter'
+}
+
 const mapMetaToFilters = async (metaData: MetaData) => {
   let shownFilters:string[] = []
 
-  // TODO: map all filters
-  const categoricalAttrs = getCategoricals(metaData.attributes)
-  const categoricals = await Promise.all(categoricalAttrs.map(async (attribute) => {
-    const href = attribute.refEntityType
-
-    if (!href) throw new Error('categorical without href')
-
-    const options = await getOptions(href)
-    shownFilters.push(attribute.name)
-
-    return {
+  const filterDefinitions = metaData.attributes.filter((item: Attribute) => {
+    // Filter out undefined datatypes
+    return fieldTypeToFilterType[item.type]
+  })
+  const constructedFilters = await Promise.all(filterDefinitions.map(async (attribute: Attribute) => {
+    const options = await getFieldOptions(attribute)
+    // Base filter template
+    let filterDefinition: FilterDefinition = {
       name: attribute.name,
       label: attribute.label,
-      type: 'checkbox-filter',
+      // @ts-ignore
       options: options,
+      type: fieldTypeToFilterType[attribute.type],
       collapsable: true,
       collapsed: false
     }
+    return filterDefinition
   }))
-
+  console.log(constructedFilters)
   return {
-    definition: categoricals,
+    definition: constructedFilters,
     shown: shownFilters
   }
 }
 
+/*
 const getOptions = async (href: string) => {
   let url = href.replace(':443', ':8080') // TODO: issue with double proxy removing port numbers, this is only needed during development, we will need to find a better solution than this
   const metadata = await fetchMetaDataByURL(url)
@@ -50,7 +74,7 @@ const getOptions = async (href: string) => {
     )
   }
 }
-
+*/
 export {
   mapMetaToFilters
 }
