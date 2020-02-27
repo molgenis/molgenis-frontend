@@ -25,13 +25,14 @@ export type TableSetting = {
 }
 
 export type FilterSelections = {
-  [s: string]: string | string[]
+  [s: string]: any
 }
 
 export type FilterDefinition = {
   name: string,
   label: string,
-  type: string,
+  type: string, // filter type
+  dataType: string, // molgenis datatype
   description?: string,
   placeholder?: string,
   bulkOperation?: boolean,
@@ -44,6 +45,12 @@ export type FilterDefinition = {
   step?:number
 }
 
+export type FilterGroup = {
+  hideSidebar: boolean
+  definition: FilterDefinition[]
+  shown: string[]
+  selections: FilterSelections
+}
 export default interface ApplicationState {
   toast: Toast | null,
   dataDisplayLayout: 'CardView' | 'TableView'
@@ -55,10 +62,5 @@ export default interface ApplicationState {
   showShoppingCart: boolean
   tableSettings: TableSetting
   isSettingsLoaded: boolean
-  filters: {
-    hideSidebar: boolean
-    definition: FilterDefinition[]
-    shown: string[]
-    selections: FilterSelections
-  }
+  filters: FilterGroup
 }

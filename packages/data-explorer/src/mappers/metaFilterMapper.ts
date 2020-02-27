@@ -41,6 +41,7 @@ const mapMetaToFilters = async (metaData: MetaData) => {
       name: attribute.name,
       label: attribute.label,
       type: fieldTypeToFilterType[attribute.type],
+      dataType: attribute.type,
       collapsable: true,
       collapsed: false
     }
@@ -69,8 +70,6 @@ const mapMetaToFilters = async (metaData: MetaData) => {
     definition: constructedFilters,
     shown: shownFilters
   }
-
-
 }
 
 /*
