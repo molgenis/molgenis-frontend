@@ -107,6 +107,7 @@ type AttributeData = {
   unique?: boolean,
   readOnly?: boolean,
   aggregatable?: boolean,
+  range?: { min?: number, max?:number },
   enumOptions?: string[],
   categoricalOptions?: CategoricalOption[],
   defaultValue?: string,

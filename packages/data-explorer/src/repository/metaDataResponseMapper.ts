@@ -73,6 +73,8 @@ const toAttribute = (responseAttribute: ResponseAttribute): Attribute => {
 
   attribute = addOptional(attribute, 'defaultValue', data.defaultValue)
 
+  attribute = addOptional(attribute, 'range', data.range)
+
   if (data.parentAttribute) {
     attribute = { ...attribute, parentAttribute: toAttribute(data.parentAttribute) }
   }

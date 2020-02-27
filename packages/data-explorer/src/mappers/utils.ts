@@ -7,7 +7,10 @@ export const getCategoricals = (attributes: Attribute[]) => attributes.filter(at
 
 export const getFieldOptions = async (attribute: Attribute) => {
   const getOptions = async (href: string) => {
-    let url = href.replace(':443', ':8080') // TODO: issue with double proxy removing port numbers, this is only needed during development, we will need to find a better solution than this
+    let url = href
+    if (window.location.hostname === 'localhost') {
+      url = href.replace(':443', ':8080')
+    }
     const metadata = await fetchMetaDataByURL(url)
 
     return async () => {

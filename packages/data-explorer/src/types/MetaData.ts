@@ -39,6 +39,7 @@ export type Attribute = {
   nullableExpression?: string,
   visibleExpression?: string,
   validationExpression?: string,
+  range?: { min?: number, max?:number }
 }
 
 type CategoricalOption = {

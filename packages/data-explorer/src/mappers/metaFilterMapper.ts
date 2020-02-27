@@ -40,19 +40,37 @@ const mapMetaToFilters = async (metaData: MetaData) => {
     let filterDefinition: FilterDefinition = {
       name: attribute.name,
       label: attribute.label,
-      // @ts-ignore
-      options: options,
       type: fieldTypeToFilterType[attribute.type],
       collapsable: true,
       collapsed: false
     }
-    return filterDefinition
+
+    // DECIMAL
+    if (attribute.type.includes('decimal')) {
+      filterDefinition.step = 0.1
+    }
+
+    // RANGE
+    if (filterDefinition.type === 'range-filter' && attribute.range) {
+      if (attribute.range.max) {
+        filterDefinition.max = attribute.range.max
+      }
+      if (attribute.range.min) {
+        filterDefinition.min = attribute.range.min
+      }
+      if (attribute.range.max && attribute.range.min) {
+        filterDefinition.useSlider = true
+      }
+    }
+
+    return options ? { ...filterDefinition, options } : filterDefinition
   }))
-  console.log(constructedFilters)
   return {
     definition: constructedFilters,
     shown: shownFilters
   }
+
+
 }
 
 /*
