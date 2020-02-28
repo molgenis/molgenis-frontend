@@ -13,11 +13,14 @@ export const getFieldOptions = async (attribute: Attribute) => {
     }
     const metadata = await fetchMetaDataByURL(url)
 
-    return async () => {
+    return async (params?: string) => {
       const nameAttr = metadata.labelAttribute ? metadata.labelAttribute.name : ''
       const idAttr = metadata.idAttribute.name
 
       url = url.replace('/metadata/', '/data/') // TODO: this needs a backend direct link solution
+      if (params) {
+        url += params
+      }
       const data = await axios.get(url)
       return Promise.resolve(
         data.data.items.map((i: any) => {
