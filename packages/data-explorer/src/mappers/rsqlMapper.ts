@@ -25,6 +25,7 @@ export const createRSQLQuery = (filters: FilterGroup): string | null => {
 
   Object.keys(filters.selections).forEach((name: string) => {
     const selection = filters.selections[name]
+    if (selection === undefined) return
     const definition = filters.definition.filter((filter) => filter.name === name)[0]
 
     // TODO: refactor by adding ComparisonOperator to filter mapper
