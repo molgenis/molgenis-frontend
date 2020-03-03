@@ -54,7 +54,5 @@ export const createRSQLQuery = (filters: FilterGroup): string | null => {
     operator: Operator.And,
     operands: operands
   })
-
-  console.log(result)
   return result
 }

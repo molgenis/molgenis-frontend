@@ -1,21 +1,8 @@
 import * as rsqlMapper from '@/mappers/rsqlMapper'
 import { FilterGroup } from '@/types/ApplicationState'
 import { Value, transformToRSQL } from '@molgenis/rsql'
-import meta from '../mocks/metaDataResponseMock'
-import { MetaData, Attribute } from '@/types/MetaData'
-
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
-
-jest.mock('@molgenis/molgenis-api-client', () => ({
-  get: jest.fn()
-}))
 
 describe('rsqlMapper', () => {
-  beforeEach(() => {
-    api.get.mockReset()
-  })
-
   describe('createInQuery', () => {
     it('create an inQuery', async () => {
       const selections: Value[] = [ 'NL', 'DE' ]
@@ -41,9 +28,6 @@ describe('rsqlMapper', () => {
       shown: [],
       selections: {}
     }
-    beforeEach(() => {
-
-    })
     it('will return null with empty filters', async () => {
       const rsqlQuery = await rsqlMapper.createRSQLQuery(filterState)
       expect(rsqlQuery).toEqual(null)
