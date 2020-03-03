@@ -72,28 +72,6 @@ const mapMetaToFilters = async (metaData: MetaData) => {
   }
 }
 
-/*
-const getOptions = async (href: string) => {
-  let url = href;
-  if(window.location.hostname === "localhost") // DEV
-     url = href.replace(':443', ':8080')
-  const metadata = await fetchMetaDataByURL(url)
-
-  return async () => {
-    const nameAttr = metadata.labelAttribute ? metadata.labelAttribute.name : ''
-    const idAttr = metadata.idAttribute.name
-
-    url = url.replace('/metadata/', '/data/') // TODO: this needs a backend direct link solution
-    const data = await axios.get(url)
-    return Promise.resolve(
-      data.data.items.map((i: any) => {
-        // @ts-ignore
-        return { value: i.data[idAttr], text: i.data[nameAttr] }
-      })
-    )
-  }
-}
-*/
 export {
   mapMetaToFilters
 }

@@ -14,3 +14,10 @@ export default Vue.extend({
   components: { PageComponent }
 })
 </script>
+
+<style>
+/* TODO: This needs to be fixed in the base style sheet */
+.modal-backdrop{
+  background-color: rgba(0,0,0,0.3);
+}
+</style>
