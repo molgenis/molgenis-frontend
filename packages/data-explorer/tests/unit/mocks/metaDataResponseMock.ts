@@ -1,7 +1,7 @@
 import { Attribute } from '@/types/MetaData'
 
 const idAttribute:Attribute = {
-  id: '/api/v2/test/meta/id',
+  id: '/api/metadata/id',
   name: 'id',
   type: 'int',
   label: 'id',
@@ -18,7 +18,7 @@ const idAttribute:Attribute = {
   isReference: false
 }
 const labelAttribute:Attribute = {
-  id: '/api/v2/test/meta/label',
+  id: '/api/metadata/label',
   type: 'string',
   name: 'label',
   label: 'label',
@@ -47,7 +47,7 @@ export default {
     idAttribute,
     labelAttribute,
     {
-      id: '/api/v2/test/meta/country',
+      id: '/api/metadata/country',
       type: 'categorical',
       name: 'country',
       label: 'country',
@@ -61,10 +61,10 @@ export default {
       visible: true,
       isReference: false,
       aggregatable: false,
-      refEntityType: '/api/v2/country'
+      refEntityType: '/api/metadata/country'
     },
     {
-      id: '/api/v2/test/meta/age_groups',
+      id: '/api/metadata/age_groups',
       type: 'categorical_mref',
       name: 'age_groups',
       label: 'age_groups',
@@ -78,10 +78,10 @@ export default {
       isReference: false,
       visible: true,
       aggregatable: false,
-      refEntityType: '/api/v2/age_groups'
+      refEntityType: '/api/metadata/age_groups'
     },
     {
-      id: '/api/v2/test/meta/name',
+      id: '/api/metadata/name',
       type: 'string',
       name: 'name',
       label: 'name',

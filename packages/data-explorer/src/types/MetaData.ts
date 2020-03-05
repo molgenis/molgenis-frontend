@@ -4,7 +4,7 @@ export type MetaData = {
   id: string,
   idAttribute: Attribute, // computed by mapper
   labelAttribute: Attribute | undefined // computed by mapper
-  package: string | null, // url
+  package: string | null, // url to package
   extends?: string, // ref url to parent
   description: string,
   label: string,

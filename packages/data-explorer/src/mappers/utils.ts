@@ -17,7 +17,7 @@ export const getFieldOptions = async (attribute: Attribute) => {
       const nameAttr = metadata.labelAttribute ? metadata.labelAttribute.name : ''
       const idAttr = metadata.idAttribute.name
 
-      url = url.replace('/metadata/', '/data/') // TODO: this needs a backend direct link solution
+      url = url.replace('/metadata/', '/data/')
       const data = await axios.get(url)
       return Promise.resolve(
         data.data.items.map((i: any) => {

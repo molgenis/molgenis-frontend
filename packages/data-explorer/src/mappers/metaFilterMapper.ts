@@ -11,15 +11,15 @@ const fieldTypeToFilterType:StringMap = {
   'long': 'range-filter',
   'decimal': 'range-filter',
   'bool': 'checkbox-filter',
-  'data': 'string-filter', // TODO: create time filter
-  'datatime': 'string-filter', // TODO: create time filter
+  'data': 'string-filter',
+  'datatime': 'string-filter',
   'email': 'string-filter',
   'hyperlink': 'string-filter',
   'categorical': 'checkbox-filter',
   'categorical_mref': 'checkbox-filter',
-  'mref': 'checkbox-filter', // TODO: create multiselect filter
-  'xref': 'checkbox-filter', // TODO: create multiselect filter
-  'one_to_many': 'checkbox-filter', // TODO: create multiselect filter
+  'mref': 'checkbox-filter',
+  'xref': 'checkbox-filter',
+  'one_to_many': 'checkbox-filter',
   'enum': 'checkbox-filter',
   'file': 'string-filter'
 }
