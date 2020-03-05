@@ -1,7 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
-// @ts-ignore
-import { getCategoricals, getFieldOptions } from './utils'
-import { fetchMetaDataByURL } from '@/repository/metaDataRepository'
+import { getFieldOptions } from './utils'
 import { StringMap } from '@/types/GeneralTypes'
 import { MetaData, Attribute } from '../types/MetaData'
 import { FilterDefinition } from '@/types/ApplicationState'

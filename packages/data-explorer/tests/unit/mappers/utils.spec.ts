@@ -1,13 +1,14 @@
 import * as utils from '@/mappers/utils'
 import mock from '../mocks/metaDataResponseMock'
 import { Attribute } from '@/types/MetaData'
+import axios from 'axios'
 
 jest.mock('axios', () => ({
-  get: jest.fn().mockResolvedValue(mock)
+  get: jest.fn().mockResolvedValue({ data: { items: [ { data: { id: 'id', label: 'label' } } ] } })
 }))
 
 jest.mock('@/repository/metaDataRepository', () => ({
-  fetchMetaDataByURL: () => jest.fn()
+  fetchMetaDataByURL: () => mock
 }))
 
 describe('Mapper utils', () => {
@@ -20,6 +21,11 @@ describe('Mapper utils', () => {
   describe('getFieldOptions', () => {
     it('string filter not to return options', async () => {
       expect(await utils.getFieldOptions(mock.attributes[1] as Attribute)).toEqual(null)
+    })
+    it('categorical filter returns some options', async () => {
+      let res = await utils.getFieldOptions(mock.attributes[2] as Attribute)
+      // @ts-ignore
+      expect(await res()).toEqual([ { value: 'id', text: 'label' } ])
     })
   })
 })
