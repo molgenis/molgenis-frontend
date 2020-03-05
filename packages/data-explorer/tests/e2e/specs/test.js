@@ -40,7 +40,7 @@ module.exports = {
   },
   'expand and collapse default card in card layout': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + '#/TableWithMoreColumns')
+      .url(process.env.VUE_DEV_SERVER_URL)
       .waitForElementPresent('#app', timeOutDelay)
       .assert.visible('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(5)')
       .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')

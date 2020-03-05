@@ -80,7 +80,7 @@ export default {
     // todo need to refacor state.tableData to look up list
     state.tableData.items.forEach((row, index) => {
       // @ts-ignore
-      if (row[state.tableMeta.idAttribute.name].toString() === rowId.toString()) {
+      if (rowId && row[state.tableMeta.idAttribute.name].toString() === rowId.toString()) {
         // @ts-ignore
         Vue.set(state.tableData.items, index, rowData)
       }
