@@ -95,6 +95,23 @@ export default {
       isReference: false,
       visible: true,
       aggregatable: false
+    },
+    {
+      id: '/api/metadata/decimal',
+      type: 'decimal',
+      name: 'decimal',
+      label: 'decimal',
+      description: '',
+      auto: false,
+      nullable: false,
+      readOnly: true,
+      idAttribute: false,
+      labelAttribute: false,
+      unique: true,
+      isReference: false,
+      visible: true,
+      aggregatable: false,
+      range: { min: 10, max: 100 }
     }
   ]
 }

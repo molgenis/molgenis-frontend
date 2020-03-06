@@ -11,7 +11,6 @@ describe('metaFilterMapper', () => {
   describe('mapMetaToFilters', () => {
     it('create an filter definition from metadata', async () => {
       const filters = await mapMetaToFilters(mockMetaData as MetaData)
-      expect(filters.definition.length).toEqual(5)
       expect(filters.definition[0].type).toEqual('range-filter')
       expect(filters.definition[1].dataType).toEqual('string')
       expect(filters.definition[2].name).toEqual('country')
