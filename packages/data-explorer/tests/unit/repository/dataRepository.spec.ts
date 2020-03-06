@@ -11,7 +11,7 @@ jest.mock('axios', () => ({
 }))
 
 jest.mock('@/repository/metaDataRepository', () => ({
-  fetchMetaDataByURL: () => { return { data: mockmeta } }
+  fetchMetaDataByURL: () => { return { data: mockmeta, ...mockmeta } }
 }))
 
 describe('dataRepository', () => {
@@ -26,11 +26,9 @@ describe('dataRepository', () => {
       const rowId = '101'
       // @ts-ignore
       axios.get.mockResolvedValue({ data: mockRowResponse })
-      mockmeta.attributes[2].isReference = false
-      mockmeta.attributes[3].isReference = false
       const resp = await dataRepository.getRowDataWithReferenceLabels(tableId, rowId, mockmeta as MetaData)
       expect(resp).toEqual({
-        country: 'item',
+        country: 'label',
         id: 1,
         label: 'my label row data'
       })

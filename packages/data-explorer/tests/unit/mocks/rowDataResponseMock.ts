@@ -5,6 +5,6 @@ export default {
   data: {
     id: 1,
     label: 'my label row data',
-    country: 'item'
+    country: { data: { name: 'name', label: 'label', id: 'id' } }
   }
 }
