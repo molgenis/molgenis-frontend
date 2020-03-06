@@ -42,6 +42,7 @@ module.exports = {
     browser
       .url(process.env.VUE_DEV_SERVER_URL)
       .waitForElementPresent('#app', timeOutDelay)
+      .waitForElementPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(4)', timeOutDelay)
       .assert.visible('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(4)')
       .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
       .waitForElementPresent('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand', timeOutDelay)
