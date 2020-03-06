@@ -16,7 +16,7 @@ export default Vue.extend({
 </script>
 
 <style>
-/* TODO: This needs to be fixed in the base style sheet */
+/* TODO: The show class is not being set like it its in ui-filters? */
 .modal-backdrop{
   background-color: rgba(0,0,0,0.3);
 }

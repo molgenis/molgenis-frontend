@@ -36,7 +36,6 @@ export const getFieldOptions = async (attribute: Attribute) => {
     case 'mref':
       return attribute.refEntityType ? getOptions(attribute.refEntityType) : null
     case 'enum':
-      // TODO: check if enum still gives these results in api v3
       if (attribute.enumOptions) {
         const enumOptions = attribute.enumOptions.map(option => {
           return {

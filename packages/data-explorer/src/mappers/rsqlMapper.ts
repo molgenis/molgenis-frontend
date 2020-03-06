@@ -28,7 +28,6 @@ export const createRSQLQuery = (filters: FilterGroup): string | null => {
     if (selection === undefined) return
     const definition = filters.definition.filter((filter) => filter.name === name)[0]
 
-    // TODO: refactor by adding ComparisonOperator to filter mapper
     switch (definition.type) {
       case 'checkbox-filter':
         if (definition.dataType === 'bool') {

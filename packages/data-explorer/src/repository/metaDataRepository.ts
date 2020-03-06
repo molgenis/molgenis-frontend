@@ -41,7 +41,6 @@ const fetchMetaDataById = async (entityId: string): Promise<MetaData> => {
 }
 
 const fetchMetaDataByURL = async (url: string): Promise<MetaData> => {
-  // TODO: refactor to use url, note shared cache
   // @ts-ignore
   return fetchMetaDataById(url.split('/').pop())
 }

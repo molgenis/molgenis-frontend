@@ -57,8 +57,7 @@ const toAttribute = (responseAttribute: ResponseAttribute): Attribute => {
   }
 
   if (data.orderBy) {
-    // Todo
-    throw new Error('Unhandled metadata Attribute orderBy')
+    // TODO: implement
   }
 
   attribute = addOptional(attribute, 'lookupAttributeIndex', data.lookupAttributeIndex)
