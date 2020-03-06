@@ -1,4 +1,4 @@
-import { MetaData, Attribute } from '@/types/MetaData'
+import { MetaData } from '@/types/MetaData'
 
 const buildExpandQuery = (metaData: MetaData, selectedAttributeNames:string[]) => {
   return metaData.attributes

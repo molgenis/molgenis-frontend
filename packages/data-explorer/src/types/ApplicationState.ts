@@ -1,5 +1,4 @@
-import { DataApiResponse, MetaDataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
-import { StringMap } from '@/types/GeneralTypes'
+import { DataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
 import { MetaData } from './MetaData'
 
 export type Toast = {

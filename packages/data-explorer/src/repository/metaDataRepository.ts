@@ -21,11 +21,11 @@ const fetchMetaDataById = async (entityId: string): Promise<MetaData> => {
     return metaDataCache[entityId]
   }
   if (metaDataCue[entityId]) {
-    return metaDataCue[entityId].then((response) => {
+    return metaDataCue[entityId].then((result) => {
       if (metaDataCache[entityId]) {
         return metaDataCache[entityId]
       }
-      return mapAndStore(entityId, response)
+      return mapAndStore(entityId, result)
     })
   }
 

@@ -60,7 +60,6 @@ import { mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { filterQueryGenerator, expandQueryGenerator } from '../repository/queryBuilder'
 
 library.add(faShoppingBag)
 

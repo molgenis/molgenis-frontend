@@ -1,7 +1,5 @@
 import { Operator, ComparisonOperator, Value, Constraint, transformToRSQL } from '@molgenis/rsql'
-import { Attribute } from '@/types/MetaData'
-import { getCategoricals } from './utils'
-import { FilterGroup, FilterOption, FilterOptionsPromise, FilterSelections } from '@/types/ApplicationState'
+import { FilterGroup } from '@/types/ApplicationState'
 
 /**
  * Create an RSQL 'in' query for filters
