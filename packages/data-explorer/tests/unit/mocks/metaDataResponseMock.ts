@@ -59,7 +59,7 @@ export default {
       labelAttribute: false,
       unique: true,
       visible: true,
-      isReference: false,
+      isReference: true,
       aggregatable: false,
       refEntityType: '/api/metadata/country'
     },
@@ -75,7 +75,7 @@ export default {
       idAttribute: false,
       labelAttribute: false,
       unique: true,
-      isReference: false,
+      isReference: true,
       visible: true,
       aggregatable: false,
       refEntityType: '/api/metadata/age_groups'

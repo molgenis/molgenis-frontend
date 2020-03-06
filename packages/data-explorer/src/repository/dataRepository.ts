@@ -1,10 +1,9 @@
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta } from './metaDataService'
 import * as metaDataRepository from './metaDataRepository'
-import { DataApiResponseItem, DataObject } from '@/types/ApiResponse'
+import { DataApiResponse, DataApiResponseItem, DataObject } from '@/types/ApiResponse'
 import { MetaData, Attribute } from '@/types/MetaData'
+import axios from 'axios'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaData) => {
@@ -20,11 +19,14 @@ const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaDat
   const row: DataObject = rowData.data
   let result:any = {}
   let keys = Object.keys(row)
+  console.log(metadataAttributeMap)
+  console.log('--', keys.length)
 
   for (let i = 0; i < keys.length; i++) {
     const columnKey = keys[i]
     const value = row[columnKey]
     const attributeMetadata = metadataAttributeMap[columnKey]
+    console.log(attributeMetadata)
     const isReference = attributeMetadata.isReference
     let resolvedValue
     if (isReference && attributeMetadata.refEntityType) {
@@ -104,9 +106,9 @@ const getTableDataDeepReference = async (tableId: string, metaData: MetaData, co
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
   const request = addFilterIfSet(`/api/data/${tableId}?${expandReferencesQuery}`, rsqlQuery)
-  const response = await api.get(request)
-  response.items = response.items.map((item: DataApiResponseItem) => levelNRowMapper(item))
-  return response
+  const response = (await axios.get<DataApiResponse>(request)).data
+  const result = { items: response.items.map((item: DataApiResponseItem) => levelNRowMapper(item)) }
+  return result
 }
 
 const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string) => {
@@ -118,11 +120,11 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
   const request = addFilterIfSet(`/api/data/${tableId}?${expandReferencesQuery}`, rsqlQuery)
-  const response = await api.get(request)
-  response.items = await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
+  const response = (await axios.get<DataApiResponse>(request)).data
+  const result = { items: await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
     return levelOneRowMapper(item, metaData)
-  }))
-  return response
+  })) }
+  return result
 }
 
 // called on row expand
@@ -136,8 +138,8 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
     columnSet.add(metaData.labelAttribute.name)
   }
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const response = await api.get(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
-  return levelOneRowMapper(response, metaData)
+  const response = await axios.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
+  return levelOneRowMapper(response.data, metaData)
 }
 
 export {

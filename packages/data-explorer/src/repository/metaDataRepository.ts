@@ -36,8 +36,8 @@ const fetchMetaDataById = async (entityId: string): Promise<MetaData> => {
   })
 
   metaDataCue[entityId] = response
-  const resloved = await response
-  return mapAndStore(entityId, resloved)
+  const resolved = await response
+  return mapAndStore(entityId, resolved)
 }
 
 const fetchMetaDataByURL = async (url: string): Promise<MetaData> => {
