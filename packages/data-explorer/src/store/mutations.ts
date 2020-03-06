@@ -2,7 +2,7 @@ import ApplicationState, { Toast, FilterDefinition } from '@/types/ApplicationSt
 import { DataApiResponse } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
-import { MetaData, Attribute } from '@/types/MetaData'
+import { MetaData } from '@/types/MetaData'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {

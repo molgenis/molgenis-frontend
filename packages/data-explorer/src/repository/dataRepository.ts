@@ -19,14 +19,11 @@ const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaDat
   const row: DataObject = rowData.data
   let result:any = {}
   let keys = Object.keys(row)
-  console.log(metadataAttributeMap)
-  console.log('--', keys.length)
 
   for (let i = 0; i < keys.length; i++) {
     const columnKey = keys[i]
     const value = row[columnKey]
     const attributeMetadata = metadataAttributeMap[columnKey]
-    console.log(attributeMetadata)
     const isReference = attributeMetadata.isReference
     let resolvedValue
     if (isReference && attributeMetadata.refEntityType) {

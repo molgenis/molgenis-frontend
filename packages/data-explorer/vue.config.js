@@ -124,34 +124,6 @@ module.exports = {
       app.get('/api/data/TableWithCustomCard', function (req, res) {
         res.json(require('./tests/e2e/resources/tableWithMoreColumns.js'))
       })
-
-      /*
-      app.get('/api/v2/root_hospital_patients', function (req, res) {
-        res.json(require('./tests/e2e/resources/typeTestMetaData.js'))
-      })
-      app.get('/api/v2/root_hospital_diagnosis', function (req, res) {
-        res.json(require('./tests/e2e/resources/diagnosisOptions.js'))
-      })
-      app.get('/api/v2/root_cities', function (req, res) {
-        res.json(require('./tests/e2e/resources/cityOptions.js'))
-      })
-      app.get('/api/v2/root_gender', function (req, res) {
-        res.json(require('./tests/e2e/resources/genderOptions.js.js'))
-      })
-      app.get('/api/v2/it_emx_datatypes_TypeTestRef', function (req, res) {
-        res.json(require('./tests/e2e/resources/typeTestMetaData.js'))
-      })
-      app.get('/api/v2/root_hospital_sample_types', function (req, res) {
-        res.json(require('./tests/e2e/resources/typeTestMetaData.js'))
-      })
-
-      app.get('/api/data/TableWithMoreColumns', function (req, res) {
-        res.json(require('./tests/e2e/resources/tableWithMoreColumns.js'))
-      })
-      app.get('/api/data/TableWithMoreColumns/p000000001_2014_11_11', function (req, res) {
-        res.json(require('./tests/e2e/resources/tableWithMoreColumnsExpanded.js'))
-      })
-      */
     }
   }
 }

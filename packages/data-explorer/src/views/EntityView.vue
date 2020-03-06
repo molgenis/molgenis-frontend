@@ -56,7 +56,7 @@
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -103,12 +103,6 @@ export default {
     },
     getEntityLabel (entity) {
       return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
-    },
-    buildQuery () {
-      const attributes = this.tableMeta.attributes.filter((attribute) => attribute.type !== 'compound').slice(0, 10).map((attribute) => attribute.name)
-      const expand = expandQueryGenerator(this.tableMeta, attributes)
-      const filter = filterQueryGenerator(this.tableMeta, attributes)
-      return `expand=${expand}&filter=${filter}`
     }
   }
 }
