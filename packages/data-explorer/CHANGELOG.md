@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.15.1...@molgenis-experimental/data-explorer@0.16.0) (2020-03-09)
+
+
+### Features
+
+* updated readme to reflect how to set env variable ([2384b48](https://github.com/molgenis/molgenis-frontend/commit/2384b48))
+
+
+
+
+
 ## [0.15.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.15.0...@molgenis-experimental/data-explorer@0.15.1) (2020-02-06)
 
 
