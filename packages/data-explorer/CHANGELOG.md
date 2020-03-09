@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.16.0...@molgenis-experimental/data-explorer@0.17.0) (2020-03-09)
+
+
+### Bug Fixes
+
+* add missing range types ([50ebea5](https://github.com/molgenis/molgenis-frontend/commit/50ebea5))
+* added more testdata ([78a9a2b](https://github.com/molgenis/molgenis-frontend/commit/78a9a2b))
+* added test for bool. ([ffcf5f8](https://github.com/molgenis/molgenis-frontend/commit/ffcf5f8))
+* added testcase for bool in RSQL mapper ([c0e0168](https://github.com/molgenis/molgenis-frontend/commit/c0e0168))
+* added unittest for enum ([831b173](https://github.com/molgenis/molgenis-frontend/commit/831b173))
+* it works... somehow ([917bec4](https://github.com/molgenis/molgenis-frontend/commit/917bec4))
+* metadata cache; make non blocking ([f545687](https://github.com/molgenis/molgenis-frontend/commit/f545687))
+* remove unused code ([09c8ba0](https://github.com/molgenis/molgenis-frontend/commit/09c8ba0))
+* removed experimental version ([203a713](https://github.com/molgenis/molgenis-frontend/commit/203a713))
+* removed undefined search results ([2231881](https://github.com/molgenis/molgenis-frontend/commit/2231881))
+* review comments ([2180f0a](https://github.com/molgenis/molgenis-frontend/commit/2180f0a))
+* review comments ([f28626a](https://github.com/molgenis/molgenis-frontend/commit/f28626a))
+* sonar code smells ([8fba484](https://github.com/molgenis/molgenis-frontend/commit/8fba484))
+
+
+### Features
+
+* add alle filters have rsql ([95a9a2a](https://github.com/molgenis/molgenis-frontend/commit/95a9a2a))
+* added developmentcheck for https url rewrite ([611048e](https://github.com/molgenis/molgenis-frontend/commit/611048e))
+* added filtermapper framework ([429e960](https://github.com/molgenis/molgenis-frontend/commit/429e960))
+* added optional rsql parameters to options ([843e8db](https://github.com/molgenis/molgenis-frontend/commit/843e8db))
+
+
+
+
+
 # [0.16.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.15.1...@molgenis-experimental/data-explorer@0.16.0) (2020-03-09)
 
 
