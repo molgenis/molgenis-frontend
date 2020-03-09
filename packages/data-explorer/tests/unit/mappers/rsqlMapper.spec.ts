@@ -5,7 +5,7 @@ import { Value, transformToRSQL } from '@molgenis/rsql'
 describe('rsqlMapper', () => {
   describe('createInQuery', () => {
     it('create an inQuery', async () => {
-      const selections: Value[] = [ 'NL', 'DE' ]
+      const selections: Value[] = ['NL', 'DE']
       const inQuery = rsqlMapper.createInQuery('country', selections)
       const rsql = transformToRSQL(inQuery)
       expect(rsql).toEqual('country=in=(NL,DE)')
@@ -22,7 +22,7 @@ describe('rsqlMapper', () => {
   })
 
   describe('createRSQLQuery', () => {
-    let filterState:FilterGroup = {
+    let filterState: FilterGroup = {
       hideSidebar: false,
       definition: [],
       shown: [],
@@ -33,11 +33,12 @@ describe('rsqlMapper', () => {
       expect(rsqlQuery).toEqual(null)
     })
 
-    it('will', async () => {
+    it('will', async (done) => {
       filterState.selections = {
         search: 'Hello',
         country: ['DE', 'NL'],
-        age: [ '10', '30' ]
+        age: ['10', '30'],
+        comply: ['yes']
       }
       filterState.definition.push({
         name: 'search',
@@ -54,9 +55,15 @@ describe('rsqlMapper', () => {
         label: 'age',
         type: 'range-filter',
         dataType: 'int'
+      }, {
+        name: 'comply',
+        label: 'You want in?',
+        type: 'checkbox-filter',
+        dataType: 'bool'
       })
       const rsqlQuery = await rsqlMapper.createRSQLQuery(filterState)
-      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=rng=(10,30)')
+      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=rng=(10,30);comply==(yes)')
+      done()
     })
   })
 })
