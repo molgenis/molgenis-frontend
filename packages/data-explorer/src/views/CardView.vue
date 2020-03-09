@@ -40,16 +40,16 @@ export default {
       return this.tableMeta.labelAttribute
     },
     numberOfAttributes () {
-      return this.tableMeta.attributes.filter((attr) => { return attr.fieldType !== 'COMPOUND' }).length
+      return this.tableMeta.attributes.filter((attr) => { return attr.type !== 'compound' }).length
     }
   },
   methods: {
     ...mapActions(['fetchCardViewData', 'fetchRowDataLabels']),
     getEntityId (entity) {
-      return entity[this.idAttribute].toString()
+      return entity[this.idAttribute.name] ? entity[this.idAttribute.name].toString() : ''
     },
     getEntityLabel (entity) {
-      return this.labelAttribute ? entity[this.labelAttribute].toString() : this.getEntityId(entity).toString()
+      return this.labelAttribute ? entity[this.labelAttribute.name].toString() : this.getEntityId(entity).toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))

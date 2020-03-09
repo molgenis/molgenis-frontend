@@ -1,17 +1,16 @@
-import { DataApiResponse, MetaDataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
-import { StringMap } from '@/types/GeneralTypes'
+import { DataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
+import { MetaData } from './MetaData'
 
 export type Toast = {
   type: 'danger' | 'success',
   message: string
 }
 
-export type EntityMetaRefs = {
-  [s: string]: {
-    refEntity: string,
-    fieldType: string,
-    labelAttribute: string
-  }
+export type FilterOptionsPromise = Promise<FilterOption[]>
+
+export type FilterOption = {
+  value: string | number | boolean,
+  text?: string
 }
 
 export type TableSetting = {
@@ -25,37 +24,42 @@ export type TableSetting = {
 }
 
 export type FilterSelections = {
-  [s: string]: string | string[]
+  [s: string]: any
 }
 
 export type FilterDefinition = {
   name: string,
   label: string,
-  type: string,
+  type: string, // filter type
+  dataType: string, // molgenis datatype
   description?: string,
   placeholder?: string,
   bulkOperation?: boolean,
   options?: [{ value: string, text: string }],
   collapsable?: boolean,
-  collapsed?: boolean
+  collapsed?: boolean,
+  min?: number,
+  max?: number,
+  useSlider?: boolean,
+  step?:number
 }
 
+export type FilterGroup = {
+  hideSidebar: boolean
+  definition: FilterDefinition[]
+  shown: string[]
+  selections: FilterSelections
+}
 export default interface ApplicationState {
   toast: Toast | null,
   dataDisplayLayout: 'CardView' | 'TableView'
   tableName: string | null
   tableData: DataApiResponse | null
-  tableMeta: MetaDataApiResponse | null
+  tableMeta: MetaData | null
   defaultEntityData: DataApiResponseItem[] | null,
-  entityMetaRefs: EntityMetaRefs,
   shoppedEntityItems: string[]
   showShoppingCart: boolean
   tableSettings: TableSetting
   isSettingsLoaded: boolean
-  filters: {
-    hideSidebar: boolean
-    definition: FilterDefinition[]
-    shown: string[]
-    selections: FilterSelections
-  }
+  filters: FilterGroup
 }

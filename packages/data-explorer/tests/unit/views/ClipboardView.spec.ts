@@ -13,7 +13,7 @@ describe('ClipboardView.vue', () => {
 
   beforeEach(() => {
     state = {
-      tableMeta: { idAttribute: 'tableID' },
+      tableMeta: { idAttribute: { name: 'tableID' } },
       shoppedEntityItems: ['1', '3'],
       tableData: {
         items: [

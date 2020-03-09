@@ -1,92 +1,73 @@
-import { getRefsFromMeta, getAttributesfromMeta } from '@/repository/metaDataService'
-import { MetaDataApiResponse } from '@/types/ApiResponse'
+import { getAttributesfromMeta } from '@/repository/metaDataService'
+import { MetaData, Attribute } from '@/types/MetaData'
 
 describe('metaDataService', () => {
-  const meta:MetaDataApiResponse = {
-    href: 'blaat',
-    hrefCollection: 'collection',
-    name: 'table',
-    label: 'Table',
-    labelAttribute: 'id',
-    idAttribute: 'id',
-    description: 'description',
-    lookupAttributes: ['id'],
-    isAbstract: false,
-    writable: true,
-    permissions: [],
-    languageCode: 'en',
+  const IdAndLabelAttribute:Attribute = {
+    id: 'https://someurl.nl/api',
+    idAttribute: true,
+    description: 'the id',
+    isReference: false,
+    name: 'id',
+    nullable: false,
+    readOnly: false,
+    label: 'id',
+    type: 'string',
+    unique: true,
+    auto: true,
+    labelAttribute: true,
+    visible: true,
+    lookupAttributeIndex: 1,
+    aggregatable: false
+  }
+
+  const meta:MetaData = {
+    id: 'blaat',
+    labelAttribute: IdAndLabelAttribute,
+    idAttribute: IdAndLabelAttribute,
+    description: '',
+    package: null,
+    label: '',
+    abstract: false,
     attributes: [
+      IdAndLabelAttribute,
       {
-        href: 'https://someurl.nl/api',
-        name: 'id',
-        nillable: false,
-        readOnly: false,
-        label: 'id',
-        fieldType: 'STRING',
-        unique: true,
-        auto: true,
-        labelAttribute: true,
-        visible: true,
-        lookupAttribute: true,
-        isAggregatable: false
-      },
-      {
-        href: 'https://someurl.nl/api',
+        id: 'https://someurl.nl/api',
         name: 'reference',
+        idAttribute: false,
+        description: 'the ref',
+        isReference: true,
         label: 'reference',
-        nillable: false,
+        nullable: false,
         readOnly: false,
-        refEntity: {
-          name: 'pkg_refTable',
-          labelAttribute: 'label'
-        },
-        fieldType: 'CATEGORICAL',
+        refEntityType: 'https://someurl.nl/ref-id',
+        type: 'categorical',
         unique: false,
         auto: false,
         labelAttribute: false,
         visible: true,
-        lookupAttribute: false,
-        isAggregatable: false
+        lookupAttributeIndex: 2,
+        aggregatable: false
       },
       {
-        href: 'https://someurl.nl/api',
+        id: 'https://someurl.nl/api',
         name: 'multi_reference',
+        idAttribute: false,
+        description: 'the multi',
+        isReference: true,
         label: 'multi reference',
-        nillable: false,
+        nullable: false,
         readOnly: false,
-        refEntity: {
-          name: 'pkg_anotherRefTable',
-          labelAttribute: 'label'
-        },
-        fieldType: 'CATEGORICAL_MREF',
+        refEntityType: 'https://someurl.nl/ref-id',
+        type: 'categorical_mref',
         unique: false,
         auto: false,
         labelAttribute: false,
         visible: true,
-        lookupAttribute: false,
-        isAggregatable: false
+        lookupAttributeIndex: 3,
+        aggregatable: false
       }
     ]
   }
-  describe('getRefsFromMeta', () => {
-    it('should convert meta data structure to object of references', () => {
-      const expected = {
-        'reference': {
-          refEntity: 'pkg_refTable',
-          labelAttribute: 'label',
-          fieldType: 'CATEGORICAL'
-        },
-        'multi_reference': {
-          refEntity: 'pkg_anotherRefTable',
-          labelAttribute: 'label',
-          fieldType: 'CATEGORICAL_MREF'
-        }
-      }
-
-      const observed = getRefsFromMeta(meta)
-      expect(observed).toEqual(expected)
-    })
-  })
   describe('getAttributesFromMeta', () => {
     it('should get a string array of attributes from meta object', () => {
       const expectedAttributes = ['id', 'reference', 'multi_reference']

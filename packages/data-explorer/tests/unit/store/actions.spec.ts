@@ -42,7 +42,7 @@ const metaResponse = {
       },
       {
         'href': '/api/v2/it_emx_datatypes_TypeTest/meta/xcompound',
-        'fieldType': 'COMPOUND',
+        'fieldType': 'compound',
         'name': 'xcompound',
         'label': 'xcompound label',
         'description': 'TypeTest compound attribute',
@@ -214,7 +214,7 @@ jest.mock('@molgenis/molgenis-api-client', () => {
 
 jest.mock('@/repository/metaDataRepository', () => {
   return {
-    fetchMetaData: jest.fn()
+    fetchMetaDataById: jest.fn()
   }
 })
 
@@ -228,7 +228,6 @@ jest.mock('@/repository/dataRepository', () => {
 
 jest.mock('@/repository/metaDataService', () => {
   return {
-    getRefsFromMeta: jest.fn(),
     getAttributesfromMeta: jest.fn()
   }
 })
@@ -245,7 +244,6 @@ describe('actions', () => {
       tableMeta: null,
       dataDisplayLayout: 'CardView',
       defaultEntityData: null,
-      entityMetaRefs: {},
       filters: {
         hideSidebar: false,
         definition: [],
@@ -289,7 +287,7 @@ describe('actions', () => {
       metaDataService.getAttributesfromMeta.mockReturnValue([])
 
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
+      metaDataRepository.fetchMetaDataById.mockResolvedValue({ attributes: [] })
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
       await actions.fetchCardViewData({ commit, state, getters })
@@ -310,7 +308,7 @@ describe('actions', () => {
       state.tableName = 'tableName'
       const commit = jest.fn()
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaData.mockResolvedValue({ meta: 'data' })
+      metaDataRepository.fetchMetaDataById.mockResolvedValue({ meta: 'data' })
       await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
       expect(commit).toBeCalledWith('setMetaData', { meta: 'data' })
     })
@@ -324,7 +322,7 @@ describe('actions', () => {
       getters.filterRsql = 'a==b'
 
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaData.mockResolvedValue({ attributes: [] })
+      metaDataRepository.fetchMetaDataById.mockResolvedValue({ attributes: [] })
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
 

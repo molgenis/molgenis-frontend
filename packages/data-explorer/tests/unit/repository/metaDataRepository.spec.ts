@@ -1,34 +1,43 @@
 import * as metaDataRepository from '../../../src/repository/metaDataRepository'
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
+import * as metaDataResponseMapper from '../../../src/repository/metaDataResponseMapper'
+import axios from 'axios'
 
-jest.mock('@molgenis/molgenis-api-client', () => ({
+jest.mock('axios', () => ({
   get: jest.fn()
+}))
+
+jest.mock('../../../src/repository/metaDataResponseMapper', () => ({
+  toMetaData: jest.fn()
 }))
 
 describe('metaDataRepository', () => {
   const mockResponse = {
-    meta: {
-      meta: 'data'
+    data: {
+      meta: 'meta'
     }
   }
 
   describe('fetchMetaData', () => {
     const tableId = 'books'
 
-    api.get.mockResolvedValue(mockResponse)
+    // @ts-ignore
+    axios.get.mockResolvedValue(mockResponse)
+    // @ts-ignore
+    metaDataResponseMapper.toMetaData.mockReturnValue({
+      meta: 'meta'
+    })
 
     it('should fetch the meta data', async () => {
-      const resp = await metaDataRepository.fetchMetaData(tableId)
-      expect(resp).toEqual(mockResponse.meta)
-      expect(api.get).toHaveBeenCalled()
+      const resp = await metaDataRepository.fetchMetaDataById(tableId)
+      expect(resp).toEqual(mockResponse.data)
+      expect(axios.get).toHaveBeenCalled()
     })
 
     it('should cache the results and use the cache', async () => {
-      let resp = await metaDataRepository.fetchMetaData(tableId)
-      resp = await metaDataRepository.fetchMetaData(tableId)
-      expect(resp).toEqual(mockResponse.meta)
-      expect(api.get).toHaveBeenCalledTimes(1)
+      await metaDataRepository.fetchMetaDataById(tableId)
+      const resp = await metaDataRepository.fetchMetaDataById(tableId)
+      expect(resp).toEqual(mockResponse.data)
+      expect(axios.get).toHaveBeenCalledTimes(1)
     })
   })
 })

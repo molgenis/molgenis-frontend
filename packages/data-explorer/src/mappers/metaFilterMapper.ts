@@ -1,43 +1,71 @@
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
-import { MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
-import { getCategoricals } from './utils'
+import { getFieldOptions } from './utils'
+import { StringMap } from '@/types/GeneralTypes'
+import { MetaData, Attribute } from '../types/MetaData'
 import { FilterDefinition } from '@/types/ApplicationState'
 
-const mapMetaToFilters = async (meta: MetaDataApiResponse) => {
+const fieldTypeToFilterType:StringMap = {
+  'string': 'string-filter',
+  'text': 'string-filter',
+  'html': 'string-filter',
+  'int': 'range-filter',
+  'long': 'range-filter',
+  'decimal': 'range-filter',
+  'bool': 'checkbox-filter',
+  'data': 'string-filter',
+  'datatime': 'string-filter',
+  'email': 'string-filter',
+  'hyperlink': 'string-filter',
+  'categorical': 'checkbox-filter',
+  'categorical_mref': 'checkbox-filter',
+  'mref': 'checkbox-filter',
+  'xref': 'checkbox-filter',
+  'one_to_many': 'checkbox-filter',
+  'enum': 'checkbox-filter',
+  'file': 'string-filter'
+}
+
+const mapMetaToFilters = async (metaData: MetaData) => {
   let shownFilters:string[] = []
 
-  // TODO: map all filters
-  const categoricals = await Promise.all(getCategoricals(meta.attributes).map(async (item) => {
-    const href = item && item.refEntity && item.refEntity.href
-
-    if (!href) throw new Error('categorical without href')
-
-    const options = await getOptions(href)
-    shownFilters.push(item.name)
-
-    return {
-      name: item.name,
-      label: item.label,
-      type: 'checkbox-filter',
-      options: options,
+  const filterDefinitions = metaData.attributes.filter((item: Attribute) => {
+    // Filter out undefined datatypes
+    return fieldTypeToFilterType[item.type]
+  })
+  const constructedFilters = await Promise.all(filterDefinitions.map(async (attribute: Attribute) => {
+    const options = await getFieldOptions(attribute)
+    // Base filter template
+    let filterDefinition: FilterDefinition = {
+      name: attribute.name,
+      label: attribute.label,
+      type: fieldTypeToFilterType[attribute.type],
+      dataType: attribute.type,
       collapsable: true,
       collapsed: false
     }
+
+    // DECIMAL
+    if (attribute.type.includes('decimal')) {
+      filterDefinition.step = 0.1
+    }
+
+    // RANGE
+    if (filterDefinition.type === 'range-filter' && attribute.range) {
+      if (attribute.range.max) {
+        filterDefinition.max = attribute.range.max
+      }
+      if (attribute.range.min) {
+        filterDefinition.min = attribute.range.min
+      }
+      if (attribute.range.max && attribute.range.min) {
+        filterDefinition.useSlider = true
+      }
+    }
+
+    return options ? { ...filterDefinition, options } : filterDefinition
   }))
-
   return {
-    definition: categoricals,
+    definition: constructedFilters,
     shown: shownFilters
-  }
-}
-
-const getOptions = async (href: string) => {
-  const resp = await api.get(href)
-  return () => {
-    return Promise.resolve(
-      resp.items.map((item: any) => ({ value: item[resp.meta.idAttribute], text: item[resp.meta.labelAttribute] }))
-    )
   }
 }
 

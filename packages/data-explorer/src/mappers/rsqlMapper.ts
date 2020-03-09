@@ -1,7 +1,5 @@
 import { Operator, ComparisonOperator, Value, Constraint, transformToRSQL } from '@molgenis/rsql'
-import { MetaDataAttribute, MetaDataApiResponse } from '@/types/ApiResponse'
-import { getCategoricals } from './utils'
-import { FilterSelections } from '@/types/ApplicationState'
+import { FilterGroup } from '@/types/ApplicationState'
 
 /**
  * Create an RSQL 'in' query for filters
@@ -10,6 +8,7 @@ import { FilterSelections } from '@/types/ApplicationState'
  * country=in=(NL,BE,DE)
  */
 export const createInQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.In, arguments: selection })
+export const createEqualsQuery = (attributeName: string, selection: Value): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.Equals, arguments: selection })
 
 /**
  *
@@ -18,18 +17,39 @@ export const createInQuery = (attributeName: string, selection: Value[]): Constr
  * @example queries
  * country=in=(NL,BE)
  */
-export const createRSQLQuery = (selections: FilterSelections, metaData: MetaDataAttribute[]): string | null => {
-  const categoricals: MetaDataAttribute[] = getCategoricals(metaData)
 
-  const operands: Constraint[] = categoricals
-    .map(cat => cat.name)
-    .filter(name => !!selections[name])
-    .map(name => createInQuery(name, selections[name] as string[]))
+export const createRSQLQuery = (filters: FilterGroup): string | null => {
+  const operands: Constraint[] = []
+
+  Object.keys(filters.selections).forEach((name: string) => {
+    const selection = filters.selections[name]
+    if (selection === undefined) return
+    const definition = filters.definition.filter((filter) => filter.name === name)[0]
+
+    switch (definition.type) {
+      case 'checkbox-filter':
+        if (definition.dataType === 'bool') {
+          operands.push(createEqualsQuery(name, selection))
+        } else {
+          operands.push(createInQuery(name, selection as Value[]))
+        }
+        break
+      case 'string-filter':
+        operands.push({ selector: name, comparison: ComparisonOperator.Like, arguments: selection })
+        break
+      case 'range-filter':
+        operands.push({ selector: name, comparison: ComparisonOperator.RangeFromTo, arguments: selection })
+        break
+      default:
+        return null
+    }
+  })
 
   if (operands.length === 0) return null
 
-  return transformToRSQL({
+  const result = transformToRSQL({
     operator: Operator.And,
     operands: operands
   })
+  return result
 }

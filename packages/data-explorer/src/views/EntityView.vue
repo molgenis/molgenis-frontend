@@ -1,6 +1,6 @@
 <template>
   <div class="mt-2 entity-table container-fluid"
-       v-if="activeEntityData && activeEntityData.items.length > 0 && entityMeta">
+       v-if="tableData && tableData.items.length > 0">
     <div class="row" v-if="isShop && entitiesToShow.length === 0">
       <div class="alert alert-warning col">
       </div>
@@ -56,11 +56,10 @@
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { filterQueryGenerator, expandQueryGenerator } from '../repository/queryBuilder'
 
 library.add(faShoppingBag)
 
@@ -75,22 +74,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['activeEntityData']),
-    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'entityMeta', 'entityMetaRefs', 'shoppedEntityItems', 'defaultEntityData']),
+    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'tableMeta', 'shoppedEntityItems', 'defaultEntityData', 'tableData']),
     idAttribute () {
-      return this.entityMeta.idAttribute
+      return this.tableMeta.idAttribute.name
     },
     labelAttribute () {
-      return this.entityMeta.labelAttribute
+      return this.tableMeta.labelAttribute.name
     },
     tableHeaderToShow () {
       return Object.keys(this.entitiesToShow[0])
     },
     entitiesToShow () {
       if (this.shoppingFilter) {
-        return this.activeEntityData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
+        return this.tableData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
       } else {
-        return this.activeEntityData.items
+        return this.tableData.items
       }
     }
   },
@@ -104,12 +102,6 @@ export default {
     },
     getEntityLabel (entity) {
       return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
-    },
-    buildQuery () {
-      const attributes = this.entityMeta.attributes.filter((attribute) => attribute.fieldType !== 'COMPOUND').slice(0, 10).map((attribute) => attribute.name)
-      const expand = expandQueryGenerator(this.entityMetaRefs, attributes)
-      const filter = filterQueryGenerator(this.entityMetaRefs, attributes)
-      return `expand=${expand}&filter=${filter}`
     }
   }
 }

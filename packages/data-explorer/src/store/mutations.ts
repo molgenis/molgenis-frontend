@@ -1,7 +1,8 @@
-import ApplicationState, { Toast, EntityMetaRefs, FilterDefinition } from '@/types/ApplicationState'
-import { DataApiResponse, MetaDataApiResponse, MetaDataAttribute } from '@/types/ApiResponse'
+import ApplicationState, { Toast, FilterDefinition } from '@/types/ApplicationState'
+import { DataApiResponse } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
+import { MetaData } from '@/types/MetaData'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {
@@ -36,21 +37,8 @@ export default {
       state.shoppedEntityItems.push(id)
     }
   },
-  setTableMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
+  setTableMetaData (state: ApplicationState, meta: MetaData) {
     state.tableMeta = meta
-  },
-  setMetaDataRefLabels (state: ApplicationState, meta: MetaDataApiResponse) {
-    const refItems = meta.attributes.reduce((obj : EntityMetaRefs, attribute : MetaDataAttribute) => {
-      if (attribute.refEntity) {
-        obj[attribute.name] = {
-          refEntity: attribute.refEntity.name.toString(),
-          fieldType: attribute.fieldType,
-          labelAttribute: attribute.refEntity.labelAttribute.toString()
-        }
-      }
-      return obj
-    }, <EntityMetaRefs>{})
-    state.entityMetaRefs = refItems
   },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {
     const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'
@@ -75,8 +63,8 @@ export default {
       state.filters.shown = state.tableSettings.defaultFilters
     }
   },
-  setMetaData (state: ApplicationState, meta: MetaDataApiResponse) {
-    state.tableMeta = meta
+  setMetaData (state: ApplicationState, metaData: MetaData) {
+    state.tableMeta = metaData
   },
   setFilterSelection (state: ApplicationState, selections: StringMap) {
     Vue.set(state.filters, 'selections', selections)
@@ -92,7 +80,7 @@ export default {
     // todo need to refacor state.tableData to look up list
     state.tableData.items.forEach((row, index) => {
       // @ts-ignore
-      if (row[state.tableMeta.idAttribute].toString() === rowId) {
+      if (rowId && row[state.tableMeta.idAttribute.name].toString() === rowId.toString()) {
         // @ts-ignore
         Vue.set(state.tableData.items, index, rowData)
       }

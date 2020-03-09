@@ -14,7 +14,7 @@ describe('CardView.vue', () => {
   beforeEach(() => {
     state = {
       shoppingFilter: false,
-      tableMeta: { idAttribute: 'tableID', labelAttribute: 'label', attributes: [{ fieldType: 'COMPOUND' }, { fieldType: 'string' }, { fieldType: 'string' }] },
+      tableMeta: { idAttribute: { name: 'tableID' }, labelAttribute: { name: 'label' }, attributes: [{ type: 'compound' }, { type: 'string' }, { type: 'string' }] },
       dataDisplayLayout: 'ClipboardView',
       shoppedEntityItems: ['1', '3']
     }
@@ -81,7 +81,7 @@ describe('CardView.vue', () => {
   it('returns id if label attribute is not defined', () => {
     state = {
       shoppingFilter: false,
-      tableMeta: { idAttribute: 'tableID' },
+      tableMeta: { idAttribute: { name: 'tableID' } },
       dataDisplayLayout: 'ClipboardView',
       shoppedEntityItems: [1, 3]
     }

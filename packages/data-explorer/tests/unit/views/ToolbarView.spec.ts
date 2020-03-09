@@ -18,7 +18,6 @@ describe('ToolbarView.vue', () => {
       tableMeta: null,
       dataDisplayLayout: 'CardView',
       defaultEntityData: null,
-      entityMetaRefs: {},
       showShoppingCart: false,
       shoppedEntityItems: [],
       isSettingsLoaded: false,

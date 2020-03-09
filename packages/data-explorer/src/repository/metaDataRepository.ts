@@ -1,20 +1,51 @@
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
-import { StringMap } from '../types/GeneralTypes'
+/* eslint-disable object-curly-spacing */
+import axios, { AxiosResponse } from 'axios'
+import * as mapper from './metaDataResponseMapper'
+import { ResponseEntityType } from '../types/EntityTypeV3'
+import { MetaData } from '../types/MetaData'
 
-const metaDataCache:StringMap = {}
+const metaDataCache:{ [s: string]: MetaData } = {}
+const metaDataCue: { [s: string]: Promise<AxiosResponse<ResponseEntityType>> } = {}
 
-// Todo placeholder until we have a metadataApi
-const fetchMetaData = async (entityId: string) => {
+const mapAndStore = (entityId:string, response: AxiosResponse<ResponseEntityType>) => {
+  const entityType = response.data
+  const metadata = mapper.toMetaData(entityType)
+
+  // Cache mapped response to improve speed
+  metaDataCache[entityId] = metadata
+  return metadata
+}
+
+const fetchMetaDataById = async (entityId: string): Promise<MetaData> => {
   if (metaDataCache[entityId]) {
     return metaDataCache[entityId]
   }
+  if (metaDataCue[entityId]) {
+    return metaDataCue[entityId].then((result) => {
+      if (metaDataCache[entityId]) {
+        return metaDataCache[entityId]
+      }
+      return mapAndStore(entityId, result)
+    })
+  }
 
-  const resp = await api.get(`/api/v2/${entityId}?num=0`)
-  metaDataCache[entityId] = resp.meta
-  return resp.meta
+  const response = axios.get<ResponseEntityType>(`/api/metadata/${entityId}`, {
+    params: {
+      flattenAttributes: true
+    }
+  })
+
+  metaDataCue[entityId] = response
+  const resolved = await response
+  return mapAndStore(entityId, resolved)
+}
+
+const fetchMetaDataByURL = async (url: string): Promise<MetaData> => {
+  // @ts-ignore
+  return fetchMetaDataById(url.split('/').pop())
 }
 
 export {
-  fetchMetaData
+  fetchMetaDataById,
+  fetchMetaDataByURL
 }

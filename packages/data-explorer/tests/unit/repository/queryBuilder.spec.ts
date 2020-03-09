@@ -1,24 +1,15 @@
 import { buildExpandedAttributesQuery } from '@/repository/queryBuilder'
-import { EntityMetaRefs } from '@/types/ApplicationState'
+import meta from '../mocks/metaDataResponseMock'
+import { MetaData } from '@/types/MetaData'
 
 describe('metaDataService', () => {
-  const metaRefs:EntityMetaRefs = {
-    'reference': {
-      refEntity: 'pkg_refTable',
-      labelAttribute: 'label',
-      fieldType: 'CATEGORICAL'
-    },
-    'multi_reference': {
-      refEntity: 'pkg_anotherRefTable',
-      labelAttribute: 'label',
-      fieldType: 'CATEGORICAL_MREF'
-    }
-  }
   describe('buildExpandedAttributesQuery', () => {
     it('should build a query with expand and filter to get all attributes', () => {
-      const expected = 'expand=reference,multi_reference&filter=id,reference(label),multi_reference(label)'
+      const expected = 'expand=&filter=id,reference,multi_reference'
+      // TODO: should this function expand its variables again?
+      // const expected = 'expand=reference,multi_reference&filter=id,reference(label),multi_reference(label)'
       const attributes = ['id', 'reference', 'multi_reference']
-      const observed = buildExpandedAttributesQuery(metaRefs, attributes, true)
+      const observed = buildExpandedAttributesQuery(meta as MetaData, attributes)
       expect(observed).toEqual(expected)
     })
   })

@@ -1,41 +1,64 @@
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
 import { buildExpandedAttributesQuery } from './queryBuilder'
-import { getAttributesfromMeta, getRefsFromMeta } from './metaDataService'
-
-import { DataApiResponseItem, MetaDataApiResponse, DataApiResponse, DataObject } from '@/types/ApiResponse'
-import { StringMap } from '@/types/GeneralTypes'
-import { EntityMetaRefs } from '@/types/ApplicationState'
+import { getAttributesfromMeta } from './metaDataService'
+import * as metaDataRepository from './metaDataRepository'
+import { DataApiResponse, DataApiResponseItem, DataObject } from '@/types/ApiResponse'
+import { MetaData, Attribute } from '@/types/MetaData'
+import axios from 'axios'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
-const levelOneRowMapper = (rowData: DataApiResponseItem, metaDataRefs: EntityMetaRefs): StringMap => {
+const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaData) => {
   if (!rowData.data) {
     throw new Error('invalid input: row data must have data property')
   }
+
+  const metadataAttributeMap: {[s: string]: Attribute} = metaData.attributes.reduce((accum:any, attr) => {
+    accum[attr.name] = attr
+    return accum
+  }, {})
+
   const row: DataObject = rowData.data
-  return Object.keys(row).reduce((accum, key) => {
-    const value = row[key]
-    const isReference = (key: string): boolean => Object.keys(metaDataRefs).includes(key)
+  let result:any = {}
+  let keys = Object.keys(row)
+
+  for (let i = 0; i < keys.length; i++) {
+    const columnKey = keys[i]
+    const value = row[columnKey]
+    const attributeMetadata = metadataAttributeMap[columnKey]
+    const isReference = attributeMetadata.isReference
     let resolvedValue
-    if (isReference(key)) {
+    if (isReference && attributeMetadata.refEntityType) {
       // @ts-ignore
       if (value.items) {
-        // The isMref already checks if the value.items is available
-        // @ts-ignore
-        resolvedValue = value.items.map((mrefValue) => mrefValue.data[metaDataRefs[key].labelAttribute]).join(', ')
+        resolvedValue = await getMrefLabel(attributeMetadata, value)
       } else {
-        // This is checked by isReference
-        // @ts-ignore
-        resolvedValue = value.data[metaDataRefs[key].labelAttribute]
+        resolvedValue = await getRefLabel(attributeMetadata, value)
       }
     } else {
       resolvedValue = value
     }
-    accum[key] = resolvedValue
-    return accum
-  }, <StringMap>{})
+    result[columnKey] = resolvedValue
+  }
+
+  return result
 }
 
+const getMrefLabel = async (attributeMetadata: Attribute, rowDataItem:any) => {
+  // The isMref already checks if the value.items is available
+  // @ts-ignore
+  const refMetadata = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
+  // @ts-ignore
+  const resolvedValue = rowDataItem.items.map((mrefValue) => mrefValue.data[refMetadata.labelAttribute.name]).join(', ')
+  return resolvedValue
+}
+
+const getRefLabel = async (attributeMetadata: Attribute, rowDataItem:any) => {
+  // This is checked by isReference
+  // @ts-ignore
+  const refMetadata = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
+  // @ts-ignore
+  const resolvedValue = rowDataItem.data[refMetadata.labelAttribute.name]
+  return resolvedValue
+}
 const apiResponseMapper = (rowData: DataApiResponseItem) => {
   if (rowData.data) {
     const row: any = rowData.data
@@ -65,47 +88,55 @@ const levelNRowMapper = (rowData: DataApiResponseItem) => {
   }
 }
 
-const addFilterIfSet = (request: string, rsqlFilter?: string):string => {
+const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
   return rsqlFilter ? `${request}&q=${rsqlFilter}` : request
 }
 
-const getTableDataDeepReference = async (tableId: string, metaData: MetaDataApiResponse, coloms: string[], rsqlQuery?: string) => {
-  if (!coloms.includes(metaData.idAttribute)) coloms.push(metaData.idAttribute)
-  if (!coloms.includes(metaData.labelAttribute)) coloms.push(metaData.labelAttribute)
+const getTableDataDeepReference = async (tableId: string, metaData: MetaData, coloms: string[], rsqlQuery?: string) => {
+  if (!coloms.includes(metaData.idAttribute.name)) {
+    coloms.push(metaData.idAttribute.name)
+  }
 
-  const metaDataRefs = getRefsFromMeta(metaData)
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, coloms, false)
+  if (metaData.labelAttribute !== undefined && !coloms.includes(metaData.labelAttribute.name)) {
+    coloms.push(metaData.labelAttribute.name)
+  }
+
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
   const request = addFilterIfSet(`/api/data/${tableId}?${expandReferencesQuery}`, rsqlQuery)
-  const response = await api.get(request)
-  response.items = response.items.map((item: DataApiResponseItem) => levelNRowMapper(item))
-  return response
+  const response = (await axios.get<DataApiResponse>(request)).data
+  const result = { items: response.items.map((item: DataApiResponseItem) => levelNRowMapper(item)) }
+  return result
 }
 
-const getTableDataWithLabel = async (tableId: string, metaData: MetaDataApiResponse, columns: string[], rsqlQuery?: string) => {
+const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string) => {
   const columnSet = new Set([...columns])
-  columnSet.add(metaData.idAttribute)
-  columnSet.add(metaData.labelAttribute)
+  columnSet.add(metaData.idAttribute.name)
+  if (metaData.labelAttribute !== undefined) {
+    columnSet.add(metaData.labelAttribute.name)
+  }
 
-  const metaDataRefs = getRefsFromMeta(metaData)
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, [...columnSet], false)
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
   const request = addFilterIfSet(`/api/data/${tableId}?${expandReferencesQuery}`, rsqlQuery)
-  const response = await api.get(request)
-  response.items = response.items.map((item: DataApiResponseItem) => levelOneRowMapper(item, metaDataRefs))
-  return response
+  const response = (await axios.get<DataApiResponse>(request)).data
+  const result = { items: await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
+    return levelOneRowMapper(item, metaData)
+  })) }
+  return result
 }
 
 // called on row expand
-const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaDataApiResponse) => {
+const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
-  // Todo: remove work around, needed as compounds are not pased by getAttributesfromMeta.
-  // Addding id and label makes sure we get these fields.
+  // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
+  // Adding id and label makes sure we get these fields.
   const columnSet = new Set([...attributes])
-  columnSet.add(metaData.idAttribute)
-  columnSet.add(metaData.labelAttribute)
-  const metaDataRefs = getRefsFromMeta(metaData)
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaDataRefs, [...columnSet], true)
-  const response = await api.get(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
-  return levelOneRowMapper(response, metaDataRefs)
+  columnSet.add(metaData.idAttribute.name)
+  if (metaData.labelAttribute !== undefined) {
+    columnSet.add(metaData.labelAttribute.name)
+  }
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
+  const response = await axios.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
+  return levelOneRowMapper(response.data, metaData)
 }
 
 export {
