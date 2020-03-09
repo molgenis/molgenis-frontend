@@ -112,6 +112,23 @@ export default {
       visible: true,
       aggregatable: false,
       range: { min: 10, max: 100 }
+    },
+    {
+      id: '/api/metadata/enum',
+      type: 'enum',
+      name: 'enum',
+      label: 'My enum',
+      description: '',
+      auto: false,
+      nullable: false,
+      readOnly: true,
+      idAttribute: false,
+      labelAttribute: false,
+      unique: true,
+      isReference: false,
+      visible: true,
+      aggregatable: false,
+      enumOptions: [{ text: 'option A', value: 'a' }, { text: 'option B', value: 'b' }, { text: 'option C', value: 'c' }]
     }
   ]
 }
