@@ -129,6 +129,22 @@ export default {
       visible: true,
       aggregatable: false,
       enumOptions: [{ text: 'option A', value: 'a' }, { text: 'option B', value: 'b' }, { text: 'option C', value: 'c' }]
+    },
+    {
+      id: '/api/metadata/bool',
+      type: 'bool',
+      name: 'bool',
+      label: 'My bool',
+      description: '',
+      auto: false,
+      nullable: false,
+      readOnly: true,
+      idAttribute: false,
+      labelAttribute: false,
+      unique: true,
+      isReference: false,
+      visible: true,
+      aggregatable: false
     }
   ]
 }
