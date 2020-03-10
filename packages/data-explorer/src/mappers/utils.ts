@@ -38,7 +38,7 @@ export const getFieldOptions = async (attribute: Attribute) => {
   switch (attribute.type) {
     case 'categorical':
     case 'categorical_mref':
-    case 'one_to_many':
+    case 'onetomany':
     case 'xref':
     case 'mref':
       return attribute.refEntityType ? getOptions(attribute.refEntityType) : null

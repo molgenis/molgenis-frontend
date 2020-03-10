@@ -19,7 +19,7 @@ const fieldTypeToFilterType:StringMap = {
   'categorical_mref': 'checkbox-filter',
   'mref': 'multi-filter',
   'xref': 'multi-filter',
-  'one_to_many': 'multi-filter',
+  'onetomany': 'multi-filter',
   'enum': 'checkbox-filter',
   'file': 'string-filter'
 }
