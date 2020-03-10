@@ -71,6 +71,7 @@ export default Vue.extend({
     white-space: normal;
   }
   .flex-filter {
+    z-index: 1; /* prioritizes stacking index of sidebar: needed for datepicker */
     transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
     min-width: 20rem;
     max-width: 20rem;

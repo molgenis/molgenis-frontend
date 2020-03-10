@@ -49,10 +49,10 @@ const mapMetaToFilters = async (metaData: MetaData) => {
     }
 
     // Date
-    if (attribute.type.includes('data')) {
+    if (attribute.type.includes('date')) {
       filterDefinition.time = false
     }
-    if (attribute.type.includes('datatime')) {
+    if (attribute.type.includes('datetime')) {
       filterDefinition.time = true
     }
 
