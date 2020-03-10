@@ -7,6 +7,7 @@ import { FilterGroup } from '@/types/ApplicationState'
  * @example in query for a country filter
  * country=in=(NL,BE,DE)
  */
+export const createLikeQuery = (attributeName: string, selection: Value): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.Like, arguments: selection })
 export const createInQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.In, arguments: selection })
 export const createEqualsQuery = (attributeName: string, selection: Value): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.Equals, arguments: selection })
 export const createRangeQuery = (attributeName: string, selection: Value[]): Constraint => ({
@@ -41,10 +42,13 @@ export const createRSQLQuery = (filters: FilterGroup): string | null => {
         }
         break
       case 'string-filter':
-        operands.push({ selector: name, comparison: ComparisonOperator.Like, arguments: selection })
+        operands.push(createLikeQuery(name, selection))
         break
       case 'range-filter':
         operands.push(createRangeQuery(name, selection))
+        break
+      case 'multi-filter':
+        operands.push(createInQuery(name, selection))
         break
       case 'date-time-filter':
         operands.push(createRangeQuery(name, [selection.startDate.toISOString(), selection.endDate.toISOString()]))
@@ -60,6 +64,5 @@ export const createRSQLQuery = (filters: FilterGroup): string | null => {
     operator: Operator.And,
     operands: operands
   })
-  console.log('res:', result)
   return result
 }

@@ -62,7 +62,7 @@ describe('rsqlMapper', () => {
         dataType: 'bool'
       })
       const rsqlQuery = await rsqlMapper.createRSQLQuery(filterState)
-      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=rng=(10,30);comply==(yes)')
+      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=ge=10;age=le=30;comply==(yes)')
       done()
     })
   })

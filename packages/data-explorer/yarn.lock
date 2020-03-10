@@ -789,10 +789,10 @@
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 
-"@molgenis/molgenis-ui-filter@^1.5.4":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-filter/-/molgenis-ui-filter-1.5.4.tgz#2c3b30ad06419b0292aa3abaf80547f135d18d66"
-  integrity sha512-dZP4uih7xRTMatmr/2eKXusxpRaQAO92NINiSxJw9An3eQMIr0g2C6Q2xfEkzl+eHb3X23nNQsDsnovSRYopuA==
+"@molgenis/molgenis-ui-filter@^1.5.5":
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-filter/-/molgenis-ui-filter-1.5.5.tgz#2823a8633c1e2d55ef3575f5c69ea1b182d8ba87"
+  integrity sha512-SnTaYPKG9UiwUs3+tMqxWKk17KNlYLqdlZ0pPtDtdK+N7+1DGqIPBPrIdf6qNYVf5lua8b+tY2uwF+D/V8ZFFA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.17"
     "@fortawesome/free-solid-svg-icons" "^5.8.1"
@@ -10932,9 +10932,9 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
 vue2-daterange-picker@^0.4.4:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/vue2-daterange-picker/-/vue2-daterange-picker-0.4.5.tgz#35fe448ef173825be62a1dff211aa9b5f9d7f382"
-  integrity sha512-w6alQIsZbvUJAY/GM3Rpind1AbcTv9Z92Fvpg1HFv6TwaYOkZPOPVu6HxHMYYdfepCxMB4/wta0H5cikE2i7Fw==
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/vue2-daterange-picker/-/vue2-daterange-picker-0.4.6.tgz#e5199eda2c910d1acff226105ebe02df0391a846"
+  integrity sha512-XnUdVpl7KTjWLSQiZsEZ20BJ/EjPE/fxQXejcd3+NFBh0mIzGimtjJOG90DEJbc74O/H/q3dg9ypx9J78JdHKQ==
   dependencies:
     vue "^2.6.10"
 
