@@ -40,6 +40,10 @@ export const createRSQLQuery = (filters: FilterGroup): string | null => {
       case 'range-filter':
         operands.push({ selector: name, comparison: ComparisonOperator.RangeFromTo, arguments: selection })
         break
+      case 'date-time-filter':
+        console.log(selection)
+        operands.push({ selector: name, comparison: ComparisonOperator.RangeFromTo, arguments: selection })
+        break
       default:
         return null
     }
