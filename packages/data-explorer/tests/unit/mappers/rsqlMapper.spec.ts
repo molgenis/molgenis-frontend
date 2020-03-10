@@ -38,7 +38,10 @@ describe('rsqlMapper', () => {
         search: 'Hello',
         country: ['DE', 'NL'],
         age: ['10', '30'],
-        comply: ['yes']
+        comply: ['yes'],
+        date: { startDate: new Date(1), endDate: new Date(2) },
+        xref: ['bla'],
+        default: true
       }
       filterState.definition.push({
         name: 'search',
@@ -60,9 +63,24 @@ describe('rsqlMapper', () => {
         label: 'You want in?',
         type: 'checkbox-filter',
         dataType: 'bool'
+      }, {
+        name: 'date',
+        label: 'date',
+        type: 'date-time-filter',
+        dataType: 'date'
+      }, {
+        name: 'xref',
+        label: 'xref',
+        type: 'multi-filter',
+        dataType: 'xref'
+      }, {
+        name: 'default',
+        label: 'default',
+        type: 'default-filter',
+        dataType: 'default'
       })
       const rsqlQuery = await rsqlMapper.createRSQLQuery(filterState)
-      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=ge=10;age=le=30;comply==(yes)')
+      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=ge=10;age=le=30;comply==(yes);date=ge=1970-01-01T00:00:00.001Z;date=le=1970-01-01T00:00:00.002Z;xref=in=(bla)')
       done()
     })
   })
