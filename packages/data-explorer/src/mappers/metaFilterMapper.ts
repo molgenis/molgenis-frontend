@@ -11,15 +11,15 @@ const fieldTypeToFilterType:StringMap = {
   'long': 'range-filter',
   'decimal': 'range-filter',
   'bool': 'checkbox-filter',
-  'data': 'string-filter',
-  'datatime': 'string-filter',
+  'date': 'date-time-filter',
+  'datetime': 'date-time-filter',
   'email': 'string-filter',
   'hyperlink': 'string-filter',
   'categorical': 'checkbox-filter',
   'categorical_mref': 'checkbox-filter',
-  'mref': 'checkbox-filter',
-  'xref': 'checkbox-filter',
-  'one_to_many': 'checkbox-filter',
+  'mref': 'multi-filter',
+  'xref': 'multi-filter',
+  'onetomany': 'multi-filter',
   'enum': 'checkbox-filter',
   'file': 'string-filter'
 }
@@ -43,12 +43,20 @@ const mapMetaToFilters = async (metaData: MetaData) => {
       collapsed: false
     }
 
-    // DECIMAL
+    // Decimal
     if (attribute.type.includes('decimal')) {
       filterDefinition.step = 0.1
     }
 
-    // RANGE
+    // Date
+    if (attribute.type.includes('date')) {
+      filterDefinition.time = false
+    }
+    if (attribute.type.includes('datetime')) {
+      filterDefinition.time = true
+    }
+
+    // Range (number)
     if (filterDefinition.type === 'range-filter' && attribute.range) {
       if (attribute.range.max) {
         filterDefinition.max = attribute.range.max

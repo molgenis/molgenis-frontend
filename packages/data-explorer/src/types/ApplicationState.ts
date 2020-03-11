@@ -41,7 +41,8 @@ export type FilterDefinition = {
   min?: number,
   max?: number,
   useSlider?: boolean,
-  step?:number
+  step?:number,
+  time?:boolean
 }
 
 export type FilterGroup = {

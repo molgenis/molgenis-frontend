@@ -7,9 +7,16 @@ import { FilterGroup } from '@/types/ApplicationState'
  * @example in query for a country filter
  * country=in=(NL,BE,DE)
  */
+export const createLikeQuery = (attributeName: string, selection: Value): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.Like, arguments: selection })
 export const createInQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.In, arguments: selection })
 export const createEqualsQuery = (attributeName: string, selection: Value): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.Equals, arguments: selection })
-
+export const createRangeQuery = (attributeName: string, selection: Value[]): Constraint => ({
+  operator: Operator.And,
+  operands: [
+    { selector: attributeName, comparison: ComparisonOperator.GreaterThanOrEqualTo, arguments: selection[0] },
+    { selector: attributeName, comparison: ComparisonOperator.LesserThanOrEqualTo, arguments: selection[1] }
+  ]
+})
 /**
  *
  * Transform to RSQL
@@ -35,10 +42,16 @@ export const createRSQLQuery = (filters: FilterGroup): string | null => {
         }
         break
       case 'string-filter':
-        operands.push({ selector: name, comparison: ComparisonOperator.Like, arguments: selection })
+        operands.push(createLikeQuery(name, selection))
         break
       case 'range-filter':
-        operands.push({ selector: name, comparison: ComparisonOperator.RangeFromTo, arguments: selection })
+        operands.push(createRangeQuery(name, selection))
+        break
+      case 'multi-filter':
+        operands.push(createInQuery(name, selection))
+        break
+      case 'date-time-filter':
+        operands.push(createRangeQuery(name, [selection.startDate.toISOString(), selection.endDate.toISOString()]))
         break
       default:
         return null

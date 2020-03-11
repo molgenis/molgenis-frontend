@@ -71,11 +71,12 @@ export default Vue.extend({
     white-space: normal;
   }
   .flex-filter {
-    transition: max-width 0.3s, min-width 0.3s;
+    z-index: 1; /* prioritizes stacking index of sidebar: needed for datepicker */
+    transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
     min-width: 20rem;
     max-width: 20rem;
     padding-right: 1rem;
-    overflow: hidden;
+    transform: translateX( 0 );
   }
 
   .flex-data {
@@ -83,6 +84,8 @@ export default Vue.extend({
     width: 100%;
   }
   .hidefilters .flex-filter {
+    transition: max-width 0.3s, min-width 0.3s, transform 0.6s;
+    transform: translateX( -20rem );
     max-width: 0;
     min-width: 0;
     padding-right: 0;

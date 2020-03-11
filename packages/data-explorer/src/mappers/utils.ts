@@ -2,6 +2,7 @@ import { Attribute } from '@/types/MetaData'
 import { FilterOption, FilterOptionsPromise } from '@/types/ApplicationState'
 import { fetchMetaDataByURL } from '@/repository/metaDataRepository'
 import axios from 'axios'
+import { toRsqlValue } from '@molgenis/rsql'
 
 export const getCategoricals = (attributes: Attribute[]) => attributes.filter(attribute => attribute.type.includes('categorical'))
 
@@ -13,12 +14,18 @@ export const getFieldOptions = async (attribute: Attribute) => {
     }
     const metadata = await fetchMetaDataByURL(url)
 
-    return async () => {
+    return async (nameAttribute:boolean = true, queryType: string = 'like', query?: string) => {
       const nameAttr = metadata.labelAttribute ? metadata.labelAttribute.name : ''
       const idAttr = metadata.idAttribute.name
+      let params = {}
+      if (query) {
+        params = {
+          q: `${nameAttribute ? nameAttr : idAttr}=${queryType}=${queryType === 'in' ? `(${query})` : toRsqlValue(query)}`
+        }
+      }
 
       url = url.replace('/metadata/', '/data/')
-      const data = await axios.get(url)
+      const data = await axios.get(url, { params: { ...params, flattenAttributes: true } })
       return Promise.resolve(
         data.data.items.map((i: any) => {
           // @ts-ignore
@@ -31,7 +38,7 @@ export const getFieldOptions = async (attribute: Attribute) => {
   switch (attribute.type) {
     case 'categorical':
     case 'categorical_mref':
-    case 'one_to_many':
+    case 'onetomany':
     case 'xref':
     case 'mref':
       return attribute.refEntityType ? getOptions(attribute.refEntityType) : null
