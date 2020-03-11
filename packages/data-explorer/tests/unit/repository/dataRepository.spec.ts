@@ -36,13 +36,23 @@ describe('dataRepository', () => {
   })
 
   describe('getTableDataWithLabel', () => {
-    it('should fetch the table data and expand the query for the label data ', async () => {
+    beforeEach(() => {
       // @ts-ignore
       axios.get.mockResolvedValue({ data: { items: [
         mockRowResponse
       ] } })
+    })
+
+    it('should fetch the table data and expand the query for the label data ', async (done) => {
       await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, ['foo'])
       expect(axios.get).toBeCalledWith('/api/data/tableId?expand=&filter=foo,id,label')
+      done()
+    })
+
+    it('should url encode the filter values if needed ', async (done) => {
+      await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, ['foo'], 'bloodtype=in=(A-,A+)')
+      expect(axios.get).toBeCalledWith('/api/data/tableId?expand=&filter=foo,id,label&q=bloodtype=in=(A-,A%2B)')
+      done()
     })
   })
 })
