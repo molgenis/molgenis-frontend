@@ -4,6 +4,7 @@ import * as metaDataRepository from './metaDataRepository'
 import { DataApiResponse, DataApiResponseItem, DataObject } from '@/types/ApiResponse'
 import { MetaData, Attribute } from '@/types/MetaData'
 import axios from 'axios'
+import { encodeRsqlValue } from '@molgenis/rsql'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaData) => {
@@ -89,7 +90,7 @@ const levelNRowMapper = (rowData: DataApiResponseItem) => {
 }
 
 const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
-  return rsqlFilter ? `${request}&q=${rsqlFilter}` : request
+  return rsqlFilter ? `${request}&q=${encodeRsqlValue(rsqlFilter)}` : request
 }
 
 const getTableDataDeepReference = async (tableId: string, metaData: MetaData, coloms: string[], rsqlQuery?: string) => {
