@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.17.0...@molgenis-experimental/data-explorer@0.18.0) (2020-03-11)
+
+
+### Bug Fixes
+
+* add one to many suport ([1ee82f3](https://github.com/molgenis/molgenis-frontend/commit/1ee82f3))
+* change rsql rng to <> ([8d6bbcc](https://github.com/molgenis/molgenis-frontend/commit/8d6bbcc))
+* menu collapse redone without overflow ([dd7f7c4](https://github.com/molgenis/molgenis-frontend/commit/dd7f7c4))
+
+
+### Features
+
+* add date-time filter binding ([4df69d9](https://github.com/molgenis/molgenis-frontend/commit/4df69d9))
+* added miltifilter logic ([3cdd487](https://github.com/molgenis/molgenis-frontend/commit/3cdd487))
+
+
+
+
+
 # [0.17.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.16.0...@molgenis-experimental/data-explorer@0.17.0) (2020-03-09)
 
 
