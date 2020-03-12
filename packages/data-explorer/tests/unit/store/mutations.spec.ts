@@ -75,7 +75,8 @@ describe('mutations', () => {
         definition: [],
         shown: [],
         selections: {}
-      }
+      },
+      searchText: ''
     }
   })
 

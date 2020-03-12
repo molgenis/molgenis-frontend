@@ -24,7 +24,8 @@ const state: ApplicationState = {
     definition: [],
     shown: [],
     selections: {}
-  }
+  },
+  searchText: ''
 }
 
 export default state

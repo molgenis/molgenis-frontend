@@ -88,5 +88,8 @@ export default {
   },
   setIsSettingsLoaded (state: ApplicationState) {
     state.isSettingsLoaded = true
+  },
+  setSearchText (state: ApplicationState, searchText: string) {
+    state.searchText = searchText
   }
 }

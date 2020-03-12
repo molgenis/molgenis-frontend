@@ -35,7 +35,8 @@ describe('ToolbarView.vue', () => {
         definition: [],
         shown: [],
         selections: {}
-      }
+      },
+      searchText: ''
     }
     mutations = {
       setHideFilters: jest.fn(),
