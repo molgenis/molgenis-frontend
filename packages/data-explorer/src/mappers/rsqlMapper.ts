@@ -18,6 +18,7 @@ export const createRangeQuery = (attributeName: string, selection: Value[]): Con
   ]
 })
 export const createSearchQuery = (selection: Value): Constraint => ({ selector: '*', comparison: ComparisonOperator.Search, arguments: selection })
+
 /**
  *
  * Transform to RSQL
@@ -25,7 +26,6 @@ export const createSearchQuery = (selection: Value): Constraint => ({ selector: 
  * @example queries
  * country=in=(NL,BE)
  */
-
 export const createRSQLQuery = (filters: FilterGroup, searchText?: string): string | null => {
   const operands: Constraint[] = []
   let filterDefinitions = filters.definition
@@ -48,9 +48,9 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
 
     switch (definition.type) {
       case 'search-filter':
-        if (searchText && searchText.length > 0) {
-          operands.push(createSearchQuery(searchText))
-        }
+        // search filter case is only added when searchText is non empty, ignore null warning
+        // @ts-ignore
+        operands.push(createSearchQuery(searchText))
         break
       case 'checkbox-filter':
         if (definition.dataType === 'bool') {
