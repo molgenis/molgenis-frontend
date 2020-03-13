@@ -41,7 +41,9 @@ describe('ToolbarView.vue', () => {
     mutations = {
       setHideFilters: jest.fn(),
       setDataDisplayLayout: jest.fn(),
-      setShowShoppingCart: jest.fn()
+      setShowShoppingCart: jest.fn(),
+      setFilterSelection: jest.fn(),
+      setSearchText: jest.fn()
     }
     store = new Vuex.Store({
       state, mutations
@@ -78,5 +80,22 @@ describe('ToolbarView.vue', () => {
     button.trigger('click')
     expect(mutations.setShowShoppingCart).toHaveBeenCalledWith(state, true)
     expect(mutations.setHideFilters).toHaveBeenCalledWith(state, true)
+  })
+
+  describe('saveFilterState method', () => {
+    let wrapper:any
+    beforeEach(() => {
+      wrapper = shallowMount(ToolbarView, { store, localVue })
+    })
+    it('should clear the search text if search is not part of the filter', () => {
+      const newSelections = {}
+      wrapper.vm.saveFilterState(newSelections)
+      expect(mutations.setSearchText).toHaveBeenCalled()
+    })
+    it('should not clear the search text if search is part of the filter', () => {
+      const newSelections = { _search: 'mock selection' }
+      wrapper.vm.saveFilterState(newSelections)
+      expect(mutations.setSearchText).not.toHaveBeenCalled()
+    })
   })
 })
