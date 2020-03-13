@@ -83,7 +83,7 @@ describe('ToolbarView.vue', () => {
   })
 
   describe('saveFilterState method', () => {
-    let wrapper:any
+    let wrapper: any
     beforeEach(() => {
       wrapper = shallowMount(ToolbarView, { store, localVue })
     })
@@ -96,6 +96,26 @@ describe('ToolbarView.vue', () => {
       const newSelections = { _search: 'mock selection' }
       wrapper.vm.saveFilterState(newSelections)
       expect(mutations.setSearchText).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('when the search text is non empty', () => {
+    let wrapper: any
+    beforeEach(() => {
+      store.state.searchText = 'my search'
+      wrapper = shallowMount(ToolbarView, { store, localVue })
+    })
+
+    it('should add search to the active filter selection', () => {
+      expect(wrapper.vm.activeFilterSelections).toEqual({ _search: 'my search' })
+    })
+
+    it('should add search to the active filter selection', () => {
+      expect(wrapper.vm.filterDefinitions).toEqual([{
+        type: 'string',
+        label: 'search',
+        name: '_search'
+      } ])
     })
   })
 })

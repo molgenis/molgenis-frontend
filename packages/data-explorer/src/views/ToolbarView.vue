@@ -24,7 +24,7 @@
     <active-filters
       @input="saveFilterState"
       :value="activeFilterSelections"
-      :filters="filterDefinitionsWithSearch"
+      :filters="filterDefinitions"
     ></active-filters>
   </div>
 </template>
@@ -46,7 +46,7 @@ export default Vue.extend({
     activeFilterSelections: (vm) => {
       return vm.searchText ? { ...vm.filters.selections, _search: vm.searchText } : vm.filters.selections
     },
-    filterDefinitionsWithSearch: (vm) => {
+    filterDefinitions: (vm) => {
       const searchDef = {
         type: 'string',
         label: 'search',
