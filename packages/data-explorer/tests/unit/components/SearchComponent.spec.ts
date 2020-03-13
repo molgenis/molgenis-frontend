@@ -2,7 +2,7 @@ import { shallowMount, Wrapper } from '@vue/test-utils'
 import SearchComponent from '@/components/SearchComponent.vue'
 
 describe('SearchComponent', () => {
-  let wrapper: Wrapper<SearchComponent>
+  let wrapper: any
 
   beforeEach(() => {
     wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' } })
