@@ -225,4 +225,11 @@ describe('mutations', () => {
       expect(baseAppState.isSettingsLoaded).toEqual(true)
     })
   })
+
+  describe('setSearchText', () => {
+    it('sets searchText to the passes value', () => {
+      mutations.setSearchText(baseAppState, 'test123')
+      expect(baseAppState.searchText).toEqual('test123')
+    })
+  })
 })
