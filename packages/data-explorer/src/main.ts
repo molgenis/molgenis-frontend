@@ -6,8 +6,17 @@ import store from './store/store'
 
 // @ts-ignore
 import i18n from '@molgenis/molgenis-i18n-js'
+import { decodeBookmark } from './store/helpers'
 
 Vue.config.productionTip = false
+
+// Catch query parameters to render them when accessing a bookmark
+router.beforeEach((to, from, next) => {
+  if (to.query.filters) {
+    store.commit('applyBookmarkedFilters', decodeBookmark(to.query))
+  }
+  next()
+})
 
 Vue.use(i18n, {
   lng: 'en',

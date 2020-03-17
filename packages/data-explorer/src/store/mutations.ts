@@ -73,7 +73,11 @@ export default {
     Vue.set(state.filters, 'definition', definition)
     Vue.set(state.filters, 'shown', shown)
   },
-  updateRowData (state: ApplicationState, { rowId, rowData }: {rowId: string, rowData: StringMap}) {
+  applyBookmarkedFilters (state: ApplicationState, bookmarkedFilters: any) {
+    if (bookmarkedFilters.selections) Vue.set(state.filters, 'selections', bookmarkedFilters.selections)
+    if (bookmarkedFilters.shown) Vue.set(state.filters, 'shown', bookmarkedFilters.shown)
+  },
+  updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {
     if (!state.tableData) {
       throw new Error('cannot update empty table data')
     }
