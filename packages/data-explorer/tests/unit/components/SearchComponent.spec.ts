@@ -19,7 +19,7 @@ describe('SearchComponent', () => {
 
   describe('when the search button is clicked', () => {
     beforeEach(() => {
-      wrapper.find('button').trigger('click')
+      wrapper.find('button').trigger('submit')
     })
 
     it('should fire a input event passing the searchText', () => {
@@ -37,6 +37,19 @@ describe('SearchComponent', () => {
       wrapper.vm.$nextTick().then(() => {
         const inputElement = wrapper.find('input').element as HTMLInputElement
         expect(inputElement.value).toEqual('')
+      })
+    })
+  })
+
+  describe('when the searchString value is changed to empty string (by html5 search clear action)', () => {
+    beforeEach(() => {
+      wrapper.setProps({ searchText: '' })
+    })
+
+    it('should emit a event from the search component', () => {
+      wrapper.vm.$nextTick().then(() => {
+        expect(wrapper.emitted('input')).toBeTruthy()
+        expect(wrapper.emitted('input')[0]).toEqual([''])
       })
     })
   })
