@@ -21,6 +21,15 @@ describe('rsqlMapper', () => {
     })
   })
 
+  describe('createSearchQuery', () => {
+    it('create an search Query', async () => {
+      const selections: Value = 'search term'
+      const query = rsqlMapper.createSearchQuery(selections)
+      const rsql = transformToRSQL(query)
+      expect(rsql).toEqual('*=q=\'search term\'')
+    })
+  })
+
   describe('createRSQLQuery', () => {
     let filterState: FilterGroup = {
       hideSidebar: false,
@@ -29,11 +38,16 @@ describe('rsqlMapper', () => {
       selections: {}
     }
     it('will return null with empty filters', async () => {
-      const rsqlQuery = await rsqlMapper.createRSQLQuery(filterState)
+      const rsqlQuery = rsqlMapper.createRSQLQuery(filterState)
       expect(rsqlQuery).toEqual(null)
     })
 
-    it('will', async (done) => {
+    it('should adds search if optional search term is passed', async () => {
+      const rsqlQuery = rsqlMapper.createRSQLQuery(filterState, 'search-term')
+      expect(rsqlQuery).toEqual('*=q=search-term')
+    })
+
+    it('will create a rsql string from the given filterState', () => {
       filterState.selections = {
         search: 'Hello',
         country: ['DE', 'NL'],
@@ -79,9 +93,8 @@ describe('rsqlMapper', () => {
         type: 'default-filter',
         dataType: 'default'
       })
-      const rsqlQuery = await rsqlMapper.createRSQLQuery(filterState)
+      const rsqlQuery = rsqlMapper.createRSQLQuery(filterState)
       expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=ge=10;age=le=30;comply==(yes);date=ge=1970-01-01T00:00:00.001Z;date=le=1970-01-01T00:00:00.002Z;xref=in=(bla)')
-      done()
     })
   })
 })

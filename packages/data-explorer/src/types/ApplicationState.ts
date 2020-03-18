@@ -63,4 +63,5 @@ export default interface ApplicationState {
   tableSettings: TableSetting
   isSettingsLoaded: boolean
   filters: FilterGroup
+  searchText: string
 }

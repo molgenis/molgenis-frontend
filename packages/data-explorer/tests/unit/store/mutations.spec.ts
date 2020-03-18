@@ -75,7 +75,8 @@ describe('mutations', () => {
         definition: [],
         shown: [],
         selections: {}
-      }
+      },
+      searchText: ''
     }
   })
 
@@ -222,6 +223,13 @@ describe('mutations', () => {
     it('sets isSettingsLoaded to treu', () => {
       mutations.setIsSettingsLoaded(baseAppState)
       expect(baseAppState.isSettingsLoaded).toEqual(true)
+    })
+  })
+
+  describe('setSearchText', () => {
+    it('sets searchText to the passes value', () => {
+      mutations.setSearchText(baseAppState, 'test123')
+      expect(baseAppState.searchText).toEqual('test123')
     })
   })
 })

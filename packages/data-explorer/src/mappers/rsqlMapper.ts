@@ -1,13 +1,13 @@
 import { Operator, ComparisonOperator, Value, Constraint, transformToRSQL } from '@molgenis/rsql'
 import { FilterGroup } from '@/types/ApplicationState'
 
+export const createLikeQuery = (attributeName: string, selection: Value): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.Like, arguments: selection })
 /**
  * Create an RSQL 'in' query for filters
  *
  * @example in query for a country filter
  * country=in=(NL,BE,DE)
  */
-export const createLikeQuery = (attributeName: string, selection: Value): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.Like, arguments: selection })
 export const createInQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.In, arguments: selection })
 export const createEqualsQuery = (attributeName: string, selection: Value): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.Equals, arguments: selection })
 export const createRangeQuery = (attributeName: string, selection: Value[]): Constraint => ({
@@ -17,6 +17,8 @@ export const createRangeQuery = (attributeName: string, selection: Value[]): Con
     { selector: attributeName, comparison: ComparisonOperator.LesserThanOrEqualTo, arguments: selection[1] }
   ]
 })
+export const createSearchQuery = (selection: Value): Constraint => ({ selector: '*', comparison: ComparisonOperator.Search, arguments: selection })
+
 /**
  *
  * Transform to RSQL
@@ -24,16 +26,32 @@ export const createRangeQuery = (attributeName: string, selection: Value[]): Con
  * @example queries
  * country=in=(NL,BE)
  */
-
-export const createRSQLQuery = (filters: FilterGroup): string | null => {
+export const createRSQLQuery = (filters: FilterGroup, searchText?: string): string | null => {
   const operands: Constraint[] = []
+  let filterDefinitions = filters.definition
+  let filterSelections = filters.selections
 
-  Object.keys(filters.selections).forEach((name: string) => {
-    const selection = filters.selections[name]
+  if (searchText && searchText.length > 0) {
+    filterDefinitions = [...filterDefinitions, {
+      type: 'search-filter',
+      label: 'search',
+      name: '_search',
+      dataType: 'string'
+    }]
+    filterSelections = { ...filters.selections, _search: searchText }
+  }
+
+  Object.keys(filterSelections).forEach((name: string) => {
+    const selection = filterSelections[name]
     if (selection === undefined) return
-    const definition = filters.definition.filter((filter) => filter.name === name)[0]
+    const definition = filterDefinitions.filter((filter) => filter.name === name)[0]
 
     switch (definition.type) {
+      case 'search-filter':
+        // search filter case is only added when searchText is non empty, ignore null warning
+        // @ts-ignore
+        operands.push(createSearchQuery(searchText))
+        break
       case 'checkbox-filter':
         if (definition.dataType === 'bool') {
           operands.push(createEqualsQuery(name, selection))

@@ -23,8 +23,8 @@
     </button>
     <active-filters
       @input="saveFilterState"
-      :value="filters.selections"
-      :filters="filters.definition"
+      :value="activeFilterSelections"
+      :filters="filterDefinitions"
     ></active-filters>
   </div>
 </template>
@@ -42,10 +42,21 @@ library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag)
 export default Vue.extend({
   name: 'ToolbarView',
   computed: {
-    ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'tableSettings', 'filters'])
+    ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'tableSettings', 'filters', 'searchText']),
+    activeFilterSelections: (vm) => {
+      return vm.searchText ? { ...vm.filters.selections, _search: vm.searchText } : vm.filters.selections
+    },
+    filterDefinitions: (vm) => {
+      const searchDef = {
+        type: 'string',
+        label: 'search',
+        name: '_search'
+      }
+      return vm.searchText ? [ ...vm.filters.definition, searchDef ] : vm.filters.definition
+    }
   },
   methods: {
-    ...mapMutations(['setDataDisplayLayout', 'setShowShoppingCart', 'setHideFilters', 'setFilterSelection']),
+    ...mapMutations(['setDataDisplayLayout', 'setShowShoppingCart', 'setHideFilters', 'setFilterSelection', 'setSearchText']),
     toggleDataDisplayLayout () {
       const value = this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.setDataDisplayLayout(value)
@@ -55,6 +66,9 @@ export default Vue.extend({
       this.setHideFilters(true)
     },
     saveFilterState (newSelections) {
+      if (newSelections['_search'] === undefined) {
+        this.setSearchText('')
+      }
       this.setFilterSelection(newSelections)
     }
   },
