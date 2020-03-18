@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.18.1...@molgenis-experimental/data-explorer@0.19.0) (2020-03-18)
+
+
+### Features
+
+* **data-explorer:** Add search ([621763b](https://github.com/molgenis/molgenis-frontend/commit/621763b))
+
+
+
+
+
 ## [0.18.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.18.0...@molgenis-experimental/data-explorer@0.18.1) (2020-03-11)
 
 **Note:** Version bump only for package @molgenis-experimental/data-explorer
