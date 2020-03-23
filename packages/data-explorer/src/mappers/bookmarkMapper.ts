@@ -1,8 +1,9 @@
 import { FilterDefinition } from '../types/ApplicationState'
 import { StringMap } from '@/types/GeneralTypes'
+import { MetaData } from '@/types/MetaData'
 
 function convertBookmarkValue (value: any, type: string): any[] | string | undefined {
-  switch (type) {
+  switch (type.toString()) {
     case 'string':
     case 'text':
     case 'html':
@@ -17,7 +18,7 @@ function convertBookmarkValue (value: any, type: string): any[] | string | undef
     case 'mref':
     case 'xref':
     case 'onetomany':
-      return decodeURI(value.split(','))
+      return value.split(',')
     default:
       return undefined
 
@@ -30,10 +31,9 @@ function convertBookmarkValue (value: any, type: string): any[] | string | undef
   }
 }
 
-export const decodeBookmark = (filterDefinitions: FilterDefinition[], query: any) => {
+export const decodeBookmark = (metaData: MetaData | null, query: any) => {
   let output: any = {}
-
-  if (Object.keys(query).length >= 1) {
+  if (Object.keys(query).length >= 1 && metaData !== null) {
     output.selections = {}
 
     for (let property in query) {
@@ -41,28 +41,24 @@ export const decodeBookmark = (filterDefinitions: FilterDefinition[], query: any
       if (property === 'filters') {
         output.shown = propValue.split(',')
       } else {
-        const definition = filterDefinitions.filter(fd => fd.name === property || fd.label === property)
-        output.selections[property] = convertBookmarkValue(propValue, definition[0].dataType)
+        const definition = metaData.attributes.filter(fd => {
+          return fd.name === property || fd.label === property
+        })
+        output.selections[property] = convertBookmarkValue(propValue, definition[0].type)
       }
     }
   }
   return output
 }
 
-export const bookmarkShown = (shownFilters: string[]) => {
-  if (!shownFilters || shownFilters.length === 0) return {}
-  else return { filters: encodeURI(shownFilters.join(',')) }
-}
-
-export const bookmarkSelection = (selection: StringMap) => {
-  if (!selection || !Object.keys(selection)) return {}
-  else {
+export const createBookmark = (shown: string[], selections: StringMap = {}) => {
+  if (Object.keys(selections).length === 0) {
+    return { filters: encodeURI(shown.join(',')) }
+  } else {
     let output: any = {}
-    let filters = []
-    for (let property in selection) {
-      filters.push(property)
-      output[property] = encodeURI(selection[property])
+    for (let property in selections) {
+      output[property] = encodeURI(selections[property])
     }
-    return { ...bookmarkShown(filters), ...output }
+    return { filters: encodeURI(shown.join(',')), ...output }
   }
 }

@@ -63,5 +63,8 @@ export default interface ApplicationState {
   tableSettings: TableSetting
   isSettingsLoaded: boolean
   filters: FilterGroup
-  searchText: string
+  searchText: string,
+  bookmarkedShownFilters: string[],
+  bookmarkedSelections: any,
+  bookmark: any
 }

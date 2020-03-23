@@ -4,6 +4,7 @@ import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
 import { decodeBookmark } from '@/mappers/bookmarkMapper'
+import { fetchMetaDataById } from '@/repository/metaDataRepository'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {
@@ -74,10 +75,20 @@ export default {
     Vue.set(state.filters, 'definition', definition)
     Vue.set(state.filters, 'shown', shown)
   },
-  applyBookmarkedFilters (state: ApplicationState, query: any) {
-    const bookmarkedFilters = decodeBookmark(state.filters.definition, query)
-    if (bookmarkedFilters.selections) Vue.set(state.filters, 'selections', bookmarkedFilters.selections)
-    if (bookmarkedFilters.shown) Vue.set(state.filters, 'shown', bookmarkedFilters.shown)
+  setBookmark (state: ApplicationState, query: any) {
+    Vue.set(state, 'bookmark', query)
+  },
+  applyBookmarkedFilters (state: ApplicationState, query: any, meta?: any) {
+    const bookmarkedFilters = decodeBookmark(meta || state.tableMeta, query)
+
+    if (bookmarkedFilters.selections) {
+      Vue.set(state.filters, 'selections', bookmarkedFilters.selections)
+      Vue.set(state, 'bookmarkedSelections', bookmarkedFilters.selections)
+    }
+    if (bookmarkedFilters.shown) {
+      Vue.set(state.filters, 'shown', bookmarkedFilters.shown)
+      Vue.set(state, 'bookmarkedShownFilters', bookmarkedFilters.shown)
+    }
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {
     if (!state.tableData) {

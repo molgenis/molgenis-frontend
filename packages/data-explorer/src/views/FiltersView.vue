@@ -29,12 +29,12 @@
 
 <script>
 import Vue from 'vue'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, createNamespacedHelpers } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import FilterContainer from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/FilterContainer.vue'
-import { bookmarkShown, bookmarkSelection } from '../mappers/bookmarkMapper'
+import { createBookmark } from '../mappers/bookmarkMapper'
 
 library.add(faChevronLeft)
 
@@ -42,10 +42,21 @@ export default Vue.extend({
   name: 'FiltersView',
   components: { FilterContainer, FontAwesomeIcon },
   data: () => {
-    return { renderCount: 0, componentRoute: false }
+    return {
+      renderCount: 0,
+      componentRoute: false,
+      bookmarkShown: [],
+      bookmarkSelections: {}
+    }
   },
   computed: {
-    ...mapState(['filters', 'tableMeta', 'isSettingsLoaded']),
+    ...mapState([
+      'filters',
+      'tableMeta',
+      'isSettingsLoaded',
+      'bookmarkedShownFilters',
+      'bookmarkedSelections'
+    ]),
     isFilterDataLoaded: vm => !!vm.tableMeta && vm.isSettingsLoaded,
     filterSelections: {
       get () {
@@ -53,8 +64,16 @@ export default Vue.extend({
       },
       set (val) {
         this.filters.selections = val
-        const filterBookmark = bookmarkSelection(val)
-        this.addBookmark(filterBookmark)
+        this.bookmarkSelections = val
+        this.addBookmark()
+      }
+    },
+    filterShown: {
+      get () {
+        return this.filters.shown
+      },
+      set (val) {
+        this.setFiltersShown(val)
       }
     }
   },
@@ -62,16 +81,20 @@ export default Vue.extend({
     ...mapMutations([
       'setHideFilters',
       'applyBookmarkedFilters',
-      'setFiltersShown'
+      'setFiltersShown',
+      'setBookmark'
     ]),
-    updateState (filterSelection) {
-      this.setFiltersShown(filterSelection)
-      const filterBookmark = bookmarkShown(filterSelection)
-      this.addBookmark(filterBookmark)
+    updateState (shownFilters) {
+      this.setFiltersShown(shownFilters)
+      this.bookmarkShown = shownFilters
+      this.addBookmark()
     },
-    addBookmark (filterBookmark) {
+    addBookmark () {
+      const filterBookmark = createBookmark(
+        this.bookmarkShown,
+        this.bookmarkSelections
+      )
       this.componentRoute = true
-      console.log(filterBookmark)
       this.$router.push(
         {
           name: 'root',
@@ -86,14 +109,18 @@ export default Vue.extend({
     '$route.query': function (query) {
       // need to check if component triggered query, if so ignore.
       if (!this.componentRoute) {
+        console.log('trigger too?')
         this.applyBookmarkedFilters(query)
         this.renderCount++ // this is a work-around for issue #42 of molgenis-ui-filter
       } else this.componentRoute = false
-    }
-  },
-  mounted () {
-    if (this.$route.query) {
-      this.applyBookmarkedFilters(this.$route.query)
+    },
+    tableMeta: function (meta) {
+      if (this.$route.query) {
+        this.applyBookmarkedFilters(this.$route.query, meta)
+        this.bookmarkShown = this.bookmarkedShownFilters
+        this.bookmarkSelections = this.bookmarkedSelections
+        this.renderCount++
+      }
     }
   }
 })

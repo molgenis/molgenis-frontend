@@ -25,6 +25,9 @@ const state: ApplicationState = {
     shown: [],
     selections: {}
   },
+  bookmarkedShownFilters: [],
+  bookmarkedSelections: {},
+  bookmark: {},
   searchText: ''
 }
 
