@@ -70,7 +70,11 @@ export default Vue.extend({
     },
     filterShown: {
       get () {
-        return this.filters.shown
+        if (this.filters.shown.length > 0) {
+          return this.filters.shown
+        } else {
+          return this.bookmarkShown
+        }
       },
       set (val) {
         this.setFiltersShown(val)
