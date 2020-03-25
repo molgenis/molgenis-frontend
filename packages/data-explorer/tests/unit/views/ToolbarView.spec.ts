@@ -118,4 +118,19 @@ describe('ToolbarView.vue', () => {
       } ])
     })
   })
+
+  describe('add row button', () => {
+    it('should render the add button as a line to the data-row-edit', () => {
+      const wrapper = shallowMount(ToolbarView, { store, localVue })
+      expect(wrapper.find('.toolbar > a').attributes().href).toEqual('/plugin/data-row-edit/root_hospital_patients')
+    })
+
+    it('should not be shown in shoppingcart mode', () => {
+      store.state.showShoppingCart = true
+      const wrapper = shallowMount(ToolbarView, { store, localVue })
+      expect(wrapper.find('.toolbar > a').exists()).toBe(false)
+    })
+
+    afterEach(() => { store.state.showShoppingCart = false })
+  })
 })
