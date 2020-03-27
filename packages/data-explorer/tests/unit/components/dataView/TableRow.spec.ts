@@ -8,6 +8,6 @@ describe('EntityTableRow.vue', () => {
   })
   it('renders table rows', () => {
     const wrapper = shallowMount(TableRow, { propsData: { id: 'id', rowData: { name: 'name', title: 'title', content: 'content' } } })
-    expect(wrapper.findAll('td').length).toEqual(3)
+    expect(wrapper.findAll('td').length).toEqual(4) // length + 1 for edit btn
   })
 })

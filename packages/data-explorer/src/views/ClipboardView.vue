@@ -16,6 +16,7 @@
         <table-row v-for="(entity, index) in entitiesToShow"
                    :key="index"
                    :id="getEntityId(entity)"
+                   :tableName="tableName"
                    :rowData="entity"
                    :isSelected="isSelected(entity)"
                    :isShop="true"></table-row>

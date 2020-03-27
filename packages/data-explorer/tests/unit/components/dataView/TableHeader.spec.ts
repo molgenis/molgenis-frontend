@@ -8,6 +8,6 @@ describe('TableHeader.vue', () => {
   })
   it('renders table headers', () => {
     const wrapper = shallowMount(TableHeader, { propsData: { header: ['1', '2', '3'] } })
-    expect(wrapper.findAll('th').length).toEqual(3)
+    expect(wrapper.findAll('th').length).toEqual(4) // length + 1 for edit btn
   })
 })
