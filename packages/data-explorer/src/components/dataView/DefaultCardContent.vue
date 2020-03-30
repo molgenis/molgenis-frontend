@@ -7,6 +7,13 @@
         :href="'/plugin/data-row-edit/' + dataTable + '/' + dataId">
         <font-awesome-icon icon="edit"></font-awesome-icon>
       </a>
+      <button
+        class="btn btn-sm btn-link"
+        role="button"
+        @click="$eventBus.$emit('delete-item', dataId)"
+        >
+        <font-awesome-icon icon="trash"></font-awesome-icon>
+      </button>
       <slot name="shopping-button"></slot>
     </h5>
     <div class="card-text">
@@ -36,10 +43,10 @@
 <script>
 import Vue from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch, faChevronUp, faChevronRight, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faChevronUp, faChevronRight, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faSearch, faChevronRight, faChevronUp, faEdit)
+library.add(faSearch, faChevronRight, faChevronUp, faEdit, faTrash)
 
 export default Vue.extend({
   name: 'DefaultCardContent',

@@ -7,7 +7,8 @@ import mockRowResponse from '../mocks/rowDataResponseMock'
 import axios from 'axios'
 
 jest.mock('axios', () => ({
-  get: jest.fn()
+  get: jest.fn(),
+  delete: jest.fn()
 }))
 
 jest.mock('@/repository/metaDataRepository', () => ({
@@ -52,6 +53,14 @@ describe('dataRepository', () => {
     it('should url encode the filter values if needed ', async (done) => {
       await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, ['foo'], 'bloodtype=in=(A-,A+)')
       expect(axios.get).toBeCalledWith('/api/data/tableId?expand=&filter=foo,id,label&q=bloodtype=in=(A-,A%2B)')
+      done()
+    })
+  })
+
+  describe('deleteRow', () => {
+    it('should send delete request', async (done) => {
+      await dataRepository.deleteRow('my-table', 'my-row')
+      expect(axios.delete).toBeCalledWith('/api/data/my-table/my-row')
       done()
     })
   })

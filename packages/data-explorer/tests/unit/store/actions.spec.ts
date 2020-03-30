@@ -222,7 +222,8 @@ jest.mock('@/repository/dataRepository', () => {
   return {
     getTableDataDeepReference: jest.fn(),
     getTableDataWithLabel: jest.fn(),
-    getRowDataWithReferenceLabels: jest.fn()
+    getRowDataWithReferenceLabels: jest.fn(),
+    deleteRow: jest.fn()
   }
 })
 
@@ -333,6 +334,28 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledWith('setTableData', [])
       expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
       expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('entity', { attributes: [] }, [], 'a==b')
+    })
+  })
+
+  describe('deleteRow', () => {
+    let commit: any
+    beforeEach(() => {
+      commit = jest.fn()
+    })
+
+    it('should call deleteRow on the dataRepository and update the state', async (done) => {
+      state.tableName = 'my-table'
+      await actions.deleteRow({ state, commit }, { rowId: 'my-row' })
+      expect(dataRepository.deleteRow).toHaveBeenCalledWith('my-table', 'my-row')
+      expect(commit).toHaveBeenCalledWith('removeRow', { rowId: 'my-row' })
+      done()
+    })
+
+    it('should throw an error when the table name is not set', async (done) => {
+      state.tableName = null
+      await actions.deleteRow({ state, commit }, { rowId: 'my-row' })
+      expect(commit).toHaveBeenCalledWith('setToast', { message: 'Cannot delete row from unknown table', type: 'danger' })
+      done()
     })
   })
 })

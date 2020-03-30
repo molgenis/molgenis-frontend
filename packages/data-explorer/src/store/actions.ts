@@ -72,5 +72,12 @@ export default {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })
     }
-  }
+  },
+  deleteRow: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string }) => {
+    if (typeof state.tableName !== 'string') {
+      throw new Error('Cannot delete row from unknown table')
+    }
+    await dataRepository.deleteRow(state.tableName, payload.rowId)
+    commit('removeRow', { rowId: payload.rowId })
+  })
 }

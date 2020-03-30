@@ -34,12 +34,20 @@ import Vue from 'vue'
 import FiltersView from './FiltersView'
 import ToastComponent from '../components/utils/ToastComponent'
 import DataView from './DataView'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faChevronUp)
+
+const deleteConfirmOptions = {
+  okVariant: 'danger',
+  okTitle: 'Delete',
+  cancelTitle: 'Cancel',
+  hideHeaderClose: false,
+  centered: true
+}
 
 export default Vue.extend({
   name: 'MainView',
@@ -47,12 +55,31 @@ export default Vue.extend({
     ...mapState(['filters', 'toast', 'showShoppingCart'])
   },
   methods: {
-    ...mapMutations([ 'clearToast', 'setHideFilters' ])
+    ...mapMutations([ 'clearToast', 'setHideFilters' ]),
+    ...mapActions(['deleteRow']),
+    async handeldeleteItem (itemId) {
+      const msg = 'Are you sure you want to delete this item ?'
+      const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, deleteConfirmOptions)
+      if (isDeleteConfirmed) {
+        this.deleteRow({ rowId: itemId })
+      }
+    }
   },
   created () {
+    // Setup event bus for n-level deep child -> parent events
+    // This way the mainView can coordinate the events
+    Vue.prototype.$eventBus = new Vue()
+    this.$eventBus.$on('delete-item', (data) => {
+      this.handeldeleteItem(data)
+    })
+
     if (this.$route.params.entity) {
       this.$store.commit('setTableName', this.$route.params.entity)
     }
+  },
+  destroyed () {
+    this.$eventBus.$off('delete-item')
+    delete Vue.prototype.$eventBus
   },
   components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon }
 })
