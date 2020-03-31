@@ -116,6 +116,9 @@ export default Vue.extend({
         this.setFilters(query)
         this.refreshFilterView()
       } else this.componentRoute = false
+    },
+    filterSelections: function () {
+      this.addBookmark()
     }
   },
   mounted () {
