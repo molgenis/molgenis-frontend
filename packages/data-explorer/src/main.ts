@@ -9,6 +9,14 @@ import i18n from '@molgenis/molgenis-i18n-js'
 
 Vue.config.productionTip = false
 
+// Catch query parameters to render them when accessing a bookmark
+router.beforeEach((to, from, next) => {
+  if (to.query.filters) {
+    store.commit('setBookmark', to.query)
+  }
+  next()
+})
+
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',

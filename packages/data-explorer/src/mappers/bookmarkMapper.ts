@@ -1,6 +1,6 @@
-import { FilterDefinition } from '../types/ApplicationState'
 import { StringMap } from '@/types/GeneralTypes'
 import { MetaData } from '@/types/MetaData'
+import store from '@/store/store'
 
 function convertBookmarkValue (value: any, type: string): any[] | string | undefined {
   switch (type.toString()) {
@@ -20,7 +20,7 @@ function convertBookmarkValue (value: any, type: string): any[] | string | undef
     case 'onetomany':
       return value.split(',')
     default:
-      return undefined
+      return ''
 
     //   'decimal': 'range-filter',
     //   'int': 'range-filter',
@@ -31,7 +31,7 @@ function convertBookmarkValue (value: any, type: string): any[] | string | undef
   }
 }
 
-export const decodeBookmark = (metaData: MetaData | null, query: any) => {
+const decodeBookmark = (metaData: MetaData | null, query: any) => {
   let output: any = {}
   if (Object.keys(query).length >= 1 && metaData !== null) {
     output.selections = {}
@@ -60,5 +60,19 @@ export const createBookmark = (shown: string[], selections: StringMap = {}) => {
       output[property] = encodeURI(selections[property])
     }
     return { filters: encodeURI(shown.join(',')), ...output }
+  }
+}
+
+// Bookmark is the source of truth. If no bookmark, then default.
+export const applyFilters = (metaData: MetaData | null, query: any, defaultShownFilters?: string[]) => {
+  const bookmarkedFilters = decodeBookmark(metaData, query)
+  if (bookmarkedFilters.shown) {
+    store.commit('setFiltersShown', bookmarkedFilters.shown)
+  } else if (defaultShownFilters) {
+    store.commit('setFiltersShown', defaultShownFilters)
+  }
+
+  if (bookmarkedFilters.selections) {
+    store.commit('setFilterSelection', bookmarkedFilters.selections)
   }
 }

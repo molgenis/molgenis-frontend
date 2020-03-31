@@ -18,7 +18,7 @@
           v-if="isFilterDataLoaded"
           v-model="filterSelections"
           :filters="filters.definition"
-          :filters-shown="filters.shown"
+          :filters-shown="filterShown"
           @update="updateState"
           :can-edit="true"
         ></filter-container>
@@ -57,46 +57,42 @@ export default Vue.extend({
       'bookmarkedShownFilters',
       'bookmarkedSelections'
     ]),
-    isFilterDataLoaded: vm => !!vm.tableMeta && vm.isSettingsLoaded,
+    isFilterDataLoaded: vm => vm.tableMeta !== null && vm.isSettingsLoaded,
     filterSelections: {
       get () {
         return this.filters.selections
       },
       set (val) {
-        this.filters.selections = val
-        this.bookmarkSelections = val
+        this.setFilterSelection(val)
         this.addBookmark()
       }
     },
     filterShown: {
       get () {
-        if (this.filters.shown.length > 0) {
-          return this.filters.shown
-        } else {
-          return this.bookmarkShown
-        }
+        return this.filters.shown
       },
       set (val) {
         this.setFiltersShown(val)
+        this.addBookmark()
       }
     }
   },
   methods: {
     ...mapMutations([
       'setHideFilters',
-      'applyBookmarkedFilters',
+      'setFilters',
       'setFiltersShown',
+      'setFilterSelection',
       'setBookmark'
     ]),
     updateState (shownFilters) {
       this.setFiltersShown(shownFilters)
-      this.bookmarkShown = shownFilters
       this.addBookmark()
     },
     addBookmark () {
       const filterBookmark = createBookmark(
-        this.bookmarkShown,
-        this.bookmarkSelections
+        this.filters.shown,
+        this.filters.selections
       )
       this.componentRoute = true
       this.$router.push(
@@ -107,25 +103,24 @@ export default Vue.extend({
         // to prevent error, which occurs on routing to same page (Vue issue)
         () => {}
       )
+    },
+    refreshFilters () {
+      this.renderCount++
     }
   },
   watch: {
     '$route.query': function (query) {
       // need to check if component triggered query, if so ignore.
       if (!this.componentRoute) {
-        console.log('trigger too?')
-        this.applyBookmarkedFilters(query)
-        this.renderCount++ // this is a work-around for issue #42 of molgenis-ui-filter
+        this.setFilters(query)
+        this.refreshFilters() // this is a work-around for issue #42 of molgenis-ui-filter
       } else this.componentRoute = false
-    },
-    tableMeta: function (meta) {
-      if (this.$route.query) {
-        this.applyBookmarkedFilters(this.$route.query, meta)
-        this.bookmarkShown = this.bookmarkedShownFilters
-        this.bookmarkSelections = this.bookmarkedSelections
-        this.renderCount++
-      }
     }
+  },
+  mounted () {
+    this.setFilters()
+    this.refreshFilters()
+    this.addBookmark()
   }
 })
 </script>

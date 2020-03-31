@@ -76,7 +76,8 @@ describe('mutations', () => {
         shown: [],
         selections: {}
       },
-      searchText: ''
+      searchText: '',
+      bookmark: {}
     }
   })
 
@@ -173,12 +174,6 @@ describe('mutations', () => {
       mutations.toggleShoppingItems(baseAppState, 'item2')
       mutations.toggleShoppingItems(baseAppState, 'item2')
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
-    })
-  })
-  describe('setTableMetaData', () => {
-    it('sets the meta data', () => {
-      mutations.setTableMetaData(baseAppState, entityMetaData)
-      expect(baseAppState.tableMeta).toEqual(entityMetaData)
     })
   })
   describe('setTableSettings', () => {

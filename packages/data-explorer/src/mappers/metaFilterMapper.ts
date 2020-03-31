@@ -25,8 +25,6 @@ const fieldTypeToFilterType:StringMap = {
 }
 
 const mapMetaToFilters = async (metaData: MetaData) => {
-  let shownFilters:string[] = []
-
   const filterDefinitions = metaData.attributes.filter((item: Attribute) => {
     // Filter out undefined datatypes
     return fieldTypeToFilterType[item.type]
@@ -72,8 +70,7 @@ const mapMetaToFilters = async (metaData: MetaData) => {
     return options ? { ...filterDefinition, options } : filterDefinition
   }))
   return {
-    definition: constructedFilters,
-    shown: shownFilters
+    definition: constructedFilters
   }
 }
 

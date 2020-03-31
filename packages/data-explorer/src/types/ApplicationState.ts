@@ -20,7 +20,7 @@ export type TableSetting = {
   settingsRowId: string | null,
   collapseLimit: number,
   isShop: boolean,
-  defaultFilters: string []
+  defaultFilters: string[]
 }
 
 export type FilterSelections = {
@@ -41,8 +41,8 @@ export type FilterDefinition = {
   min?: number,
   max?: number,
   useSlider?: boolean,
-  step?:number,
-  time?:boolean
+  step?: number,
+  time?: boolean
 }
 
 export type FilterGroup = {
@@ -64,7 +64,5 @@ export default interface ApplicationState {
   isSettingsLoaded: boolean
   filters: FilterGroup
   searchText: string,
-  bookmarkedShownFilters: string[],
-  bookmarkedSelections: any,
   bookmark: any
 }

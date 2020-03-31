@@ -262,7 +262,8 @@ describe('actions', () => {
         defaultFilters: []
       },
       isSettingsLoaded: true,
-      searchText: ''
+      searchText: '',
+      bookmark: {}
     }
 
     getters = {

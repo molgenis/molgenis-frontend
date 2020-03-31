@@ -3,8 +3,7 @@ import { DataApiResponse } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
-import { decodeBookmark } from '@/mappers/bookmarkMapper'
-import { fetchMetaDataById } from '@/repository/metaDataRepository'
+import { applyFilters } from '@/mappers/bookmarkMapper'
 
 export default {
   setToast (state: ApplicationState, toast: Toast) {
@@ -19,12 +18,6 @@ export default {
   setTableData (state: ApplicationState, data: DataApiResponse) {
     state.tableData = data
   },
-  setHideFilters (state: ApplicationState, hideFilters: boolean) {
-    state.filters.hideSidebar = hideFilters
-  },
-  setFiltersShown (state: ApplicationState, shown: string[]) {
-    Vue.set(state.filters, 'shown', shown)
-  },
   setTableName (state: ApplicationState, entity: string) {
     state.tableName = entity
   },
@@ -38,9 +31,6 @@ export default {
     } else {
       state.shoppedEntityItems.push(id)
     }
-  },
-  setTableMetaData (state: ApplicationState, meta: MetaData) {
-    state.tableMeta = meta
   },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {
     const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'
@@ -62,33 +52,28 @@ export default {
     }
     if (isPropSet('default_filters')) {
       state.tableSettings.defaultFilters = tableSettings.default_filters.split(',').map(f => f.trim())
-      state.filters.shown = state.tableSettings.defaultFilters
     }
   },
   setMetaData (state: ApplicationState, metaData: MetaData) {
     state.tableMeta = metaData
   },
+  setFiltersDefinition (state: ApplicationState, { definition }: { definition: FilterDefinition[] }) {
+    Vue.set(state.filters, 'definition', definition)
+  },
+  setHideFilters (state: ApplicationState, hideFilters: boolean) {
+    state.filters.hideSidebar = hideFilters
+  },
+  setFiltersShown (state: ApplicationState, shown: string[]) {
+    Vue.set(state.filters, 'shown', shown)
+  },
   setFilterSelection (state: ApplicationState, selections: StringMap) {
     Vue.set(state.filters, 'selections', selections)
-  },
-  setFilters (state: ApplicationState, { definition, shown }: { definition: FilterDefinition[], shown: string[] }) {
-    Vue.set(state.filters, 'definition', definition)
-    Vue.set(state.filters, 'shown', shown)
   },
   setBookmark (state: ApplicationState, query: any) {
     Vue.set(state, 'bookmark', query)
   },
-  applyBookmarkedFilters (state: ApplicationState, query: any, meta?: any) {
-    const bookmarkedFilters = decodeBookmark(meta || state.tableMeta, query)
-
-    if (bookmarkedFilters.selections) {
-      Vue.set(state.filters, 'selections', bookmarkedFilters.selections)
-      Vue.set(state, 'bookmarkedSelections', bookmarkedFilters.selections)
-    }
-    if (bookmarkedFilters.shown) {
-      Vue.set(state.filters, 'shown', bookmarkedFilters.shown)
-      Vue.set(state, 'bookmarkedShownFilters', bookmarkedFilters.shown)
-    }
+  setFilters (state: ApplicationState, query?: any) {
+    applyFilters(state.tableMeta, query || state.bookmark, state.tableSettings.defaultFilters)
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {
     if (!state.tableData) {

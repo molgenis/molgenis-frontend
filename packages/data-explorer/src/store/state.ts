@@ -25,10 +25,8 @@ const state: ApplicationState = {
     shown: [],
     selections: {}
   },
-  bookmarkedShownFilters: [],
-  bookmarkedSelections: {},
-  bookmark: {},
-  searchText: ''
+  searchText: '',
+  bookmark: {}
 }
 
 export default state
