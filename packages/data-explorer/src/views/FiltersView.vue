@@ -104,7 +104,8 @@ export default Vue.extend({
         () => {}
       )
     },
-    refreshFilters () {
+    refreshFilterView () {
+      // Refresh the filtercomponent
       this.renderCount++
     }
   },
@@ -113,13 +114,13 @@ export default Vue.extend({
       // need to check if component triggered query, if so ignore.
       if (!this.componentRoute) {
         this.setFilters(query)
-        this.refreshFilters() // this is a work-around for issue #42 of molgenis-ui-filter
+        this.refreshFilterView()
       } else this.componentRoute = false
     }
   },
   mounted () {
     this.setFilters()
-    this.refreshFilters()
+    this.refreshFilterView()
     this.addBookmark()
   }
 })
