@@ -49,9 +49,6 @@ export default {
     idAttribute () {
       return this.tableMeta.idAttribute
     },
-    tableHeaderToShow () {
-      return Object.keys(this.entitiesToShow[0])
-    },
     entitiesToShow () {
       return this.tableData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
     },
