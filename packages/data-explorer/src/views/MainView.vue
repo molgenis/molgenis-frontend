@@ -66,9 +66,6 @@ export default Vue.extend({
     }
   },
   created () {
-    // Setup event bus for n-level deep child -> parent events
-    // This way the mainView can coordinate the events
-    Vue.prototype.$eventBus = new Vue()
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
@@ -79,7 +76,6 @@ export default Vue.extend({
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
-    delete Vue.prototype.$eventBus
   },
   components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon }
 })

@@ -9,6 +9,10 @@ import i18n from '@molgenis/molgenis-i18n-js'
 
 Vue.config.productionTip = false
 
+// Setup event bus for n-level deep child -> parent events
+// This way the mainView can coordinate the events
+Vue.prototype.$eventBus = new Vue()
+
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',
