@@ -57,14 +57,16 @@ export const createBookmark = (shown: string[], selections: StringMap = {}) => {
   } else {
     let output: any = {}
     for (let property in selections) {
-      output[property] = encodeURI(selections[property])
+      if (selections[property]) {
+        output[property] = encodeURI(selections[property])
+      }
     }
     return { filters: encodeURI(shown.join(',')), ...output }
   }
 }
 
 // Bookmark is the source of truth. If no bookmark, then default.
-export const applyFilters = (metaData: MetaData | null, query: any, defaultShownFilters?: string[]) => {
+export const applyFilters = (metaData: MetaData | null, query?: any, defaultShownFilters?: string[]) => {
   const bookmarkedFilters = decodeBookmark(metaData, query)
   if (bookmarkedFilters.shown) {
     store.commit('setFiltersShown', bookmarkedFilters.shown)
