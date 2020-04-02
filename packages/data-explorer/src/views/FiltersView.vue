@@ -119,12 +119,11 @@ export default Vue.extend({
     },
     filterSelections: function () {
       this.addBookmark()
+    },
+    isFilterDataLoaded () {
+      this.setFilters()
+      this.refreshFilterView()
     }
-  },
-  mounted () {
-    this.setFilters()
-    this.refreshFilterView()
-    this.addBookmark()
   }
 })
 </script>
