@@ -57,7 +57,7 @@ export const createBookmark = (shown: string[], selections: StringMap = {}) => {
   } else {
     let output: any = {}
     for (let property in selections) {
-      if (selections[property]) {
+      if (selections[property] && selections[property].length > 0) {
         output[property] = encodeURI(selections[property])
       }
     }
