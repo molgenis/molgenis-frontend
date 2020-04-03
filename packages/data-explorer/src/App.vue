@@ -14,10 +14,3 @@ export default Vue.extend({
   components: { PageComponent }
 })
 </script>
-
-<style>
-/* TODO: The show class is not being set like it its in ui-filters? */
-.modal-backdrop{
-  background-color: rgba(0,0,0,0.3);
-}
-</style>
