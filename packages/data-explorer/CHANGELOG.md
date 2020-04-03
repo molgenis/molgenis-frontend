@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.20.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.20.1...@molgenis-experimental/data-explorer@0.20.2) (2020-04-03)
+
+
+### Bug Fixes
+
+* Add missing bootstrap vue css ([#283](https://github.com/molgenis/molgenis-frontend/issues/283)) ([7a27e72](https://github.com/molgenis/molgenis-frontend/commit/7a27e72))
+
+
+
+
+
 ## [0.20.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.20.0...@molgenis-experimental/data-explorer@0.20.1) (2020-03-27)
 
 
