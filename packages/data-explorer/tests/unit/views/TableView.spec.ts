@@ -14,7 +14,26 @@ describe('TableView.vue', () => {
   beforeEach(() => {
     state = {
       shoppingFilter: false,
-      tableMeta: { idAttribute: { name: 'id' } },
+      tableMeta: {
+        idAttribute: { name: 'id' },
+        attributes: [
+          {
+            id: '1',
+            name: 'col1',
+            visible: true
+          },
+          {
+            id: '2',
+            name: 'col2',
+            visible: false
+          },
+          {
+            id: '3',
+            name: 'col3',
+            visible: true
+          }
+        ]
+      },
       dataDisplayLayout: 'TableView',
       shoppedEntityItems: [1, 3]
     }

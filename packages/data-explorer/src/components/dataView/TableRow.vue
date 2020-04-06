@@ -1,7 +1,9 @@
 <template>
   <tr>
     <td v-if="isShop"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></td>
-    <td v-for="(item, index) in rowData" :key="index">{{item}}</td>
+    <td v-for="(column, index) in visibleColumns" :key="index">
+      {{rowData[column.name]}}
+    </td>
   </tr>
 </template>
 
@@ -16,6 +18,10 @@ export default {
     },
     rowData: {
       type: Object,
+      required: true
+    },
+    visibleColumns: {
+      type: Array,
       required: true
     },
     isSelected: {
