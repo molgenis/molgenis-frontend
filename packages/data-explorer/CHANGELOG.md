@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.20.2...@molgenis-experimental/data-explorer@0.21.0) (2020-04-06)
+
+
+### Features
+
+* **data-explorer:** 7247 Use meta data for table structure ([d85678a](https://github.com/molgenis/molgenis-frontend/commit/d85678a))
+
+
+
+
+
 ## [0.20.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.20.1...@molgenis-experimental/data-explorer@0.20.2) (2020-04-03)
 
 
