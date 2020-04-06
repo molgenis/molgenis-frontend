@@ -7,19 +7,32 @@ describe('EntityTableRow.vue', () => {
       propsData: {
         id: 'id',
         tableName: 'tableName',
-        rowData: {}
+        rowData: {},
+        visibleColumns: []
       }
     })
+
     expect(wrapper.exists()).toBeTruthy()
   })
+
   it('renders table rows', () => {
     const wrapper = shallowMount(TableRow, {
       propsData: {
         id: 'id',
         tableName: 'tableName',
-        rowData: { name: 'name', title: 'title', content: 'content' }
+        rowData: { name: 'name', title: 'title', content: 'content' },
+        visibleColumns: [{ name: 'name' }, { name: 'title' }, { content: 'content' }]
       }
     })
     expect(wrapper.findAll('td').length).toEqual(4) // length + 1 for edit btn
+  })
+
+  it('only renders visible columns', () => {
+    const wrapper = shallowMount(TableRow, { propsData: {
+      id: 'id',
+      rowData: { name: 'name', title: 'title', content: 'content' },
+      visibleColumns: [{ name: 'name' }, { content: 'content' }]
+    } })
+    expect(wrapper.findAll('td').length).toEqual(3) // length + 1 for edit btn
   })
 })

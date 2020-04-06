@@ -11,13 +11,14 @@
         <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
       </button>
       <table class="table">
-        <table-header :header="tableHeaderToShow" :isShop="true"></table-header>
+        <table-header :visibleColumns="visibleColumns" :isShop="true"></table-header>
         <tbody>
         <table-row v-for="(entity, index) in entitiesToShow"
                    :key="index"
                    :id="getEntityId(entity)"
                    :tableName="tableName"
                    :rowData="entity"
+                   :visibleColumns="visibleColumns"
                    :isSelected="isSelected(entity)"
                    :isShop="true"></table-row>
         </tbody>
@@ -49,11 +50,14 @@ export default {
     idAttribute () {
       return this.tableMeta.idAttribute
     },
-    tableHeaderToShow () {
-      return Object.keys(this.entitiesToShow[0])
-    },
     entitiesToShow () {
       return this.tableData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
+    },
+    visibleColumns () {
+      return this.tableMeta.attributes
+        .filter(a => a.visible)
+        .filter(a => a.idAttribute || a.labelAttribute || typeof a.lookupAttributeIndex === 'number')
+        .map(a => ({ id: a.id, name: a.name }))
     }
   },
   methods: {

@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.20.2...@molgenis-experimental/data-explorer@0.21.0) (2020-04-06)
+
+
+### Features
+
+* **data-explorer:** 7247 Use meta data for table structure ([d85678a](https://github.com/molgenis/molgenis-frontend/commit/d85678a))
+
+
+
+
+
+## [0.20.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.20.1...@molgenis-experimental/data-explorer@0.20.2) (2020-04-03)
+
+
+### Bug Fixes
+
+* Add missing bootstrap vue css ([#283](https://github.com/molgenis/molgenis-frontend/issues/283)) ([7a27e72](https://github.com/molgenis/molgenis-frontend/commit/7a27e72))
+
+
+
+
+
+## [0.20.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.20.0...@molgenis-experimental/data-explorer@0.20.1) (2020-03-27)
+
+
+### Bug Fixes
+
+* **data-explorer:** bump [@molgenis](https://github.com/molgenis)/molgenis-ui-context from 1.6.3 to 1.6.4 ([fbb7d52](https://github.com/molgenis/molgenis-frontend/commit/fbb7d52))
+
+
+
+
+
 # [0.20.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.19.0...@molgenis-experimental/data-explorer@0.20.0) (2020-03-18)
 
 

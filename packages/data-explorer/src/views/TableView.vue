@@ -1,12 +1,13 @@
 <template>
   <table class="table" v-if="entitiesToShow.length">
-    <table-header :header="tableHeaderToShow" :isShop="isShop"></table-header>
+    <table-header :visibleColumns="visibleColumns" :isShop="isShop"></table-header>
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"
                :key="index"
                :id="getEntityId(entity)"
                :tableName="tableName"
                :rowData="entity"
+               :visibleColumns="visibleColumns"
                :isSelected="isSelected(entity)"
                :isShop="isShop"></table-row>
     </tbody>
@@ -36,8 +37,10 @@ export default {
     idAttribute () {
       return this.tableMeta.idAttribute
     },
-    tableHeaderToShow () {
-      return Object.keys(this.entitiesToShow[0])
+    visibleColumns () {
+      return this.tableMeta.attributes
+        .filter(a => a.visible)
+        .map(a => ({ id: a.id, name: a.name }))
     }
   },
   methods: {

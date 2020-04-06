@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td v-if="isShop"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></td>
-    <td v-if="!isShop">
+    <td v-else>
       <div class="btn-group" role="group" aria-label="row actions">
         <button
           class="btn btn-sm btn-link"
@@ -18,7 +18,9 @@
         </a>
       </div>
     </td>
-    <td v-for="(item, index) in rowData" :key="index">{{item}}</td>
+    <td v-for="(column, index) in visibleColumns" :key="index">
+      {{rowData[column.name]}}
+    </td>
   </tr>
 </template>
 
@@ -42,6 +44,10 @@ export default {
     },
     rowData: {
       type: Object,
+      required: true
+    },
+    visibleColumns: {
+      type: Array,
       required: true
     },
     isSelected: {
