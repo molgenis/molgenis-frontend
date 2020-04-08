@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.21.0...@molgenis-experimental/data-explorer@0.22.0) (2020-04-08)
+
+
+### Features
+
+* **data-explorer:** Add add row/card button to toolbar ([a9164d4](https://github.com/molgenis/molgenis-frontend/commit/a9164d4))
+* **data-explorer:** Add delete buttons ([f9607a4](https://github.com/molgenis/molgenis-frontend/commit/f9607a4))
+
+
+
+
+
 # [0.21.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.20.2...@molgenis-experimental/data-explorer@0.21.0) (2020-04-06)
 
 
