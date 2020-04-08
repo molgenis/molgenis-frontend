@@ -35,6 +35,7 @@ describe('TableView.vue', () => {
         ]
       },
       dataDisplayLayout: 'TableView',
+      tableName: 'tableName',
       shoppedEntityItems: [1, 3]
     }
     mutations = {
@@ -54,7 +55,9 @@ describe('TableView.vue', () => {
   it('exists', () => {
     const wrapper = shallowMount(TableView, { store,
       localVue,
-      propsData: { entitiesToShow: [{ id: '1' }] } })
+      propsData: {
+        entitiesToShow: [{ id: '1' }]
+      } })
     expect(wrapper.exists()).toBeTruthy()
   })
 })

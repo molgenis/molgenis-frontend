@@ -77,6 +77,10 @@ module.exports = {
       '^/@molgenis-ui': {
         target: PROXY_TARGET,
         changeOrigin: true
+      },
+      '^/plugin': {
+        target: PROXY_TARGET,
+        changeOrigin: true
       }
     },
     // Used as mock in e2e tests

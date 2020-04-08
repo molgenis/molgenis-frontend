@@ -140,8 +140,13 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
   return levelOneRowMapper(response.data, metaData)
 }
 
+const deleteRow = async (tableId: string, rowId: string) => {
+  return axios.delete(`/api/data/${tableId}/${rowId}`)
+}
+
 export {
   getTableDataDeepReference,
   getTableDataWithLabel,
-  getRowDataWithReferenceLabels
+  getRowDataWithReferenceLabels,
+  deleteRow
 }

@@ -10,6 +10,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
 
+// Setup event bus for n-level deep child -> parent events
+// This way the mainView can coordinate the events
+Vue.prototype.$eventBus = new Vue()
+
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',
