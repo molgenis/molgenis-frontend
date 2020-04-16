@@ -1,5 +1,13 @@
 <template>
   <div class="toolbar mt-2">
+    <a
+      v-if="!showShoppingCart"
+      class="btn btn-light btn-outline-secondary card-layout"
+      role="button"
+      :href="'/plugin/data-row-edit/' + tableName">
+      <font-awesome-icon icon="plus-square"></font-awesome-icon>
+      Add
+    </a>
     <button
       v-if="!showShoppingCart && dataDisplayLayout === 'TableView'"
       @click="toggleDataDisplayLayout"
@@ -35,33 +43,17 @@ import Vue from 'vue'
 import ActiveFilters from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/ActiveFilters.vue'
 import { mapState, mapMutations } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-  faStore,
-  faShoppingCart,
-  faTh,
-  faThList,
-  faSlidersH,
-  faShoppingBag
-} from '@fortawesome/free-solid-svg-icons'
+import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag)
+library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare)
 
 export default Vue.extend({
   name: 'ToolbarView',
   computed: {
-    ...mapState([
-      'dataDisplayLayout',
-      'hideFilters',
-      'showShoppingCart',
-      'tableSettings',
-      'filters',
-      'searchText'
-    ]),
-    activeFilterSelections: vm => {
-      return vm.searchText
-        ? { ...vm.filters.selections, _search: vm.searchText }
-        : vm.filters.selections
+    ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'tableSettings', 'filters', 'searchText', 'tableName']),
+    activeFilterSelections: (vm) => {
+      return vm.searchText ? { ...vm.filters.selections, _search: vm.searchText } : vm.filters.selections
     },
     filterDefinitions: vm => {
       const searchDef = {

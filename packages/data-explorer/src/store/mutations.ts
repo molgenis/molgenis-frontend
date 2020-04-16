@@ -88,6 +88,19 @@ export default {
       }
     })
   },
+  removeRow (state: ApplicationState, { rowId }: {rowId: string}) {
+    if (!state.tableData) {
+      throw new Error('Cannot delete item from empty table')
+    }
+    // todo need to refacor state.tableData to look up list
+    state.tableData.items.forEach((row, index) => {
+      // @ts-ignore
+      if (rowId && row[state.tableMeta.idAttribute.name].toString() === rowId.toString()) {
+        // @ts-ignore
+        Vue.delete(state.tableData.items, index)
+      }
+    })
+  },
   setIsSettingsLoaded (state: ApplicationState) {
     state.isSettingsLoaded = true
   },

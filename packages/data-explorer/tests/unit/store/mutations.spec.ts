@@ -214,6 +214,28 @@ describe('mutations', () => {
       }
     })
   })
+
+  describe('removeRow', () => {
+    it('throws error on when classed on empty dataTable', () => {
+      try {
+        mutations.removeRow(baseAppState, { rowId: 'id' })
+      } catch (err) {
+        expect(err.toString()).toEqual('Error: Cannot delete item from empty table')
+      }
+    })
+
+    it('should remove the item, corresponding to the passed row id, from the dataTable', () => {
+      let mockState = {
+        tableMeta: { idAttribute: { name: 'idField' } },
+        tableData: { items: [{ idField: 'a' }, { idField: 'b' }] }
+      }
+
+      // @ts-ignore
+      mutations.removeRow(mockState, { rowId: 'b' })
+      expect(mockState.tableData.items).toEqual([{ idField: 'a' }])
+    })
+  })
+
   describe('setIsSettingsLoaded', () => {
     it('sets isSettingsLoaded to treu', () => {
       mutations.setIsSettingsLoaded(baseAppState)

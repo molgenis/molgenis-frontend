@@ -782,10 +782,10 @@
     i18next-xhr-backend "^1.4.1"
     moment "^2.18.1"
 
-"@molgenis/molgenis-ui-context@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-1.6.3.tgz#33e621a6f4619082ec5824a022c9f000ed67d07d"
-  integrity sha512-kqfm/Fim7tpvMluco0ApJS/Dh7PKII4XYDWeNpFkvi62pLx1phzilkxEl//dtUyhj1MXGc1RQG4leszEZrmpEQ==
+"@molgenis/molgenis-ui-context@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-1.6.4.tgz#b7eb0f8df292c9cdbdc17b7c69284ada4dfbe3e8"
+  integrity sha512-cyBSKZb/Ome0ZsO65sR39WWtphVtRw8+FZZbi0AzYkQuP1Rj+2XlAefB3TnDTnSVTvigI+ELt0EoZxUx747NoQ==
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 
@@ -2949,7 +2949,12 @@ copy-webpack-plugin@^4.6.0:
     p-limit "^1.0.0"
     serialize-javascript "^1.4.0"
 
-core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.5:
+core-js@^2.4.0:
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
+  integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
+
+core-js@^2.5.0, core-js@^2.6.5:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
   integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==

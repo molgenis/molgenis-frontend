@@ -2,9 +2,10 @@
   <thead>
   <tr>
     <th scope="col" v-if="isShop"></th>
+    <th scope="col" v-if="!isShop"></th>
     <th scope="col"
-        v-for="(label, index) in header" :key="index">
-      {{ label }}
+        v-for="(column, index) in visibleColumns" :key="index">
+      {{ column.name }}
     </th>
   </tr>
   </thead>
@@ -14,7 +15,7 @@
 export default {
   name: 'TableHeader',
   props: {
-    header: {
+    visibleColumns: {
       type: Array,
       required: true
     },
