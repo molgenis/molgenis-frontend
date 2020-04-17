@@ -1,6 +1,7 @@
 import mutations from '@/store/mutations'
 import ApplicationState from '@/types/ApplicationState'
 import { Attribute, MetaData } from '@/types/MetaData'
+import emptyState from '../fixtures/state'
 
 describe('mutations', () => {
   const IntAttribute: Attribute = {
@@ -51,7 +52,7 @@ describe('mutations', () => {
   let baseAppState: ApplicationState
 
   beforeEach(() => {
-    baseAppState = {
+    baseAppState = { ...emptyState,
       toast: null,
       tableName: 'root_hospital_patients',
       tableData: null,

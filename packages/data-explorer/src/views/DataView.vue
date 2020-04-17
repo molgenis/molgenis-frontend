@@ -8,7 +8,7 @@
         <search-component v-model="searchText"></search-component>
       </div>
       <div class="col-3">
-         <table-settings-button class="float-right" :tableSettings="tableSettings"></table-settings-button>
+         <table-settings-button v-if="hasManagerRole" class="float-right" :tableSettings="tableSettings"></table-settings-button>
       </div>
     </div>
     <div class="row">
@@ -36,13 +36,14 @@ import ToolbarView from './ToolbarView'
 import SelectLayoutView from './SelectLayoutView'
 import TableSettingsButton from '../components/utils/TableSettingsButton'
 import SearchComponent from '../components/SearchComponent'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import ClipboardView from './ClipboardView'
 
 export default Vue.extend({
   name: 'DataView',
   computed: {
     ...mapState(['showShoppingCart', 'tableName', 'tableMeta', 'tableSettings']),
+    ...mapGetters(['hasManagerRole']),
     searchText: {
       get () {
         return this.$store.state.searchText

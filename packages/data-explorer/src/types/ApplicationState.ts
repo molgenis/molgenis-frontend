@@ -1,5 +1,6 @@
 import { DataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
 import { MetaData } from './MetaData'
+import { Context, ContextState } from '@molgenis/molgenis-ui-context/src/types'
 
 export type Toast = {
   type: 'danger' | 'success',
@@ -51,7 +52,7 @@ export type FilterGroup = {
   shown: string[]
   selections: FilterSelections
 }
-export default interface ApplicationState {
+export interface AppState {
   toast: Toast | null,
   dataDisplayLayout: 'CardView' | 'TableView'
   tableName: string | null
@@ -64,4 +65,13 @@ export default interface ApplicationState {
   isSettingsLoaded: boolean
   filters: FilterGroup
   searchText: string
+}
+
+// we start using the store only after the context is loaded
+interface LoadedContextState extends ContextState {
+  context: Context
+}
+
+export default interface ApplicationState extends AppState {
+  context: LoadedContextState
 }

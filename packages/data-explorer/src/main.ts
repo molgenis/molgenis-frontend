@@ -14,6 +14,11 @@ Vue.config.productionTip = false
 // This way the mainView can coordinate the events
 Vue.prototype.$eventBus = new Vue()
 
+const contextPromise = store.dispatch('fetchContext').catch(() => {
+  // session key has timed out
+  window.location.href = '/login'
+})
+
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',

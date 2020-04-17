@@ -2,6 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ToolbarView from '@/views/ToolbarView.vue'
 import Vuex from 'vuex'
 import ApplicationState from '@/types/ApplicationState'
+import emptyState from '../fixtures/state'
 
 describe('ToolbarView.vue', () => {
   const localVue = createLocalVue()
@@ -11,7 +12,7 @@ describe('ToolbarView.vue', () => {
   let mutations: any
 
   beforeEach(() => {
-    state = {
+    state = { ...emptyState,
       toast: null,
       tableName: 'root_hospital_patients',
       tableData: null,

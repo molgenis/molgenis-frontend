@@ -1,6 +1,6 @@
-import ApplicationState from '@/types/ApplicationState'
+import { AppState } from '@/types/ApplicationState'
 
-const state: ApplicationState = {
+const state: AppState = {
   toast: null,
   tableName: 'root_hospital_patients',
   tableData: null,

@@ -3,6 +3,7 @@ import ApplicationState from '@/types/ApplicationState'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
+import emptyState from '../fixtures/state'
 
 const metaResponse = {
   meta: {
@@ -238,7 +239,7 @@ let getters: any
 
 describe('actions', () => {
   beforeEach(() => {
-    state = {
+    state = { ...emptyState,
       toast: null,
       tableName: 'it_emx_datatypes_TypeTest',
       tableData: null,
