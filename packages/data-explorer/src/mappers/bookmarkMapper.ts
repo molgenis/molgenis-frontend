@@ -18,13 +18,12 @@ function convertBookmarkValue (value: any, type: string): any[] | string | undef
     case 'mref':
     case 'xref':
     case 'onetomany':
+    case 'decimal':
+    case 'int':
+    case 'long':
       return value.split(',')
     default:
       return ''
-
-    //   'decimal': 'range-filter',
-    //   'int': 'range-filter',
-    //   'long': 'range-filter',
 
     //   'date': 'date-time-filter',
     //   'datetime': 'date-time-filter',

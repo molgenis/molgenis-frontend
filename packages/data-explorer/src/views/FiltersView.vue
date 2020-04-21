@@ -82,8 +82,7 @@ export default Vue.extend({
       'setHideFilters',
       'setFilters',
       'setFiltersShown',
-      'setFilterSelection',
-      'setBookmark'
+      'setFilterSelection'
     ]),
     updateState (shownFilters) {
       this.setFiltersShown(shownFilters)
@@ -97,7 +96,8 @@ export default Vue.extend({
       this.componentRoute = true
       this.$router.push(
         {
-          name: 'root',
+          name: this.$router.name,
+          path: this.$router.path,
           query: filterBookmark
         },
         // to prevent error, which occurs on routing to same page (Vue issue)
