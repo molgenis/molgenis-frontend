@@ -10,8 +10,8 @@ export const createLikeQuery = (attributeName: string, selection: Value): Constr
  */
 export const createInQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.In, arguments: selection })
 export const createEqualsQuery = (attributeName: string, selection: Value): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.Equals, arguments: selection })
-export const createGreaterEqualQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.GreaterThanOrEqualTo, arguments: selection[0] })
-export const createLesserEqualQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.GreaterThanOrEqualTo, arguments: selection[0] })
+export const createGreaterEqualQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.GreaterThanOrEqualTo, arguments: selection })
+export const createLesserEqualQuery = (attributeName: string, selection: Value[]): Constraint => ({ selector: attributeName, comparison: ComparisonOperator.GreaterThanOrEqualTo, arguments: selection })
 export const createRangeQuery = (attributeName: string, selection: Value[]): Constraint => ({
   operator: Operator.And,
   operands: [
