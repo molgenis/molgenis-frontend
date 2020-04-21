@@ -66,9 +66,9 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
         operands.push(createLikeQuery(name, selection))
         break
       case 'range-filter':
-        if (selection[0] == null && selection[1] !== null) {
+        if (selection[0] == null && selection[0] !== null) {
           operands.push(createLesserEqualQuery(name, selection[1]))
-        } else if (selection[1] == null && selection[0] !== null) {
+        } else if (selection[1] == null && selection[1] !== null) {
           operands.push(createGreaterEqualQuery(name, selection[0]))
         } else if (selection[0] !== null && selection[1] !== null) {
           let correctedSelection = [Math.min(selection[0], selection[1]), Math.max(selection[0], selection[1])]
