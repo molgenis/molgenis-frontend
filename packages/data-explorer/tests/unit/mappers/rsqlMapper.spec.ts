@@ -52,6 +52,8 @@ describe('rsqlMapper', () => {
         search: 'Hello',
         country: ['DE', 'NL'],
         age: ['10', '30'],
+        money: ['0', null],
+        amount: [null, 100],
         comply: ['yes'],
         date: { startDate: new Date(1), endDate: new Date(2) },
         xref: ['bla'],
@@ -70,6 +72,16 @@ describe('rsqlMapper', () => {
       }, {
         name: 'age',
         label: 'age',
+        type: 'range-filter',
+        dataType: 'int'
+      }, {
+        name: 'money',
+        label: 'money',
+        type: 'range-filter',
+        dataType: 'int'
+      }, {
+        name: 'amount',
+        label: 'amount',
         type: 'range-filter',
         dataType: 'int'
       }, {
@@ -94,7 +106,7 @@ describe('rsqlMapper', () => {
         dataType: 'default'
       })
       const rsqlQuery = rsqlMapper.createRSQLQuery(filterState)
-      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=ge=10;age=le=30;comply==(yes);date=ge=1970-01-01T00:00:00.001Z;date=le=1970-01-01T00:00:00.002Z;xref=in=(bla)')
+      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=ge=10;age=le=30;money=ge=0;amount=ge=100;comply==(yes);date=ge=1970-01-01T00:00:00.001Z;date=le=1970-01-01T00:00:00.002Z;xref=in=(bla)')
     })
   })
 })
