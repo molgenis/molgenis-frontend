@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.22.0...@molgenis-experimental/data-explorer@0.23.0) (2020-04-22)
+
+
+### Bug Fixes
+
+* add min/max correction to filter range ([a8cec1f](https://github.com/molgenis/molgenis-frontend/commit/a8cec1f))
+* dont send undefined to the server ([8e9e2f7](https://github.com/molgenis/molgenis-frontend/commit/8e9e2f7))
+* greater and lesser filter should be the other wat around ([05fc59a](https://github.com/molgenis/molgenis-frontend/commit/05fc59a))
+* removed erroneous array index request ([f54f1c7](https://github.com/molgenis/molgenis-frontend/commit/f54f1c7))
+* sanitize undefined from rsql ([c6af2b5](https://github.com/molgenis/molgenis-frontend/commit/c6af2b5))
+* sanitize undefined from rsql ([8309722](https://github.com/molgenis/molgenis-frontend/commit/8309722))
+* used the correct array indexes ([3bb3965](https://github.com/molgenis/molgenis-frontend/commit/3bb3965))
+
+
+### Features
+
+* Add greater and lesser rsql mapping for rangefilter ([ba2feff](https://github.com/molgenis/molgenis-frontend/commit/ba2feff))
+
+
+
+
+
 # [0.22.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.21.0...@molgenis-experimental/data-explorer@0.22.0) (2020-04-08)
 
 

@@ -675,17 +675,17 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.22.tgz#3f1328d232a0fd5de8484d833c8519426f39f016"
   integrity sha512-QmEuZsipX5/cR9JOg0fsTN4Yr/9lieYWM8AQpmRa0eIfeOcl/HLYoEa366BCGRSrgNJEexuvOgbq9jnJ22IY5g==
 
-"@fortawesome/fontawesome-common-types@^0.2.27":
-  version "0.2.27"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.27.tgz#19706345859fc46adf3684ed01d11b40903b87e9"
-  integrity sha512-97GaByGaXDGMkzcJX7VmR/jRJd8h1mfhtA7RsxDBN61GnWE/PPCZhOdwG/8OZYktiRUF0CvFOr+VgRkJrt6TWg==
+"@fortawesome/fontawesome-common-types@^0.2.28":
+  version "0.2.28"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.28.tgz#1091bdfe63b3f139441e9cba27aa022bff97d8b2"
+  integrity sha512-gtis2/5yLdfI6n0ia0jH7NJs5i/Z/8M/ZbQL6jXQhCthEOe5Cr5NcQPhgTvFxNOtURE03/ZqUcEskdn2M+QaBg==
 
 "@fortawesome/fontawesome-svg-core@^1.2.17":
-  version "1.2.27"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.27.tgz#e4db8e3be81a40988213507c3e3d0c158a6641a3"
-  integrity sha512-sOD3DKynocnHYpuw2sLPnTunDj7rLk91LYhi2axUYwuGe9cPCw7Bsu9EWtVdNJP+IYgTCZIbyARKXuy5K/nv+Q==
+  version "1.2.28"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.28.tgz#e5b8c8814ef375f01f5d7c132d3c3a2f83a3abf9"
+  integrity sha512-4LeaNHWvrneoU0i8b5RTOJHKx7E+y7jYejplR7uSVB34+mp3Veg7cbKk7NBCLiI4TyoWS1wh9ZdoyLJR8wSAdg==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.27"
+    "@fortawesome/fontawesome-common-types" "^0.2.28"
 
 "@fortawesome/fontawesome-svg-core@^1.2.19":
   version "1.2.22"
@@ -695,11 +695,11 @@
     "@fortawesome/fontawesome-common-types" "^0.2.22"
 
 "@fortawesome/free-solid-svg-icons@^5.8.1":
-  version "5.12.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.12.1.tgz#76b6f958a3471821ff146f8f955e6d7cfe87147c"
-  integrity sha512-k3MwRFFUhyL4cuCJSaHDA0YNYMELDXX0h8JKtWYxO5XD3Dn+maXOMrVAAiNGooUyM2v/wz/TOaM0jxYVKeXX7g==
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.13.0.tgz#44d9118668ad96b4fd5c9434a43efc5903525739"
+  integrity sha512-IHUgDJdomv6YtG4p3zl1B5wWf9ffinHIvebqQOmV3U+3SLw4fC+LUCCgwfETkbTtjy5/Qws2VoVf6z/ETQpFpg==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.27"
+    "@fortawesome/fontawesome-common-types" "^0.2.28"
 
 "@fortawesome/free-solid-svg-icons@^5.9.0":
   version "5.10.2"
@@ -789,10 +789,10 @@
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 
-"@molgenis/molgenis-ui-filter@^1.5.5":
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-filter/-/molgenis-ui-filter-1.5.5.tgz#2823a8633c1e2d55ef3575f5c69ea1b182d8ba87"
-  integrity sha512-SnTaYPKG9UiwUs3+tMqxWKk17KNlYLqdlZ0pPtDtdK+N7+1DGqIPBPrIdf6qNYVf5lua8b+tY2uwF+D/V8ZFFA==
+"@molgenis/molgenis-ui-filter@^1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-filter/-/molgenis-ui-filter-1.8.1.tgz#ae2ba7a155fd6a7445c4d8a532dff4e7c77d35a9"
+  integrity sha512-MnP7P7pWppXiE3eHIEm5Jl6EHDotA7JDOzn738mnjTNp6jki50/4DfMdNwbPZFgZL3JEyCZpO8utWRWbAwJy7Q==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.17"
     "@fortawesome/free-solid-svg-icons" "^5.8.1"
@@ -800,12 +800,12 @@
     "@molgenis/molgenis-api-client" "^3.1.0"
     "@molgenis/molgenis-i18n-js" "^0.1.1"
     "@molgenis/rsql" "^0.2.5"
-    bootstrap-vue "^2.0.0-rc.19"
+    bootstrap-vue "^2.9.0"
     core-js "^2.6.5"
     vue "^2.6.10"
     vue-slider-component "^3.0.41"
     vue2-daterange-picker "^0.4.4"
-    vuedraggable "^2.21.0"
+    vuedraggable "^2.23.2"
 
 "@molgenis/rsql@^0.2.5":
   version "0.2.5"
@@ -2140,10 +2140,10 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
-bootstrap-vue@^2.0.0-rc.19:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/bootstrap-vue/-/bootstrap-vue-2.6.1.tgz#ee96e2e4d277a9044b378e925ef703b2bd9d27c4"
-  integrity sha512-eOL06T2sjOREUiyN1IZCFYANKrb+tqRqe1pgwjXjbjYa3oclYT6E99v/O12W0Eq9i7+0rQiy+wFOSkFL2yvnng==
+bootstrap-vue@^2.9.0:
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-vue/-/bootstrap-vue-2.12.0.tgz#4298c9652f17ac403db226ff811fa146d7d185ca"
+  integrity sha512-cnW89Ig0OBbKTA6Hv8daijSWziNSDErAme9jTOmjBDtzqYAd9D4NCp0wDjfNRaZBojTRx/UR1SCatxP3bE+SMw==
   dependencies:
     "@nuxt/opencollective" "^0.3.0"
     bootstrap ">=4.4.1 <5.0.0"
@@ -10897,9 +10897,9 @@ vue-loader@^15.7.0:
     vue-style-loader "^4.1.0"
 
 vue-property-decorator@^8.0.0:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.4.0.tgz#f4e641f84ca51a7b4721e236392a1efbb6eac00b"
-  integrity sha512-0o85LJSTLZvDaB7IXfmpONfAQZ7NgScFvptFSrlFFSsScR716muJb3mMFojNnKC3Vpm7CM4PsmHNdk30uuNpag==
+  version "8.4.1"
+  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.4.1.tgz#fd8045b8678e1348fed57f9149279e00e404ed38"
+  integrity sha512-8R4Us7DxFO0rwAL/2fv6vaZL8Oa4n/HGanHODYGTcvQHwT0FYJr9UuuFm2GoWAIXQu1mDO03HNeHswFp9vmTVA==
   dependencies:
     vue-class-component "^7.1.0"
 
@@ -10909,9 +10909,9 @@ vue-router@^3.0.7:
   integrity sha512-WssQEHSEvIS1/CI4CO2T8LJdoK4Q9Ngox28K7FDNMTfzNTk2WS5D0dDlqYCaPG+AG4Z8wJkn1KrBc7AhspZJUQ==
 
 vue-slider-component@^3.0.41:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-3.1.1.tgz#00727a3d3eee9a4e4e940a9f45afdfcefbb99308"
-  integrity sha512-5BagCDOqK7q3WRdQrT16cjfSDPp1/VxKDk0i92u1tRT03fPJKzYmkbWSeJVHuET5IB9nVWuTGUPgUo0jTzQ3QQ==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-3.1.2.tgz#173608c86bb1c3469952fca368dd79cc7942d81c"
+  integrity sha512-pSVSoUTvRLYlkEr8pquNJMWtW3r5UU8GyUhWm0xfPBrNLWzcC/KNhRF2QtwccFuC+iTxjI03Za3EIM8UO09+Xw==
   dependencies:
     vue-property-decorator "^8.0.0"
 
@@ -10948,7 +10948,7 @@ vue@^2.6.10:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
 
-vuedraggable@^2.21.0:
+vuedraggable@^2.23.2:
   version "2.23.2"
   resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.23.2.tgz#0d95d7fdf4f02f56755a26b3c9dca5c7ca9cfa72"
   integrity sha512-PgHCjUpxEAEZJq36ys49HfQmXglattf/7ofOzUrW2/rRdG7tu6fK84ir14t1jYv4kdXewTEa2ieKEAhhEMdwkQ==
