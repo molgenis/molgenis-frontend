@@ -6,7 +6,6 @@ export default {
     return state.tableMeta && createRSQLQuery(state.filters, state.searchText)
   },
   hasManagerRole: (state: ApplicationState) => {
-    console.log(state)
     return state.context.context.roles.includes('ROLE_MANAGER')
   }
 }
