@@ -17,7 +17,8 @@ describe('DataView.vue', () => {
       tableSettings: {}
     }
     getters = {
-      activeEntityData: jest.fn()
+      activeEntityData: jest.fn(),
+      hasManagerRole: jest.fn()
     }
     mutations = {
       setSearchText: jest.fn()
