@@ -33,7 +33,8 @@ module.exports = {
   ],
   globals: {
     'ts-jest': {
-      babelConfig: true
+      babelConfig: true,
+      isolatedModules: true
     }
   },
   collectCoverage: true
