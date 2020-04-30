@@ -44,14 +44,13 @@ module.exports = {
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(4)', timeOutDelay)
       .assert.visible('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(4)')
-      .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
+      .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(8)')
       .waitForElementPresent('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand', timeOutDelay)
       .click('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand')
-      .waitForElementPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)', timeOutDelay)
+      .waitForElementPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(8)', timeOutDelay)
       .waitForElementPresent('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand', timeOutDelay)
       .click('#app button.btn.btn-outline-info.btn-sm.mr-1.mg-card-expand')
-      .waitForElementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)', timeOutDelay)
-      .assert.elementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
+      .waitForElementNotPresent('#app div.mt-3.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(8)', timeOutDelay)
       .end()
   },
   'open/close filters sidebar': browser => {
