@@ -16,8 +16,8 @@
       </button>
       <slot name="shopping-button"></slot>
     </h5>
-    <div class="card-text">
-      <div class="row mb-1" v-for="(value, head) in dataToShow" :key="head">
+    <div class="card-text default-card-list" :class="cardState">
+      <div v-for="(value, head) in dataToShow" :key="head" class="row mb-1">
         <div class="col-6">
           {{head}}
         </div>
