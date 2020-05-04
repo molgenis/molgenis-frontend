@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid my-4">
+  <div class="container-fluid my-2">
     <toast-component
       class="toast-component mt-2"
       v-if="toast"
@@ -7,6 +7,7 @@
       :message="toast.message"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
+    <page-header-view></page-header-view>
     <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
       <div class="flex-filter">
         <filters-view></filters-view>
@@ -38,6 +39,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import PageHeaderView from './PageHeaderView'
 
 library.add(faChevronUp)
 
@@ -51,6 +53,7 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
+  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon, PageHeaderView },
   computed: {
     ...mapState(['filters', 'toast', 'showShoppingCart'])
   },
@@ -76,8 +79,7 @@ export default Vue.extend({
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
-  },
-  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon }
+  }
 })
 </script>
 

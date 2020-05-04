@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 entity-table" v-show="tableData && tableData.items && tableData.items.length > 0 && tableMeta">
+  <div class="entity-table" v-show="tableData && tableData.items && tableData.items.length > 0 && tableMeta">
     <div v-if="tableData && tableData.items && tableData.items.length === 0" class="alert alert-warning">
       {{ 'dataexplorer_empty_table' | i18n}}
     </div>

@@ -14,13 +14,21 @@ describe('DataView.vue', () => {
   beforeEach(() => {
     state = {
       dataDisplayLayout: 'cards',
-      tableSettings: {}
+      tableSettings: {},
+      filters: {
+        hideSidebar: false,
+        definition: [],
+        shown: [],
+        selections: {}
+      },
+      searchText: ''
     }
     getters = {
       activeEntityData: jest.fn()
     }
     mutations = {
-      setSearchText: jest.fn()
+      setSearchText: jest.fn(),
+      setFilterSelection: jest.fn()
     }
     actions = {
       getTableData: jest.fn(),
@@ -44,6 +52,43 @@ describe('DataView.vue', () => {
     })
     it('should mutate the value to the store', () => {
       expect(mutations.setSearchText).toHaveBeenCalled()
+    })
+  })
+
+  describe('saveFilterState method', () => {
+    let wrapper: any
+    beforeEach(() => {
+      wrapper = shallowMount(DataView, { store, localVue })
+    })
+    it('should clear the search text if search is not part of the filter', () => {
+      const newSelections = {}
+      wrapper.vm.saveFilterState(newSelections)
+      expect(mutations.setSearchText).toHaveBeenCalled()
+    })
+    it('should not clear the search text if search is part of the filter', () => {
+      const newSelections = { _search: 'mock selection' }
+      wrapper.vm.saveFilterState(newSelections)
+      expect(mutations.setSearchText).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('when the search text is non empty', () => {
+    let wrapper: any
+    beforeEach(() => {
+      store.state.searchText = 'my search'
+      wrapper = shallowMount(DataView, { store, localVue })
+    })
+
+    it('should add search to the active filter selection', () => {
+      expect(wrapper.vm.activeFilterSelections).toEqual({ _search: 'my search' })
+    })
+
+    it('should add search to the active filter selection', () => {
+      expect(wrapper.vm.filterDefinitions).toEqual([{
+        type: 'string',
+        label: 'search',
+        name: '_search'
+      } ])
     })
   })
 })
