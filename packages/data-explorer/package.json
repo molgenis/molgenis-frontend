@@ -50,7 +50,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "banner-webpack-plugin": "^0.2.3",
-    "chromedriver": "^76.0.1",
+    "chromedriver": "^81.0.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "geckodriver": "^1.16.2",
