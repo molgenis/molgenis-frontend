@@ -96,4 +96,13 @@ describe('ToolbarView.vue', () => {
 
     afterEach(() => { store.state.showShoppingCart = false })
   })
+
+  describe('searchString value is set', () => {
+    it('should persist the value in the store', () => {
+      store.state.showShoppingCart = true
+      const wrapper = shallowMount(ToolbarView, { store, localVue })
+      wrapper.setData({ searchText: 'demo' })
+      expect(mutations.setSearchText).toHaveBeenCalled()
+    })
+  })
 })
