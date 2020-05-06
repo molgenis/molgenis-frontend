@@ -12,8 +12,8 @@ const flattenCompounds = (fields) => {
 }
 
 const isFileIncluded = (formData, formFields) => {
-  const allFieds = flattenCompounds(formFields)
-  const fieldsWithFile = allFieds
+  const flattendFields = flattenCompounds(formFields)
+  const fieldsWithFile = flattendFields
     .filter((field) => field.type === 'file')
     .find((field) => typeof formData[field.id] !== 'string')
 
@@ -32,8 +32,8 @@ export const appendToForm = (fields, formData, [key, value]) => {
 
 const buildFormData = (data, fields) => {
   const formData = new FormData()
-  const allFieds = flattenCompounds(fields)
-  Object.entries(data).forEach((pair) => appendToForm(allFieds, formData, pair))
+  const flattendFields = flattenCompounds(fields)
+  Object.entries(data).forEach((pair) => appendToForm(flattendFields, formData, pair))
   return formData
 }
 
