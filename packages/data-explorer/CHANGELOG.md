@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.23.0...@molgenis-experimental/data-explorer@0.23.1) (2020-05-06)
+
+
+### Bug Fixes
+
+* ui-filters version bump ([#290](https://github.com/molgenis/molgenis-frontend/issues/290)) ([83ac924](https://github.com/molgenis/molgenis-frontend/commit/83ac924))
+
+
+
+
+
 # [0.23.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.22.0...@molgenis-experimental/data-explorer@0.23.0) (2020-04-22)
 
 
