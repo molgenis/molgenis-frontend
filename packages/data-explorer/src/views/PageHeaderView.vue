@@ -8,16 +8,14 @@
               :id="tableName"
               :text="tableMeta.label"
               toggle-class="bread-crumb-item-dropdown"
-              variant="link"
-              left
-              block
+              dropup
               no-caret
             >
             <template v-slot:button-content>
               <h1 class="mb-0" style="color: #212529;">{{tableMeta.label}}</h1>
             </template>
             <template v-for="table in packageTables">
-              <b-dropdown-item :key="table.id">{{table.label}}</b-dropdown-item>
+              <b-dropdown-item :key="table.id" :to="table.id">{{table.label}}</b-dropdown-item>
             </template>
             </b-nav-item-dropdown>
           </b-nav>
@@ -63,10 +61,14 @@ export default Vue.extend({
     ])
   },
   methods: {
-    ...mapActions(['getTableSettings'])
+    ...mapActions(['getTableSettings']),
+    ...mapActions('header', [
+      'getGroupTabels'
+    ])
   },
   created () {
     this.getTableSettings({ tableName: this.tableName })
+    this.getGroupTabels()
   }
 })
 </script>

@@ -4,7 +4,7 @@ import state from '@/store/state'
 import actions from '@/store/actions'
 import mutations from '@/store/mutations'
 import getters from '@/store/getters'
-import headerModule from '@/store/headerModule'
+import headerModule from '@/store/header/headerModule'
 
 Vue.use(Vuex)
 
