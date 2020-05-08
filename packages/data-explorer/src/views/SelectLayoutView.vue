@@ -7,6 +7,8 @@
       :is="dataDisplayLayout"
       :entitiesToShow="(tableData && tableData.items) ? tableData.items : []"
     />
+
+    <end-of-results v-if="tableData && tableData.items && tableData.items.length >= dataDisplayLimit" :dataDisplayLimit="dataDisplayLimit" class="mt-4"></end-of-results>
   </div>
 </template>
 
@@ -16,13 +18,14 @@ import TableView from './TableView'
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
+import EndOfResults from '../components/utils/EndOfResults'
 import { mapState } from 'vuex'
 
 export default {
   name: 'SelectLayoutView',
-  components: { ExplorerCard, TableRow, TableHeader, CardView, TableView },
+  components: { ExplorerCard, TableRow, TableHeader, CardView, TableView, EndOfResults },
   computed: {
-    ...mapState(['dataDisplayLayout', 'tableMeta', 'tableData'])
+    ...mapState(['dataDisplayLayout', 'dataDisplayLimit', 'tableMeta', 'tableData'])
   }
 }
 </script>

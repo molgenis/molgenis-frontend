@@ -34,17 +34,17 @@ export default {
     commit('setTableData', [])
     if (isCustomCard) {
       columns = state.tableSettings.customCardAttrs.split(',').map(attribute => attribute.trim())
-      tableData = await dataRepository.getTableDataDeepReference(state.tableName, metaData, columns, rsqlQuery)
+      tableData = await dataRepository.getTableDataDeepReference(state.tableName, metaData, columns, state.dataDisplayLimit, rsqlQuery)
     } else {
       columns = metaDataService.getAttributesfromMeta(metaData).splice(0, state.tableSettings.collapseLimit)
-      tableData = await dataRepository.getTableDataWithLabel(state.tableName, metaData, columns, rsqlQuery)
+      tableData = await dataRepository.getTableDataWithLabel(state.tableName, metaData, columns, state.dataDisplayLimit, rsqlQuery)
     }
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
     }
   },
-  fetchTableViewData: async ({ commit, getters }: { commit: any, getters: any }, payload: {tableName: string}) => {
+  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {tableName: string}) => {
     const tableName = payload.tableName
     const metaData = await metaDataRepository.fetchMetaDataById(tableName)
     commit('setMetaData', metaData)
@@ -52,7 +52,7 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('setTableData', [])
-    const tableData = await dataRepository.getTableDataWithLabel(tableName, metaData, metaDataService.getAttributesfromMeta(metaData), rsqlQuery)
+    const tableData = await dataRepository.getTableDataWithLabel(tableName, metaData, metaDataService.getAttributesfromMeta(metaData), state.dataDisplayLimit, rsqlQuery)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
@@ -67,7 +67,7 @@ export default {
     commit('setMetaData', metaData)
     const rsqlQuery = getters.filterRsql
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, metaData)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, metaData, state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })

@@ -93,7 +93,7 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
   return rsqlFilter ? `${request}&q=${encodeRsqlValue(rsqlFilter)}` : request
 }
 
-const getTableDataDeepReference = async (tableId: string, metaData: MetaData, coloms: string[], rsqlQuery?: string) => {
+const getTableDataDeepReference = async (tableId: string, metaData: MetaData, coloms: string[], size: Number, rsqlQuery?: string) => {
   if (!coloms.includes(metaData.idAttribute.name)) {
     coloms.push(metaData.idAttribute.name)
   }
@@ -103,13 +103,13 @@ const getTableDataDeepReference = async (tableId: string, metaData: MetaData, co
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
-  const request = addFilterIfSet(`/api/data/${tableId}?${expandReferencesQuery}`, rsqlQuery)
+  const request = addFilterIfSet(`/api/data/${tableId}?size=${size}&${expandReferencesQuery}`, rsqlQuery)
   const response = (await axios.get<DataApiResponse>(request)).data
   const result = { items: response.items.map((item: DataApiResponseItem) => levelNRowMapper(item)) }
   return result
 }
 
-const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string) => {
+const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], size: Number, rsqlQuery?: string) => {
   const columnSet = new Set([...columns])
   columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
@@ -117,7 +117,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const request = addFilterIfSet(`/api/data/${tableId}?${expandReferencesQuery}`, rsqlQuery)
+  const request = addFilterIfSet(`/api/data/${tableId}?size=${size}&${expandReferencesQuery}`, rsqlQuery)
   const response = (await axios.get<DataApiResponse>(request)).data
   const result = { items: await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
     return levelOneRowMapper(item, metaData)
@@ -126,7 +126,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
 }
 
 // called on row expand
-const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData) => {
+const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, size: Number) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
   // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
   // Adding id and label makes sure we get these fields.
@@ -136,7 +136,7 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
     columnSet.add(metaData.labelAttribute.name)
   }
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const response = await axios.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
+  const response = await axios.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?size=${size}&${expandReferencesQuery}`)
   return levelOneRowMapper(response.data, metaData)
 }
 

@@ -54,6 +54,7 @@ export type FilterGroup = {
 export default interface ApplicationState {
   toast: Toast | null,
   dataDisplayLayout: 'CardView' | 'TableView'
+  dataDisplayLimit: Number
   tableName: string | null
   tableData: DataApiResponse | null
   tableMeta: MetaData | null
