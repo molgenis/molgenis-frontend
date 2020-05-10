@@ -9,7 +9,7 @@
     </toast-component>
     <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
       <div class="flex-filter">
-        <filters-view></filters-view>
+        <filters-view v-if="tableName"></filters-view>
       </div>
       <div class="flex-data ml-4" >
         <button
@@ -52,16 +52,45 @@ const deleteConfirmOptions = {
 export default Vue.extend({
   name: 'MainView',
   computed: {
-    ...mapState(['filters', 'toast', 'showShoppingCart'])
+    ...mapState([
+      'filters',
+      'toast',
+      'showShoppingCart',
+      'dataDisplayLayout'
+    ])
   },
   methods: {
-    ...mapMutations([ 'clearToast', 'setHideFilters' ]),
-    ...mapActions(['deleteRow']),
+    ...mapMutations([
+      'clearToast',
+      'setHideFilters',
+      'setTableName',
+      'tableName'
+    ]),
+    ...mapActions([
+      'deleteRow',
+      'getTableSettings',
+      'fetchTableMeta',
+      'fetchCardViewData',
+      'fetchTableViewData'
+    ]),
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, deleteConfirmOptions)
       if (isDeleteConfirmed) {
         this.deleteRow({ rowId: itemId })
+      }
+    },
+    async fetchViewData (tableName) {
+      if (this.tableName !== tableName) {
+        await this.getTableSettings({ tableName })
+        await this.fetchTableMeta({ tableName })
+        this.setTableName(tableName)
+      }
+
+      if (this.dataDisplayLayout === 'CardView') {
+        this.fetchCardViewData()
+      } else {
+        this.fetchTableViewData()
       }
     }
   },
@@ -69,13 +98,15 @@ export default Vue.extend({
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
-
-    if (this.$route.params.entity) {
-      this.$store.commit('setTableName', this.$route.params.entity)
-    }
+    this.fetchViewData(this.$route.params.entity)
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
+  },
+  async beforeRouteUpdate (to, from, next) {
+    console.log('Mainvuew beforeRouteUpdate to:' + to.params.entity)
+    await this.fetchViewData(to.params.entity)
+    next()
   },
   components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon }
 })

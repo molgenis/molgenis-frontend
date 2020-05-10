@@ -2,7 +2,7 @@ import ApplicationState from '@/types/ApplicationState'
 
 const state: ApplicationState = {
   toast: null,
-  tableName: 'root_hospital_patients',
+  tableName: null,
   tableData: null,
   tableMeta: null,
   dataDisplayLayout: 'CardView',

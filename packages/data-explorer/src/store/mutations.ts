@@ -37,9 +37,6 @@ export default {
       state.shoppedEntityItems.push(id)
     }
   },
-  setTableMetaData (state: ApplicationState, meta: MetaData) {
-    state.tableMeta = meta
-  },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {
     const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'
 
@@ -99,8 +96,8 @@ export default {
       }
     })
   },
-  setIsSettingsLoaded (state: ApplicationState) {
-    state.isSettingsLoaded = true
+  setIsSettingsLoaded (state: ApplicationState, isLoaded: boolean) {
+    state.isSettingsLoaded = isLoaded
   },
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText

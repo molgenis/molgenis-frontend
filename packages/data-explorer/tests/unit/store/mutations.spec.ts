@@ -175,12 +175,6 @@ describe('mutations', () => {
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
     })
   })
-  describe('setTableMetaData', () => {
-    it('sets the meta data', () => {
-      mutations.setTableMetaData(baseAppState, entityMetaData)
-      expect(baseAppState.tableMeta).toEqual(entityMetaData)
-    })
-  })
   describe('setTableSettings', () => {
     it('sets the tableSettings', () => {
       mutations.setTableSettings(baseAppState, {
@@ -242,8 +236,8 @@ describe('mutations', () => {
   })
 
   describe('setIsSettingsLoaded', () => {
-    it('sets isSettingsLoaded to treu', () => {
-      mutations.setIsSettingsLoaded(baseAppState)
+    it('sets isSettingsLoaded to bool value passed', () => {
+      mutations.setIsSettingsLoaded(baseAppState, true)
       expect(baseAppState.isSettingsLoaded).toEqual(true)
     })
   })

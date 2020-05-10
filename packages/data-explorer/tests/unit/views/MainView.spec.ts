@@ -32,11 +32,18 @@ describe('MainView.vue', () => {
     }
 
     mutations = {
-      setActiveEntity: jest.fn()
+      clearToast: jest.fn(),
+      setHideFilters: jest.fn(),
+      setActiveEntity: jest.fn(),
+      setTableName: jest.fn()
     }
 
     actions = {
-      deleteRow: jest.fn()
+      deleteRow: jest.fn(),
+      getTableSettings: jest.fn(),
+      fetchTableMeta: jest.fn(),
+      fetchCardViewData: jest.fn(),
+      fetchTableViewData: jest.fn()
     }
 
     store = new Vuex.Store({
