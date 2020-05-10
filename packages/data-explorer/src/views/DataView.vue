@@ -52,9 +52,6 @@ export default Vue.extend({
       }
     }
   },
-  methods: {
-    ...mapActions(['getTableSettings'])
-  },
   components: { ToolbarView, SelectLayoutView, TableSettingsButton, ClipboardView, SearchComponent }
 })
 </script>

@@ -56,19 +56,18 @@ export default Vue.extend({
       'filters',
       'toast',
       'showShoppingCart',
-      'dataDisplayLayout'
+      'dataDisplayLayout',
+      'tableName'
     ])
   },
   methods: {
     ...mapMutations([
       'clearToast',
       'setHideFilters',
-      'setTableName',
-      'tableName'
+      'setTableName'
     ]),
     ...mapActions([
       'deleteRow',
-      'getTableSettings',
       'fetchTableMeta',
       'fetchCardViewData',
       'fetchTableViewData'
@@ -82,7 +81,6 @@ export default Vue.extend({
     },
     async fetchViewData (tableName) {
       if (this.tableName !== tableName) {
-        await this.getTableSettings({ tableName })
         await this.fetchTableMeta({ tableName })
         this.setTableName(tableName)
       }
@@ -104,7 +102,6 @@ export default Vue.extend({
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
-    console.log('Mainvuew beforeRouteUpdate to:' + to.params.entity)
     await this.fetchViewData(to.params.entity)
     next()
   },

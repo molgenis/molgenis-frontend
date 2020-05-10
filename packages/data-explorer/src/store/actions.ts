@@ -8,21 +8,28 @@ import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 export default {
-  getTableSettings: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState },
-    payload: { tableName: string }) => {
-    commit('setIsSettingsLoaded', false)
-    const response = await api.get(`/api/data/${state.tableSettings.settingsTable}?q=table=="${payload.tableName}"`)
-    if (response.items.length > 0) {
-      commit('setTableSettings', response.items[0].data)
-    }
-    commit('setIsSettingsLoaded', true)
-    return response.items[0].data
-  }),
   fetchTableMeta: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
+    try {
+      const response = await api.get(`/api/data/${state.tableSettings.settingsTable}?q=table=="${payload.tableName}"`)
+      commit('setTableSettings', response.items[0].data)
+    } catch (e) {
+      // Use default table settings if no settings loaded
+      commit('setTableSettings', {
+        settingsTable: 'de_dataexplorer_table_settings',
+        settingsRowId: null,
+        collapseLimit: 5,
+        customCardCode: null,
+        customCardAttrs: '',
+        isShop: false,
+        defaultFilters: []
+      })
+    }
+
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
+    const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
     commit('setMetaData', metaData)
-    commit('setFilters', await metaFilterMapper.mapMetaToFilters(metaData))
-    return metaData
+    commit('setFilterDefinition', definition)
+    commit('setFiltersShown', state.tableSettings.defaultFilters)
   }),
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
