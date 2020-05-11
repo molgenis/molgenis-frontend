@@ -9,13 +9,16 @@ import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 export default {
   fetchTableMeta: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
+    commit('setTableSettings', {})
+    commit('setMetaData', null)
+    commit('setFilterDefinition', [])
+    commit('setFiltersShown', [])
     try {
-      const response = await api.get(`/api/data/${state.tableSettings.settingsTable}?q=table=="${payload.tableName}"`)
+      const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
       commit('setTableSettings', response.items[0].data)
     } catch (e) {
       // Use default table settings if no settings loaded
       commit('setTableSettings', {
-        settingsTable: 'de_dataexplorer_table_settings',
         settingsRowId: null,
         collapseLimit: 5,
         customCardCode: null,

@@ -247,6 +247,7 @@ describe('actions', () => {
   beforeEach(() => {
     state = {
       toast: null,
+      settingsTable: 'de_dataexplorer_table_settings',
       tableName: 'it_emx_datatypes_TypeTest',
       tableData: null,
       tableMeta: null,
@@ -265,7 +266,6 @@ describe('actions', () => {
         settingsRowId: null,
         customCardCode: null,
         customCardAttrs: '',
-        settingsTable: 'de_dataexplorer_table_settings',
         collapseLimit: 5,
         defaultFilters: []
       },

@@ -22,15 +22,19 @@ export default {
   name: 'TableSettingsButton',
   components: { FontAwesomeIcon },
   props: {
-    tableSettings: {
-      type: Object,
+    settingsTableId: {
+      type: String,
       required: true
+    },
+    settingsRowId: {
+      type: String,
+      required: false
     }
   },
   computed: {
     href () {
-      const href = `${SETTINGS_APP_URL}/${this.tableSettings.settingsTable}`
-      return this.tableSettings.settingsRowId ? `${href}/${this.tableSettings.settingsRowId}` : href
+      const href = `${SETTINGS_APP_URL}/${this.settingsTableId}`
+      return this.settingsRowId ? `${href}/${this.settingsRowId}` : href
     }
   }
 }
