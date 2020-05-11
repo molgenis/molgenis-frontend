@@ -342,7 +342,7 @@ describe('actions', () => {
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
       expect(actions.fetchCardViewData({ commit, state, getters }))
         .rejects
-        .toEqual(new Error('cannot load card data without table name'))
+        .toThrow(new Error('cannot load card data without table name'))
     })
 
     it('should throw a error if the state does not meta data', async () => {
@@ -352,7 +352,7 @@ describe('actions', () => {
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
       expect(actions.fetchCardViewData({ commit, state, getters }))
         .rejects
-        .toEqual(new Error('cannot load table data without meta data'))
+        .toThrow(new Error('cannot load table data without meta data'))
     })
   })
 
@@ -377,7 +377,7 @@ describe('actions', () => {
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
       expect(actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' }))
         .rejects
-        .toEqual(new Error('cannot fetch row data without table name'))
+        .toThrow(new Error('cannot fetch row data without table name'))
     })
 
     it('should throw a error if the state does not meta data', async () => {
@@ -387,7 +387,7 @@ describe('actions', () => {
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
       expect(actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' }))
         .rejects
-        .toEqual(new Error('cannot fetch row data without meta data'))
+        .toThrow(new Error('cannot fetch row data without meta data'))
     })
   })
 
@@ -417,7 +417,7 @@ describe('actions', () => {
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
       expect(actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' }))
         .rejects
-        .toEqual(new Error('cannot fetch table view data without table name'))
+        .toThrow(new Error('cannot fetch table view data without table name'))
     })
 
     it('should throw a error if the state does not meta data', async () => {
@@ -427,7 +427,7 @@ describe('actions', () => {
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
       expect(actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' }))
         .rejects
-        .toEqual(new Error('cannot fetch table view data without meta data'))
+        .toThrow(new Error('cannot fetch table view data without meta data'))
     })
   })
 
