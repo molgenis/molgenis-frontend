@@ -6,7 +6,7 @@ const state: ApplicationState = {
   tableData: null,
   tableMeta: null,
   dataDisplayLayout: 'CardView',
-  dataDisplayLimit: 1000,
+  dataDisplayLimit: 100,
   defaultEntityData: null,
   showShoppingCart: false,
   shoppedEntityItems: [],
