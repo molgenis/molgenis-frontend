@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.23.1...@molgenis-experimental/data-explorer@0.23.2) (2020-05-12)
+
+
+### Bug Fixes
+
+* [#286](https://github.com/molgenis/molgenis-frontend/issues/286) react to route change ([9bf391a](https://github.com/molgenis/molgenis-frontend/commit/9bf391a))
+* semantics for error ([025ba54](https://github.com/molgenis/molgenis-frontend/commit/025ba54))
+
+
+
+
+
 ## [0.23.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.23.0...@molgenis-experimental/data-explorer@0.23.1) (2020-05-06)
 
 
