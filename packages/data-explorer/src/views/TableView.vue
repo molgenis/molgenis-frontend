@@ -59,8 +59,7 @@ export default {
     filterRsql: {
       handler: function () {
         this.fetchTableViewData({ tableName: this.tableName })
-      },
-      immediate: true
+      }
     }
   }
 }
