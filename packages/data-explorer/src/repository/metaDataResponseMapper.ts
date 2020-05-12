@@ -74,9 +74,7 @@ const toAttribute = (responseAttribute: ResponseAttribute): Attribute => {
 
   attribute = addOptional(attribute, 'range', data.range)
 
-  if (data.parentAttribute) {
-    attribute = { ...attribute, parentAttribute: toAttribute(data.parentAttribute) }
-  }
+  attribute = addOptional(attribute, 'parentAttributeId', data.parentAttributeId)
 
   attribute = addOptional(attribute, 'expression', data.expression)
 
