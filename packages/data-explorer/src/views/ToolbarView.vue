@@ -30,7 +30,7 @@
       <font-awesome-icon icon="shopping-cart"></font-awesome-icon>Show cart
     </button>
     <active-filters
-      v-if="filterDefinitions.length > 0"
+      v-if="filterDefinitions && filterDefinitions.length > 0"
       @input="saveFilterState"
       :value="activeFilterSelections"
       :filters="filterDefinitions"

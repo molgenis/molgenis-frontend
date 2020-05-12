@@ -73,9 +73,6 @@ export default {
       this.setShowShoppingCart(false)
       this.setHideFilters(false)
     }
-  },
-  mounted: function () {
-    this.fetchTableViewData({ tableName: this.tableName })
   }
 }
 </script>

@@ -57,7 +57,7 @@ export default {
   setMetaData (state: ApplicationState, metaData: MetaData) {
     state.tableMeta = metaData
   },
-  setFiltersDefinition (state: ApplicationState, { definition }: { definition: FilterDefinition[] }) {
+  setFilterDefinition (state: ApplicationState, { definition }: { definition: FilterDefinition[] }) {
     Vue.set(state.filters, 'definition', definition)
   },
   setHideFilters (state: ApplicationState, hideFilters: boolean) {
@@ -101,8 +101,8 @@ export default {
       }
     })
   },
-  setIsSettingsLoaded (state: ApplicationState) {
-    state.isSettingsLoaded = true
+  setIsSettingsLoaded (state: ApplicationState, isLoaded: boolean) {
+    state.isSettingsLoaded = isLoaded
   },
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText

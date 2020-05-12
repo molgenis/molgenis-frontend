@@ -30,6 +30,7 @@ describe('EntityTableRow.vue', () => {
   it('only renders visible columns', () => {
     const wrapper = shallowMount(TableRow, { propsData: {
       id: 'id',
+      tableName: 'tableName',
       rowData: { name: 'name', title: 'title', content: 'content' },
       visibleColumns: [{ name: 'name' }, { content: 'content' }]
     } })

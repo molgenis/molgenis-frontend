@@ -25,6 +25,7 @@ describe('MainView.vue', () => {
 
   beforeEach(() => {
     state = {
+      tableName: 'tableName',
       activeEntity: 'it_emx_datatypes_TypeTest',
       filters: {
         hideSidebar: false
@@ -32,11 +33,17 @@ describe('MainView.vue', () => {
     }
 
     mutations = {
-      setActiveEntity: jest.fn()
+      clearToast: jest.fn(),
+      setHideFilters: jest.fn(),
+      setActiveEntity: jest.fn(),
+      setTableName: jest.fn()
     }
 
     actions = {
-      deleteRow: jest.fn()
+      deleteRow: jest.fn(),
+      fetchTableMeta: jest.fn(),
+      fetchCardViewData: jest.fn(),
+      fetchTableViewData: jest.fn()
     }
 
     store = new Vuex.Store({
@@ -80,6 +87,60 @@ describe('MainView.vue', () => {
       const wrapper = shallowMount(MainView, { store, localVue, mocks })
       wrapper.destroy()
       expect(offSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe('fetchViewData', () => {
+    it('if table name is changed, should fetch settings and metaData ', async (done) => {
+      const wrapper = shallowMount(MainView, { store, localVue, mocks })
+      // @ts-ignore
+      await wrapper.vm.fetchViewData('new table name')
+      expect(actions.fetchTableMeta).toHaveBeenCalled()
+      expect(mutations.setTableName).toHaveBeenCalled()
+      done()
+    })
+
+    it('if table name is not changed, should not fetch settings and meta ', async (done) => {
+      const wrapper = shallowMount(MainView, { store, localVue, mocks })
+      actions.fetchTableMeta.mockReset()
+      mutations.setTableName.mockReset()
+      // @ts-ignore
+      await wrapper.vm.fetchViewData('tableName')
+      expect(actions.fetchTableMeta).not.toHaveBeenCalled()
+      expect(mutations.setTableName).not.toHaveBeenCalled()
+      done()
+    })
+
+    it('if selected view is cardView, should fetch card data', async (done) => {
+      store.state.dataDisplayLayout = 'CardView'
+      const wrapper = shallowMount(MainView, { store, localVue, mocks })
+      // @ts-ignore
+      await wrapper.vm.fetchViewData('tableName')
+      expect(actions.fetchCardViewData).toHaveBeenCalled()
+      done()
+    })
+  })
+
+  describe('before route update', () => {
+    it('fetch data before calling next', async (done) => {
+      // @ts-ignore
+      actions.fetchTableViewData.mockResolvedValue()
+      const wrapper = shallowMount(MainView, {
+        store,
+        localVue,
+        mocks
+      })
+      const next = jest.fn()
+      const from = {}
+      const to = {
+        params: {
+          entity: 'entity'
+        }
+      }
+      // @ts-ignore use call to pass vm context
+      await wrapper.vm.$options.beforeRouteUpdate.call(wrapper.vm, to, from, next)
+      expect(next).toHaveBeenCalled()
+      done()
     })
   })
 })
