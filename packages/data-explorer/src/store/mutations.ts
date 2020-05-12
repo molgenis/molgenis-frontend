@@ -20,9 +20,6 @@ export default {
   setHideFilters (state: ApplicationState, hideFilters: boolean) {
     state.filters.hideSidebar = hideFilters
   },
-  setFiltersShown (state: ApplicationState, shown: string[]) {
-    Vue.set(state.filters, 'shown', shown)
-  },
   setTableName (state: ApplicationState, entity: string) {
     state.tableName = entity
   },
@@ -36,9 +33,6 @@ export default {
     } else {
       state.shoppedEntityItems.push(id)
     }
-  },
-  setTableMetaData (state: ApplicationState, meta: MetaData) {
-    state.tableMeta = meta
   },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {
     const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'
@@ -60,7 +54,6 @@ export default {
     }
     if (isPropSet('default_filters')) {
       state.tableSettings.defaultFilters = tableSettings.default_filters.split(',').map(f => f.trim())
-      state.filters.shown = state.tableSettings.defaultFilters
     }
   },
   setMetaData (state: ApplicationState, metaData: MetaData) {
@@ -69,8 +62,10 @@ export default {
   setFilterSelection (state: ApplicationState, selections: StringMap) {
     Vue.set(state.filters, 'selections', selections)
   },
-  setFilters (state: ApplicationState, { definition, shown }: { definition: FilterDefinition[], shown: string[] }) {
+  setFilterDefinition (state: ApplicationState, definition: FilterDefinition[]) {
     Vue.set(state.filters, 'definition', definition)
+  },
+  setFiltersShown (state: ApplicationState, shown: string[]) {
     Vue.set(state.filters, 'shown', shown)
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: {rowId: string, rowData: StringMap}) {
@@ -99,8 +94,8 @@ export default {
       }
     })
   },
-  setIsSettingsLoaded (state: ApplicationState) {
-    state.isSettingsLoaded = true
+  setIsSettingsLoaded (state: ApplicationState, isLoaded: boolean) {
+    state.isSettingsLoaded = isLoaded
   },
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText

@@ -23,8 +23,7 @@ describe('DataView.vue', () => {
       setSearchText: jest.fn()
     }
     actions = {
-      getTableData: jest.fn(),
-      getTableSettings: jest.fn()
+      getTableData: jest.fn()
     }
     store = new Vuex.Store({
       state, getters, actions, mutations

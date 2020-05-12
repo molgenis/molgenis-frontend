@@ -13,6 +13,7 @@ describe('ToolbarView.vue', () => {
   beforeEach(() => {
     state = {
       toast: null,
+      settingsTable: 'de_dataexplorer_table_settings',
       tableName: 'root_hospital_patients',
       tableData: null,
       tableMeta: null,
@@ -23,7 +24,6 @@ describe('ToolbarView.vue', () => {
       isSettingsLoaded: false,
       tableSettings: {
         defaultFilters: [],
-        settingsTable: 'de_dataexplorer_table_settings',
         settingsRowId: null,
         collapseLimit: 5,
         customCardCode: null,
