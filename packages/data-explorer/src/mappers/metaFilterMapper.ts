@@ -27,7 +27,7 @@ const fieldTypeToFilterType:StringMap = {
 
 const mapMetaToFilters = async (metaData: MetaData) => {
   let shownFilters:string[] = []
-  function findByID (ID: string) {
+  function findByID (ID: string):Attribute {
     return metaData.attributes.filter((item) => item.id === ID)[0]
   }
 
@@ -49,7 +49,10 @@ const mapMetaToFilters = async (metaData: MetaData) => {
 
     // Compound child
     if (attribute.parentAttributeId) {
-      filterDefinition.compound = findByID(attribute.parentAttributeId).name
+      const parent = findByID(attribute.parentAttributeId)
+      if (parent.type === 'compound') {
+        filterDefinition.compound = findByID(attribute.parentAttributeId).name
+      }
     }
 
     // Decimal
