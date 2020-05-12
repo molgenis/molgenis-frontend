@@ -65,7 +65,8 @@ export default {
     filterRsql: {
       handler: function () {
         this.fetchCardViewData()
-      }
+      },
+      immediate: true
     }
   }
 }
