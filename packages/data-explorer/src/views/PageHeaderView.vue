@@ -71,7 +71,7 @@ export default Vue.extend({
     ])
   },
   mounted () {
-    this.getGroupTabels()
+    this.getGroupTabels({ package: this.tableMeta.package })
   }
 })
 </script>

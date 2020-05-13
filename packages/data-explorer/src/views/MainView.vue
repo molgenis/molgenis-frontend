@@ -7,10 +7,10 @@
       :message="toast.message"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
-    <page-header-view></page-header-view>
+    <page-header-view v-if="!loading"></page-header-view>
     <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
       <div class="flex-filter">
-        <filters-view v-if="tableName"></filters-view>
+        <filters-view v-if="!loading"></filters-view>
       </div>
       <div class="flex-data ml-4" >
         <button

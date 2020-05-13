@@ -2,8 +2,9 @@ import axios from 'axios'
 import { DataApiResponse } from '@/types/ApiResponse'
 
 export default {
-  getGroupTabels: async ({ commit, state }: { commit: any, state: any }, payload: { tableName: string }) => {
-    const query = 'q=package==root_hospital'
+  getGroupTabels: async ({ commit }: { commit: any }, payload: { package: string }) => {
+    const packageName = payload.package.split('/').pop()
+    const query = `q=package==${packageName}`
     const filter = 'filter=id,label,package'
     const expand = 'expand=package'
     const resp = await axios.get<DataApiResponse>(`/api/data/sys_md_EntityType?${expand}&${filter}&${query}`)
