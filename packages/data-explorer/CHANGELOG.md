@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.23.3...@molgenis-experimental/data-explorer@0.24.0) (2020-05-13)
+
+
+### Features
+
+* add a data display limit and warning ([#296](https://github.com/molgenis/molgenis-frontend/issues/296)) ([56c97fe](https://github.com/molgenis/molgenis-frontend/commit/56c97fe))
+
+
+
+
+
 ## [0.23.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.23.2...@molgenis-experimental/data-explorer@0.23.3) (2020-05-13)
 
 
