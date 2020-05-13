@@ -1,17 +1,21 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
+import { BootstrapVue } from 'bootstrap-vue'
 import PageHeaderView from '@/views/PageHeaderView.vue'
 
 describe('PageHeaderView', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  localVue.use(BootstrapVue)
   let store: any
   let state: any
   let actions: any
+  let modules: any
 
   beforeEach(() => {
     state = {
       tableSettings: {},
+      settingsTable: 'settingsTable',
       tableMeta: {
         label: 'lbl',
         description: 'desc'
@@ -20,8 +24,20 @@ describe('PageHeaderView', () => {
 
     actions = {}
 
+    modules = {
+      header: {
+        namespaced: true,
+        state: {
+          packageTables: []
+        },
+        actions: {
+          getGroupTabels: jest.fn()
+        }
+      }
+    }
+
     store = new Vuex.Store({
-      state, actions
+      state, actions, modules
     })
   })
 
