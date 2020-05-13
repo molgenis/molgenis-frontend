@@ -93,7 +93,7 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
   return rsqlFilter ? `${request}&q=${encodeRsqlValue(rsqlFilter)}` : request
 }
 
-const _buildSizeQueryParam = (dataDisplayLimit?: number) => {
+const _buildSizeQueryParam = (dataDisplayLimit?: Number) => {
   return typeof dataDisplayLimit === 'number' ? `size=${dataDisplayLimit}&` : ''
 }
 
@@ -102,7 +102,7 @@ const getTableDataDeepReference = async (
   metaData: MetaData,
   coloms: string[],
   rsqlQuery?: string,
-  dataDisplayLimit?: number
+  dataDisplayLimit?: Number
 ) => {
   if (!coloms.includes(metaData.idAttribute.name)) {
     coloms.push(metaData.idAttribute.name)
@@ -120,7 +120,7 @@ const getTableDataDeepReference = async (
   return result
 }
 
-const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, dataDisplayLimit?: number) => {
+const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, dataDisplayLimit?: Number) => {
   const columnSet = new Set([...columns])
   columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
@@ -138,7 +138,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
 }
 
 // called on row expand
-const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: number) => {
+const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: Number) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
   // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
   // Adding id and label makes sure we get these fields.
