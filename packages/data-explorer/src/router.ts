@@ -10,14 +10,16 @@ export default new Router({
   base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'root',
-      component: MainView
-    },
-    {
       path: '/:entity',
       name: 'main-view',
       component: MainView
+    },
+    {
+      path: '*',
+      redirect: {
+        name: 'main-view',
+        params: { entity: 'root_hospital_patients' }
+      }
     }
   ]
 })

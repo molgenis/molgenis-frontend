@@ -53,15 +53,16 @@ describe('mutations', () => {
   beforeEach(() => {
     baseAppState = {
       toast: null,
+      settingsTable: 'de_dataexplorer_table_settings',
       tableName: 'root_hospital_patients',
       tableData: null,
       tableMeta: null,
       dataDisplayLayout: 'CardView',
+      dataDisplayLimit: 100,
       defaultEntityData: null,
       showShoppingCart: false,
       shoppedEntityItems: [],
       tableSettings: {
-        settingsTable: 'de_dataexplorer_table_settings',
         settingsRowId: null,
         collapseLimit: 5,
         customCardCode: null,
@@ -175,12 +176,6 @@ describe('mutations', () => {
       expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
     })
   })
-  describe('setTableMetaData', () => {
-    it('sets the meta data', () => {
-      mutations.setTableMetaData(baseAppState, entityMetaData)
-      expect(baseAppState.tableMeta).toEqual(entityMetaData)
-    })
-  })
   describe('setTableSettings', () => {
     it('sets the tableSettings', () => {
       mutations.setTableSettings(baseAppState, {
@@ -200,7 +195,6 @@ describe('mutations', () => {
     it('should keep the defaults if no overrides are passed', () => {
       mutations.setTableSettings(baseAppState, {})
       expect(baseAppState.tableSettings).toEqual({
-        settingsTable: 'de_dataexplorer_table_settings',
         settingsRowId: null,
         collapseLimit: 5,
         customCardCode: null,
@@ -242,8 +236,8 @@ describe('mutations', () => {
   })
 
   describe('setIsSettingsLoaded', () => {
-    it('sets isSettingsLoaded to treu', () => {
-      mutations.setIsSettingsLoaded(baseAppState)
+    it('sets isSettingsLoaded to bool value passed', () => {
+      mutations.setIsSettingsLoaded(baseAppState, true)
       expect(baseAppState.isSettingsLoaded).toEqual(true)
     })
   })

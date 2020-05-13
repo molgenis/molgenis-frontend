@@ -8,22 +8,40 @@ import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 export default {
-  getTableSettings: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState },
-    payload: { tableName: string }) => {
-    const response = await api.get(`/api/data/${state.tableSettings.settingsTable}?q=table=="${payload.tableName}"`)
-    if (response.items.length > 0) {
+  fetchTableMeta: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
+    commit('setTableSettings', {})
+    commit('setMetaData', null)
+    commit('setFilterDefinition', [])
+    commit('setFiltersShown', [])
+    try {
+      const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
       commit('setTableSettings', response.items[0].data)
+    } catch (e) {
+      // Use default table settings if no settings loaded
+      commit('setTableSettings', {
+        settingsRowId: null,
+        collapseLimit: 5,
+        customCardCode: null,
+        customCardAttrs: '',
+        isShop: false,
+        defaultFilters: []
+      })
     }
-    commit('setIsSettingsLoaded')
+
+    const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
+    const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
+    commit('setMetaData', metaData)
+    commit('setFilterDefinition', definition)
+    commit('setFiltersShown', state.tableSettings.defaultFilters)
   }),
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
-      throw new Error('cannot load table data for non string table id')
+      throw new Error('cannot load card data without table name')
     }
 
-    const metaData = await metaDataRepository.fetchMetaDataById(state.tableName)
-    commit('setMetaData', metaData)
-    commit('setFilters', await metaFilterMapper.mapMetaToFilters(metaData))
+    if (state.tableMeta === null) {
+      throw new Error('cannot load table data without meta data')
+    }
 
     let columns: string[]
     let tableData
@@ -33,11 +51,18 @@ export default {
 
     commit('setTableData', [])
     if (isCustomCard) {
-      columns = state.tableSettings.customCardAttrs.split(',').map(attribute => attribute.trim())
-      tableData = await dataRepository.getTableDataDeepReference(state.tableName, metaData, columns, rsqlQuery, state.dataDisplayLimit)
+      columns = state.tableSettings.customCardAttrs
+        .split(',')
+        .map(a => a.trim())
+      tableData = await dataRepository.getTableDataDeepReference(
+        state.tableName,
+        state.tableMeta,
+        columns,
+        rsqlQuery
+      , state.dataDisplayLimit)
     } else {
-      columns = metaDataService.getAttributesfromMeta(metaData).splice(0, state.tableSettings.collapseLimit)
-      tableData = await dataRepository.getTableDataWithLabel(state.tableName, metaData, columns, rsqlQuery, state.dataDisplayLimit)
+      columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
+      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, state.dataDisplayLimit)
     }
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
@@ -45,14 +70,23 @@ export default {
     }
   },
   fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {tableName: string}) => {
-    const tableName = payload.tableName
-    const metaData = await metaDataRepository.fetchMetaDataById(tableName)
-    commit('setMetaData', metaData)
+    if (state.tableName === null) {
+      throw new Error('cannot fetch table view data without table name')
+    }
+
+    if (state.tableMeta === null) {
+      throw new Error('cannot fetch table view data without meta data')
+    }
 
     const rsqlQuery = getters.filterRsql
 
     commit('setTableData', [])
-    const tableData = await dataRepository.getTableDataWithLabel(tableName, metaData, metaDataService.getAttributesfromMeta(metaData), rsqlQuery, state.dataDisplayLimit)
+    const tableData = await dataRepository.getTableDataWithLabel(
+      state.tableName,
+      state.tableMeta,
+      metaDataService.getAttributesfromMeta(state.tableMeta),
+      rsqlQuery
+    , state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
@@ -60,14 +94,18 @@ export default {
   },
   // expanded default card
   fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {rowId: string}) => {
-    if (typeof state.tableName !== 'string') {
-      throw new Error('cannot load table data for non string table id')
+    if (state.tableName === null) {
+      throw new Error('cannot fetch row data without table name')
     }
-    const metaData = await metaDataRepository.fetchMetaDataById(state.tableName)
-    commit('setMetaData', metaData)
+
+    if (state.tableMeta === null) {
+      throw new Error('cannot fetch row data without meta data')
+    }
+
     const rsqlQuery = getters.filterRsql
+
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, metaData, state.dataDisplayLimit)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })

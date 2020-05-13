@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div>
       <div class="p-0 pl-3 d-flex justify-content-between align-items-center">
         <h2>
@@ -16,7 +15,6 @@
       </div>
       <div class="p-2">
         <filter-container
-          v-if="isFilterDataLoaded"
           v-model="filters.selections"
           :filters="filters.definition"
           :filters-shown="filters.shown"
@@ -43,8 +41,7 @@ export default Vue.extend({
   name: 'FiltersView',
   components: { FilterContainer, FontAwesomeIcon },
   computed: {
-    ...mapState(['filters', 'tableMeta', 'isSettingsLoaded']),
-    isFilterDataLoaded: vm => !!vm.tableMeta && vm.isSettingsLoaded
+    ...mapState(['filters'])
   },
   methods: {
     ...mapMutations([ 'setHideFilters', 'setFiltersShown' ]),

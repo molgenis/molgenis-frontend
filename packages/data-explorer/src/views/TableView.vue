@@ -52,6 +52,9 @@ export default {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
     }
   },
+  /**
+  * Todo temp watch, remove watch when sync is done via url
+  */
   watch: {
     filterRsql: {
       handler: function () {
