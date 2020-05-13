@@ -247,4 +247,18 @@ describe('mutations', () => {
       expect(baseAppState.searchText).toEqual('test123')
     })
   })
+
+  describe('setFilterSelection', () => {
+    it('sets the filter selection as passed', () => {
+      mutations.setFilterSelection(baseAppState, { a: 'a', b: 'b' })
+      expect(baseAppState.filters.selections).toEqual({ a: 'a', b: 'b' })
+    })
+  })
+  describe('setFilterDefinition', () => {
+    it('sets the filter definition as passed', () => {
+      const filterDef: any = { filter: 'def' }
+      mutations.setFilterDefinition(baseAppState, filterDef)
+      expect(baseAppState.filters.definition).toEqual(filterDef)
+    })
+  })
 })

@@ -17,15 +17,7 @@ export default {
       const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
       commit('setTableSettings', response.items[0].data)
     } catch (e) {
-      // Use default table settings if no settings loaded
-      commit('setTableSettings', {
-        settingsRowId: null,
-        collapseLimit: 5,
-        customCardCode: null,
-        customCardAttrs: '',
-        isShop: false,
-        defaultFilters: []
-      })
+      // dont show error to user, just keep the default settings
     }
 
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
