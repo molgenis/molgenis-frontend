@@ -54,27 +54,7 @@ export default {
             readOnly: true,
             aggregatable: false,
             defaultValue: 'default',
-            parentAttribute: {
-              link: {
-                self: 'https://server/api/metadata/mock-entity/attributes/mock-entity-attribute'
-              },
-              data: {
-                id: 'mock-entity-attribute',
-                label: 'id',
-                name: 'id',
-                sequenceNr: 0,
-                type: 'onetomany',
-                idAttribute: true,
-                labelAttribute: false,
-                nullable: false,
-                auto: false,
-                visible: true,
-                unique: true,
-                readOnly: true,
-                aggregatable: false,
-                defaultValue: 'default'
-              }
-            }
+            parentAttributeId: 'mock-entity-attribute'
           }
         }
       ]
