@@ -58,6 +58,7 @@ describe('mutations', () => {
       tableData: null,
       tableMeta: null,
       dataDisplayLayout: 'CardView',
+      dataDisplayLimit: 100,
       defaultEntityData: null,
       showShoppingCart: false,
       shoppedEntityItems: [],

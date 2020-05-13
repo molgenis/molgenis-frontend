@@ -57,6 +57,26 @@ describe('dataRepository', () => {
     })
   })
 
+  describe('getTableDataDeepReference', () => {
+    beforeEach(() => {
+      // @ts-ignore
+      axios.get.mockResolvedValue({ data: { items: [
+        mockRowResponse
+      ] } })
+    })
+
+    it('should build query with deep ref', async (done) => {
+      const tableId = 'tableId'
+      const metaData = mockmeta as MetaData
+      const coloms = ['foo']
+      const rsqlQuery = 'rsqlQuery'
+      const dataDisplayLimit = 10
+      await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, dataDisplayLimit)
+      expect(axios.get).toBeCalledWith('/api/data/tableId?size=10&expand=&filter=foo,id,label&q=rsqlQuery')
+      done()
+    })
+  })
+
   describe('deleteRow', () => {
     it('should send delete request', async (done) => {
       await dataRepository.deleteRow('my-table', 'my-row')

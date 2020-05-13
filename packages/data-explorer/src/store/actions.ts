@@ -50,11 +50,11 @@ export default {
         state.tableName,
         state.tableMeta,
         columns,
-        rsqlQuery
-      )
+        rsqlQuery,
+        state.dataDisplayLimit)
     } else {
       columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
-      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery)
+      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, state.dataDisplayLimit)
     }
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
@@ -77,8 +77,8 @@ export default {
       state.tableName,
       state.tableMeta,
       metaDataService.getAttributesfromMeta(state.tableMeta),
-      rsqlQuery
-    )
+      rsqlQuery,
+      state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
@@ -97,7 +97,7 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })
