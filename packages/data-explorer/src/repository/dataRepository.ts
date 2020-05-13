@@ -93,7 +93,17 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
   return rsqlFilter ? `${request}&q=${encodeRsqlValue(rsqlFilter)}` : request
 }
 
-const getTableDataDeepReference = async (tableId: string, metaData: MetaData, coloms: string[], rsqlQuery?: string, dataDisplayLimit?: Number) => {
+const _buildSizeQueryParam = (dataDisplayLimit?: number) => {
+  return typeof dataDisplayLimit === 'number' ? `size=${dataDisplayLimit}&` : ''
+}
+
+const getTableDataDeepReference = async (
+  tableId: string,
+  metaData: MetaData,
+  coloms: string[],
+  rsqlQuery?: string,
+  dataDisplayLimit?: number
+) => {
   if (!coloms.includes(metaData.idAttribute.name)) {
     coloms.push(metaData.idAttribute.name)
   }
@@ -103,14 +113,14 @@ const getTableDataDeepReference = async (tableId: string, metaData: MetaData, co
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
-  const size = typeof dataDisplayLimit === 'number' ? `size=${dataDisplayLimit}&` : ''
+  const size = _buildSizeQueryParam(dataDisplayLimit)
   const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
   const response = (await axios.get<DataApiResponse>(request)).data
   const result = { items: response.items.map((item: DataApiResponseItem) => levelNRowMapper(item)) }
   return result
 }
 
-const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, dataDisplayLimit?: Number) => {
+const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, dataDisplayLimit?: number) => {
   const columnSet = new Set([...columns])
   columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
@@ -118,7 +128,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const size = typeof dataDisplayLimit === 'number' ? `size=${dataDisplayLimit}&` : ''
+  const size = _buildSizeQueryParam(dataDisplayLimit)
   const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
   const response = (await axios.get<DataApiResponse>(request)).data
   const result = { items: await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
@@ -128,7 +138,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
 }
 
 // called on row expand
-const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: Number) => {
+const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: number) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
   // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
   // Adding id and label makes sure we get these fields.
@@ -138,7 +148,7 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
     columnSet.add(metaData.labelAttribute.name)
   }
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const size = typeof dataDisplayLimit === 'number' ? `size=${dataDisplayLimit}&` : ''
+  const size = _buildSizeQueryParam(dataDisplayLimit)
   const response = await axios.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${size}${expandReferencesQuery}`)
   return levelOneRowMapper(response.data, metaData)
 }
