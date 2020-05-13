@@ -24,7 +24,7 @@
 import Vue from 'vue'
 import SelectLayoutView from './SelectLayoutView'
 import ClipboardView from './ClipboardView'
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import ActiveFilters from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/ActiveFilters.vue'
 
 export default Vue.extend({
