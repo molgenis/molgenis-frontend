@@ -18,7 +18,7 @@ import TableView from './TableView'
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import EndOfResults from '../components/utils/EndOfResults'
+import EndOfResults from '../components/dataView/EndOfResults'
 import { mapState } from 'vuex'
 
 export default {

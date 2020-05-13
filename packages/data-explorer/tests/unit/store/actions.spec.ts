@@ -244,6 +244,7 @@ describe('actions', () => {
       tableData: null,
       tableMeta: null,
       dataDisplayLayout: 'CardView',
+      dataDisplayLimit: 100,
       defaultEntityData: null,
       filters: {
         hideSidebar: false,
@@ -328,12 +329,12 @@ describe('actions', () => {
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
 
-      await actions.fetchTableViewData({ commit, getters }, { tableName: 'entity' })
+      await actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' })
 
       expect(commit).toHaveBeenCalledWith('setMetaData', { attributes: [] })
       expect(commit).toHaveBeenCalledWith('setTableData', [])
       expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
-      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('entity', { attributes: [] }, [], 'a==b')
+      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('entity', { attributes: [] }, [], 'a==b', 100)
     })
   })
 

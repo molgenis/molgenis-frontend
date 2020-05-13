@@ -34,10 +34,10 @@ export default {
     commit('setTableData', [])
     if (isCustomCard) {
       columns = state.tableSettings.customCardAttrs.split(',').map(attribute => attribute.trim())
-      tableData = await dataRepository.getTableDataDeepReference(state.tableName, metaData, columns, state.dataDisplayLimit, rsqlQuery)
+      tableData = await dataRepository.getTableDataDeepReference(state.tableName, metaData, columns, rsqlQuery, state.dataDisplayLimit)
     } else {
       columns = metaDataService.getAttributesfromMeta(metaData).splice(0, state.tableSettings.collapseLimit)
-      tableData = await dataRepository.getTableDataWithLabel(state.tableName, metaData, columns, state.dataDisplayLimit, rsqlQuery)
+      tableData = await dataRepository.getTableDataWithLabel(state.tableName, metaData, columns, rsqlQuery, state.dataDisplayLimit)
     }
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
@@ -52,7 +52,7 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('setTableData', [])
-    const tableData = await dataRepository.getTableDataWithLabel(tableName, metaData, metaDataService.getAttributesfromMeta(metaData), state.dataDisplayLimit, rsqlQuery)
+    const tableData = await dataRepository.getTableDataWithLabel(tableName, metaData, metaDataService.getAttributesfromMeta(metaData), rsqlQuery, state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
