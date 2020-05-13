@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.23.2...@molgenis-experimental/data-explorer@0.23.3) (2020-05-13)
+
+
+### Bug Fixes
+
+* **data-explorer:** issue with stale template data and trying to render card before data was fetched ([a366cf3](https://github.com/molgenis/molgenis-frontend/commit/a366cf3))
+
+
+
+
+
 ## [0.23.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.23.1...@molgenis-experimental/data-explorer@0.23.2) (2020-05-12)
 
 
