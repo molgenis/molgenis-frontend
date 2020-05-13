@@ -23,7 +23,11 @@
       </div>
       <div class="col-6"></div>
       <div class="col-3">
-        <table-settings-button class="float-right" :tableSettings="tableSettings"></table-settings-button>
+        <table-settings-button
+          class="float-right"
+          :settingsTableId="settingsTable"
+          :tableSettings="tableSettings">
+        </table-settings-button>
       </div>
     </div>
     <div class="row mb-3">
@@ -54,20 +58,19 @@ export default Vue.extend({
     ...mapState([
       'tableName',
       'tableMeta',
-      'tableSettings'
+      'tableSettings',
+      'settingsTable'
     ]),
     ...mapState('header', [
       'packageTables'
     ])
   },
   methods: {
-    ...mapActions(['getTableSettings']),
     ...mapActions('header', [
       'getGroupTabels'
     ])
   },
-  created () {
-    this.getTableSettings({ tableName: this.tableName })
+  mounted () {
     this.getGroupTabels()
   }
 })

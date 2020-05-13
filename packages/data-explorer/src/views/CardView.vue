@@ -1,5 +1,5 @@
 <template>
-  <div class="card-deck">
+  <div class="card-deck mx-n2">
     <explorer-card
       v-for="(entity, index) in entitiesToShow"
       :key="index"
@@ -49,7 +49,7 @@ export default {
       return entity[this.idAttribute.name] ? entity[this.idAttribute.name].toString() : ''
     },
     getEntityLabel (entity) {
-      return this.labelAttribute ? entity[this.labelAttribute.name].toString() : this.getEntityId(entity).toString()
+      return this.labelAttribute && entity[this.labelAttribute.name] ? entity[this.labelAttribute.name].toString() : this.getEntityId(entity).toString()
     },
     isSelected (entity) {
       return this.shoppedEntityItems.includes(this.getEntityId(entity))
@@ -58,6 +58,9 @@ export default {
       this.fetchRowDataLabels({ rowId: this.getEntityId(entity) })
     }
   },
+  /**
+   * Todo temp watch, remove watch when sync is done via url
+   */
   watch: {
     filterRsql: {
       handler: function () {

@@ -3,6 +3,7 @@ import ApplicationState from '@/types/ApplicationState'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
+import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 const metaResponse = {
   meta: {
@@ -233,6 +234,12 @@ jest.mock('@/repository/metaDataService', () => {
   }
 })
 
+jest.mock('@/mappers/metaFilterMapper', () => {
+  return {
+    mapMetaToFilters: jest.fn()
+  }
+})
+
 let state: ApplicationState
 let getters: any
 
@@ -240,10 +247,12 @@ describe('actions', () => {
   beforeEach(() => {
     state = {
       toast: null,
+      settingsTable: 'de_dataexplorer_table_settings',
       tableName: 'it_emx_datatypes_TypeTest',
       tableData: null,
       tableMeta: null,
       dataDisplayLayout: 'CardView',
+      dataDisplayLimit: 100,
       defaultEntityData: null,
       filters: {
         hideSidebar: false,
@@ -258,7 +267,6 @@ describe('actions', () => {
         settingsRowId: null,
         customCardCode: null,
         customCardAttrs: '',
-        settingsTable: 'de_dataexplorer_table_settings',
         collapseLimit: 5,
         defaultFilters: []
       },
@@ -271,69 +279,156 @@ describe('actions', () => {
     }
   })
 
-  describe('getTableSettings', () => {
-    it('gets the settings for the selected table', async (done) => {
+  describe('fetchTableMeta', () => {
+    it('should fetch settings and meta', async () => {
       const commit = jest.fn()
-      const state = { tableSettings: { isShop: false, settingsRowId: '', settingsTable: 'settingsEntity', collapseLimit: 0 } }
-      await actions.getTableSettings({ commit, state }, { tableName: 'entity' })
-      expect(commit).toHaveBeenCalledWith('setTableSettings', { shop: true, collapse_limit: 5, id: 'blaat' })
-      done()
+      // @ts-ignore ts does not know its a mock
+      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
+      // @ts-ignore
+      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
+      await actions.fetchTableMeta({ commit, state }, 'entity')
+      expect(commit).toHaveBeenCalledWith('setFiltersShown', [])
+      expect(commit).toHaveBeenCalledWith('setFilterDefinition', 'def')
+      expect(commit).toHaveBeenCalledWith('setMetaData', 'meta')
     })
   })
 
   describe('fetchCardViewData', () => {
     it('should fetch the table data from the backend', async () => {
       const commit = jest.fn()
-      state.tableName = 'entity'
+      const getters = jest.fn()
+      const state:any = {
+        tableName: 'tableName',
+        tableMeta: 'tableMeta',
+        dataDisplayLayout: 'CardView',
+        tableSettings: {
+          customCardCode: true,
+          customCardAttrs: 'x, y, z'
+        }
+      }
       // @ts-ignore ts does not know its a mock
-      metaDataService.getAttributesfromMeta.mockReturnValue([])
+      dataRepository.getTableDataDeepReference.mockResolvedValue(['data'])
 
-      // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaDataById.mockResolvedValue({ attributes: [] })
-      // @ts-ignore ts does not know its a mock
-      dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
       await actions.fetchCardViewData({ commit, state, getters })
-      expect(commit).toHaveBeenCalledWith('setMetaData', { attributes: [] })
-      expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
+
+      expect(dataRepository.getTableDataDeepReference).toHaveBeenCalled()
+      expect(commit).toHaveBeenCalledWith('setTableData', ['data'])
     })
 
-    it('should throw a error if the state does not contain a string table name', async () => {
+    it('should fetch collapseLimit cols in case of default card', async () => {
+      const commit = jest.fn()
+      const getters = jest.fn()
+      const state:any = {
+        tableName: 'tableName',
+        tableMeta: 'tableMeta',
+        dataDisplayLayout: 'CardView',
+        tableSettings: {
+          customCardCode: false
+        }
+      }
+      // @ts-ignore ts does not know its a mock
+      metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
+      // @ts-ignore ts does not know its a mock
+      dataRepository.getTableDataWithLabel.mockResolvedValue(['data'])
+
+      await actions.fetchCardViewData({ commit, state, getters })
+
+      expect(dataRepository.getTableDataDeepReference).toHaveBeenCalled()
+      expect(commit).toHaveBeenCalledWith('setTableData', ['data'])
+    })
+
+    it('should throw a error if the state table name', async () => {
       const commit = jest.fn()
       state.tableName = null
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchCardViewData({ commit, state, getters })).rejects.toEqual(new Error('cannot load table data for non string table id'))
+      expect(actions.fetchCardViewData({ commit, state, getters }))
+        .rejects
+        .toThrow(new Error('cannot load card data without table name'))
+    })
+
+    it('should throw a error if the state does not meta data', async () => {
+      const commit = jest.fn()
+      state.tableName = 'tableName'
+      state.tableMeta = null
+      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
+      expect(actions.fetchCardViewData({ commit, state, getters }))
+        .rejects
+        .toThrow(new Error('cannot load table data without meta data'))
     })
   })
 
-  describe('fetch row data', () => {
+  describe('fetchRowDataLabels', () => {
     it('should fetch the data for a single row', async () => {
-      state.tableName = 'tableName'
       const commit = jest.fn()
+      state.tableName = 'tableName'
+      const mockMeta:any = 'tableMeta'
+      state.tableMeta = mockMeta
+
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaDataById.mockResolvedValue({ meta: 'data' })
+      dataRepository.getRowDataWithReferenceLabels.mockResolvedValue('rowData')
+
       await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
-      expect(commit).toBeCalledWith('setMetaData', { meta: 'data' })
+
+      expect(commit).toBeCalledWith('updateRowData', { rowData: 'rowData', rowId: 'rowId' })
+    })
+
+    it('should throw a error if the state table name', async () => {
+      const commit = jest.fn()
+      state.tableName = null
+      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
+      expect(actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' }))
+        .rejects
+        .toThrow(new Error('cannot fetch row data without table name'))
+    })
+
+    it('should throw a error if the state does not meta data', async () => {
+      const commit = jest.fn()
+      state.tableName = 'tableName'
+      state.tableMeta = null
+      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
+      expect(actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' }))
+        .rejects
+        .toThrow(new Error('cannot fetch row data without meta data'))
     })
   })
 
   describe('fetch fetchTableViewData', () => {
     it('should add the filter if it is set', async () => {
-      state.tableName = 'tableName'
       const commit = jest.fn()
-
+      state.tableName = 'tableName'
+      const mockMeta:any = 'tableMeta'
+      state.tableMeta = mockMeta
       getters.filterRsql = 'a==b'
 
       // @ts-ignore ts does not know its a mock
-      metaDataRepository.fetchMetaDataById.mockResolvedValue({ attributes: [] })
-      // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
+      // @ts-ignore ts does not know its a mock
+      metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
 
-      await actions.fetchTableViewData({ commit, getters }, { tableName: 'entity' })
+      await actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' })
 
-      expect(commit).toHaveBeenCalledWith('setMetaData', { attributes: [] })
       expect(commit).toHaveBeenCalledWith('setTableData', [])
+      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('tableName', 'tableMeta', ['attr'], 'a==b', 100)
       expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
-      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('entity', { attributes: [] }, [], 'a==b')
+    })
+
+    it('should throw a error if the state table name', async () => {
+      const commit = jest.fn()
+      state.tableName = null
+      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
+      expect(actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' }))
+        .rejects
+        .toThrow(new Error('cannot fetch table view data without table name'))
+    })
+
+    it('should throw a error if the state does not meta data', async () => {
+      const commit = jest.fn()
+      state.tableName = 'tableName'
+      state.tableMeta = null
+      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
+      expect(actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' }))
+        .rejects
+        .toThrow(new Error('cannot fetch table view data without meta data'))
     })
   })
 

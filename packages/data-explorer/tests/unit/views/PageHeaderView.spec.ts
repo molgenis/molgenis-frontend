@@ -18,9 +18,7 @@ describe('PageHeaderView', () => {
       }
     }
 
-    actions = {
-      getTableSettings: jest.fn()
-    }
+    actions = {}
 
     store = new Vuex.Store({
       state, actions

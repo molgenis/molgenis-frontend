@@ -1,7 +1,19 @@
 import api from '@molgenis/molgenis-api-client'
 
+const flattenCompounds = (fields) => {
+  return fields.reduce((accum, f) => {
+    if (f.type === 'field-group') {
+      accum = accum.concat(flattenCompounds(f.children))
+    } else {
+      accum.push(f)
+    }
+    return accum
+  }, [])
+}
+
 const isFileIncluded = (formData, formFields) => {
-  const fieldsWithFile = formFields
+  const flattendFields = flattenCompounds(formFields)
+  const fieldsWithFile = flattendFields
     .filter((field) => field.type === 'file')
     .find((field) => typeof formData[field.id] !== 'string')
 
@@ -20,7 +32,8 @@ export const appendToForm = (fields, formData, [key, value]) => {
 
 const buildFormData = (data, fields) => {
   const formData = new FormData()
-  Object.entries(data).forEach((pair) => appendToForm(fields, formData, pair))
+  const flattendFields = flattenCompounds(fields)
+  Object.entries(data).forEach((pair) => appendToForm(flattendFields, formData, pair))
   return formData
 }
 

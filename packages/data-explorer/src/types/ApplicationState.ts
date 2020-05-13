@@ -14,7 +14,6 @@ export type FilterOption = {
 }
 
 export type TableSetting = {
-  settingsTable: string,
   customCardCode: string | null,
   customCardAttrs: string
   settingsRowId: string | null,
@@ -53,7 +52,9 @@ export type FilterGroup = {
 }
 export default interface ApplicationState {
   toast: Toast | null,
+  settingsTable: string,
   dataDisplayLayout: 'CardView' | 'TableView'
+  dataDisplayLimit: Number
   tableName: string | null
   tableData: DataApiResponse | null
   tableMeta: MetaData | null

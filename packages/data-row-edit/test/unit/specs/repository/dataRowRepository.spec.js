@@ -154,8 +154,14 @@ describe('Data row repository', () => {
 
       const formFields = [
         {
-          id: 'e',
-          type: 'file'
+          id: 'comp',
+          type: 'field-group',
+          children: [
+            {
+              id: 'e',
+              type: 'file'
+            }
+          ]
         },
         {
           id: 'f',

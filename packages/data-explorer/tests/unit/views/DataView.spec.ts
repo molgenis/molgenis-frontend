@@ -13,6 +13,7 @@ describe('DataView.vue', () => {
 
   beforeEach(() => {
     state = {
+      settingsTable: 'settings-table',
       dataDisplayLayout: 'cards',
       tableSettings: {},
       filters: {
@@ -31,8 +32,7 @@ describe('DataView.vue', () => {
       setFilterSelection: jest.fn()
     }
     actions = {
-      getTableData: jest.fn(),
-      getTableSettings: jest.fn()
+      getTableData: jest.fn()
     }
     store = new Vuex.Store({
       state, getters, actions, mutations

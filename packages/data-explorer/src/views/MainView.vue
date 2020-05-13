@@ -10,7 +10,7 @@
     <page-header-view></page-header-view>
     <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
       <div class="flex-filter">
-        <filters-view></filters-view>
+        <filters-view v-if="tableName"></filters-view>
       </div>
       <div class="flex-data ml-4" >
         <button
@@ -23,7 +23,7 @@
           <span class="ml-2">Filters</span>
         </button>
 
-        <data-view></data-view>
+        <data-view v-if="!loading"></data-view>
       </div>
     </div>
 
@@ -55,30 +55,65 @@ export default Vue.extend({
   name: 'MainView',
   components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon, PageHeaderView },
   computed: {
-    ...mapState(['filters', 'toast', 'showShoppingCart'])
+    ...mapState([
+      'filters',
+      'toast',
+      'showShoppingCart',
+      'dataDisplayLayout',
+      'tableName'
+    ])
+  },
+  data () {
+    return {
+      loading: false
+    }
   },
   methods: {
-    ...mapMutations([ 'clearToast', 'setHideFilters' ]),
-    ...mapActions(['deleteRow']),
+    ...mapMutations([
+      'clearToast',
+      'setHideFilters',
+      'setTableName'
+    ]),
+    ...mapActions([
+      'deleteRow',
+      'fetchTableMeta',
+      'fetchCardViewData',
+      'fetchTableViewData',
+      'fetchTableMeta'
+    ]),
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, deleteConfirmOptions)
       if (isDeleteConfirmed) {
         this.deleteRow({ rowId: itemId })
       }
+    },
+    async fetchViewData (tableName) {
+      if (this.tableName !== tableName) {
+        this.loading = true
+        await this.fetchTableMeta({ tableName })
+        this.setTableName(tableName)
+      }
+      if (this.dataDisplayLayout === 'CardView') {
+        this.fetchCardViewData()
+      } else {
+        this.fetchTableViewData()
+      }
+      this.loading = false
     }
   },
   created () {
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
-
-    if (this.$route.params.entity) {
-      this.$store.commit('setTableName', this.$route.params.entity)
-    }
+    this.fetchViewData(this.$route.params.entity)
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
+  },
+  async beforeRouteUpdate (to, from, next) {
+    await this.fetchViewData(to.params.entity)
+    next()
   }
 })
 </script>
