@@ -58,8 +58,8 @@ export default {
         state.tableName,
         state.tableMeta,
         columns,
-        rsqlQuery
-      , state.dataDisplayLimit)
+        rsqlQuery,
+        state.dataDisplayLimit)
     } else {
       columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
       tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, state.dataDisplayLimit)
@@ -85,8 +85,8 @@ export default {
       state.tableName,
       state.tableMeta,
       metaDataService.getAttributesfromMeta(state.tableMeta),
-      rsqlQuery
-    , state.dataDisplayLimit)
+      rsqlQuery,
+      state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
