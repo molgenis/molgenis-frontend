@@ -44,9 +44,7 @@ export default Vue.extend({
   data: () => {
     return {
       renderCount: 0,
-      componentRoute: false,
-      bookmarkShown: [],
-      bookmarkSelections: {}
+      componentRoute: false
     }
   },
   computed: {
@@ -61,6 +59,7 @@ export default Vue.extend({
     },
     filterSelections: {
       get () {
+        console.log('sels', this.filters.selections)
         return this.filters.selections
       },
       set (val) {
@@ -81,7 +80,7 @@ export default Vue.extend({
   methods: {
     ...mapMutations([
       'setHideFilters',
-      'setFilters',
+      'applyBookmark',
       'setFiltersShown',
       'setFilterSelection'
     ]),
@@ -114,11 +113,11 @@ export default Vue.extend({
     '$route.query': function (query) {
       // need to check if component triggered query, if so ignore.
       if (!this.componentRoute) {
-        this.setFilters(query)
+        this.applyBookmark(query)
         this.refreshFilterView()
       } else this.componentRoute = false
     },
-    filterSelections: function () {
+    filterSelections: function (val) {
       this.addBookmark()
     }
   }

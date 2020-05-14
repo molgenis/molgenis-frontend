@@ -68,8 +68,8 @@ export default {
   setBookmark (state: ApplicationState, query: any) {
     Vue.set(state, 'bookmark', query)
   },
-  setFilters (state: ApplicationState, query?: any) {
-    applyFilters(state.tableMeta, query || state.bookmark, state.tableSettings.defaultFilters)
+  applyBookmark (state: ApplicationState, bookmark?: any) {
+    applyFilters(state.tableMeta, bookmark || state.bookmark, state.tableSettings.defaultFilters)
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {
     if (!state.tableData) {
