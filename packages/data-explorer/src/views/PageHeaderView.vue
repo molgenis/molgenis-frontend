@@ -2,24 +2,12 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-3">
-        <template v-if="tableMeta && tableMeta.label">
-          <b-nav class="bread-crumb-dropdown">
-            <b-nav-item-dropdown
-              :id="tableName"
-              :text="tableMeta.label"
-              toggle-class="bread-crumb-item-dropdown"
-              dropup
-              no-caret
-            >
-            <template v-slot:button-content>
-              <h1 class="mb-0" style="color: #212529;">{{tableMeta.label}}</h1>
-            </template>
-            <template v-for="table in packageTables">
-              <b-dropdown-item :key="table.id" :to="table.id">{{table.label}}</b-dropdown-item>
-            </template>
-            </b-nav-item-dropdown>
-          </b-nav>
-        </template>
+        <table-select
+          v-if="tableMeta && tableMeta.label && packageTables"
+          :label="tableMeta.label"
+          :packageTables="selectableTabels"
+        >
+        </table-select>
       </div>
       <div class="col-6"></div>
       <div class="col-3">
@@ -48,12 +36,13 @@
 <script>
 import Vue from 'vue'
 import ToolbarView from './ToolbarView'
+import TableSelect from '@/components/TableSelect'
 import TableSettingsButton from '../components/utils/TableSettingsButton'
 import { mapState, mapActions } from 'vuex'
 
 export default Vue.extend({
-  name: 'DataView',
-  components: { ToolbarView, TableSettingsButton },
+  name: 'PageHeaderView',
+  components: { ToolbarView, TableSettingsButton, TableSelect },
   computed: {
     ...mapState([
       'tableName',
@@ -63,7 +52,10 @@ export default Vue.extend({
     ]),
     ...mapState('header', [
       'packageTables'
-    ])
+    ]),
+    selectableTabels () {
+      return this.packageTables.filter(pt => pt.id !== this.tableMeta.id)
+    }
   },
   methods: {
     ...mapActions('header', [
@@ -77,6 +69,21 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.bread-crumb-select {
+  color: black;
+  padding-right: 2rem;
+}
+.bread-crumb-select > h1 {
+  display: inline;
+}
+.bread-crumb-select > svg {
+  display: none;
+  vertical-align: 0.2rem;
+}
+.bread-crumb-select:hover > svg {
+  display: inline;
+}
+
 .bread-crumb-dropdown >>> .bread-crumb-item-dropdown {
   padding-left: 0;
   padding-bottom: 0;

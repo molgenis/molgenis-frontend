@@ -17,6 +17,7 @@ describe('PageHeaderView', () => {
       tableSettings: {},
       settingsTable: 'settingsTable',
       tableMeta: {
+        id: 'self-id',
         label: 'lbl',
         description: 'desc'
       }
@@ -28,7 +29,13 @@ describe('PageHeaderView', () => {
       header: {
         namespaced: true,
         state: {
-          packageTables: []
+          packageTables: [{
+            id: 'self-id',
+            label: 'pt-lbl'
+          }, {
+            id: 'pt-id',
+            label: 'pt-lbl'
+          }]
         },
         actions: {
           getGroupTabels: jest.fn()
@@ -51,5 +58,11 @@ describe('PageHeaderView', () => {
     // todo replace with breadcrumb entity picker
     // expect(wrapper.find('h1').text()).toEqual('lbl')
     expect(wrapper.find('em').text()).toEqual('desc')
+  })
+
+  it('removes itself from the package list', () => {
+    const wrapper = shallowMount(PageHeaderView, { store, localVue })
+    // @ts-ignore
+    expect(wrapper.vm.selectableTabels).toEqual([{ id: 'pt-id', label: 'pt-lbl' }])
   })
 })
