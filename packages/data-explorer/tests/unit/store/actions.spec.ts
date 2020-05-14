@@ -270,7 +270,6 @@ describe('actions', () => {
         collapseLimit: 5,
         defaultFilters: []
       },
-      isSettingsLoaded: true,
       searchText: '',
       bookmark: {}
     }

@@ -70,7 +70,6 @@ describe('mutations', () => {
         isShop: false,
         defaultFilters: []
       },
-      isSettingsLoaded: false,
       filters: {
         hideSidebar: false,
         definition: [],
@@ -233,13 +232,6 @@ describe('mutations', () => {
       // @ts-ignore
       mutations.removeRow(mockState, { rowId: 'b' })
       expect(mockState.tableData.items).toEqual([{ idField: 'a' }])
-    })
-  })
-
-  describe('setIsSettingsLoaded', () => {
-    it('sets isSettingsLoaded to bool value passed', () => {
-      mutations.setIsSettingsLoaded(baseAppState, true)
-      expect(baseAppState.isSettingsLoaded).toEqual(true)
     })
   })
 

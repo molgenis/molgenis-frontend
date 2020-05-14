@@ -51,13 +51,13 @@ export default {
     state.tableSettings.defaultFilters = isPropSet('default_filters') ? tableSettings.default_filters.split(',').map(f => f.trim()) : defaultSettings.defaultFilters
   },
   setMetaData (state: ApplicationState, metaData: MetaData) {
-    state.tableMeta = metaData
+    Vue.set(state, 'tableMeta', metaData)
   },
-  setFilterDefinition (state: ApplicationState, { definition }: { definition: FilterDefinition[] }) {
+  setFilterDefinition (state: ApplicationState, definition: FilterDefinition[]) {
     Vue.set(state.filters, 'definition', definition)
   },
   setHideFilters (state: ApplicationState, hideFilters: boolean) {
-    state.filters.hideSidebar = hideFilters
+    Vue.set(state.filters, 'hideSidebar', hideFilters)
   },
   setFiltersShown (state: ApplicationState, shown: string[]) {
     Vue.set(state.filters, 'shown', shown)
@@ -96,9 +96,6 @@ export default {
         Vue.delete(state.tableData.items, index)
       }
     })
-  },
-  setIsSettingsLoaded (state: ApplicationState, isLoaded: boolean) {
-    state.isSettingsLoaded = isLoaded
   },
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText

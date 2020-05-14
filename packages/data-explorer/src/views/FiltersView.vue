@@ -14,8 +14,8 @@
       </div>
       <div class="p-2">
         <filter-container
+         v-if="isFilterDataLoaded"
           :key="renderCount"
-          v-if="isFilterDataLoaded"
           v-model="filterSelections"
           :filters="filters.definition"
           :filters-shown="filterShown"
@@ -53,11 +53,12 @@ export default Vue.extend({
     ...mapState([
       'filters',
       'tableMeta',
-      'isSettingsLoaded',
       'bookmarkedShownFilters',
       'bookmarkedSelections'
     ]),
-    isFilterDataLoaded: vm => vm.tableMeta !== null && vm.isSettingsLoaded,
+    isFilterDataLoaded () {
+      return this.tableMeta !== null
+    },
     filterSelections: {
       get () {
         return this.filters.selections
@@ -103,10 +104,6 @@ export default Vue.extend({
         // to prevent error, which occurs on routing to same page (Vue issue)
         () => {}
       )
-    },
-    refreshFilterView () {
-      // Refresh the filtercomponent
-      this.renderCount++
     }
   },
   watch: {
@@ -119,10 +116,6 @@ export default Vue.extend({
     },
     filterSelections: function () {
       this.addBookmark()
-    },
-    isFilterDataLoaded () {
-      this.setFilters()
-      this.refreshFilterView()
     }
   }
 })

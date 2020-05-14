@@ -62,7 +62,6 @@ export default interface ApplicationState {
   shoppedEntityItems: string[]
   showShoppingCart: boolean
   tableSettings: TableSetting
-  isSettingsLoaded: boolean
   filters: FilterGroup
   searchText: string,
   bookmark: any
