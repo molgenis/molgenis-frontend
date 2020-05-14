@@ -104,6 +104,10 @@ export default Vue.extend({
         // to prevent error, which occurs on routing to same page (Vue issue)
         () => {}
       )
+    },
+    refreshFilterView () {
+      // Refresh the filtercomponent
+      this.renderCount++
     }
   },
   watch: {
