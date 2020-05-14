@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.24.0...@molgenis-experimental/data-explorer@0.25.0) (2020-05-13)
+
+
+### Features
+
+* **data-explorer:** trigger release ([831e521](https://github.com/molgenis/molgenis-frontend/commit/831e521))
+
+
+
+
+
 # [0.24.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.23.3...@molgenis-experimental/data-explorer@0.24.0) (2020-05-13)
 
 
