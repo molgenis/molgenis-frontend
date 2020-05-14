@@ -17,15 +17,7 @@ export default {
       const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
       commit('setTableSettings', response.items[0].data)
     } catch (e) {
-      // Use default table settings if no settings loaded
-      commit('setTableSettings', {
-        settingsRowId: null,
-        collapseLimit: 5,
-        customCardCode: null,
-        customCardAttrs: '',
-        isShop: false,
-        defaultFilters: []
-      })
+      // dont show error to user, just keep the default settings
     }
 
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
@@ -58,11 +50,11 @@ export default {
         state.tableName,
         state.tableMeta,
         columns,
-        rsqlQuery
-      )
+        rsqlQuery,
+        state.dataDisplayLimit)
     } else {
       columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
-      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery)
+      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, state.dataDisplayLimit)
     }
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
@@ -85,8 +77,8 @@ export default {
       state.tableName,
       state.tableMeta,
       metaDataService.getAttributesfromMeta(state.tableMeta),
-      rsqlQuery
-    )
+      rsqlQuery,
+      state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
@@ -105,7 +97,7 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })

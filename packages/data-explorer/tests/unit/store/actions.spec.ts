@@ -252,6 +252,7 @@ describe('actions', () => {
       tableData: null,
       tableMeta: null,
       dataDisplayLayout: 'CardView',
+      dataDisplayLimit: 100,
       defaultEntityData: null,
       filters: {
         hideSidebar: false,
@@ -408,7 +409,7 @@ describe('actions', () => {
       await actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' })
 
       expect(commit).toHaveBeenCalledWith('setTableData', [])
-      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('tableName', 'tableMeta', ['attr'], 'a==b')
+      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('tableName', 'tableMeta', ['attr'], 'a==b', 100)
       expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
     })
 

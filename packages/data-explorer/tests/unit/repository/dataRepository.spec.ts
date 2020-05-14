@@ -1,5 +1,6 @@
 import * as dataRepository from '../../../src/repository/dataRepository'
 import { MetaData } from '@/types/MetaData'
+import { buildExpandedAttributesQuery } from '@/repository/queryBuilder'
 
 import mockmeta from '../mocks/metaDataResponseMock'
 import mockRowResponse from '../mocks/rowDataResponseMock'
@@ -13,6 +14,10 @@ jest.mock('axios', () => ({
 
 jest.mock('@/repository/metaDataRepository', () => ({
   fetchMetaDataByURL: () => { return { data: mockmeta, ...mockmeta } }
+}))
+
+jest.mock('@/repository/queryBuilder', () => ({
+  buildExpandedAttributesQuery: jest.fn()
 }))
 
 describe('dataRepository', () => {
@@ -42,17 +47,41 @@ describe('dataRepository', () => {
       axios.get.mockResolvedValue({ data: { items: [
         mockRowResponse
       ] } })
+      // @ts-ignore
+      buildExpandedAttributesQuery.mockReturnValue('expanded-attributes-query')
     })
 
     it('should fetch the table data and expand the query for the label data ', async (done) => {
       await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, ['foo'])
-      expect(axios.get).toBeCalledWith('/api/data/tableId?expand=&filter=foo,id,label')
+      expect(axios.get).toBeCalledWith('/api/data/tableId?expanded-attributes-query')
       done()
     })
 
     it('should url encode the filter values if needed ', async (done) => {
       await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, ['foo'], 'bloodtype=in=(A-,A+)')
-      expect(axios.get).toBeCalledWith('/api/data/tableId?expand=&filter=foo,id,label&q=bloodtype=in=(A-,A%2B)')
+      expect(axios.get).toBeCalledWith('/api/data/tableId?expanded-attributes-query&q=bloodtype=in=(A-,A%2B)')
+      done()
+    })
+  })
+
+  describe('getTableDataDeepReference', () => {
+    beforeEach(() => {
+      // @ts-ignore
+      axios.get.mockResolvedValue({ data: { items: [
+        mockRowResponse
+      ] } })
+      // @ts-ignore
+      buildExpandedAttributesQuery.mockReturnValue('expanded-attributes-query')
+    })
+
+    it('should build query with deep ref', async (done) => {
+      const tableId = 'tableId'
+      const metaData = mockmeta as MetaData
+      const coloms = ['foo']
+      const rsqlQuery = 'rsqlQuery'
+      const dataDisplayLimit = 10
+      await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, dataDisplayLimit)
+      expect(axios.get).toBeCalledWith('/api/data/tableId?size=10&expanded-attributes-query&q=rsqlQuery')
       done()
     })
   })

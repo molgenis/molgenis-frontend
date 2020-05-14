@@ -22,7 +22,7 @@
           <span class="ml-2">Filters</span>
         </button>
 
-        <data-view></data-view>
+        <data-view v-if="!loading"></data-view>
       </div>
     </div>
 
@@ -60,6 +60,11 @@ export default Vue.extend({
       'tableName'
     ])
   },
+  data () {
+    return {
+      loading: false
+    }
+  },
   methods: {
     ...mapMutations([
       'clearToast',
@@ -81,15 +86,16 @@ export default Vue.extend({
     },
     async fetchViewData (tableName) {
       if (this.tableName !== tableName) {
+        this.loading = true
         await this.fetchTableMeta({ tableName })
         this.setTableName(tableName)
       }
-
       if (this.dataDisplayLayout === 'CardView') {
         this.fetchCardViewData()
       } else {
         this.fetchTableViewData()
       }
+      this.loading = false
     }
   },
   created () {

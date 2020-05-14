@@ -58,6 +58,7 @@ describe('mutations', () => {
       tableData: null,
       tableMeta: null,
       dataDisplayLayout: 'CardView',
+      dataDisplayLimit: 100,
       defaultEntityData: null,
       showShoppingCart: false,
       shoppedEntityItems: [],
@@ -246,6 +247,20 @@ describe('mutations', () => {
     it('sets searchText to the passes value', () => {
       mutations.setSearchText(baseAppState, 'test123')
       expect(baseAppState.searchText).toEqual('test123')
+    })
+  })
+
+  describe('setFilterSelection', () => {
+    it('sets the filter selection as passed', () => {
+      mutations.setFilterSelection(baseAppState, { a: 'a', b: 'b' })
+      expect(baseAppState.filters.selections).toEqual({ a: 'a', b: 'b' })
+    })
+  })
+  describe('setFilterDefinition', () => {
+    it('sets the filter definition as passed', () => {
+      const filterDef: any = { filter: 'def' }
+      mutations.setFilterDefinition(baseAppState, filterDef)
+      expect(baseAppState.filters.definition).toEqual(filterDef)
     })
   })
 })

@@ -13,6 +13,7 @@ describe('DataView.vue', () => {
 
   beforeEach(() => {
     state = {
+      settingsTable: 'settings-table',
       dataDisplayLayout: 'cards',
       tableSettings: {}
     }
