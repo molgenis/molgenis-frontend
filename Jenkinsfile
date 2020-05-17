@@ -44,11 +44,11 @@ pipeline {
                 container('node') {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
-                    sh "yarn lerna run unit --since refs/remotes/origin/master "
+                    sh "yarn lerna run unit -- --since master "
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e --since refs/remotes/origin/master  -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
+                    sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e --since refs/remotes/origin/master  -- --scope @molgenis-experimental/data-explorer -- --env ci_chrome,ci_ie11,ci_firefox"
+                    sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --env ci_chrome,ci_ie11,ci_firefox"
                     sh "yarn lerna run build"
                 }
                 container('sonar') {
