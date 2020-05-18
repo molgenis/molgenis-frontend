@@ -59,7 +59,6 @@ export default Vue.extend({
     },
     filterSelections: {
       get () {
-        console.log('sels', this.filters.selections)
         return this.filters.selections
       },
       set (val) {
@@ -89,20 +88,12 @@ export default Vue.extend({
       this.addBookmark()
     },
     addBookmark () {
-      const filterBookmark = createBookmark(
+      createBookmark(
+        this.$router,
         this.filters.shown,
         this.filters.selections
       )
       this.componentRoute = true
-      this.$router.push(
-        {
-          name: this.$router.name,
-          path: this.$router.path,
-          query: filterBookmark
-        },
-        // to prevent error, which occurs on routing to same page (Vue issue)
-        () => {}
-      )
     },
     refreshFilterView () {
       // Refresh the filtercomponent

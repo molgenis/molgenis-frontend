@@ -84,7 +84,7 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
         operands.push(createInQuery(name, selection))
         break
       case 'date-time-filter':
-        operands.push(createRangeQuery(name, [selection.startDate.toISOString(), selection.endDate.toISOString()]))
+        operands.push(createRangeQuery(name, [selection[0].toISOString(), selection[1].toISOString()]))
         break
       default:
         return null
