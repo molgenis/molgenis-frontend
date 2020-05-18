@@ -27,14 +27,16 @@ const fieldTypeToFilterType:StringMap = {
 
 const mapMetaToFilters = async (metaData: MetaData) => {
   let shownFilters:string[] = []
-  function findByID (ID: string):Attribute {
-    return metaData.attributes.filter((item) => item.id === ID)[0]
+  function findById (id: string): Attribute|null {
+    const selection = metaData.attributes.filter((item) => item.id === id)
+    return selection.length > 0 ? selection[0] : null
   }
 
   const filterDefinitions = metaData.attributes.filter((item: Attribute) => {
     // Filter out undefined datatypes
     return fieldTypeToFilterType[item.type]
   })
+
   const constructedFilters = await Promise.all(filterDefinitions.map(async (attribute: Attribute) => {
     const options = await getFieldOptions(attribute)
     // Base filter template
@@ -49,9 +51,9 @@ const mapMetaToFilters = async (metaData: MetaData) => {
 
     // Compound child
     if (attribute.parentAttributeId) {
-      const parent = findByID(attribute.parentAttributeId)
-      if (parent.type === 'compound') {
-        filterDefinition.compound = findByID(attribute.parentAttributeId).name
+      const parent = findById(attribute.parentAttributeId)
+      if (parent !== null && parent.type === 'compound') {
+        filterDefinition.compound = parent.name
       }
     }
 
@@ -83,6 +85,7 @@ const mapMetaToFilters = async (metaData: MetaData) => {
 
     return options ? { ...filterDefinition, options } : filterDefinition
   }))
+
   return {
     definition: constructedFilters,
     shown: shownFilters
