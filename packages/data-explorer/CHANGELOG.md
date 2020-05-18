@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.25.0...@molgenis-experimental/data-explorer@0.26.0) (2020-05-18)
+
+
+### Features
+
+* **data-explorer:** Filters version bump and add compounds labels to filter list ([#298](https://github.com/molgenis/molgenis-frontend/issues/298)) ([1d0425f](https://github.com/molgenis/molgenis-frontend/commit/1d0425f))
+
+
+
+
+
 # [0.25.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.24.0...@molgenis-experimental/data-explorer@0.25.0) (2020-05-13)
 
 
