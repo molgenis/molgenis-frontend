@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.26.0...@molgenis-experimental/data-explorer@0.27.0) (2020-05-19)
+
+
+### Bug Fixes
+
+* added additional check for multifilter ([4cddf9a](https://github.com/molgenis/molgenis-frontend/commit/4cddf9a))
+* added bookmarks to fetchMeta step ([ca7537a](https://github.com/molgenis/molgenis-frontend/commit/ca7537a))
+* bookmark now changes on removal of active filters ([a58ea1c](https://github.com/molgenis/molgenis-frontend/commit/a58ea1c))
+* fixed active filters being rendered before filter definitions were loaded ([b84916e](https://github.com/molgenis/molgenis-frontend/commit/b84916e))
+* fixed crash when definitions are undefined ([ff30d74](https://github.com/molgenis/molgenis-frontend/commit/ff30d74))
+* fixed entity view not working correctly ([4213e1a](https://github.com/molgenis/molgenis-frontend/commit/4213e1a))
+* fixed item being undefined when the last active filter is removed ([15be43c](https://github.com/molgenis/molgenis-frontend/commit/15be43c))
+* regenerated yarn.lock ([1520b73](https://github.com/molgenis/molgenis-frontend/commit/1520b73))
+* undo deletion ([2db414e](https://github.com/molgenis/molgenis-frontend/commit/2db414e))
+
+
+### Features
+
+* added all filters to bookmark, zipped it and encoded to base 64 ([175f6cd](https://github.com/molgenis/molgenis-frontend/commit/175f6cd))
+* added bookmarkable shown filters. which can be added / removed by manipulating the url ([d3cc94f](https://github.com/molgenis/molgenis-frontend/commit/d3cc94f))
+* bookmark works, now the query needs to be correctly made ([82cae34](https://github.com/molgenis/molgenis-frontend/commit/82cae34))
+* filters shown are set in url, selections are set in url. ([6eb9aa5](https://github.com/molgenis/molgenis-frontend/commit/6eb9aa5))
+* made bookmarks working, ([14c6aa6](https://github.com/molgenis/molgenis-frontend/commit/14c6aa6))
+
+
+
+
+
 # [0.26.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.25.0...@molgenis-experimental/data-explorer@0.26.0) (2020-05-18)
 
 
