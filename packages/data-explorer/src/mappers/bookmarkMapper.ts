@@ -1,23 +1,30 @@
 import router from '@/router'
 import store from '@/store/store'
+// @ts-ignore
+import * as LZString from 'lz-string'
 
 // can be name or label
 function getDataTypeForFilter (filterIdentifier: string): string {
   const filterDefinitions = store.state.filters.definition
-  const definitionForFilter = filterDefinitions.filter(fd => {
+  const definitionForFilter = filterDefinitions.filter((fd: any) => {
     return fd.name === filterIdentifier || fd.label === filterIdentifier
   })[0]
 
   return definitionForFilter ? definitionForFilter.dataType : ''
 }
 
-// function createDateTime (event_date: any, event_timezone_offset: any) {
-//   let d = new Date(event_date)
-//   let timeCorrection = d.getTimezoneOffset() - event_timezone_offset
-//   d.setMinutes(d.getMinutes() + timeCorrection)
+function encodeBookmark (object: any) {
+  if (object === null) return null // to clear the routing completely.
 
-//   return d
-// }
+  const jsonString = JSON.stringify(object)
+  const compressed = LZString.compressToBase64(jsonString)
+  return { bookmark: compressed }
+}
+
+function decodeBookmark (encodedBookmark: string) {
+  const decompressed = LZString.decompressFromBase64(encodedBookmark)
+  return JSON.parse(decompressed)
+}
 
 function convertBookmarkValue (value: any, dataType: string): any[] | string | undefined {
   switch (dataType) {
@@ -41,7 +48,7 @@ function convertBookmarkValue (value: any, dataType: string): any[] | string | u
       return value.split(',')
     case 'date':
     case 'datetime': // if its a date, we need to parse that.
-      return value.split(',')
+      return value.split(',').map((isoString: string) => new Date(isoString))
     default:
       return ''
   }
@@ -52,20 +59,24 @@ function setBookmark (route: any, bookmark: any) {
     {
       name: route.name,
       path: route.path,
-      query: bookmark
+      query: encodeBookmark(bookmark)
     },
     // to prevent error, which occurs on routing to same page (Vue issue)
     () => { }
   )
 }
 
-function decodeBookmark (query: any) {
+function parseBookmark (encodedBookmark: string) {
+  if (encodedBookmark === '') return
+
+  const bookmark = decodeBookmark(encodedBookmark)
   let output: any = {}
-  if (Object.keys(query).length >= 1) {
+
+  if (Object.keys(bookmark).length >= 1) {
     output.selections = {}
 
-    for (let property in query) {
-      const propValue = query[property]
+    for (let property in bookmark) {
+      const propValue = bookmark[property]
       if (property === 'filters') {
         output.shown = propValue.split(',')
       } else {
@@ -95,7 +106,7 @@ export const createBookmark = (router: any, shown: string[], selections: any = {
       const dataType = getDataTypeForFilter(property)
 
       if (dataType.includes('date')) {
-
+        bookmark[property] = encodeURI(value.map((date: Date) => date.toISOString()).join(','))
       } else {
         if (Array.isArray(value)) {
           bookmark[property] = encodeURI(value.join(','))
@@ -110,7 +121,7 @@ export const createBookmark = (router: any, shown: string[], selections: any = {
 
 // Bookmark is the source of truth. If no bookmark, then default.
 export const applyFilters = (query?: any, defaultShownFilters?: string[]) => {
-  const bookmarkedFilters = decodeBookmark(query)
+  const bookmarkedFilters = parseBookmark(query)
   if (bookmarkedFilters.shown) {
     store.commit('setFiltersShown', bookmarkedFilters.shown)
   } else if (defaultShownFilters) {

@@ -26,7 +26,7 @@ export default {
     commit('setFilterDefinition', definition)
     commit('setFiltersShown', state.tableSettings.defaultFilters)
 
-    if (state.bookmark.filters !== undefined) { commit('applyBookmark') }
+    if (state.bookmark !== '') { commit('applyBookmark') }
   }),
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {

@@ -30,6 +30,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.5",
     "jquery": "^3.4.1",
+    "lz-string": "^1.4.4",
     "popper.js": "^1.15.0",
     "v-runtime-template": "^1.10.0",
     "vue": "^2.6.10",

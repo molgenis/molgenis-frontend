@@ -12,8 +12,8 @@ Vue.config.productionTip = false
 
 // Catch query parameters to render them when accessing a bookmark
 router.beforeEach((to, from, next) => {
-  if (to.query.filters) {
-    store.commit('setBookmark', to.query)
+  if (to.query.bookmark) {
+    store.commit('setBookmark', to.query.bookmark)
   }
   next()
 })

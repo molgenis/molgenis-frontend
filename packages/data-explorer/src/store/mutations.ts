@@ -65,8 +65,8 @@ export default {
   setFilterSelection (state: ApplicationState, selections: StringMap) {
     Vue.set(state.filters, 'selections', selections)
   },
-  setBookmark (state: ApplicationState, query: any) {
-    Vue.set(state, 'bookmark', query)
+  setBookmark (state: ApplicationState, bookmark: string) {
+    Vue.set(state, 'bookmark', bookmark)
   },
   applyBookmark (state: ApplicationState, bookmark?: any) {
     applyFilters(bookmark || state.bookmark, state.tableSettings.defaultFilters)

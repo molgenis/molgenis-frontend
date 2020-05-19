@@ -26,7 +26,7 @@ const state: ApplicationState = {
     selections: {}
   },
   searchText: '',
-  bookmark: {}
+  bookmark: ''
 }
 
 export default state
