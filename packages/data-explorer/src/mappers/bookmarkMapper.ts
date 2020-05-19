@@ -13,7 +13,7 @@ function getDataTypeForFilter (filterIdentifier: string): string {
   return definitionForFilter ? definitionForFilter.dataType : ''
 }
 
-function encodeBookmark (object: any) {
+function encodeBookmark (object: any): any {
   if (object === null) return null // to clear the routing completely.
 
   const jsonString = JSON.stringify(object)

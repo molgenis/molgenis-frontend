@@ -36,7 +36,7 @@ describe('ToolbarView.vue', () => {
         shown: [],
         selections: {}
       },
-      bookmark: {},
+      bookmark: '',
       searchText: ''
     }
     mutations = {

@@ -271,7 +271,7 @@ describe('actions', () => {
         defaultFilters: []
       },
       searchText: '',
-      bookmark: {}
+      bookmark: ''
     }
 
     getters = {
