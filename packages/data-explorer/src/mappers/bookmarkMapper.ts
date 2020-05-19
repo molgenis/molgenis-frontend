@@ -1,4 +1,3 @@
-import router from '@/router'
 import store from '@/store/store'
 // @ts-ignore
 import * as LZString from 'lz-string'
@@ -54,11 +53,11 @@ function convertBookmarkValue (value: any, dataType: string): any[] | string | u
   }
 }
 
-function setBookmark (route: any, bookmark: any) {
+function setBookmark (router: any, bookmark: any) {
   router.push(
     {
-      name: route.name,
-      path: route.path,
+      name: router.name,
+      path: router.path,
       query: encodeBookmark(bookmark)
     },
     // to prevent error, which occurs on routing to same page (Vue issue)
@@ -66,7 +65,7 @@ function setBookmark (route: any, bookmark: any) {
   )
 }
 
-function parseBookmark (encodedBookmark: string) {
+function parseBookmark (encodedBookmark: string = '') {
   if (encodedBookmark === '') return
 
   const bookmark = decodeBookmark(encodedBookmark)
@@ -120,13 +119,14 @@ export const createBookmark = (router: any, shown: string[], selections: any = {
 }
 
 // Bookmark is the source of truth. If no bookmark, then default.
-export const applyFilters = (query?: any, defaultShownFilters?: string[]) => {
+export const applyFilters = (query?: string, defaultShownFilters?: string[]) => {
   const bookmarkedFilters = parseBookmark(query)
-  if (bookmarkedFilters.shown) {
-    store.commit('setFiltersShown', bookmarkedFilters.shown)
-  } else if (defaultShownFilters) {
+
+  if (!bookmarkedFilters) {
     store.commit('setFiltersShown', defaultShownFilters)
+    return
   }
+  store.commit('setFiltersShown', bookmarkedFilters.shown)
 
   if (bookmarkedFilters.selections) {
     store.commit('setFilterSelection', bookmarkedFilters.selections)

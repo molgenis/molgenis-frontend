@@ -104,7 +104,7 @@ export default Vue.extend({
     '$route.query': function (query) {
       // need to check if component triggered query, if so ignore.
       if (!this.componentRoute) {
-        this.applyBookmark(query)
+        this.applyBookmark(query.bookmark)
         this.refreshFilterView()
       } else this.componentRoute = false
     },
