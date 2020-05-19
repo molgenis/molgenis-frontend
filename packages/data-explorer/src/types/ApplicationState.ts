@@ -19,7 +19,7 @@ export type TableSetting = {
   settingsRowId: string | null,
   collapseLimit: number,
   isShop: boolean,
-  defaultFilters: string []
+  defaultFilters: string[]
 }
 
 export type FilterSelections = {
@@ -63,7 +63,7 @@ export default interface ApplicationState {
   shoppedEntityItems: string[]
   showShoppingCart: boolean
   tableSettings: TableSetting
-  isSettingsLoaded: boolean
   filters: FilterGroup
-  searchText: string
+  searchText: string,
+  bookmark: string
 }

@@ -11,25 +11,26 @@
     <button
       v-if="!showShoppingCart && dataDisplayLayout === 'TableView'"
       @click="toggleDataDisplayLayout"
-      class="btn btn-light ml-1 float-right btn-outline-secondary card-layout">
-      <font-awesome-icon icon="th"></font-awesome-icon>
-      Card layout
+      class="btn btn-light ml-1 float-right btn-outline-secondary card-layout"
+    >
+      <font-awesome-icon icon="th"></font-awesome-icon>Card layout
     </button>
     <button
       v-else-if="!showShoppingCart"
       @click="toggleDataDisplayLayout"
-      class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
-      <font-awesome-icon icon="th-list"></font-awesome-icon>
-      Table layout
+      class="btn btn-light ml-1 float-right btn-outline-secondary table-layout"
+    >
+      <font-awesome-icon icon="th-list"></font-awesome-icon>Table layout
     </button>
     <button
       v-if="!showShoppingCart && tableSettings.isShop"
       @click="openShoppingCart"
-      class="btn btn-light ml-1 float-right btn-outline-secondary show-cart">
-      <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
-      Show cart
+      class="btn btn-light ml-1 float-right btn-outline-secondary show-cart"
+    >
+      <font-awesome-icon icon="shopping-cart"></font-awesome-icon>Show cart
     </button>
     <active-filters
+      v-if="filterDefinitions && filterDefinitions.length > 0"
       @input="saveFilterState"
       :value="activeFilterSelections"
       :filters="filterDefinitions"
@@ -54,19 +55,28 @@ export default Vue.extend({
     activeFilterSelections: (vm) => {
       return vm.searchText ? { ...vm.filters.selections, _search: vm.searchText } : vm.filters.selections
     },
-    filterDefinitions: (vm) => {
+    filterDefinitions: vm => {
       const searchDef = {
         type: 'string',
         label: 'search',
         name: '_search'
       }
-      return vm.searchText ? [ ...vm.filters.definition, searchDef ] : vm.filters.definition
+      return vm.searchText
+        ? [...vm.filters.definition, searchDef]
+        : vm.filters.definition
     }
   },
   methods: {
-    ...mapMutations(['setDataDisplayLayout', 'setShowShoppingCart', 'setHideFilters', 'setFilterSelection', 'setSearchText']),
+    ...mapMutations([
+      'setDataDisplayLayout',
+      'setShowShoppingCart',
+      'setHideFilters',
+      'setFilterSelection',
+      'setSearchText'
+    ]),
     toggleDataDisplayLayout () {
-      const value = this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
+      const value =
+        this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.setDataDisplayLayout(value)
     },
     openShoppingCart () {

@@ -26,7 +26,6 @@ const fieldTypeToFilterType:StringMap = {
 }
 
 const mapMetaToFilters = async (metaData: MetaData) => {
-  let shownFilters:string[] = []
   function findById (id: string): Attribute|null {
     const selection = metaData.attributes.filter((item) => item.id === id)
     return selection.length > 0 ? selection[0] : null
@@ -87,8 +86,7 @@ const mapMetaToFilters = async (metaData: MetaData) => {
   }))
 
   return {
-    definition: constructedFilters,
-    shown: shownFilters
+    definition: constructedFilters
   }
 }
 

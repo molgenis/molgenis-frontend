@@ -10,6 +10,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
 
+// Catch query parameters to render them when accessing a bookmark
+router.beforeEach((to, from, next) => {
+  if (to.query.bookmark) {
+    store.commit('setBookmark', to.query.bookmark)
+  }
+  next()
+})
 // Setup event bus for n-level deep child -> parent events
 // This way the mainView can coordinate the events
 Vue.prototype.$eventBus = new Vue()

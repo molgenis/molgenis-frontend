@@ -1,4 +1,3 @@
-
 export const getErrorMessage = (response: any) =>
   response.errors
     ? response.errors[0].code

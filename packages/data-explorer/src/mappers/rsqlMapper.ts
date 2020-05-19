@@ -47,7 +47,9 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
   Object.keys(filterSelections).forEach((name: string) => {
     const selection = filterSelections[name]
     if (selection === undefined) return
+
     const definition = filterDefinitions.filter((filter) => filter.name === name)[0]
+    if (!definition || definition === null) return
 
     switch (definition.type) {
       case 'search-filter':
@@ -82,7 +84,7 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
         operands.push(createInQuery(name, selection))
         break
       case 'date-time-filter':
-        operands.push(createRangeQuery(name, [selection.startDate.toISOString(), selection.endDate.toISOString()]))
+        operands.push(createRangeQuery(name, [selection[0].toISOString(), selection[1].toISOString()]))
         break
       default:
         return null
