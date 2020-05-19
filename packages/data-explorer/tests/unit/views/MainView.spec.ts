@@ -15,6 +15,7 @@ describe('MainView.vue', () => {
   let state: any
   let mutations: any
   let actions: any
+  let wrapper: any
   const mocks: any = {
     $route: { params: {} },
     $eventBus: bus,
@@ -25,6 +26,7 @@ describe('MainView.vue', () => {
 
   beforeEach(() => {
     state = {
+      dataDisplayLayout: 'CardView',
       tableName: 'tableName',
       activeEntity: 'it_emx_datatypes_TypeTest',
       filters: {
@@ -49,10 +51,10 @@ describe('MainView.vue', () => {
     store = new Vuex.Store({
       state, mutations, actions
     })
+    wrapper = shallowMount(MainView, { store, localVue, mocks })
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(MainView, { store, localVue, mocks })
     expect(wrapper.exists()).toBeTruthy()
   })
 
@@ -60,7 +62,6 @@ describe('MainView.vue', () => {
     describe('when user confirms delete', () => {
       it('should call the deleteRow action passing the key', async (done) => {
         mocks.$bvModal.msgBoxConfirm.mockResolvedValue(true)
-        const wrapper = shallowMount(MainView, { store, localVue, mocks })
         // @ts-ignore
         wrapper.vm.$eventBus.$emit('delete-item', 'my-key')
         await wrapper.vm.$nextTick()
@@ -72,7 +73,6 @@ describe('MainView.vue', () => {
     describe('when user cancels delete', () => {
       it('should not call the delete row action', async (done) => {
         mocks.$bvModal.msgBoxConfirm.mockResolvedValue(false)
-        const wrapper = shallowMount(MainView, { store, localVue, mocks })
         // @ts-ignore
         wrapper.vm.$eventBus.$emit('delete-item', 'my-key')
         await wrapper.vm.$nextTick()
@@ -84,7 +84,6 @@ describe('MainView.vue', () => {
 
   describe('when destroyed', () => {
     it('should remove the delete-item event listener', () => {
-      const wrapper = shallowMount(MainView, { store, localVue, mocks })
       wrapper.destroy()
       expect(offSpy).toHaveBeenCalled()
     })
@@ -92,7 +91,6 @@ describe('MainView.vue', () => {
 
   describe('fetchViewData', () => {
     it('if table name is changed, should fetch settings and metaData ', async (done) => {
-      const wrapper = shallowMount(MainView, { store, localVue, mocks })
       // @ts-ignore
       await wrapper.vm.fetchViewData('new table name')
       expect(actions.fetchTableMeta).toHaveBeenCalled()
@@ -101,7 +99,6 @@ describe('MainView.vue', () => {
     })
 
     it('if table name is not changed, should not fetch settings and meta ', async (done) => {
-      const wrapper = shallowMount(MainView, { store, localVue, mocks })
       actions.fetchTableMeta.mockReset()
       mutations.setTableName.mockReset()
       // @ts-ignore
@@ -112,8 +109,6 @@ describe('MainView.vue', () => {
     })
 
     it('if selected view is cardView, should fetch card data', async (done) => {
-      store.state.dataDisplayLayout = 'CardView'
-      const wrapper = shallowMount(MainView, { store, localVue, mocks })
       // @ts-ignore
       await wrapper.vm.fetchViewData('tableName')
       expect(actions.fetchCardViewData).toHaveBeenCalled()
@@ -125,11 +120,6 @@ describe('MainView.vue', () => {
     it('fetch data before calling next', async (done) => {
       // @ts-ignore
       actions.fetchTableViewData.mockResolvedValue()
-      const wrapper = shallowMount(MainView, {
-        store,
-        localVue,
-        mocks
-      })
       const next = jest.fn()
       const from = {}
       const to = {
