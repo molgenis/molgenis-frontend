@@ -37,6 +37,7 @@ export type FilterDefinition = {
   options?: [{ value: string, text: string }],
   collapsable?: boolean,
   collapsed?: boolean,
+  compound?: string
   min?: number,
   max?: number,
   useSlider?: boolean,

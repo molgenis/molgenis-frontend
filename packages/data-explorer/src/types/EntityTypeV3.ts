@@ -112,7 +112,7 @@ type AttributeData = {
   categoricalOptions?: CategoricalOption[],
   defaultValue?: string,
   cascadeDelete?: boolean,
-  parentAttribute?: Attribute,
+  parentAttributeId?: string,
   expression?: string,
   nullableExpression?: string,
   visibleExpression?: string,
@@ -132,5 +132,5 @@ type ResponseAttributeData = AttributeData & {
   unique: boolean,
   readOnly: boolean,
   aggregatable: boolean,
-  parentAttribute?: ResponseAttribute,
+  parentAttributeId: string
 }
