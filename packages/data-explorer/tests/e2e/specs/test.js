@@ -74,14 +74,14 @@ module.exports = {
     browser
       .url(process.env.VUE_DEV_SERVER_URL)
       .waitForElementPresent('#app', timeOutDelay)
-      .waitForElementPresent('.dropdown-toggle.dropdown-toggle-no-caret', timeOutDelay)
-      .click('.dropdown-toggle.dropdown-toggle-no-caret')
-      .waitForElementPresent('.dropdown-menu', timeOutDelay)
-      .assert.elementCount('.filter-card', 0)
+      .waitForElementPresent('.filter-container .dropdown-toggle.dropdown-toggle-no-caret', timeOutDelay)
+      .click('.filter-container .dropdown-toggle.dropdown-toggle-no-caret')
+      .waitForElementPresent('.filter-container .dropdown-menu', timeOutDelay)
+      .assert.elementCount('.filter-container .filter-card', 0)
       .click('.custom-control.custom-checkbox:nth-child(1) label')
-      .assert.elementCount('.filter-card', 1)
+      .assert.elementCount('.filter-container .filter-card', 1)
       .click('.custom-control.custom-checkbox:nth-child(1) label')
-      .assert.elementCount('.filter-card', 0)
+      .assert.elementCount('.filter-container .filter-card', 0)
       .end()
   }
 }
