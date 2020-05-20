@@ -19,14 +19,14 @@ const state: ApplicationState = {
     isShop: false,
     defaultFilters: []
   },
-  isSettingsLoaded: false,
   filters: {
     hideSidebar: false,
     definition: [],
     shown: [],
     selections: {}
   },
-  searchText: ''
+  searchText: '',
+  bookmark: ''
 }
 
 export default state

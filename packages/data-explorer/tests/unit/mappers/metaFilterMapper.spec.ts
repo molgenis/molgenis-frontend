@@ -42,6 +42,40 @@ describe('metaFilterMapper', () => {
         visible: true,
         aggregatable: false
       })
+      meta.attributes.push({
+        id: '/api/metadata/compound',
+        type: 'compound',
+        name: 'compound',
+        label: 'compound label',
+        description: '',
+        auto: false,
+        nullable: false,
+        readOnly: true,
+        idAttribute: false,
+        labelAttribute: false,
+        unique: false,
+        isReference: false,
+        visible: true,
+        aggregatable: false
+      })
+      meta.attributes.push({
+        id: '/api/metadata/compoundChild',
+        type: 'int',
+        name: 'int',
+        label: 'int',
+        range: { min: 0, max: 10 },
+        description: '',
+        auto: false,
+        nullable: false,
+        readOnly: true,
+        idAttribute: false,
+        labelAttribute: false,
+        unique: false,
+        isReference: false,
+        visible: true,
+        parentAttributeId: '/api/metadata/compound',
+        aggregatable: false
+      })
       const filters = await mapMetaToFilters(meta as MetaData)
       expect(filters.definition[0].type).toEqual('range-filter')
       expect(filters.definition[1].dataType).toEqual('string')
@@ -50,6 +84,8 @@ describe('metaFilterMapper', () => {
       expect(filters.definition[4].type).toEqual('string-filter')
       expect(filters.definition[8].type).toEqual('date-time-filter')
       expect(filters.definition[9].time).toEqual(true)
+      expect(filters.definition[10].type).toEqual('compound-title')
+      expect(filters.definition[11].compound).toEqual('compound')
     })
   })
 })

@@ -34,7 +34,7 @@ export type Attribute = {
   enumOptions?: string[],
   categoricalOptions?: CategoricalOption[],
   defaultValue?: string,
-  parentAttribute?: Attribute,
+  parentAttributeId?: string,
   expression?: string,
   nullableExpression?: string,
   visibleExpression?: string,

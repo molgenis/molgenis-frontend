@@ -79,7 +79,8 @@ export default Vue.extend({
       'setSearchText'
     ]),
     toggleDataDisplayLayout () {
-      const value = this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
+      const value =
+        this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.setDataDisplayLayout(value)
     },
     openShoppingCart () {

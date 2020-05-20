@@ -55,7 +55,7 @@ describe('rsqlMapper', () => {
         money: ['0', null],
         amount: [null, 100],
         comply: ['yes'],
-        date: { startDate: new Date(1), endDate: new Date(2) },
+        date: [new Date(1), new Date(2)],
         xref: ['bla'],
         default: true
       }

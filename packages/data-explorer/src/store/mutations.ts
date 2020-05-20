@@ -3,6 +3,7 @@ import { DataApiResponse } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
+import { applyFilters } from '@/mappers/bookmarkMapper'
 
 const defaultSettings = {
   settingsRowId: null,
@@ -25,9 +26,6 @@ export default {
   },
   setTableData (state: ApplicationState, data: DataApiResponse) {
     state.tableData = data
-  },
-  setHideFilters (state: ApplicationState, hideFilters: boolean) {
-    state.filters.hideSidebar = hideFilters
   },
   setTableName (state: ApplicationState, entity: string) {
     state.tableName = entity
@@ -53,18 +51,27 @@ export default {
     state.tableSettings.defaultFilters = isPropSet('default_filters') ? tableSettings.default_filters.split(',').map(f => f.trim()) : defaultSettings.defaultFilters
   },
   setMetaData (state: ApplicationState, metaData: MetaData) {
-    state.tableMeta = metaData
-  },
-  setFilterSelection (state: ApplicationState, selections: StringMap) {
-    Vue.set(state.filters, 'selections', selections)
+    Vue.set(state, 'tableMeta', metaData)
   },
   setFilterDefinition (state: ApplicationState, definition: FilterDefinition[]) {
     Vue.set(state.filters, 'definition', definition)
   },
+  setHideFilters (state: ApplicationState, hideFilters: boolean) {
+    Vue.set(state.filters, 'hideSidebar', hideFilters)
+  },
   setFiltersShown (state: ApplicationState, shown: string[]) {
     Vue.set(state.filters, 'shown', shown)
   },
-  updateRowData (state: ApplicationState, { rowId, rowData }: {rowId: string, rowData: StringMap}) {
+  setFilterSelection (state: ApplicationState, selections: StringMap) {
+    Vue.set(state.filters, 'selections', selections)
+  },
+  setBookmark (state: ApplicationState, bookmark: string) {
+    Vue.set(state, 'bookmark', bookmark)
+  },
+  applyBookmark (state: ApplicationState, bookmark?: string) {
+    applyFilters(bookmark || state.bookmark, state.tableSettings.defaultFilters)
+  },
+  updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {
     if (!state.tableData) {
       throw new Error('cannot update empty table data')
     }
@@ -89,9 +96,6 @@ export default {
         Vue.delete(state.tableData.items, index)
       }
     })
-  },
-  setIsSettingsLoaded (state: ApplicationState, isLoaded: boolean) {
-    state.isSettingsLoaded = isLoaded
   },
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText

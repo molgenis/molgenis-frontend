@@ -270,8 +270,8 @@ describe('actions', () => {
         collapseLimit: 5,
         defaultFilters: []
       },
-      isSettingsLoaded: true,
-      searchText: ''
+      searchText: '',
+      bookmark: ''
     }
 
     getters = {

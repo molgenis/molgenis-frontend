@@ -22,7 +22,6 @@ describe('ToolbarView.vue', () => {
       defaultEntityData: null,
       showShoppingCart: false,
       shoppedEntityItems: [],
-      isSettingsLoaded: false,
       tableSettings: {
         defaultFilters: [],
         settingsRowId: null,
@@ -37,6 +36,7 @@ describe('ToolbarView.vue', () => {
         shown: [],
         selections: {}
       },
+      bookmark: '',
       searchText: ''
     }
     mutations = {

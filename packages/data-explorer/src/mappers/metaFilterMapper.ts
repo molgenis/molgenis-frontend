@@ -21,16 +21,21 @@ const fieldTypeToFilterType:StringMap = {
   'xref': 'multi-filter',
   'onetomany': 'multi-filter',
   'enum': 'checkbox-filter',
-  'file': 'string-filter'
+  'file': 'string-filter',
+  'compound': 'compound-title'
 }
 
 const mapMetaToFilters = async (metaData: MetaData) => {
-  let shownFilters:string[] = []
+  function findById (id: string): Attribute|null {
+    const selection = metaData.attributes.filter((item) => item.id === id)
+    return selection.length > 0 ? selection[0] : null
+  }
 
   const filterDefinitions = metaData.attributes.filter((item: Attribute) => {
     // Filter out undefined datatypes
     return fieldTypeToFilterType[item.type]
   })
+
   const constructedFilters = await Promise.all(filterDefinitions.map(async (attribute: Attribute) => {
     const options = await getFieldOptions(attribute)
     // Base filter template
@@ -41,6 +46,14 @@ const mapMetaToFilters = async (metaData: MetaData) => {
       dataType: attribute.type,
       collapsable: true,
       collapsed: false
+    }
+
+    // Compound child
+    if (attribute.parentAttributeId) {
+      const parent = findById(attribute.parentAttributeId)
+      if (parent !== null && parent.type === 'compound') {
+        filterDefinition.compound = parent.name
+      }
     }
 
     // Decimal
@@ -71,9 +84,9 @@ const mapMetaToFilters = async (metaData: MetaData) => {
 
     return options ? { ...filterDefinition, options } : filterDefinition
   }))
+
   return {
-    definition: constructedFilters,
-    shown: shownFilters
+    definition: constructedFilters
   }
 }
 
