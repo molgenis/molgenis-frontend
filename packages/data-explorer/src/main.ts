@@ -12,9 +12,7 @@ Vue.config.productionTip = false
 
 // Catch query parameters to render them when accessing a bookmark
 router.beforeEach((to, from, next) => {
-  if (to.query.bookmark) {
-    store.commit('setBookmark', to.query.bookmark)
-  }
+  store.commit('setBookmark', to.query.bookmark ? to.query.bookmark : '')
   next()
 })
 // Setup event bus for n-level deep child -> parent events
