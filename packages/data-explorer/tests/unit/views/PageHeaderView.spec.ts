@@ -53,9 +53,9 @@ describe('PageHeaderView', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  it('show table name and description', () => {
+  it('show table table-settings-button and description', () => {
     const wrapper = shallowMount(PageHeaderView, { store, localVue })
-    expect(wrapper.find('h1').text()).toEqual('lbl')
+    expect(wrapper.find('table-settings-button-stub')).toBeDefined()
     expect(wrapper.find('em').text()).toEqual('desc')
   })
 
