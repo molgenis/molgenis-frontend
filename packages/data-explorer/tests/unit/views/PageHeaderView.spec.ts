@@ -55,8 +55,7 @@ describe('PageHeaderView', () => {
 
   it('show table name and description', () => {
     const wrapper = shallowMount(PageHeaderView, { store, localVue })
-    // todo replace with breadcrumb entity picker
-    // expect(wrapper.find('h1').text()).toEqual('lbl')
+    expect(wrapper.find('h1').text()).toEqual('lbl')
     expect(wrapper.find('em').text()).toEqual('desc')
   })
 
