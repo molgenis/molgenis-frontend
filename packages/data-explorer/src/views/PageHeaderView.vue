@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid mb-3">
     <div class="row">
       <div class="col-3">
         <table-select
@@ -18,7 +18,7 @@
         </table-settings-button>
       </div>
     </div>
-    <div class="row mb-3">
+    <div class="row">
       <div class="col-6">
         <small v-if="tableMeta && tableMeta.description" class="text-secondary">
           <em>{{tableMeta.description}}</em>

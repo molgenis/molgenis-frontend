@@ -1,5 +1,5 @@
 <template>
-  <div class="toolbar row mt-2">
+  <div class="toolbar row">
     <div class="col-4">
       <a
         v-if="!showShoppingCart"
