@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchComponent should render the component 1`] = `
+<b-nav-stub tag="ul" class="bread-crumb-dropdown">
+  <b-nav-item-dropdown-stub id="label" dropup="true" offset="0" boundary="scrollParent" text="label" toggleclass="bread-crumb-item-dropdown" nocaret="true" role="menu">
+    <b-dropdown-item-stub target="_self" to="pt-id" event="click" routertag="a">pt-lbl</b-dropdown-item-stub>
+  </b-nav-item-dropdown-stub>
+</b-nav-stub>
+`;

@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2 entity-table container-fluid"
+  <div class="entity-table container-fluid"
        v-if="tableData && tableData.items.length > 0">
     <div class="row" v-if="isShop && entitiesToShow.length === 0">
       <div class="alert alert-warning col">

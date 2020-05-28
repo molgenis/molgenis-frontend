@@ -290,6 +290,8 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledWith('setFiltersShown', [])
       expect(commit).toHaveBeenCalledWith('setFilterDefinition', 'def')
       expect(commit).toHaveBeenCalledWith('setMetaData', 'meta')
+      expect(commit).toHaveBeenCalledWith('setFilterSelection', {})
+      expect(commit).toHaveBeenCalledWith('setSearchText', '')
     })
   })
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2 entity-table" v-if="tableData && tableData.items && tableData.items.length > 0 && tableMeta">
+  <div class="entity-table" v-if="tableData && tableData.items && tableData.items.length > 0 && tableMeta">
     <div v-if="entitiesToShow.length === 0" class="alert alert-warning">
       {{ 'dataexplorer_empty_shopping_cart' | i18n}}
     </div>

@@ -13,6 +13,9 @@ export default {
     commit('setMetaData', null)
     commit('setFilterDefinition', [])
     commit('setFiltersShown', [])
+    commit('setFilterSelection', {})
+    commit('setSearchText', '')
+
     try {
       const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
       commit('setTableSettings', response.items[0].data)
