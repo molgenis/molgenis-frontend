@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.27.0...@molgenis-experimental/data-explorer@0.28.0) (2020-05-28)
+
+
+### Bug Fixes
+
+* **data-explorer:** fix e2e test ([4ba9835](https://github.com/molgenis/molgenis-frontend/commit/4ba9835))
+* **data-explorer:** remove unneeded margin to align column ([7ec5559](https://github.com/molgenis/molgenis-frontend/commit/7ec5559))
+* **data-explorer:** Reset bookmark on table change ([31b1b3e](https://github.com/molgenis/molgenis-frontend/commit/31b1b3e))
+
+
+### Features
+
+* Add chevron on hover and remove self from list ([c32336d](https://github.com/molgenis/molgenis-frontend/commit/c32336d))
+* select table to explore ([1f797d6](https://github.com/molgenis/molgenis-frontend/commit/1f797d6))
+
+
+
+
+
 # [0.27.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.26.0...@molgenis-experimental/data-explorer@0.27.0) (2020-05-19)
 
 
