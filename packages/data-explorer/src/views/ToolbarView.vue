@@ -1,69 +1,73 @@
 <template>
-  <div class="toolbar mt-2">
-    <a
-      v-if="!showShoppingCart"
-      class="btn btn-light btn-outline-secondary card-layout"
-      role="button"
-      :href="'/plugin/data-row-edit/' + tableName">
-      <font-awesome-icon icon="plus-square"></font-awesome-icon>
-      Add
-    </a>
-    <button
-      v-if="!showShoppingCart && dataDisplayLayout === 'TableView'"
-      @click="toggleDataDisplayLayout"
-      class="btn btn-light ml-1 float-right btn-outline-secondary card-layout"
-    >
-      <font-awesome-icon icon="th"></font-awesome-icon>Card layout
-    </button>
-    <button
-      v-else-if="!showShoppingCart"
-      @click="toggleDataDisplayLayout"
-      class="btn btn-light ml-1 float-right btn-outline-secondary table-layout"
-    >
-      <font-awesome-icon icon="th-list"></font-awesome-icon>Table layout
-    </button>
-    <button
-      v-if="!showShoppingCart && tableSettings.isShop"
-      @click="openShoppingCart"
-      class="btn btn-light ml-1 float-right btn-outline-secondary show-cart"
-    >
-      <font-awesome-icon icon="shopping-cart"></font-awesome-icon>Show cart
-    </button>
-    <active-filters
-      v-if="filterDefinitions && filterDefinitions.length > 0"
-      @input="saveFilterState"
-      :value="activeFilterSelections"
-      :filters="filterDefinitions"
-    ></active-filters>
+  <div class="toolbar row">
+    <div class="col-4">
+      <a
+        v-if="!showShoppingCart"
+        class="btn btn-light btn-outline-secondary card-layout"
+        role="button"
+        :href="'/plugin/data-row-edit/' + tableName">
+        <font-awesome-icon icon="plus-square"></font-awesome-icon>
+        Add
+      </a>
+    </div>
+    <div class="col-4">
+      <search-component v-model="searchText"></search-component>
+    </div>
+    <div class="col-4">
+      <button
+        v-if="!showShoppingCart && dataDisplayLayout === 'TableView'"
+        @click="toggleDataDisplayLayout"
+        class="btn btn-light ml-1 float-right btn-outline-secondary card-layout">
+        <font-awesome-icon icon="th"></font-awesome-icon>
+        Card layout
+      </button>
+      <button
+        v-else-if="!showShoppingCart"
+        @click="toggleDataDisplayLayout"
+        class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
+        <font-awesome-icon icon="th-list"></font-awesome-icon>
+        Table layout
+      </button>
+      <button
+        v-if="!showShoppingCart && tableSettings.isShop"
+        @click="openShoppingCart"
+        class="btn btn-light ml-1 float-right btn-outline-secondary show-cart">
+        <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
+        Show cart
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import ActiveFilters from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/ActiveFilters.vue'
 import { mapState, mapMutations } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import SearchComponent from '../components/SearchComponent'
 
 library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare)
 
 export default Vue.extend({
   name: 'ToolbarView',
+  components: { FontAwesomeIcon, SearchComponent },
   computed: {
-    ...mapState(['dataDisplayLayout', 'hideFilters', 'showShoppingCart', 'tableSettings', 'filters', 'searchText', 'tableName']),
-    activeFilterSelections: (vm) => {
-      return vm.searchText ? { ...vm.filters.selections, _search: vm.searchText } : vm.filters.selections
-    },
-    filterDefinitions: vm => {
-      const searchDef = {
-        type: 'string',
-        label: 'search',
-        name: '_search'
+    ...mapState([
+      'dataDisplayLayout',
+      'hideFilters',
+      'showShoppingCart',
+      'tableSettings',
+      'searchText',
+      'tableName'
+    ]),
+    searchText: {
+      get () {
+        return this.$store.state.searchText
+      },
+      set (value) {
+        this.$store.commit('setSearchText', value)
       }
-      return vm.searchText
-        ? [...vm.filters.definition, searchDef]
-        : vm.filters.definition
     }
   },
   methods: {
@@ -82,14 +86,7 @@ export default Vue.extend({
     openShoppingCart () {
       this.setShowShoppingCart(true)
       this.setHideFilters(true)
-    },
-    saveFilterState (newSelections) {
-      if (newSelections['_search'] === undefined) {
-        this.setSearchText('')
-      }
-      this.setFilterSelection(newSelections)
     }
-  },
-  components: { ActiveFilters, FontAwesomeIcon }
+  }
 })
 </script>

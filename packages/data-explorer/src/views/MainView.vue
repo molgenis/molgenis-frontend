@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid my-4">
+  <div class="container-fluid my-2">
     <toast-component
       class="toast-component mt-2"
       v-if="toast"
@@ -7,9 +7,10 @@
       :message="toast.message"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
+    <page-header-view v-if="!loading"></page-header-view>
     <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
       <div class="flex-filter">
-        <filters-view v-if="tableName"></filters-view>
+        <filters-view v-if="!loading"></filters-view>
       </div>
       <div class="flex-data ml-4" >
         <button
@@ -38,6 +39,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import PageHeaderView from './PageHeaderView'
 
 library.add(faChevronUp)
 
@@ -51,6 +53,7 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
+  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon, PageHeaderView },
   computed: {
     ...mapState([
       'filters',
@@ -75,7 +78,8 @@ export default Vue.extend({
       'deleteRow',
       'fetchTableMeta',
       'fetchCardViewData',
-      'fetchTableViewData'
+      'fetchTableViewData',
+      'fetchTableMeta'
     ]),
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'
@@ -110,8 +114,7 @@ export default Vue.extend({
   async beforeRouteUpdate (to, from, next) {
     await this.fetchViewData(to.params.entity)
     next()
-  },
-  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon }
+  }
 })
 </script>
 
