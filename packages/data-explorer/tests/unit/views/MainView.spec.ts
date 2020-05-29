@@ -65,6 +65,7 @@ describe('MainView.vue', () => {
         // @ts-ignore
         wrapper.vm.$eventBus.$emit('delete-item', 'my-key')
         await wrapper.vm.$nextTick()
+        await wrapper.vm.$nextTick()
         expect(actions.deleteRow).toHaveBeenCalledWith(expect.anything(), { rowId: 'my-key' }, undefined)
         done()
       })
