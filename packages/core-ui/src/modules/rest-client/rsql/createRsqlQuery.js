@@ -30,10 +30,13 @@ export function createRsqlQuery(rules) {
             rule = rule.nestedRules[0];
         }
 
+        const field = rule.field !== undefined ? rule.field : '*';
         switch (rule.operator) {
             case 'SEARCH':
-                let field = rule.field !== undefined ? rule.field : '*';
                 rsql += toRsqlValue(field) + '=q=' + toRsqlValue(rule.value);
+                break;
+            case 'SEARCH_QUERY':
+                rsql += toRsqlValue(field) + '=sq=' + toRsqlValue(rule.value);
                 break;
             case 'EQUALS':
                 rsql += toRsqlValue(rule.field) + '==' + toRsqlValue(rule.value);

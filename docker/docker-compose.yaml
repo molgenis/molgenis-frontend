@@ -2,7 +2,7 @@ version: "3.4"
 services:
   frontend:
     build: 
-      context: ./proxy-config
+      context: ./preview-config
     depends_on:
       - molgenis
     ports:
