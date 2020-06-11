@@ -76,8 +76,10 @@ function parseBookmark (encodedBookmark: string = '') {
 
     for (let property in bookmark) {
       const propValue = bookmark[property]
-      if (property === 'filters') {
+      if (property === 'shown') {
         output.shown = propValue.split(',')
+      } else if (property === 'searchText') {
+        output.searchText = propValue
       } else {
         const dataType = getDataTypeForFilter(property)
         output.selections[property] = convertBookmarkValue(propValue, dataType)
@@ -87,21 +89,24 @@ function parseBookmark (encodedBookmark: string = '') {
   return output
 }
 
-export const createBookmark = (router: any, shown: string[], selections: any = {}) => {
+export const createBookmark = (router: any) => {
+  store.commit('setComponentRoute', true)
+
+  const shown = store.state.filters.shown
+  const selections = store.state.filters.selections
+  const searchText = store.state.searchText
   if (shown.length === 0) {
     setBookmark(router, null)
     return
   }
   const bookmark: any = {}
-
-  bookmark.filters = encodeURI(shown.join(','))
+  bookmark.searchText = searchText
+  bookmark.shown = encodeURI(shown.join(','))
 
   if (Object.keys(selections).length > 0) {
     for (let property in selections) {
       const value = selections[property]
-
       if (value === '' || value === null || value === undefined || value.length === 0) { break } // can't do if(!value) because that would also trigger if value === 0
-
       const dataType = getDataTypeForFilter(property)
 
       if (dataType.includes('date')) {
@@ -126,8 +131,12 @@ export const applyFilters = (query?: string, defaultShownFilters?: string[]) => 
     store.commit('setFiltersShown', defaultShownFilters)
     return
   }
-  store.commit('setFiltersShown', bookmarkedFilters.shown)
-
+  if (bookmarkedFilters.searchText) {
+    store.commit('setSearchText', bookmarkedFilters.searchText)
+  }
+  if (bookmarkedFilters.shown) {
+    store.commit('setFiltersShown', bookmarkedFilters.shown)
+  }
   if (bookmarkedFilters.selections) {
     store.commit('setFilterSelection', bookmarkedFilters.selections)
   }

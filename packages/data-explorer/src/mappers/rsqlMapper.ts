@@ -43,11 +43,10 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
     }]
     filterSelections = { ...filters.selections, _search: searchText }
   }
-
   Object.keys(filterSelections).forEach((name: string) => {
     const selection = filterSelections[name]
-    if (selection === undefined) return
 
+    if (selection === undefined || (Array.isArray(selection) && selection.length === 0)) return
     const definition = filterDefinitions.filter((filter) => filter.name === name)[0]
     if (!definition || definition === null) return
 
@@ -90,7 +89,6 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
         return null
     }
   })
-
   if (operands.length === 0) return null
 
   const result = transformToRSQL({

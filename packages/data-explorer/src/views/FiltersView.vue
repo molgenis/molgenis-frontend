@@ -43,8 +43,7 @@ export default Vue.extend({
   components: { FilterContainer, FontAwesomeIcon },
   data: () => {
     return {
-      renderCount: 0,
-      componentRoute: false
+      renderCount: 0
     }
   },
   computed: {
@@ -52,7 +51,8 @@ export default Vue.extend({
       'filters',
       'tableMeta',
       'bookmarkedShownFilters',
-      'bookmarkedSelections'
+      'bookmarkedSelections',
+      'componentRoute'
     ]),
     isFilterDataLoaded () {
       return this.tableMeta !== null
@@ -81,19 +81,15 @@ export default Vue.extend({
       'setHideFilters',
       'applyBookmark',
       'setFiltersShown',
-      'setFilterSelection'
+      'setFilterSelection',
+      'setComponentRoute'
     ]),
     updateState (shownFilters) {
       this.setFiltersShown(shownFilters)
       this.addBookmark()
     },
     addBookmark () {
-      createBookmark(
-        this.$router,
-        this.filters.shown,
-        this.filters.selections
-      )
-      this.componentRoute = true
+      createBookmark(this.$router)
     },
     refreshFilterView () {
       // Refresh the filtercomponent
@@ -106,10 +102,7 @@ export default Vue.extend({
       if (!this.componentRoute) {
         this.applyBookmark(query.bookmark)
         this.refreshFilterView()
-      } else this.componentRoute = false
-    },
-    filterSelections: function (val) {
-      this.addBookmark()
+      } else this.setComponentRoute(false)
     }
   }
 })

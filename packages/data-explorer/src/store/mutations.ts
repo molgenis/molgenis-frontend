@@ -99,5 +99,8 @@ export default {
   },
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText
+  },
+  setComponentRoute (state: ApplicationState, componentRoute: boolean) {
+    state.componentRoute = componentRoute
   }
 }
