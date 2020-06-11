@@ -1,5 +1,4 @@
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
+import api from '@/lib/api'
 import ApplicationState from '@/types/ApplicationState'
 import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
@@ -18,6 +17,7 @@ export default {
 
     try {
       const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+      // @ts-ignore
       commit('setTableSettings', response.items[0].data)
     } catch (e) {
       // dont show error to user, just keep the default settings

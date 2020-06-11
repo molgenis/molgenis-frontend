@@ -1,7 +1,7 @@
 import actions from '@/store/header/actions'
-import axios from 'axios'
+import api from '@/lib/api'
 
-jest.mock('axios', () => ({ get: jest.fn() }))
+jest.mock('@/lib/api', () => ({ get: jest.fn() }))
 
 describe('header actions', () => {
   let commit: any = jest.fn()
@@ -14,7 +14,7 @@ describe('header actions', () => {
         }
       }
       // @ts-ignore
-      axios.get.mockResolvedValue(mockResp)
+      api.get.mockResolvedValue(mockResp)
       await actions.getGroupTabels({ commit }, { package: 'http://host/api/data/sys_md_Package/my-pack' })
       expect(commit).toHaveBeenCalledWith('setPackageTables', [{ id: 'id', label: 'label' }])
       done()

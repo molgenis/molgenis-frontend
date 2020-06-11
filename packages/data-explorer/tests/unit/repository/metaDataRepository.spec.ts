@@ -1,8 +1,8 @@
 import * as metaDataRepository from '../../../src/repository/metaDataRepository'
 import * as metaDataResponseMapper from '../../../src/repository/metaDataResponseMapper'
-import axios from 'axios'
+import api from '@/lib/api'
 
-jest.mock('axios', () => ({
+jest.mock('@/lib/api', () => ({
   get: jest.fn()
 }))
 
@@ -21,7 +21,7 @@ describe('metaDataRepository', () => {
     const tableId = 'books'
 
     // @ts-ignore
-    axios.get.mockResolvedValue(mockResponse)
+    api.get.mockResolvedValue(mockResponse)
     // @ts-ignore
     metaDataResponseMapper.toMetaData.mockReturnValue({
       meta: 'meta'
@@ -30,14 +30,14 @@ describe('metaDataRepository', () => {
     it('should fetch the meta data', async () => {
       const resp = await metaDataRepository.fetchMetaDataById(tableId)
       expect(resp).toEqual(mockResponse.data)
-      expect(axios.get).toHaveBeenCalled()
+      expect(api.get).toHaveBeenCalled()
     })
 
     it('should cache the results and use the cache', async () => {
       await metaDataRepository.fetchMetaDataById(tableId)
       const resp = await metaDataRepository.fetchMetaDataById(tableId)
       expect(resp).toEqual(mockResponse.data)
-      expect(axios.get).toHaveBeenCalledTimes(1)
+      expect(api.get).toHaveBeenCalledTimes(1)
     })
   })
 })

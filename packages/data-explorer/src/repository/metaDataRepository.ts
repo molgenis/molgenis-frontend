@@ -1,5 +1,6 @@
 /* eslint-disable object-curly-spacing */
-import axios, { AxiosResponse } from 'axios'
+import api from '@/lib/api'
+import { AxiosResponse } from 'axios'
 import * as mapper from './metaDataResponseMapper'
 import { ResponseEntityType } from '../types/EntityTypeV3'
 import { MetaData } from '../types/MetaData'
@@ -29,7 +30,7 @@ const fetchMetaDataById = async (entityId: string): Promise<MetaData> => {
     })
   }
 
-  const response = axios.get<ResponseEntityType>(`/api/metadata/${entityId}`, {
+  const response = api.get<ResponseEntityType>(`/api/metadata/${entityId}`, {
     params: {
       flattenAttributes: true
     }
