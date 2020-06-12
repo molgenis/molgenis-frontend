@@ -1,11 +1,12 @@
 import { shallowMount, Wrapper } from '@vue/test-utils'
 import SearchComponent from '@/components/SearchComponent.vue'
+import router from '@/router'
 
 describe('SearchComponent', () => {
   let wrapper: any
 
   beforeEach(() => {
-    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' } })
+    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router })
   })
 
   it('should render the component', () => {

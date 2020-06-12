@@ -21,7 +21,7 @@ function encodeBookmark (object: any): any {
 }
 
 function decodeBookmark (encodedBookmark: string) {
-  const decompressed = LZString.decompressFromBase64(encodedBookmark)
+  const decompressed = LZString.decompressFromBase64(decodeURIComponent(encodedBookmark))
   return JSON.parse(decompressed)
 }
 
