@@ -28,6 +28,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { createBookmark } from '../mappers/bookmarkMapper'
 
 library.add(faSearch)
 
@@ -48,6 +49,7 @@ export default {
   methods: {
     handleSearchAction () {
       this.$emit('input', this.searchText)
+      createBookmark(this.$router)
     }
   },
   watch: {

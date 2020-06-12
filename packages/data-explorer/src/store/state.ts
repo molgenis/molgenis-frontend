@@ -26,7 +26,8 @@ const state: ApplicationState = {
     selections: {}
   },
   searchText: '',
-  bookmark: ''
+  bookmark: '',
+  componentRoute: false
 }
 
 export default state
