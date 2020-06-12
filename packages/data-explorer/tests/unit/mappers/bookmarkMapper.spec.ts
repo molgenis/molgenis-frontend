@@ -19,17 +19,25 @@ store.state.filters.definition = [filterADefinition, filterBDefinition]
 
 const testShownFilters = ['a', 'b']
 const testfilterSelections = { 'a': ['1', '2', '3'], 'b': 'A' }
-const testBookmark = 'N4IgZglgNgLgpgJwM4gFwgIYBoBGIuZogCMWATFgMz4h7oCCIAvkA%3D%3D%3D'
+const testBookmark = 'N4IgzgpghgTgxgCwCoQB4BcQC4QgDTgID2A7gHbYhR4BG%2BVlAjHgEx4DM9dOAgiAL5A%3D'
+
+beforeEach(() => {
+  store.state.filters.shown = []
+  store.state.filters.selections = {}
+  store.state.bookmark = ''
+})
 
 describe('bookmarkMapper.ts', () => {
   it('bookmarks shown filters and selection as a base64 encoded zipped string', () => {
-    createBookmark(router, testShownFilters, testfilterSelections)
+    store.state.filters.shown = testShownFilters
+    store.state.filters.selections = testfilterSelections
+    createBookmark(router)
     // @ts-ignore
     expect(router.history.current.fullPath).toBe(`/root_hospital_patients?bookmark=${testBookmark}`)
   })
 
   it('should not show a bookmark when shown array is empty', () => {
-    createBookmark(router, [])
+    createBookmark(router)
     // @ts-ignore
     expect(router.history.current.fullPath).toBe('/root_hospital_patients')
   })

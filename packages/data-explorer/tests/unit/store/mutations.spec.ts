@@ -77,7 +77,8 @@ describe('mutations', () => {
         selections: {}
       },
       searchText: '',
-      bookmark: ''
+      bookmark: '',
+      componentRoute: false
     }
   })
 

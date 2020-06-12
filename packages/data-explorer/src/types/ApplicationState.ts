@@ -65,5 +65,6 @@ export default interface ApplicationState {
   tableSettings: TableSetting
   filters: FilterGroup
   searchText: string,
-  bookmark: string
+  bookmark: string,
+  componentRoute: boolean
 }
