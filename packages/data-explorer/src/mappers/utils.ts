@@ -3,6 +3,7 @@ import { FilterOption, FilterOptionsPromise } from '@/types/ApplicationState'
 import { fetchMetaDataByURL } from '@/repository/metaDataRepository'
 import axios from 'axios'
 import { toRsqlValue } from '@molgenis/rsql'
+import { QueryOptions } from '@/types/QueryOptions'
 
 export const getCategoricals = (attributes: Attribute[]) => attributes.filter(attribute => attribute.type.includes('categorical'))
 
@@ -14,13 +15,22 @@ export const getFieldOptions = async (attribute: Attribute) => {
     }
     const metadata = await fetchMetaDataByURL(url)
 
-    return async (nameAttribute:boolean = true, queryType: string = 'like', query?: string) => {
+    return async (queryOptions? : QueryOptions) => {
       const nameAttr = metadata.labelAttribute ? metadata.labelAttribute.name : ''
       const idAttr = metadata.idAttribute.name
-      let params = {}
-      if (query) {
+      let params: any = {}
+
+      if (queryOptions && queryOptions.count) {
+        params.size = queryOptions.count
+      }
+
+      if (queryOptions && queryOptions.query) {
+        const queryAttribute = queryOptions.nameAttribute ? nameAttr : idAttr
+        const rsqlQueryType = queryOptions.queryType ? queryOptions.queryType : 'like'
+        const queryParameters = queryOptions.queryType === 'in' ? `(${queryOptions.query})` : toRsqlValue(queryOptions.query)
+
         params = {
-          q: `${nameAttribute ? nameAttr : idAttr}=${queryType}=${queryType === 'in' ? `(${query})` : toRsqlValue(query)}`
+          q: `${queryAttribute}=${rsqlQueryType}=${queryParameters}`
         }
       }
 
