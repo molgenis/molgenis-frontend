@@ -1,4 +1,4 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import TableSettingsButton from '@/components/utils/TableSettingsButton.vue'
 
 describe('TableSettingsButton.vue', () => {

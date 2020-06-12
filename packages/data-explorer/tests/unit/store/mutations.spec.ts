@@ -1,4 +1,5 @@
 import mutations from '@/store/mutations'
+import mockState from '../mocks/mockState'
 import ApplicationState from '@/types/ApplicationState'
 import { Attribute, MetaData } from '@/types/MetaData'
 
@@ -51,34 +52,8 @@ describe('mutations', () => {
   let baseAppState: ApplicationState
 
   beforeEach(() => {
-    baseAppState = {
-      toast: null,
-      settingsTable: 'de_dataexplorer_table_settings',
-      tableName: 'root_hospital_patients',
-      tableData: null,
-      tableMeta: null,
-      dataDisplayLayout: 'CardView',
-      dataDisplayLimit: 100,
-      defaultEntityData: null,
-      showShoppingCart: false,
-      shoppedEntityItems: [],
-      tableSettings: {
-        settingsRowId: null,
-        collapseLimit: 5,
-        customCardCode: null,
-        customCardAttrs: '',
-        isShop: false,
-        defaultFilters: []
-      },
-      filters: {
-        hideSidebar: false,
-        definition: [],
-        shown: [],
-        selections: {}
-      },
-      searchText: '',
-      bookmark: ''
-    }
+    baseAppState = mockState()
+    baseAppState.tableName = 'root_hospital_patients'
   })
 
   describe('setToast', () => {

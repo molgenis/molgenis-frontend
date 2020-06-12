@@ -1,4 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import mockState from '../mocks/mockState'
 import ToolbarView from '@/views/ToolbarView.vue'
 import Vuex from 'vuex'
 import ApplicationState from '@/types/ApplicationState'
@@ -11,34 +12,9 @@ describe('ToolbarView.vue', () => {
   let mutations: any
 
   beforeEach(() => {
-    state = {
-      toast: null,
-      settingsTable: 'de_dataexplorer_table_settings',
-      tableName: 'root_hospital_patients',
-      tableData: null,
-      tableMeta: null,
-      dataDisplayLayout: 'CardView',
-      dataDisplayLimit: 100,
-      defaultEntityData: null,
-      showShoppingCart: false,
-      shoppedEntityItems: [],
-      tableSettings: {
-        defaultFilters: [],
-        settingsRowId: null,
-        collapseLimit: 5,
-        customCardCode: null,
-        customCardAttrs: '',
-        isShop: false
-      },
-      filters: {
-        hideSidebar: false,
-        definition: [],
-        shown: [],
-        selections: {}
-      },
-      bookmark: '',
-      searchText: ''
-    }
+    state = mockState()
+    state.tableName = 'root_hospital_patients'
+
     mutations = {
       setHideFilters: jest.fn(),
       setDataDisplayLayout: jest.fn(),
