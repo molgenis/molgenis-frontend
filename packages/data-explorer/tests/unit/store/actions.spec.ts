@@ -1,5 +1,6 @@
 import actions from '@/store/actions'
 import ApplicationState from '@/types/ApplicationState'
+import mockState from '../mocks/mockState'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
@@ -245,36 +246,8 @@ let getters: any
 
 describe('actions', () => {
   beforeEach(() => {
-    state = {
-      toast: null,
-      settingsTable: 'de_dataexplorer_table_settings',
-      tableName: 'it_emx_datatypes_TypeTest',
-      tableData: null,
-      tableMeta: null,
-      dataDisplayLayout: 'CardView',
-      dataDisplayLimit: 100,
-      defaultEntityData: null,
-      filters: {
-        hideSidebar: false,
-        definition: [],
-        shown: [],
-        selections: {}
-      },
-      showShoppingCart: false,
-      shoppedEntityItems: [],
-      tableSettings: {
-        isShop: false,
-        settingsRowId: null,
-        customCardCode: null,
-        customCardAttrs: '',
-        collapseLimit: 5,
-        defaultFilters: []
-      },
-      searchText: '',
-      bookmark: '',
-      componentRoute: false
-    }
-
+    state = mockState()
+    state.tableName = 'it_emx_datatypes_TypeTest'
     getters = {
       filterRsql: null
     }
