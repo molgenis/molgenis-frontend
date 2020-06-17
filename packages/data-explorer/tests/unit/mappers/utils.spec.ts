@@ -2,7 +2,7 @@ import * as utils from '@/mappers/utils'
 import mock from '../mocks/metaDataResponseMock'
 import { Attribute } from '@/types/MetaData'
 
-jest.mock('axios', () => ({
+jest.mock('@/lib/client', () => ({
   get: jest.fn().mockResolvedValue({ data: { items: [{ data: { id: 'id', label: 'label' } }] } })
 }))
 
