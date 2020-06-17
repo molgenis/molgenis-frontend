@@ -1,4 +1,4 @@
-import api from '@/lib/api'
+import client from '@/lib/client'
 import { DataApiResponse } from '@/types/ApiResponse'
 
 export default {
@@ -7,7 +7,7 @@ export default {
     const query = `q=package==${packageName}`
     const filter = 'filter=id,label,package'
     const expand = 'expand=package'
-    const resp = await api.get<DataApiResponse>(`/api/data/sys_md_EntityType?${expand}&${filter}&${query}`)
+    const resp = await client.get<DataApiResponse>(`/api/data/sys_md_EntityType?${expand}&${filter}&${query}`)
     const packageTables = resp.data.items.map((i:any) => {
       return {
         id: i.data.id,

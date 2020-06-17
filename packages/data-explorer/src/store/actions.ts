@@ -1,4 +1,4 @@
-import api from '@/lib/api'
+import client from '@/lib/client'
 import ApplicationState from '@/types/ApplicationState'
 import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
@@ -16,7 +16,7 @@ export default {
     commit('setSearchText', '')
 
     try {
-      const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+      const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
       // @ts-ignore
       commit('setTableSettings', response.items[0].data)
     } catch (e) {

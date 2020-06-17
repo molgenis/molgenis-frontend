@@ -5,9 +5,9 @@ import { buildExpandedAttributesQuery } from '@/repository/queryBuilder'
 import mockmeta from '../mocks/metaDataResponseMock'
 import mockRowResponse from '../mocks/rowDataResponseMock'
 
-import api from '@/lib/api'
+import client from '@/lib/client'
 
-jest.mock('@/lib/api', () => ({
+jest.mock('@/lib/client', () => ({
   delete: jest.fn(),
   get: jest.fn()
 }))
@@ -23,7 +23,7 @@ jest.mock('@/repository/queryBuilder', () => ({
 describe('dataRepository', () => {
   beforeEach(() => {
     // @ts-ignore
-    api.get.mockReset()
+    client.get.mockReset()
   })
 
   describe('getRowDataWithReference', () => {
@@ -31,7 +31,7 @@ describe('dataRepository', () => {
       const tableId = 'books'
       const rowId = '101'
       // @ts-ignore
-      api.get.mockResolvedValue({ data: mockRowResponse })
+      client.get.mockResolvedValue({ data: mockRowResponse })
       const resp = await dataRepository.getRowDataWithReferenceLabels(tableId, rowId, mockmeta as MetaData)
       expect(resp).toEqual({
         country: 'label',
@@ -44,7 +44,7 @@ describe('dataRepository', () => {
   describe('getTableDataWithLabel', () => {
     beforeEach(() => {
       // @ts-ignore
-      api.get.mockResolvedValue({ data: { items: [
+      client.get.mockResolvedValue({ data: { items: [
         mockRowResponse
       ] } })
       // @ts-ignore
@@ -53,13 +53,13 @@ describe('dataRepository', () => {
 
     it('should fetch the table data and expand the query for the label data ', async (done) => {
       await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, ['foo'])
-      expect(api.get).toBeCalledWith('/api/data/tableId?expanded-attributes-query')
+      expect(client.get).toBeCalledWith('/api/data/tableId?expanded-attributes-query')
       done()
     })
 
     it('should url encode the filter values if needed ', async (done) => {
       await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, ['foo'], 'bloodtype=in=(A-,A+)')
-      expect(api.get).toBeCalledWith('/api/data/tableId?expanded-attributes-query&q=bloodtype=in=(A-,A%2B)')
+      expect(client.get).toBeCalledWith('/api/data/tableId?expanded-attributes-query&q=bloodtype=in=(A-,A%2B)')
       done()
     })
   })
@@ -67,7 +67,7 @@ describe('dataRepository', () => {
   describe('getTableDataDeepReference', () => {
     beforeEach(() => {
       // @ts-ignore
-      api.get.mockResolvedValue({ data: { items: [
+      client.get.mockResolvedValue({ data: { items: [
         mockRowResponse
       ] } })
       // @ts-ignore
@@ -81,7 +81,7 @@ describe('dataRepository', () => {
       const rsqlQuery = 'rsqlQuery'
       const dataDisplayLimit = 10
       await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, dataDisplayLimit)
-      expect(api.get).toBeCalledWith('/api/data/tableId?size=10&expanded-attributes-query&q=rsqlQuery')
+      expect(client.get).toBeCalledWith('/api/data/tableId?size=10&expanded-attributes-query&q=rsqlQuery')
       done()
     })
   })
@@ -89,7 +89,7 @@ describe('dataRepository', () => {
   describe('deleteRow', () => {
     it('should send delete request', async (done) => {
       await dataRepository.deleteRow('my-table', 'my-row')
-      expect(api.delete).toBeCalledWith('/api/data/my-table/my-row')
+      expect(client.delete).toBeCalledWith('/api/data/my-table/my-row')
       done()
     })
   })

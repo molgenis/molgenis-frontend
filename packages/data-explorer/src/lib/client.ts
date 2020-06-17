@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const api = axios.create({
+const client = axios.create({
   baseURL: '/',
   timeout: 1000,
   validateStatus: function (status) {
@@ -11,4 +11,4 @@ const api = axios.create({
   }
 })
 
-export default api
+export default client
