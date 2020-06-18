@@ -20,10 +20,6 @@ export const getFieldOptions = async (attribute: Attribute) => {
       const idAttr = metadata.idAttribute.name
       let params: any = {}
 
-      if (queryOptions && queryOptions.count) {
-        params.size = queryOptions.count
-      }
-
       if (queryOptions && queryOptions.query) {
         const queryAttribute = queryOptions.nameAttribute ? nameAttr : idAttr
         const rsqlQueryType = queryOptions.queryType ? queryOptions.queryType : 'like'
@@ -34,11 +30,14 @@ export const getFieldOptions = async (attribute: Attribute) => {
         }
       }
 
+      if (queryOptions && queryOptions.count) {
+        params.size = queryOptions.count
+      }
+
       url = url.replace('/metadata/', '/data/')
       const data = await axios.get(url, { params: { ...params, flattenAttributes: true } })
       return Promise.resolve(
         data.data.items.map((i: any) => {
-          // @ts-ignore
           return { value: i.data[idAttr], text: i.data[nameAttr] }
         })
       )
