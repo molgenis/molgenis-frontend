@@ -5,6 +5,7 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
+import client from '@/lib/client'
 
 const metaResponse = {
   meta: {
@@ -205,11 +206,18 @@ const mockResponses: {[key:string]: Object} = {
   '/api/data/entity': { 'loaded': true },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
-  '/api/data/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true, collapse_limit: 5 } }] }
+  '/api/data/sys_entity_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
+  '/api/data/sys_entity_DataExplorerEntitySettings?q=table=="tableWithSettings"':  { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }]} }
 }
-jest.mock('@molgenis/molgenis-api-client', () => {
+jest.mock('@/lib/client', () => {
   return {
-    get: (url: string) => Promise.resolve(mockResponses[url]),
+    get: (url: string) => {
+      const mockResp = mockResponses[url]
+      if(!mockResp) {
+        console.warn(`mock url (${url}) called but not found in ${mockResponses}`)
+      }
+      return Promise.resolve(mockResp)
+    },
     post: jest.fn()
   }
 })
@@ -260,12 +268,64 @@ describe('actions', () => {
       metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
       // @ts-ignore
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, 'entity')
-      expect(commit).toHaveBeenCalledWith('setFiltersShown', [])
-      expect(commit).toHaveBeenCalledWith('setFilterDefinition', 'def')
-      expect(commit).toHaveBeenCalledWith('setMetaData', 'meta')
-      expect(commit).toHaveBeenCalledWith('setFilterSelection', {})
-      expect(commit).toHaveBeenCalledWith('setSearchText', '')
+      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithOutSettings' })
+      expect(commit.mock.calls).toEqual([
+        [ 'setTableSettings', {} ],
+        [ 'setMetaData', null ],
+        [ 'setFilterDefinition', [] ],
+        [ 'setFiltersShown', [] ],
+        [ 'setFilterSelection', {} ],
+        [ 'setSearchText', '' ],
+        [ 'setMetaData', 'meta' ],
+        [ 'setFilterDefinition', 'def' ],
+        [ 'setFiltersShown', [] ]
+      ])
+    })
+
+    it('should commit table settings from server only if present', async () => {
+      const commit = jest.fn()
+      // @ts-ignore ts does not know its a mock
+      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
+      // @ts-ignore
+      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
+      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
+      expect(commit.mock.calls).toEqual([
+        [ 'setTableSettings', {} ],
+        [ 'setMetaData', null ],
+        [ 'setFilterDefinition', [] ],
+        [ 'setFiltersShown', [] ],
+        [ 'setFilterSelection', {} ],
+        [ 'setSearchText', '' ],
+        [
+          'setTableSettings',
+          { id: 'ent-set', shop: true, collapse_limit: 5 }
+        ],
+        [ 'setMetaData', 'meta' ],
+        [ 'setFilterDefinition', 'def' ],
+        [ 'setFiltersShown', [] ]
+      ])
+    })
+
+    it('should only commit bookmark if set', async () => {
+      const commit = jest.fn()
+      // @ts-ignore ts does not know its a mock
+      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
+      // @ts-ignore
+      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
+      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
+      expect(commit.mock.calls).not.toContain([ [ 'applyBookmark' ] ])
+    })
+
+    it('should commit bookmark if set', async () => {
+      state = mockState()
+      state.bookmark = 'bookmark'
+      const commit = jest.fn()
+      // @ts-ignore ts does not know its a mock
+      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
+      // @ts-ignore
+      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
+      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
+      expect(commit.mock.calls.pop()[0]).toEqual('applyBookmark')
     })
   })
 
