@@ -207,13 +207,13 @@ const mockResponses: {[key:string]: Object} = {
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
   '/api/data/sys_entity_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
-  '/api/data/sys_entity_DataExplorerEntitySettings?q=table=="tableWithSettings"':  { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }]} }
+  '/api/data/sys_entity_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } }
 }
 jest.mock('@/lib/client', () => {
   return {
     get: (url: string) => {
       const mockResp = mockResponses[url]
-      if(!mockResp) {
+      if (!mockResp) {
         console.warn(`mock url (${url}) called but not found in ${mockResponses}`)
       }
       return Promise.resolve(mockResp)
