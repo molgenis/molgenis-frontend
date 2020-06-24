@@ -116,7 +116,7 @@ module.exports = {
       app.get('/api/data/root_hospital_patients', function (req, res) {
         res.json(require('./tests/e2e/resources/typeTestData.js'))
       })
-      app.get('/api/data/de_dataexplorer_table_settings', function (req, res) {
+      app.get('/api/data/sys_entity_DataExplorerEntitySettings', function (req, res) {
         if (req.url.includes('TableWithMoreColumns')) {
           res.json({ items: [] })
         } else if (req.url.includes('TableWithCustomCard')) {
