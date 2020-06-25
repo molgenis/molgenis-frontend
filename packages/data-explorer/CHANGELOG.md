@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.29.0...@molgenis-experimental/data-explorer@0.29.1) (2020-06-25)
+
+
+### Bug Fixes
+
+* reverted pre-emptive systable merge ([c03bea9](https://github.com/molgenis/molgenis-frontend/commit/c03bea9))
+
+
+
+
+
 # [0.29.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.28.4...@molgenis-experimental/data-explorer@0.29.0) (2020-06-25)
 
 
