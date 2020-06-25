@@ -17,8 +17,9 @@ export default {
 
     try {
       const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
-      // @ts-ignore
-      commit('setTableSettings', response.data.items[0].data)
+      if (response.data.items.length === 1) {
+        commit('setTableSettings', response.data.items[0].data)
+      }
     } catch (e) {
       // dont show error to user, just keep the default settings
     }
@@ -29,7 +30,9 @@ export default {
     commit('setFilterDefinition', definition)
     commit('setFiltersShown', state.tableSettings.defaultFilters)
 
-    if (state.bookmark !== '') { commit('applyBookmark') }
+    if (state.bookmark !== '') {
+      commit('applyBookmark')
+    }
   }),
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
