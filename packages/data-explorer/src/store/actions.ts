@@ -114,5 +114,8 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
-  })
+  }),
+  setToast: ({ commit }: { commit: any }, message: string) => {
+    commit('setToast', message)
+  }
 }
