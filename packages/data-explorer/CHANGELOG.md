@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.28.4...@molgenis-experimental/data-explorer@0.29.0) (2020-06-25)
+
+
+### Bug Fixes
+
+* update e2e test mock path ([dccd903](https://github.com/molgenis/molgenis-frontend/commit/dccd903))
+
+
+### Features
+
+* **data-explorer:** Use sys table settings ([4aa0d65](https://github.com/molgenis/molgenis-frontend/commit/4aa0d65))
+
+
+
+
+
 ## [0.28.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.28.3...@molgenis-experimental/data-explorer@0.28.4) (2020-06-22)
 
 
