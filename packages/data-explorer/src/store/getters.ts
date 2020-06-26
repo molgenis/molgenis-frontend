@@ -1,6 +1,5 @@
 import ApplicationState from '@/types/ApplicationState'
 import { createRSQLQuery } from '@/mappers/rsqlMapper'
-import { RouterLinkStub } from '@vue/test-utils'
 
 export default {
   filterRsql: (state: ApplicationState): string | null =>
