@@ -18,6 +18,7 @@
                               :dataContents="dataContents"
                               :collapseLimit="collapseLimit"
                               :numberOfAttributes="numberOfAttributes"
+                              :isEditable="isEditable"
                               @expandDefaultCard="handleDefaultCardExpand"
         >
           <template v-slot:shopping-button>
@@ -75,6 +76,11 @@ export default Vue.extend({
     collapseLimit: {
       type: Number,
       default: () => 5
+    },
+    isEditable: {
+      type: Boolean,
+      required: false,
+      default: () => false
     }
   },
   components: { ShoppingButton, DefaultCardContent, CustomCardContent },

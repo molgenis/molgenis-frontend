@@ -79,6 +79,10 @@ export default Vue.extend({
     collapseLimit: {
       type: Number,
       default: () => 5
+    },
+    isEditable: {
+      type: Boolean,
+      default: () => false
     }
   },
   components: { FontAwesomeIcon },

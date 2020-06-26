@@ -81,6 +81,9 @@ export default Vue.extend({
       'fetchTableViewData',
       'fetchTableMeta'
     ]),
+    ...mapActions('account', [
+      'fetchContext'
+    ]),
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, deleteConfirmOptions)
@@ -103,6 +106,7 @@ export default Vue.extend({
     }
   },
   created () {
+    this.fetchContext()
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
