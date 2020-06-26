@@ -1,5 +1,4 @@
-// @ts-ignore
-import api from '@molgenis/molgenis-api-client'
+import client from '@/lib/client'
 import ApplicationState from '@/types/ApplicationState'
 import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
@@ -17,8 +16,10 @@ export default {
     commit('setSearchText', '')
 
     try {
-      const response = await api.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
-      commit('setTableSettings', response.items[0].data)
+      const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+      if (response.data.items.length === 1) {
+        commit('setTableSettings', response.data.items[0].data)
+      }
     } catch (e) {
       // dont show error to user, just keep the default settings
     }
@@ -29,7 +30,9 @@ export default {
     commit('setFilterDefinition', definition)
     commit('setFiltersShown', state.tableSettings.defaultFilters)
 
-    if (state.bookmark !== '') { commit('applyBookmark') }
+    if (state.bookmark !== '') {
+      commit('applyBookmark')
+    }
   }),
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {

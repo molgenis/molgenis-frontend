@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.29.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.29.0...@molgenis-experimental/data-explorer@0.29.1) (2020-06-25)
+
+
+### Bug Fixes
+
+* reverted pre-emptive systable merge ([c03bea9](https://github.com/molgenis/molgenis-frontend/commit/c03bea9))
+
+
+
+
+
+# [0.29.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.28.4...@molgenis-experimental/data-explorer@0.29.0) (2020-06-25)
+
+
+### Bug Fixes
+
+* update e2e test mock path ([dccd903](https://github.com/molgenis/molgenis-frontend/commit/dccd903))
+
+
+### Features
+
+* **data-explorer:** Use sys table settings ([4aa0d65](https://github.com/molgenis/molgenis-frontend/commit/4aa0d65))
+
+
+
+
+
+## [0.28.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.28.3...@molgenis-experimental/data-explorer@0.28.4) (2020-06-22)
+
+
+### Bug Fixes
+
+* data response table settings ([#313](https://github.com/molgenis/molgenis-frontend/issues/313)) ([8db7321](https://github.com/molgenis/molgenis-frontend/commit/8db7321))
+* redirect to login page on 401 ([36a2116](https://github.com/molgenis/molgenis-frontend/commit/36a2116))
+
+
+
+
+
+## [0.28.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.28.2...@molgenis-experimental/data-explorer@0.28.3) (2020-06-15)
+
+**Note:** Version bump only for package @molgenis-experimental/data-explorer
+
+
+
+
+
 ## [0.28.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.28.1...@molgenis-experimental/data-explorer@0.28.2) (2020-06-12)
 
 **Note:** Version bump only for package @molgenis-experimental/data-explorer

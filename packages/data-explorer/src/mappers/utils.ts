@@ -1,7 +1,7 @@
 import { Attribute } from '@/types/MetaData'
 import { FilterOption, FilterOptionsPromise } from '@/types/ApplicationState'
 import { fetchMetaDataByURL } from '@/repository/metaDataRepository'
-import axios from 'axios'
+import client from '@/lib/client'
 import { toRsqlValue } from '@molgenis/rsql'
 import { QueryOptions } from '@/types/QueryOptions'
 
@@ -35,7 +35,7 @@ export const getFieldOptions = async (attribute: Attribute) => {
       }
 
       url = url.replace('/metadata/', '/data/')
-      const data = await axios.get(url, { params: { ...params, flattenAttributes: true } })
+      const data = await client.get(url, { params: { ...params, flattenAttributes: true } })
       return Promise.resolve(
         data.data.items.map((i: any) => {
           return { value: i.data[idAttr], text: i.data[nameAttr] }

@@ -1,9 +1,9 @@
 import * as utils from '@/mappers/utils'
 import mock from '../mocks/metaDataResponseMock'
 import { Attribute } from '@/types/MetaData'
-import axios from 'axios';
+import client from '@/lib/client'
 
-jest.mock('axios', () => ({
+jest.mock('@/lib/client', () => ({
   get: jest.fn().mockResolvedValue({ data: { items: [{ data: { id: 'id', label: 'label' } }] } })
 }))
 
@@ -42,14 +42,14 @@ describe('Mapper utils', () => {
       let res = await utils.getFieldOptions(mock.attributes[2] as Attribute)
       // @ts-ignore
       await res({ count: 3 })
-      expect(axios.get).toBeCalledWith('/api/data/country', { 'params': { 'flattenAttributes': true, 'size': 3 } })
+      expect(client.get).toBeCalledWith('/api/data/country', { 'params': { 'flattenAttributes': true, 'size': 3 } })
       done()
     })
     it('can have fields set to change the query ', async (done) => {
       let res = await utils.getFieldOptions(mock.attributes[2] as Attribute)
       // @ts-ignore
       await res({ nameAttribute: 3, queryType: 'in', query: 'test' })
-      expect(axios.get).toBeCalledWith('/api/data/country', { 'params': { 'flattenAttributes': true, 'q': 'label=in=(test)' } })
+      expect(client.get).toBeCalledWith('/api/data/country', { 'params': { 'flattenAttributes': true, 'q': 'label=in=(test)' } })
       done()
     })
   })

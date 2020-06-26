@@ -44,7 +44,7 @@
                 <small>Zip should contain <em>index.html</em> and <em>config.json</em>, consult
                   <a target="_blank" 
                     rel="noopener noreferrer" 
-                    href="https://molgenis.gitbooks.io/molgenis/content/guide-app-manager.html">the manual</a>
+                    href="https://molgenis.gitbook.io/molgenis/for-developers/guide-development-apps">the manual</a>
                   for details.
                 </small>
               </p>

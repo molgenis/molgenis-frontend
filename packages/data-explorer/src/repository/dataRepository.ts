@@ -3,7 +3,7 @@ import { getAttributesfromMeta } from './metaDataService'
 import * as metaDataRepository from './metaDataRepository'
 import { DataApiResponse, DataApiResponseItem, DataObject } from '@/types/ApiResponse'
 import { MetaData, Attribute } from '@/types/MetaData'
-import axios from 'axios'
+import client from '@/lib/client'
 import { encodeRsqlValue } from '@molgenis/rsql'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
@@ -115,7 +115,7 @@ const getTableDataDeepReference = async (
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
   const size = _buildSizeQueryParam(dataDisplayLimit)
   const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
-  const response = (await axios.get<DataApiResponse>(request)).data
+  const response = (await client.get<DataApiResponse>(request)).data
   const result = { items: response.items.map((item: DataApiResponseItem) => levelNRowMapper(item)) }
   return result
 }
@@ -130,7 +130,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
   const size = _buildSizeQueryParam(dataDisplayLimit)
   const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
-  const response = (await axios.get<DataApiResponse>(request)).data
+  const response = (await client.get<DataApiResponse>(request)).data
   const result = { items: await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
     return levelOneRowMapper(item, metaData)
   })) }
@@ -149,12 +149,12 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
   }
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
   const size = _buildSizeQueryParam(dataDisplayLimit)
-  const response = await axios.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${size}${expandReferencesQuery}`)
+  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${size}${expandReferencesQuery}`)
   return levelOneRowMapper(response.data, metaData)
 }
 
 const deleteRow = async (tableId: string, rowId: string) => {
-  return axios.delete(`/api/data/${tableId}/${rowId}`)
+  return client.delete(`/api/data/${tableId}/${rowId}`)
 }
 
 export {
