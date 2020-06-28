@@ -14,7 +14,7 @@ module.exports = {
     '^.+\\.es.js$': 'babel-jest'
   },
   transformIgnorePatterns: [
-    '/node_modules/(?!(@molgenis/*))'
+    '/node_modules/(?!(@molgenis/molgenis-ui-filter|@molgenis/molgenis-ui-context|@molgenis/molgenis-api-client))'
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
