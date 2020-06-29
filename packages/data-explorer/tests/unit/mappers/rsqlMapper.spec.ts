@@ -30,6 +30,27 @@ describe('rsqlMapper', () => {
     })
   })
 
+  describe('createGreaterEqualQuery', () => {
+    it('create an greater equal Query', async () => {
+      const selections: Value = 5
+      const name = 'id'
+      const query = rsqlMapper.createGreaterEqualQuery(name, selections)
+      const rsql = transformToRSQL(query)
+      expect(rsql).toEqual('id=ge=5')
+    })
+  })
+
+  describe('createLesserEqualQuery', () => {
+    it('create an lesser equal Query', async () => {
+      const selections: Value = 3
+      console.log(selections)
+      const name = 'id'
+      const query = rsqlMapper.createLesserEqualQuery(name, selections)
+      const rsql = transformToRSQL(query)
+      expect(rsql).toEqual('id=le=3')
+    })
+  })
+
   describe('createRSQLQuery', () => {
     let filterState: FilterGroup = {
       hideSidebar: false,
@@ -106,7 +127,7 @@ describe('rsqlMapper', () => {
         dataType: 'default'
       })
       const rsqlQuery = rsqlMapper.createRSQLQuery(filterState)
-      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=ge=10;age=le=30;money=ge=0;amount=ge=100;comply==(yes);date=ge=1970-01-01T00:00:00.001Z;date=le=1970-01-01T00:00:00.002Z;xref=in=(bla)')
+      expect(rsqlQuery).toEqual('search=like=Hello;country=in=(DE,NL);age=ge=10;age=le=30;money=ge=0;amount=le=100;comply==(yes);date=ge=1970-01-01T00:00:00.001Z;date=le=1970-01-01T00:00:00.002Z;xref=in=(bla)')
     })
   })
 })
