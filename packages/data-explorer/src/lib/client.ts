@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const client = axios.create({
   baseURL: '/',
-  timeout: 1000,
+  timeout: 5000,
   validateStatus: function (status) {
     if (status === 401) {
       window.location.href = '/login'

@@ -1,6 +1,7 @@
 import * as utils from '@/mappers/utils'
 import mock from '../mocks/metaDataResponseMock'
 import { Attribute } from '@/types/MetaData'
+import client from '@/lib/client'
 
 jest.mock('@/lib/client', () => ({
   get: jest.fn().mockResolvedValue({ data: { items: [{ data: { id: 'id', label: 'label' } }] } })
@@ -35,6 +36,20 @@ describe('Mapper utils', () => {
       let res = await utils.getFieldOptions(mock.attributes[7] as Attribute)
       // @ts-ignore
       expect(await res()).toEqual([{ 'text': 'Yes', 'value': true }, { 'text': 'No', 'value': false }])
+      done()
+    })
+    it('can select a count option elements to return', async (done) => {
+      let res = await utils.getFieldOptions(mock.attributes[2] as Attribute)
+      // @ts-ignore
+      await res({ count: 3 })
+      expect(client.get).toBeCalledWith('/api/data/country', { 'params': { 'flattenAttributes': true, 'size': 3 } })
+      done()
+    })
+    it('can have fields set to change the query ', async (done) => {
+      let res = await utils.getFieldOptions(mock.attributes[2] as Attribute)
+      // @ts-ignore
+      await res({ nameAttribute: 3, queryType: 'in', query: 'test' })
+      expect(client.get).toBeCalledWith('/api/data/country', { 'params': { 'flattenAttributes': true, 'q': 'label=in=(test)' } })
       done()
     })
   })
