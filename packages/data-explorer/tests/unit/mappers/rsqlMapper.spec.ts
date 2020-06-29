@@ -43,7 +43,6 @@ describe('rsqlMapper', () => {
   describe('createLesserEqualQuery', () => {
     it('create an lesser equal Query', async () => {
       const selections: Value = 3
-      console.log(selections)
       const name = 'id'
       const query = rsqlMapper.createLesserEqualQuery(name, selections)
       const rsql = transformToRSQL(query)
