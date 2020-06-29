@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.29.1...@molgenis-experimental/data-explorer@0.30.0) (2020-06-29)
+
+
+### Features
+
+* add more queryOptions to have control over the first options to show in multifilter ([1faf3a1](https://github.com/molgenis/molgenis-frontend/commit/1faf3a1))
+
+
+
+
+
 ## [0.29.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.29.0...@molgenis-experimental/data-explorer@0.29.1) (2020-06-25)
 
 
