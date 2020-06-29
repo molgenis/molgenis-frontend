@@ -2,7 +2,7 @@
   <tr>
     <td v-if="isShop"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></td>
     <td v-else>
-      <div class="btn-group" role="group" aria-label="row actions">
+      <div v-if="isEditable" class="btn-group" role="group" aria-label="row actions">
         <button
           class="btn btn-sm btn-link"
           role="button"
@@ -58,6 +58,10 @@ export default {
     isShop: {
       type: Boolean,
       required: false,
+      default: () => false
+    },
+    isEditable: {
+      type: Boolean,
       default: () => false
     }
   },
