@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.30.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.30.0...@molgenis-experimental/data-explorer@0.30.1) (2020-07-01)
+
+
+### Bug Fixes
+
+* **data-explorer:** make lesser equal query work ([#321](https://github.com/molgenis/molgenis-frontend/issues/321)) ([225c103](https://github.com/molgenis/molgenis-frontend/commit/225c103))
+
+
+
+
+
 # [0.30.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.29.1...@molgenis-experimental/data-explorer@0.30.0) (2020-06-29)
 
 
