@@ -2,12 +2,14 @@
   <div>
     <h5 class="card-title mg-default-card-title">{{dataLabel}}
       <a
+        v-if="isEditable"
         class="btn btn-sm btn-link ml-1"
         role="button"
         :href="'/plugin/data-row-edit/' + dataTable + '/' + dataId">
         <font-awesome-icon icon="edit"></font-awesome-icon>
       </a>
       <button
+        v-if="isEditable"
         class="btn btn-sm btn-link"
         role="button"
         @click="$eventBus.$emit('delete-item', dataId)"
