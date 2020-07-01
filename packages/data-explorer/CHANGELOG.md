@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.30.1...@molgenis-experimental/data-explorer@0.31.0) (2020-07-01)
+
+
+### Bug Fixes
+
+* **data-explorer:** Add missing rights in default card ([3d491e6](https://github.com/molgenis/molgenis-frontend/commit/3d491e6))
+* **data-explorer:** remove double call to context by re-using menu call result ([c39c085](https://github.com/molgenis/molgenis-frontend/commit/c39c085))
+
+
+### Features
+
+* **data-explorer:** Hide/Show edit mode via context ([70fb7e7](https://github.com/molgenis/molgenis-frontend/commit/70fb7e7))
+* toggle edit btns based on context for table view ([17f5d01](https://github.com/molgenis/molgenis-frontend/commit/17f5d01))
+
+
+
+
+
 ## [0.30.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.30.0...@molgenis-experimental/data-explorer@0.30.1) (2020-07-01)
 
 
