@@ -10,6 +10,7 @@ describe('ToolbarView.vue', () => {
   let store: any
   let state: ApplicationState
   let mutations: any
+  let getters: any
 
   beforeEach(() => {
     state = mockState()
@@ -22,8 +23,13 @@ describe('ToolbarView.vue', () => {
       setFilterSelection: jest.fn(),
       setSearchText: jest.fn()
     }
+
+    getters = {
+      hasEditRights: jest.fn()
+    }
+
     store = new Vuex.Store({
-      state, mutations
+      state, mutations, getters
     })
   })
 
@@ -42,7 +48,7 @@ describe('ToolbarView.vue', () => {
   it('can change to card layout', () => {
     state.dataDisplayLayout = 'TableView'
     store = new Vuex.Store({
-      state, mutations
+      state, mutations, getters
     })
     const wrapper = shallowMount(ToolbarView, { store, localVue })
     wrapper.find('button.card-layout').trigger('click')
@@ -60,6 +66,8 @@ describe('ToolbarView.vue', () => {
   })
 
   describe('add row button', () => {
+    beforeEach(() => getters.hasEditRights.mockReturnValueOnce(true))
+
     it('should render the add button as a link to the data-row-edit', () => {
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       expect(wrapper.find('.toolbar > div > a').attributes().href).toEqual('/plugin/data-row-edit/root_hospital_patients')
@@ -67,6 +75,13 @@ describe('ToolbarView.vue', () => {
 
     it('should not be shown in shoppingcart mode', () => {
       store.state.showShoppingCart = true
+      const wrapper = shallowMount(ToolbarView, { store, localVue })
+      expect(wrapper.find('.toolbar > a').exists()).toBe(false)
+    })
+
+    it('should not show the button without edit rights', () => {
+      store.state.showShoppingCart = true
+      getters.hasEditRights.mockReturnValueOnce(false)
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       expect(wrapper.find('.toolbar > a').exists()).toBe(false)
     })

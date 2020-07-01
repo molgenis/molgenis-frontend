@@ -16,6 +16,7 @@ describe('MainView.vue', () => {
   let mutations: any
   let actions: any
   let wrapper: any
+  let modules: any
   const mocks: any = {
     $route: { params: {} },
     $eventBus: bus,
@@ -48,8 +49,17 @@ describe('MainView.vue', () => {
       fetchTableViewData: jest.fn()
     }
 
+    modules = {
+      account: {
+        namespaced: true,
+        actions: {
+          fetchContext: jest.fn()
+        }
+      }
+    }
+
     store = new Vuex.Store({
-      state, mutations, actions
+      state, mutations, actions, modules
     })
     wrapper = shallowMount(MainView, { store, localVue, mocks })
   })

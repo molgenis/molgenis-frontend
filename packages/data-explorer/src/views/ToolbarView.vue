@@ -2,7 +2,7 @@
   <div class="toolbar row">
     <div class="col-4">
       <a
-        v-if="!showShoppingCart"
+        v-if="hasEditRights && !showShoppingCart"
         class="btn btn-light btn-outline-secondary card-layout"
         role="button"
         :href="'/plugin/data-row-edit/' + tableName">
@@ -41,7 +41,7 @@
 
 <script>
 import Vue from 'vue'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -60,6 +60,9 @@ export default Vue.extend({
       'tableSettings',
       'searchText',
       'tableName'
+    ]),
+    ...mapGetters([
+      'hasEditRights'
     ]),
     searchText: {
       get () {
