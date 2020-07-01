@@ -20,7 +20,6 @@ export default new Vuex.Store({
     account: {
       namespaced: true,
       state: uiContextModule.store.state,
-      actions: uiContextModule.store.actions,
       mutations: uiContextModule.store.mutations
     }
   }
