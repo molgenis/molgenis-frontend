@@ -10,7 +10,7 @@
         </table-select>
       </div>
       <div class="col-6"></div>
-      <div class="col-3">
+      <div v-if="hasEditSettingsRights" class="col-3">
         <table-settings-button
           class="float-right"
           :settingsTableId="settingsTable"
@@ -38,7 +38,7 @@ import Vue from 'vue'
 import ToolbarView from './ToolbarView'
 import TableSelect from '@/components/TableSelect'
 import TableSettingsButton from '../components/utils/TableSettingsButton'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default Vue.extend({
   name: 'PageHeaderView',
@@ -53,6 +53,7 @@ export default Vue.extend({
     ...mapState('header', [
       'packageTables'
     ]),
+    ...mapGetters(['hasEditSettingsRights']),
     selectableTabels () {
       return this.packageTables.filter(pt => pt.id !== this.tableMeta.id)
     }

@@ -10,6 +10,7 @@ describe('PageHeaderView', () => {
   let store: any
   let state: any
   let actions: any
+  let getters: any
   let modules: any
 
   beforeEach(() => {
@@ -24,6 +25,10 @@ describe('PageHeaderView', () => {
     }
 
     actions = {}
+
+    getters = {
+      hasEditSettingsRights: jest.fn()
+    }
 
     modules = {
       header: {
@@ -44,7 +49,7 @@ describe('PageHeaderView', () => {
     }
 
     store = new Vuex.Store({
-      state, actions, modules
+      state, actions, getters, modules
     })
   })
 
