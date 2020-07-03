@@ -1,17 +1,19 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
+import { ProblemResponse } from '@/types/ApiResponse'
+import { ClientSettings } from '@/types/ClientSettings'
 
-const defaultResponse = function (response: any) {
+const defaultResponse = function (response: AxiosResponse<any>) {
   return response
 }
 
-const defaultErrorReponse = function (error: any) {
+const defaultErrorReponse = function (error: ProblemResponse) {
   if (console && console.error) {
     console.error(error)
   }
   return Promise.reject(error)
 }
 
-export function build (settings?:any) {
+export function build (settings?: ClientSettings) {
   const client = axios.create({
     baseURL: settings && settings.baseURL ? settings.baseURL : '/',
     timeout: settings && settings.timeout ? settings.timeout : 5000,

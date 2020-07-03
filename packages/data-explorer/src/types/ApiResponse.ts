@@ -55,3 +55,12 @@ export type MetaDataApiResponse = {
   permissions: string[]
   writable: boolean,
 }
+
+export type ProblemResponse = {
+  type?: string,
+  title?: string,
+  status?: number, // Range [100, 600]
+  detail?: string,
+  instance?: string, // URL
+  errorCode?: string // Molgenis error code
+}
