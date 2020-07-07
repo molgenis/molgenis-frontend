@@ -20,38 +20,82 @@ describe('getters', () => {
     })
   })
 
-  describe('hasEditRights', () => {
-    
+  describe('userRoles', () => {
     let state: any
     let rootState:any = {
       account: {
-        context: null 
+        context: {
+          roles: ['r1', 'r2']
+        }
       }
     }
 
-    it('should return false if context is not set', () => {
-      rootState.account.context = null
-      expect(getters.hasEditRights(state, getters, rootState)).toEqual(false)
+    it('should return the user roles from the context', () => {
+      expect(getters.userRoles(state, getters, rootState)).toEqual(['r1', 'r2'])
     })
 
-    it('should return false if not authenticated', () => {
-      rootState.account.context = {
-        authenticated: false
+    it('should return empty list if context not yet set', () => {
+      rootState.account.context = null
+      expect(getters.userRoles(state, getters, rootState)).toEqual([])
+    })
+  })
+
+  describe('isUserAuthenticated', () => {
+    let state: any
+    let rootState:any = {
+      account: {
+        context: null
       }
-      expect(getters.hasEditRights(state, getters, rootState)).toEqual(false)
+    }
+
+    it('should return false if not authenticated', () => {
+      expect(getters.isUserAuthenticated(state, getters, rootState)).toEqual(false)
+    })
+    it('should return true if authenticated', () => {
+      let rootState:any = {
+        account: {
+          context: {
+            authenticated: true
+          }
+        }
+      }
+      expect(getters.isUserAuthenticated(state, getters, rootState)).toEqual(true)
+    })
+  })
+
+  describe('hasEditRights', () => {
+    let state: any
+
+    it('should return false if not authenticated', () => {
+      let localGetters = {
+        isUserAuthenticated: false,
+        userRoles: []
+      }
+      expect(getters.hasEditRights(state, localGetters)).toEqual(false)
     })
 
     it('should return true if authenticated and has edit role', () => {
-      rootState.account.context = {
-        authenticated: true,
-        roles: ['ROLE_EDITOR']
+      let localGetters = {
+        isUserAuthenticated: true,
+        userRoles: ['ROLE_EDITOR']
       }
-      expect(getters.hasEditRights(state, getters, rootState)).toEqual(true)
-      rootState.account.context.roles = ['ROLE_MANAGER']
-      expect(getters.hasEditRights(state, getters, rootState)).toEqual(true)
-      rootState.account.context.roles = ['ROLE_SU']
-      expect(getters.hasEditRights(state, getters, rootState)).toEqual(true)
+      expect(getters.hasEditRights(state, localGetters)).toEqual(true)
+      localGetters.userRoles = ['ROLE_MANAGER']
+      expect(getters.hasEditRights(state, localGetters)).toEqual(true)
+      localGetters.userRoles = ['ROLE_SU']
+      expect(getters.hasEditRights(state, localGetters)).toEqual(true)
     })
+  })
 
+  describe('hasEditSettingsRights', () => {
+    let state: any
+
+    it('should return true if authenticated and has super user role', () => {
+      let localGetters = {
+        isUserAuthenticated: true,
+        userRoles: ['ROLE_SU']
+      }
+      expect(getters.hasEditSettingsRights(state, localGetters)).toEqual(true)
+    })
   })
 })
