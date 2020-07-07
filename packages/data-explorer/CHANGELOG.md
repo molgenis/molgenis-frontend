@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.31.1...@molgenis-experimental/data-explorer@0.32.0) (2020-07-07)
+
+
+### Features
+
+* **data-explorer:** Hide / Show edit table settings btn ([c4120f5](https://github.com/molgenis/molgenis-frontend/commit/c4120f5))
+
+
+
+
+
 ## [0.31.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.31.0...@molgenis-experimental/data-explorer@0.31.1) (2020-07-03)
 
 
