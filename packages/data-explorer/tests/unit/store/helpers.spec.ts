@@ -1,4 +1,4 @@
-import { getErrorMessage, tryAction } from '@/store/helpers'
+import { getErrorMessage } from '@/store/helpers'
 import Vue from 'vue'
 
 describe('store', () => {
@@ -38,25 +38,6 @@ describe('store', () => {
 
       it('returns message from Error', () => {
         expect(getErrorMessage(new Error('Some error'))).toBe('Some error')
-      })
-    })
-
-    describe('tryAction', () => {
-      it('returns successful result', () => {
-        const result = Promise.resolve('succes')
-        expect(tryAction(() => result)()).toEqual(result)
-      })
-
-      it('commits error message toast for failed result', (done) => {
-        const action = () => Promise.reject(new Error('Something went wrong'))
-        const commit = jest.fn()
-        const context = { commit }
-        const toast = { message: 'Something went wrong', type: 'danger' }
-        tryAction(action)(context)
-        Vue.nextTick(() => {
-          expect(commit).toHaveBeenCalledWith('setToast', toast)
-          done()
-        })
       })
     })
   })

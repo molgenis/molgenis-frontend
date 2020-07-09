@@ -1,40 +1,35 @@
-import axios, { AxiosResponse } from 'axios'
-import { ProblemResponse } from '@/types/ApiResponse'
-import { ClientSettings } from '@/types/ClientSettings'
+import build from './clientFactory'
+import store from '@/store/store'
 
-const defaultResponse = function (response: AxiosResponse<any>) {
-  return response
+const statusValidation = function (status: number) {
+/*
+  if (status === 401) {
+    // TODO: we may wat to login to fix rights issue
+    // window.location.href = '/login'
+    console.log(status)
+    return true
+  }
+ */
+  return status >= 200 && status < 300
 }
 
-const defaultErrorReponse = function (error: ProblemResponse) {
-  if (console && console.error) {
-    console.error(error)
+const errorReponse = (error:any) => {
+  let message = error.message
+  if (error.response.data) {
+    message = error.response.data.detail
   }
+  if (error.response.status === 401) {
+    message += '( you can try to login <a href="/login"> here </a>)'
+  }
+  console.error(message)
+  store.commit('setToast', { message, type: 'danger' })
   return Promise.reject(error)
 }
 
-export function build (settings?: ClientSettings) {
-  const client = axios.create({
-    baseURL: settings && settings.baseURL ? settings.baseURL : '/',
-    timeout: settings && settings.timeout ? settings.timeout : 5000,
-    validateStatus: settings && settings.validateStatus ? settings.validateStatus : function (status) {
-      if (status === 401) {
-        // window.location.href = '/login'
-        console.log(status)
-        return true
-      }
-      return status >= 200 && status < 300
-    }
-  })
-
-  client.interceptors.response.use(
-    settings && settings.responseInterceptor ? settings.responseInterceptor : defaultResponse,
-    settings && settings.responseErrorInterceptor ? settings.responseErrorInterceptor : defaultErrorReponse
-  )
-
-  return client
-}
-
-const client = build()
+// Create the default axios client the data-explorer will use
+const client = build({
+  validateStatus: statusValidation,
+  responseErrorInterceptor: errorReponse
+})
 
 export default client

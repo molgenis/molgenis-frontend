@@ -10,8 +10,3 @@ export const getErrorMessage = (response: any) =>
       : response.message
         ? response.message
         : 'Unknown error'
-
-export const tryAction = (action: any): any =>
-  (context: any, payload: any) =>
-    action(context, payload).catch(
-      (error: any) => context.commit('setToast', { message: getErrorMessage(error), type: 'danger' }))

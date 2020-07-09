@@ -1,13 +1,12 @@
 import client from '@/lib/client'
 import ApplicationState from '@/types/ApplicationState'
-import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 export default {
-  fetchTableMeta: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
+  fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
     commit('setTableSettings', {})
     commit('setMetaData', null)
     commit('setFilterDefinition', [])
@@ -33,7 +32,7 @@ export default {
     if (state.bookmark !== '') {
       commit('applyBookmark')
     }
-  }),
+  },
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
       throw new Error('cannot load card data without table name')
@@ -111,11 +110,11 @@ export default {
       commit('updateRowData', { rowId: payload.rowId, rowData })
     }
   },
-  deleteRow: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string }) => {
+  deleteRow: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string }) => {
     if (typeof state.tableName !== 'string') {
       throw new Error('Cannot delete row from unknown table')
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
-  })
+  }
 }
