@@ -484,8 +484,7 @@ describe('actions', () => {
 
     it('should throw an error when the table name is not set', async (done) => {
       state.tableName = null
-      await actions.deleteRow({ state, commit }, { rowId: 'my-row' })
-      expect(commit).toHaveBeenCalledWith('setToast', { message: 'Cannot delete row from unknown table', type: 'danger' })
+      expect(actions.deleteRow({ state, commit }, { rowId: 'my-row' })).rejects.toThrow('Cannot delete row from unknown table')
       done()
     })
   })
