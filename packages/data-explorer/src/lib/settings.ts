@@ -32,7 +32,7 @@ const BootstrapExplorer = async () => {
   // console.log(fileRequest)
   const t = settingsByUrlFormdata()
   console.log(t)
-  let x = await Axios.post(t)
+  let x = await Axios.post(t).catch(e => console.log(e))
   console.log('axios', x)
 
   // /plugin/importwizard/importByUrl?notify=false&entityTypeId=demo&url=http://localhost:8080/config/settings.xlsx
