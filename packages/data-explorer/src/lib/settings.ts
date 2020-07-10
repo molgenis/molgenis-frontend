@@ -15,7 +15,7 @@ function setSettingsFormData (fileContents: string) {
 }
 
 function settingsByUrlFormdata () {
-  return `/plugin/importwizard/importByUrl?notify=true&entityTypeId=demo&url=${encodeURIComponent(getSettingsUrl())}`
+  return `/plugin/importwizard/importByUrl?notify=true&entityTypeId=demo&url=${getSettingsUrl()}`
 }
 
 const BootstrapExplorer = async () => {
@@ -27,7 +27,9 @@ const BootstrapExplorer = async () => {
   // const settingsFormData = setSettingsFormData(fileRequest.data)
   // console.log(fileRequest)
   const t = settingsByUrlFormdata()
+  console.log(t)
   let x = await Axios.post(t)
+  console.log('axios', x)
 
   // /plugin/importwizard/importByUrl?notify=false&entityTypeId=demo&url=http://localhost:8080/config/settings.xlsx
   if (store.getters.hasEditRights) { }
