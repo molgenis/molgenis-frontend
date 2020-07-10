@@ -21,10 +21,10 @@ function settingsByUrlFormdata () {
 }
 
 const BootstrapExplorer = async () => {
-  console.log('bootstrapping application')
-  let versionNumberRequest = await Axios.get('/config/version.txt')
-  const version = versionNumberRequest.data
-  console.log('version number is', version)
+  // console.log('bootstrapping application')
+  // let versionNumberRequest = await Axios.get('/config/version.txt') // this does not work on the server
+  // const version = versionNumberRequest.data
+  // console.log('version number is', version)
   // check for table
   // if not then check user rights
   // const fileRequest = await Axios.get('/config/settings.xlsx')
