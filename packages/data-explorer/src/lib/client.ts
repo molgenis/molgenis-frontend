@@ -1,12 +1,12 @@
 import build from './clientFactory'
 import store from '@/store/store'
 
-const errorReponse = (error:any) => {
+export const errorReponse = (error:any) => {
   let message = error.message
-  if (error.response.data) {
+  if (error.response && error.response.data) {
     message = error.response.data.detail
   }
-  if (error.response.status === 401) {
+  if (error.response && error.response.status === 401) {
     if (!store.getters.isUserAuthenticated) {
       window.location.href = '/login'
     }
