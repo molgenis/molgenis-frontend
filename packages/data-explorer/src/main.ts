@@ -20,7 +20,9 @@ router.beforeEach((to, from, next) => {
 // This way the mainView can coordinate the events
 Vue.prototype.$eventBus = new Vue()
 
-BootstrapExplorer()
+BootstrapExplorer().then((statusMessage: string | undefined) => {
+  if (statusMessage) store.dispatch('notifyUser', { type: 'success', message: statusMessage })
+})
 
 Vue.use(i18n, {
   lng: 'en',
