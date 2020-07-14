@@ -7,7 +7,6 @@ const metaDataEndpoint = 'api/metadata'
 
 async function createSettings () {
   if (!store.getters.hasEditRights) return 'Please login as administrator to initialize the application'
-  console.log(store.getters.hasEditRights)
   try {
     await axios.post(packageEndpoint, applicationSettings.packageSettings)
   } catch (error) { } // if it exists, axios gives error and stops executing.

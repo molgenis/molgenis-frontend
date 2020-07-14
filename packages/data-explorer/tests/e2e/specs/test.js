@@ -1,6 +1,6 @@
 // For authoring Nightwatch tests, see
 // http://nightwatchjs.org/guide#usage
-const timeOutDelay = 5000
+const timeOutDelay = 7000
 const animationDelay = 300
 
 module.exports = {
