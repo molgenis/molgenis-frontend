@@ -1,5 +1,5 @@
 import client from '@/lib/client'
-import ApplicationState from '@/types/ApplicationState'
+import ApplicationState, { Toast } from '@/types/ApplicationState'
 import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
@@ -117,5 +117,8 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
-  })
+  }),
+  notifyUser: ({ commit }: { commit: any }, toast: Toast) => {
+    commit('setToast', toast)
+  }
 }
