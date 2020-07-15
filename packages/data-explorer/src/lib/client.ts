@@ -1,9 +1,10 @@
 import build from './clientFactory'
 import store from '@/store/store'
+import { AxiosInstance } from 'axios'
 
-export const errorReponse = (error:any) => {
+export const errorReponse = (error: any) => {
   let message = error.message
-  if (error.response && error.response.data) {
+  if (error.response && error.response.data && error.response.data.detail) {
     message = error.response.data.detail
   }
   if (error.response && error.response.status === 401) {
@@ -16,7 +17,7 @@ export const errorReponse = (error:any) => {
 }
 
 // Create the default axios client the data-explorer will use
-const client = build({
+const client:AxiosInstance = build({
   responseErrorInterceptor: errorReponse
 })
 

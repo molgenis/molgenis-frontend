@@ -16,26 +16,30 @@ jest.mock('@/store/store', () => ({
   getters: { isUserAuthenticated: false }
 }))
 
-describe('dataRepository', () => {
-  describe('client', () => {
-    it('should try to login if user is not logged upon receiving a 401 error', async () => {
-      const data = { response: { status: 401, data: { detail: 'hello world' } } }
-      try {
-        await errorReponse(data)
-      } catch (e) {
-        expect(e).toBe(data)
-      }
-      expect(window.location.href).toBe('/login')
-      expect(store.commit).toBeCalledWith('setToast', { 'message': 'hello world', 'type': 'danger' })
-    })
+describe('client', () => {
+  it('should try to login if user is not logged upon receiving a 401 error', async () => {
+    const data = { response: { status: 401, data: { detail: 'hello world' } } }
+    try {
+      await errorReponse(data)
+    } catch (e) {
+      expect(e).toBe(data)
+    }
+    expect(window.location.href).toBe('/login')
+  })
 
-    it('should create a axios client with error handling done via store setToast', async () => {
-      try {
-        await client.get('non-existing-host.err')
-      } catch (e) {
-        expect(e.message).toBe('Network Error')
-      }
-      expect(store.commit).toBeCalledWith('setToast', { 'message': 'Network Error', 'type': 'danger' })
-    })
+  it('should do error handling via store setToast', async () => {
+    const data = { response: { status: 404, data: { detail: 'world not found' } } }
+    try {
+      await errorReponse(data)
+    } catch (e) {
+      expect(e).toBe(data)
+    }
+    expect(store.commit).toBeCalledWith('setToast', { 'message': 'world not found', 'type': 'danger' })
+  })
+
+  it('should create a axios instance', async () => {
+    expect(client.get).toBeDefined()
+    expect(client.delete).toBeDefined()
+    expect(client.options).toBeDefined()
   })
 })
