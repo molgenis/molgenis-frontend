@@ -35,11 +35,13 @@ export default {
   },
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
-      throw new Error('cannot load card data without table name')
+      commit('setToast', { message: 'cannot load card data without table name', type: 'danger' })
+      return
     }
 
     if (state.tableMeta === null) {
-      throw new Error('cannot load table data without meta data')
+      commit('setToast', { message: 'cannot load table data without meta data', type: 'danger' })
+      return
     }
 
     let columns: string[]
@@ -70,11 +72,13 @@ export default {
   },
   fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {tableName: string}) => {
     if (state.tableName === null) {
-      throw new Error('cannot fetch table view data without table name')
+      commit('setToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
+      return
     }
 
     if (state.tableMeta === null) {
-      throw new Error('cannot fetch table view data without meta data')
+      commit('setToast', { message: 'cannot fetch table view data without meta data', type: 'danger' })
+      return
     }
 
     const rsqlQuery = getters.filterRsql
@@ -94,11 +98,13 @@ export default {
   // expanded default card
   fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {rowId: string}) => {
     if (state.tableName === null) {
-      throw new Error('cannot fetch row data without table name')
+      commit('setToast', { message: 'cannot fetch row data without table name', type: 'danger' })
+      return
     }
 
     if (state.tableMeta === null) {
-      throw new Error('cannot fetch row data without meta data')
+      commit('setToast', { message: 'cannot fetch row data without meta data', type: 'danger' })
+      return
     }
 
     const rsqlQuery = getters.filterRsql
@@ -112,7 +118,8 @@ export default {
   },
   deleteRow: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string }) => {
     if (typeof state.tableName !== 'string') {
-      throw new Error('Cannot delete row from unknown table')
+      commit('setToast', { message: 'cannot delete row from unknown table', type: 'danger' })
+      return
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
