@@ -5,6 +5,7 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
+import BootstrapExplorer from '@/lib/bootstrapExplorer'
 
 export default {
   fetchTableMeta: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
@@ -29,6 +30,10 @@ export default {
     commit('setMetaData', metaData)
     commit('setFilterDefinition', definition)
     commit('setFiltersShown', state.tableSettings.defaultFilters)
+
+    BootstrapExplorer().then((status: any | undefined) => {
+      if (status) commit('setToast', { type: status.type, message: status.message })
+    })
 
     if (state.bookmark !== '') {
       commit('applyBookmark')
@@ -117,8 +122,5 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
-  }),
-  notifyUser: ({ commit }: { commit: any }, toast: Toast) => {
-    commit('setToast', toast)
-  }
+  })
 }
