@@ -17,7 +17,7 @@ describe('bootstrapExplorer.ts', () => {
       return new Promise((resolve, reject) => reject(new Error()))
     })
     const status = await BootstrapExplorer()
-    expect(status).toBe('Please login as administrator to initialize the application')
+    expect(status.message).toBe('Please login as administrator to initialize the application')
     done()
   })
 
