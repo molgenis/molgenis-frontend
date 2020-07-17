@@ -1,5 +1,5 @@
 import client from '@/lib/client'
-import ApplicationState, { Toast } from '@/types/ApplicationState'
+import ApplicationState from '@/types/ApplicationState'
 import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'

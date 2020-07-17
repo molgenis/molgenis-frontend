@@ -7,7 +7,6 @@ import store from './store/store'
 // @ts-ignore
 import i18n from '@molgenis/molgenis-i18n-js'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import BootstrapExplorer from './lib/bootstrapExplorer'
 
 Vue.config.productionTip = false
 
