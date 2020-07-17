@@ -4,6 +4,7 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
+import bootstrapExplorer from '@/lib/bootstrapExplorer'
 
 export default {
   fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
@@ -22,6 +23,8 @@ export default {
     } catch (e) {
       // dont show error to user, just keep the default settings
     }
+
+    bootstrapExplorer()
 
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
     const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
@@ -70,7 +73,7 @@ export default {
       commit('setTableData', tableData)
     }
   },
-  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {tableName: string}) => {
+  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { tableName: string }) => {
     if (state.tableName === null) {
       commit('setToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
       return
@@ -96,7 +99,7 @@ export default {
     }
   },
   // expanded default card
-  fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {rowId: string}) => {
+  fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {
     if (state.tableName === null) {
       commit('setToast', { message: 'cannot fetch row data without table name', type: 'danger' })
       return

@@ -5,7 +5,6 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
-import client from '@/lib/client'
 
 const metaResponse = {
   meta: {
@@ -206,8 +205,9 @@ const mockResponses: {[key:string]: Object} = {
   '/api/data/entity': { 'loaded': true },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
-  '/api/data/de_dataexplorer_table_settings?q=table=="tableWithOutSettings"': { data: { items: [] } },
-  '/api/data/de_dataexplorer_table_settings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } }
+  '/api/data/app_set_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
+  '/api/data/app_set_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
+  '/api/data/app_set_DataExplorerEntitySettings': {}
 }
 jest.mock('@/lib/client', () => {
   return {
