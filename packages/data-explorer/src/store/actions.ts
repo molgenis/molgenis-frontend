@@ -5,7 +5,7 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
-import BootstrapExplorer from '@/lib/bootstrapExplorer'
+import bootstrapExplorer from '@/lib/bootstrapExplorer'
 
 export default {
   fetchTableMeta: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
@@ -25,15 +25,13 @@ export default {
       // dont show error to user, just keep the default settings
     }
 
+    bootstrapExplorer()
+
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
     const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
     commit('setMetaData', metaData)
     commit('setFilterDefinition', definition)
     commit('setFiltersShown', state.tableSettings.defaultFilters)
-
-    BootstrapExplorer().then((status: any | undefined) => {
-      if (status) commit('setToast', { type: status.type, message: status.message })
-    })
 
     if (state.bookmark !== '') {
       commit('applyBookmark')
@@ -74,7 +72,7 @@ export default {
       commit('setTableData', tableData)
     }
   },
-  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {tableName: string}) => {
+  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { tableName: string }) => {
     if (state.tableName === null) {
       throw new Error('cannot fetch table view data without table name')
     }
@@ -98,7 +96,7 @@ export default {
     }
   },
   // expanded default card
-  fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {rowId: string}) => {
+  fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {
     if (state.tableName === null) {
       throw new Error('cannot fetch row data without table name')
     }
@@ -122,5 +120,8 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
-  })
+  }),
+  notifyUser: async ({ commit }: { commit: any }, payload: { messageType: string, message: string }) => {
+    commit('setToast', { type: payload.messageType, message: payload.message })
+  }
 }

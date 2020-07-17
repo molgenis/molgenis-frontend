@@ -1,4 +1,4 @@
-import axios from 'axios'
+import client from './client'
 import store from '../store/store'
 import applicationSettings from './applicationSettings'
 
@@ -8,20 +8,21 @@ const metaDataEndpoint = 'api/metadata'
 async function createSettings () {
   if (!store.getters.hasEditRights) return { type: 'danger', message: 'Please login as administrator to initialize the application' }
   try {
-    await axios.post(packageEndpoint, applicationSettings.packageSettings)
+    await client.post(packageEndpoint, applicationSettings.packageSettings)
   } catch (error) { } // if it exists, axios gives error and stops executing.
 
-  await axios.post(metaDataEndpoint, applicationSettings.entitySettings)
+  await client.post(metaDataEndpoint, applicationSettings.entitySettings)
   return { type: 'success', message: 'The application has been succesfully initialized!' }
 }
 
-const BootstrapExplorer = async (): Promise<any | undefined> => {
+const bootstrapExplorer = async (): Promise<any | undefined> => {
   try {
-    await axios.get('/api/data/app_set_DataExplorerEntitySettings')
+    await client.get('/api/data/app_set_DataExplorerEntitySettings')
   } catch (error) {
+    store.dispatch('notifyUser', { messageType: 'warning', message: 'Bootstrapping Data explorer' })
     const status = await createSettings()
-    return status
+    store.dispatch('notifyUser', { messageType: status.type, message: status.message })
   }
 }
 
-export default BootstrapExplorer
+export default bootstrapExplorer
