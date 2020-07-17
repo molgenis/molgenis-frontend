@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.33.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.32.0...@molgenis-experimental/data-explorer@0.33.0) (2020-07-17)
+
+
+### Bug Fixes
+
+* **data-explorer:** build time missing type error ([1692753](https://github.com/molgenis/molgenis-frontend/commit/1692753))
+* added some missing error handling ([1a26fe3](https://github.com/molgenis/molgenis-frontend/commit/1a26fe3))
+
+
+### Features
+
+* **data-explorer:** Setup error handling in axios client ([b3a30b7](https://github.com/molgenis/molgenis-frontend/commit/b3a30b7))
+* client error handling ([0a4ecfe](https://github.com/molgenis/molgenis-frontend/commit/0a4ecfe))
+* show molgenis errors if found ([7f02e47](https://github.com/molgenis/molgenis-frontend/commit/7f02e47))
+
+
+
+
+
 # [0.32.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.31.1...@molgenis-experimental/data-explorer@0.32.0) (2020-07-07)
 
 
