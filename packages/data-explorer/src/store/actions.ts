@@ -120,8 +120,5 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
-  }),
-  notifyUser: async ({ commit }: { commit: any }, payload: { messageType: string, message: string }) => {
-    commit('setToast', { type: payload.messageType, message: payload.message })
-  }
+  })
 }

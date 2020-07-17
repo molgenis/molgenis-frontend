@@ -19,9 +19,9 @@ const bootstrapExplorer = async (): Promise<any | undefined> => {
   try {
     await client.get('/api/data/app_set_DataExplorerEntitySettings')
   } catch (error) {
-    store.dispatch('notifyUser', { messageType: 'warning', message: 'Bootstrapping Data explorer' })
+    store.commit('setToast', { type: 'warning', message: 'Bootstrapping Data explorer' })
     const status = await createSettings()
-    store.dispatch('notifyUser', { messageType: status.type, message: status.message })
+    store.commit('setToast', { type: status.type, message: status.message })
   }
 }
 

@@ -16,10 +16,10 @@ describe('bootstrapExplorer.ts', () => {
     client.get = jest.fn(() => {
       return new Promise((resolve, reject) => reject(new Error()))
     })
-    store.dispatch = jest.fn()
+    store.commit = jest.fn()
 
     await bootstrapExplorer()
-    expect(store.dispatch).toHaveBeenCalledWith('notifyUser', { messageType: 'danger', message: 'Please login as administrator to initialize the application' })
+    expect(store.commit).toHaveBeenCalledWith('setToast', { type: 'danger', message: 'Please login as administrator to initialize the application' })
     done()
   })
 
