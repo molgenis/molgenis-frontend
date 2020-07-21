@@ -53,6 +53,30 @@
         </router-link>
       </div>
     </div>
+
+    <div class="row groups-listing mt-3 ">
+      <div class="col">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="AnonymousView">
+          <label class="form-check-label" for="AnonymousView">
+            Anonymous can view
+          </label>
+        </div>
+        <div class="form-check" role="button">
+          <input class="form-check-input" type="checkbox" value="" id="RegisteredView">
+          <label class="form-check-label" for="RegisteredView">
+            Registered can view
+          </label>
+        </div>
+        <div class="form-check" role="button">
+          <input class="form-check-input" type="checkbox" value="" id="RegisteredEdit">
+          <label class="form-check-label" for="RegisteredEdit">
+            Registered can edit
+          </label>
+        </div>
+      </div>
+    </div>
+
     <b-modal id="deleteModal" ok-variant="danger" cancel-variant="secondary"
              :title="$t('security-ui-delete-confirmation-title')"
              :ok-title="$t('security-ui-delete-confirmation-ok-text')"
