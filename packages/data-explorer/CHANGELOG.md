@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.33.0...@molgenis-experimental/data-explorer@0.34.0) (2020-07-27)
+
+
+### Bug Fixes
+
+* **data-explorer:** added a few seconds to timeout ([bf88ea6](https://github.com/molgenis/molgenis-frontend/commit/bf88ea6))
+* halved speed ([261529f](https://github.com/molgenis/molgenis-frontend/commit/261529f))
+* refactored items ([01a529e](https://github.com/molgenis/molgenis-frontend/commit/01a529e))
+* renamed endpoint in tests ([44fbd7f](https://github.com/molgenis/molgenis-frontend/commit/44fbd7f))
+* reverted time back ([06c9f81](https://github.com/molgenis/molgenis-frontend/commit/06c9f81))
+* **data-explorer:** Fix bootstrapper unit test ([b5adcf7](https://github.com/molgenis/molgenis-frontend/commit/b5adcf7))
+* **data-explorer:** fixed toast not showing correctly ([0a28cc9](https://github.com/molgenis/molgenis-frontend/commit/0a28cc9))
+* **data-explorer:** removed codesmells ([bc692a9](https://github.com/molgenis/molgenis-frontend/commit/bc692a9))
+* **unittest:** updated unittest ([3dd4064](https://github.com/molgenis/molgenis-frontend/commit/3dd4064))
+
+
+### Features
+
+* **data-explorer:** added bootstrap logic to add settings if they are not present. ([c8b49d4](https://github.com/molgenis/molgenis-frontend/commit/c8b49d4))
+* **data-explorer:** added modal to let admin know bootstrapping is in progress, ([020fd23](https://github.com/molgenis/molgenis-frontend/commit/020fd23))
+
+
+
+
+
 # [0.33.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-experimental/data-explorer@0.32.0...@molgenis-experimental/data-explorer@0.33.0) (2020-07-17)
 
 

@@ -1,10 +1,17 @@
-import bootstrapExplorer from '../../../src/lib/bootstrapExplorer'
-import client from '../../../src/lib/client'
+import bootstrapExplorer from '@/lib/bootstrapExplorer'
+import client from '@/lib/client'
 import store from '@/store/store'
-import applicationSettings from '../../../src/lib/applicationSettings'
+import applicationSettings from '@/lib/applicationSettings'
 
-jest.mock('../../../src/lib/client')
-jest.mock('@/store/store')
+jest.mock('@/lib/client', () => ({
+  post: jest.fn(),
+  get: jest.fn()
+}))
+
+jest.mock('@/store/store', () => ({
+  commit: jest.fn(),
+  getters: { hasEditRights: jest.fn() }
+}))
 
 describe('bootstrapExplorer.ts', () => {
   it('checks if table exists', async (done) => {
@@ -13,10 +20,10 @@ describe('bootstrapExplorer.ts', () => {
     done()
   })
   it('only adds data when user has edit rights', async (done) => {
+    store.getters.hasEditRights = false
     client.get = jest.fn(() => {
       return new Promise((resolve, reject) => reject(new Error()))
     })
-    store.commit = jest.fn()
 
     await bootstrapExplorer()
     expect(store.commit).toHaveBeenCalledWith('setToast', { type: 'danger', message: 'Please login as administrator to initialize the application' })
@@ -24,10 +31,7 @@ describe('bootstrapExplorer.ts', () => {
   })
 
   it('adds data if the table does not exist', async (done) => {
-    store.getters.hasEditRights = jest.fn(() => true)
-    client.get = jest.fn(() => {
-      return new Promise((resolve, reject) => reject(new Error()))
-    })
+    store.getters.hasEditRights = true
     await bootstrapExplorer()
     expect(client.post).toBeCalledWith('api/data/sys_md_Package', applicationSettings.packageSettings)
     expect(client.post).toBeCalledWith('api/metadata', applicationSettings.entitySettings)
