@@ -5,14 +5,25 @@ import applicationSettings from './applicationSettings'
 const packageEndpoint = 'api/data/sys_md_Package'
 const metaDataEndpoint = 'api/metadata'
 
-async function createSettings () {
-  if (!store.getters.hasEditRights) return { type: 'danger', message: 'Please login as administrator to initialize the application' }
+async function createSettings() {
+  if (!store.getters.hasEditRights) {
+    return {
+      type: 'danger',
+      message: 'Please login as administrator to initialize the application'
+    }
+  }
+
   try {
     await client.post(packageEndpoint, applicationSettings.packageSettings)
-  } catch (error) { } // if it exists, axios gives error and stops executing.
+  } catch (error) {
+    // if the settings table already exists, axios gives error and stops executing.
+  }
 
   await client.post(metaDataEndpoint, applicationSettings.entitySettings)
-  return { type: 'success', message: 'The application has been succesfully initialized!' }
+  return {
+    type: 'success',
+    message: 'The application has been succesfully initialized!'
+  }
 }
 
 const bootstrapExplorer = async (): Promise<any | undefined> => {
