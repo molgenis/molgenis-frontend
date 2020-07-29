@@ -57,19 +57,19 @@
     <div class="row groups-listing mt-3 ">
       <div class="col">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="AnonymousView">
+          <input class="form-check-input" type="checkbox" id="AnonymousView" v-model="anonymousViewer">
           <label class="form-check-label" for="AnonymousView">
             Anonymous can view
           </label>
         </div>
         <div class="form-check" role="button">
-          <input class="form-check-input" type="checkbox" value="" id="RegisteredView">
+          <input class="form-check-input" type="checkbox" id="RegisteredView" v-model="userViewer">
           <label class="form-check-label" for="RegisteredView">
             Registered can view
           </label>
         </div>
         <div class="form-check" role="button">
-          <input class="form-check-input" type="checkbox" value="" id="RegisteredEdit">
+          <input class="form-check-input" type="checkbox" id="RegisteredEdit" v-model="userEditor">
           <label class="form-check-label" for="RegisteredEdit">
             Registered can edit
           </label>
@@ -102,15 +102,53 @@
       ...mapGetters([
         'groupMembers',
         'groupPermissions',
-        'getLoginUser'
+        'getLoginUser',
+        'getAnonymousGroupRights',
+        'getUserGroupRights'
       ]),
+      anonymousViewer: {
+        get: function () {
+          return this.anonymousGroupRight('Viewer')
+        },
+        set: function (status) {
+          if (status) {
+            this.setGroupRight('ANONYMOUS', 'Viewer')
+          } else {
+            this.removeGroupRight('ANONYMOUS', 'Viewer')
+          }
+        }
+      },
+      userViewer: {
+        get: function () {
+          return this.userGroupRight('Viewer')
+        },
+        set: function (status) {
+          if (status) {
+            this.setGroupRight('USER', 'Viewer')
+          } else {
+            this.removeGroupRight('USER', 'Viewer')
+          }
+        }
+      },
+      userEditor: {
+        get: function () {
+          return this.userGroupRight('Editor')
+        },
+        set: function (status) {
+          if (status) {
+            this.setGroupRight('USER', 'Editor')
+          } else {
+            this.removeGroupRight('USER', 'Editor')
+          }
+        }
+      },
       sortedMembers () {
         const members = this.groupMembers[this.name] || []
         return [...members].sort((a, b) => a.username.localeCompare(b.username))
       },
       canAddMember () {
-        const permissions = this.groupPermissions[this.name] || []
-        return permissions.includes('ADD_MEMBERSHIP')
+        const groupPermissions = this.groupPermissions[this.name] || []
+        return groupPermissions.includes('ADD_MEMBERSHIP')
       }
     },
     methods: {
@@ -120,6 +158,18 @@
       addMember () {
         this.clearToast()
         this.$router.push({name: 'addMember', params: {groupName: this.name}})
+      },
+      setGroupRight (role, right) {
+        this.$store.dispatch('setGroupRight', { name: this.name, role, right })
+      },
+      removeGroupRight (role, right) {
+        this.$store.dispatch('removeGroupRight', { name: this.name, role, right })
+      },
+      anonymousGroupRight (rightID) {
+        return this.getAnonymousGroupRights(this.name, rightID)
+      },
+      userGroupRight (rightID) {
+        return this.getUserGroupRights(this.name, rightID)
       },
       deleteGroup () {
         this.$store.dispatch('deleteGroup', {groupName: this.name})
@@ -131,6 +181,9 @@
     created () {
       this.$store.dispatch('fetchGroupMembers', this.name)
       this.$store.dispatch('fetchGroupPermissions', this.name)
+
+      // TODO: refactor -> this only needs to be called ones ( and every change )
+      this.$store.dispatch('fetchGroupRights', this.name)
     },
     components: {
       Toast

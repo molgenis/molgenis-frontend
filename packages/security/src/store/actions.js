@@ -79,7 +79,53 @@ const actions = {
       commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
     })
   },
+  'setGroupRight' ({commit, state}: { commit: Function, state: Object }, data) {
+    console.log('setGroupRight', data)
+    console.log(state.groupRights.roles)
+    // roll does not exist already
+    if (!state.groupRights.roles.find(item => item.roleName === `${data.name}_${data.role}`.toUpperCase())) {
+      const url = `/api/identities/group/${data.name}/role/${data.role}`
+      let roles = state.groupRights.roles.map(item => ({ role: item.roleName }))
+      roles.push({ role: `${data.name}_${data.right}`.toUpperCase() })
+      const payload = { body: JSON.stringify(roles) }
+      console.log(payload)
+      return api.put(url, payload).then(rights => {
+        console.log('setGroupRight', rights)
+      }, (response) => {
+        commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+      })
+    }
+  },
+  'removeGroupRight' ({commit, state}: { commit: Function, state: Function }, data) {
+    /*
+    console.log('setGroupRight', data)
+    const url = `/api/identities/group/${data.name}/role/${data.role}`
+    const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
 
+    return api.delete_(url, payload).then(rights => {
+      console.log('setGroupRight', rights)
+    }, (response) => {
+      commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+    })
+     */
+  },
+  'fetchGroupRights' ({commit}: { commit: Function }, groupName) {
+    let url = '/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER'
+    api.get(url).then(rights => {
+      // TODO: moet dit wel reactive zijn?
+      commit('setGroupRights', { groupName: 'anonymous', groupRights: rights.items.find(item => item.data.name === 'ANONYMOUS').data })
+      commit('setGroupRights', { groupName: 'user', groupRights: rights.items.find(item => item.data.name === 'USER').data })
+    }, (response) => {
+      commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+    })
+
+    url = `/api/identities/group/${groupName}/role`
+    api.get(url).then(rights => {
+      commit('setGroupRights', { groupName: 'roles', groupRights: rights })
+    }, (response) => {
+      commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+    })
+  },
   'createGroup' ({commit, dispatch}: { commit: Function, dispatch: Function }, createGroupCmd: CreateGroupCommand) {
     const payload = {
       body: JSON.stringify({
