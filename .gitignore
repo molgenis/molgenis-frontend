@@ -6,3 +6,4 @@
 *.iml
 **/selenium-debug.log
 **/*.spec.xml
+.DS_Store
