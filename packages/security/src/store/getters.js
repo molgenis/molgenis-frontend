@@ -23,15 +23,20 @@ const getters = {
   toast: (state: SecurityModel): Toast => {
     return state.toast
   },
-  getAnonymousGroupRights: (state: SecurityModel) => (groupID: string, rightID: string) => {
+  getAnonymousGroupRightsBool: (state: SecurityModel) => (groupID: string, rightID: string) => {
     if (state.groupRights.anonymous && state.groupRights.anonymous.includes) {
-      return state.groupRights.anonymous.includes.items.filter(item => item.data.description === `${groupID} {rightID}`).length > 0
+      return state.groupRights.anonymous.includes.items.filter(item => item.data.description === `${groupID} ${rightID}`).length > 0
     }
     return false
   },
-  getUserGroupRights: (state: SecurityModel) => (groupID: string, rightID: string) => {
+  getUserGroupRightsString: (state: SecurityModel) => (groupID: string) => {
     if (state.groupRights && state.groupRights.user && state.groupRights.user.includes) {
-      return state.groupRights.user.includes.items.filter(item => item.data.description === `${groupID} ${rightID}`).length > 0
+      const found = state.groupRights.user.includes.items.find(item => item.data.label === 'Viewer' || item.data.label === 'Editor')
+      if (found) {
+        return found.data.label
+      } else {
+        return ''
+      }
     }
   }
 }

@@ -82,12 +82,23 @@ const actions = {
   'setGroupRight' ({commit, state}: { commit: Function, state: Object }, data) {
     console.log('setGroupRight', data)
     console.log(state.groupRights.roles)
-    // roll does not exist already
+
+    // remove all rights
+    if (data.right === '') {
+      const url = `/api/identities/group/${data.name}/role/${data.role}`
+      const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
+
+      return api.delete_(url, payload).then(rights => {
+        console.log('setGroupRight', rights)
+      }, (response) => {
+        commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+      })
+    }
+
+    // change rights
     if (!state.groupRights.roles.find(item => item.roleName === `${data.name}_${data.role}`.toUpperCase())) {
       const url = `/api/identities/group/${data.name}/role/${data.role}`
-      let roles = state.groupRights.roles.map(item => ({ role: item.roleName }))
-      roles.push({ role: `${data.name}_${data.right}`.toUpperCase() })
-      const payload = { body: JSON.stringify(roles) }
+      const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
       console.log(payload)
       return api.put(url, payload).then(rights => {
         console.log('setGroupRight', rights)
@@ -95,19 +106,6 @@ const actions = {
         commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
       })
     }
-  },
-  'removeGroupRight' ({commit, state}: { commit: Function, state: Function }, data) {
-    /*
-    console.log('setGroupRight', data)
-    const url = `/api/identities/group/${data.name}/role/${data.role}`
-    const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
-
-    return api.delete_(url, payload).then(rights => {
-      console.log('setGroupRight', rights)
-    }, (response) => {
-      commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
-    })
-     */
   },
   'fetchGroupRights' ({commit}: { commit: Function }, groupName) {
     let url = '/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER'
