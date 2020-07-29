@@ -1,7 +1,8 @@
+// @ts-ignore
 import api from '@molgenis/molgenis-api-client'
 
-const flattenCompounds = (fields) => {
-  return fields.reduce((accum, f) => {
+const flattenCompounds = (fields: any[]) => {
+  return fields.reduce((accum: any[], f: { type: string; children: any }) => {
     if (f.type === 'field-group') {
       accum = accum.concat(flattenCompounds(f.children))
     } else {
@@ -11,33 +12,35 @@ const flattenCompounds = (fields) => {
   }, [])
 }
 
-const isFileIncluded = (formData, formFields) => {
+const isFileIncluded = (formData: { [x: string]: any }, formFields: any) => {
   const flattendFields = flattenCompounds(formFields)
   const fieldsWithFile = flattendFields
-    .filter((field) => field.type === 'file')
-    .find((field) => typeof formData[field.id] !== 'string')
+    .filter((field: { type: string }) => field.type === 'file')
+    .find((field: { id: string | number }) => typeof formData[field.id] !== 'string')
 
   return !!fieldsWithFile
 }
 
-export const appendToForm = (fields, formData, [key, value]) => {
-  const isFile = value && fields.find((field) => field.id === key && field.type === 'file' && typeof value !== 'string')
+export const appendToForm = (fields: any[], formData: FormData, [key, value]: [string, unknown]) => {
+  const isFile = value && fields.find((field: { id: any; type: string }) => field.id === key && field.type === 'file' && typeof value !== 'string')
   if (isFile) {
+    // @ts-ignore
     formData.append(key, value, value.name)
   } else {
-    const stringValue = value === undefined || value === null ? '' : value
+    // @ts-ignore
+    const stringValue: string = value === undefined || value === null ? '' : value
     formData.append(key, stringValue)
   }
 }
 
-const buildFormData = (data, fields) => {
+const buildFormData = (data: { [s: string]: unknown } | ArrayLike<unknown>, fields: any) => {
   const formData = new FormData()
   const flattendFields = flattenCompounds(fields)
   Object.entries(data).forEach((pair) => appendToForm(flattendFields, formData, pair))
   return formData
 }
 
-const doPost = (uri, formData, formFields) => {
+const doPost = (uri: string, formData: any, formFields: any) => {
   const containsFileData = isFileIncluded(formData, formFields)
   const options = {
     headers: {
@@ -59,31 +62,30 @@ const doPost = (uri, formData, formFields) => {
  * @param response
  * @returns Promise{{meta: *, rowData: *}}
  */
-const parseEditResponse = (response) => {
-  // noinspection JSUnusedLocalSymbols
-  const { _meta, _href, ...rowData } = response
+const parseEditResponse = (response: { [x: string]: any; _meta: any }) => {
+  const { _meta, ...rowData } = response
   return Promise.resolve({meta: _meta, rowData: rowData})
 }
 
-const fetchForCreate = (tableId) => api.get('/api/v2/' + tableId + '?num=0')
+const fetchForCreate = (tableId: string) => api.get('/api/v2/' + tableId + '?num=0')
 
-const fetchForUpdate = (tableId, rowId) => {
-  return api.get('/api/v2/' + tableId + '/' + rowId).then(response => parseEditResponse(response))
+const fetchForUpdate = (tableId: string, rowId: string) => {
+  return api.get('/api/v2/' + tableId + '/' + rowId).then((response: any) => parseEditResponse(response))
 }
 
-const create = (formData, formFields, tableId) => {
+const create = (formData: any, formFields: any, tableId: string) => {
   return doPost('/api/v1/' + tableId + '?_method=PUT', formData, formFields)
 }
 
-const update = (formData, formFields, tableId, rowId) => {
+const update = (formData: any, formFields: any, tableId: string, rowId: string) => {
   return doPost('/api/v1/' + tableId + '/' + rowId + '?_method=PUT', formData, formFields)
 }
 
-const save = (formData, formFields, tableId, rowId) => {
+const save = async (formData: any, formFields: any, tableId: any, rowId: null | string) => {
   return rowId === null ? create(formData, formFields, tableId) : update(formData, formFields, tableId, rowId)
 }
 
-const fetch = (tableId, rowId) => rowId === null ? fetchForCreate(tableId) : fetchForUpdate(tableId, rowId)
+const fetch = (tableId: any, rowId: null | string) => rowId === null ? fetchForCreate(tableId) : fetchForUpdate(tableId, rowId)
 
 export {
   save, fetch

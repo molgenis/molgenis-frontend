@@ -69,12 +69,12 @@
 </template>
 
 <script>
-  import { FormComponent, EntityToFormMapper as mapper } from '@molgenis/molgenis-ui-form'
-  import '../../node_modules/@molgenis/molgenis-ui-form/dist/static/css/molgenis-ui-form.css'
-  import * as repository from '@/repository/dataRowRepository'
+import { FormComponent, EntityToFormMapper } from '@molgenis/molgenis-ui-form'
+import '../../node_modules/@molgenis/molgenis-ui-form/dist/static/css/molgenis-ui-form.css'
+import * as repository from '@/repository/dataRowRepository'
 
-  export default {
-    name: 'DataRowEdit',
+export default {
+  name: 'DataRowEdit',
     props: {
       dataTableId: {
         type: String,
@@ -102,7 +102,7 @@
       onValueChanged (updatedFormData) {
         this.formData = updatedFormData
       },
-      onSubmit () {
+      async onSubmit () {
         const formState = this.formState
         this.formFields
           .filter(field => field.type !== 'field-group') // field-groups have no validation to show
@@ -112,9 +112,12 @@
           })
         if (this.formState.$valid) {
           this.isSaving = true
-          repository
-            .save(this.formData, this.formFields, this.dataTableId, this.dataRowId)
-            .then(this.goBackToPluginCaller, this.handleError)
+          try {
+            await repository.save(this.formData, this.formFields, this.dataTableId, this.dataRowId)
+            this.goBackToPluginCaller()
+          } catch (e) {
+            this.handleError(e)
+          }
         }
       },
       goBackToPluginCaller () {
@@ -133,7 +136,7 @@
         this.isSaving = false
       }
     },
-    created: function () {
+    created: async function () {
       const mapperOptions = {
         showNonVisibleAttributes: true,
         mapperMode: this.dataRowId ? 'UPDATE' : 'CREATE',
@@ -143,16 +146,19 @@
           nillLabel: this.$t('data-row-edit-boolean-null')
         }
       }
-      repository.fetch(this.dataTableId, this.dataRowId).then(resp => {
+      try {
+        const resp = await repository.fetch(this.dataTableId, this.dataRowId)
         this.dataTableLabel = resp.meta.label
-        const mappedData = mapper.generateForm(resp.meta, resp.rowData, mapperOptions)
+        const mappedData = EntityToFormMapper.generateForm(resp.meta, resp.rowData, mapperOptions)
         this.formFields = mappedData.formFields
         this.formData = mappedData.formData
         this.showForm = true
-      }, this.handleError)
+      } catch (e) {
+        this.handleError(e)
+      }
     },
     components: {
       FormComponent
     }
-  }
+}
 </script>
