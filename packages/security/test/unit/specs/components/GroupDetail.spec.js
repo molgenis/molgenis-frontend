@@ -69,7 +69,10 @@ describe('GroupDetail component', () => {
 
     actions = {
       fetchGroupMembers: () => td.function(),
-      fetchGroupPermissions: () => td.function()
+      fetchGroupPermissions: () => td.function(),
+      fetchGroupRights: () => td.function(),
+      getAnonymousGroupRightsBool: () => td.function(),
+      getUserGroupRightsString: () => td.function()
     }
 
     getters = {
