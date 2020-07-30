@@ -54,35 +54,50 @@
       </div>
     </div>
 
-    <div class="row groups-listing mt-3 ">
+    <div class="row">
       <div class="col">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="AnonymousView" v-model="anonymousViewer">
-          <label class="form-check-label" for="AnonymousView">
-            Anonymous can view
-          </label>
-        </div>
-        <div class="form-check" role="button">
-          <input class="form-check-input" type="radio" id="RegisteredNone" name="RegisteredUser" value="" v-model="registeredUser">
-          <label class="form-check-label" for="RegisteredNone">
-            Registered user not permitted
-          </label>
-        </div>
-        <div class="form-check" role="button">
-          <input class="form-check-input" type="radio" id="RegisteredView" name="RegisteredUser" value="Viewer" v-model="registeredUser">
-          <label class="form-check-label" for="RegisteredView">
-            Registered user can view
-          </label>
-        </div>
-        <div class="form-check" role="button">
-          <input class="form-check-input" type="radio" id="RegisteredEdit" name="RegisteredUser" value="Editor" v-model="registeredUser">
-          <label class="form-check-label" for="RegisteredEdit">
-            Registered user can edit
-          </label>
-        </div>
+        <h3 class="mt-4">Permissions</h3>
       </div>
     </div>
 
+    <div class="jmbotron">
+      <div class="row groups-listing">
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="AnonymousView" v-model="anonymousViewerPermission" :disabled="isSaving">
+            <label class="form-check-label" for="AnonymousView">
+              {{ 'security-ui-anonymous-can-view' | i18n }}
+            </label>
+          </div>
+          <div class="form-check" role="button">
+            <input class="form-check-input" type="radio" id="RegisteredNone" name="RegisteredUser" value="" v-model="registeredUserPermission" :disabled="isSaving">
+            <label class="form-check-label" for="RegisteredNone">
+              {{ 'security-ui-user-can-not-view' | i18n }}
+            </label>
+          </div>
+          <div class="form-check" role="button">
+            <input class="form-check-input" type="radio" id="RegisteredView" name="RegisteredUser" value="Viewer" v-model="registeredUserPermission" :disabled="isSaving">
+            <label class="form-check-label" for="RegisteredView">
+              {{ 'security-ui-user-can-view' | i18n }}
+            </label>
+          </div>
+          <div class="form-check" role="button">
+            <input class="form-check-input" type="radio" id="RegisteredEdit" name="RegisteredUser" value="Editor" v-model="registeredUserPermission" :disabled="isSaving">
+            <label class="form-check-label" for="RegisteredEdit">
+              {{ 'security-ui-user-can-edit' | i18n }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col">
+          <span class="">
+            <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving"><i class="fa fa-save"></i> Save permissions </button>
+          </span>
+        </div>
+      </div>
+    </div>
     <b-modal id="deleteModal" ok-variant="danger" cancel-variant="secondary"
              :title="$t('security-ui-delete-confirmation-title')"
              :ok-title="$t('security-ui-delete-confirmation-ok-text')"
@@ -104,6 +119,13 @@
         required: false
       }
     },
+    data () {
+      return {
+        anonymousViewerPermission: false,
+        registeredUserPermission: '',
+        isSaving: true
+      }
+    },
     computed: {
       ...mapGetters([
         'groupMembers',
@@ -112,26 +134,6 @@
         'getAnonymousGroupRightsBool',
         'getUserGroupRightsString'
       ]),
-      anonymousViewer: {
-        get: function () {
-          return this.getAnonymousGroupRightsBool(this.name, 'Viewer')
-        },
-        set: function (status) {
-          if (status) {
-            this.setGroupRight('ANONYMOUS', 'Viewer')
-          } else {
-            this.setGroupRight('ANONYMOUS', '')
-          }
-        }
-      },
-      registeredUser: {
-        get: function () {
-          return this.getUserGroupRightsString(this.name)
-        },
-        set: function (status) {
-          this.setGroupRight('USER', status)
-        }
-      },
       sortedMembers () {
         const members = this.groupMembers[this.name] || []
         return [...members].sort((a, b) => a.username.localeCompare(b.username))
@@ -145,12 +147,18 @@
       ...mapMutations([
         'clearToast'
       ]),
+      async savePermissions () {
+        this.isSaving = true
+        await Promise.all([ this.setGroupRight('ANONYMOUS', this.anonymousViewerPermission ? 'Viewer' : ''), this.setGroupRight('USER', this.registeredUserPermission) ])
+        await this.$store.dispatch('fetchGroupRights', this.name)
+        this.isSaving = false
+      },
       addMember () {
         this.clearToast()
         this.$router.push({name: 'addMember', params: {groupName: this.name}})
       },
-      setGroupRight (role, right) {
-        this.$store.dispatch('setGroupRight', { name: this.name, role, right })
+      async setGroupRight (role, right) {
+        await this.$store.dispatch('setGroupRight', { name: this.name, role, right })
       },
       deleteGroup () {
         this.$store.dispatch('deleteGroup', {groupName: this.name})
@@ -162,7 +170,11 @@
     created () {
       this.$store.dispatch('fetchGroupMembers', this.name)
       this.$store.dispatch('fetchGroupPermissions', this.name)
-      this.$store.dispatch('fetchGroupRights', this.name)
+      this.$store.dispatch('fetchGroupRights', this.name).then(() => {
+        this.anonymousViewerPermission = this.getAnonymousGroupRightsBool(this.name, 'Viewer')
+        this.registeredUserPermission = this.getUserGroupRightsString(this.name)
+        this.isSaving = false
+      })
     },
     components: {
       Toast

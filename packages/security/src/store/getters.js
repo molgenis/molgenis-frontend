@@ -38,6 +38,7 @@ const getters = {
         return ''
       }
     }
+    return ''
   }
 }
 export default getters
