@@ -101,7 +101,6 @@ const actions = {
     const rolesUrl = `/api/identities/group/${groupName}/role`
     return Promise.all([
       api.get(groupUrl).then(rights => {
-        // TODO: moet dit wel reactive zijn?
         commit('setGroupRights', { groupName: 'anonymous', groupRights: rights.items.find(item => item.data.name === 'ANONYMOUS').data })
         commit('setGroupRights', { groupName: 'user', groupRights: rights.items.find(item => item.data.name === 'USER').data })
       }, (response) => {
