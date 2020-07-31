@@ -109,7 +109,7 @@
 
 <script>
   import Toast from './Toast'
-  import { mapGetters, mapMutations } from 'vuex'
+  import { mapGetters, mapMutations, mapActions } from 'vuex'
 
   export default {
     name: 'GroupDetail',
@@ -147,30 +147,36 @@
       ...mapMutations([
         'clearToast'
       ]),
+      ...mapActions([
+        'fetchGroupMembers',
+        'fetchGroupPermissions',
+        'fetchGroupRights',
+        'setGroupRight',
+        'deleteGroup'
+      ]),
       async savePermissions () {
         this.isSaving = true
-        await Promise.all([ this.setGroupRight('ANONYMOUS', this.anonymousViewerPermission ? 'Viewer' : ''), this.setGroupRight('USER', this.registeredUserPermission) ])
-        await this.$store.dispatch('fetchGroupRights', this.name)
+        await Promise.all([
+          this.setGroupRight({ name: this.name, role: 'ANONYMOUS', right: this.anonymousViewerPermission ? 'Viewer' : '' }),
+          this.setGroupRight({ name: this.name, role: 'USER', right: this.registeredUserPermission })
+        ])
+        await this.fetchGroupRights(this.name)
         this.isSaving = false
       },
       addMember () {
         this.clearToast()
         this.$router.push({name: 'addMember', params: {groupName: this.name}})
       },
-      async setGroupRight (role, right) {
-        await this.$store.dispatch('setGroupRight', { name: this.name, role, right })
-      },
       deleteGroup () {
-        this.$store.dispatch('deleteGroup', {groupName: this.name})
-          .then(() => {
-            this.$router.push({name: 'groupOverView'})
-          })
+        this.deleteGroup({groupName: this.name}).then(() => {
+          this.$router.push({name: 'groupOverView'})
+        })
       }
     },
     created () {
-      this.$store.dispatch('fetchGroupMembers', this.name)
-      this.$store.dispatch('fetchGroupPermissions', this.name)
-      this.$store.dispatch('fetchGroupRights', this.name).then(() => {
+      this.fetchGroupMembers(this.name)
+      this.fetchGroupPermissions(this.name)
+      this.fetchGroupRights(this.name).then(() => {
         this.anonymousViewerPermission = this.getAnonymousGroupRightsBool(this.name, 'Viewer')
         this.registeredUserPermission = this.getUserGroupRightsString(this.name)
         this.isSaving = false

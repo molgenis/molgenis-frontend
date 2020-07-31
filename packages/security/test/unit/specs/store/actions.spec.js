@@ -509,4 +509,19 @@ describe('actions', () => {
       testUtils.testAction(actions.deleteGroup, options, done)
     })
   })
+  describe('setGroupRight', () => {
+    it('should', async () => {
+      const put = td.function('api.put')
+      const url = '/api/identities/group/group1/role/role1'
+      const payload = { body: JSON.stringify({ role: 'GROUP1_RIGHT1' }) }
+      td.when(put(url, payload))
+        .thenResolve({ state: true })
+      td.replace(api, 'put', put)
+
+      const commit = sinon.spy()
+      const state = { groupRights: { roles: [ ] } }
+      await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: 'right1' })
+      td.verify(put(url, payload))
+    })
+  })
 })

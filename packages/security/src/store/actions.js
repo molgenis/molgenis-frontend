@@ -79,11 +79,10 @@ const actions = {
       commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
     })
   },
-  'setGroupRight' ({commit, state}: { commit: Function, state: Object }, data) {
+  async 'setGroupRight' ({commit, state}: { commit: Function, state: Object }, data) {
     if (data.right === '') {
       const url = `/api/identities/group/${data.name}/role/${data.role}`
       const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
-
       return api.delete_(url, payload).then(() => {}, (response) => {
         commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
       })
@@ -91,9 +90,11 @@ const actions = {
     if (!state.groupRights.roles.find(item => item.roleName === `${data.name}_${data.role}`.toUpperCase())) {
       const url = `/api/identities/group/${data.name}/role/${data.role}`
       const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
-      return api.put(url, payload).then(() => {}, (response) => {
+      const response = await api.put(url, payload)
+      if (response && response.status !== 204) {
         commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
-      })
+      }
+      return response
     }
   },
   'fetchGroupRights' ({commit}: { commit: Function }, groupName) {
