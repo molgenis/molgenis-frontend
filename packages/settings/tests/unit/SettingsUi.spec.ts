@@ -1,51 +1,70 @@
-import { shallow } from 'vue-test-utils'
-import SettingsUi from '@/components/SettingsUi'
+import { shallowMount } from '@vue/test-utils'
+import SettingsUi from '@/components/SettingsUi.vue'
+// @ts-ignore
 import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
+// @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import td from 'testdouble'
+
+jest.mock('@molgenis/molgenis-api-client', () => {
+  return {
+    post: jest.fn(),
+    get: jest.fn()
+  }
+})
+
+jest.mock('@molgenis/molgenis-ui-form', () => {
+  return {
+      FormComponent: {},
+      EntityToFormMapper: {
+        generateForm: jest.fn()
+      }
+    }
+})
 
 describe('SettingsUi component', () => {
   it('Should have "SettingsUi" as name.', () => {
-    expect(SettingsUi.name).to.equal('SettingsUi')
+    expect(SettingsUi.name).toEqual('SettingsUi')
   })
 
   it('Should have a "data" function.', () => {
-    expect(typeof SettingsUi.data).to.equal('function')
+    // @ts-ignore
+    expect(typeof SettingsUi.data).toEqual('function')
   })
 
   describe('Data should initialize', () => {
+    // @ts-ignore
     const data = SettingsUi.data()
 
     it('selectedSetting to null.', () => {
-      expect(data.selectedSetting).to.equal(null)
+      expect(data.selectedSetting).toEqual(null)
     })
 
     it('formState as a empty object.', () => {
-      expect(data.formState).to.deep.equal({})
+      expect(data.formState).toEqual({})
     })
 
     it('formFields as a empty array.', () => {
-      expect(data.formFields).to.deep.equal([])
+      expect(data.formFields).toEqual([])
     })
 
     it('formData as a empty object.', () => {
-      expect(data.formData).to.deep.equal({})
+      expect(data.formData).toEqual({})
     })
 
     it('settingsOptions as a empty array.', () => {
-      expect(data.settingsOptions).to.deep.equal([])
+      expect(data.settingsOptions).toEqual([])
     })
 
     it('alert to null.', () => {
-      expect(data.alert).to.equal(null)
+      expect(data.alert).toEqual(null)
     })
 
     it('showForm to false.', () => {
-      expect(data.showForm).to.equal(false)
+      expect(data.showForm).toEqual(false)
     })
 
     it('settingLabel as empty string.', () => {
-      expect(data.settingLabel).to.equal('')
+      expect(data.settingLabel).toEqual('')
     })
   })
 
@@ -57,9 +76,7 @@ describe('SettingsUi component', () => {
       }
     }
 
-    const settingsOptions = {
-      items: [{id: '1', label: 'set1'}, {id: '2', label: 'set2'}]
-    }
+    const settingsOptions = { items: [{id: '1', label: 'set1'}, {id: '2', label: 'set2'}] }
 
     const settingResponse = {
       items: [settingItem],
@@ -68,18 +85,17 @@ describe('SettingsUi component', () => {
       }
     }
 
-    const get = td.function('api.get')
-    td.when(get('/api/v2/sys_md_EntityType?sort=label&num=1000&&q=isAbstract==false;package.id==sys_set'))
-      .thenResolve(settingsOptions)
-    td.when(get('/api/v2/test-setting'))
-      .thenResolve(settingResponse)
-    td.replace(api, 'get', get)
+    // '/api/v2/sys_md_EntityType?sort=label&num=1000&&q=isAbstract==false;package.id==sys_set'
+    api.get.mockResolvedValueOnce(settingsOptions)
 
-    td.replace(EntityToFormMapper, 'generateForm', settingItem)
+    // '/api/v2/test-setting'
+    api.get.mockResolvedValueOnce(settingResponse)
+
+    EntityToFormMapper.generateForm.mockReturnValueOnce(settingItem)
 
     let pushedRoute = {}
     const $router = {
-      push: function (pushed) {
+      push: function (pushed: {}) {
         pushedRoute = pushed
       }
     }
@@ -88,7 +104,7 @@ describe('SettingsUi component', () => {
         setting: 'test-setting'
       }
     }
-    const wrapper = shallow(SettingsUi, {
+    const wrapper = shallowMount(SettingsUi, {
       mocks: {
         $router,
         $route
@@ -96,59 +112,73 @@ describe('SettingsUi component', () => {
     })
 
     it('Should fetch the settings data.', () => {
-      expect(pushedRoute).to.deep.equal({path: '/test-setting'})
+      expect(pushedRoute).toEqual({path: '/test-setting'})
     })
 
     it('Should make the route setting the selected setting.', () => {
-      expect(wrapper.vm.selectedSetting).to.equal('test-setting')
+      // @ts-ignore
+      expect(wrapper.vm.selectedSetting).toEqual('test-setting')
     })
 
     describe('After creating', () => {
       it('Calling clear alert, clear the alert', () => {
+        // @ts-ignore
         wrapper.vm.clearAlert()
-        expect(wrapper.vm.alert).to.equal(null)
+        // @ts-ignore
+        expect(wrapper.vm.alert).toEqual(null)
       })
 
       it('Calling onValueChanged should pass state of the form to settings data', () => {
+        // @ts-ignore
         wrapper.vm.onValueChanged({foo: 'bar'})
-        expect(wrapper.vm.formData).to.deep.equal({foo: 'bar'})
+        // @ts-ignore
+        expect(wrapper.vm.formData).toEqual({foo: 'bar'})
       })
 
       it('Calling handle error, sets the alert', () => {
+        // @ts-ignore
         wrapper.vm.handleError('test-error')
-        expect(wrapper.vm.alert).to.deep.equal({
+        // @ts-ignore
+        expect(wrapper.vm.alert).toEqual({
           message: 'test-error',
           type: 'danger'
         })
       })
 
       it('Calling handle error with not passing a string sets the alert the default alert', () => {
+        // @ts-ignore
         wrapper.vm.handleError({foo: 'bar'})
-        expect(wrapper.vm.alert).to.deep.equal({
+        // @ts-ignore
+        expect(wrapper.vm.alert).toEqual({
           message: 'An error has occurred.',
           type: 'danger'
         })
       })
 
       it('Calling the success handler resets the form and signals succes to the user', () => {
+        // @ts-ignore
         wrapper.vm.formState._reset = function () {}
+        // @ts-ignore
         wrapper.vm.handleSuccess()
-        expect(wrapper.vm.alert).to.deep.equal({
+        // @ts-ignore
+        expect(wrapper.vm.alert).toEqual({
           message: 'Settings saved',
           type: 'success'
         })
       })
 
       it('Submitting the form triggers post and triggers success handeler ', () => {
+        // @ts-ignore
         wrapper.vm.formState._reset = function () {
         }
         wrapper.setData({formData: {id: 'test_id', a: 'a'}})
-        const post = td.function('api.post')
-        td.when(post('/api/v1/test-setting/test_id?_method=PUT', {body: '{"id":"test_id","a":"a"}'}))
-          .thenResolve({status: 'OKE'})
-        td.replace(api, 'post', post)
+
+        // '/api/v1/test-setting/test_id?_method=PUT' , // {body: '{"id":"test_id","a":"a"}'}
+        api.post.mockResolvedValueOnce({status: 'OKE'})
+        // @ts-ignore
         wrapper.vm.onSubmit()
-        expect(wrapper.vm.alert).to.deep.equal({
+        // @ts-ignore
+        expect(wrapper.vm.alert).toEqual({
           message: 'Settings saved',
           type: 'success'
         })
