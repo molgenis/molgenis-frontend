@@ -98,6 +98,10 @@ const actions = {
     }
   },
   'fetchGroupRights' ({commit}: { commit: Function }, groupName) {
+    commit('setGroupRights', { groupName: 'anonymous', groupRights: null })
+    commit('setGroupRights', { groupName: 'user', groupRights: null })
+    commit('setGroupRights', { groupName: 'roles', groupRights: [] })
+
     const groupUrl = '/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER'
     const rolesUrl = `/api/identities/group/${groupName}/role`
     return Promise.all([
