@@ -32,7 +32,8 @@ export type User = {
 
 export type GroupRights = {
   user: any,
-  anonymous: any
+  anonymous: any,
+  roles: Array
 }
 
 export type SecurityModel = {
