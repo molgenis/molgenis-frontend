@@ -558,5 +558,35 @@ describe('actions', () => {
       }
       testUtils.testAction(actions.fetchGroupRights, options, done)
     })
+    it('should commit any fetchGroupRights errors to the store', done => {
+      const error = {
+        errors: [{
+          message: 'Error when calling',
+          code: 'backend'
+        }]
+      }
+      const groupName = 'group1'
+
+      const get = td.function('api.get')
+      td.when(get('/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER')).thenReject(error)
+      td.when(get(`/api/identities/group/${groupName}/role`)).thenReject(error)
+      td.replace(api, 'get', get)
+
+      const options = {
+        payload: groupName,
+        expectedMutations: [
+          {
+            type: 'setToast',
+            payload: {type: 'danger', message: 'Error when calling (backend)'}
+          },
+          {
+            type: 'setToast',
+            payload: {type: 'danger', message: 'Error when calling (backend)'}
+          }
+        ]
+      }
+
+      testUtils.testAction(actions.fetchGroupRights, options, done)
+    })
   })
 })
