@@ -93,7 +93,7 @@
       <div class="row mt-3">
         <div class="col">
           <span class="">
-            <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving"><i class="fa fa-save"></i> Save permissions </button>
+            <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving"><i :class="['fa', 'fa-save']"></i> Save permissions </button>
           </span>
         </div>
       </div>
