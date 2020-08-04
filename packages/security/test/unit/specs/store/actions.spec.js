@@ -510,7 +510,7 @@ describe('actions', () => {
     })
   })
   describe('setGroupRight', () => {
-    it('should', async () => {
+    it('should set the requested roll/permission/group combination', async () => {
       const put = td.function('api.put')
       const url = '/api/identities/group/group1/role/role1'
       const payload = { body: JSON.stringify({ role: 'GROUP1_RIGHT1' }) }
@@ -522,6 +522,19 @@ describe('actions', () => {
       const state = { groupRights: { roles: [ ] } }
       await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: 'right1' })
       td.verify(put(url, payload))
+    })
+    it('should unset the requested roll/permission/group combination', async () => {
+      const delete_ = td.function('api.delete_')
+      const url = '/api/identities/group/group1/role/role1'
+      const payload = { body: JSON.stringify({ role: 'GROUP1_' }) }
+      td.when(delete_(url, payload))
+        .thenResolve({ state: true })
+      td.replace(api, 'delete_', delete_)
+
+      const commit = sinon.spy()
+      const state = { groupRights: { roles: [ ] } }
+      await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: '' })
+      td.verify(delete_(url, payload))
     })
   })
 })
