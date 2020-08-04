@@ -537,4 +537,26 @@ describe('actions', () => {
       td.verify(delete_(url, payload))
     })
   })
+  describe('fetchGroupRights', () => {
+    it('should fetch al the needed information to manipulate the group permissions', done => {
+      const groupPermissions = { items: [ { data: { name: 'ANONYMOUS' } }, { data: { name: 'USER' } } ] }
+      const roles = [{ hello: 'world' }]
+      const groupName = 'group1'
+
+      const get = td.function('api.get')
+      td.when(get('/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER')).thenResolve(groupPermissions)
+      td.when(get(`/api/identities/group/${groupName}/role`)).thenResolve(roles)
+      td.replace(api, 'get', get)
+
+      const options = {
+        payload: groupName,
+        expectedMutations: [
+          { type: 'setGroupRights', payload: { groupName: 'anonymous', groupRights: { name: 'ANONYMOUS' } } },
+          { type: 'setGroupRights', payload: { groupName: 'user', groupRights: { name: 'USER' } } },
+          { type: 'setGroupRights', payload: { groupName: 'roles', groupRights: roles } }
+        ]
+      }
+      testUtils.testAction(actions.fetchGroupRights, options, done)
+    })
+  })
 })
