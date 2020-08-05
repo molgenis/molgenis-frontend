@@ -30,6 +30,12 @@ export type User = {
   username: string
 }
 
+export type GroupRights = {
+  user: any,
+  anonymous: any,
+  roles: Array
+}
+
 export type SecurityModel = {
   loginUser: LoginUser,
   groups: Array<Group>,
@@ -37,7 +43,8 @@ export type SecurityModel = {
   groupRoles: { [string]: Array<GroupRole> },
   groupPermissions: { [string]: Array<string> },
   users: Array<User>,
-  toast: ?Toast
+  toast: ?Toast,
+  groupRights: GroupRights
 }
 
 export type CreateGroupCommand = {

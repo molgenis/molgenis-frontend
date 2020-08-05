@@ -509,4 +509,90 @@ describe('actions', () => {
       testUtils.testAction(actions.deleteGroup, options, done)
     })
   })
+
+  describe('setGroupRight', () => {
+    it('should set the requested roll/permission/group combination', async () => {
+      const put = td.function('api.put')
+      const url = '/api/identities/group/group1/role/role1'
+      const payload = { body: JSON.stringify({ role: 'GROUP1_RIGHT1' }) }
+      td.when(put(url, payload))
+        .thenResolve({ state: true })
+      td.replace(api, 'put', put)
+
+      const commit = sinon.spy()
+      const state = { groupRights: { roles: [ ] } }
+      await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: 'right1' })
+      td.verify(put(url, payload))
+    })
+    it('should unset the requested roll/permission/group combination', async () => {
+      const delete_ = td.function('api.delete_')
+      const url = '/api/identities/group/group1/role/role1'
+      td.when(delete_(url))
+        .thenResolve({ state: true })
+      td.replace(api, 'delete_', delete_)
+
+      const commit = sinon.spy()
+      const state = { groupRights: { roles: [ ] } }
+      await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: '' })
+      td.verify(delete_(url))
+    })
+  })
+
+  describe('fetchGroupRights', () => {
+    it('should fetch al the needed information to manipulate the group permissions', done => {
+      const groupPermissions = { items: [ { data: { name: 'ANONYMOUS' } }, { data: { name: 'USER' } } ] }
+      const roles = [{ hello: 'world' }]
+      const groupName = 'group1'
+
+      const get = td.function('api.get')
+      td.when(get('/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER')).thenResolve(groupPermissions)
+      td.when(get(`/api/identities/group/${groupName}/role`)).thenResolve(roles)
+      td.replace(api, 'get', get)
+
+      const options = {
+        payload: groupName,
+        expectedMutations: [
+          { type: 'setGroupRights', payload: { groupName: 'anonymous', groupRights: null } },
+          { type: 'setGroupRights', payload: { groupName: 'user', groupRights: null } },
+          { type: 'setGroupRights', payload: { groupName: 'roles', groupRights: [] } },
+          { type: 'setGroupRights', payload: { groupName: 'anonymous', groupRights: { name: 'ANONYMOUS' } } },
+          { type: 'setGroupRights', payload: { groupName: 'user', groupRights: { name: 'USER' } } },
+          { type: 'setGroupRights', payload: { groupName: 'roles', groupRights: roles } }
+        ]
+      }
+      testUtils.testAction(actions.fetchGroupRights, options, done)
+    })
+    it('should commit any fetchGroupRights errors to the store', done => {
+      const error = {
+        errors: [{
+          message: 'Error when calling',
+          code: 'backend'
+        }]
+      }
+      const groupName = 'group1'
+
+      const get = td.function('api.get')
+      td.when(get('/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER')).thenReject(error)
+      td.when(get(`/api/identities/group/${groupName}/role`)).thenReject(error)
+      td.replace(api, 'get', get)
+
+      const options = {
+        payload: groupName,
+        expectedMutations: [
+          { type: 'setGroupRights', payload: { groupName: 'anonymous', groupRights: null } },
+          { type: 'setGroupRights', payload: { groupName: 'user', groupRights: null } },
+          { type: 'setGroupRights', payload: { groupName: 'roles', groupRights: [] } },
+          {
+            type: 'setToast',
+            payload: {type: 'danger', message: 'Error when calling (backend)'}
+          },
+          {
+            type: 'setToast',
+            payload: {type: 'danger', message: 'Error when calling (backend)'}
+          }
+        ]
+      }
+      testUtils.testAction(actions.fetchGroupRights, options, done)
+    })
+  })
 })

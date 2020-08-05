@@ -2,6 +2,9 @@ import GroupDetail from '../../../../src/components/GroupDetail'
 import {createLocalVue, shallowMount} from '@vue/test-utils'
 import td from 'testdouble'
 import Vuex from 'vuex'
+import sinon from 'sinon'
+
+import BootstrapVue from 'bootstrap-vue'
 
 const $t = (key) => {
   const translations = {}
@@ -55,6 +58,7 @@ describe('GroupDetail component', () => {
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
+    localVue.use(BootstrapVue)
     localVue.filter('i18n', $t)
 
     state = {
@@ -69,13 +73,17 @@ describe('GroupDetail component', () => {
 
     actions = {
       fetchGroupMembers: () => td.function(),
-      fetchGroupPermissions: () => td.function()
+      fetchGroupPermissions: () => td.function(),
+      fetchGroupRights: td.function(),
+      setGroupRight: td.function()
     }
 
     getters = {
       groupMembers: () => groupMembers,
       groupPermissions: () => groupPermissions,
-      getLoginUser: () => loginUser
+      getLoginUser: () => loginUser,
+      getAnonymousGroupRightsBool: () => td.function(),
+      getUserGroupRightsString: () => td.function()
     }
 
     mutations = {
@@ -129,6 +137,28 @@ describe('GroupDetail component', () => {
       wrapper.find('#add-member-btn').trigger('click')
       expect(pushedRoute).to.deep.equal({name: 'addMember', params: {groupName: 'group1'}})
       td.verify(mutations.clearToast(state, undefined))
+    })
+  })
+
+  describe('when save permissions clicked', () => {
+    it('should save permissions', async () => {
+      const wrapper = shallowMount(GroupDetail, {
+        propsData: {
+          name: 'group1'
+        },
+        mocks: {$router, $route, $t},
+        store,
+        stubs,
+        localVue
+      })
+      wrapper.vm.fetchGroupRights = sinon.spy()
+      wrapper.vm.setGroupRight = sinon.spy()
+
+      await wrapper.vm.savePermissions()
+
+      sinon.assert.calledWith(wrapper.vm.fetchGroupRights, 'group1')
+      sinon.assert.calledWith(wrapper.vm.setGroupRight, { name: 'group1', role: 'ANONYMOUS', right: '' })
+      sinon.assert.calledWith(wrapper.vm.setGroupRight, { name: 'group1', role: 'USER', right: '' })
     })
   })
 })

@@ -90,4 +90,44 @@ describe('getters', () => {
       expect(getters.toast(state)).to.deep.equal(state.toast)
     })
   })
+
+  describe('getAnonymousGroupRightsBool', () => {
+    it('should be false when data is not loaded', () => {
+      const state = {
+        groupRights: {
+          anonymous: null
+        }
+      }
+      expect(getters.getAnonymousGroupRightsBool(state)('test', 'Viewer')).to.equal(false)
+    })
+
+    it('should check if the selected roll has the selected permission', () => {
+      const state = {
+        groupRights: {
+          anonymous: { includes: { items: [ { data: { name: 'GROUP_PERMISSION' } } ] } }
+        }
+      }
+      expect(getters.getAnonymousGroupRightsBool(state)('Group', 'Permission')).to.equal(true)
+    })
+  })
+
+  describe('getUserGroupRightsString', () => {
+    it('should be false when data is not loaded', () => {
+      const state = {
+        groupRights: {
+          user: null
+        }
+      }
+      expect(getters.getUserGroupRightsString(state)('test')).to.equal('')
+    })
+
+    it('should check if the selected roll has the selected permission', () => {
+      const state = {
+        groupRights: {
+          user: { includes: { items: [ { data: { name: 'GROUP_VIEWER', label: 'Viewer' } } ] } }
+        }
+      }
+      expect(getters.getUserGroupRightsString(state)('Group')).to.equal('Viewer')
+    })
+  })
 })

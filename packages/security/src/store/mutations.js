@@ -21,6 +21,9 @@ const mutations = {
   setGroupPermissions (state: SecurityModel, { groupName, groupPermissions }) {
     Vue.set(state.groupPermissions, groupName, groupPermissions)
   },
+  setGroupRights (state: SecurityModel, { groupName, groupRights }) {
+    Vue.set(state.groupRights, groupName, groupRights)
+  },
   clearToast (state: SecurityModel) {
     state.toast = null
   },

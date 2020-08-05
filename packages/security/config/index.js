@@ -23,16 +23,18 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/login': {
-        target: 'http://localhost:8080'
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true
       },
       '/api': {
-        target: 'http://localhost:8080'
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true
       }
     },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 3000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
