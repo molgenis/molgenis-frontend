@@ -63,53 +63,53 @@
 </template>
 
 <script>
-  import Toast from './Toast'
-  import { mapGetters, mapMutations } from 'vuex'
+import Toast from '@/components/Toast.vue'
+import { mapGetters, mapMutations } from 'vuex'
 
-  export default {
-    name: 'GroupDetail',
-    props: {
-      name: {
-        type: String,
-        required: false
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'groupMembers',
-        'groupPermissions',
-        'getLoginUser'
-      ]),
-      sortedMembers () {
-        const members = this.groupMembers[this.name] || []
-        return [...members].sort((a, b) => a.username.localeCompare(b.username))
-      },
-      canAddMember () {
-        const permissions = this.groupPermissions[this.name] || []
-        return permissions.includes('ADD_MEMBERSHIP')
-      }
-    },
-    methods: {
-      ...mapMutations([
-        'clearToast'
-      ]),
-      addMember () {
-        this.clearToast()
-        this.$router.push({name: 'addMember', params: {groupName: this.name}})
-      },
-      deleteGroup () {
-        this.$store.dispatch('deleteGroup', {groupName: this.name})
-          .then(() => {
-            this.$router.push({name: 'groupOverView'})
-          })
-      }
-    },
-    created () {
-      this.$store.dispatch('fetchGroupMembers', this.name)
-      this.$store.dispatch('fetchGroupPermissions', this.name)
-    },
-    components: {
-      Toast
+export default {
+  name: 'GroupDetail',
+  props: {
+    name: {
+      type: String,
+      required: false
     }
+  },
+  computed: {
+    ...mapGetters([
+      'groupMembers',
+      'groupPermissions',
+      'getLoginUser'
+    ]),
+    sortedMembers () {
+      const members = this.groupMembers[this.name] || []
+      return [...members].sort((a, b) => a.username.localeCompare(b.username))
+    },
+    canAddMember () {
+      const permissions = this.groupPermissions[this.name] || []
+      return permissions.includes('ADD_MEMBERSHIP')
+    }
+  },
+  methods: {
+    ...mapMutations([
+      'clearToast'
+    ]),
+    addMember () {
+      this.clearToast()
+      this.$router.push({ name: 'addMember', params: { groupName: this.name } })
+    },
+    deleteGroup () {
+      this.$store.dispatch('deleteGroup', { groupName: this.name })
+        .then(() => {
+          this.$router.push({ name: 'groupOverView' })
+        })
+    }
+  },
+  created () {
+    this.$store.dispatch('fetchGroupMembers', this.name)
+    this.$store.dispatch('fetchGroupPermissions', this.name)
+  },
+  components: {
+    Toast
   }
+}
 </script>

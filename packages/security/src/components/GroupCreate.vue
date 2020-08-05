@@ -65,74 +65,73 @@
       </div>
     </div>
 
-
   </div>
 </template>
 
 <script>
-  import Toast from './Toast'
-  import slugService from '../service/slugService'
-  import _ from 'lodash'
+import Toast from '@/components/Toast.vue'
+import slugService from '@/service/slugService.ts'
+import _ from 'lodash'
 
-  export default {
-    name: 'GroupCreate',
-    data () {
-      return {
-        groupName: '',
-        groupIdentifier: '',
-        isCreating: false,
-        groupIdentifierTaken: null
-      }
+export default {
+  name: 'GroupCreate',
+  data () {
+    return {
+      groupName: '',
+      groupIdentifier: '',
+      isCreating: false,
+      groupIdentifierTaken: null
+    }
+  },
+  computed: {
+    groupIdentifierSlug () {
+      return slugService.slugify(this.groupName)
     },
-    computed: {
-      groupIdentifierSlug () {
-        return slugService.slugify(this.groupName)
-      },
-      invalidGroupIdentifier () {
-        // See https://regex101.com/r/rpnoM1/3 for the regex
-        return this.groupIdentifier && !this.groupIdentifier.match(/^[\w-]+$/)
-      },
-      canSubmit () {
-        return this.groupIdentifier.trim().length &&
+    invalidGroupIdentifier () {
+      // See https://regex101.com/r/rpnoM1/3 for the regex
+      return this.groupIdentifier && !this.groupIdentifier.match(/^[\w-]+$/)
+    },
+    canSubmit () {
+      return this.groupIdentifier.trim().length &&
           this.groupName.trim().length &&
           !this.invalidGroupIdentifier &&
           this.groupIdentifierTaken === false
-      }
-    },
-    watch: {
-      groupName (newVal) {
-        this.groupIdentifier = this.groupIdentifierSlug
-      },
-      groupIdentifier (newVal) {
-        this.groupIdentifierTaken = null
-        if (newVal && !this.invalidGroupIdentifier) {
-          this.groupIdentifierTaken = null
-          this.checkRootPackageExists()
-        }
-      }
-    },
-    methods: {
-      onSubmit () {
-        this.isCreating = !this.isCreating
-        const createGroupCommand = {groupIdentifier: this.groupIdentifier, name: this.groupName}
-        this.$store.dispatch('createGroup', createGroupCommand)
-          .then(() => {
-            this.$router.push({name: 'groupOverView'})
-          }, () => {
-            this.isCreating = !this.isCreating
-          })
-      },
-      checkRootPackageExists: _.debounce(function () {
-        const groupIdentifier = this.groupIdentifier
-        this.$store.dispatch('checkRootPackageExists', groupIdentifier).then((exists) => {
-          if (this.groupIdentifier === groupIdentifier) {
-            this.groupIdentifierTaken = exists
-          }
-        })
-      }, 300)
-    },
-    components: {
-      Toast
     }
+  },
+  watch: {
+    groupName () {
+      this.groupIdentifier = this.groupIdentifierSlug
+    },
+    groupIdentifier (newVal) {
+      this.groupIdentifierTaken = null
+      if (newVal && !this.invalidGroupIdentifier) {
+        this.groupIdentifierTaken = null
+        this.checkRootPackageExists()
+      }
+    }
+  },
+  methods: {
+    onSubmit () {
+      this.isCreating = !this.isCreating
+      const createGroupCommand = { groupIdentifier: this.groupIdentifier, name: this.groupName }
+      this.$store.dispatch('createGroup', createGroupCommand)
+        .then(() => {
+          this.$router.push({ name: 'groupOverView' })
+        }, () => {
+          this.isCreating = !this.isCreating
+        })
+    },
+    checkRootPackageExists: _.debounce(function () {
+      const groupIdentifier = this.groupIdentifier
+      this.$store.dispatch('checkRootPackageExists', groupIdentifier).then((exists) => {
+        if (this.groupIdentifier === groupIdentifier) {
+          this.groupIdentifierTaken = exists
+        }
+      })
+    }, 300)
+  },
+  components: {
+    Toast
   }
+}
 </script>
