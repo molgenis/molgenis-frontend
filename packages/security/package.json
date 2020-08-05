@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/security",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "LGPL-3.0",
   "description": "Interface for managing groups, users and permissions",
   "author": "sido <sido@haakma.org>",
