@@ -14,7 +14,8 @@ const state: SecurityModel = {
   groupRoles: {},
   groupPermissions: {},
   users: [],
-  toast: null
+  toast: null,
+  groupRights: { user: null, anonymous: null, roles: [] }
 }
 
 export default new Vuex.Store({

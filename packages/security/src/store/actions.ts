@@ -174,6 +174,46 @@ const actions = {
         reject(response)
       })
     })
+  },
+  async 'setGroupRight' ({commit, state}: { commit: Function, state: Object }, data) {
+    const url = `/api/identities/group/${data.name}/role/${data.role}`
+    const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
+    if (data.right === '') {
+      const response = await api.delete_(url)
+      if (response && response.status !== 204) {
+        commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+      }
+      return response
+    }
+    if (!state.groupRights.roles.find((item:any) => item.roleName === `${data.name}_${data.role}`.toUpperCase())) {
+      const response = await api.put(url, payload)
+      if (response && response.status !== 204) {
+        commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+      }
+      return response
+    }
+  },
+  'fetchGroupRights' ({commit}: { commit: Function }, groupName) {
+    commit('setGroupRights', { groupName: 'anonymous', groupRights: null })
+    commit('setGroupRights', { groupName: 'user', groupRights: null })
+    commit('setGroupRights', { groupName: 'roles', groupRights: [] })
+
+    const groupUrl = '/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER'
+    const rolesUrl = `/api/identities/group/${groupName}/role`
+    return Promise.all([
+      api.get(groupUrl).then(rights => {
+        commit('setGroupRights', { groupName: 'anonymous', groupRights: rights.items.find(item => item.data.name === 'ANONYMOUS').data })
+        commit('setGroupRights', { groupName: 'user', groupRights: rights.items.find(item => item.data.name === 'USER').data })
+      }, (response) => {
+        commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+      })
+    ], [
+      api.get(rolesUrl).then(rights => {
+        commit('setGroupRights', { groupName: 'roles', groupRights: rights })
+      }, (response) => {
+        commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+      })
+    ])
   }
 }
 export default actions

@@ -18,8 +18,7 @@
             <input v-model="groupName" type="text" class="form-control" id="groupNameInput" aria-describedby="groupName"
                    :placeholder="'security-ui-group-attribute-label-placeholder' | i18n">
             <small id="groupNameHelp" class="form-text text-muted">
-              {{'security-ui-group-attribute-label-description' |
-              i18n}}
+              {{'security-ui-group-attribute-label-description' | i18n}}
             </small>
           </div>
 

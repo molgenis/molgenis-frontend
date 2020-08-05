@@ -1,5 +1,5 @@
 import GroupDetail from '@/components/GroupDetail.vue'
-import {createLocalVue, shallowMount} from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Vuex from 'vuex'
 
 const $t = (key: string | number) => {
@@ -9,12 +9,12 @@ const $t = (key: string | number) => {
 }
 
 describe('GroupDetail component', () => {
-  let getters:any
-  let mutations:any
-  let actions:any
-  let localVue:any
-  let state:any
-  let store:any
+  let getters: any
+  let mutations: any
+  let actions: any
+  let localVue: any
+  let state: any
+  let store: any
 
   let pushedRoute = {}
   const $router = {
@@ -56,34 +56,38 @@ describe('GroupDetail component', () => {
     localVue = createLocalVue()
     localVue.use(Vuex)
     localVue.filter('i18n', $t)
-    localVue.directive('b-modal',  {})
+    localVue.directive('b-modal', {})
 
     state = {
       loginUser: loginUser,
       groups: [],
       groupMembers: groupMembers,
       groupRoles: {},
-      groupPermissions: {group1: ['ADD_MEMBERSHIP']},
+      groupPermissions: { group1: ['ADD_MEMBERSHIP'] },
       users: [],
       toast: null
     }
 
     actions = {
       fetchGroupMembers: () => jest.fn(),
-      fetchGroupPermissions: () => jest.fn()
+      fetchGroupPermissions: () => jest.fn(),
+      fetchGroupRights: () => jest.fn(),
+      setGroupRight: () => jest.fn()
     }
 
     getters = {
       groupMembers: () => groupMembers,
       groupPermissions: () => groupPermissions,
-      getLoginUser: () => loginUser
+      getLoginUser: () => loginUser,
+      getAnonymousGroupRightsBool: () => jest.fn(),
+      getUserGroupRightsString: () => jest.fn()
     }
 
     mutations = {
       clearToast: jest.fn()
     }
 
-    store = new Vuex.Store({state, actions, getters, mutations})
+    store = new Vuex.Store({ state, actions, getters, mutations })
   })
 
   const stubs = ['router-link', 'router-view', 'b-button', 'b-modal']
@@ -94,7 +98,7 @@ describe('GroupDetail component', () => {
         propsData: {
           name: 'group1'
         },
-        mocks: {$router, $route, $t},
+        mocks: { $router, $route, $t },
         store,
         stubs,
         localVue
@@ -108,7 +112,7 @@ describe('GroupDetail component', () => {
         propsData: {
           name: 'group1'
         },
-        mocks: {$router, $route, $t},
+        mocks: { $router, $route, $t },
         store,
         stubs,
         localVue
@@ -124,14 +128,42 @@ describe('GroupDetail component', () => {
         propsData: {
           name: 'group1'
         },
-        mocks: {$router, $route, $t},
+        mocks: { $router, $route, $t },
         store,
         stubs,
         localVue
       })
       wrapper.find('#add-member-btn').trigger('click')
-      expect(pushedRoute).toEqual({name: 'addMember', params: {groupName: 'group1'}})
+      expect(pushedRoute).toEqual({ name: 'addMember', params: { groupName: 'group1' } })
       expect(mutations.clearToast).toHaveBeenCalledWith(state, undefined)
+    })
+  })
+
+  describe('when save permissions clicked', () => {
+    it('should save permissions', async (done) => {
+      const wrapper = shallowMount(GroupDetail, {
+        propsData: {
+          name: 'group1'
+        },
+        mocks: {$router, $route, $t},
+        store,
+        stubs,
+        localVue
+      })
+      //wrapper.vm.fetchGroupRights = sinon.spy()
+      //wrapper.vm.setGroupRight = sinon.spy()
+
+      // @ts-ignore
+      await wrapper.vm.savePermissions()
+
+      // sinon.assert.calledWith(wrapper.vm.fetchGroupRights, 'group1')
+      // sinon.assert.calledWith(wrapper.vm.setGroupRight, { name: 'group1', role: 'ANONYMOUS', right: '' })
+      // sinon.assert.calledWith(wrapper.vm.setGroupRight, { name: 'group1', role: 'USER', right: '' })
+
+      // expect(actions.setGroupRight).toBeCalledWith({ name: 'group1', role: 'ANONYMOUS', right: '' })
+      // expect(actions.setGroupRight).toBeCalledWith({ name: 'group1', role: 'USER', right: '' })
+      // expect(actions.fetchGroupRights).toBeCalledWith('group1')
+      done()
     })
   })
 })

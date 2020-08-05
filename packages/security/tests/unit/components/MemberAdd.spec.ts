@@ -81,7 +81,6 @@ describe('MemberAdd component', () => {
 
   describe('after created', () => {
     beforeEach(() => {
-
       state = {}
 
       actions = {

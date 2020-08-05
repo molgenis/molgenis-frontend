@@ -6,11 +6,12 @@ import { User } from './User'
 import { Toast } from './Toast'
 
 export type SecurityModel = {
-  loginUser: LoginUser | {};
-  groups: Array<Group>;
-  groupMembers: { string: Array<GroupMember> } | {};
-  groupRoles: { string: Array<GroupRole> } | {};
-  groupPermissions: { string: Array<string> } | {};
-  users: Array<User>;
-  toast: Toast | null;
+  loginUser: LoginUser | {}
+  groups: Array<Group>
+  groupMembers: { string: Array<GroupMember> } | {}
+  groupRoles: { string: Array<GroupRole> } | {}
+  groupPermissions: { string: Array<string> } | {}
+  users: Array<User>
+  toast: Toast | null
+  groupRights: { user: null | {}, anonymous: null | {}, roles: [] }
 }

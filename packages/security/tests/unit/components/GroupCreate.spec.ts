@@ -46,7 +46,7 @@ describe('GroupCreate component', () => {
       checkRootPackageExists: jest.fn()
     }
 
-    store = new Vuex.Store({state, actions, getters})
+    store = new Vuex.Store({ state, actions, getters })
   })
 
   const stubs = ['router-link', 'router-view']
@@ -54,7 +54,7 @@ describe('GroupCreate component', () => {
   it('should return the slugified text', (done) => {
     const wrapper = shallowMount(GroupCreate, { store, stubs, localVue })
     wrapper.find('#groupNameInput').setValue('test group')
-    let groupIdentifier = wrapper.find('#groupIdentifierInput')
+    const groupIdentifier = wrapper.find('#groupIdentifierInput')
     setTimeout(() => {
       // @ts-ignore
       expect(groupIdentifier.element.value).toEqual('test-group')
@@ -63,11 +63,11 @@ describe('GroupCreate component', () => {
   })
 
   it('should check if the group identifier is taken', (done) => {
-    const wrapper = shallowMount(GroupCreate, {mocks: {$router, $route}, store, stubs, localVue})
+    const wrapper = shallowMount(GroupCreate, { mocks: { $router, $route }, store, stubs, localVue })
     actions.checkRootPackageExists.mockReturnValueOnce(true)
     wrapper.find('#groupNameInput').setValue('Test Group')
     setTimeout(() => {
-        // @ts-ignore
+      // @ts-ignore
       expect(wrapper.vm.groupIdentifierTaken).toEqual(true)
       // @ts-ignore
       expect(wrapper.vm.canSubmit).toEqual(false)
@@ -76,7 +76,7 @@ describe('GroupCreate component', () => {
   })
 
   it('should check if the group identifier is invalid', () => {
-    const wrapper = shallowMount(GroupCreate, {mocks: {$router, $route}, store, stubs, localVue})
+    const wrapper = shallowMount(GroupCreate, { mocks: { $router, $route }, store, stubs, localVue })
     wrapper.find('#groupNameInput').setValue('Test Group')
     wrapper.find('#groupIdentifierInput').setValue('test group?')
     // @ts-ignore
@@ -86,7 +86,7 @@ describe('GroupCreate component', () => {
   })
 
   it('should create a new group', (done) => {
-    const wrapper = shallowMount(GroupCreate, {mocks: {$router, $route}, store, stubs, localVue})
+    const wrapper = shallowMount(GroupCreate, { mocks: { $router, $route }, store, stubs, localVue })
     actions.checkRootPackageExists.mockReturnValueOnce(false)
     wrapper.find('#groupNameInput').setValue('Test Group')
     setTimeout(() => {

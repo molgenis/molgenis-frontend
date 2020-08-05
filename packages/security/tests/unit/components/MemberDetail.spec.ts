@@ -1,5 +1,5 @@
 import MemberDetail from '@/components/MemberDetail.vue'
-import {createLocalVue, shallowMount} from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Vuex from 'vuex'
 
 const $t = (key: string | number) => {
@@ -93,10 +93,10 @@ describe('MemberDetail component', () => {
 
   mutations = {}
 
-  store = new Vuex.Store({state, actions, getters, mutations})
+  store = new Vuex.Store({ state, actions, getters, mutations })
 
   describe('created with empty store', () => {
-    let propsData = {
+    const propsData = {
       groupName: 'group1',
       memberName: 'member1'
     }
@@ -107,8 +107,8 @@ describe('MemberDetail component', () => {
         groupMembers: () => { return {} },
         groupPermissions: () => { return {} }
       }
-      const emptyStore = new Vuex.Store({state, actions, getters: emptyGetters, mutations})
-      shallowMount(MemberDetail, {propsData, store: emptyStore, stubs, localVue})
+      const emptyStore = new Vuex.Store({ state, actions, getters: emptyGetters, mutations })
+      shallowMount(MemberDetail, { propsData, store: emptyStore, stubs, localVue })
     })
 
     it('should fetch the group members', () => {
@@ -125,13 +125,13 @@ describe('MemberDetail component', () => {
   })
 
   describe('created with filled up store', () => {
-    let propsData = {
+    const propsData = {
       groupName: 'group1',
       memberName: 'member1'
     }
 
     beforeEach(() => {
-      shallowMount(MemberDetail, {propsData, store, stubs, localVue})
+      shallowMount(MemberDetail, { propsData, store, stubs, localVue })
     })
 
     it('should fetch the group members', () => {
@@ -149,13 +149,13 @@ describe('MemberDetail component', () => {
 
   describe('getters', () => {
     let wrapper: any
-    let propsData = {
+    const propsData = {
       groupName: 'group1',
       memberName: 'ans'
     }
 
     beforeEach(() => {
-      wrapper = shallowMount(MemberDetail, {propsData, store, stubs, localVue})
+      wrapper = shallowMount(MemberDetail, { propsData, store, stubs, localVue })
     })
 
     it('should return the groupRoles via a getter', () => {
@@ -179,7 +179,7 @@ describe('MemberDetail component', () => {
 
   describe('methods', () => {
     let wrapper: any
-    let propsData = {
+    const propsData = {
       groupName: 'group1',
       memberName: 'ans'
     }
@@ -188,7 +188,7 @@ describe('MemberDetail component', () => {
       wrapper = shallowMount(MemberDetail,
         {
           propsData,
-          mocks: {$router, $route},
+          mocks: { $router, $route },
           store,
           stubs,
           localVue

@@ -27,8 +27,8 @@ describe('GroupOverview component', () => {
   }
 
   const groups = [
-    {name: 'group1', label: 'My group 1'},
-    {name: 'group2', label: 'My group 2'}
+    { name: 'group1', label: 'My group 1' },
+    { name: 'group2', label: 'My group 2' }
   ]
 
   const loginUser = {
@@ -58,7 +58,7 @@ describe('GroupOverview component', () => {
       clearToast: jest.fn()
     }
 
-    store = new Vuex.Store({state, actions, getters, mutations})
+    store = new Vuex.Store({ state, actions, getters, mutations })
   })
 
   const stubs = ['router-link', 'router-view']
@@ -71,7 +71,7 @@ describe('GroupOverview component', () => {
   it('should navigate to the group add page', () => {
     const wrapper = shallowMount(GroupOverview, { mocks: { $router, $route }, store, stubs, localVue })
     wrapper.find('#add-group-btn').trigger('click')
-    expect(pushedRoute).toEqual({name: 'createGroup'})
+    expect(pushedRoute).toEqual({ name: 'createGroup' })
     expect(mutations.clearToast(state, undefined))
   })
 })
