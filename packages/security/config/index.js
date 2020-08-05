@@ -23,11 +23,11 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/login': {
-        target: 'https://master.dev.molgenis.org:443',
+        target: 'https://master.dev.molgenis.org',
         changeOrigin: true
       },
       '/api': {
-        target: 'https://master.dev.molgenis.org:443',
+        target: 'https://master.dev.molgenis.org',
         changeOrigin: true
       }
     },

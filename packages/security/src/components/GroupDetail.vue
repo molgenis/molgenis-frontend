@@ -56,46 +56,44 @@
 
     <div class="row">
       <div class="col">
-        <h3 class="mt-4">Permissions</h3>
+        <h3 class="mt-4">{{ 'security-ui-permissions-label' | i18n }}</h3>
       </div>
     </div>
 
-    <div class="jmbotron">
-      <div class="row groups-listing">
-        <div class="col">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="AnonymousView" v-model="anonymousViewerPermission" :disabled="isSaving">
-            <label class="form-check-label" for="AnonymousView">
-              {{ 'security-ui-anonymous-can-view' | i18n }}
-            </label>
-          </div>
-          <div class="form-check" role="button">
-            <input class="form-check-input" type="radio" id="RegisteredNone" name="RegisteredUser" value="" v-model="registeredUserPermission" :disabled="isSaving">
-            <label class="form-check-label" for="RegisteredNone">
-              {{ 'security-ui-user-can-not-view' | i18n }}
-            </label>
-          </div>
-          <div class="form-check" role="button">
-            <input class="form-check-input" type="radio" id="RegisteredView" name="RegisteredUser" value="Viewer" v-model="registeredUserPermission" :disabled="isSaving">
-            <label class="form-check-label" for="RegisteredView">
-              {{ 'security-ui-user-can-view' | i18n }}
-            </label>
-          </div>
-          <div class="form-check" role="button">
-            <input class="form-check-input" type="radio" id="RegisteredEdit" name="RegisteredUser" value="Editor" v-model="registeredUserPermission" :disabled="isSaving">
-            <label class="form-check-label" for="RegisteredEdit">
-              {{ 'security-ui-user-can-edit' | i18n }}
-            </label>
-          </div>
+    <div class="row groups-listing">
+      <div class="col">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="anonymous-view" v-model="anonymousViewerPermission" :disabled="isSaving">
+          <label class="form-check-label" for="anonymous-view">
+            {{ 'security-ui-anonymous-can-view' | i18n }}
+          </label>
+        </div>
+        <div class="form-check" role="button">
+          <input class="form-check-input" type="radio" id="registered-none" name="RegisteredUser" value="" v-model="registeredUserPermission" :disabled="isSaving">
+          <label class="form-check-label" for="registered-none">
+            {{ 'security-ui-user-can-not-view' | i18n }}
+          </label>
+        </div>
+        <div class="form-check" role="button">
+          <input class="form-check-input" type="radio" id="registered-view" name="RegisteredUser" value="Viewer" v-model="registeredUserPermission" :disabled="isSaving">
+          <label class="form-check-label" for="registered-view">
+            {{ 'security-ui-user-can-view' | i18n }}
+          </label>
+        </div>
+        <div class="form-check" role="button">
+          <input class="form-check-input" type="radio" id="registered-edit" name="RegisteredUser" value="Editor" v-model="registeredUserPermission" :disabled="isSaving">
+          <label class="form-check-label" for="registered-edit">
+            {{ 'security-ui-user-can-edit' | i18n }}
+          </label>
         </div>
       </div>
+    </div>
 
-      <div class="row mt-3">
-        <div class="col">
-          <span class="">
-            <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving"><i :class="['fa', 'fa-save']"></i> Save permissions </button>
-          </span>
-        </div>
+    <div class="row mt-3">
+      <div class="col">
+        <span class="">
+          <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving"><i :class="['fa', 'fa-save']"></i> Save permissions </button>
+        </span>
       </div>
     </div>
     <b-modal id="deleteModal" ok-variant="danger" cancel-variant="secondary"
