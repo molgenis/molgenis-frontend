@@ -104,10 +104,10 @@ describe('getters', () => {
     it('should check if the selected roll has the selected permission', () => {
       const state = {
         groupRights: {
-          anonymous: { includes: { items: [ { data: { description: 'roll permission' } } ] } }
+          anonymous: { includes: { items: [ { data: { name: 'GROUP_PERMISSION' } } ] } }
         }
       }
-      expect(getters.getAnonymousGroupRightsBool(state)('roll', 'permission')).to.equal(true)
+      expect(getters.getAnonymousGroupRightsBool(state)('Group', 'Permission')).to.equal(true)
     })
   })
 
@@ -124,10 +124,10 @@ describe('getters', () => {
     it('should check if the selected roll has the selected permission', () => {
       const state = {
         groupRights: {
-          user: { includes: { items: [ { data: { label: 'Viewer' } } ] } }
+          user: { includes: { items: [ { data: { name: 'GROUP_VIEWER', label: 'Viewer' } } ] } }
         }
       }
-      expect(getters.getUserGroupRightsString(state)('roll')).to.equal('Viewer')
+      expect(getters.getUserGroupRightsString(state)('Group')).to.equal('Viewer')
     })
   })
 })

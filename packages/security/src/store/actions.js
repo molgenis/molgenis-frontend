@@ -83,7 +83,7 @@ const actions = {
     const url = `/api/identities/group/${data.name}/role/${data.role}`
     const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
     if (data.right === '') {
-      const response = await api.delete_(url, payload)
+      const response = await api.delete_(url)
       if (response && response.status !== 204) {
         commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
       }
