@@ -4,12 +4,12 @@ import Vue from 'vue'
 describe('mutations', () => {
   describe('setLoginUser', () => {
     it('should set the loginUser in the store', () => {
-      const state:any = {
+      const state: any = {
         loginUser: {}
       }
 
-      const payload:any = [
-        {name: 'admin', isSuperUSer: true}
+      const payload: any = [
+        { name: 'admin', isSuperUSer: true }
       ]
 
       mutations.setLoginUser(state, payload)
@@ -19,13 +19,13 @@ describe('mutations', () => {
   })
   describe('setGroups', () => {
     it('should set an list of groups in the store', () => {
-      const state:any = {
+      const state: any = {
         groups: []
       }
 
-      const payload:any = [
-        {name: 'group1', label: 'group 1'},
-        {name: 'group2', label: 'group 2'}
+      const payload: any = [
+        { name: 'group1', label: 'group 1' },
+        { name: 'group2', label: 'group 2' }
       ]
 
       mutations.setGroups(state, payload)
@@ -35,13 +35,13 @@ describe('mutations', () => {
   })
   describe('setUsers', () => {
     it('should set an list of users in the store', () => {
-      const state:any = {
+      const state: any = {
         users: []
       }
 
-      const payload:any = [
-        {id: 'a', username: 'john'},
-        {id: 'b', username: 'paul'}
+      const payload: any = [
+        { id: 'a', username: 'john' },
+        { id: 'b', username: 'paul' }
       ]
 
       mutations.setUsers(state, payload)
@@ -50,11 +50,11 @@ describe('mutations', () => {
     })
   })
   describe('setGroupMembers', () => {
-    const state:any = {
+    const state: any = {
       groupMembers: {}
     }
 
-    const payload:any = {
+    const payload: any = {
       groupName: 'my-group',
       groupMembers: [
         {
@@ -78,11 +78,11 @@ describe('mutations', () => {
     })
   })
   describe('setGroupRoles', () => {
-    const state:any = {
+    const state: any = {
       groupRoles: {}
     }
 
-    const payload:any = {
+    const payload: any = {
       groupName: 'my-group',
       groupRoles: [
         {
@@ -104,11 +104,11 @@ describe('mutations', () => {
     })
   })
   describe('setGroupPermissions', () => {
-    const state:any = {
+    const state: any = {
       groupPermissions: {}
     }
 
-    const payload:any = {
+    const payload: any = {
       groupName: 'my-group',
       groupPermissions: [
         ['ADD_MEMBERSHIP', 'REMOVE_MEMBERSHIP']
@@ -128,7 +128,7 @@ describe('mutations', () => {
   })
   describe('clearToast', () => {
     it('should clears the toast message', () => {
-      const state:any = {
+      const state: any = {
         toast: {
           type: 'danger',
           message: 'How do you do'
@@ -142,12 +142,12 @@ describe('mutations', () => {
   })
   describe('setToast', () => {
     it('should set the toast in the store', () => {
-      const state:any = {
+      const state: any = {
         toast: {}
       }
 
-      const payload:any = [
-        {type: 'danger', message: 'How do you do'}
+      const payload: any = [
+        { type: 'danger', message: 'How do you do' }
       ]
 
       mutations.setToast(state, payload)

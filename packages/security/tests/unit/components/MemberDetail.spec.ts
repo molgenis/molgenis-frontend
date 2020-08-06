@@ -1,5 +1,5 @@
 import MemberDetail from '@/components/MemberDetail.vue'
-import {createLocalVue, shallowMount} from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Vuex from 'vuex'
 
 const $t = (key: string | number) => {
@@ -14,19 +14,13 @@ localVue.use(Vuex)
 localVue.filter('i18n', $t)
 
 const $router = {
-  push: function () {}
+  push: jest.fn()
 }
 const $route = {
   path: '/group/my-group'
 }
 
 describe('MemberDetail component', () => {
-  let getters: any
-  let mutations: any
-  let actions: any
-  let state: any
-  let store: any
-
   const stubs = ['router-link', 'router-view']
 
   const groupRoles = {
@@ -67,7 +61,7 @@ describe('MemberDetail component', () => {
     group1: ['REMOVE_MEMBERSHIP']
   }
 
-  state = {
+  const state: any = {
     loginUser: {},
     groups: [],
     groupMembers: {},
@@ -77,7 +71,7 @@ describe('MemberDetail component', () => {
     toast: null
   }
 
-  actions = {
+  const actions: any = {
     fetchGroupMembers: jest.fn(),
     fetchGroupRoles: jest.fn(),
     fetchGroupPermissions: jest.fn(),
@@ -85,18 +79,18 @@ describe('MemberDetail component', () => {
     updateMember: jest.fn()
   }
 
-  getters = {
+  const getters: any = {
     groupRoles: () => groupRoles,
     groupMembers: () => groupMembers,
     groupPermissions: () => groupPermissions
   }
 
-  mutations = {}
+  const mutations: any = {}
 
-  store = new Vuex.Store({state, actions, getters, mutations})
+  const store: any = new Vuex.Store({ state, actions, getters, mutations })
 
   describe('created with empty store', () => {
-    let propsData = {
+    const propsData = {
       groupName: 'group1',
       memberName: 'member1'
     }
@@ -107,8 +101,8 @@ describe('MemberDetail component', () => {
         groupMembers: () => { return {} },
         groupPermissions: () => { return {} }
       }
-      const emptyStore = new Vuex.Store({state, actions, getters: emptyGetters, mutations})
-      shallowMount(MemberDetail, {propsData, store: emptyStore, stubs, localVue})
+      const emptyStore = new Vuex.Store({ state, actions, getters: emptyGetters, mutations })
+      shallowMount(MemberDetail, { propsData, store: emptyStore, stubs, localVue })
     })
 
     it('should fetch the group members', () => {
@@ -125,13 +119,13 @@ describe('MemberDetail component', () => {
   })
 
   describe('created with filled up store', () => {
-    let propsData = {
+    const propsData = {
       groupName: 'group1',
       memberName: 'member1'
     }
 
     beforeEach(() => {
-      shallowMount(MemberDetail, {propsData, store, stubs, localVue})
+      shallowMount(MemberDetail, { propsData, store, stubs, localVue })
     })
 
     it('should fetch the group members', () => {
@@ -149,13 +143,13 @@ describe('MemberDetail component', () => {
 
   describe('getters', () => {
     let wrapper: any
-    let propsData = {
+    const propsData = {
       groupName: 'group1',
       memberName: 'ans'
     }
 
     beforeEach(() => {
-      wrapper = shallowMount(MemberDetail, {propsData, store, stubs, localVue})
+      wrapper = shallowMount(MemberDetail, { propsData, store, stubs, localVue })
     })
 
     it('should return the groupRoles via a getter', () => {
@@ -179,7 +173,7 @@ describe('MemberDetail component', () => {
 
   describe('methods', () => {
     let wrapper: any
-    let propsData = {
+    const propsData = {
       groupName: 'group1',
       memberName: 'ans'
     }
@@ -188,7 +182,7 @@ describe('MemberDetail component', () => {
       wrapper = shallowMount(MemberDetail,
         {
           propsData,
-          mocks: {$router, $route},
+          mocks: { $router, $route },
           store,
           stubs,
           localVue
