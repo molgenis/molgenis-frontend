@@ -5,6 +5,7 @@ import { GroupMember } from '@/types/GroupMember'
 import { CreateGroupCommand } from '@/types/CreateGroupCommand'
 import { UpdateMemberCommand } from '@/types/UpdateMemberCommand'
 import { AddMemberCommand } from '@/types/AddMemberCommand'
+import { SecurityModel } from '@/types/SecurityModel'
 
 const SECURITY_API_ROUTE = '/api/identities'
 const SECURITY_API_VERSION = ''
@@ -175,7 +176,7 @@ const actions = {
       })
     })
   },
-  async 'setGroupRight' ({commit, state}: { commit: Function, state: Object }, data) {
+  async 'setGroupRight' ({ commit, state }: { commit: Function; state: SecurityModel }, data: { name: string; role: string; right: string }) {
     const url = `/api/identities/group/${data.name}/role/${data.role}`
     const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
     if (data.right === '') {
@@ -185,7 +186,7 @@ const actions = {
       }
       return response
     }
-    if (!state.groupRights.roles.find((item:any) => item.roleName === `${data.name}_${data.role}`.toUpperCase())) {
+    if (!state.groupRights.roles.find((item: any) => item.roleName === `${data.name}_${data.role}`.toUpperCase())) {
       const response = await api.put(url, payload)
       if (response && response.status !== 204) {
         commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
@@ -193,7 +194,7 @@ const actions = {
       return response
     }
   },
-  'fetchGroupRights' ({commit}: { commit: Function }, groupName) {
+  'fetchGroupRights' ({ commit }: { commit: Function }, groupName: string) {
     commit('setGroupRights', { groupName: 'anonymous', groupRights: null })
     commit('setGroupRights', { groupName: 'user', groupRights: null })
     commit('setGroupRights', { groupName: 'roles', groupRights: [] })
@@ -201,16 +202,17 @@ const actions = {
     const groupUrl = '/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER'
     const rolesUrl = `/api/identities/group/${groupName}/role`
     return Promise.all([
-      api.get(groupUrl).then(rights => {
-        commit('setGroupRights', { groupName: 'anonymous', groupRights: rights.items.find(item => item.data.name === 'ANONYMOUS').data })
-        commit('setGroupRights', { groupName: 'user', groupRights: rights.items.find(item => item.data.name === 'USER').data })
-      }, (response) => {
+      api.get(groupUrl).then((rights: any) => {
+        commit('setGroupRights', { groupName: 'anonymous', groupRights: rights.items.find((item: any) => item.data.name === 'ANONYMOUS').data })
+        commit('setGroupRights', { groupName: 'user', groupRights: rights.items.find((item: any) => item.data.name === 'USER').data })
+      }, (response: any) => {
         commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
       })
+      // @ts-ignore
     ], [
-      api.get(rolesUrl).then(rights => {
+      api.get(rolesUrl).then((rights: any) => {
         commit('setGroupRights', { groupName: 'roles', groupRights: rights })
-      }, (response) => {
+      }, (response: any) => {
         commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
       })
     ])

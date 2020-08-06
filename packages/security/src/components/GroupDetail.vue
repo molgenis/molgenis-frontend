@@ -167,8 +167,8 @@ export default {
       this.$router.push({ name: 'addMember', params: { groupName: this.name } })
     },
     deleteGroup () {
-      this.deleteGroup({groupName: this.name}).then(() => {
-        this.$router.push({name: 'groupOverView'})
+      this.deleteGroup({ groupName: this.name }).then(() => {
+        this.$router.push({ name: 'groupOverView' })
       })
     }
   },

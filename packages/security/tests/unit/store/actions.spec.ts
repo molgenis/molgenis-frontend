@@ -1,7 +1,6 @@
 import actions from '@/store/actions.ts'
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import asyncUtilService from '@/service/asyncUtilService'
 
 jest.mock('@molgenis/molgenis-api-client', () => ({
   get: jest.fn(),
@@ -11,13 +10,10 @@ jest.mock('@molgenis/molgenis-api-client', () => ({
 }))
 
 describe('actions', () => {
-/*
+  const commit = jest.fn()
   beforeEach(() => {
-    td.reset()
-    td.replace(asyncUtilService, 'callAfter', (f) => f())
+    jest.resetAllMocks()
   })
-*/
-  const commit: any = jest.fn()
 
   describe('fetchGroups', () => {
     it('should fetch a list of groups and commit them to the store', async (done) => {
@@ -68,6 +64,7 @@ describe('actions', () => {
       done()
     })
   })
+
   describe('tempFetchUsers', () => {
     it('should fetch a list of all users ( until we have a invite system)', async (done) => {
       const users = [
@@ -93,6 +90,7 @@ describe('actions', () => {
       done()
     })
   })
+
   describe('fetchGroupMembers', () => {
     const groupName = 'my-group'
 
@@ -165,6 +163,7 @@ describe('actions', () => {
       done()
     })
   })
+
   describe('createGroup', () => {
     it('should create a group and displays toast', async (done) => {
       const createGroupCommand = {
@@ -203,6 +202,7 @@ describe('actions', () => {
       done()
     })
   })
+
   describe('addMember', () => {
     const groupName = 'my-group'
 
@@ -231,6 +231,7 @@ describe('actions', () => {
       done()
     })
   })
+
   describe('removeMember', () => {
     const groupName = 'my-group'
     const memberName = 'user1'
@@ -258,6 +259,7 @@ describe('actions', () => {
       done()
     })
   })
+
   describe('updateMember', () => {
     const groupName = 'my-group'
     const memberName = 'user1'
@@ -314,59 +316,78 @@ describe('actions', () => {
       done()
     })
   })
+
   describe('setGroupRight', () => {
-    it('should set the requested roll/permission/group combination', async () => {
-      const put = td.function('api.put')
-      const url = '/api/identities/group/group1/role/role1'
-      const payload = { body: JSON.stringify({ role: 'GROUP1_RIGHT1' }) }
-      td.when(put(url, payload))
-        .thenResolve({ state: true })
-      td.replace(api, 'put', put)
-
-      const commit = sinon.spy()
-      const state = { groupRights: { roles: [ ] } }
+    it('should set the requested roll/permission/group combination', async (done) => {
+      const state = { groupRights: { roles: [] } }
+      api.put.mockResolvedValueOnce()
+      // @ts-ignore
       await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: 'right1' })
-      td.verify(put(url, payload))
+      expect(commit).not.toBeCalled()
+      expect(api.put).toBeCalledTimes(1)
+      done()
     })
-    it('should unset the requested roll/permission/group combination', async () => {
-      const delete_ = td.function('api.delete_')
-      const url = '/api/identities/group/group1/role/role1'
-      td.when(delete_(url))
-        .thenResolve({ state: true })
-      td.replace(api, 'delete_', delete_)
 
-      const commit = sinon.spy()
-      const state = { groupRights: { roles: [ ] } }
+    it('should do nothing if requested roll/permission/group combination exists', async (done) => {
+      const state = { groupRights: { roles: [{ roleName: 'GROUP1_ROLE1' }] } }
+      api.put.mockResolvedValueOnce({})
+      // @ts-ignore
+      await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: 'right1' })
+      expect(commit).not.toBeCalled()
+      expect(api.put).not.toBeCalled()
+      done()
+    })
+
+    it('should send a error if roll/permission/group combination requests fails', async (done) => {
+      const state = { groupRights: { roles: [] } }
+      api.put.mockResolvedValueOnce({ status: 404 })
+      // @ts-ignore
+      await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: 'right1' })
+      expect(commit).toBeCalledWith('setToast', { message: 'An error has occurred.', type: 'danger' })
+      expect(api.put).toBeCalledTimes(1)
+      done()
+    })
+
+    it('should unset the requested roll/permission/group combination', async (done) => {
+      const state = { groupRights: { roles: [] } }
+      api.delete_.mockResolvedValueOnce()
+      // @ts-ignore
       await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: '' })
-      td.verify(delete_(url))
+      expect(commit).not.toBeCalled()
+      expect(api.delete_).toBeCalledTimes(1)
+      done()
+    })
+
+    it('should send a error if unset roll/permission/group combination fails', async (done) => {
+      const state = { groupRights: { roles: [] } }
+      api.delete_.mockResolvedValueOnce({ status: 404 })
+      // @ts-ignore
+      await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: '' })
+      expect(commit).toBeCalledWith('setToast', { message: 'An error has occurred.', type: 'danger' })
+      expect(api.delete_).toBeCalledTimes(1)
+      done()
     })
   })
 
   describe('fetchGroupRights', () => {
-    it('should fetch al the needed information to manipulate the group permissions', done => {
-      const groupPermissions = { items: [ { data: { name: 'ANONYMOUS' } }, { data: { name: 'USER' } } ] }
+    it('should fetch al the needed information to manipulate the group permissions', async (done) => {
+      const groupPermissions = { items: [{ data: { name: 'ANONYMOUS' } }, { data: { name: 'USER' } }] }
       const roles = [{ hello: 'world' }]
       const groupName = 'group1'
+      api.get.mockResolvedValueOnce(groupPermissions)
+      api.get.mockResolvedValueOnce(roles)
 
-      const get = td.function('api.get')
-      td.when(get('/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER')).thenResolve(groupPermissions)
-      td.when(get(`/api/identities/group/${groupName}/role`)).thenResolve(roles)
-      td.replace(api, 'get', get)
-
-      const options = {
-        payload: groupName,
-        expectedMutations: [
-          { type: 'setGroupRights', payload: { groupName: 'anonymous', groupRights: null } },
-          { type: 'setGroupRights', payload: { groupName: 'user', groupRights: null } },
-          { type: 'setGroupRights', payload: { groupName: 'roles', groupRights: [] } },
-          { type: 'setGroupRights', payload: { groupName: 'anonymous', groupRights: { name: 'ANONYMOUS' } } },
-          { type: 'setGroupRights', payload: { groupName: 'user', groupRights: { name: 'USER' } } },
-          { type: 'setGroupRights', payload: { groupName: 'roles', groupRights: roles } }
-        ]
-      }
-      testUtils.testAction(actions.fetchGroupRights, options, done)
+      await actions.fetchGroupRights({ commit }, groupName)
+      expect(commit).toBeCalledWith('setGroupRights', { groupName: 'anonymous', groupRights: null })
+      expect(commit).toBeCalledWith('setGroupRights', { groupName: 'user', groupRights: null })
+      expect(commit).toBeCalledWith('setGroupRights', { groupName: 'roles', groupRights: [] })
+      expect(commit).toBeCalledWith('setGroupRights', { groupName: 'anonymous', groupRights: { name: 'ANONYMOUS' } })
+      expect(commit).toBeCalledWith('setGroupRights', { groupName: 'user', groupRights: { name: 'USER' } })
+      expect(commit).toBeCalledWith('setGroupRights', { groupName: 'roles', groupRights: roles })
+      done()
     })
-    it('should commit any fetchGroupRights errors to the store', done => {
+
+    it('should commit any fetchGroupRights errors to the store', async (done) => {
       const error = {
         errors: [{
           message: 'Error when calling',
@@ -374,29 +395,14 @@ describe('actions', () => {
         }]
       }
       const groupName = 'group1'
-
-      const get = td.function('api.get')
-      td.when(get('/api/data/sys_sec_Role?expand=includes&q=name==ANONYMOUS,name==USER')).thenReject(error)
-      td.when(get(`/api/identities/group/${groupName}/role`)).thenReject(error)
-      td.replace(api, 'get', get)
-
-      const options = {
-        payload: groupName,
-        expectedMutations: [
-          { type: 'setGroupRights', payload: { groupName: 'anonymous', groupRights: null } },
-          { type: 'setGroupRights', payload: { groupName: 'user', groupRights: null } },
-          { type: 'setGroupRights', payload: { groupName: 'roles', groupRights: [] } },
-          {
-            type: 'setToast',
-            payload: {type: 'danger', message: 'Error when calling (backend)'}
-          },
-          {
-            type: 'setToast',
-            payload: {type: 'danger', message: 'Error when calling (backend)'}
-          }
-        ]
-      }
-      testUtils.testAction(actions.fetchGroupRights, options, done)
+      api.get.mockRejectedValueOnce(error)
+      api.get.mockRejectedValueOnce(error)
+      await actions.fetchGroupRights({ commit }, groupName)
+      expect(commit).toBeCalledWith('setGroupRights', { groupName: 'anonymous', groupRights: null })
+      expect(commit).toBeCalledWith('setGroupRights', { groupName: 'user', groupRights: null })
+      expect(commit).toBeCalledWith('setGroupRights', { groupName: 'roles', groupRights: [] })
+      expect(commit).toBeCalledWith('setToast', { type: 'danger', message: 'Error when calling (backend)' })
+      done()
     })
   })
 })

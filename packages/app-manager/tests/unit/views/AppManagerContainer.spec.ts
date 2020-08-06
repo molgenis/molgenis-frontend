@@ -2,10 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import AppManagerContainer from '@/views/AppManagerContainer.vue'
 
-
-
 describe('AppManagerContainer', () => {
-
   const localVue = createLocalVue()
   localVue.use(Vuex)
   let store: any
@@ -26,7 +23,7 @@ describe('AppManagerContainer', () => {
     }
     actions = {
       FETCH_APPS: jest.fn(),
-      UPLOAD_APP:jest.fn()
+      UPLOAD_APP: jest.fn()
     }
     store = new Vuex.Store({ state, getters, actions, mutations })
   })

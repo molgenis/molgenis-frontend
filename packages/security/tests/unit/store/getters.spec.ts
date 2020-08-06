@@ -92,41 +92,41 @@ describe('getters', () => {
   })
   describe('getAnonymousGroupRightsBool', () => {
     it('should be false when data is not loaded', () => {
-      const state = {
+      const state: any = {
         groupRights: {
           anonymous: null
         }
       }
-      expect(getters.getAnonymousGroupRightsBool(state)('test', 'Viewer')).to.equal(false)
+      expect(getters.getAnonymousGroupRightsBool(state)('test', 'Viewer')).toEqual(false)
     })
 
     it('should check if the selected roll has the selected permission', () => {
-      const state = {
+      const state: any = {
         groupRights: {
-          anonymous: { includes: { items: [ { data: { name: 'GROUP_PERMISSION' } } ] } }
+          anonymous: { includes: { items: [{ data: { name: 'GROUP_PERMISSION' } }] } }
         }
       }
-      expect(getters.getAnonymousGroupRightsBool(state)('Group', 'Permission')).to.equal(true)
+      expect(getters.getAnonymousGroupRightsBool(state)('Group', 'Permission')).toEqual(true)
     })
   })
 
   describe('getUserGroupRightsString', () => {
     it('should be false when data is not loaded', () => {
-      const state = {
+      const state: any = {
         groupRights: {
           user: null
         }
       }
-      expect(getters.getUserGroupRightsString(state)('test')).to.equal('')
+      expect(getters.getUserGroupRightsString(state)('test')).toEqual('')
     })
 
     it('should check if the selected roll has the selected permission', () => {
-      const state = {
+      const state: any = {
         groupRights: {
-          user: { includes: { items: [ { data: { name: 'GROUP_VIEWER', label: 'Viewer' } } ] } }
+          user: { includes: { items: [{ data: { name: 'GROUP_VIEWER', label: 'Viewer' } }] } }
         }
       }
-      expect(getters.getUserGroupRightsString(state)('Group')).to.equal('Viewer')
+      expect(getters.getUserGroupRightsString(state)('Group')).toEqual('Viewer')
     })
   })
 })

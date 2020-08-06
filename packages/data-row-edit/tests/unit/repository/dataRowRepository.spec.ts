@@ -9,7 +9,7 @@ jest.mock('@molgenis/molgenis-api-client', () => {
   }
 })
 
-let basicOptions = {
+const basicOptions = {
   body: '{}',
   credentials: 'same-origin',
   headers: {
@@ -21,7 +21,7 @@ let basicOptions = {
 
 describe('DataRowRepository', () => {
 
-  let tableId = 'my-table'
+  const tableId = 'my-table'
 
   describe('save', () => {
     let formData: any
@@ -44,10 +44,10 @@ describe('DataRowRepository', () => {
     describe('create', () => {
       it('should post the new row', () => {
         repository.save(formData, formFields, tableId, null)
-        let containsFileData = false
-        let uri = '/api/v1/my-table?_method=PUT'
-        let options = basicOptions
-        options.body = '{\"e\":\"f\"}'
+        const containsFileData = false
+        const uri = '/api/v1/my-table?_method=PUT'
+        const options = basicOptions
+        options.body = '{"e":"f"}'
         expect(api.post).toHaveBeenCalledWith(uri, options, containsFileData)
       })
     })
@@ -57,8 +57,8 @@ describe('DataRowRepository', () => {
         formFields = [{ id: 'x', type: 'file' }]
         formData = ['x', 'x']
         repository.save(formData, formFields, tableId, null)
-        let containsFileData = true
-        let uri = '/api/v1/my-table?_method=PUT'
+        const containsFileData = true
+        const uri = '/api/v1/my-table?_method=PUT'
         expect(api.post).toHaveBeenCalledWith(uri, expect.objectContaining({
           headers: basicOptions.headers
         }), containsFileData)
@@ -102,8 +102,8 @@ describe('DataRowRepository', () => {
           }
         ]
         repository.save(formData, formFields, tableId, null)
-        let containsFileData = true
-        let uri = '/api/v1/my-table?_method=PUT'
+        const containsFileData = true
+        const uri = '/api/v1/my-table?_method=PUT'
         expect(api.post).toHaveBeenCalledWith(uri, expect.objectContaining({
           headers: basicOptions.headers
         }), containsFileData)
@@ -112,12 +112,12 @@ describe('DataRowRepository', () => {
 
     describe('update', () => {
       it('should contain the row id in case op update', () => {
-        let rowId = '123'
+        const rowId = '123'
         repository.save(formData, formFields, tableId, rowId)
-        let containsFileData = false
-        let uri = '/api/v1/my-table/123?_method=PUT'
-        let options = basicOptions
-        options.body = '{\"e\":\"f\"}'
+        const containsFileData = false
+        const uri = '/api/v1/my-table/123?_method=PUT'
+        const options = basicOptions
+        options.body = '{"e":"f"}'
         expect(api.post).toHaveBeenCalledWith(uri, options, containsFileData)
       })
     })
@@ -137,9 +137,9 @@ describe('DataRowRepository', () => {
 
     describe('calling fetch passing a rowId', () => {
       it('should fetch the form structure and row data', async (done) => {
-        let rowId = 'row-id'
+        const rowId = 'row-id'
         api.get.mockResolvedValue({ a: 'b', _meta: 'resp-meta' })
-        let res = await repository.fetch(tableId, rowId)
+        const res = await repository.fetch(tableId, rowId)
         expect(api.get).toHaveBeenCalledWith('/api/v2/my-table/row-id')
         expect(res).toEqual({
           meta: "resp-meta",

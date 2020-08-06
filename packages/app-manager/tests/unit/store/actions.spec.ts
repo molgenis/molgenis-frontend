@@ -3,19 +3,18 @@ import api from '@molgenis/molgenis-api-client'
 import actions from '@/store/actions'
 
 jest.mock('@molgenis/molgenis-api-client', () => {
-    return {
-      post: jest.fn(),
-      get: jest.fn(),
-      delete_: jest.fn(),
-      postFile: jest.fn()
-    }
-  })
+  return {
+    post: jest.fn(),
+    get: jest.fn(),
+    delete_: jest.fn(),
+    postFile: jest.fn()
+  }
+})
 
 describe('actions', () => {
+  const state: any = {}
 
-  let state:any = {}
-
-  let context = {
+  const context = {
     state,
     commit: jest.fn(),
     dispatch: jest.fn(),
@@ -23,14 +22,14 @@ describe('actions', () => {
   }
 
   describe('ACTIVATE_APP', () => {
-    it('should dispatch FETCH_APPS on successful get request', async(done) => {
+    it('should dispatch FETCH_APPS on successful get request', async (done) => {
       api.post.mockResolvedValueOnce()
       await actions.ACTIVATE_APP(context, 'test_id')
       expect(context.dispatch).toBeCalledWith('FETCH_APPS')
       done()
     })
 
-    it('should commit SET_ERROR on failed post request', async(done) => {
+    it('should commit SET_ERROR on failed post request', async (done) => {
       api.post.mockRejectedValueOnce('failed get request')
       await actions.ACTIVATE_APP(context, 'test_id')
       expect(context.commit).toBeCalledWith('SET_ERROR', 'failed get request')
@@ -39,14 +38,14 @@ describe('actions', () => {
   })
 
   describe('DEACTIVATE_APP', () => {
-    it('should dispatch FETCH_APPS on successful get request', async(done) => {
+    it('should dispatch FETCH_APPS on successful get request', async (done) => {
       api.post.mockResolvedValueOnce()
       await actions.DEACTIVATE_APP(context, 'test_id')
       expect(context.dispatch).toBeCalledWith('FETCH_APPS')
       done()
     })
 
-    it('should commit SET_ERROR on failed post request', async(done) => {
+    it('should commit SET_ERROR on failed post request', async (done) => {
       api.post.mockRejectedValueOnce('failed post request')
       await actions.DEACTIVATE_APP(context, 'test_id')
       expect(context.commit).toBeCalledWith('SET_ERROR', 'failed post request')
@@ -55,14 +54,14 @@ describe('actions', () => {
   })
 
   describe('DELETE_APP', () => {
-    it('should dispatch FETCH_APPS on successful delete request', async(done) => {
+    it('should dispatch FETCH_APPS on successful delete request', async (done) => {
       api.delete_.mockResolvedValueOnce()
       await actions.DELETE_APP(context, 'test_id')
       expect(context.dispatch).toBeCalledWith('FETCH_APPS')
       done()
     })
 
-    it('should commit SET_ERROR on failed get request', async(done) => {
+    it('should commit SET_ERROR on failed get request', async (done) => {
       api.delete_.mockRejectedValueOnce('failed delete request')
       await actions.DELETE_APP(context, 'test_id')
       expect(context.commit).toBeCalledWith('SET_ERROR', 'failed delete request')
@@ -71,8 +70,8 @@ describe('actions', () => {
   })
 
   describe('FETCH_APPS', () => {
-    it('should commit UPDATE_APPS and SET_LOADING on successful get request', async(done) => {
-      const apps = [{name: 'app1'}, {name: 'app2'}]
+    it('should commit UPDATE_APPS and SET_LOADING on successful get request', async (done) => {
+      const apps = [{ name: 'app1' }, { name: 'app2' }]
       api.get.mockResolvedValueOnce(apps)
       await actions.FETCH_APPS(context)
       expect(context.commit).toBeCalledWith('UPDATE_APPS', apps)
@@ -80,7 +79,7 @@ describe('actions', () => {
       done()
     })
 
-    it('should commit SET_ERROR on failed get request', async(done) => {
+    it('should commit SET_ERROR on failed get request', async (done) => {
       api.get.mockRejectedValueOnce('failed get request')
       await actions.FETCH_APPS(context)
       expect(context.commit).toBeCalledWith('SET_ERROR', 'failed get request')
@@ -89,16 +88,16 @@ describe('actions', () => {
   })
 
   describe('UPLOAD_APP', () => {
-    it('should dispatch FETCH_APPS on successful post request', async(done) => {
+    it('should dispatch FETCH_APPS on successful post request', async (done) => {
       api.postFile.mockResolvedValueOnce()
-      let file = new File([], 'file')
+      const file = new File([], 'file')
       await actions.UPLOAD_APP(context, file)
       expect(context.dispatch).toBeCalledWith('FETCH_APPS')
       done()
     })
 
-    it('should commit SET_ERROR on failed post request', async(done) => {
-      let file = new File([], 'file')
+    it('should commit SET_ERROR on failed post request', async (done) => {
+      const file = new File([], 'file')
       api.postFile.mockRejectedValueOnce('failed post request')
       await actions.UPLOAD_APP(context, file)
       expect(context.commit).toBeCalledWith('SET_ERROR', 'failed post request')

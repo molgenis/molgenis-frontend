@@ -33,14 +33,14 @@ Object.defineProperty(window, '__INITIAL_STATE__', {
 
 describe('DataRowEdit.vue', () => {
 
-  let wrapper:any
+  let wrapper: any
 
-  let mappedCreateData = {
+  const mappedCreateData = {
     formFields: [{id: 'a', type: 'text'}],
     formData: {a: 'b'},
     formLabel: 'form label'
   }
-  let mappedUpdateData = {
+  const mappedUpdateData = {
     formFields: [{id: 'a', type: 'text'}, {id: 'b', type: 'field-group'}],
     formData: {a: 'b'},
     formLabel: 'form label'

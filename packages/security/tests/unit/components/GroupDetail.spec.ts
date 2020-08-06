@@ -71,8 +71,8 @@ describe('GroupDetail component', () => {
     actions = {
       fetchGroupMembers: () => jest.fn(),
       fetchGroupPermissions: () => jest.fn(),
-      fetchGroupRights: () => jest.fn(),
-      setGroupRight: () => jest.fn()
+      fetchGroupRights: jest.fn().mockResolvedValue({ test: true }),
+      setGroupRight: jest.fn().mockResolvedValue({ test: true })
     }
 
     getters = {
@@ -84,9 +84,10 @@ describe('GroupDetail component', () => {
     }
 
     mutations = {
-      clearToast: jest.fn()
+      clearToast: jest.fn(),
+      setToast: jest.fn(),
+      setGroupRights: jest.fn()
     }
-
     store = new Vuex.Store({ state, actions, getters, mutations })
   })
 
@@ -145,24 +146,17 @@ describe('GroupDetail component', () => {
         propsData: {
           name: 'group1'
         },
-        mocks: {$router, $route, $t},
+        mocks: { $router, $route, $t },
         store,
         stubs,
         localVue
       })
-      //wrapper.vm.fetchGroupRights = sinon.spy()
-      //wrapper.vm.setGroupRight = sinon.spy()
 
       // @ts-ignore
       await wrapper.vm.savePermissions()
-
-      // sinon.assert.calledWith(wrapper.vm.fetchGroupRights, 'group1')
-      // sinon.assert.calledWith(wrapper.vm.setGroupRight, { name: 'group1', role: 'ANONYMOUS', right: '' })
-      // sinon.assert.calledWith(wrapper.vm.setGroupRight, { name: 'group1', role: 'USER', right: '' })
-
-      // expect(actions.setGroupRight).toBeCalledWith({ name: 'group1', role: 'ANONYMOUS', right: '' })
-      // expect(actions.setGroupRight).toBeCalledWith({ name: 'group1', role: 'USER', right: '' })
-      // expect(actions.fetchGroupRights).toBeCalledWith('group1')
+      expect(actions.setGroupRight.mock.calls[0][1]).toEqual({ name: 'group1', role: 'ANONYMOUS', right: '' })
+      expect(actions.setGroupRight.mock.calls[1][1]).toEqual({ name: 'group1', role: 'USER', right: '' })
+      expect(actions.fetchGroupRights.mock.calls[0][1]).toEqual('group1')
       done()
     })
   })

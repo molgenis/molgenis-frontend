@@ -14,11 +14,11 @@ jest.mock('@molgenis/molgenis-api-client', () => {
 
 jest.mock('@molgenis/molgenis-ui-form', () => {
   return {
-      FormComponent: {},
-      EntityToFormMapper: {
-        generateForm: jest.fn()
-      }
+    FormComponent: {},
+    EntityToFormMapper: {
+      generateForm: jest.fn()
     }
+  }
 })
 
 describe('SettingsUi component', () => {
@@ -76,7 +76,7 @@ describe('SettingsUi component', () => {
       }
     }
 
-    const settingsOptions = { items: [{id: '1', label: 'set1'}, {id: '2', label: 'set2'}] }
+    const settingsOptions = { items: [{ id: '1', label: 'set1' }, { id: '2', label: 'set2' }] }
 
     const settingResponse = {
       items: [settingItem],
@@ -112,7 +112,7 @@ describe('SettingsUi component', () => {
     })
 
     it('Should fetch the settings data.', () => {
-      expect(pushedRoute).toEqual({path: '/test-setting'})
+      expect(pushedRoute).toEqual({ path: '/test-setting' })
     })
 
     it('Should make the route setting the selected setting.', () => {
@@ -130,9 +130,9 @@ describe('SettingsUi component', () => {
 
       it('Calling onValueChanged should pass state of the form to settings data', () => {
         // @ts-ignore
-        wrapper.vm.onValueChanged({foo: 'bar'})
+        wrapper.vm.onValueChanged({ foo: 'bar' })
         // @ts-ignore
-        expect(wrapper.vm.formData).toEqual({foo: 'bar'})
+        expect(wrapper.vm.formData).toEqual({ foo: 'bar' })
       })
 
       it('Calling handle error, sets the alert', () => {
@@ -147,7 +147,7 @@ describe('SettingsUi component', () => {
 
       it('Calling handle error with not passing a string sets the alert the default alert', () => {
         // @ts-ignore
-        wrapper.vm.handleError({foo: 'bar'})
+        wrapper.vm.handleError({ foo: 'bar' })
         // @ts-ignore
         expect(wrapper.vm.alert).toEqual({
           message: 'An error has occurred.',
@@ -157,7 +157,7 @@ describe('SettingsUi component', () => {
 
       it('Calling the success handler resets the form and signals succes to the user', () => {
         // @ts-ignore
-        wrapper.vm.formState._reset = function () {}
+        wrapper.vm.formState._reset = jest.fn()
         // @ts-ignore
         wrapper.vm.handleSuccess()
         // @ts-ignore
@@ -169,12 +169,11 @@ describe('SettingsUi component', () => {
 
       it('Submitting the form triggers post and triggers success handeler ', () => {
         // @ts-ignore
-        wrapper.vm.formState._reset = function () {
-        }
-        wrapper.setData({formData: {id: 'test_id', a: 'a'}})
+        wrapper.vm.formState._reset = jest.fn()
+        wrapper.setData({ formData: { id: 'test_id', a: 'a' } })
 
         // '/api/v1/test-setting/test_id?_method=PUT' , // {body: '{"id":"test_id","a":"a"}'}
-        api.post.mockResolvedValueOnce({status: 'OKE'})
+        api.post.mockResolvedValueOnce({ status: 'OKE' })
         // @ts-ignore
         wrapper.vm.onSubmit()
         // @ts-ignore

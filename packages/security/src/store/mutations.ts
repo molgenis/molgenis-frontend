@@ -6,6 +6,7 @@ import { Toast } from '@/types/Toast'
 import { LoginUser } from '@/types/LoginUser'
 import { GroupMember } from '@/types/GroupMember'
 import { GroupRole } from '@/types/GroupRole'
+import { GroupRollSubSelection } from '@/types/GroupRollSubSelection'
 
 const mutations = {
   setLoginUser (state: SecurityModel, loginUser: LoginUser) {
@@ -26,7 +27,7 @@ const mutations = {
   setGroupPermissions (state: SecurityModel, { groupName, groupPermissions }: {groupName: string; groupPermissions: string[]}) {
     Vue.set(state.groupPermissions, groupName, groupPermissions)
   },
-  setGroupRights (state: SecurityModel, { groupName, groupRights }) {
+  setGroupRights (state: SecurityModel, { groupName, groupRights }: {groupName: string; groupRights: GroupRollSubSelection }) {
     Vue.set(state.groupRights, groupName, groupRights)
   },
   clearToast (state: SecurityModel) {

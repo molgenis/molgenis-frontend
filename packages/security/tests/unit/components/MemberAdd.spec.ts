@@ -147,13 +147,6 @@ describe('MemberAdd component', () => {
         await localVue.nextTick()
         await localVue.nextTick()
         expect(pushedRoute).toEqual({ name: 'groupDetail', params: { name: 'group1' } })
-        const expectedPayload = {
-          groupName: 'group1',
-          addMemberCommand: {
-            username: 'user-3',
-            roleName: 'EDITOR'
-          }
-        }
         done()
       })
     })

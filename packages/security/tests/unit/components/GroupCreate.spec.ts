@@ -16,7 +16,7 @@ describe('GroupCreate component', () => {
   let store: any
 
   const $router = {
-    push: function () {}
+    push: jest.fn()
   }
   const $route = {
     path: '/group'

@@ -14,19 +14,13 @@ localVue.use(Vuex)
 localVue.filter('i18n', $t)
 
 const $router = {
-  push: function () {}
+  push: jest.fn()
 }
 const $route = {
   path: '/group/my-group'
 }
 
 describe('MemberDetail component', () => {
-  let getters: any
-  let mutations: any
-  let actions: any
-  let state: any
-  let store: any
-
   const stubs = ['router-link', 'router-view']
 
   const groupRoles = {
@@ -67,7 +61,7 @@ describe('MemberDetail component', () => {
     group1: ['REMOVE_MEMBERSHIP']
   }
 
-  state = {
+  const state: any = {
     loginUser: {},
     groups: [],
     groupMembers: {},
@@ -77,7 +71,7 @@ describe('MemberDetail component', () => {
     toast: null
   }
 
-  actions = {
+  const actions: any = {
     fetchGroupMembers: jest.fn(),
     fetchGroupRoles: jest.fn(),
     fetchGroupPermissions: jest.fn(),
@@ -85,15 +79,15 @@ describe('MemberDetail component', () => {
     updateMember: jest.fn()
   }
 
-  getters = {
+  const getters: any = {
     groupRoles: () => groupRoles,
     groupMembers: () => groupMembers,
     groupPermissions: () => groupPermissions
   }
 
-  mutations = {}
+  const mutations: any = {}
 
-  store = new Vuex.Store({ state, actions, getters, mutations })
+  const store: any = new Vuex.Store({ state, actions, getters, mutations })
 
   describe('created with empty store', () => {
     const propsData = {
