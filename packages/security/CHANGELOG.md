@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.2.0...@molgenis-ui/security@0.3.0) (2020-08-05)
+
+
+### Bug Fixes
+
+* added identities api, may have some issues with it ([56cae8a](https://github.com/molgenis/molgenis-frontend/commit/56cae8a))
+* make never used before items work ([5984029](https://github.com/molgenis/molgenis-frontend/commit/5984029))
+* review comments ([02bef52](https://github.com/molgenis/molgenis-frontend/commit/02bef52))
+* state is saved correctly to server ([81a12d0](https://github.com/molgenis/molgenis-frontend/commit/81a12d0))
+* use the identities api in the correct way ([0c3ed1b](https://github.com/molgenis/molgenis-frontend/commit/0c3ed1b))
+
+
+### Features
+
+* add checkboxes ([1053f90](https://github.com/molgenis/molgenis-frontend/commit/1053f90))
+
+
+
+
+
 # [0.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.1.6...@molgenis-ui/security@0.2.0) (2020-02-07)
 
 
