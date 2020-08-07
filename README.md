@@ -488,6 +488,15 @@ public class NewAppController extends VuePluginController {
 
 That is it.
 
+### Pre-view frontend with alternative backend using CI rancher cluster
+
+You can link the generated PR preview to a alternative backend service
+- Login to rancher ( or use cli).
+- Find the preview config ( Menu item 'config-maps', use search to find the preview version you are looking for).
+- Edit the ...-config file, change the 'proxy_pass' location to use the alternative backend service ( save after edit).
+- Go to the Workloads page and find the preview version you are looking for.
+- Scale down to 0, and scale back up to 1 ( this will create a new container that uses the updated config).
+ 
 ## Guidelines
 Below you can find some guidelines + code examples for stuff that we view is standard when creating a MOLGENIS plugin.
 
