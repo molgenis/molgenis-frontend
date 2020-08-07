@@ -51,7 +51,7 @@
           </div>
 
           <router-link :to="{name: 'groupDetail', params: { name: groupName }}">
-            <a href="#" class="btn btn-secondary" role="button">{{ 'security-ui-btn-cancel' | i18n }}</a>
+            <a href="#" class="btn btn-secondary mr-1" role="button">{{ 'security-ui-btn-cancel' | i18n }}</a>
           </router-link>
 
           <button

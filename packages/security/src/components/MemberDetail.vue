@@ -72,7 +72,7 @@
       <div v-else class="col-md-9 ">
         <button
           id="update-cancel-btn"
-          class="btn btn-sm btn-secondary"
+          class="btn btn-sm btn-secondary mr-1"
           type="button"
           @click.prevent="isEditRoleMode = !isEditRoleMode">
           {{'security-ui-btn-cancel' | i18n}}
