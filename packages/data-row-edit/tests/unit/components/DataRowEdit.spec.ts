@@ -3,7 +3,7 @@ import DataRowEdit from '@/components/DataRowEdit.vue'
 // @ts-ignore
 import * as repository from '@/repository/dataRowRepository'
 // @ts-ignore
-import { FormComponent, EntityToFormMapper } from '@molgenis/molgenis-ui-form'
+import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 import Vue from 'vue'
 
 jest.mock('@/repository/dataRowRepository', () => {
@@ -37,11 +37,6 @@ describe('DataRowEdit.vue', () => {
 
   const mappedCreateData = {
     formFields: [{id: 'a', type: 'text'}],
-    formData: {a: 'b'},
-    formLabel: 'form label'
-  }
-  const mappedUpdateData = {
-    formFields: [{id: 'a', type: 'text'}, {id: 'b', type: 'field-group'}],
     formData: {a: 'b'},
     formLabel: 'form label'
   }
