@@ -30,7 +30,7 @@
           <button
             id="cancel-btn"
             @click.prevent="goBackToPluginCaller"
-            class="btn btn-secondary">
+            class="btn btn-secondary mr-1">
             {{ 'data-row-edit-cancel-button-label' | i18n }}
           </button>
 
