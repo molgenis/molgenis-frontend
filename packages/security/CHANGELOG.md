@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.3.0...@molgenis-ui/security@0.3.1) (2020-08-10)
+
+
+### Bug Fixes
+
+* **data-row-edit, app-manager, settings, security:** combine chunks to make build output compatible with molgenis backend paths ([da39558](https://github.com/molgenis/molgenis-frontend/commit/da39558))
+* **data-row-edit, security:** fix cancel/save btn margins ([77bd6a4](https://github.com/molgenis/molgenis-frontend/commit/77bd6a4))
+* merge with master ([93a63bd](https://github.com/molgenis/molgenis-frontend/commit/93a63bd))
+
+
+
+
+
 # [0.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.2.0...@molgenis-ui/security@0.3.0) (2020-08-05)
 
 
