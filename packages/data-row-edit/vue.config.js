@@ -22,5 +22,19 @@ module.exports = {
       '/login': { target },
       '/api': { target }
     }  
+  },
+  configureWebpack: config => {
+    config.optimization = {
+      splitChunks: false
+    }
+    config.devtool = 'source-map'
+    config.externals = {
+      bootstrap: 'bootstrap'
+    }
+    config.plugins.push(
+      new BannerPlugin({
+        banner: bannerText
+      })
+    )
   }
 }

@@ -16,6 +16,9 @@ module.exports = {
     ? '/@molgenis-ui/app-manager/dist/'
     : '/',
   configureWebpack: config => {
+    config.optimization = {
+      splitChunks: false
+    }
     config.devtool = 'source-map'
     config.externals = {
       bootstrap: 'bootstrap'
