@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@2.0.2...@molgenis-ui/settings@3.0.0) (2020-08-10)
+
+
+### Bug Fixes
+
+* **data-row-edit, app-manager, settings, security:** combine chunks to make build output compatible with molgenis backend paths ([da39558](https://github.com/molgenis/molgenis-frontend/commit/da39558))
+
+
+### task
+
+* **app-manager, data-row-edit, settings, security:** prepare for release ([f67e309](https://github.com/molgenis/molgenis-frontend/commit/f67e309))
+
+
+### BREAKING CHANGES
+
+* **app-manager, data-row-edit, settings, security:** build moved to node 12 (erbium), dist file routes changed
+
+
+
+
+
 ## [2.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@2.0.1...@molgenis-ui/settings@2.0.2) (2019-09-24)
 
 
