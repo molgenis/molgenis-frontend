@@ -47,34 +47,34 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex'
-  import Toast from './Toast'
+import { mapGetters, mapMutations } from 'vuex'
+import Toast from '@/components/Toast.vue'
 
-  export default {
-    name: 'GroupOverview',
-    computed: {
-      ...mapGetters([
-        'groups',
-        'getLoginUser'
-      ]),
-      sortedGroups () {
-        return [...this.groups].sort((a, b) => a.label.localeCompare(b.label))
-      }
-    },
-    methods: {
-      ...mapMutations([
-        'clearToast'
-      ]),
-      addGroup () {
-        this.clearToast()
-        this.$router.push({name: 'createGroup'})
-      }
-    },
-    components: {
-      Toast
-    },
-    created () {
-      this.$store.dispatch('fetchGroups')
+export default {
+  name: 'GroupOverview',
+  computed: {
+    ...mapGetters([
+      'groups',
+      'getLoginUser'
+    ]),
+    sortedGroups () {
+      return [...this.groups].sort((a, b) => a.label.localeCompare(b.label))
     }
+  },
+  methods: {
+    ...mapMutations([
+      'clearToast'
+    ]),
+    addGroup () {
+      this.clearToast()
+      this.$router.push({ name: 'createGroup' })
+    }
+  },
+  components: {
+    Toast
+  },
+  created () {
+    this.$store.dispatch('fetchGroups')
   }
+}
 </script>

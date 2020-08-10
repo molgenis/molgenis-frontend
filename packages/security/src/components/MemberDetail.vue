@@ -48,7 +48,7 @@
           {{member.roleLabel}}</p>
         <form v-else-if="isEditRoleMode">
 
-          <div v-for="role in sortedRoles" class="form-check">
+          <div v-for="role in sortedRoles" :key="role.roleName" class="form-check">
             <input class="form-check-input" type="radio" name="roleRadio"
                    :id="role.roleName" :value="role.roleName" v-model="selectedRole">
             <label class="form-check-label" :for="role.roleName">
@@ -72,7 +72,7 @@
       <div v-else class="col-md-9 ">
         <button
           id="update-cancel-btn"
-          class="btn btn-sm btn-secondary"
+          class="btn btn-sm btn-secondary mr-1"
           type="button"
           @click.prevent="isEditRoleMode = !isEditRoleMode">
           {{'security-ui-btn-cancel' | i18n}}
@@ -122,100 +122,99 @@
       </button>
     </template>
 
-
   </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-  import Toast from './Toast'
+import { mapGetters } from 'vuex'
+import Toast from '@/components/Toast.vue'
 
-  export default {
-    name: 'MemberDetail',
-    props: {
-      groupName: {
-        type: String,
-        required: true
-      },
-      memberName: {
-        type: String,
-        required: true
-      }
+export default {
+  name: 'MemberDetail',
+  props: {
+    groupName: {
+      type: String,
+      required: true
     },
-    data () {
-      return {
-        isRemoving: false,
-        isUpdating: false,
-        isEditRoleMode: false,
-        selectedRole: ''
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'groupRoles',
-        'groupMembers',
-        'groupPermissions'
-      ]),
-      member () {
-        const members = this.groupMembers[this.groupName] || []
-        return members.find(m => m.username === this.memberName)
-      },
-      sortedRoles () {
-        if (!this.groupRoles || !this.groupRoles[this.groupName]) {
-          return []
-        }
-        return [...this.groupRoles[this.groupName]].sort(
-          (a, b) => a.roleLabel.localeCompare(b.roleLabel))
-      },
-      canRemoveMember () {
-        const permissions = this.groupPermissions[this.groupName] || []
-        return permissions.includes('REMOVE_MEMBERSHIP')
-      },
-      canUpdateMember () {
-        const permissions = this.groupPermissions[this.groupName] || []
-        return permissions.includes('UPDATE_MEMBERSHIP')
-      }
-    },
-    methods: {
-      onEditRole () {
-        this.selectedRole = this.member.roleName
-        this.isEditRoleMode = !this.isEditRoleMode
-      },
-      onRemoveMember () {
-        this.isRemoving = !this.isRemoving
-        this.$store.dispatch('removeMember',
-          {groupName: this.groupName, memberName: this.memberName})
-          .then(() => {
-            this.$router.push({name: 'groupDetail', params: {name: this.groupName}})
-          }, () => {
-            this.isRemoving = !this.isRemoving
-          })
-      },
-      onUpdateMember () {
-        this.isUpdating = !this.isUpdating
-        const updateMemberCommand = {roleName: this.selectedRole}
-        this.$store.dispatch('updateMember',
-          {groupName: this.groupName, memberName: this.memberName, updateMemberCommand})
-          .then(() => {
-            this.$router.push({name: 'groupDetail', params: {name: this.groupName}})
-          }, () => {
-            this.isUpdating = !this.isUpdating
-          })
-      }
-    },
-    created () {
-      if (!this.groupMembers[this.groupName]) {
-        this.$store.dispatch('fetchGroupMembers', this.groupName)
-      }
-      if (!this.groupRoles[this.groupName]) {
-        this.$store.dispatch('fetchGroupRoles', this.groupName)
-      }
-      if (!this.groupPermissions[this.groupName]) {
-        this.$store.dispatch('fetchGroupPermissions', this.groupName)
-      }
-    },
-    components: {
-      Toast
+    memberName: {
+      type: String,
+      required: true
     }
+  },
+  data () {
+    return {
+      isRemoving: false,
+      isUpdating: false,
+      isEditRoleMode: false,
+      selectedRole: ''
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'groupRoles',
+      'groupMembers',
+      'groupPermissions'
+    ]),
+    member () {
+      const members = this.groupMembers[this.groupName] || []
+      return members.find(m => m.username === this.memberName)
+    },
+    sortedRoles () {
+      if (!this.groupRoles || !this.groupRoles[this.groupName]) {
+        return []
+      }
+      return [...this.groupRoles[this.groupName]].sort(
+        (a, b) => a.roleLabel.localeCompare(b.roleLabel))
+    },
+    canRemoveMember () {
+      const permissions = this.groupPermissions[this.groupName] || []
+      return permissions.includes('REMOVE_MEMBERSHIP')
+    },
+    canUpdateMember () {
+      const permissions = this.groupPermissions[this.groupName] || []
+      return permissions.includes('UPDATE_MEMBERSHIP')
+    }
+  },
+  methods: {
+    onEditRole () {
+      this.selectedRole = this.member.roleName
+      this.isEditRoleMode = !this.isEditRoleMode
+    },
+    onRemoveMember () {
+      this.isRemoving = !this.isRemoving
+      this.$store.dispatch('removeMember',
+        { groupName: this.groupName, memberName: this.memberName })
+        .then(() => {
+          this.$router.push({ name: 'groupDetail', params: { name: this.groupName } })
+        }, () => {
+          this.isRemoving = !this.isRemoving
+        })
+    },
+    onUpdateMember () {
+      this.isUpdating = !this.isUpdating
+      const updateMemberCommand = { roleName: this.selectedRole }
+      this.$store.dispatch('updateMember',
+        { groupName: this.groupName, memberName: this.memberName, updateMemberCommand })
+        .then(() => {
+          this.$router.push({ name: 'groupDetail', params: { name: this.groupName } })
+        }, () => {
+          this.isUpdating = !this.isUpdating
+        })
+    }
+  },
+  created () {
+    if (!this.groupMembers[this.groupName]) {
+      this.$store.dispatch('fetchGroupMembers', this.groupName)
+    }
+    if (!this.groupRoles[this.groupName]) {
+      this.$store.dispatch('fetchGroupRoles', this.groupName)
+    }
+    if (!this.groupPermissions[this.groupName]) {
+      this.$store.dispatch('fetchGroupPermissions', this.groupName)
+    }
+  },
+  components: {
+    Toast
   }
+}
 </script>

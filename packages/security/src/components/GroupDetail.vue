@@ -106,82 +106,82 @@
 </template>
 
 <script>
-  import Toast from './Toast'
-  import { mapGetters, mapMutations, mapActions } from 'vuex'
+import Toast from '@/components/Toast.vue'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
-  export default {
-    name: 'GroupDetail',
-    props: {
-      name: {
-        type: String,
-        required: false
-      }
-    },
-    data () {
-      return {
-        anonymousViewerPermission: false,
-        registeredUserPermission: '',
-        isSaving: true
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'groupMembers',
-        'groupPermissions',
-        'getLoginUser',
-        'getAnonymousGroupRightsBool',
-        'getUserGroupRightsString'
-      ]),
-      sortedMembers () {
-        const members = this.groupMembers[this.name] || []
-        return [...members].sort((a, b) => a.username.localeCompare(b.username))
-      },
-      canAddMember () {
-        const groupPermissions = this.groupPermissions[this.name] || []
-        return groupPermissions.includes('ADD_MEMBERSHIP')
-      }
-    },
-    methods: {
-      ...mapMutations([
-        'clearToast'
-      ]),
-      ...mapActions([
-        'fetchGroupMembers',
-        'fetchGroupPermissions',
-        'fetchGroupRights',
-        'setGroupRight',
-        'deleteGroup'
-      ]),
-      async savePermissions () {
-        this.isSaving = true
-        await Promise.all([
-          this.setGroupRight({ name: this.name, role: 'ANONYMOUS', right: this.anonymousViewerPermission ? 'Viewer' : '' }),
-          this.setGroupRight({ name: this.name, role: 'USER', right: this.registeredUserPermission })
-        ])
-        await this.fetchGroupRights(this.name)
-        this.isSaving = false
-      },
-      addMember () {
-        this.clearToast()
-        this.$router.push({name: 'addMember', params: {groupName: this.name}})
-      },
-      deleteGroup () {
-        this.deleteGroup({groupName: this.name}).then(() => {
-          this.$router.push({name: 'groupOverView'})
-        })
-      }
-    },
-    created () {
-      this.fetchGroupMembers(this.name)
-      this.fetchGroupPermissions(this.name)
-      this.fetchGroupRights(this.name).then(() => {
-        this.anonymousViewerPermission = this.getAnonymousGroupRightsBool(this.name, 'Viewer')
-        this.registeredUserPermission = this.getUserGroupRightsString(this.name)
-        this.isSaving = false
-      })
-    },
-    components: {
-      Toast
+export default {
+  name: 'GroupDetail',
+  props: {
+    name: {
+      type: String,
+      required: false
     }
+  },
+  data () {
+    return {
+      anonymousViewerPermission: false,
+      registeredUserPermission: '',
+      isSaving: true
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'groupMembers',
+      'groupPermissions',
+      'getLoginUser',
+      'getAnonymousGroupRightsBool',
+      'getUserGroupRightsString'
+    ]),
+    sortedMembers () {
+      const members = this.groupMembers[this.name] || []
+      return [...members].sort((a, b) => a.username.localeCompare(b.username))
+    },
+    canAddMember () {
+      const groupPermissions = this.groupPermissions[this.name] || []
+      return groupPermissions.includes('ADD_MEMBERSHIP')
+    }
+  },
+  methods: {
+    ...mapMutations([
+      'clearToast'
+    ]),
+    ...mapActions([
+      'fetchGroupMembers',
+      'fetchGroupPermissions',
+      'fetchGroupRights',
+      'setGroupRight',
+      'deleteGroup'
+    ]),
+    async savePermissions () {
+      this.isSaving = true
+      await Promise.all([
+        this.setGroupRight({ name: this.name, role: 'ANONYMOUS', right: this.anonymousViewerPermission ? 'Viewer' : '' }),
+        this.setGroupRight({ name: this.name, role: 'USER', right: this.registeredUserPermission })
+      ])
+      await this.fetchGroupRights(this.name)
+      this.isSaving = false
+    },
+    addMember () {
+      this.clearToast()
+      this.$router.push({ name: 'addMember', params: { groupName: this.name } })
+    },
+    deleteGroup () {
+      this.deleteGroup({ groupName: this.name }).then(() => {
+        this.$router.push({ name: 'groupOverView' })
+      })
+    }
+  },
+  created () {
+    this.fetchGroupMembers(this.name)
+    this.fetchGroupPermissions(this.name)
+    this.fetchGroupRights(this.name).then(() => {
+      this.anonymousViewerPermission = this.getAnonymousGroupRightsBool(this.name, 'Viewer')
+      this.registeredUserPermission = this.getUserGroupRightsString(this.name)
+      this.isSaving = false
+    })
+  },
+  components: {
+    Toast
   }
+}
 </script>

@@ -14,21 +14,21 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
-  export default {
-    name: 'ToastMessage',
-    computed: {
-      ...mapGetters([
-        'toast'
-      ])
-    },
-    methods: {
-      ...mapMutations([
-        'clearToast'
-      ])
-    }
+export default {
+  name: 'ToastMessage',
+  computed: {
+    ...mapGetters([
+      'toast'
+    ])
+  },
+  methods: {
+    ...mapMutations([
+      'clearToast'
+    ])
   }
+}
 </script>
 
 <style>
@@ -44,4 +44,3 @@
     transform: translateY(0);
   }
 </style>
-

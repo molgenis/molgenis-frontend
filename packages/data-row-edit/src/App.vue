@@ -1,7 +1,6 @@
 <template>
-  <router-view></router-view>
+  <div id="data-row-edit-plugin">
+    <router-view/>
+  </div>
 </template>
 
-<script>
-  export default { name: 'app' }
-</script>
