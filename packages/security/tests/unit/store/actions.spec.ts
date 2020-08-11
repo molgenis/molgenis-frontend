@@ -319,7 +319,7 @@ describe('actions', () => {
 
   describe('setGroupRight', () => {
     it('should set the requested roll/permission/group combination', async (done) => {
-      const state = { groupRights: { roles: [] } }
+      const state = { groupRights: { roles: [{ roleName: 'GROUP1_RIGHT1' }] } }
       api.put.mockResolvedValueOnce()
       // @ts-ignore
       await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: 'right1' })
@@ -329,7 +329,7 @@ describe('actions', () => {
     })
 
     it('should do nothing if requested roll/permission/group combination exists', async (done) => {
-      const state = { groupRights: { roles: [{ roleName: 'GROUP1_ROLE1' }] } }
+      const state = { groupRights: { roles: [] } }
       api.put.mockResolvedValueOnce({})
       // @ts-ignore
       await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: 'right1' })
@@ -339,7 +339,7 @@ describe('actions', () => {
     })
 
     it('should send a error if roll/permission/group combination requests fails', async (done) => {
-      const state = { groupRights: { roles: [] } }
+      const state = { groupRights: { roles: [{ roleName: 'GROUP1_RIGHT1' }] } }
       api.put.mockResolvedValueOnce({ status: 404 })
       // @ts-ignore
       await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: 'right1' })
@@ -349,7 +349,7 @@ describe('actions', () => {
     })
 
     it('should unset the requested roll/permission/group combination', async (done) => {
-      const state = { groupRights: { roles: [] } }
+      const state = { groupRights: { roles: [{ roleName: 'GROUP1_RIGHT1' }] } }
       api.delete_.mockResolvedValueOnce()
       // @ts-ignore
       await actions.setGroupRight({ commit, state }, { name: 'group1', role: 'role1', right: '' })
