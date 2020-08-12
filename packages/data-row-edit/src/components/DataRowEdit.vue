@@ -39,8 +39,7 @@
             id="save-btn"
             class="btn btn-primary"
             type="submit"
-            @click.prevent="onSubmit"
-            :disabled="formState.$invalid && formState.$touched">
+            @click.prevent="onSubmit">
             {{ 'data-row-edit-save-button-label' | i18n }}
           </button>
 
@@ -54,7 +53,7 @@
             class="fa fa-spinner fa-spin " aria-hidden="true"></i>
           </button>
 
-          <span v-if="!isSaving && formState.$invalid && formState.$touched"
+          <span v-if="!isSaving && formState.$invalid && formState.$touched && saveFailed"
                 class="alert text-danger">
               {{ 'data-row-edit-invalid-fields-msg' | i18n }}
           </span>
@@ -63,7 +62,6 @@
 
     </div>
     <div v-else class=""><i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i></div>
-
   </div>
 
 </template>
@@ -95,7 +93,8 @@ export default {
         formState: {},
         alert: null,
         showForm: false,
-        isSaving: false
+        isSaving: false,
+        saveFailed: false
       }
     },
     methods: {
@@ -118,6 +117,8 @@ export default {
           } catch (e) {
             this.handleError(e)
           }
+        } else {
+          this.saveFailed = true
         }
       },
       goBackToPluginCaller () {
