@@ -1,6 +1,8 @@
 <template>
   <div class="container">
 
+    <div v-show="!showRef">
+
     <!-- Alert container -->
     <div class="row">
       <div class="col-md-12">
@@ -15,6 +17,12 @@
 
     <div v-if="showForm">
 
+      <nav  v-if="parent" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#" v-on:click.prevent="onParentClick($event)">{{parent.dataTableLabel}} </a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{dataTableLabel}}</li>
+        </ol>
+      </nav>
       <h1>{{dataTableLabel}}</h1>
 
       <form-component
@@ -22,14 +30,16 @@
         :formFields="formFields"
         :initialFormData="formData"
         :formState="formState"
-        @valueChange="onValueChanged">
+        :options="formComponentOptions"
+        @valueChange="onValueChanged"
+        @addOptionRequest="onAddOptionRequest">
       </form-component>
 
       <div class="row">
         <div class="col-md-12">
           <button
             id="cancel-btn"
-            @click.prevent="goBackToPluginCaller"
+            @click.prevent="onCancelClick"
             class="btn btn-secondary mr-1">
             {{ 'data-row-edit-cancel-button-label' | i18n }}
           </button>
@@ -64,6 +74,10 @@
     </div>
     <div v-else class=""><i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i></div>
 
+    </div>
+
+    <div ref="refContainer"></div>
+
   </div>
 
 </template>
@@ -72,6 +86,8 @@
 import { FormComponent, EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 import '../../node_modules/@molgenis/molgenis-ui-form/dist/static/css/molgenis-ui-form.css'
 import * as repository from '@/repository/dataRowRepository'
+import DataRowEdit from '@/components/DataRowEdit'
+import Vue from 'vue'
 
 export default {
   name: 'DataRowEdit',
@@ -82,6 +98,11 @@ export default {
       },
       dataRowId: {
         type: String,
+        required: false,
+        default: null
+      },
+      parent: {
+        type: Object,
         required: false,
         default: null
       }
@@ -95,12 +116,34 @@ export default {
         formState: {},
         alert: null,
         showForm: false,
-        isSaving: false
+        isSaving: false,
+        formComponentOptions: {
+          showEyeButton: true,
+          allowAddingOptions: true,
+          inputDebounceTime: 500
+        }, 
+        showRef: false,
+        referenceMap: {} // maps from field id to entityName for all reference entities 
       }
     },
     methods: {
       onValueChanged (updatedFormData) {
         this.formData = updatedFormData
+      },
+      onAddOptionRequest (optionCreatedCallback, event, sourceField) {
+        console.log(optionCreatedCallback)
+        console.log(sourceField)
+
+        const referenceTableId = this.referenceMap[sourceField.id]
+
+        const ComponentClass = Vue.extend(DataRowEdit)
+        this.optionCreatedCallback = optionCreatedCallback
+        const refDataRowEdit = new ComponentClass({
+            propsData: { dataTableId: referenceTableId, parent: this }
+        })
+        refDataRowEdit.$mount() 
+        this.showRef = true // hide parent
+        this.$refs.refContainer.appendChild(refDataRowEdit.$el) // show child
       },
       async onSubmit () {
         const formState = this.formState
@@ -113,18 +156,46 @@ export default {
         if (this.formState.$valid) {
           this.isSaving = true
           try {
-            await repository.save(this.formData, this.formFields, this.dataTableId, this.dataRowId)
-            this.goBackToPluginCaller()
+            const response = await repository.save(this.formData, this.formFields, this.dataTableId, this.dataRowId)
+            if(this.parent) {
+              /**
+               * new option is 
+               *  id: item[idAttribute],
+               *  value: item[idAttribute],
+               *  label: item[labelAttribute]
+               */
+              console.log(response)
+              const newOptionLocation = response.headers.get('Location');
+              const createdRow = await repository.fetchOption(newOptionLocation)
+              console.log(response)
+              this.showParent({id: createdRow.id, value: createdRow.id, label: createdRow.label})
+            } else {
+              this.goBackToPluginCaller()
+            }
+          
           } catch (e) {
             this.handleError(e)
           }
         }
+      },
+      onParentClick () {
+        this.showParent()
+      },
+      onCancelClick () {
+        this.parent ? this.showParent() : this.goBackToPluginCaller()
       },
       goBackToPluginCaller () {
         window.history.go(-1)
       },
       clearAlert () {
         this.alert = null
+      },
+      showParent (newOption) {
+        if(newOption) {
+          this.parent.optionCreatedCallback(newOption)
+        }
+        this.parent.showRef = false // show parent
+        this.parent.$refs.refContainer.removeChild(this.$el) // destroy child
       },
       handleError (message) {
         this.alert = {
@@ -134,28 +205,45 @@ export default {
         }
         this.showForm = true
         this.isSaving = false
+      },
+      /**
+       * Takes molgenis api-v2 metaData object and build map from fieldName to referenceEntity name
+       * Only field that have a reference entity are included in the map
+       */
+      buildReferenceMap (metaData) {
+        const attrsList = metaData.attributes
+        this.referenceMap = attrsList
+          .filter(attr => Object.prototype.hasOwnProperty.call(attr, 'refEntity'))
+          .reduce((accum, attr) => {
+            accum[attr.name] = attr.refEntity.name
+            return accum
+          }, {})
+      },
+      async fetchTableData (dataTableId, dataRowId) {
+        const mapperOptions = {
+          showNonVisibleAttributes: true,
+          mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
+          booleanLabels: {
+            trueLabel: this.$t('data-row-edit-boolean-true'),
+            falseLabel: this.$t('data-row-edit-boolean-false'),
+            nillLabel: this.$t('data-row-edit-boolean-null')
+          }
+        }
+        try {
+          const resp = await repository.fetch(dataTableId, dataRowId)
+          this.buildReferenceMap(resp.meta)
+          this.dataTableLabel = resp.meta.label
+          const mappedData = EntityToFormMapper.generateForm(resp.meta, resp.rowData, mapperOptions)
+          this.formFields = mappedData.formFields
+          this.formData = mappedData.formData
+          this.showForm = true
+        } catch (e) {
+          this.handleError(e)
+        }
       }
     },
     created: async function () {
-      const mapperOptions = {
-        showNonVisibleAttributes: true,
-        mapperMode: this.dataRowId ? 'UPDATE' : 'CREATE',
-        booleanLabels: {
-          trueLabel: this.$t('data-row-edit-boolean-true'),
-          falseLabel: this.$t('data-row-edit-boolean-false'),
-          nillLabel: this.$t('data-row-edit-boolean-null')
-        }
-      }
-      try {
-        const resp = await repository.fetch(this.dataTableId, this.dataRowId)
-        this.dataTableLabel = resp.meta.label
-        const mappedData = EntityToFormMapper.generateForm(resp.meta, resp.rowData, mapperOptions)
-        this.formFields = mappedData.formFields
-        this.formData = mappedData.formData
-        this.showForm = true
-      } catch (e) {
-        this.handleError(e)
-      }
+      this.fetchTableData(this.dataTableId, this.dataRowId)
     },
     components: {
       FormComponent

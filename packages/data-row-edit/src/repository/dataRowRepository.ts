@@ -87,6 +87,8 @@ const save = async (formData: any, formFields: any, tableId: any, rowId: null | 
 
 const fetch = (tableId: any, rowId: null | string) => rowId === null ? fetchForCreate(tableId) : fetchForUpdate(tableId, rowId)
 
+const fetchOption = async (location: string) => api.get(location)
+
 export {
-  save, fetch
+  save, fetch, fetchOption
 }
