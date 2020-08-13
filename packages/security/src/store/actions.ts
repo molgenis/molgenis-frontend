@@ -178,15 +178,17 @@ const actions = {
   },
   async 'setGroupRight' ({ commit, state }: { commit: Function; state: SecurityModel }, data: { name: string; role: string; right: string }) {
     const url = `/api/identities/group/${data.name}/role/${data.role}`
-    const payload = { body: JSON.stringify({ role: `${data.name}_${data.right}`.toUpperCase() }) }
+    const role: { roleName: string } | undefined = state.groupRights.roles.find((item: any) => item.roleName.toUpperCase() === `${data.name}_${data.right}`.toUpperCase())
+    // @ts-ignore
+    const rolename: string|null = role ? role.roleName : null
     if (data.right === '') {
       const response = await api.delete_(url)
       if (response && response.status !== 204) {
         commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
       }
       return response
-    }
-    if (!state.groupRights.roles.find((item: any) => item.roleName === `${data.name}_${data.role}`.toUpperCase())) {
+    } else if (rolename) {
+      const payload = { body: JSON.stringify({ role: rolename }) }
       const response = await api.put(url, payload)
       if (response && response.status !== 204) {
         commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
