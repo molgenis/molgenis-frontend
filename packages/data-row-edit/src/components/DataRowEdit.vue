@@ -123,6 +123,8 @@ export default {
           inputDebounceTime: 500
         }, 
         showRef: false,
+        idAttribute: null,
+        labelAttribute: null,
         referenceMap: {} // Map from field id to entityName for all reference entities 
       }
     },
@@ -164,7 +166,11 @@ export default {
               const newOptionLocation = response.headers.get('Location');
               const createdRow = await repository.fetchOption(newOptionLocation)
               // Create a new option object to pass to the reference select
-              this.parent.optionCreatedCallback({id: createdRow.id, value: createdRow.id, label: createdRow.label})
+              this.parent.optionCreatedCallback({
+                id: createdRow[this.idAttribute],
+                value: createdRow[this.idAttribute],
+                label: createdRow[this.labelAttribute]
+              })
               this.showParent()
             } else {
               this.goBackToPluginCaller()
@@ -221,6 +227,8 @@ export default {
         }
         try {
           const resp = await repository.fetch(dataTableId, dataRowId)
+          this.idAttribute = resp.meta.idAttribute
+          this.labelAttribute = resp.meta.labelAttribute
           this.buildReferenceMap(resp.meta)
           this.dataTableLabel = resp.meta.label
           const mappedData = EntityToFormMapper.generateForm(resp.meta, resp.rowData, mapperOptions)

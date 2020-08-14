@@ -50,7 +50,10 @@ describe('DataRowEdit.vue', () => {
     // @ts-ignore ts does not know its a mock
     repository.fetch.mockResolvedValue({ 
       meta: {
+        id: 'my-id',
         label: 'lbl',
+        idAttribute: 'id',
+        labelAttribute: 'label',
         attributes: [{
           name: 'my-attr',
           refEntity: {
@@ -166,7 +169,10 @@ describe('DataRowEdit.vue', () => {
     it('the mapper should run in update mode', () => {
       expect(EntityToFormMapper.generateForm).toHaveBeenCalledWith(
         {
+          id: 'my-id',
           label: 'lbl',
+          idAttribute: 'id',
+          labelAttribute: 'label',
           attributes: [{
             name: 'my-attr',
             refEntity: {
