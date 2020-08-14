@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.3.1...@molgenis-ui/security@0.4.0) (2020-08-13)
+
+
+### Bug Fixes
+
+* **security:** [#336](https://github.com/molgenis/molgenis-frontend/issues/336) fix incorect naming ([ac47b01](https://github.com/molgenis/molgenis-frontend/commit/ac47b01))
+
+
+### Features
+
+* **security:** improve layout ([29681f9](https://github.com/molgenis/molgenis-frontend/commit/29681f9))
+
+
+
+
+
 ## [0.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.3.0...@molgenis-ui/security@0.3.1) (2020-08-10)
 
 

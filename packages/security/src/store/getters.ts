@@ -38,7 +38,7 @@ const getters = {
   getUserGroupRightsString: (state: SecurityModel) => (groupID: string) => {
     // Fix for a missing identities api call to match groups with permission ( GET /api/identities/group/{groupName}/role/{roleName} )
     if (state.groupRights && state.groupRights.user && state.groupRights.user.includes) {
-      const found = state.groupRights.user.includes.items.find(item => item.data.name.toUpperCase() === `${groupID}_Viewer`.toUpperCase() || item.data.name === `${groupID}_Editor`.toUpperCase())
+      const found = state.groupRights.user.includes.items.find(item => item.data.name.toUpperCase() === `${groupID}_Viewer`.toUpperCase() || item.data.name.toUpperCase() === `${groupID}_Editor`.toUpperCase())
       if (found) {
         return found.data.label
       } else {
