@@ -19,7 +19,7 @@
 
         <nav  v-if="parent" aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#" v-on:click.prevent="onParentClick($event)">{{parent.dataTableLabel}} </a></li>
+            <li class="breadcrumb-item"><a href="#" v-on:click.prevent="showParent()">{{parent.dataTableLabel}} </a></li>
             <li class="breadcrumb-item active" aria-current="page">{{dataTableLabel}}</li>
           </ol>
         </nav>
@@ -174,9 +174,6 @@ export default {
             this.handleError(e)
           }
         }
-      },
-      onParentClick () {
-        this.showParent()
       },
       onCancelClick () {
         this.parent ? this.showParent() : this.goBackToPluginCaller()

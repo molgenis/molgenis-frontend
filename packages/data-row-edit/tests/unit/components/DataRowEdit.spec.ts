@@ -121,6 +121,12 @@ describe('DataRowEdit.vue', () => {
     done()
   })
 
+  it('onCancelClick when no parent is set should call goBackToPluginCaller', () => {
+    const goSpy = jest.spyOn(window.history, 'go');
+    wrapper.vm.onCancelClick()
+    expect(goSpy).toBeCalled()
+  })
+
   it('dismissing the alert removes it', async(done) => {
     wrapper.setData({ formState })
     // @ts-ignore
@@ -173,5 +179,85 @@ describe('DataRowEdit.vue', () => {
       )
     })
     
+  })
+
+  describe('when adding a reference option', () => {
+    it('should add a child data row edit', async(done) => {
+
+      const optionCreatedCallback = jest.fn()
+      const sourceField = {
+        id: 'my-attr'
+      }
+      wrapper.vm.onAddOptionRequest(optionCreatedCallback, {}, sourceField)
+      expect(wrapper.find('div.container div.container').exists()).toBeTruthy()
+      done()
+    })
+  })
+
+  describe('when saving a child option', () => {
+
+    const callBack = jest.fn()
+    const mockRemoveChild = jest.fn()
+
+    beforeEach(async(done) => {
+      // @ts-ignore
+      repository.save.mockResolvedValue({
+        headers: {
+          get: () => {
+            return 'created-ref-location'
+          }
+        }
+      })
+
+      // @ts-ignore
+      repository.fetchOption.mockResolvedValue({
+        id: 'option-id',
+        label: 'option-label'
+      })
+
+      const mockParent = await shallowMount(DataRowEdit, {
+        localVue,
+        propsData: { 
+          dataTableId: 'dataTableId',
+        },
+        mocks: {
+          $t: () => 'default-msg'
+        }
+      })
+
+      // @ts-ignore
+      mockParent.optionCreatedCallback = callBack
+      //@ts-ignore
+      mockParent.$refs = {
+        refContainer: {
+          removeChild: mockRemoveChild
+        }
+      }
+
+      wrapper = await shallowMount(DataRowEdit, {
+        localVue,
+        propsData: { 
+          dataTableId: 'refTableId',
+          parent: mockParent
+        },
+        mocks: {
+          $t: () => 'default-msg'
+        }
+      })
+      done()
+    })
+
+    it('save the new option and call the createOption callback with the new option', async(done) => {
+      wrapper.setData({ formState })
+      await wrapper.vm.onSubmit()
+      expect(repository.save).toHaveBeenCalled()
+      expect(callBack).toBeCalledWith({id: 'option-id', value: 'option-id', label: 'option-label'})
+      done()
+    })
+
+    it('when aborting the new option creation', () => {
+      wrapper.vm.onCancelClick()
+      expect(mockRemoveChild).toBeCalled()
+    })
   })
 })
