@@ -9,7 +9,8 @@ import Vue from 'vue'
 jest.mock('@/repository/dataRowRepository', () => {
   return {
     fetch: jest.fn(),
-    save: jest.fn()
+    save: jest.fn(),
+    fetchOption: jest.fn()
   }
 })
 
@@ -49,7 +50,13 @@ describe('DataRowEdit.vue', () => {
     // @ts-ignore ts does not know its a mock
     repository.fetch.mockResolvedValue({ 
       meta: {
-        label: 'lbl'
+        label: 'lbl',
+        attributes: [{
+          name: 'my-attr',
+          refEntity: {
+            name: 'myref'
+          }
+        }]
       },
       rowData: 'mock-rowData'
     })
@@ -152,7 +159,15 @@ describe('DataRowEdit.vue', () => {
 
     it('the mapper should run in update mode', () => {
       expect(EntityToFormMapper.generateForm).toHaveBeenCalledWith(
-        {'label': 'lbl'},
+        {
+          label: 'lbl',
+          attributes: [{
+            name: 'my-attr',
+            refEntity: {
+              name: 'myref'
+            }
+          }]
+        },
         'mock-rowData',
         expect.objectContaining({mapperMode: 'UPDATE'})
       )

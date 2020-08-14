@@ -205,8 +205,7 @@ export default {
        * Only field that have a reference entity are included in the map
        */
       buildReferenceMap (metaData) {
-        const attrsList = metaData.attributes
-        this.referenceMap = attrsList
+        this.referenceMap = metaData.attributes
           .filter(attr => Object.prototype.hasOwnProperty.call(attr, 'refEntity'))
           .reduce((accum, attr) => {
             accum[attr.name] = attr.refEntity.name
