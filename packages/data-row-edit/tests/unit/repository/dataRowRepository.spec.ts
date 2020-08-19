@@ -151,4 +151,15 @@ describe('DataRowRepository', () => {
       })
     })
   })
+
+  describe('fetchOption', () => {
+    beforeEach(() => {
+      api.get.mockClear()
+    })
+
+    it('should use the passed location to fetch the option data', () => {
+      repository.fetchOption('my/location')
+      expect(api.get).toHaveBeenCalledWith('my/location')
+    })
+  })
 })
