@@ -37,8 +37,11 @@ describe('DataRowEdit.vue', () => {
   let wrapper: any
 
   const mappedCreateData = {
-    formFields: [{id: 'a', type: 'text'}],
-    formData: {a: 'b'},
+    formFields: [
+      {id: 'a', type: 'text'},
+      {id: 'c', type: 'field-group', children: [{id: 'f', type: 'text'}]}
+    ],
+    formData: {a: 'b', c: 'd', f: 'g'},
     formLabel: 'form label'
   }
 
@@ -71,6 +74,9 @@ describe('DataRowEdit.vue', () => {
     formState = {
       $valid: true,
       a: {
+        $touched: false,
+      },
+      f: {
         $touched: false,
       }
     }
