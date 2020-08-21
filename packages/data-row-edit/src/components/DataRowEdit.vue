@@ -150,14 +150,12 @@ export default {
         this.showRef = true // hide parent
         this.$refs.refContainer.appendChild(refDataRowEdit.$el) // show child
       },
+      touchField (field) {
+        field.children ? field.children.forEach(this.touchField) : this.formState[field.id].$touched = true
+      },
       async onSubmit () {
-        const formState = this.formState
-        this.formFields
-          .filter(field => field.type !== 'field-group') // field-groups have no validation to show
-          .forEach((field) => {
-            const fieldState = formState[field.id]
-            fieldState.$touched = true // trigger field to show validation result to user
-          })
+        this.formFields.forEach(this.touchField) // validate all fields
+
         if (this.formState.$valid) {
           this.isSaving = true
           try {
