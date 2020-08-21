@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@4.0.2...@molgenis-ui/data-row-edit@4.0.3) (2020-08-21)
+
+
+### Bug Fixes
+
+* **data-row-edit:** Fix validation for field group fields ([d1affbd](https://github.com/molgenis/molgenis-frontend/commit/d1affbd)), closes [#347](https://github.com/molgenis/molgenis-frontend/issues/347)
+
+
+
+
+
 ## [4.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@4.0.1...@molgenis-ui/data-row-edit@4.0.2) (2020-08-19)
 
 **Note:** Version bump only for package @molgenis-ui/data-row-edit
