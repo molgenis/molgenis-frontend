@@ -13,8 +13,9 @@
       <div v-if="hasEditSettingsRights" class="col-3">
         <table-settings-button
           class="float-right"
+          :settingsRowId="tableSettings.settingsRowId"
           :settingsTableId="settingsTable"
-          :tableSettings="tableSettings">
+        >
         </table-settings-button>
       </div>
     </div>
