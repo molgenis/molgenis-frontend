@@ -488,7 +488,7 @@ public class NewAppController extends VuePluginController {
 
 That is it.
 
-### Pre-view frontend with alternative backend using CI rancher cluster
+### Preview frontend with alternative backend using CI rancher cluster
 
 You can link the generated PR preview to a alternative backend service
 - Login to rancher ( or use cli).
