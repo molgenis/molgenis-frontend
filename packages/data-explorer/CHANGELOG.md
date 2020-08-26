@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.35.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.35.1...@molgenis-ui/data-explorer@0.35.2) (2020-08-26)
+
+
+### Bug Fixes
+
+* **data-explorer:** pass correct props to TableSettingsButton component ([#350](https://github.com/molgenis/molgenis-frontend/issues/350)) ([f1001f3](https://github.com/molgenis/molgenis-frontend/commit/f1001f3))
+
+
+
+
+
 ## [0.35.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.35.0...@molgenis-ui/data-explorer@0.35.1) (2020-08-21)
 
 
