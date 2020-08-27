@@ -15,7 +15,7 @@ describe('menuService', () => {
       const menu = {
         id: 'foo'
       }
-      it('should return undefined', () => {
+      it('should return the path (item-id with slash)', () => {
         expect(findPath('', menu, 'foo')).toEqual('/foo')
       })
     })
@@ -53,7 +53,7 @@ describe('menuService', () => {
           { id: 'not-foo' }
         ]
       }
-      it('should return the path including the sub menu', () => {
+      it('should return the path including the sub sub menu', () => {
         expect(findPath('', menu, 'foo')).toEqual('/root/sub1/sub2/foo')
       })
     })
@@ -67,7 +67,7 @@ describe('menuService', () => {
           { id: 'not-foo' }
         ]
       }
-      it('should return the path including the sub menu', () => {
+      it('should return undefined', () => {
         expect(findPath('', menu, 'foo')).toBeUndefined()
       })
     })
