@@ -55,6 +55,15 @@ describe('MainView.vue', () => {
         actions: {
           fetchContext: jest.fn()
         }
+      },
+      header: {
+        namespaced: true,
+        actions: {
+          fetchBreadcrumbs: jest.fn()
+        },
+        state: {
+          breadcrumbs: []
+        }
       }
     }
 

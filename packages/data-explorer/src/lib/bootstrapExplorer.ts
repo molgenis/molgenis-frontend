@@ -5,7 +5,7 @@ import applicationSettings from './applicationSettings'
 const packageEndpoint = 'api/data/sys_md_Package'
 const metaDataEndpoint = 'api/metadata'
 
-async function createSettings() {
+async function createSettings () {
   if (!store.getters.hasEditRights) {
     return {
       type: 'danger',

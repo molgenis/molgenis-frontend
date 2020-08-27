@@ -1,5 +1,9 @@
 import { StringMap } from '@/types/GeneralTypes'
 
+export function isDataApiResponseItem (reponseValue: DataApiResponseItem | string | boolean | number): reponseValue is DataApiResponseItem {
+  return (reponseValue as DataApiResponseItem).links !== undefined
+}
+
 export type DataApiResponseItem = {
   links: { self: string },
   items?: DataApiResponseItem[],
