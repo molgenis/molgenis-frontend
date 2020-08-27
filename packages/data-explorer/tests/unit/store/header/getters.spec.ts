@@ -13,11 +13,25 @@ describe('header getters', () => {
         }
       }
     }
-    // @ts-ignore
-    findPath.mockReturnValueOnce('/path/to/navigator')
-    it('should return the path to the navigator plugin', () => {
-      expect(getters.navigatorLocation(state, {}, rootState)).toEqual('/path/to/navigator')
-      expect(findPath).toHaveBeenCalledWith('menu', { my: 'menu' }, 'navigator')
+    
+    describe('when menu contains navigator', () => {
+      // @ts-ignore
+      findPath.mockReturnValueOnce('/path/to/navigator')
+      it('should return the path to the navigator plugin', () => {
+        expect(getters.navigatorLocation(state, {}, rootState)).toEqual('path/to/navigator')
+        expect(findPath).toHaveBeenCalledWith('menu', { my: 'menu' }, 'navigator')
+      })
     })
+
+    describe('when menu does not contain navigator', () => {
+      // @ts-ignore
+      findPath.mockReturnValueOnce(undefined)
+      it('should return the path to the navigator plugin', () => {
+        expect(getters.navigatorLocation(state, {}, rootState)).toEqual(undefined)
+      })
+    })
+    
   })
+
+
 })
