@@ -6,7 +6,7 @@ describe('BreadcrumbBar', () => {
   let propsData = {
     breadcrumbs: [
       { id: 'c1', label: 'crumb1', link: '/location/c1' },
-      { id: 'c2', label: 'crumb2', link: '/location/c2' },
+      { id: 'c2', label: 'crumb2', link: 'location/c2' },
       { id: 'c3', label: 'crumb3', link: '/location/c3' }
     ]
   }
@@ -21,5 +21,10 @@ describe('BreadcrumbBar', () => {
     expect(wrapper.findAll('li.breadcrumb-item').at(1).text()).toEqual('crumb2')
     expect(wrapper.findAll('li.breadcrumb-item').at(2).text()).toEqual('crumb3')
     expect(wrapper.findAll('li.breadcrumb-item').at(2).classes('active')).toBe(true)
+  })
+
+  it('should use absolute links', () => {
+    expect(wrapper.findAll('li.breadcrumb-item a').at(0).attributes('href')).toEqual('location/c1')
+    expect(wrapper.findAll('li.breadcrumb-item a').at(1).attributes('href')).toEqual('location/c2')
   })
 })
