@@ -56,7 +56,7 @@
 
     <div class="row">
       <div class="col">
-        <h3 class="mt-4">{{ 'security-ui-permissions-label' | i18n }}</h3>
+        <h3 class="mt-4">{{ 'security-ui-permissions-label-anonymous' | i18n }}</h3>
       </div>
     </div>
 
@@ -68,6 +68,17 @@
             {{ 'security-ui-anonymous-can-view' | i18n }}
           </label>
         </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h3 class="mt-4">{{ 'security-ui-permissions-label-user' | i18n }}</h3>
+      </div>
+    </div>
+
+    <div class="row groups-listing">
+      <div class="col">
         <div class="form-check" role="button">
           <input class="form-check-input" type="radio" id="registered-none" name="RegisteredUser" value="" v-model="registeredUserPermission" :disabled="isSaving">
           <label class="form-check-label" for="registered-none">
@@ -92,7 +103,9 @@
     <div class="row mt-3">
       <div class="col">
         <span class="">
-          <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving"><i :class="['fa', 'fa-save']"></i> Save permissions </button>
+          <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving">
+            <i :class="['fa', 'fa-save']"></i> {{ 'security-ui-save-permissions' | i18n }} <i v-if="isSaving" class="fa fa-spinner fa-spin "></i>
+          </button>
         </span>
       </div>
     </div>
@@ -106,7 +119,7 @@
 </template>
 
 <script>
-import Toast from '@/components/Toast.vue'
+import Toast from './Toast'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {

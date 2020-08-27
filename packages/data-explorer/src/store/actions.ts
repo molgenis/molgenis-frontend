@@ -57,7 +57,9 @@ export default {
     if (isCustomCard) {
       columns = state.tableSettings.customCardAttrs
         .split(',')
+        .filter(f => f !== '')
         .map(a => a.trim())
+
       tableData = await dataRepository.getTableDataDeepReference(
         state.tableName,
         state.tableMeta,
