@@ -99,7 +99,7 @@
     <b-modal id="deleteModal" ok-variant="danger" cancel-variant="secondary"
              :title="$t('security-ui-delete-confirmation-title')"
              :ok-title="$t('security-ui-delete-confirmation-ok-text')"
-             :cancel-title="$t('security-ui-delete-confirmation-cancel-text')" @ok="deleteGroup">
+             :cancel-title="$t('security-ui-delete-confirmation-cancel-text')" @ok="deleteGroupHandler">
       {{ 'security-ui-delete-confirmation-text' | i18n }}
     </b-modal>
   </div>
@@ -165,7 +165,7 @@ export default {
       this.clearToast()
       this.$router.push({ name: 'addMember', params: { groupName: this.name } })
     },
-    deleteGroup () {
+    deleteGroupHandler () {
       this.deleteGroup({ groupName: this.name }).then(() => {
         this.$router.push({ name: 'groupOverView' })
       })
