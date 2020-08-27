@@ -17,7 +17,7 @@ describe('header getters', () => {
     findPath.mockReturnValueOnce('/path/to/navigator')
     it('should return the path to the navigator plugin', () => {
       expect(getters.navigatorLocation(state, {}, rootState)).toEqual('/path/to/navigator')
-      expect(findPath).toHaveBeenCalledWith('', { my: 'menu' }, 'navigator')
+      expect(findPath).toHaveBeenCalledWith('menu', { my: 'menu' }, 'navigator')
     })
   })
 })
