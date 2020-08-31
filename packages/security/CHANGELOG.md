@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.4.0...@molgenis-ui/security@0.4.1) (2020-08-27)
+
+
+### Bug Fixes
+
+* **security:** fixes [#351](https://github.com/molgenis/molgenis-frontend/issues/351) stack overflow on remove group ([c8e934b](https://github.com/molgenis/molgenis-frontend/commit/c8e934b))
+
+
+
+
+
 # [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.3.1...@molgenis-ui/security@0.4.0) (2020-08-13)
 
 

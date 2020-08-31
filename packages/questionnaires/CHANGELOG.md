@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@2.0.5...@molgenis-ui/questionnaires@3.0.0) (2020-08-27)
+
+
+### Bug Fixes
+
+* **settings, data-row-edit, questionnaire, scripts:** Use 5.x version of [@molgenis](https://github.com/molgenis)/molgenis-ui-form ([#354](https://github.com/molgenis/molgenis-frontend/issues/354)) ([94cc78d](https://github.com/molgenis/molgenis-frontend/commit/94cc78d)), closes [#346](https://github.com/molgenis/molgenis-frontend/issues/346)
+
+
+### BREAKING CHANGES
+
+* **settings, data-row-edit, questionnaire, scripts:** i18n key 'ui-form:form_not_a_valid_url' replaced with to 'ui-form:form_not_a_valid_hyperlink'
+
+
+
+
+
 ## [2.0.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@2.0.4...@molgenis-ui/questionnaires@2.0.5) (2019-10-28)
 
 
