@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <breadcrumb-bar :breadcrumbs="breadcrumbs" />
+    <breadcrumb-bar v-if="isUserAuthenticated" :breadcrumbs="breadcrumbs" />
     <toast-component
       class="toast-component mt-2"
       v-if="toast"
@@ -66,6 +66,9 @@ export default Vue.extend({
     ]),
     ...mapState('header', [
       'breadcrumbs'
+    ]),
+    ...mapGetters([
+      'isUserAuthenticated'
     ])
   },
   data () {
@@ -100,7 +103,9 @@ export default Vue.extend({
       if (this.tableName !== tableName) {
         this.loading = true
         await this.fetchTableMeta({ tableName })
-        this.fetchBreadcrumbs()
+        if(this.isUserAuthenticated) {
+          this.fetchBreadcrumbs()
+        }
         this.setTableName(tableName)
       }
       if (this.dataDisplayLayout === 'CardView') {
