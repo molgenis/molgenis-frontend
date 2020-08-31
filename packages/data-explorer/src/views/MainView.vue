@@ -1,6 +1,10 @@
 <template>
   <div class="container-fluid">
-    <breadcrumb-bar :breadcrumbs="breadcrumbs" />
+    <breadcrumb-bar
+      :breadcrumbs="breadcrumbs"
+      @fetchItems="fetchPackageTables"
+      >
+    </breadcrumb-bar>
     <toast-component
       class="toast-component mt-2"
       v-if="toast"
@@ -87,7 +91,8 @@ export default Vue.extend({
       'fetchTableMeta'
     ]),
     ...mapActions('header', [
-      'fetchBreadcrumbs'
+      'fetchBreadcrumbs',
+      'fetchPackageTables'
     ]),
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'

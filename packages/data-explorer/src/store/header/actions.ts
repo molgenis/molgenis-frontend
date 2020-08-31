@@ -24,19 +24,24 @@ const getBreadCrumbPath = async (parentUrl: string, addBreadcrumb: Function, bui
   }
 }
 
+const getPackageTables = async (packageId: string) => {
+  const query = `q=package==${packageId}`
+  const filter = 'filter=id,label,package'
+  const expand = 'expand=package'
+  const resp = await client.get<DataApiResponse>(`/api/data/sys_md_EntityType?${expand}&${filter}&${query}`)
+  return resp.data.items.map((i:any) => {
+    return {
+      id: i.data.id,
+      label: i.data.label
+    }
+  })
+}
+
 export default {
   getGroupTabels: async ({ commit }: { commit: any }, payload: { package: string }) => {
     const packageName = payload.package.split('/').pop()
-    const query = `q=package==${packageName}`
-    const filter = 'filter=id,label,package'
-    const expand = 'expand=package'
-    const resp = await client.get<DataApiResponse>(`/api/data/sys_md_EntityType?${expand}&${filter}&${query}`)
-    const packageTables = resp.data.items.map((i:any) => {
-      return {
-        id: i.data.id,
-        label: i.data.label
-      }
-    })
+    // @ts-ignore
+    const packageTables = await getPackageTables(packageName)
     commit('setPackageTables', packageTables)
     return packageTables
   },
@@ -58,5 +63,11 @@ export default {
       link: buildLink(rootState.tableMeta.id)
     })
     return getBreadCrumbPath(rootState.tableMeta.package, (crumb: any) => { commit('addBreadcrumb', crumb) }, buildLink)
+  },
+
+  fetchPackageTables: async ({ commit }: { commit: any }, payload: { id: string, callback: Function }) => {
+    const packageTables = await getPackageTables(payload.id)
+    payload.callback(packageTables)
   }
+
 }
