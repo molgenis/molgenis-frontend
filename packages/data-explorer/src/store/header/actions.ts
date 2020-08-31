@@ -2,7 +2,7 @@ import client from '@/lib/client'
 import { DataApiResponse, isDataApiResponseItem } from '@/types/ApiResponse'
 import { Breadcrumb } from '@/types/BreadCrumb'
 
-const getBreadCrumbPath = async (parentUrl: string, addBreadcrumb: Function, buildLink: Function): Promise<any> => {
+const getBreadcrumbPath = async (parentUrl: string, addBreadcrumb: Function, buildLink: Function): Promise<any> => {
   const packageName = parentUrl.split('/').pop()
   const query = `q=id==${packageName}`
   const resp = await client.get<DataApiResponse>(`/api/data/sys_md_Package?${query}`)
@@ -19,7 +19,7 @@ const getBreadCrumbPath = async (parentUrl: string, addBreadcrumb: Function, bui
   })
 
   if (data.parent && isDataApiResponseItem(data.parent)) {
-    return getBreadCrumbPath(data.parent.links.self, addBreadcrumb, buildLink)
+    return getBreadcrumbPath(data.parent.links.self, addBreadcrumb, buildLink)
   } else {
     Promise.resolve() // no more parents signal we are done
   }
@@ -58,6 +58,6 @@ export default {
       label: rootState.tableMeta.label,
       link: buildLink(rootState.tableMeta.id)
     })
-    return getBreadCrumbPath(rootState.tableMeta.package, (crumb: Breadcrumb) => { commit('addBreadcrumb', crumb) }, buildLink)
+    return getBreadcrumbPath(rootState.tableMeta.package, (crumb: Breadcrumb) => { commit('addBreadcrumb', crumb) }, buildLink)
   }
 }
