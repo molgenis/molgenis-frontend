@@ -8,6 +8,6 @@ export default {
     state.breadcrumbs.splice(0) // Clear array while keeping reactive reference
   },
   addBreadcrumb (state:any, breadcrumb:Breadcrumb) {
-    state.breadcrumbs.unshift(breadcrumb)
+    state.breadcrumbs.push(breadcrumb)
   }
 }

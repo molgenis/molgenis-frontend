@@ -20,12 +20,8 @@ export default {
     }
   },
   computed: {
-    head () {
-      return this.breadcrumbs[this.breadcrumbs.length - 1]
-    },
-    tail () {
-      return this.breadcrumbs.slice(0, this.breadcrumbs.length - 1)
-    }
+    head: (vm) => vm.breadcrumbs[0],
+    tail: (vm) => vm.breadcrumbs.slice(1, vm.breadcrumbs.length).reverse()
   }
 }
 </script>
