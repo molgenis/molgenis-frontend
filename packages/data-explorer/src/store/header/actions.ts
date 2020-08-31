@@ -47,13 +47,6 @@ const getPackageTables = async (packageId: string) => {
 }
 
 export default {
-  getGroupTabels: async ({ commit }: { commit: any }, payload: { package: string }) => {
-    const packageName = getPackageId(payload.package)
-    const packageTables = await getPackageTables(packageName)
-    commit('setPackageTables', packageTables)
-    return packageTables
-  },
-
   fetchBreadcrumbs: async ({ commit, getters, rootState }: { commit: any, getters: any, rootState: any }) => {
     commit('clearBreadcrumbs')
     const location = getters.navigatorLocation
