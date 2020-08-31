@@ -1,6 +1,6 @@
 import client from '@/lib/client'
 import { DataApiResponse, isDataApiResponseItem } from '@/types/ApiResponse'
-import { Breadcrumb } from '@/types/BreadCrumb'
+import { Breadcrumb } from '@/types/Breadcrumb'
 
 const getBreadcrumbPath = async (parentUrl: string, addBreadcrumb: Function, buildLink: Function): Promise<any> => {
   const packageName = parentUrl.split('/').pop()
