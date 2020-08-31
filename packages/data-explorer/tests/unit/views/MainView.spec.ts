@@ -14,6 +14,7 @@ describe('MainView.vue', () => {
   let store: any
   let state: any
   let mutations: any
+  let getters: any
   let actions: any
   let wrapper: any
   let modules: any
@@ -42,6 +43,10 @@ describe('MainView.vue', () => {
       setTableName: jest.fn()
     }
 
+    getters = {
+      isUserAuthenticated: jest.fn()
+    }
+
     actions = {
       deleteRow: jest.fn(),
       fetchTableMeta: jest.fn(),
@@ -55,11 +60,20 @@ describe('MainView.vue', () => {
         actions: {
           fetchContext: jest.fn()
         }
+      },
+      header: {
+        namespaced: true,
+        actions: {
+          fetchBreadcrumbs: jest.fn()
+        },
+        state: {
+          breadcrumbs: []
+        }
       }
     }
 
     store = new Vuex.Store({
-      state, mutations, actions, modules
+      state, mutations, actions, getters, modules
     })
     wrapper = shallowMount(MainView, { store, localVue, mocks })
   })
@@ -142,6 +156,19 @@ describe('MainView.vue', () => {
       await wrapper.vm.$options.beforeRouteUpdate.call(wrapper.vm, to, from, next)
       expect(next).toHaveBeenCalled()
       done()
+    })
+  })
+
+  describe('when user is authenticated', () => {
+    beforeEach(async (done) => {
+      getters.isUserAuthenticated.mockReturnValueOnce(true)
+      store.getters = getters
+      wrapper = shallowMount(MainView, { store, localVue, mocks })
+      done()
+    })
+    it('should add the Breadcrumb bar', () => {
+      expect(wrapper.find('breadcrumb-bar-stub').exists()).toBeTruthy()
+      expect(modules.header.actions.fetchBreadcrumbs).toHaveBeenCalled()
     })
   })
 })
