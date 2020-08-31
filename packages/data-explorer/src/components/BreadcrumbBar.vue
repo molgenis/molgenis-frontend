@@ -5,7 +5,8 @@
         @mouseover="showDropDown($event, crumb)"
         @mouseleave="hideDropDown($event, crumb)"
       >
-        <a :href="crumb.link">{{crumb.label}}</a>
+        <a v-if="crumb.link" :href="crumb.link">{{crumb.label}}</a>
+        <template v-else>{{crumb.label}}</template>
         <drop-down-list
           v-show="crumb.showDropdown"
           :listId="crumb.label"
@@ -15,7 +16,6 @@
       </li>
       <li v-if="head" class="breadcrumb-item active" aria-current="page">{{head.label}}</li>
     </ol>
-
   </nav>
 </template>
 
@@ -33,12 +33,8 @@ export default {
     }
   },
   computed: {
-    head () {
-      return this.breadcrumbs[this.breadcrumbs.length - 1]
-    },
-    tail () {
-      return this.breadcrumbs.slice(0, this.breadcrumbs.length - 1)
-    }
+    head: (vm) => vm.breadcrumbs[0],
+    tail: (vm) => vm.breadcrumbs.slice(1, vm.breadcrumbs.length).reverse()
   },
   methods: {
     showDropDown (e, crumb) {
@@ -47,6 +43,7 @@ export default {
     hideDropDown (e, crumb) {
       Vue.set(crumb, 'showDropdown', false)
     }
+
   }
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
   <div class="container-fluid">
     <breadcrumb-bar
+      v-if="isUserAuthenticated"
       :breadcrumbs="breadcrumbs"
       @fetchItems="fetchPackageTables"
       >
@@ -70,6 +71,9 @@ export default Vue.extend({
     ]),
     ...mapState('header', [
       'breadcrumbs'
+    ]),
+    ...mapGetters([
+      'isUserAuthenticated'
     ])
   },
   data () {
@@ -105,6 +109,9 @@ export default Vue.extend({
       if (this.tableName !== tableName) {
         this.loading = true
         await this.fetchTableMeta({ tableName })
+        if (this.isUserAuthenticated) {
+          this.fetchBreadcrumbs()
+        }
         this.setTableName(tableName)
       }
       if (this.dataDisplayLayout === 'CardView') {
@@ -112,7 +119,6 @@ export default Vue.extend({
       } else {
         this.fetchTableViewData()
       }
-      this.fetchBreadcrumbs()
       this.loading = false
     }
   },

@@ -1,13 +1,22 @@
 import client from '@/lib/client'
 import { DataApiResponse, isDataApiResponseItem } from '@/types/ApiResponse'
+import { Breadcrumb } from '@/types/Breadcrumb'
 
-const getBreadCrumbPath = async (parentUrl: string, addBreadcrumb: Function, buildLink: Function): Promise<any> => {
-  const packageName = parentUrl.split('/').pop()
-  const query = `q=id==${packageName}`
+const getPackageId = (url: string):string => {
+  const packageId = url.split('/').pop()
+  if (packageId === undefined) {
+    throw new Error(`could not extract package id from url: ${url}`)
+  }
+  return packageId
+}
+
+const getBreadcrumbPath = async (parentUrl: string, addBreadcrumb: Function, buildLink: Function): Promise<any> => {
+  const packageId = getPackageId(parentUrl)
+  const query = `q=id==${encodeURIComponent(packageId)}`
   const resp = await client.get<DataApiResponse>(`/api/data/sys_md_Package?${query}`)
   const data = resp.data.items[0].data
   if (data === undefined) {
-    throw new Error(`Expected package data could not be fetched for package: ${packageName}`)
+    throw new Error(`Expected package data could not be fetched for package: ${packageId}`)
   }
 
   // add the new crumb to the store
@@ -18,7 +27,7 @@ const getBreadCrumbPath = async (parentUrl: string, addBreadcrumb: Function, bui
   })
 
   if (data.parent && isDataApiResponseItem(data.parent)) {
-    return getBreadCrumbPath(data.parent.links.self, addBreadcrumb, buildLink)
+    return getBreadcrumbPath(data.parent.links.self, addBreadcrumb, buildLink)
   } else {
     Promise.resolve() // no more parents signal we are done
   }
@@ -39,8 +48,7 @@ const getPackageTables = async (packageId: string) => {
 
 export default {
   getGroupTabels: async ({ commit }: { commit: any }, payload: { package: string }) => {
-    const packageName = payload.package.split('/').pop()
-    // @ts-ignore
+    const packageName = getPackageId(payload.package)
     const packageTables = await getPackageTables(packageName)
     commit('setPackageTables', packageTables)
     return packageTables
@@ -49,12 +57,12 @@ export default {
   fetchBreadcrumbs: async ({ commit, getters, rootState }: { commit: any, getters: any, rootState: any }) => {
     commit('clearBreadcrumbs')
     const location = getters.navigatorLocation
-    if (!rootState.tableMeta || !location) {
+    if (!rootState.tableMeta) {
       return
     }
 
     const buildLink = (id: string) => {
-      return `${location}/${id}`
+      return location ? `${location}/${id}` : undefined
     }
 
     commit('addBreadcrumb', {
@@ -62,7 +70,7 @@ export default {
       label: rootState.tableMeta.label,
       link: buildLink(rootState.tableMeta.id)
     })
-    return getBreadCrumbPath(rootState.tableMeta.package, (crumb: any) => { commit('addBreadcrumb', crumb) }, buildLink)
+    return getBreadcrumbPath(rootState.tableMeta.package, (crumb: Breadcrumb) => { commit('addBreadcrumb', crumb) }, buildLink)
   },
 
   fetchPackageTables: async ({ commit }: { commit: any }, payload: { id: string, callback: Function }) => {

@@ -71,6 +71,7 @@ describe('GroupDetail component', () => {
     actions = {
       fetchGroupMembers: () => jest.fn(),
       fetchGroupPermissions: () => jest.fn(),
+      deleteGroup: jest.fn().mockResolvedValue({ test: true }),
       fetchGroupRights: jest.fn().mockResolvedValue({ test: true }),
       setGroupRight: jest.fn().mockResolvedValue({ test: true })
     }
@@ -158,6 +159,32 @@ describe('GroupDetail component', () => {
       expect(actions.setGroupRight.mock.calls[1][1]).toEqual({ name: 'group1', role: 'USER', right: '' })
       expect(actions.fetchGroupRights.mock.calls[0][1]).toEqual('group1')
       done()
+    })
+  })
+
+
+  describe('when delete group clicked', () => {
+    it('should delete the group', async (done) => {
+      const wrapper = shallowMount(GroupDetail, {
+        propsData: {
+          name: 'group1'
+        },
+        mocks: { $router, $route, $t },
+        store,
+        stubs,
+        localVue
+      })
+
+      // @ts-ignore
+      wrapper.vm.deleteGroupHandler()
+      localVue.nextTick(() => {
+        expect(actions.deleteGroup).toBeCalled()
+        expect(actions.deleteGroup).toBeCalledWith(expect.any(Object), { "groupName": "group1" });
+        localVue.nextTick(() => {
+          expect(pushedRoute).toEqual({ name: 'groupOverView' })
+          done()
+        })
+      })
     })
   })
 })

@@ -25,10 +25,13 @@ describe('header mutations', () => {
   })
 
   describe('addBreadcrumb', () => {
-    it('add a crumb to the start of the list', () => {
-      state.breadcrumbs = ['a']
-      mutations.addBreadcrumb(state, 'b')
-      expect(state.breadcrumbs).toEqual(['b', 'a'])
+    it('add a crumb to the end of the list', () => {
+      state.breadcrumbs = [{ id: 'a', label: 'la', link: 'http://a.com' }]
+      mutations.addBreadcrumb(state, { id: 'b', label: 'lb', link: undefined })
+      expect(state.breadcrumbs).toEqual([
+        { id: 'a', label: 'la', link: 'http://a.com' },
+        { id: 'b', label: 'lb', link: undefined }
+      ])
     })
   })
 })

@@ -17,9 +17,9 @@ describe('BreadcrumbBar', () => {
 
   it('should render breadcrumbs', () => {
     expect(wrapper).toBeDefined()
-    expect(wrapper.findAll('li.breadcrumb-item').at(0).text()).toEqual('crumb1')
+    expect(wrapper.findAll('li.breadcrumb-item').at(0).text()).toEqual('crumb3')
     expect(wrapper.findAll('li.breadcrumb-item').at(1).text()).toEqual('crumb2')
-    expect(wrapper.findAll('li.breadcrumb-item').at(2).text()).toEqual('crumb3')
+    expect(wrapper.findAll('li.breadcrumb-item').at(2).text()).toEqual('crumb1')
     expect(wrapper.findAll('li.breadcrumb-item').at(2).classes('active')).toBe(true)
   })
 })
