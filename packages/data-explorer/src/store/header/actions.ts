@@ -1,5 +1,6 @@
 import client from '@/lib/client'
 import { DataApiResponse, isDataApiResponseItem } from '@/types/ApiResponse'
+import { Breadcrumb } from '@/types/BreadCrumb'
 
 const getBreadCrumbPath = async (parentUrl: string, addBreadcrumb: Function, buildLink: Function): Promise<any> => {
   const packageName = parentUrl.split('/').pop()
@@ -44,7 +45,7 @@ export default {
   fetchBreadcrumbs: async ({ commit, getters, rootState }: { commit: any, getters: any, rootState: any }) => {
     commit('clearBreadcrumbs')
     const location = getters.navigatorLocation
-    if (!rootState.tableMeta ) {
+    if (!rootState.tableMeta) {
       return
     }
 
@@ -57,6 +58,6 @@ export default {
       label: rootState.tableMeta.label,
       link: buildLink(rootState.tableMeta.id)
     })
-    return getBreadCrumbPath(rootState.tableMeta.package, (crumb: any) => { commit('addBreadcrumb', crumb) }, buildLink)
+    return getBreadCrumbPath(rootState.tableMeta.package, (crumb: Breadcrumb) => { commit('addBreadcrumb', crumb) }, buildLink)
   }
 }
