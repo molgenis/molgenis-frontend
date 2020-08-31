@@ -100,6 +100,7 @@ export default Vue.extend({
       if (this.tableName !== tableName) {
         this.loading = true
         await this.fetchTableMeta({ tableName })
+        this.fetchBreadcrumbs()
         this.setTableName(tableName)
       }
       if (this.dataDisplayLayout === 'CardView') {
@@ -107,7 +108,6 @@ export default Vue.extend({
       } else {
         this.fetchTableViewData()
       }
-      this.fetchBreadcrumbs()
       this.loading = false
     }
   },
