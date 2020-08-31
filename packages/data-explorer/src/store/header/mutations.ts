@@ -1,4 +1,4 @@
-import { Breadcrumb } from '@/types/BreadCrumb'
+import { Breadcrumb } from '@/types/Breadcrumb'
 
 export default {
   setPackageTables (state:any, packageTables:any) {

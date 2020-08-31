@@ -1,4 +1,4 @@
-import { Breadcrumb } from './BreadCrumb'
+import { Breadcrumb } from './Breadcrumb'
 
 export interface HeaderState {
     packageTables: [],
