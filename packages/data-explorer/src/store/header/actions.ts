@@ -44,12 +44,12 @@ export default {
   fetchBreadcrumbs: async ({ commit, getters, rootState }: { commit: any, getters: any, rootState: any }) => {
     commit('clearBreadcrumbs')
     const location = getters.navigatorLocation
-    if (!rootState.tableMeta || !location) {
+    if (!rootState.tableMeta ) {
       return
     }
 
     const buildLink = (id: string) => {
-      return `${location}/${id}`
+      return location ? `${location}/${id}` : undefined
     }
 
     commit('addBreadcrumb', {
