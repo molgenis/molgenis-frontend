@@ -2,13 +2,21 @@ import client from '@/lib/client'
 import { DataApiResponse, isDataApiResponseItem } from '@/types/ApiResponse'
 import { Breadcrumb } from '@/types/Breadcrumb'
 
+const getPackageId = (url: string):string => {
+  const packageId = url.split('/').pop()
+  if (packageId === undefined) {
+    throw new Error(`could not extract package id from url: ${url}`)
+  }
+  return packageId
+}
+
 const getBreadcrumbPath = async (parentUrl: string, addBreadcrumb: Function, buildLink: Function): Promise<any> => {
-  const packageName = parentUrl.split('/').pop()
-  const query = `q=id==${packageName}`
+  const packageId = getPackageId(parentUrl)
+  const query = `q=id==${encodeURIComponent(packageId)}`
   const resp = await client.get<DataApiResponse>(`/api/data/sys_md_Package?${query}`)
   const data = resp.data.items[0].data
   if (data === undefined) {
-    throw new Error(`Expected package data could not be fetched for package: ${packageName}`)
+    throw new Error(`Expected package data could not be fetched for package: ${packageId}`)
   }
 
   // add the new crumb to the store
@@ -27,8 +35,8 @@ const getBreadcrumbPath = async (parentUrl: string, addBreadcrumb: Function, bui
 
 export default {
   getGroupTabels: async ({ commit }: { commit: any }, payload: { package: string }) => {
-    const packageName = payload.package.split('/').pop()
-    const query = `q=package==${packageName}`
+    const packageId = getPackageId(payload.package)
+    const query = `q=package==${encodeURIComponent(packageId)}`
     const filter = 'filter=id,label,package'
     const expand = 'expand=package'
     const resp = await client.get<DataApiResponse>(`/api/data/sys_md_EntityType?${expand}&${filter}&${query}`)

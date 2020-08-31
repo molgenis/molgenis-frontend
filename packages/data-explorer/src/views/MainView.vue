@@ -103,7 +103,7 @@ export default Vue.extend({
       if (this.tableName !== tableName) {
         this.loading = true
         await this.fetchTableMeta({ tableName })
-        if(this.isUserAuthenticated) {
+        if (this.isUserAuthenticated) {
           this.fetchBreadcrumbs()
         }
         this.setTableName(tableName)

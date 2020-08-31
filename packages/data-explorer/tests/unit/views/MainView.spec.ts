@@ -160,7 +160,7 @@ describe('MainView.vue', () => {
   })
 
   describe('when user is authenticated', () => {
-    beforeEach(async(done) => {
+    beforeEach(async (done) => {
       getters.isUserAuthenticated.mockReturnValueOnce(true)
       store.getters = getters
       wrapper = shallowMount(MainView, { store, localVue, mocks })
