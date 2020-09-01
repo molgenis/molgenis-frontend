@@ -41,10 +41,10 @@ pipeline {
             }
             steps {
                 container('node') {
-                    sh "git fetch master"
+                    sh "git fetch origin/master"
                     sh "yarn install"
-                    sh "yarn lerna bootstrap --since molgenis/molgenis-frontend/master"
-                    sh "yarn lerna run unit --since molgenis/molgenis-frontend/master"
+                    sh "yarn lerna bootstrap --since master"
+                    sh "yarn lerna run unit --since master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e --since master --scope @molgenis-ui/questionnaires --env ci_chrome,ci_ie11,ci_firefox"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
