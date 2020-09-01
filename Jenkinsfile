@@ -33,7 +33,6 @@ pipeline {
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
-                sh "git fetch origin master"
             }
         }
         stage('Install and test: [ pull request ]') {
@@ -43,7 +42,7 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn install"
-                    sh "yarn lerna bootstrap --since master"
+                    sh "yarn lerna bootstrap --since refs/remotes/origin/master"
                     sh "yarn lerna run unit --since master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e --since master --scope @molgenis-ui/questionnaires --env ci_chrome,ci_ie11,ci_firefox"
