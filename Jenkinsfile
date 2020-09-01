@@ -32,7 +32,8 @@ pipeline {
                     sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
-                sh "git fetch --depth=100"
+                sh "git fetch --tag"
+                sh "git fetch HEAD"
             }
         }
         stage('Install and test: [ pull request ]') {
