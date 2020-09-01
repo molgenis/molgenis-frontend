@@ -43,13 +43,13 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn install"
-                    sh "yarn lerna bootstrap --since origin/master"
-                    sh "yarn lerna run unit --since origin/master"
+                    sh "yarn lerna bootstrap --since master"
+                    sh "yarn lerna run unit --since master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e --since origin/master --scope @molgenis-ui/questionnaires --env ci_chrome,ci_ie11,ci_firefox"
+                    sh "yarn lerna run e2e --since master --scope @molgenis-ui/questionnaires --env ci_chrome,ci_ie11,ci_firefox"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e --since origin/master --scope @molgenis-ui/data-explorer --env ci_chrome,ci_ie11,ci_firefox"
-                    sh "yarn lerna run build --since origin/master"
+                    sh "yarn lerna run e2e --since master --scope @molgenis-ui/data-explorer --env ci_chrome,ci_ie11,ci_firefox"
+                    sh "yarn lerna run build --since master"
                 }
                 container('sonar') {
                     // Fetch the target branch, sonar likes to take a look at it
