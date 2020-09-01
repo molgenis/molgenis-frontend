@@ -32,7 +32,7 @@ pipeline {
                     sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
-                sh "git fetch --tags"
+                sh "git fetch --all"
                 sh "git branch master"
                 sh "git checkout master"
                 sh "git pull origin master"
