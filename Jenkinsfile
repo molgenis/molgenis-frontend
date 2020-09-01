@@ -41,7 +41,7 @@ pipeline {
             }
             steps {
                 container('node') {
-                    sh "larn lerna list"
+                    sh "yarn lerna list"
                     sh "yarn install"
                     sh "yarn lerna bootstrap --since HEAD"
                     sh "yarn lerna run unit --since HEAD"
