@@ -34,7 +34,7 @@ const getBreadcrumbPath = async (parentUrl: string, addBreadcrumb: Function, bui
 }
 
 const getPackageTables = async (packageId: string) => {
-  const query = `q=package==${packageId}`
+  const query = `q=package==${encodeURIComponent(packageId)}`
   const filter = 'filter=id,label,package'
   const expand = 'expand=package'
   const resp = await client.get<DataApiResponse>(`/api/data/sys_md_EntityType?${expand}&${filter}&${query}`)
