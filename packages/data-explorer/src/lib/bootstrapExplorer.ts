@@ -32,7 +32,6 @@ const bootstrapExplorer = async (): Promise<any | undefined> => {
   } catch (error) {
     store.commit('setToast', { type: 'warning', message: 'Bootstrapping Data explorer' })
     const status = await createSettings()
-    console.log('arbitrary console log')
     store.commit('setToast', { type: status.type, message: status.message })
   }
 }
