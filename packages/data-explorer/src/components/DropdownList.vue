@@ -4,7 +4,7 @@
       <font-awesome-icon icon="spinner" spin></font-awesome-icon>
     </li>
     <li v-for="item in listItems" :key="listId +'-'+ item.id" class="dropdown-item">
-      <a :href="item.id">{{item.label}}</a>
+     <router-link :to="{ name: 'main-view', params: { entity: item.id }}">{{item.label}}</router-link>
     </li>
   </ul>
 </template>
