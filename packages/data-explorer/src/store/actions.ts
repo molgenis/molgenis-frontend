@@ -1,4 +1,4 @@
-import client from '@/lib/client'
+import { silentClient } from '@/lib/client'
 import ApplicationState from '@/types/ApplicationState'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
@@ -16,7 +16,7 @@ export default {
     commit('setSearchText', '')
 
     try {
-      const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+      const response = await silentClient.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
       if (response.data.items.length === 1) {
         commit('setTableSettings', response.data.items[0].data)
       }

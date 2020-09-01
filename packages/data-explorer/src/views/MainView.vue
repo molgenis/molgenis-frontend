@@ -86,8 +86,7 @@ export default Vue.extend({
       'deleteRow',
       'fetchTableMeta',
       'fetchCardViewData',
-      'fetchTableViewData',
-      'fetchTableMeta'
+      'fetchTableViewData'
     ]),
     ...mapActions('header', [
       'fetchBreadcrumbs'

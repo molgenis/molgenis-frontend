@@ -21,4 +21,10 @@ const client:AxiosInstance = build({
   responseErrorInterceptor: errorReponse
 })
 
+export const silentClient:AxiosInstance = build({
+  responseErrorInterceptor: () => {
+    return Promise.resolve()
+  }
+})
+
 export default client

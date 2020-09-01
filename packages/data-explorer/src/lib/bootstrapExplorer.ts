@@ -1,38 +1,32 @@
-import client from './client'
 import store from '../store/store'
 import applicationSettings from './applicationSettings'
+import { silentClient } from './client'
 
 const packageEndpoint = 'api/data/sys_md_Package'
 const metaDataEndpoint = 'api/metadata'
 
 async function createSettings () {
-  if (!store.getters.hasEditRights) {
-    return {
-      type: 'danger',
-      message: 'Please login as administrator to initialize the application'
+  if (store.getters.hasEditRights) {
+    store.commit('setToast', { type: 'warning', message: 'Bootstrapping Data explorer' })
+    try {
+      await silentClient.post(packageEndpoint, applicationSettings.packageSettings)
+    } catch (error) {
+      // if the settings package already exists, axios gives error and stops executing.
     }
-  }
-
-  try {
-    await client.post(packageEndpoint, applicationSettings.packageSettings)
-  } catch (error) {
-    // if the settings table already exists, axios gives error and stops executing.
-  }
-
-  await client.post(metaDataEndpoint, applicationSettings.entitySettings)
-  return {
-    type: 'success',
-    message: 'The application has been succesfully initialized!'
+    try {
+      await silentClient.post(metaDataEndpoint, applicationSettings.entitySettings)
+    } catch (error) {
+      // entity exists already
+    }
+    store.commit('setToast', { type: 'success', message: 'The application has been succesfully initialized!' })
   }
 }
 
 const bootstrapExplorer = async (): Promise<any | undefined> => {
   try {
-    await client.get('/api/data/app_set_DataExplorerEntitySettings')
+    await silentClient.get('/api/data/app_set_DataExplorerEntitySettings')
   } catch (error) {
-    store.commit('setToast', { type: 'warning', message: 'Bootstrapping Data explorer' })
-    const status = await createSettings()
-    store.commit('setToast', { type: status.type, message: status.message })
+    await createSettings()
   }
 }
 
