@@ -33,7 +33,7 @@ pipeline {
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh "git fetch --tag"
-                sh "git checkout master"
+                sh "git checkout origin master"
             }
         }
         stage('Install and test: [ pull request ]') {
