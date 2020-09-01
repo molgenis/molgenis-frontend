@@ -32,7 +32,7 @@ pipeline {
                     sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
-                sh "git fetch --depth=0"
+                sh "git fetch --tags"
             }
         }
         stage('Install and test: [ pull request ]') {
@@ -42,8 +42,8 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn install"
-                    sh "yarn lerna bootstrap --since refs/remotes/origin/master"
-                    sh "yarn lerna run unit --since master"
+                    sh "yarn lerna bootstrap --since molgenis/molgenis-frontend/master"
+                    sh "yarn lerna run unit --since molgenis/molgenis-frontend/master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e --since master --scope @molgenis-ui/questionnaires --env ci_chrome,ci_ie11,ci_firefox"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
