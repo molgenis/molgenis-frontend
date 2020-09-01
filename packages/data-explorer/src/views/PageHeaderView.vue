@@ -33,7 +33,7 @@
 import Vue from 'vue'
 import ToolbarView from './ToolbarView'
 import TableSettingsButton from '../components/utils/TableSettingsButton'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default Vue.extend({
   name: 'PageHeaderView',
