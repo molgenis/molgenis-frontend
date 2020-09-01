@@ -42,7 +42,7 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn install"
-                    sh "yarn lerna changed"
+                    sh "yarn lerna changed --all"
                     sh "yarn lerna bootstrap --since HEAD"
                     sh "yarn lerna run unit --since HEAD"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
