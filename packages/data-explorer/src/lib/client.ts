@@ -22,8 +22,8 @@ const client:AxiosInstance = build({
 })
 
 export const silentClient:AxiosInstance = build({
-  responseErrorInterceptor: () => {
-    return Promise.resolve()
+  responseErrorInterceptor: (error) => {
+    return Promise.reject(error)
   }
 })
 

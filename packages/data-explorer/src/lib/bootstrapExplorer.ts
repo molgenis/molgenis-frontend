@@ -6,7 +6,7 @@ const packageEndpoint = 'api/data/sys_md_Package'
 const metaDataEndpoint = 'api/metadata'
 
 async function createSettings () {
-  if (store.getters.hasEditRights) {
+  if (store.getters.hasEditRights === true) {
     store.commit('setToast', { type: 'warning', message: 'Bootstrapping Data explorer' })
     try {
       await silentClient.post(packageEndpoint, applicationSettings.packageSettings)
