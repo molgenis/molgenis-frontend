@@ -32,7 +32,7 @@ pipeline {
                     sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
-                sh "git fetchs"
+                sh "git fetch --tags"
             }
         }
         stage('Install and test: [ pull request ]') {
@@ -41,6 +41,7 @@ pipeline {
             }
             steps {
                 container('node') {
+                    sh "git fetch master"
                     sh "yarn install"
                     sh "yarn lerna bootstrap --since molgenis/molgenis-frontend/master"
                     sh "yarn lerna run unit --since molgenis/molgenis-frontend/master"
