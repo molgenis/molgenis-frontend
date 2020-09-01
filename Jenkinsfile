@@ -42,9 +42,8 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn install"
-                    sh "yarn lerna changed"
-                    sh "yarn lerna bootstrap"
-                    sh "yarn lerna run unit"
+                    sh "yarn lerna bootstrap --since HEAD"
+                    sh "yarn lerna run unit --since HEAD"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e --scope @molgenis-ui/questionnaires --env ci_chrome,ci_ie11,ci_firefox"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
