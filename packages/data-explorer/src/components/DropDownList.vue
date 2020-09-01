@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'DropDownList',
+  name: 'DropdownList',
   data: function () {
     return {
       listItems: this.items
@@ -19,23 +19,22 @@ export default {
       type: String,
       required: true
     },
+    isShown: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
     items: {
       type: Array,
       required: false,
       default: () => []
-    },
-    isShown: {
-      type: Boolean,
-      required: false
     }
   },
   watch: {
     isShown: function (val) {
-      if (val) {
-        // fire event and passCallBack
-        if (!this.listItems.length) {
-          this.$emit('fetchItems', { id: this.listId, callback: this.onItemsFetched })
-        }
+      // Pass callBack to handle fetch result
+      if (!this.listItems.length) {
+        this.$emit('fetchItems', { id: this.listId, callback: this.onItemsFetched })
       }
     }
   },
@@ -49,8 +48,8 @@ export default {
 
 <style scoped>
 /*
-* Needed to remove space between mouse over target and list.
-* Else drops is hidden then mouse passes over the space.
+* Needed to remove gap between mouse-over target and list.
+* Else dropdown list is hidden when the mouse pointer passes over the gap.
  */
 ul.dropdown-menu {
   margin-top: 0;

@@ -65,4 +65,29 @@ describe('header actions', () => {
       })
     })
   })
+
+  describe('fetchPackageTables', () => {
+    it('should fetch the table data and pass the result to the callback', async (done) => {
+      // @ts-ignore
+      client.get.mockResolvedValueOnce({
+        data: {
+          items: [
+            {
+              data: {
+                id: 'p-id',
+                label: 'p-label'
+              }
+            }
+          ]
+        }
+      })
+      let payload = {
+        id: 'my-id',
+        callback: jest.fn()
+      }
+      await actions.fetchPackageTables({ commit }, payload)
+      expect(payload.callback).toHaveBeenCalledWith([{ id: 'p-id', label: 'p-label' }])
+      done()
+    })
+  })
 })

@@ -69,6 +69,7 @@ export default {
   fetchPackageTables: async ({ commit }: { commit: any }, payload: { id: string, callback: Function }) => {
     const packageTables = await getPackageTables(payload.id)
     payload.callback(packageTables)
+    Promise.resolve()
   }
 
 }
