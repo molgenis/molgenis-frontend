@@ -9,7 +9,7 @@
         <template v-else>{{crumb.label}}</template>
         <dropdown-list
           v-show="crumb.showDropdown"
-          :listId="crumb.label"
+          :listId="crumb.id"
           :isShown="crumb.showDropdown"
           v-on="$listeners"
         ></dropdown-list>
