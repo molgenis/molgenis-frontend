@@ -27,6 +27,7 @@ async function createSettings () {
 }
 
 const bootstrapExplorer = async (): Promise<any | undefined> => {
+  const x = 'foo'
   try {
     await client.get('/api/data/app_set_DataExplorerEntitySettings')
   } catch (error) {
