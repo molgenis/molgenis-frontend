@@ -66,9 +66,10 @@ export default {
     return getBreadcrumbPath(rootState.tableMeta.package, (crumb: Breadcrumb) => { commit('addBreadcrumb', crumb) }, buildLink)
   },
 
-  fetchPackageTables: async ({ commit }: { commit: any }, payload: { id: string, callback: Function }) => {
+  fetchPackageTables: async ({ rootState }: { rootState: any }, payload: { id: string, callback: Function }) => {
     const packageTables = await getPackageTables(payload.id)
-    payload.callback(packageTables)
+    const withoutSelf = packageTables.filter(pt => pt.id !== rootState.tableMeta.id)
+    payload.callback(withoutSelf)
     Promise.resolve()
   }
 

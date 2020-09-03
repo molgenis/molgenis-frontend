@@ -77,6 +77,12 @@ describe('header actions', () => {
                 id: 'p-id',
                 label: 'p-label'
               }
+            },
+            {
+              data: {
+                id: 'self-id',
+                label: 'self-label'
+              }
             }
           ]
         }
@@ -85,7 +91,12 @@ describe('header actions', () => {
         id: 'my-id',
         callback: jest.fn()
       }
-      await actions.fetchPackageTables({ commit }, payload)
+      let rootState = {
+        tableMeta: {
+          id: 'self-id'
+        }
+      }
+      await actions.fetchPackageTables({ rootState }, payload)
       expect(payload.callback).toHaveBeenCalledWith([{ id: 'p-id', label: 'p-label' }])
       done()
     })
