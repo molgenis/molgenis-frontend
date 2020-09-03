@@ -32,7 +32,6 @@ pipeline {
                     sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
-                sh(script: 'echo ${BRANCH_NAME} before', returnStdout: true)
                 sh "git fetch --tags"
             }
         }
@@ -44,7 +43,7 @@ pipeline {
                 container('node') {
                     sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
                     sh "yarn install"
-                    sh "yarn lerna bootstrap --since ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                    sh "yarn lerna bootstrap --since origin/master"
                     sh "yarn lerna run unit --since master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                    // sh "yarn lerna run e2e --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
