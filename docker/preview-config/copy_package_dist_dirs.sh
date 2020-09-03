@@ -4,12 +4,7 @@ rm -rf docker/preview-config/dist
 mkdir -p docker/preview-config/dist/@molgenis-ui
 touch docker/preview-config/dist/@molgenis-ui/heartbeat.txt
 for file in packages/*; do 
-    for entry in "$file"/*
-    do
-    echo "$entry"
-    done
-
-    if test -f "${file}/dist"; then
+    if [ -d "${file}/dist" ]
     mkdir -p "docker/preview-config/dist/@molgenis-ui/$(basename "$file")/dist"
     cp -rf "${file}/dist" "docker/preview-config/dist/@molgenis-ui/$(basename "$file")"
     fi
