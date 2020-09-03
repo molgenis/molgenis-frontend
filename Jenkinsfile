@@ -88,6 +88,8 @@ pipeline {
             environment {
                 TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
                 NAME = "preview-frontend-${TAG.toLowerCase()}"
+                PREV_NR = `expr $(echo "$BUILD_NUMBER" | bc) - 1`
+                PREV_TAG = "PR-${CHANGE_ID}-${PREV_NR}"
             }
             steps {
                 container('vault') {
@@ -95,6 +97,7 @@ pipeline {
                     sh "vault read -field=value secret/ops/jenkins/rancher/cli2.json > ${JENKINS_AGENT_WORKDIR}/.rancher/cli2.json"
                 }
                 container('rancher') {
+                    sh "rancher apps delete ${PREV_TAG} || true" 
                     sh "rancher apps install " +
                         "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +
