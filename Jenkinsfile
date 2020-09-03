@@ -41,14 +41,17 @@ pipeline {
             }
             steps {
                 container('node') {
+                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                     sh "yarn install"
-                    sh "yarn lerna bootstrap"
-                    sh "yarn lerna run unit"
+                    sh "yarn lerna bootstrap --since origin/master"
+                    sh "yarn lerna run unit --since origin/master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
+
+                    // need jenkins to check for the e2e
+                    // sh "yarn lerna run e2e --scope @molgenis-ui/questionnaires --since origin/master -- -- --env ci_chrome,ci_ie11,ci_firefox"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e -- --scope @molgenis-ui/data-explorer -- --env ci_chrome,ci_ie11,ci_firefox"
-                    sh "yarn lerna run build"
+                    // sh "yarn lerna run e2e --scope @molgenis-ui/data-explorer  -- --env ci_chrome,ci_ie11,ci_firefox"
+                    sh "yarn lerna run build --since origin/master"
                 }
                 container('sonar') {
                     // Fetch the target branch, sonar likes to take a look at it
