@@ -86,10 +86,8 @@ pipeline {
                 changeRequest()
             }
             environment {
-                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                TAG = "PR-${CHANGE_ID}"
                 NAME = "preview-frontend-${TAG.toLowerCase()}"
-                PREV_NR = """\\`expr $(echo \$BUILD_NUMBER | bc) - 1\\`"""
-                PREV_TAG = "PR-${CHANGE_ID}-${PREV_NR}"
             }
             steps {
                 container('vault') {
