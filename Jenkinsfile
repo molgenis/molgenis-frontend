@@ -34,7 +34,7 @@ pipeline {
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh(script: 'echo ${BRANCH_NAME} before', returnStdout: true)
                 sh "git fetch --tags"
-                sh "git checkout master^1"
+                sh "git checkout master"
                 sh(script: 'echo ${BRANCH_NAME} after checkout master', returnStdout: true)
                 sh "git checkout ${BRANCH_NAME}"
                 sh(script: 'echo ${BRANCH_NAME} after switch', returnStdout: true)
