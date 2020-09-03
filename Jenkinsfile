@@ -69,7 +69,7 @@ pipeline {
                 changeRequest()
             }
             environment {
-                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                TAG = "PR-${CHANGE_ID}"
                 DOCKER_CONFIG="/root/.docker"
             }
             steps {
