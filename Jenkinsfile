@@ -94,6 +94,7 @@ pipeline {
                     sh "vault read -field=value secret/ops/jenkins/rancher/cli2.json > ${JENKINS_AGENT_WORKDIR}/.rancher/cli2.json"
                 }
                 container('rancher') {
+                    // sh "rancher apps delete ("PR-${CHANGE_ID}-${BUILD_NUMBER - 1}")" 
                     sh "rancher apps install " +
                         "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +
