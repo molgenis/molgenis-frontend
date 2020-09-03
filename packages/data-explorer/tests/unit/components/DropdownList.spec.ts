@@ -3,6 +3,7 @@ import DropdownList from '@/components/DropdownList.vue'
 
 describe('DropdownList', () => {
   let wrapper: any
+  let stubs = ['router-link', 'router-view']
   let propsData = {
     listId: 'list-1',
     isShown: false,
@@ -14,7 +15,8 @@ describe('DropdownList', () => {
   }
 
   beforeEach(() => {
-    wrapper = shallowMount(DropdownList, { propsData })
+  
+    wrapper = shallowMount(DropdownList, { propsData, stubs })
   })
 
   it('should render the item list', () => {
