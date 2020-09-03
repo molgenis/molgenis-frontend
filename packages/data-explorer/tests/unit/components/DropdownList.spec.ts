@@ -15,7 +15,6 @@ describe('DropdownList', () => {
   }
 
   beforeEach(() => {
-  
     wrapper = shallowMount(DropdownList, { propsData, stubs })
   })
 
