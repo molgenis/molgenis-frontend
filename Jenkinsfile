@@ -44,7 +44,7 @@ pipeline {
                 container('node') {
                     sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
                     sh "yarn install"
-                    sh "yarn lerna bootstrap --since master"
+                    sh "yarn lerna bootstrap --since ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
                     sh "yarn lerna run unit --since master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                    // sh "yarn lerna run e2e --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
