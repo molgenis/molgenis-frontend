@@ -13,7 +13,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 script {
-                    env.GIT_COMMIT = sh(script: 'git rev HEAD', returnStdout: true).trim()
+                    env.GIT_COMMIT = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
                 }
                 container('vault') {
                     script {
@@ -32,7 +32,12 @@ pipeline {
                     sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
+                sh(script: 'echo ${BRANCH_NAME} before', returnStdout: true)
                 sh "git fetch --tags"
+                sh "git checkout master^1"
+                sh(script: 'echo ${BRANCH_NAME} after checkout master', returnStdout: true)
+                sh "git checkout ${BRANCH_NAME}"
+                sh(script: 'echo ${BRANCH_NAME} after switch', returnStdout: true)
             }
         }
         stage('Install and test: [ pull request ]') {
