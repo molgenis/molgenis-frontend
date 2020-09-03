@@ -103,7 +103,7 @@ pipeline {
                         "--set image.repository=${LOCAL_REGISTRY} " +
                         "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
                         "--set proxy.backend.service.targetRelease=master " +
-                        "--set image.pullPolicy=Always" +
+                        "--set image.pullPolicy=Always " +
                         "--set readinessPath=/@molgenis-ui/heartbeat.txt"
                 }
             }
