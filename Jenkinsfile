@@ -13,7 +13,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 script {
-                    env.GIT_COMMIT = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
+                    env.GIT_COMMIT = sh(script: 'git rev HEAD', returnStdout: true).trim()
                 }
                 container('vault') {
                     script {
@@ -32,8 +32,7 @@ pipeline {
                     sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
-                sh "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
-                sh "git fetch --all"
+                sh "git fetch --tags"
             }
         }
         stage('Install and test: [ pull request ]') {
