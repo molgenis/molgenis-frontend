@@ -35,8 +35,9 @@ pipeline {
                 sh(script: 'echo ${BRANCH_NAME} before', returnStdout: true)
                 sh "git fetch --tags"
                 sh "git branch master"
-                sh "git pull origin master"
+                sh "git checkout master"
                 sh(script: 'echo ${BRANCH_NAME} after checkout master', returnStdout: true)
+                sh "git pull origin master"
                 sh "git checkout ${BRANCH_NAME}"
                 sh(script: 'echo ${BRANCH_NAME} after switch', returnStdout: true)
             }
