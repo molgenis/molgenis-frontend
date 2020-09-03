@@ -34,7 +34,6 @@ pipeline {
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh(script: 'echo ${BRANCH_NAME} before', returnStdout: true)
                 sh "git fetch --tags"
-                sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
             }
         }
         stage('Install and test: [ pull request ]') {
@@ -43,6 +42,7 @@ pipeline {
             }
             steps {
                 container('node') {
+                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
                     sh "yarn install"
                     sh "yarn lerna bootstrap --since master"
                     sh "yarn lerna run unit --since master"
