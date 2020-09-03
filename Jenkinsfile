@@ -47,7 +47,6 @@ pipeline {
                     sh "yarn lerna run unit --since origin/master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e -- --since origin/master -- --env ci_chrome,ci_ie11,ci_firefox"
-                    sh "${WORKSPACE}/docker/multi-build/get_dists.sh" // Prefill dists
                     sh "yarn lerna run build --since origin/master"
                 }
                 container('sonar') {
@@ -104,7 +103,8 @@ pipeline {
                         "--set image.repository=${LOCAL_REGISTRY} " +
                         "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
                         "--set proxy.backend.service.targetRelease=master " +
-                        "--set image.pullPolicy=Always"
+                        "--set image.pullPolicy=Always" +
+                        "--set readinessPath=/@molgenis-ui/heartbeat.txt"
                 }
             }
             post {
