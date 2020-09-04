@@ -1,5 +1,5 @@
 {
-  "name": "@molgenis-ui/molgenis-components",
+  "name": "@molgenis-ui/components-library",
   "version": "0.1.0",
   "license": "LGPL-3.0",
   "description": "Vue component library for molgenis web frontend",
@@ -10,9 +10,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "vue-cli-service build --target lib --name molgenis-components src/components/AppButton.vue",
+    "serve": "yarn styleguide",
+    "build": "vue-cli-service build --target lib --name components-library src/components/AppButton.vue",
     "unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e": "vue-cli-service test:e2e --url localhost:6060",
     "lint": "vue-cli-service lint",
     "styleguide": "vue-cli-service styleguidist",
     "styleguide:build": "vue-cli-service styleguidist:build"
@@ -45,7 +46,7 @@
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
-    "vue-cli-plugin-styleguidist": "~4.31.1",
+    "vue-cli-plugin-styleguidist": "4.31.0",
     "vue-template-compiler": "^2.6.11"
   }
 }
