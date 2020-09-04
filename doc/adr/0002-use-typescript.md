@@ -1,4 +1,4 @@
-# 1. Record architecture decisions
+# 2. Use TypeScript
 
 Date: 2020-09-04
 
