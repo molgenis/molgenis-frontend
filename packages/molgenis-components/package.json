@@ -1,7 +1,14 @@
 {
-  "name": "molgenis-components",
+  "name": "@molgenis-ui/molgenis-components",
   "version": "0.1.0",
-  "private": true,
+  "license": "LGPL-3.0",
+  "description": "Vue component library for molgenis web frontend",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vue-cli-service build --target lib --name molgenis-components src/components/AppButton.vue",
     "test:unit": "vue-cli-service test:unit",
