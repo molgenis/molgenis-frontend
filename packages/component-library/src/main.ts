@@ -1,5 +1,3 @@
-import HelloWorld from '@/src/default/HelloWorld.vue'
+import HelloWorld from "@/src/default/HelloWorld.vue";
 
-export {
-  HelloWorld
-}
+export { HelloWorld };

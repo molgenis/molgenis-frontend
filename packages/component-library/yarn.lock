@@ -13059,6 +13059,14 @@ void-elements@^3.1.0:
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
   integrity sha1-YU9/v42AHwu18GYfWy9XhXUOTwk=
 
+vue-cli-plugin-styleguidist@^4.31.1:
+  version "4.31.1"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-styleguidist/-/vue-cli-plugin-styleguidist-4.31.1.tgz#eb33e140de50fe4369440f42da666dc41be66f7c"
+  integrity sha512-fO0qkJeSARToZ3GSB7CEpnJlSF7wtr8NJbOPzwTIWLq6vzBZqz5+nNnz+qe7vUbBWsgl4x/wATq/R5m6aQATtg==
+  dependencies:
+    vue-styleguidist "^4.31.1"
+    webpack-merge "^4.2.1"
+
 vue-docgen-api@^4.31.1:
   version "4.31.1"
   resolved "https://registry.yarnpkg.com/vue-docgen-api/-/vue-docgen-api-4.31.1.tgz#583e92f0624790157b5081107a8b122373812644"
@@ -13387,7 +13395,7 @@ webpack-log@^2.0.0:
     ansi-colors "^3.0.0"
     uuid "^3.3.2"
 
-webpack-merge@^4.0.0, webpack-merge@^4.2.2:
+webpack-merge@^4.0.0, webpack-merge@^4.2.1, webpack-merge@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-4.2.2.tgz#a27c52ea783d1398afd2087f547d7b9d2f43634d"
   integrity sha512-TUE1UGoTX2Cd42j3krGYqObZbOD+xF7u28WB7tfUordytSjbWTIjK/8V0amkBfTYN4/pB/GIDlJZZ657BGG19g==
