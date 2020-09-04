@@ -5,9 +5,9 @@
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Compiles and hot-reloads for development using styleguide
 ```
-yarn serve
+yarn styleguide
 ```
 
 ### Compiles and minifies for production
