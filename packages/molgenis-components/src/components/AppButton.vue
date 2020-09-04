@@ -1,5 +1,5 @@
 <template>
-  <button :style="styles" @click="handleClick">
+  <button class="mg-button" :style="styles" @click="handleClick">
     <!-- @slot Use this slot to place the button content -->
     <slot></slot>
   </button>
