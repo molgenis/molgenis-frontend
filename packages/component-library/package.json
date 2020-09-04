@@ -1,14 +1,31 @@
 {
-  "name": "component-library",
+  "name": "molgenis-component-library",
   "version": "0.1.0",
-  "private": true,
+  "license": "LGPL-3.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    {
+      "name": "Max Postema"
+    },
+    {
+      "name": "Jelmer Veen"
+    }
+  ],
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "styleguide",
+    "build": "build-lib",
+    "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint"
+    "build-lib": "vue-cli-service build --target lib --name molgenis-component-library src/main.ts",
+    "sc": "vue serve",
+    "sc:example": "vue serve src/components/Counter.vue",
+    "styleguide": "vue-cli-service styleguidist",
+    "styleguide:build": "vue-cli-service styleguidist:build"
   },
+  "main": "./dist/molgenis-component-library.common.js",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
