@@ -22,4 +22,22 @@ describe('BreadcrumbBar', () => {
     expect(wrapper.findAll('li.breadcrumb-item').at(2).text()).toEqual('crumb1')
     expect(wrapper.findAll('li.breadcrumb-item').at(2).classes('active')).toBe(true)
   })
+
+  describe('show dropdown handlers', () => {
+    it('should add showDropdown prop to the crumb', () => {
+      let crumb = { id: 'c1', label: 'crumb1', link: '/location/c1' }
+      wrapper.vm.showDropdown({}, crumb)
+      // @ts-ignore
+      expect(crumb.showDropdown).toBeTruthy()
+    })
+  })
+
+  describe('hide dropdown handlers', () => {
+    it('should add showDropDown prop to the crumb', () => {
+      let crumb = { id: 'c1', label: 'crumb1', link: '/location/c1' }
+      wrapper.vm.hideDropdown({}, crumb)
+      // @ts-ignore
+      expect(crumb.showDropdown).toBeFalsy()
+    })
+  })
 })
