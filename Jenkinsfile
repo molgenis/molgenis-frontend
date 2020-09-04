@@ -69,7 +69,7 @@ pipeline {
                 changeRequest()
             }
             environment {
-                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                TAG = "PR-${CHANGE_ID}"
                 DOCKER_CONFIG="/root/.docker"
             }
             steps {
@@ -86,7 +86,7 @@ pipeline {
                 changeRequest()
             }
             environment {
-                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                TAG = "PR-${CHANGE_ID}"
                 NAME = "preview-frontend-${TAG.toLowerCase()}"
             }
             steps {
@@ -95,6 +95,7 @@ pipeline {
                     sh "vault read -field=value secret/ops/jenkins/rancher/cli2.json > ${JENKINS_AGENT_WORKDIR}/.rancher/cli2.json"
                 }
                 container('rancher') {
+                    sh "rancher apps delete ${TAG} || true" 
                     sh "rancher apps install " +
                         "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +
