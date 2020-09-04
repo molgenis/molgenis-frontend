@@ -33,18 +33,7 @@ describe('PageHeaderView', () => {
     modules = {
       header: {
         namespaced: true,
-        state: {
-          packageTables: [{
-            id: 'self-id',
-            label: 'pt-lbl'
-          }, {
-            id: 'pt-id',
-            label: 'pt-lbl'
-          }]
-        },
-        actions: {
-          getGroupTabels: jest.fn()
-        }
+        state: {}
       }
     }
 
@@ -62,11 +51,5 @@ describe('PageHeaderView', () => {
     const wrapper = shallowMount(PageHeaderView, { store, localVue })
     expect(wrapper.find('table-settings-button-stub')).toBeDefined()
     expect(wrapper.find('em').text()).toEqual('desc')
-  })
-
-  it('removes itself from the package list', () => {
-    const wrapper = shallowMount(PageHeaderView, { store, localVue })
-    // @ts-ignore
-    expect(wrapper.vm.selectableTabels).toEqual([{ id: 'pt-id', label: 'pt-lbl' }])
   })
 })
