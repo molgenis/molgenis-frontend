@@ -609,15 +609,3 @@ docker/preview-config/conf.d/preview.conf
 ```
 
 which will proxy all packages to master.dev.molgenis.org that have not been found in the preview container
-
-### Sidenote
-
-As of now, there is no more proxying of @molgenis-experimental, due to the fact that there are no more packages using this path. 
-
-
-
-
-
-
-
-
