@@ -33,23 +33,20 @@ const getBreadcrumbPath = async (parentUrl: string, addBreadcrumb: Function, bui
   }
 }
 
-export default {
-  getGroupTabels: async ({ commit }: { commit: any }, payload: { package: string }) => {
-    const packageId = getPackageId(payload.package)
-    const query = `q=package==${encodeURIComponent(packageId)}`
-    const filter = 'filter=id,label,package'
-    const expand = 'expand=package'
-    const resp = await client.get<DataApiResponse>(`/api/data/sys_md_EntityType?${expand}&${filter}&${query}`)
-    const packageTables = resp.data.items.map((i:any) => {
-      return {
-        id: i.data.id,
-        label: i.data.label
-      }
-    })
-    commit('setPackageTables', packageTables)
-    return packageTables
-  },
+const getPackageTables = async (packageId: string) => {
+  const query = `q=package==${encodeURIComponent(packageId)}`
+  const filter = 'filter=id,label,package'
+  const expand = 'expand=package'
+  const resp = await client.get<DataApiResponse>(`/api/data/sys_md_EntityType?${expand}&${filter}&${query}`)
+  return resp.data.items.map((i:any) => {
+    return {
+      id: i.data.id,
+      label: i.data.label
+    }
+  })
+}
 
+export default {
   fetchBreadcrumbs: async ({ commit, getters, rootState }: { commit: any, getters: any, rootState: any }) => {
     commit('clearBreadcrumbs')
     const location = getters.navigatorLocation
@@ -67,5 +64,13 @@ export default {
       link: buildLink(rootState.tableMeta.id)
     })
     return getBreadcrumbPath(rootState.tableMeta.package, (crumb: Breadcrumb) => { commit('addBreadcrumb', crumb) }, buildLink)
+  },
+
+  fetchPackageTables: async ({ rootState }: { rootState: any }, payload: { id: string, callback: Function }) => {
+    const packageTables = await getPackageTables(payload.id)
+    const withoutSelf = packageTables.filter(pt => pt.id !== rootState.tableMeta.id)
+    payload.callback(withoutSelf)
+    Promise.resolve()
   }
+
 }
