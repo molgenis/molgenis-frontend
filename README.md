@@ -585,7 +585,35 @@ export default {
 }
 ```
 
-More to come...
+# Jenkins CI/CD
+
+## Pull requests / commits to pull requests
+Whenever a PR is created or commits are being made to a PR
+a trigger is sent to Jenkins to start building a preview.
+
+For our build we use Lerna. We let Lerna check against the change target (mostly master)
+to see which packages have been changed and only test / build those.
+
+## Build script
+You can find a custom build script that checks if a dist folder exists (eg, has been created by Lerna) and copies that to a temp docker dir.
+
+```
+docker/copy_package_dist_dirs.sh
+```
+
+## Preview container
+For the preview we have some special nginx config
+
+```
+docker/preview-config/conf.d/preview.conf
+```
+
+which will proxy all packages to master.dev.molgenis.org that have not been found in the preview container
+
+### Sidenote
+
+As of now, there is no more proxying of @molgenis-experimental, due to the fact that there are no more packages using this path. 
+
 
 
 
