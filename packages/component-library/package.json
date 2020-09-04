@@ -21,7 +21,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "build-lib": "vue-cli-service build --target lib --name molgenis-component-library src/main.ts",
     "sc": "vue serve",
-    "sc:example": "vue serve src/components/Counter.vue",
+    "sc:example": "vue serve src/default/HelloWorld.vue",
     "styleguide": "vue-cli-service styleguidist",
     "styleguide:build": "vue-cli-service styleguidist:build"
   },
