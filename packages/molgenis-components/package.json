@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "build": "vue-cli-service build --target lib --name molgenis-components src/components/AppButton.vue",
-    "test:unit": "vue-cli-service test:unit",
+    "unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "styleguide": "vue-cli-service styleguidist",
