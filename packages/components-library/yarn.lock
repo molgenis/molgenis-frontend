@@ -13217,12 +13217,12 @@ void-elements@^3.1.0:
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
   integrity sha1-YU9/v42AHwu18GYfWy9XhXUOTwk=
 
-vue-cli-plugin-styleguidist@~4.31.1:
-  version "4.31.1"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-styleguidist/-/vue-cli-plugin-styleguidist-4.31.1.tgz#eb33e140de50fe4369440f42da666dc41be66f7c"
-  integrity sha512-fO0qkJeSARToZ3GSB7CEpnJlSF7wtr8NJbOPzwTIWLq6vzBZqz5+nNnz+qe7vUbBWsgl4x/wATq/R5m6aQATtg==
+vue-cli-plugin-styleguidist@4.31.0:
+  version "4.31.0"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-styleguidist/-/vue-cli-plugin-styleguidist-4.31.0.tgz#ab8ac1887832f4da1f8b1d07c12f318ccaa22e1e"
+  integrity sha512-8jrWPQ3wQRVTCeg+NA9g04diCHlbhv5fTUaTYWHgm1qlBldvpYVfNRV1r5cleMcu7h4HTvrTcYRtRqkYFYCtpg==
   dependencies:
-    vue-styleguidist "^4.31.1"
+    vue-styleguidist "^4.31.0"
     webpack-merge "^4.2.1"
 
 vue-docgen-api@^4.31.1:
@@ -13326,7 +13326,7 @@ vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-styleguidist@^4.31.1:
+vue-styleguidist@^4.31.0:
   version "4.31.1"
   resolved "https://registry.yarnpkg.com/vue-styleguidist/-/vue-styleguidist-4.31.1.tgz#717933063e34ae7157c79b5d0cbfa111b30d4582"
   integrity sha512-EQVyj3xdBThA1tOd3PPbukytqBIghmjkD/CXTcieoucY8OB9r/2vd8fcUjvjm2SezbLq2rUspUwI91NUf+6JJw==

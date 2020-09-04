@@ -17,10 +17,14 @@ yarn build
 
 ### Run your unit tests
 ```
-yarn test:unit
+yarn unit
 ```
 
 ### Run your end-to-end tests
+```
+yarn styleguide
+```
+Wait for server to start.
 ```
 yarn test:e2e
 ```
