@@ -112,6 +112,7 @@ pipeline {
                 }
                 container('rancher') {
                     sh "rancher apps delete ${NAME} || true" 
+                    sh "timout 5s" // making sure that the container is deleted
                     sh "rancher apps install " +
                         "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +
