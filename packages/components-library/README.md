@@ -38,4 +38,4 @@ yarn lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### View styleguide preview when pull request is build by CI
-See https://preview-frontend-pr-[PR_NUMBER].dev.molgenis.org/styleguide/
+See https://preview-frontend-pr-[PR_NUMBER].dev.molgenis.org/styleguide
