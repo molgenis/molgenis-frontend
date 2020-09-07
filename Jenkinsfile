@@ -48,6 +48,7 @@ pipeline {
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e -- --since origin/master -- --env ci_chrome,ci_ie11,ci_firefox"
                     sh "yarn lerna run build --since origin/master"
+                    sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
                 }
                 container('sonar') {
                     // Fetch the target branch, sonar likes to take a look at it
@@ -150,8 +151,8 @@ pipeline {
                     sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e -- --scope @molgenis-ui/data-explorer -- --env ci_chrome,ci_ie11,ci_firefox"
-                    
                     sh "yarn lerna run build"
+                    sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
                 }
                 container('sonar') {
                     sh "sonar-scanner"
