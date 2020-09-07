@@ -112,18 +112,20 @@ pipeline {
                 }
                 container('rancher') {
                     sh "rancher apps delete ${NAME} || true" 
-                    sh "timeout 5s" // making sure that the container is deleted
-                    sh "rancher apps install " +
-                        "cattle-global-data:molgenis-helm-molgenis-frontend " +
-                        "${NAME} " +
-                        "--no-prompt " +
-                        "--set environment=dev " +
-                        "--set image.tag=${TAG} " +
-                        "--set image.repository=${LOCAL_REGISTRY} " +
-                        "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
-                        "--set proxy.backend.service.targetRelease=master " +
-                        "--set image.pullPolicy=Always " +
-                        "--set readinessPath=/@molgenis-ui/heartbeat.txt"
+                    timeout(time: 5, unit: 'SECONDS')
+                    {
+                        sh "rancher apps install " +
+                            "cattle-global-data:molgenis-helm-molgenis-frontend " +
+                            "${NAME} " +
+                            "--no-prompt " +
+                            "--set environment=dev " +
+                            "--set image.tag=${TAG} " +
+                            "--set image.repository=${LOCAL_REGISTRY} " +
+                            "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
+                            "--set proxy.backend.service.targetRelease=master " +
+                            "--set image.pullPolicy=Always " +
+                            "--set readinessPath=/@molgenis-ui/heartbeat.txt"
+                    }
                 }
             }
             post {
