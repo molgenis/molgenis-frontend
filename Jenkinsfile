@@ -63,6 +63,23 @@ pipeline {
                 }
             }
         }
+        stage('Add components lib to preview [ PR ]') {
+            when {
+                changeRequest()
+            }
+            environment {
+                TAG = "PR-${CHANGE_ID}"
+                DOCKER_CONFIG="/root/.docker"
+            }
+            steps {
+                container('node') {
+                    sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
+                }
+                container (name: 'kaniko', shell: '/busybox/sh') {
+                    sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview-config/copy_component_styleguide.sh"
+                }
+            }
+        }
         stage('Build container serving the artifacts [ PR ]') {
             when {
                 changeRequest()
