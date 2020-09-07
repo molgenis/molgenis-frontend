@@ -112,7 +112,7 @@ pipeline {
                 }
                 container('rancher') {
                     sh "rancher apps delete ${NAME} || true" 
-                    timeout(time: 5, unit: 'SECONDS')
+                    timeout(time: 10, unit: 'SECONDS')
                     {
                         sh "rancher apps install " +
                             "cattle-global-data:molgenis-helm-molgenis-frontend " +
