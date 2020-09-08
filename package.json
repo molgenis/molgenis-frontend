@@ -5,7 +5,8 @@
   "devDependencies": {
     "commitizen": "^3.0.6",
     "cz-conventional-changelog": "2.1.0",
-    "lerna": "^3.4.3"
+    "lerna": "^3.4.3",
+    "vue-cli-plugin-styleguidist": "~4.31.1"
   },
   "scripts": {
     "commit": "git-cz"
