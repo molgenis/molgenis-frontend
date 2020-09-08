@@ -5,7 +5,6 @@ import SettingsUi from '@/components/SettingsUi.vue'
 import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
-import { VueConstructor } from 'vue/types/umd'
 
 const settingsUi: any = SettingsUi
 
