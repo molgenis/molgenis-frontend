@@ -19,6 +19,7 @@
     "styleguide": "vue-cli-service styleguidist",
     "styleguide:build": "vue-cli-service styleguidist:build"
   },
+  "main": "./dist/components-library.common.js",
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
