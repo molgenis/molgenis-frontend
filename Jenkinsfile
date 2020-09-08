@@ -73,7 +73,7 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn lerna run build --since origin/master"
-                    sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
+                    sh "yarn lerna run styleguide:build -- --since origin/master --scope @molgenis-ui/components-library"
                 }
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"

@@ -1,9 +1,12 @@
 import { shallowMount } from '@vue/test-utils'
 import SettingsUi from '@/components/SettingsUi.vue'
+
 // @ts-ignore
 import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
+
+const settingsUi: any = SettingsUi
 
 jest.mock('@molgenis/molgenis-api-client', () => {
   return {
@@ -23,17 +26,17 @@ jest.mock('@molgenis/molgenis-ui-form', () => {
 
 describe('SettingsUi component', () => {
   it('Should have "SettingsUi" as name.', () => {
-    expect(SettingsUi.name).toEqual('SettingsUi')
+    expect(settingsUi.name).toEqual('SettingsUi')
   })
 
   it('Should have a "data" function.', () => {
     // @ts-ignore
-    expect(typeof SettingsUi.data).toEqual('function')
+    expect(typeof settingsUi.data).toEqual('function')
   })
 
   describe('Data should initialize', () => {
     // @ts-ignore
-    const data = SettingsUi.data()
+    const data = settingsUi.data()
 
     it('selectedSetting to null.', () => {
       expect(data.selectedSetting).toEqual(null)
