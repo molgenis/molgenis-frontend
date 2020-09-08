@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.0.0...@molgenis-ui/settings@4.0.1) (2020-09-08)
+
+
+### Bug Fixes
+
+* **settings:** any it is ([ef8a646](https://github.com/molgenis/molgenis-frontend/commit/ef8a646))
+* **settings:** fixed TS typting for unittest ([7690274](https://github.com/molgenis/molgenis-frontend/commit/7690274))
+
+
+
+
+
 # [4.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@3.0.0...@molgenis-ui/settings@4.0.0) (2020-08-27)
 
 
