@@ -47,8 +47,6 @@ pipeline {
                     sh "yarn lerna run unit --since origin/master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e -- --since origin/master -- --env ci_chrome,ci_ie11,ci_firefox"
-                    sh "yarn lerna run build --since origin/master"
-                    sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
                 }
                 container('sonar') {
                     // Fetch the target branch, sonar likes to take a look at it
@@ -64,23 +62,6 @@ pipeline {
                 }
             }
         }
-        stage('Add components lib to preview [ PR ]') {
-            when {
-                changeRequest()
-            }
-            environment {
-                TAG = "PR-${CHANGE_ID}"
-                DOCKER_CONFIG="/root/.docker"
-            }
-            steps {
-                container('node') {
-                    sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
-                }
-                container (name: 'kaniko', shell: '/busybox/sh') {
-                    sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview-config/copy_component_styleguide.sh"
-                }
-            }
-        }
         stage('Build container serving the artifacts [ PR ]') {
             when {
                 changeRequest()
@@ -90,10 +71,15 @@ pipeline {
                 DOCKER_CONFIG="/root/.docker"
             }
             steps {
+                container('node') {
+                    sh "yarn lerna run build --since origin/master"
+                    sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
+                }
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
                     sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
                     sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview-config/copy_package_dist_dirs.sh"
+                    sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview-config/copy_component_styleguide.sh"
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/preview-config --destination ${LOCAL_REPOSITORY}:${TAG}"
                 }
             }
