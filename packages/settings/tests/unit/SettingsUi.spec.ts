@@ -7,7 +7,7 @@ import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 import api from '@molgenis/molgenis-api-client'
 import { VueConstructor } from 'vue/types/umd'
 
-const settingsUi: VueConstructor<Vue> = SettingsUi
+const settingsUi: any = SettingsUi
 
 jest.mock('@molgenis/molgenis-api-client', () => {
   return {
