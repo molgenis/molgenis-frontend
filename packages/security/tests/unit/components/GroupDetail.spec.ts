@@ -81,7 +81,8 @@ describe('GroupDetail component', () => {
       groupPermissions: () => groupPermissions,
       getLoginUser: () => loginUser,
       getAnonymousGroupRightsBool: () => jest.fn(),
-      getUserGroupRightsString: () => jest.fn()
+      getUserGroupRightsString: () => jest.fn(),
+      hasSuperUserRights: jest.fn().mockReturnValue(true)
     }
 
     mutations = {
@@ -162,7 +163,6 @@ describe('GroupDetail component', () => {
     })
   })
 
-
   describe('when delete group clicked', () => {
     it('should delete the group', async (done) => {
       const wrapper = shallowMount(GroupDetail, {
@@ -179,7 +179,7 @@ describe('GroupDetail component', () => {
       wrapper.vm.deleteGroupHandler()
       localVue.nextTick(() => {
         expect(actions.deleteGroup).toBeCalled()
-        expect(actions.deleteGroup).toBeCalledWith(expect.any(Object), { "groupName": "group1" });
+        expect(actions.deleteGroup).toBeCalledWith(expect.any(Object), { groupName: 'group1' })
         localVue.nextTick(() => {
           expect(pushedRoute).toEqual({ name: 'groupOverView' })
           done()

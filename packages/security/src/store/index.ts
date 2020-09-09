@@ -4,6 +4,7 @@ import actions from '@/store/actions.ts'
 import getters from '@/store/getters.ts'
 import mutations from '@/store/mutations.ts'
 import { SecurityModel } from '@/types/SecurityModel'
+const uiContextModule = require('@molgenis/molgenis-ui-context').default
 
 Vue.use(Vuex)
 
@@ -24,5 +25,11 @@ export default new Vuex.Store({
   actions,
   getters,
   modules: {
+    account: {
+      namespaced: true,
+      state: uiContextModule.store.state,
+      mutations: uiContextModule.store.mutations,
+      actions: uiContextModule.store.actions
+    }
   }
 })

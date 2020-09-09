@@ -53,60 +53,61 @@
         </router-link>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col">
-        <h3 class="mt-4">{{ 'security-ui-permissions-label-anonymous' | i18n }}</h3>
-      </div>
-    </div>
-
-    <div class="row groups-listing">
-      <div class="col">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="anonymous-view" v-model="anonymousViewerPermission" :disabled="isSaving">
-          <label class="form-check-label" for="anonymous-view">
-            {{ 'security-ui-anonymous-can-view' | i18n }}
-          </label>
+    <div v-if="hasSuperUserRights">
+      <div class="row">
+        <div class="col">
+          <h3 class="mt-4">{{ 'security-ui-permissions-label-anonymous' | i18n }}</h3>
         </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="col">
-        <h3 class="mt-4">{{ 'security-ui-permissions-label-user' | i18n }}</h3>
-      </div>
-    </div>
-
-    <div class="row groups-listing">
-      <div class="col">
-        <div class="form-check" role="button">
-          <input class="form-check-input" type="radio" id="registered-none" name="RegisteredUser" value="" v-model="registeredUserPermission" :disabled="isSaving">
-          <label class="form-check-label" for="registered-none">
-            {{ 'security-ui-user-can-not-view' | i18n }}
-          </label>
-        </div>
-        <div class="form-check" role="button">
-          <input class="form-check-input" type="radio" id="registered-view" name="RegisteredUser" value="Viewer" v-model="registeredUserPermission" :disabled="isSaving">
-          <label class="form-check-label" for="registered-view">
-            {{ 'security-ui-user-can-view' | i18n }}
-          </label>
-        </div>
-        <div class="form-check" role="button">
-          <input class="form-check-input" type="radio" id="registered-edit" name="RegisteredUser" value="Editor" v-model="registeredUserPermission" :disabled="isSaving">
-          <label class="form-check-label" for="registered-edit">
-            {{ 'security-ui-user-can-edit' | i18n }}
-          </label>
+      <div class="row groups-listing">
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="anonymous-view" v-model="anonymousViewerPermission" :disabled="isSaving">
+            <label class="form-check-label" for="anonymous-view">
+              {{ 'security-ui-anonymous-can-view' | i18n }}
+            </label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="row mt-3">
-      <div class="col">
-        <span class="">
-          <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving">
-            <i :class="['fa', 'fa-save']"></i> {{ 'security-ui-save-permissions' | i18n }} <i v-if="isSaving" class="fa fa-spinner fa-spin "></i>
-          </button>
-        </span>
+      <div class="row">
+        <div class="col">
+          <h3 class="mt-4">{{ 'security-ui-permissions-label-user' | i18n }}</h3>
+        </div>
+      </div>
+
+      <div class="row groups-listing">
+        <div class="col">
+          <div class="form-check" role="button">
+            <input class="form-check-input" type="radio" id="registered-none" name="RegisteredUser" value="" v-model="registeredUserPermission" :disabled="isSaving">
+            <label class="form-check-label" for="registered-none">
+              {{ 'security-ui-user-can-not-view' | i18n }}
+            </label>
+          </div>
+          <div class="form-check" role="button">
+            <input class="form-check-input" type="radio" id="registered-view" name="RegisteredUser" value="Viewer" v-model="registeredUserPermission" :disabled="isSaving">
+            <label class="form-check-label" for="registered-view">
+              {{ 'security-ui-user-can-view' | i18n }}
+            </label>
+          </div>
+          <div class="form-check" role="button">
+            <input class="form-check-input" type="radio" id="registered-edit" name="RegisteredUser" value="Editor" v-model="registeredUserPermission" :disabled="isSaving">
+            <label class="form-check-label" for="registered-edit">
+              {{ 'security-ui-user-can-edit' | i18n }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col">
+          <span class="">
+            <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving">
+              <i :class="['fa', 'fa-save']"></i> {{ 'security-ui-save-permissions' | i18n }} <i v-if="isSaving" class="fa fa-spinner fa-spin "></i>
+            </button>
+          </span>
+        </div>
       </div>
     </div>
     <b-modal id="deleteModal" ok-variant="danger" cancel-variant="secondary"
@@ -143,7 +144,8 @@ export default {
       'groupPermissions',
       'getLoginUser',
       'getAnonymousGroupRightsBool',
-      'getUserGroupRightsString'
+      'getUserGroupRightsString',
+      'hasSuperUserRights'
     ]),
     sortedMembers () {
       const members = this.groupMembers[this.name] || []
@@ -182,16 +184,30 @@ export default {
       this.deleteGroup({ groupName: this.name }).then(() => {
         this.$router.push({ name: 'groupOverView' })
       })
+    },
+    loadGroupRights () {
+      this.fetchGroupRights(this.name).then(() => {
+        this.anonymousViewerPermission = this.getAnonymousGroupRightsBool(this.name, 'Viewer')
+        this.registeredUserPermission = this.getUserGroupRightsString(this.name)
+        this.isSaving = false
+      })
     }
   },
   created () {
     this.fetchGroupMembers(this.name)
     this.fetchGroupPermissions(this.name)
-    this.fetchGroupRights(this.name).then(() => {
-      this.anonymousViewerPermission = this.getAnonymousGroupRightsBool(this.name, 'Viewer')
-      this.registeredUserPermission = this.getUserGroupRightsString(this.name)
+    if (this.hasSuperUserRights) {
+      this.loadGroupRights()
+    } else {
       this.isSaving = false
-    })
+    }
+  },
+  watch: {
+    hasSuperUserRights (newValue) {
+      if (newValue === true) {
+        this.loadGroupRights()
+      }
+    }
   },
   components: {
     Toast

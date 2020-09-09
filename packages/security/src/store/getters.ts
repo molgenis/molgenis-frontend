@@ -46,6 +46,15 @@ const getters = {
       }
     }
     return ''
+  },
+  hasSuperUserRights: (state: SecurityModel, getters: any): boolean => {
+    return getters.isUserAuthenticated && getters.userRoles.includes('ROLE_SU')
+  },
+  isUserAuthenticated: (state: SecurityModel, getters: any, rootState: any): boolean => {
+    return rootState.account.context ? rootState.account.context.authenticated : false
+  },
+  userRoles: (state: SecurityModel, getters: any, rootState: any): string[] => {
+    return rootState.account.context ? rootState.account.context.roles : []
   }
 }
 export default getters

@@ -3,7 +3,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'SecurityApp'
+  name: 'SecurityApp',
+  methods: {
+    ...mapActions('account', ['fetchContext'])
+  },
+  created () {
+    this.fetchContext()
+  }
 }
 </script>
