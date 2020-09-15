@@ -1,5 +1,5 @@
-import AppButton from "./components/AppButton.vue"
+import CartSelectionToast from "./components/CartSelectionToast.vue"
 
 export default {
-    AppButton
+  CartSelectionToast
 }
