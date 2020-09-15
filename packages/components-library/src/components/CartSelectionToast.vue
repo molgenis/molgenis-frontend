@@ -35,7 +35,7 @@
         <div class="col-auto">
           <b-button @click="clickHandler" :variant="buttonVariant">
             <!-- @slot display tekst of button -->
-            <slot name="buttonText"></slot>
+            <slot name="buttonText">Request items</slot>
           </b-button>
         </div>
       </div>
