@@ -1,6 +1,6 @@
 <template>
   <b-toast
-    v-model="bla"
+    visible
     no-close-button
     no-auto-hide
     :toaster="location"
@@ -8,10 +8,12 @@
   >
     <div class="row">
       <div class="col d-flex align-items-center">
-        <span><slot name="cartSelection"></slot></span>
+        <span>
+          <slot name="cartSelection"></slot>
+        </span>
       </div>
       <div class="col-auto">
-        <b-button :variant="buttonVariant"><slot name="buttonText"></slot></b-button>
+        <b-button @click="clickHandler" :variant="buttonVariant"><slot name="buttonText"></slot></b-button>
       </div>
     </div>
   </b-toast>
@@ -53,10 +55,16 @@ export default {
       type: Array,
       required: false,
       default: () => []
+    },
+    /**
+     * Button click handler
+     */
+    clickHandler: {
+      type: Function,
+      required: true
     }
   },
   data: () => ({
-    bla: true
   }),
   methods: {
   }
@@ -70,7 +78,7 @@ export default {
 
   ```jsx
   <b-toaster name="demo"></b-toaster>
-  <cart-selection-toast location="demo">
+  <cart-selection-toast location="demo" :clickHandler="()=>{}">
     <template v-slot:buttonText>To cart</template>
     <template v-slot:cartSelection>Selected: <b-badge>10</b-badge></template>
   </cart-selection-toast>
@@ -79,7 +87,7 @@ export default {
 
   ```jsx
   <b-toaster name="demo2"></b-toaster>
-  <cart-selection-toast location="demo2" :value="['Apple', 'Pear', 'Banana']">
+  <cart-selection-toast location="demo2" :value="['Apple', 'Pear', 'Banana']"  :clickHandler="()=>{}">
     <template v-slot:buttonText>To cart</template>
     <template v-slot:cartSelection>Selected: <b-badge>10</b-badge></template>
   </cart-selection-toast>
