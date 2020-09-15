@@ -89,17 +89,8 @@ export default {
     }
   },
   data: () => ({
-    previewToggle: false
   }),
-  computed: {
-    selectionText () {
-      return this.previewToggle ? 'Hide' : 'Show'
-    }
-  },
   methods: {
-    removeItem (itemName) {
-      this.$emit('input', this.value.filter(item => item !== itemName))
-    }
   }
 }
 </script>
@@ -110,27 +101,19 @@ export default {
   ## Basic example
 
   ```jsx
-  function click(){
-    alert('clicked')
-  }
   <b-toaster name="demo"></b-toaster>
-  <cart-selection-toast location="demo" :clickHandler="click">
+  <cart-selection-toast location="demo" :clickHandler="()=>{}">
     <template v-slot:buttonText>To cart</template>
-    <template v-slot:cartSelection>10 items selected</template>
+    <template v-slot:cartSelection>Selected: <b-badge>10</b-badge></template>
   </cart-selection-toast>
   ```
-  ## Example with filled slots and selection preview
+  ## Example with preview
 
   ```jsx
-  let items = ['Apple', 'Pear', 'Banana'];
-  function click(){
-    alert('clicked')
-  }
   <b-toaster name="demo2"></b-toaster>
-  <cart-selection-toast location="demo2" v-model="items" :clickHandler="click">
-    <template v-slot:buttonText>Checkout <i class="fa fa-shopping-basket"></i></template>
-    <template v-slot:cartSelection>{{items.length}} item(s) selected</template>
-    <template v-slot:removeButton><i class="far fa-times-circle"></i></template>
+  <cart-selection-toast location="demo2" :value="['Apple', 'Pear', 'Banana']"  :clickHandler="()=>{}">
+    <template v-slot:buttonText>To cart</template>
+    <template v-slot:cartSelection>Selected: <b-badge>10</b-badge></template>
   </cart-selection-toast>
   ```
 </docs>
