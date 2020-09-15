@@ -6,14 +6,38 @@
     :toaster="location"
     :variant="backgroundVariant"
   >
-    <div class="row">
-      <div class="col d-flex align-items-center">
-        <span>
-          <slot name="cartSelection"></slot>
-        </span>
+    <div class="container">
+      <div v-if="previewToggle && value.length > 0" class="mb-4">
+        <div class="row" v-for="(item, index) in value" :key="index">
+          <div class="col">
+            {{item}}
+          </div>
+          <div class="col-auto mb-2">
+            <span role="button" @click="removeItem(item)">
+              <!-- @slot pass an icon for the remove button -->
+              <slot name="removeButton"><i class="fa fa-times"></i></slot>
+            </span>
+          </div>
+        </div>
       </div>
-      <div class="col-auto">
-        <b-button @click="clickHandler" :variant="buttonVariant"><slot name="buttonText"></slot></b-button>
+      <div class="row">
+        <div class="col d-flex flex-column justify-content-start align-self-center">
+          <div>
+            <b>
+              <!-- @slot pass text to notify the selection amount -->
+              <slot name="cartSelection"></slot>
+            </b>
+          </div>
+          <div v-if="value.length > 0">
+            <span role="button" @click="previewToggle = !previewToggle">{{selectionText}} selection</span>
+          </div>
+        </div>
+        <div class="col-auto">
+          <b-button @click="clickHandler" :variant="buttonVariant">
+            <!-- @slot display tekst of button -->
+            <slot name="buttonText"></slot>
+          </b-button>
+        </div>
       </div>
     </div>
   </b-toast>
@@ -65,8 +89,17 @@ export default {
     }
   },
   data: () => ({
+    previewToggle: false
   }),
+  computed: {
+    selectionText () {
+      return this.previewToggle ? 'Hide' : 'Show'
+    }
+  },
   methods: {
+    removeItem (itemName) {
+      this.$emit('input', this.value.filter(item => item !== itemName))
+    }
   }
 }
 </script>
@@ -77,19 +110,27 @@ export default {
   ## Basic example
 
   ```jsx
+  function click(){
+    alert('clicked')
+  }
   <b-toaster name="demo"></b-toaster>
-  <cart-selection-toast location="demo" :clickHandler="()=>{}">
+  <cart-selection-toast location="demo" :clickHandler="click">
     <template v-slot:buttonText>To cart</template>
-    <template v-slot:cartSelection>Selected: <b-badge>10</b-badge></template>
+    <template v-slot:cartSelection>10 items selected</template>
   </cart-selection-toast>
   ```
-  ## Example with preview
+  ## Example with filled slots and selection preview
 
   ```jsx
+  let items = ['Apple', 'Pear', 'Banana'];
+  function click(){
+    alert('clicked')
+  }
   <b-toaster name="demo2"></b-toaster>
-  <cart-selection-toast location="demo2" :value="['Apple', 'Pear', 'Banana']"  :clickHandler="()=>{}">
-    <template v-slot:buttonText>To cart</template>
-    <template v-slot:cartSelection>Selected: <b-badge>10</b-badge></template>
+  <cart-selection-toast location="demo2" v-model="items" :clickHandler="click">
+    <template v-slot:buttonText>Checkout <i class="fa fa-shopping-basket"></i></template>
+    <template v-slot:cartSelection>{{items.length}} item(s) selected</template>
+    <template v-slot:removeButton><i class="far fa-times-circle"></i></template>
   </cart-selection-toast>
   ```
 </docs>
