@@ -4,6 +4,7 @@
     "msjsdiag.debugger-for-chrome",
     "eamodio.gitlens",
     "hex-ci.stylelint-plus",
-    "octref.vetur"
+    "octref.vetur",
+    "syler.sass-indented"
   ]
 }

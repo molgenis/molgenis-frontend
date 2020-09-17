@@ -1,14 +1,16 @@
 <template>
-  <button class="mg-button" :style="styles" @click="handleClick">
-    <!-- @slot Use this slot to place the button content -->
-    <slot></slot>
-  </button>
+    <button class="mg-button" :style="styles" @click="handleClick">
+        <!-- @slot Use this slot to place the button content -->
+        <slot></slot>
+        <div />
+    </button>
 </template>
 
 <script>
 import sizeMixin from './sizeMixin'
+
 export default {
-  name: 'app-button',
+  name: 'AppButton',
   mixins: [sizeMixin],
   props: {
     /**

@@ -1,12 +1,11 @@
 {
     "eslint.enable": true,
-    "eslint.validate": ["javascript", "vue-html", "typescript"],
+    "eslint.validate": ["javascript", "vue", "typescript"],
     "vetur.validation.template": false,
+    "vetur.format.defaultFormatter.sass": "sass-formatter",
+    "vetur.format.defaultFormatter.ts": "vscode-typescript",
     "stylelint.autoFixOnSave": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
-    },
-    "files.associations": {
-        "*.vue": "vue-html"
-     }
+    }
 }

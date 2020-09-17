@@ -15,12 +15,15 @@
     "globals": {
         "globalThis": true
     },
-    "ignorePatterns": [],
     "overrides": [
         {
             "files": ["**/*.ts"],
             "parser": "@typescript-eslint/parser",
+            "plugins": [
+                "@typescript-eslint"
+            ],
             "extends": [
+                "eslint:recommended",
                 "plugin:@typescript-eslint/recommended"
             ]
         },
@@ -28,10 +31,21 @@
             "parser": "vue-eslint-parser",
             "files": ["**/*.vue"],
             "extends": [
-                "plugin:vue/essential",
+                "plugin:vue/recommended",
                 "@vue/standard",
                 "@vue/typescript/recommended"
-            ]
+            ],
+            "rules": {
+                "vue/html-self-closing": "off",
+                "vue/html-indent": ["error", 4],
+                "vue/max-attributes-per-line": ["error", {
+                    "singleline": 3,
+                    "multiline": {
+                      "max": 2,
+                      "allowFirstLine": false
+                    }
+                }]
+            }
         }
     ]
 }
