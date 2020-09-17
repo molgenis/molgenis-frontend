@@ -3,10 +3,13 @@
   "license": "LGPL-3.0",
   "private": true,
   "devDependencies": {
+    "@typescript-eslint/parser": "^4.1.1",
     "commitizen": "^3.0.6",
     "cz-conventional-changelog": "2.1.0",
+    "eslint-plugin-vue": "^6.2.2",
     "lerna": "^3.4.3",
-    "vue-cli-plugin-styleguidist": "~4.31.1"
+    "vue-cli-plugin-styleguidist": "~4.31.1",
+    "vue-eslint-parser": "^7.1.0"
   },
   "scripts": {
     "commit": "git-cz"
@@ -19,5 +22,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "dependencies": {}
 }

@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "attach",
+            "name": "WebPhone browser debugger",
+            "port": 9222,
+            "url": "https://dev.ca11.app/",
+            "webRoot": "${workspaceFolder}/packages/webphone/build",
+            "sourceMaps": true
+        }
+    ]
+}
