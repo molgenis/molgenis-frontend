@@ -117,7 +117,6 @@ export default {
   <cart-selection-toast location="demo" :clickHandler="click">
     <template v-slot:buttonText>To cart</template>
     <template v-slot:cartSelection>10 items selected</template>
-
   </cart-selection-toast>
   ```
   ## Example with filled slots and selection preview
