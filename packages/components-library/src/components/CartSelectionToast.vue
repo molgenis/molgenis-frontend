@@ -22,11 +22,8 @@
       </div>
       <div class="row">
         <div class="col d-flex flex-column justify-content-start align-self-center">
-          <div>
-            <b>
-              <!-- @slot pass text to notify the selection amount -->
-              <slot name="cartSelection"></slot>
-            </b>
+          <div class="font-weight-bold">
+            {{ cartSelectionText }}
           </div>
           <div v-if="value.length > 0">
             <span role="button" @click="previewToggle = !previewToggle">{{selectionText}} selection</span>
@@ -47,6 +44,16 @@
 export default {
   name: 'CartSelectionToast',
   props: {
+    /**
+     * Default descriptive text.
+     * Use this to specify the amount of selected items in the cart
+     * For example:
+     * "3 items selected"
+     */
+    cartSelectionText: {
+      type: String,
+      required: true
+    },
     /**
      * See: https://bootstrap-vue.org/docs/components/toast#b-toaster-target-component
      */
@@ -98,6 +105,12 @@ export default {
   },
   methods: {
     removeItem (itemName) {
+      /**
+       * v-model return value
+       *
+       * @event input
+       * @property {Array} Returns new array without the deleted item
+       */
       this.$emit('input', this.value.filter(item => item !== itemName))
     }
   }
@@ -114,7 +127,7 @@ export default {
     alert('clicked')
   }
   <b-toaster name="demo"></b-toaster>
-  <cart-selection-toast location="demo" :clickHandler="click">
+  <cart-selection-toast location="demo" :clickHandler="click" cartSelectionText="3 items selected">
     <template v-slot:buttonText>To cart</template>
     <template v-slot:cartSelection>10 items selected</template>
   </cart-selection-toast>
@@ -127,7 +140,7 @@ export default {
     alert('clicked')
   }
   <b-toaster name="demo2"></b-toaster>
-  <cart-selection-toast location="demo2" v-model="items" :clickHandler="click">
+  <cart-selection-toast location="demo2" v-model="items" :clickHandler="click" :cartSelectionText="items.length + ' item(s) selected'">
     <template v-slot:buttonText>Checkout <i class="fa fa-shopping-basket"></i></template>
     <template v-slot:cartSelection>{{items.length}} item(s) selected</template>
     <template v-slot:removeButton><i class="far fa-times-circle"></i></template>
