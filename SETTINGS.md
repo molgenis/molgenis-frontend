@@ -52,6 +52,8 @@ settings.json
 ## Recommended plugins for these settings:
 You can run them in the terminal:
 
+```
 code --install-extension dbaeumer.vscode-eslint
 code --install-extension hex-ci.stylelint-plus
 code --install-extension sibiraj-s.vscode-scss-formatter
+```
