@@ -40,6 +40,13 @@
               fixed-width/> {{ label.item.label }}
           </a>
         </span>
+        <span v-else-if="label.item.type === 'ENTITY_TYPE' && !dataExplorerUrl">
+          <a :href="`/@molgenis-ui/data-explorer/dist/index.html#${label.item.id}`">
+            <font-awesome-icon
+              icon="list"
+              fixed-width/> {{ label.item.label }}
+          </a>
+        </span>
         <span v-else-if="label.item.type === 'ENTITY_TYPE' || label.item.type === 'ENTITY_TYPE_ABSTRACT'">
           <font-awesome-icon
             icon="list"

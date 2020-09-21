@@ -3,12 +3,12 @@
 </template>
 
 <script>
-  import AppManagerContainer from './pages/AppManagerContainer.vue'
+import AppManagerContainer from '@/views/AppManagerContainer.vue'
 
-  export default {
-    name: 'AppManager',
-    components: {
-      AppManagerContainer
-    }
+export default {
+  name: 'AppManager',
+  components: {
+    AppManagerContainer
   }
+}
 </script>

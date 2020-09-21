@@ -789,10 +789,10 @@
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 
-"@molgenis/molgenis-ui-filter@^1.9.3":
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-filter/-/molgenis-ui-filter-1.9.3.tgz#e0801398432abe8dac485efa1129f8b5b7f8b82e"
-  integrity sha512-Ou//sGSuGgZIAQMl3tM5MBLevQJi/g6GNxz2zG0ZuMzfn4y+Ac4JA16L5IiR5tV//Pfjgwy/NnZLFmaMZ0ZTjQ==
+"@molgenis/molgenis-ui-filter@^1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-filter/-/molgenis-ui-filter-1.11.1.tgz#a2b920bd55bfb969452ede9ee8a5eb6c3af111de"
+  integrity sha512-3btlht3M1Kj5vM3GtYtFYy732KWPZ4XfxD/yywtX4TjVJnki4HJpJk4PydRaf+P4pJCegSAGOQpg5nGfBlVcWA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.17"
     "@fortawesome/free-solid-svg-icons" "^5.8.1"

@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.4.0...@molgenis-ui/security@0.4.1) (2020-08-27)
+
+
+### Bug Fixes
+
+* **security:** fixes [#351](https://github.com/molgenis/molgenis-frontend/issues/351) stack overflow on remove group ([c8e934b](https://github.com/molgenis/molgenis-frontend/commit/c8e934b))
+
+
+
+
+
+# [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.3.1...@molgenis-ui/security@0.4.0) (2020-08-13)
+
+
+### Bug Fixes
+
+* **security:** [#336](https://github.com/molgenis/molgenis-frontend/issues/336) fix incorect naming ([ac47b01](https://github.com/molgenis/molgenis-frontend/commit/ac47b01))
+
+
+### Features
+
+* **security:** improve layout ([29681f9](https://github.com/molgenis/molgenis-frontend/commit/29681f9))
+
+
+
+
+
+## [0.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.3.0...@molgenis-ui/security@0.3.1) (2020-08-10)
+
+
+### Bug Fixes
+
+* **data-row-edit, app-manager, settings, security:** combine chunks to make build output compatible with molgenis backend paths ([da39558](https://github.com/molgenis/molgenis-frontend/commit/da39558))
+* **data-row-edit, security:** fix cancel/save btn margins ([77bd6a4](https://github.com/molgenis/molgenis-frontend/commit/77bd6a4))
+* merge with master ([93a63bd](https://github.com/molgenis/molgenis-frontend/commit/93a63bd))
+
+
+
+
+
+# [0.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.2.0...@molgenis-ui/security@0.3.0) (2020-08-05)
+
+
+### Bug Fixes
+
+* added identities api, may have some issues with it ([56cae8a](https://github.com/molgenis/molgenis-frontend/commit/56cae8a))
+* make never used before items work ([5984029](https://github.com/molgenis/molgenis-frontend/commit/5984029))
+* review comments ([02bef52](https://github.com/molgenis/molgenis-frontend/commit/02bef52))
+* state is saved correctly to server ([81a12d0](https://github.com/molgenis/molgenis-frontend/commit/81a12d0))
+* use the identities api in the correct way ([0c3ed1b](https://github.com/molgenis/molgenis-frontend/commit/0c3ed1b))
+
+
+### Features
+
+* add checkboxes ([1053f90](https://github.com/molgenis/molgenis-frontend/commit/1053f90))
+
+
+
+
+
 # [0.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.1.6...@molgenis-ui/security@0.2.0) (2020-02-07)
 
 

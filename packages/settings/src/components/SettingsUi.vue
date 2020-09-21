@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-md-12">
         <select v-model="selectedSetting" class="form-control">
-          <option v-for="option in settingsOptions" :value="option.id">
+          <option v-for="option in settingsOptions" :value="option.id" :key="option.id">
             {{option.label}}
           </option>
         </select>
@@ -65,81 +65,81 @@
 </template>
 
 <script>
-  import { FormComponent, EntityToFormMapper } from '@molgenis/molgenis-ui-form'
-  import '../../node_modules/@molgenis/molgenis-ui-form/dist/static/css/molgenis-ui-form.css'
-  import api from '@molgenis/molgenis-api-client'
+import { FormComponent, EntityToFormMapper } from '@molgenis/molgenis-ui-form'
+import '../../node_modules/@molgenis/molgenis-ui-form/dist/static/css/molgenis-ui-form.css'
+import api from '@molgenis/molgenis-api-client'
 
-  export default {
-    name: 'SettingsUi',
-    data () {
-      return {
-        selectedSetting: null,
-        formFields: [],
-        formData: {},
-        formState: {},
-        settingsOptions: [],
-        alert: null,
-        showForm: false,
-        settingLabel: '',
-        isSaving: false
-      }
-    },
-    watch: {
-      selectedSetting: function (setting) {
-        this.showForm = false
-        this.$router.push({path: `/${setting}`})
-        api.get('/api/v2/' + setting).then(this.initializeForm, this.handleError)
-      }
-    },
-    methods: {
-      onValueChanged (formData) {
-        this.formData = formData
-      },
-
-      onSubmit () {
-        this.isSaving = true
-        const options = {
-          body: JSON.stringify(this.formData)
-        }
-        const uri = '/api/v1/' + this.selectedSetting + '/' + this.formData.id + '?_method=PUT'
-        api.post(uri, options).then(this.handleSuccess, this.handleError)
-      },
-      clearAlert () {
-        this.alert = null
-      },
-      handleError (message) {
-        this.isSaving = false
-        this.alert = {
-          message: typeof message !== 'string' ? 'An error has occurred.' : message,
-          type: 'danger'
-        }
-      },
-      handleSuccess () {
-        this.formState._reset()
-        this.alert = {
-          message: 'Settings saved',
-          type: 'success'
-        }
-        this.isSaving = false
-      },
-      initializeSettingsOptions (response) {
-        this.settingsOptions = response.items
-      },
-      initializeForm (response) {
-        const mappedData = EntityToFormMapper.generateForm(response.meta, response.items[0])
-        this.formFields = mappedData.formFields
-        this.formData = mappedData.formData
-        this.settingLabel = response.meta.label
-        this.showForm = true
-      }
-    },
-    created: function () {
-      this.selectedSetting = this.$route.params.setting
-      api.get('/api/v2/sys_md_EntityType?sort=label&num=1000&&q=isAbstract==false;package.id==sys_set')
-        .then(this.initializeSettingsOptions, this.handleError)
-    },
-    components: {
-      FormComponent
+export default {
+  name: 'SettingsUi',
+  data () {
+    return {
+      selectedSetting: null,
+      formFields: [],
+      formData: {},
+      formState: {},
+      settingsOptions: [],
+      alert: null,
+      showForm: false,
+      settingLabel: '',
+      isSaving: false
     }
+  },
+  watch: {
+    selectedSetting: function (setting) {
+      this.showForm = false
+      this.$router.push({ path: `/${setting}` })
+      api.get('/api/v2/' + setting).then(this.initializeForm, this.handleError)
+    }
+  },
+  methods: {
+    onValueChanged (formData) {
+      this.formData = formData
+    },
+
+    onSubmit () {
+      this.isSaving = true
+      const options = {
+        body: JSON.stringify(this.formData)
+      }
+      const uri = '/api/v1/' + this.selectedSetting + '/' + this.formData.id + '?_method=PUT'
+      api.post(uri, options).then(this.handleSuccess, this.handleError)
+    },
+    clearAlert () {
+      this.alert = null
+    },
+    handleError (message) {
+      this.isSaving = false
+      this.alert = {
+        message: typeof message !== 'string' ? 'An error has occurred.' : message,
+        type: 'danger'
+      }
+    },
+    handleSuccess () {
+      this.formState._reset()
+      this.alert = {
+        message: 'Settings saved',
+        type: 'success'
+      }
+      this.isSaving = false
+    },
+    initializeSettingsOptions (response) {
+      this.settingsOptions = response.items
+    },
+    initializeForm (response) {
+      const mappedData = EntityToFormMapper.generateForm(response.meta, response.items[0])
+      this.formFields = mappedData.formFields
+      this.formData = mappedData.formData
+      this.settingLabel = response.meta.label
+      this.showForm = true
+    }
+  },
+  created: function () {
+    this.selectedSetting = this.$route.params.setting
+    api.get('/api/v2/sys_md_EntityType?sort=label&num=1000&&q=isAbstract==false;package.id==sys_set')
+      .then(this.initializeSettingsOptions, this.handleError)
+  },
+  components: {
+    FormComponent
   }
+}
 </script>

@@ -9,13 +9,13 @@
 </template>
 
 <script>
-  import AppCard from './AppCard.vue'
+import AppCard from '@/components/AppCard.vue'
 
-  export default {
-    name: 'AppCardGallery',
-    props: ['apps'],
-    components: {
-      AppCard
-    }
+export default {
+  name: 'AppCardGallery',
+  props: ['apps'],
+  components: {
+    AppCard
   }
+}
 </script>

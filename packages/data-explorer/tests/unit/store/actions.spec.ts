@@ -205,11 +205,19 @@ const mockResponses: {[key:string]: Object} = {
   '/api/data/entity': { 'loaded': true },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
-  '/api/data/settingsEntity?q=table=="entity"': { items: [{ data: { id: 'blaat', shop: true, collapse_limit: 5 } }] }
+  '/api/data/app_set_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
+  '/api/data/app_set_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
+  '/api/data/app_set_DataExplorerEntitySettings': {}
 }
-jest.mock('@molgenis/molgenis-api-client', () => {
+jest.mock('@/lib/client', () => {
   return {
-    get: (url: string) => Promise.resolve(mockResponses[url]),
+    get: (url: string) => {
+      const mockResp = mockResponses[url]
+      if (!mockResp) {
+        console.warn(`mock url (${url}) called but not found in ${mockResponses}`)
+      }
+      return Promise.resolve(mockResp)
+    },
     post: jest.fn()
   }
 })
@@ -260,12 +268,64 @@ describe('actions', () => {
       metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
       // @ts-ignore
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, 'entity')
-      expect(commit).toHaveBeenCalledWith('setFiltersShown', [])
-      expect(commit).toHaveBeenCalledWith('setFilterDefinition', 'def')
-      expect(commit).toHaveBeenCalledWith('setMetaData', 'meta')
-      expect(commit).toHaveBeenCalledWith('setFilterSelection', {})
-      expect(commit).toHaveBeenCalledWith('setSearchText', '')
+      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithOutSettings' })
+      expect(commit.mock.calls).toEqual([
+        [ 'setTableSettings', {} ],
+        [ 'setMetaData', null ],
+        [ 'setFilterDefinition', [] ],
+        [ 'setFiltersShown', [] ],
+        [ 'setFilterSelection', {} ],
+        [ 'setSearchText', '' ],
+        [ 'setMetaData', 'meta' ],
+        [ 'setFilterDefinition', 'def' ],
+        [ 'setFiltersShown', [] ]
+      ])
+    })
+
+    it('should commit table settings from server only if present', async () => {
+      const commit = jest.fn()
+      // @ts-ignore ts does not know its a mock
+      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
+      // @ts-ignore
+      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
+      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
+      expect(commit.mock.calls).toEqual([
+        [ 'setTableSettings', {} ],
+        [ 'setMetaData', null ],
+        [ 'setFilterDefinition', [] ],
+        [ 'setFiltersShown', [] ],
+        [ 'setFilterSelection', {} ],
+        [ 'setSearchText', '' ],
+        [
+          'setTableSettings',
+          { id: 'ent-set', shop: true, collapse_limit: 5 }
+        ],
+        [ 'setMetaData', 'meta' ],
+        [ 'setFilterDefinition', 'def' ],
+        [ 'setFiltersShown', [] ]
+      ])
+    })
+
+    it('should only commit bookmark if set', async () => {
+      const commit = jest.fn()
+      // @ts-ignore ts does not know its a mock
+      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
+      // @ts-ignore
+      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
+      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
+      expect(commit.mock.calls).not.toContain([ [ 'applyBookmark' ] ])
+    })
+
+    it('should commit bookmark if set', async () => {
+      state = mockState()
+      state.bookmark = 'bookmark'
+      const commit = jest.fn()
+      // @ts-ignore ts does not know its a mock
+      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
+      // @ts-ignore
+      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
+      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
+      expect(commit.mock.calls.pop()[0]).toEqual('applyBookmark')
     })
   })
 
@@ -425,7 +485,7 @@ describe('actions', () => {
     it('should throw an error when the table name is not set', async (done) => {
       state.tableName = null
       await actions.deleteRow({ state, commit }, { rowId: 'my-row' })
-      expect(commit).toHaveBeenCalledWith('setToast', { message: 'Cannot delete row from unknown table', type: 'danger' })
+      expect(commit).toHaveBeenCalledWith('setToast', { message: 'cannot delete row from unknown table', type: 'danger' })
       done()
     })
   })

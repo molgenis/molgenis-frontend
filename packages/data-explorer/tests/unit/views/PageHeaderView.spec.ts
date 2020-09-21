@@ -10,6 +10,7 @@ describe('PageHeaderView', () => {
   let store: any
   let state: any
   let actions: any
+  let getters: any
   let modules: any
 
   beforeEach(() => {
@@ -25,26 +26,19 @@ describe('PageHeaderView', () => {
 
     actions = {}
 
+    getters = {
+      hasEditSettingsRights: jest.fn()
+    }
+
     modules = {
       header: {
         namespaced: true,
-        state: {
-          packageTables: [{
-            id: 'self-id',
-            label: 'pt-lbl'
-          }, {
-            id: 'pt-id',
-            label: 'pt-lbl'
-          }]
-        },
-        actions: {
-          getGroupTabels: jest.fn()
-        }
+        state: {}
       }
     }
 
     store = new Vuex.Store({
-      state, actions, modules
+      state, actions, getters, modules
     })
   })
 
@@ -57,11 +51,5 @@ describe('PageHeaderView', () => {
     const wrapper = shallowMount(PageHeaderView, { store, localVue })
     expect(wrapper.find('table-settings-button-stub')).toBeDefined()
     expect(wrapper.find('em').text()).toEqual('desc')
-  })
-
-  it('removes itself from the package list', () => {
-    const wrapper = shallowMount(PageHeaderView, { store, localVue })
-    // @ts-ignore
-    expect(wrapper.vm.selectableTabels).toEqual([{ id: 'pt-id', label: 'pt-lbl' }])
   })
 })

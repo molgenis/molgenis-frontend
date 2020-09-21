@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            label 'node-carbon'
+            label 'node-erbium'
         }
     }
     environment {
@@ -41,14 +41,12 @@ pipeline {
             }
             steps {
                 container('node') {
+                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                     sh "yarn install"
-                    sh "yarn lerna bootstrap"
-                    sh "yarn lerna run unit"
+                    sh "yarn lerna bootstrap --since origin/master"
+                    sh "yarn lerna run unit --since origin/master"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
-                    // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --env ci_chrome,ci_ie11,ci_firefox"
-                    sh "yarn lerna run build"
+                    sh "yarn lerna run e2e -- --since origin/master -- --env ci_chrome,ci_ie11,ci_firefox"
                 }
                 container('sonar') {
                     // Fetch the target branch, sonar likes to take a look at it
@@ -69,14 +67,19 @@ pipeline {
                 changeRequest()
             }
             environment {
-                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                TAG = "PR-${CHANGE_ID}"
                 DOCKER_CONFIG="/root/.docker"
             }
             steps {
+                container('node') {
+                    sh "yarn lerna run build --since origin/master"
+                    sh "yarn lerna run styleguide:build -- --since origin/master --scope @molgenis-ui/components-library"
+                }
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
                     sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
                     sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview-config/copy_package_dist_dirs.sh"
+                    sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview-config/copy_component_styleguide.sh"
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/preview-config --destination ${LOCAL_REPOSITORY}:${TAG}"
                 }
             }
@@ -86,7 +89,7 @@ pipeline {
                 changeRequest()
             }
             environment {
-                TAG = "PR-${CHANGE_ID}-${BUILD_NUMBER}"
+                TAG = "PR-${CHANGE_ID}"
                 NAME = "preview-frontend-${TAG.toLowerCase()}"
             }
             steps {
@@ -95,6 +98,8 @@ pipeline {
                     sh "vault read -field=value secret/ops/jenkins/rancher/cli2.json > ${JENKINS_AGENT_WORKDIR}/.rancher/cli2.json"
                 }
                 container('rancher') {
+                    sh "rancher apps delete ${NAME} || true" 
+                    sh "sleep 5s" // wait for deletion
                     sh "rancher apps install " +
                         "cattle-global-data:molgenis-helm-molgenis-frontend " +
                         "${NAME} " +
@@ -104,7 +109,8 @@ pipeline {
                         "--set image.repository=${LOCAL_REGISTRY} " +
                         "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
                         "--set proxy.backend.service.targetRelease=master " +
-                        "--set image.pullPolicy=Always"
+                        "--set image.pullPolicy=Always " +
+                        "--set readinessPath=/@molgenis-ui/heartbeat.txt"
                 }
             }
             post {
@@ -130,9 +136,9 @@ pipeline {
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
-                    sh "yarn lerna run e2e -- --scope @molgenis-experimental/data-explorer -- --env ci_chrome,ci_ie11,ci_firefox"
-                    
+                    sh "yarn lerna run e2e -- --scope @molgenis-ui/data-explorer -- --env ci_chrome,ci_ie11,ci_firefox"
                     sh "yarn lerna run build"
+                    sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
                 }
                 container('sonar') {
                     sh "sonar-scanner"

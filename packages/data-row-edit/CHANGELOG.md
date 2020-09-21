@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@4.0.3...@molgenis-ui/data-row-edit@5.0.0) (2020-08-27)
+
+
+### Bug Fixes
+
+* **settings, data-row-edit, questionnaire, scripts:** Use 5.x version of [@molgenis](https://github.com/molgenis)/molgenis-ui-form ([#354](https://github.com/molgenis/molgenis-frontend/issues/354)) ([94cc78d](https://github.com/molgenis/molgenis-frontend/commit/94cc78d)), closes [#346](https://github.com/molgenis/molgenis-frontend/issues/346)
+
+
+### BREAKING CHANGES
+
+* **settings, data-row-edit, questionnaire, scripts:** i18n key 'ui-form:form_not_a_valid_url' replaced with to 'ui-form:form_not_a_valid_hyperlink'
+
+
+
+
+
+## [4.0.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@4.0.2...@molgenis-ui/data-row-edit@4.0.3) (2020-08-21)
+
+
+### Bug Fixes
+
+* **data-row-edit:** Fix validation for field group fields ([d1affbd](https://github.com/molgenis/molgenis-frontend/commit/d1affbd)), closes [#347](https://github.com/molgenis/molgenis-frontend/issues/347)
+
+
+
+
+
+## [4.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@4.0.1...@molgenis-ui/data-row-edit@4.0.2) (2020-08-19)
+
+**Note:** Version bump only for package @molgenis-ui/data-row-edit
+
+
+
+
+
+## [4.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@4.0.0...@molgenis-ui/data-row-edit@4.0.1) (2020-08-17)
+
+
+### Bug Fixes
+
+* **data-row-edit:** only display errors after saving incorrect data ([#340](https://github.com/molgenis/molgenis-frontend/issues/340)) ([bbb9c0f](https://github.com/molgenis/molgenis-frontend/commit/bbb9c0f)), closes [#207](https://github.com/molgenis/molgenis-frontend/issues/207)
+
+
+
+
+
+# [4.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@3.0.5...@molgenis-ui/data-row-edit@4.0.0) (2020-08-10)
+
+
+### Bug Fixes
+
+* **data-row-edit:** Put back fontawesome dependancy ([8acbcc2](https://github.com/molgenis/molgenis-frontend/commit/8acbcc2))
+* **data-row-edit, app-manager, settings, security:** combine chunks to make build output compatible with molgenis backend paths ([da39558](https://github.com/molgenis/molgenis-frontend/commit/da39558))
+
+
+### task
+
+* **app-manager, data-row-edit, settings, security:** prepare for release ([f67e309](https://github.com/molgenis/molgenis-frontend/commit/f67e309))
+
+
+### BREAKING CHANGES
+
+* **app-manager, data-row-edit, settings, security:** build moved to node 12 (erbium), dist file routes changed
+
+
+
+
+
 ## [3.0.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@3.0.4...@molgenis-ui/data-row-edit@3.0.5) (2020-05-07)
 
 

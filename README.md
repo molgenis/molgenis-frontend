@@ -488,6 +488,15 @@ public class NewAppController extends VuePluginController {
 
 That is it.
 
+### Preview frontend with alternative backend using CI rancher cluster
+
+You can link the generated PR preview to a alternative backend service
+- Login to rancher ( or use cli).
+- Find the preview config ( Menu item 'config-maps', use search to find the preview version you are looking for).
+- Edit the ...-config file, change the 'proxy_pass' location to use the alternative backend service ( save after edit).
+- Go to the Workloads page and find the preview version you are looking for.
+- Scale down to 0, and scale back up to 1 ( this will create a new container that uses the updated config).
+ 
 ## Guidelines
 Below you can find some guidelines + code examples for stuff that we view is standard when creating a MOLGENIS plugin.
 
@@ -576,11 +585,27 @@ export default {
 }
 ```
 
-More to come...
+# Jenkins CI/CD
 
+## Pull requests / commits to pull requests
+Whenever a PR is created or commits are being made to a PR
+a trigger is sent to Jenkins to start building a preview.
 
+For our build we use Lerna. We let Lerna check against the change target (mostly master)
+to see which packages have been changed and only test / build those.
 
+## Build script
+You can find a custom build script that checks if a dist folder exists (eg, has been created by Lerna) and copies that to a temp docker dir.
 
+```
+docker/copy_package_dist_dirs.sh
+```
 
+## Preview container
+For the preview we have some special nginx config
 
+```
+docker/preview-config/conf.d/preview.conf
+```
 
+which will proxy all packages to master.dev.molgenis.org that have not been found in the preview container

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/app-manager@0.1.5...@molgenis-ui/app-manager@1.0.0) (2020-08-10)
+
+
+### Bug Fixes
+
+* **data-row-edit, app-manager, settings, security:** combine chunks to make build output compatible with molgenis backend paths ([da39558](https://github.com/molgenis/molgenis-frontend/commit/da39558))
+
+
+### task
+
+* **app-manager, data-row-edit, settings, security:** prepare for release ([f67e309](https://github.com/molgenis/molgenis-frontend/commit/f67e309))
+
+
+### BREAKING CHANGES
+
+* **app-manager, data-row-edit, settings, security:** build moved to node 12 (erbium), dist file routes changed
+
+
+
+
+
 ## [0.1.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/app-manager@0.1.4...@molgenis-ui/app-manager@0.1.5) (2020-06-15)
 
 

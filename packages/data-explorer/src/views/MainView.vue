@@ -1,5 +1,11 @@
 <template>
-  <div class="container-fluid my-2">
+  <div class="container-fluid">
+    <breadcrumb-bar
+      v-if="isUserAuthenticated"
+      :breadcrumbs="breadcrumbs"
+      @fetchItems="fetchPackageTables"
+      >
+    </breadcrumb-bar>
     <toast-component
       class="toast-component mt-2"
       v-if="toast"
@@ -34,8 +40,9 @@
 import Vue from 'vue'
 import FiltersView from './FiltersView'
 import ToastComponent from '../components/utils/ToastComponent'
+import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
 import DataView from './DataView'
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -53,7 +60,7 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
-  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon, PageHeaderView },
+  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon, PageHeaderView, BreadcrumbBar },
   computed: {
     ...mapState([
       'filters',
@@ -61,6 +68,12 @@ export default Vue.extend({
       'showShoppingCart',
       'dataDisplayLayout',
       'tableName'
+    ]),
+    ...mapState('header', [
+      'breadcrumbs'
+    ]),
+    ...mapGetters([
+      'isUserAuthenticated'
     ])
   },
   data () {
@@ -81,6 +94,10 @@ export default Vue.extend({
       'fetchTableViewData',
       'fetchTableMeta'
     ]),
+    ...mapActions('header', [
+      'fetchBreadcrumbs',
+      'fetchPackageTables'
+    ]),
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, deleteConfirmOptions)
@@ -92,6 +109,9 @@ export default Vue.extend({
       if (this.tableName !== tableName) {
         this.loading = true
         await this.fetchTableMeta({ tableName })
+        if (this.isUserAuthenticated) {
+          this.fetchBreadcrumbs()
+        }
         this.setTableName(tableName)
       }
       if (this.dataDisplayLayout === 'CardView') {
@@ -163,5 +183,10 @@ export default Vue.extend({
       max-width: none;
       padding: 0;
     }
+  }
+
+  .container-fluid >>> .breadcrumb {
+    margin-left: -1rem;
+    margin-right: -1rem;
   }
 </style>

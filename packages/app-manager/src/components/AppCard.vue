@@ -47,25 +47,25 @@
 </style>
 
 <script>
-  import Vue from 'vue'
-  import ToggleButton from 'vue-js-toggle-button'
-  Vue.use(ToggleButton)
+import Vue from 'vue'
+import ToggleButton from 'vue-js-toggle-button'
+Vue.use(ToggleButton)
 
-  export default {
-    name: 'AppCard',
-    props: ['app'],
-    methods: {
-      deleteApp (app) {
-        this.$store.dispatch('DELETE_APP', app.id)
-      },
+export default {
+  name: 'AppCard',
+  props: ['app'],
+  methods: {
+    deleteApp (app) {
+      this.$store.dispatch('DELETE_APP', app.id)
+    },
 
-      toggleAppActiveState (app) {
-        if (app.isActive) {
-          this.$store.dispatch('DEACTIVATE_APP', app.id)
-        } else {
-          this.$store.dispatch('ACTIVATE_APP', app.id)
-        }
+    toggleAppActiveState (app) {
+      if (app.isActive) {
+        this.$store.dispatch('DEACTIVATE_APP', app.id)
+      } else {
+        this.$store.dispatch('ACTIVATE_APP', app.id)
       }
     }
   }
+}
 </script>

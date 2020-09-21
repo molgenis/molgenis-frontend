@@ -1,14 +1,24 @@
-import axios from 'axios'
+import build from './clientFactory'
+import store from '@/store/store'
+import { AxiosInstance } from 'axios'
 
-const client = axios.create({
-  baseURL: '/',
-  timeout: 1000,
-  validateStatus: function (status) {
-    if (status === 401) {
+export const errorReponse = (error: any) => {
+  let message = error.message
+  if (error.response && error.response.data && error.response.data.detail) {
+    message = error.response.data.detail
+  }
+  if (error.response && error.response.status === 401) {
+    if (!store.getters.isUserAuthenticated) {
       window.location.href = '/login'
     }
-    return status >= 200 && status < 300
   }
+  store.commit('setToast', { message, type: 'danger' })
+  return Promise.reject(error)
+}
+
+// Create the default axios client the data-explorer will use
+const client:AxiosInstance = build({
+  responseErrorInterceptor: errorReponse
 })
 
 export default client

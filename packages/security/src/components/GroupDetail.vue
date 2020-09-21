@@ -53,63 +53,148 @@
         </router-link>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col">
+        <h3 class="mt-4">{{ 'security-ui-permissions-label-anonymous' | i18n }}</h3>
+      </div>
+    </div>
+
+    <div class="row groups-listing">
+      <div class="col">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="anonymous-view" v-model="anonymousViewerPermission" :disabled="isSaving">
+          <label class="form-check-label" for="anonymous-view">
+            {{ 'security-ui-anonymous-can-view' | i18n }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h3 class="mt-4">{{ 'security-ui-permissions-label-user' | i18n }}</h3>
+      </div>
+    </div>
+
+    <div class="row groups-listing">
+      <div class="col">
+        <div class="form-check" role="button">
+          <input class="form-check-input" type="radio" id="registered-none" name="RegisteredUser" value="" v-model="registeredUserPermission" :disabled="isSaving">
+          <label class="form-check-label" for="registered-none">
+            {{ 'security-ui-user-can-not-view' | i18n }}
+          </label>
+        </div>
+        <div class="form-check" role="button">
+          <input class="form-check-input" type="radio" id="registered-view" name="RegisteredUser" value="Viewer" v-model="registeredUserPermission" :disabled="isSaving">
+          <label class="form-check-label" for="registered-view">
+            {{ 'security-ui-user-can-view' | i18n }}
+          </label>
+        </div>
+        <div class="form-check" role="button">
+          <input class="form-check-input" type="radio" id="registered-edit" name="RegisteredUser" value="Editor" v-model="registeredUserPermission" :disabled="isSaving">
+          <label class="form-check-label" for="registered-edit">
+            {{ 'security-ui-user-can-edit' | i18n }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col">
+        <span class="">
+          <button id="save-permissions-btn" @click="savePermissions" type="button" class="btn btn-primary" :disabled="isSaving">
+            <i :class="['fa', 'fa-save']"></i> {{ 'security-ui-save-permissions' | i18n }} <i v-if="isSaving" class="fa fa-spinner fa-spin "></i>
+          </button>
+        </span>
+      </div>
+    </div>
     <b-modal id="deleteModal" ok-variant="danger" cancel-variant="secondary"
              :title="$t('security-ui-delete-confirmation-title')"
              :ok-title="$t('security-ui-delete-confirmation-ok-text')"
-             :cancel-title="$t('security-ui-delete-confirmation-cancel-text')" @ok="deleteGroup">
+             :cancel-title="$t('security-ui-delete-confirmation-cancel-text')" @ok="deleteGroupHandler">
       {{ 'security-ui-delete-confirmation-text' | i18n }}
     </b-modal>
   </div>
 </template>
 
 <script>
-  import Toast from './Toast'
-  import { mapGetters, mapMutations } from 'vuex'
+import Toast from './Toast'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
-  export default {
-    name: 'GroupDetail',
-    props: {
-      name: {
-        type: String,
-        required: false
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'groupMembers',
-        'groupPermissions',
-        'getLoginUser'
-      ]),
-      sortedMembers () {
-        const members = this.groupMembers[this.name] || []
-        return [...members].sort((a, b) => a.username.localeCompare(b.username))
-      },
-      canAddMember () {
-        const permissions = this.groupPermissions[this.name] || []
-        return permissions.includes('ADD_MEMBERSHIP')
-      }
-    },
-    methods: {
-      ...mapMutations([
-        'clearToast'
-      ]),
-      addMember () {
-        this.clearToast()
-        this.$router.push({name: 'addMember', params: {groupName: this.name}})
-      },
-      deleteGroup () {
-        this.$store.dispatch('deleteGroup', {groupName: this.name})
-          .then(() => {
-            this.$router.push({name: 'groupOverView'})
-          })
-      }
-    },
-    created () {
-      this.$store.dispatch('fetchGroupMembers', this.name)
-      this.$store.dispatch('fetchGroupPermissions', this.name)
-    },
-    components: {
-      Toast
+export default {
+  name: 'GroupDetail',
+  props: {
+    name: {
+      type: String,
+      required: false
     }
+  },
+  data () {
+    return {
+      anonymousViewerPermission: false,
+      registeredUserPermission: '',
+      isSaving: true
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'groupMembers',
+      'groupPermissions',
+      'getLoginUser',
+      'getAnonymousGroupRightsBool',
+      'getUserGroupRightsString'
+    ]),
+    sortedMembers () {
+      const members = this.groupMembers[this.name] || []
+      return [...members].sort((a, b) => a.username.localeCompare(b.username))
+    },
+    canAddMember () {
+      const groupPermissions = this.groupPermissions[this.name] || []
+      return groupPermissions.includes('ADD_MEMBERSHIP')
+    }
+  },
+  methods: {
+    ...mapMutations([
+      'clearToast'
+    ]),
+    ...mapActions([
+      'fetchGroupMembers',
+      'fetchGroupPermissions',
+      'fetchGroupRights',
+      'setGroupRight',
+      'deleteGroup'
+    ]),
+    async savePermissions () {
+      this.isSaving = true
+      await Promise.all([
+        this.setGroupRight({ name: this.name, role: 'ANONYMOUS', right: this.anonymousViewerPermission ? 'Viewer' : '' }),
+        this.setGroupRight({ name: this.name, role: 'USER', right: this.registeredUserPermission })
+      ])
+      await this.fetchGroupRights(this.name)
+      this.isSaving = false
+    },
+    addMember () {
+      this.clearToast()
+      this.$router.push({ name: 'addMember', params: { groupName: this.name } })
+    },
+    deleteGroupHandler () {
+      this.deleteGroup({ groupName: this.name }).then(() => {
+        this.$router.push({ name: 'groupOverView' })
+      })
+    }
+  },
+  created () {
+    this.fetchGroupMembers(this.name)
+    this.fetchGroupPermissions(this.name)
+    this.fetchGroupRights(this.name).then(() => {
+      this.anonymousViewerPermission = this.getAnonymousGroupRightsBool(this.name, 'Viewer')
+      this.registeredUserPermission = this.getUserGroupRightsString(this.name)
+      this.isSaving = false
+    })
+  },
+  components: {
+    Toast
   }
+}
 </script>

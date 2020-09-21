@@ -1,13 +1,13 @@
 import client from '@/lib/client'
 import ApplicationState from '@/types/ApplicationState'
-import { tryAction } from './helpers'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
+import bootstrapExplorer from '@/lib/bootstrapExplorer'
 
 export default {
-  fetchTableMeta: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
+  fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
     commit('setTableSettings', {})
     commit('setMetaData', null)
     commit('setFilterDefinition', [])
@@ -17,11 +17,14 @@ export default {
 
     try {
       const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
-      // @ts-ignore
-      commit('setTableSettings', response.data.items[0].data)
+      if (response.data.items.length === 1) {
+        commit('setTableSettings', response.data.items[0].data)
+      }
     } catch (e) {
       // dont show error to user, just keep the default settings
     }
+
+    bootstrapExplorer()
 
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
     const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
@@ -29,15 +32,19 @@ export default {
     commit('setFilterDefinition', definition)
     commit('setFiltersShown', state.tableSettings.defaultFilters)
 
-    if (state.bookmark !== '') { commit('applyBookmark') }
-  }),
+    if (state.bookmark !== '') {
+      commit('applyBookmark')
+    }
+  },
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
-      throw new Error('cannot load card data without table name')
+      commit('setToast', { message: 'cannot load card data without table name', type: 'danger' })
+      return
     }
 
     if (state.tableMeta === null) {
-      throw new Error('cannot load table data without meta data')
+      commit('setToast', { message: 'cannot load table data without meta data', type: 'danger' })
+      return
     }
 
     let columns: string[]
@@ -50,7 +57,9 @@ export default {
     if (isCustomCard) {
       columns = state.tableSettings.customCardAttrs
         .split(',')
+        .filter(f => f !== '')
         .map(a => a.trim())
+
       tableData = await dataRepository.getTableDataDeepReference(
         state.tableName,
         state.tableMeta,
@@ -66,13 +75,15 @@ export default {
       commit('setTableData', tableData)
     }
   },
-  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {tableName: string}) => {
+  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { tableName: string }) => {
     if (state.tableName === null) {
-      throw new Error('cannot fetch table view data without table name')
+      commit('setToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
+      return
     }
 
     if (state.tableMeta === null) {
-      throw new Error('cannot fetch table view data without meta data')
+      commit('setToast', { message: 'cannot fetch table view data without meta data', type: 'danger' })
+      return
     }
 
     const rsqlQuery = getters.filterRsql
@@ -90,13 +101,15 @@ export default {
     }
   },
   // expanded default card
-  fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: {rowId: string}) => {
+  fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {
     if (state.tableName === null) {
-      throw new Error('cannot fetch row data without table name')
+      commit('setToast', { message: 'cannot fetch row data without table name', type: 'danger' })
+      return
     }
 
     if (state.tableMeta === null) {
-      throw new Error('cannot fetch row data without meta data')
+      commit('setToast', { message: 'cannot fetch row data without meta data', type: 'danger' })
+      return
     }
 
     const rsqlQuery = getters.filterRsql
@@ -108,11 +121,12 @@ export default {
       commit('updateRowData', { rowId: payload.rowId, rowData })
     }
   },
-  deleteRow: tryAction(async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string }) => {
+  deleteRow: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string }) => {
     if (typeof state.tableName !== 'string') {
-      throw new Error('Cannot delete row from unknown table')
+      commit('setToast', { message: 'cannot delete row from unknown table', type: 'danger' })
+      return
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
-  })
+  }
 }
