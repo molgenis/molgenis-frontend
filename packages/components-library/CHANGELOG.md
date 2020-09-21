@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.2.0...@molgenis-ui/components-library@0.2.1) (2020-09-21)
+
+
+### Bug Fixes
+
+* **components-library:** now exposes correctly ([a9c9914](https://github.com/molgenis/molgenis-frontend/commit/a9c9914))
+
+
+
+
+
 # [0.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.1.1...@molgenis-ui/components-library@0.2.0) (2020-09-18)
 
 
