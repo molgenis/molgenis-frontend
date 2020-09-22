@@ -29,29 +29,34 @@
 
 <script>
 export default {
+  name: 'CheckboxFilter',
   props: {
-    name: {
-      type: String,
-      required: true
-    },
-    label: {
-      type: String,
-      required: false,
-      default: () => ''
-    },
+    /**
+     * A Promise-function that resolves with an array of options.
+     * {text: 'foo', value: 'bar'}
+     */
     options: {
       type: [Function],
       required: true
     },
+    /**
+     * This is the v-model value; an array of selected options.
+     */
     value: {
       type: Array,
       default: () => []
     },
+    /**
+     * Whether to use (De)Select All or not.
+     */
     bulkOperation: {
       type: Boolean,
       required: false,
       default: () => true
     },
+    /**
+     * Limit the maximum number of visible items.
+     */
     maxVisibleOptions: {
       type: Number,
       default: () => undefined
@@ -108,15 +113,11 @@ export default {
   }
 }
 </script>
-
 <docs>
 Filter that renders a list of options as a set of checkboxes
 
-## Examples
-
+## Usage
 ```jsx
-Basic checkbox:
-
 const options = () => Promise.resolve(
  [
   { text: 'Orange', value: 'orange' },
@@ -125,15 +126,13 @@ const options = () => Promise.resolve(
   { text: 'Grape', value: 'grape' }
  ]
 )
-const selection = []
-<checkbox-filter
-  name="example-checkbox"
+const model = []
+<CheckboxFilter
+  v-bind:maxVisibleOptions="null"
+  v-bind:bulkOperation="true"
   v-bind:options="options"
-  v-model="selection">
-</checkbox-filter>
-
-<div>Selected</div>
-<ul><li v-for="item in selection">{{item}}</li></ul>
-
+  v-model="model">
+</CheckboxFilter>
+<div>model: {{model}}</div>
 ```
 </docs>
