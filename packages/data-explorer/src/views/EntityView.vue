@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <div class="row" v-if="shoppingFilter && isShop">
+    <div class="row" v-if="isShop">
       <div class="col">
         <button class="btn btn-success m-1">
           <font-awesome-icon icon="shopping-bag"></font-awesome-icon>
@@ -74,7 +74,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'tableMeta', 'shoppedEntityItems', 'defaultEntityData', 'tableData']),
+    ...mapState(['dataDisplayLayout', 'tableMeta', 'shoppedEntityItems', 'defaultEntityData', 'tableData']),
     idAttribute () {
       return this.tableMeta.idAttribute.name
     },
@@ -85,11 +85,7 @@ export default {
       return Object.keys(this.entitiesToShow[0])
     },
     entitiesToShow () {
-      if (this.shoppingFilter) {
-        return this.tableData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
-      } else {
-        return this.tableData.items
-      }
+      return this.tableData.items
     }
   },
   methods: {
