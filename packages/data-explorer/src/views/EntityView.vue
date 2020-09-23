@@ -49,6 +49,16 @@
       </div>
     </div>
 
+    <cart-selection-toast
+      v-if="shoppedEntityItems.length > 0"
+      :cartSelectionText="`${shoppedEntityItems.length} items(s) selected`"
+      :clickHandler="selectionAction"
+      title="Selection"
+    >
+      <template v-slot:buttonText>
+        Action
+      </template>
+    </cart-selection-toast>
   </div>
 </template>
 
@@ -60,6 +70,7 @@ import { mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { CartSelectionToast } from '@molgenis-ui/components-library'
 
 library.add(faShoppingBag)
 
@@ -74,7 +85,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'tableMeta', 'shoppedEntityItems', 'defaultEntityData', 'tableData']),
+    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'tableMeta', 'shoppedEntityItems', 'defaultEntityData', 'tableData', 'CartSelectionToast']),
     idAttribute () {
       return this.tableMeta.idAttribute.name
     },

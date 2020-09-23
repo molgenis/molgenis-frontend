@@ -17,6 +17,18 @@
         </div>
       </div>
     </div>
+    <cart-selection-toast
+      v-if="shoppedEntityItems.length > 0"
+      :cartSelectionText="`${shoppedEntityItems.length} item${shoppedEntityItems.length==1?'':'s'} selected`"
+      :clickHandler="selectionAction"
+      title="Selection"
+      v-model="shoppedEntityItems"
+    >
+      <template v-slot:removeButton>&times;</template>
+      <template v-slot:buttonText>
+        Download
+      </template>
+    </cart-selection-toast>
   </div>
 </template>
 
@@ -26,10 +38,11 @@ import SelectLayoutView from './SelectLayoutView'
 import ClipboardView from './ClipboardView'
 import { mapState, mapMutations } from 'vuex'
 import ActiveFilters from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/ActiveFilters.vue'
+import { CartSelectionToast } from '@molgenis-ui/components-library'
 
 export default Vue.extend({
   name: 'DataView',
-  components: { SelectLayoutView, ClipboardView, ActiveFilters },
+  components: { SelectLayoutView, ClipboardView, ActiveFilters, CartSelectionToast },
   computed: {
     ...mapState([
       'showShoppingCart',
@@ -37,7 +50,8 @@ export default Vue.extend({
       'tableMeta',
       'tableSettings',
       'searchText',
-      'filters'
+      'filters',
+      'shoppedEntityItems'
     ]),
     searchText: {
       get () {
@@ -64,6 +78,9 @@ export default Vue.extend({
       'setFilterSelection',
       'setSearchText'
     ]),
+    selectionAction () {
+
+    },
     saveFilterState (newSelections) {
       if (newSelections['_search'] === undefined) {
         this.setSearchText('')
