@@ -22,9 +22,15 @@
   "main": "./dist/components-library.common.js",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
+    "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "@fortawesome/vue-fontawesome": "^2.0.0",
+    "@molgenis/rsql": "^0.2.5",
     "bootstrap-vue": "^2.17.0",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-slider-component": "^3.2.5",
+    "vue2-daterange-picker": "^0.5.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.13",
