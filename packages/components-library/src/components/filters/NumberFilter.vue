@@ -29,26 +29,38 @@ export default Vue.extend({
   name: 'NumberFilter',
   components: { VueSlider },
   props: {
-    name: {
-      type: String,
-      required: true
-    },
+    /**
+     * The minimum allowed filter value.
+     */
     min: {
       type: Number,
       default: () => Number.MIN_SAFE_INTEGER
     },
+    /**
+     * The maximum allowed filter value.
+     */
     max: {
       type: Number,
       default: () => Number.MAX_SAFE_INTEGER
     },
+    /**
+     * Step size when using browser UI controls.
+     */
     step: {
       type: Number,
       default: () => 1
     },
+    /**
+     * The number to be used in filtering items.
+     * @model
+     */
     value: {
       type: Number,
       default: () => null
     },
+    /**
+     * Whether to use an additional UI slider to set the input value.
+     */
     useSlider: {
       type: Boolean,
       default: () => false
@@ -72,18 +84,20 @@ export default Vue.extend({
 })
 </script>
 <docs>
-Item-based Filter. Search box is used to find items in the table.
-
+Browser number input filter with additional options.
 ### Usage
 ```jsx
-const model = []
+const model = 5
 <NumberFilter
-  v-bind:options="$mocks.multifilterOptions"
   v-bind:collapses="false"
   v-bind:maxVisibleOptions="5"
   v-model="model"
-  label="Filter with multiple options"
-  name="author">
+  v-bind:min="0"
+  v-bind:max="10"
+  v-bind:step="2"
+  v-bind:useSlider="true"
+  label="Number"
+  name="number">
 </NumberFilter>
 <div>{{model}}</div>
 ```

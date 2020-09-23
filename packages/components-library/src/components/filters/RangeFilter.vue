@@ -72,26 +72,38 @@ export default Vue.extend({
   name: 'RangeFilter',
   components: { VueSlider, FontAwesomeIcon },
   props: {
-    name: {
-      type: String,
-      required: true
-    },
+    /**
+     * The minimum allowed filter value.
+     */
     min: {
       type: Number,
       default: () => Number.MIN_SAFE_INTEGER
     },
+    /**
+     * The maximum allowed filter value.
+     */
     max: {
       type: Number,
       default: () => Number.MAX_SAFE_INTEGER
     },
+    /**
+     * Step size when using browser UI controls.
+     */
     step: {
       type: Number,
       default: () => 1
     },
+    /**
+     * The number to be used in filtering items.
+     * @model
+     */
     value: {
       type: Array,
       default: () => [null, null]
     },
+    /**
+     * Whether to use an additional UI slider to set the input value.
+     */
     useSlider: {
       type: Boolean,
       default: () => false
@@ -133,9 +145,28 @@ export default Vue.extend({
       }
       this.rangeValue = [this.rangeValue[0], this.rangeValue[1]]
 
-      // clone to break reactive loop
+      /**
+      * Clone to break reactive loop.
+      * @property {Array} rangeValue Range filter value
+      */
       this.$emit('input', [...this.rangeValue])
     }
   }
 })
 </script>
+<docs>
+Browser number input filter with additional options.
+### Usage
+```jsx
+const model = [2, 8]
+<RangeFilter
+  v-model="model"
+  v-bind:min="0"
+  v-bind:max="10"
+  v-bind:step="1"
+  v-bind:useSlider="true"
+  label="Number"
+  name="number">
+</RangeFilter>
+<div>{{model}}</div>
+```

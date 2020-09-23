@@ -29,15 +29,25 @@ export default Vue.extend({
   name: 'StringFilter',
   components: { FontAwesomeIcon },
   props: {
+    /**
+     * The HTML input element name.
+     */
     name: {
       type: String,
       required: true
     },
+    /**
+     * The HTML input element placeholder.
+     */
     placeholder: {
       type: String,
       required: false,
       default: () => ''
     },
+    /**
+     * The StringFilter model value.
+     * @model
+     */
     value: {
       type: String,
       default: () => ''
@@ -55,3 +65,15 @@ export default Vue.extend({
   }
 })
 </script>
+<docs>
+Browser input filter with additional options.
+### Usage
+```jsx
+const model = 'bla'
+<StringFilter
+  v-model="model"
+  placeholder="Input placeholder"
+  name="number">
+</StringFilter>
+<div>{{model}}</div>
+```
