@@ -190,6 +190,6 @@ const model = [defaultMin.toISOString(), defaultMax.toISOString()]
     v-model='model'
     type='date-time-filter'>
 </DateTimeFilter>
-<div>{{model}} {{foobar}}</div>
+<div>{{model}}</div>
 ```
 </docs>

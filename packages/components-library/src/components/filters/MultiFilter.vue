@@ -149,22 +149,20 @@ export default {
         if (newVal.length) {
           this.showCount = this.maxVisibleOptions
           this.isLoading = true
-          try {
-            const fetched = await this.options({ nameAttribute: true, queryType: 'like', query: this.query })
-            const valuesPresent = previousSelection.map(prev => prev.value)
 
-            if (valuesPresent.length) {
-              const difference = fetched.filter(
-                prev => !valuesPresent.includes(prev.value)
-              )
-              this.inputOptions = previousSelection.concat(difference)
-            } else {
-              this.inputOptions = fetched
-            }
-          } catch (err) {
-          } finally {
-            this.isLoading = false
+          const fetched = await this.options({ nameAttribute: 'label', query: this.query })
+          const valuesPresent = previousSelection.map(prev => prev.value)
+
+          if (valuesPresent.length) {
+            const difference = fetched.filter(
+              prev => !valuesPresent.includes(prev.value)
+            )
+            this.inputOptions = previousSelection.concat(difference)
+          } else {
+            this.inputOptions = fetched
           }
+
+          this.isLoading = false
         }
       }, 500)
     }
@@ -182,9 +180,9 @@ export default {
     async initializeFilter () {
       let fetched = []
       if (this.value && this.value.length > 0) {
-        fetched = await this.options({ nameAttribute: false, queryType: 'in', query: this.value.join(',') })
+        fetched = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.value.join(',') })
       } else {
-        fetched = await this.options({ count: this.initialDisplayItems })
+        fetched = await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })
       }
       this.initialOptions = fetched
     }
@@ -211,22 +209,18 @@ export default {
 }
 </style>
 <docs>
-Filter between a begin Date(time) and optionally an end Date(time)
+Item-based Filter. Search box is used to find items in the table.
 
 ### Usage
 ```jsx
-{{$foo}}
-const options = (options) => Promise.resolve(
- [
-  { text: 'Orange', value: 'orange' },
-  { text: 'Apple', value: 'apple' },
-  { text: 'Pineapple', value: 'pineapple' },
-  { text: 'Grape', value: 'grape' }
- ]
-)
+const model = []
 <MultiFilter
-  name="multi"
-    v-bind:collapses='false'>
+  v-bind:options="$mocks.multifilterOptions"
+  v-bind:collapses="false"
+  v-bind:maxVisibleOptions="5"
+  v-model="model"
+  label="Filter with multiple options"
+  name="author">
 </MultiFilter>
 <div>{{model}}</div>
 ```

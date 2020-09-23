@@ -71,3 +71,19 @@ export default Vue.extend({
   }
 })
 </script>
+<docs>
+Item-based Filter. Search box is used to find items in the table.
+
+### Usage
+```jsx
+const model = []
+<NumberFilter
+  v-bind:options="$mocks.multifilterOptions"
+  v-bind:collapses="false"
+  v-bind:maxVisibleOptions="5"
+  v-model="model"
+  label="Filter with multiple options"
+  name="author">
+</NumberFilter>
+<div>{{model}}</div>
+```
