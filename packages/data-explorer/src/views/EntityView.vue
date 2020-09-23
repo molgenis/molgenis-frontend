@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <div class="row" v-if="shoppingFilter && isShop">
+    <div class="row" v-if="isShop">
       <div class="col">
         <button class="btn btn-success m-1">
           <font-awesome-icon icon="shopping-bag"></font-awesome-icon>

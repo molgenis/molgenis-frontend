@@ -13,7 +13,6 @@ describe('TableView.vue', () => {
 
   beforeEach(() => {
     state = {
-      shoppingFilter: false,
       tableMeta: {
         idAttribute: { name: 'id' },
         attributes: [
