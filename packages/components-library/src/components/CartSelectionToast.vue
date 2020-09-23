@@ -127,7 +127,7 @@ export default {
     alert('clicked')
   }
   <b-toaster name="demo"></b-toaster>
-  <cart-selection-toast location="demo" :clickHandler="click" cartSelectionText="3 items selected">
+  <cart-selection-toast location="demo" v-bind:clickHandler="click" cartSelectionText="3 items selected">
     <template v-slot:buttonText>To cart</template>
     <template v-slot:cartSelection>10 items selected</template>
   </cart-selection-toast>
@@ -140,7 +140,7 @@ export default {
     alert('clicked')
   }
   <b-toaster name="demo2"></b-toaster>
-  <cart-selection-toast location="demo2" v-model="items" :clickHandler="click" :cartSelectionText="items.length + ' item(s) selected'">
+  <cart-selection-toast location="demo2" v-model="items" v-bind:clickHandler="click" v-bind:cartSelectionText="items.length + ' item(s) selected'">
     <template v-slot:buttonText>Checkout <i class="fa fa-shopping-basket"></i></template>
     <template v-slot:cartSelection>{{items.length}} item(s) selected</template>
     <template v-slot:removeButton><i class="far fa-times-circle"></i></template>

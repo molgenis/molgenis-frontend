@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.2.1...@molgenis-ui/components-library@0.2.2) (2020-09-22)
+
+
+### Bug Fixes
+
+* **components-lib:** Fix linting in jsx template for vs code, needs v-bind: instead of : ([f4a5a3f](https://github.com/molgenis/molgenis-frontend/commit/f4a5a3f))
+
+
+
+
+
 ## [0.2.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.2.0...@molgenis-ui/components-library@0.2.1) (2020-09-21)
 
 
