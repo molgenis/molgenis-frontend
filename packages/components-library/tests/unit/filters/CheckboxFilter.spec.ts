@@ -4,9 +4,8 @@ import CheckboxFilter from '@/components/filters/CheckboxFilter.vue'
 const localVue = createLocalVue()
 localVue.use(BootstrapVue)
 
-
-function getWrapper(props = {}) {
-  let propsData = {
+function getWrapper (props = {}) {
+  const propsData = {
     ...props,
     value: [],
     options: async () => {
@@ -23,7 +22,7 @@ function getWrapper(props = {}) {
     stubs: ['font-awesome-icon'],
     propsData,
     listeners: {
-      input: (newVal:any) => {
+      input: (newVal: any) => {
         wrapper.setProps({ value: newVal })
       }
     }
@@ -31,11 +30,9 @@ function getWrapper(props = {}) {
   return wrapper
 }
 
-
 describe('CheckboxFilter.vue', () => {
-
   describe('Parsing only required props', () => {
-    let wrapper:any
+    let wrapper: any
     beforeEach(() => { wrapper = getWrapper() })
 
     it('matches the snapshot', () => {
@@ -64,7 +61,7 @@ describe('CheckboxFilter.vue', () => {
   })
 
   describe('When restricting maxVisibleOptions to 1', () => {
-    let wrapper:any
+    let wrapper: any
     beforeEach(() => { wrapper = getWrapper({ maxVisibleOptions: 1 }) })
 
     it('can hide elements based on maxVisibleOptions', async () => {
