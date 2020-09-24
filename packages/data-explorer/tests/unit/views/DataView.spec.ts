@@ -31,6 +31,8 @@ describe('DataView.vue', () => {
     }
     mutations = {
       setSearchText: jest.fn(),
+      setHideFilters: jest.fn(),
+      setShowShoppingCart: jest.fn(),
       setFilterSelection: jest.fn()
     }
     actions = {
@@ -72,6 +74,16 @@ describe('DataView.vue', () => {
       // @ts-ignore
       wrapper.vm.saveFilterState(newSelections)
       expect(mutations.setSearchText).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('cartSelectionToast button ', () => {
+    it('should hide filters and change to selection list when openSelectionList is called', () => {
+      const wrapper = shallowMount(DataView, { store, localVue })
+      // @ts-ignore
+      wrapper.vm.openSelectionList()
+      expect(mutations.setShowShoppingCart).toHaveBeenCalledWith(state, true)
+      expect(mutations.setHideFilters).toHaveBeenCalledWith(state, true)
     })
   })
 

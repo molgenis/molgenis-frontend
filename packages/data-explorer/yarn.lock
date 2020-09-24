@@ -759,10 +759,10 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@molgenis-ui/components-library@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-0.2.2.tgz#9eb3f2d9e115da9456453f1ddba9c8ee26b97920"
-  integrity sha512-YR3/ZUWuT4dW1qbv9BQ+0w7BCFGJu2RixfjD57gHjdIBgCEEzeFb21K+tjiUc9BSGry4oSyvAnSM2yTHCb/TDw==
+"@molgenis-ui/components-library@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-0.3.0.tgz#1509ad7f0c43a367d4140aacc65cfd1feafee37c"
+  integrity sha512-GtCYfma781dOdZ6zg/0NJAyxCHJtLslCaXWhm7WJoovE+1fiYdH8tm3hwrif3g3pu4dHjE0e+OK5TsctPN3odg==
   dependencies:
     "@fortawesome/fontawesome-free" "^5.14.0"
     bootstrap-vue "^2.17.0"

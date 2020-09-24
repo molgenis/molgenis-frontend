@@ -18,15 +18,16 @@
       </div>
     </div>
     <cart-selection-toast
-      v-if="selectedItemIds.length > 0"
+      v-if="selectedItemIds.length > 0 && !showSelected"
       :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"
-      :clickHandler="selectionAction"
+      :clickHandler="openSelectionList"
       title="Selection"
       v-model="handleSelectionItems"
     >
-      <template v-slot:removeButton>&times;</template>
+      <template v-slot:removeButton><font-awesome-icon icon="times"></font-awesome-icon></template>
       <template v-slot:buttonText>
-        Download
+        <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
+        Show cart
       </template>
     </cart-selection-toast>
   </div>
@@ -39,10 +40,15 @@ import ClipboardView from './ClipboardView'
 import { mapState, mapMutations } from 'vuex'
 import ActiveFilters from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/ActiveFilters.vue'
 import { CartSelectionToast } from '@molgenis-ui/components-library'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTimes, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faTimes, faShoppingCart)
 
 export default Vue.extend({
   name: 'DataView',
-  components: { SelectLayoutView, ClipboardView, ActiveFilters, CartSelectionToast },
+  components: { SelectLayoutView, ClipboardView, ActiveFilters, CartSelectionToast, FontAwesomeIcon },
   computed: {
     ...mapState([
       'showSelected',
@@ -51,14 +57,19 @@ export default Vue.extend({
       'tableSettings',
       'searchText',
       'filters',
-      'selectedItemIds'
+      'selectedItemIds',
+      'tableData',
+      'tableMeta'
     ]),
+    displayName () {
+      return this.tableMeta.labelAttribute.name || 'name'
+    },
     handleSelectionItems: {
       get () {
-        return this.selectedItemIds
+        return this.selectedItemIds.map(id => ({ id: id, name: this.tableData.items.find(item => item.id === id)[this.displayName] }))
       },
       set (value) {
-        this.setShoppingItems(value)
+        this.setShoppingItems(value.map(item => item.id))
       }
     },
     searchText: {
@@ -85,10 +96,13 @@ export default Vue.extend({
     ...mapMutations([
       'setFilterSelection',
       'setSearchText',
+      'setShowShoppingCart',
+      'setHideFilters',
       'setShoppingItems'
     ]),
-    selectionAction () {
-
+    openSelectionList () {
+      this.setShowShoppingCart(true)
+      this.setHideFilters(true)
     },
     saveFilterState (newSelections) {
       if (newSelections['_search'] === undefined) {

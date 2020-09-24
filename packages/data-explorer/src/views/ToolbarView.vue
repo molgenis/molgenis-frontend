@@ -28,13 +28,6 @@
         <font-awesome-icon icon="th-list"></font-awesome-icon>
         Table layout
       </button>
-      <button
-        v-if="!showSelected && tableSettings.isShop"
-        @click="openShoppingCart"
-        class="btn btn-light ml-1 float-right btn-outline-secondary show-cart">
-        <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
-        Show cart
-      </button>
     </div>
   </div>
 </template>
@@ -43,11 +36,11 @@
 import Vue from 'vue'
 import { mapState, mapMutations, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faStore, faShoppingCart, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faStore, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
 
-library.add(faShoppingCart, faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare)
+library.add(faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare)
 
 export default Vue.extend({
   name: 'ToolbarView',
@@ -55,10 +48,10 @@ export default Vue.extend({
   computed: {
     ...mapState([
       'dataDisplayLayout',
-      'hideFilters',
       'tableSettings',
       'searchText',
-      'tableName'
+      'tableName',
+      'showSelected'
     ]),
     ...mapGetters([
       'hasEditRights'
@@ -75,8 +68,6 @@ export default Vue.extend({
   methods: {
     ...mapMutations([
       'setDataDisplayLayout',
-      'setShowShoppingCart',
-      'setHideFilters',
       'setFilterSelection',
       'setSearchText'
     ]),
@@ -84,10 +75,6 @@ export default Vue.extend({
       const value =
         this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.setDataDisplayLayout(value)
-    },
-    openShoppingCart () {
-      this.setShowShoppingCart(true)
-      this.setHideFilters(true)
     }
   }
 })

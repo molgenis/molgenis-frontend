@@ -17,9 +17,7 @@ describe('ToolbarView.vue', () => {
     state.tableName = 'root_hospital_patients'
 
     mutations = {
-      setHideFilters: jest.fn(),
       setDataDisplayLayout: jest.fn(),
-      setShowShoppingCart: jest.fn(),
       setFilterSelection: jest.fn(),
       setSearchText: jest.fn()
     }
@@ -54,15 +52,6 @@ describe('ToolbarView.vue', () => {
     wrapper.find('button.card-layout').trigger('click')
     // @ts-ignore
     expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'CardView')
-  })
-
-  it('opens shoppingcart', () => {
-    state.tableSettings.isShop = true
-    const wrapper = shallowMount(ToolbarView, { store, localVue })
-    const button = wrapper.find('button.show-cart')
-    button.trigger('click')
-    expect(mutations.setShowShoppingCart).toHaveBeenCalledWith(state, true)
-    expect(mutations.setHideFilters).toHaveBeenCalledWith(state, true)
   })
 
   describe('add row button', () => {
