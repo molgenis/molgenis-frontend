@@ -7,134 +7,77 @@ localVue.use(BootstrapVue)
 
 
 describe('CheckboxFilter.vue', () => {
-  const optionsPromise = () => {
-    return new Promise(
-      function (resolve) {
-        resolve([{ value: 'foo', text: 'Foo' }, { value: 'bar', text: 'Bar' }, { value: 'baz', text: 'Baz' }])
+  let wrapper:any
+
+  beforeEach(() => {
+    wrapper = mount(CheckboxFilter, {
+      localVue,
+      stubs: [
+          'font-awesome-icon',
+      ],
+      propsData: {
+        bulkOperation: true,
+        name: 'name',
+        label: 'label',
+        value: [],
+        options: async () => {
+          return [
+            { value: 'foo', text: 'Foo' },
+            { value: 'bar', text: 'Bar' },
+            { value: 'baz', text: 'Baz' }
+          ]
+        }
       }
-    )
-  }
-
-  const wrapper = mount(CheckboxFilter, {
-    localVue,
-    stubs: [
-        'font-awesome-icon',
-    ],
-    propsData: {
-      name: 'name',
-      label: 'label',
-      value: [],
-      options: optionsPromise
-    }
-  })
-
-  const unselected = mount(CheckboxFilter, {
-    localVue,
-    stubs: {
-      'font-awesome-icon': '<div />'
-    },
-    propsData: {
-      name: 'name',
-      label: 'label',
-      value: [],
-      options: optionsPromise
-    }
-  })
-
-  const selected = mount(CheckboxFilter, {
-    localVue,
-    stubs: {
-      'font-awesome-icon': '<div />'
-    },
-    propsData: {
-      name: 'name',
-      label: 'label',
-      value: ['foo'],
-      options: optionsPromise
-    }
-  })
-
-  const maxVisible = mount(CheckboxFilter, {
-    localVue,
-    stubs: {
-      'font-awesome-icon': '<div />'
-    },
-    propsData: {
-      name: 'name',
-      label: 'label',
-      maxVisibleOptions: 1,
-      value: [],
-      options: optionsPromise
-    }
+    })
   })
 
   it('matches the snapshot', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-
-  it('can set and unset values', () => {
+  it('can set and unset values', async () => {
     const inputElements = wrapper.findAll('input')
-    console.log("INPUT ELEMENTS", inputElements)
+
     inputElements.at(0).trigger('click') // select foo
     inputElements.at(1).trigger('click') // select bar
     inputElements.at(2).trigger('click') // select baz
     inputElements.at(1).trigger('click') // deselect bar
-    console.log('EMITTED:', wrapper.emitted)
-    // @ts-ignore
-    expect(wrapper.emitted('input')[3]).toEqual([['foo', 'baz']])
+
+    await localVue.nextTick()
+    expect(wrapper.emitted('input')[0]).toEqual([['foo', 'baz']])
   })
 
-//   it('can select all and deselect all', () => {
-//     unselected.find('a.toggle-select.card-link').trigger('click') // select all
-//     expect(unselected.emitted('input')[0]).toEqual([['foo', 'bar', 'baz']])
+  it.only('can select all and deselect all', async () => {
+    console.log('VALUE', wrapper.vm.value)
+    wrapper.find('a.toggle-select').trigger('click') // select all
+    expect(wrapper.emitted('input')[0]).toEqual([['foo', 'bar', 'baz']])
+    await localVue.nextTick()
+    wrapper.find('a.toggle-select').trigger('click') // deselect all
+    console.log('VALUE', wrapper.emitted('input'))
+    expect(wrapper.emitted('input')[0]).toEqual([undefined])
+  })
 
-//     selected.find('a.toggle-select.card-link').trigger('click') // deselect all
-//     expect(selected.emitted('input')[0]).toEqual([undefined])
-//   })
+  it('can hide elements based on maxVisibleOptions', async () => {
+    expect(wrapper.findAll('.custom-control.custom-checkbox').length).toBe(1)
+    console.log('BEFORE CLICK')
+    wrapper.find('a.toggle-slice').trigger('click')
+    await localVue.nextTick()
+    console.log('AFTER CLICK')
+    expect(wrapper.findAll('.custom-control.custom-checkbox').length).toBe(3)
+    wrapper.find('a.toggle-slice').trigger('click')
+    await localVue.nextTick()
+    expect(wrapper.findAll('.custom-control.custom-checkbox').length).toBe(1)
+  })
 
-//   it('can hide elements based on maxVisibleOptions', () => {
-//     expect(maxVisible.findAll('.custom-control.custom-checkbox').length).toBe(1)
-//     maxVisible.find('a.toggle-slice.card-link').trigger('click')
-//     expect(maxVisible.findAll('.custom-control.custom-checkbox').length).toBe(3)
-//     maxVisible.find('a.toggle-slice.card-link').trigger('click')
-//     expect(maxVisible.findAll('.custom-control.custom-checkbox').length).toBe(1)
-//   })
+  it('use function as options property', async (done) => {
+    // wait one frame to let the options resolve by the created() function
+    await localVue.nextTick()
+    wrapper.find('a.toggle-select.card-link').trigger('click') // select all
+    expect(wrapper.emitted('input')[0]).toEqual([['foo', 'bar', 'baz']])
 
-//   it('use function as options property', (done) => {
-//     const unselected = mount(CheckboxFilter, {
-//       stubs: {
-//         'font-awesome-icon': '<div />'
-//       },
-//       propsData: {
-//         name: 'name',
-//         label: 'label',
-//         value: [],
-//         options: optionsPromise
-//       }
-//     })
+    wrapper.find('a.toggle-select.card-link').trigger('click') // deselect all
+    await localVue.nextTick()
+    expect(wrapper.emitted('input')[0]).toEqual([undefined])
 
-//     const selected = mount(CheckboxFilter, {
-//       stubs: {
-//         'font-awesome-icon': '<div />'
-//       },
-//       propsData: {
-//         name: 'name',
-//         label: 'label',
-//         value: ['foo'],
-//         options: optionsPromise
-//       }
-//     })
-
-//     // wait one frame to let the options resolve by the created() function
-//     wrapper.vm.$nextTick(() => {
-//       unselected.find('a.toggle-select.card-link').trigger('click') // select all
-//       expect(unselected.emitted('input')[0]).toEqual([['foo', 'bar', 'baz']])
-
-//       selected.find('a.toggle-select.card-link').trigger('click') // deselect all
-//       expect(selected.emitted('input')[0]).toEqual([undefined])
-
-//       done()
-//     })
-//   })
+  })
 })

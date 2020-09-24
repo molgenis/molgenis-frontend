@@ -64,33 +64,46 @@ library.add(faTimes, faExclamationTriangle, faSpinner)
 export default {
   components: { FontAwesomeIcon },
   props: {
+    /**
+     * The HTML input element name.
+     */
     name: {
       type: String,
       required: true
     },
+    /**
+     * The HTML input element placeholder.
+     */
     placeholder: {
       type: String,
       required: false,
       default: () => 'Type to search more'
     },
-    label: {
-      type: String,
-      required: false,
-      default: () => ''
-    },
+    /**
+     * The async method returning filter options.
+     */
     options: {
       type: Function,
       required: true
     },
+    /**
+     * The amount of initial options to show.
+     */
     initialDisplayItems: {
       type: Number,
       required: false,
-      default: () => 5
+      default: () => 1
     },
+    /**
+     * @model
+     */
     value: {
       type: Array,
       default: () => []
     },
+    /**
+     * The amount of options to show after filtering the checkbox options.
+     */
     maxVisibleOptions: {
       type: Number,
       default: () => 10
@@ -182,6 +195,7 @@ export default {
       if (this.value && this.value.length > 0) {
         fetched = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.value.join(',') })
       } else {
+        console.log('blaa')
         fetched = await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })
       }
       this.initialOptions = fetched
@@ -213,14 +227,47 @@ Item-based Filter. Search box is used to find items in the table.
 
 ### Usage
 ```jsx
+const options = [
+  { text: 'Orange', value: 'orange' },
+  { text: 'Apple', value: 'apple' },
+  { text: 'Pineapple', value: 'pineapple' },
+  { text: 'Grape', value: 'grape' },
+  { text: 'Melon', value: 'melon' },
+  { text: 'Kiwi', value: 'kiwi' },
+  { text: 'Blueberry', value: 'blueberry' },
+  { text: 'Pear', value: 'pear' },
+  { text: 'Apricot', value: 'apricot' },
+  { text: 'Mango', value: 'mango' },
+  { text: 'Breadfruit', value: 'breadfruit' },
+  { text: 'Cherry', value: 'cherry' },
+  { text: 'Cranberry', value: 'cranberry' },
+  { text: 'Durian', value: 'durian' },
+  { text: 'Guava', value: 'guuva' },
+  { text: 'Papaya', value: 'papaya' },
+]
+
+const optionsMethod = ({count, nameAttribute, queryType, query}) => {
+  return new Promise((resolve) => {
+    let filteredOptions = options
+    if (query) {
+      filteredOptions = options.filter((i) => i.text.includes(query))
+    }
+    if (count) {
+      filteredOptions = filteredOptions.splice(0, count)
+    }
+
+    resolve(filteredOptions)
+  })
+}
+
 const model = []
 <MultiFilter
-  v-bind:options="$mocks.multifilterOptions"
+  v-bind:options="optionsMethod"
   v-bind:collapses="false"
+  v-bind:initialDisplayItems="5"
   v-bind:maxVisibleOptions="5"
   v-model="model"
-  label="Filter with multiple options"
-  name="author">
+  name="books">
 </MultiFilter>
 <div>{{model}}</div>
 ```
