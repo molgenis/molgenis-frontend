@@ -16,6 +16,8 @@ describe('DataView.vue', () => {
       settingsTable: 'settings-table',
       dataDisplayLayout: 'cards',
       tableSettings: {},
+      showSelected: false,
+      selectedItemIds: [],
       filters: {
         hideSidebar: false,
         definition: [],
@@ -67,6 +69,7 @@ describe('DataView.vue', () => {
     })
     it('should not clear the search text if search is part of the filter', () => {
       const newSelections = { _search: 'mock selection' }
+      // @ts-ignore
       wrapper.vm.saveFilterState(newSelections)
       expect(mutations.setSearchText).not.toHaveBeenCalled()
     })
@@ -80,10 +83,12 @@ describe('DataView.vue', () => {
     })
 
     it('should add search to the active filter selection', () => {
+      // @ts-ignore
       expect(wrapper.vm.activeFilterSelections).toEqual({ _search: 'my search' })
     })
 
     it('should add search to the active filter selection', () => {
+      // @ts-ignore
       expect(wrapper.vm.filterDefinitions).toEqual([{
         type: 'string',
         label: 'search',

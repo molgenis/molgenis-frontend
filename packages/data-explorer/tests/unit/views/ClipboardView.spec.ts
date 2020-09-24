@@ -37,7 +37,7 @@ describe('ClipboardView.vue', () => {
             lookupAttributeIndex: 0
           }
         ] },
-      shoppedEntityItems: ['1', '3'],
+      selectedItemIds: ['1', '3'],
       tableData: {
         items: [
           { tableID: '1' },

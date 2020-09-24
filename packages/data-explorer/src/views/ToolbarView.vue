@@ -2,7 +2,7 @@
   <div class="toolbar row">
     <div class="col-4">
       <a
-        v-if="hasEditRights && !showShoppingCart"
+        v-if="hasEditRights && !showSelected"
         class="btn btn-light btn-outline-secondary card-layout"
         role="button"
         :href="'/plugin/data-row-edit/' + tableName">
@@ -15,21 +15,21 @@
     </div>
     <div class="col-4">
       <button
-        v-if="!showShoppingCart && dataDisplayLayout === 'TableView'"
+        v-if="!showSelected && dataDisplayLayout === 'TableView'"
         @click="toggleDataDisplayLayout"
         class="btn btn-light ml-1 float-right btn-outline-secondary card-layout">
         <font-awesome-icon icon="th"></font-awesome-icon>
         Card layout
       </button>
       <button
-        v-else-if="!showShoppingCart"
+        v-else-if="!showSelected"
         @click="toggleDataDisplayLayout"
         class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
         <font-awesome-icon icon="th-list"></font-awesome-icon>
         Table layout
       </button>
       <button
-        v-if="!showShoppingCart && tableSettings.isShop"
+        v-if="!showSelected && tableSettings.isShop"
         @click="openShoppingCart"
         class="btn btn-light ml-1 float-right btn-outline-secondary show-cart">
         <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
@@ -56,7 +56,6 @@ export default Vue.extend({
     ...mapState([
       'dataDisplayLayout',
       'hideFilters',
-      'showShoppingCart',
       'tableSettings',
       'searchText',
       'tableName'

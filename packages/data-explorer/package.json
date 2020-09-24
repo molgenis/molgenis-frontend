@@ -30,6 +30,7 @@
     "@molgenis/rsql": "^0.2.5",
     "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.17.3",
     "core-js": "^2.6.5",
     "jquery": "^3.4.1",
     "lz-string": "^1.4.4",

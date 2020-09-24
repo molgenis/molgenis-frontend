@@ -130,25 +130,25 @@ describe('mutations', () => {
   describe('setShowShoppingCart', () => {
     it('sets if the table is a store', () => {
       mutations.setShowShoppingCart(baseAppState, true)
-      expect(baseAppState.showShoppingCart).toEqual(true)
+      expect(baseAppState.showSelected).toEqual(true)
     })
   })
 
   describe('toggleShoppingItems', () => {
     it('adds item to shopping cart', () => {
       mutations.toggleShoppingItems(baseAppState, 'item1')
-      expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
+      expect(baseAppState.selectedItemIds).toEqual(['item1'])
     })
     it('adds another item to shopping cart', () => {
       mutations.toggleShoppingItems(baseAppState, 'item1')
       mutations.toggleShoppingItems(baseAppState, 'item2')
-      expect(baseAppState.shoppedEntityItems).toEqual(['item1', 'item2'])
+      expect(baseAppState.selectedItemIds).toEqual(['item1', 'item2'])
     })
     it('removes an existing item from shopping cart', () => {
       mutations.toggleShoppingItems(baseAppState, 'item1')
       mutations.toggleShoppingItems(baseAppState, 'item2')
       mutations.toggleShoppingItems(baseAppState, 'item2')
-      expect(baseAppState.shoppedEntityItems).toEqual(['item1'])
+      expect(baseAppState.selectedItemIds).toEqual(['item1'])
     })
   })
   describe('setTableSettings', () => {

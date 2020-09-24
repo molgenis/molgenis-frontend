@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <clipboard-view v-if="showShoppingCart"></clipboard-view>
+        <clipboard-view v-if="showSelected"></clipboard-view>
         <div v-else>
           <div class="row">
             <div class="col">
@@ -18,11 +18,11 @@
       </div>
     </div>
     <cart-selection-toast
-      v-if="shoppedEntityItems.length > 0"
-      :cartSelectionText="`${shoppedEntityItems.length} item${shoppedEntityItems.length==1?'':'s'} selected`"
+      v-if="selectedItemIds.length > 0"
+      :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"
       :clickHandler="selectionAction"
       title="Selection"
-      v-model="shoppedEntityItems"
+      v-model="handleSelectionItems"
     >
       <template v-slot:removeButton>&times;</template>
       <template v-slot:buttonText>
@@ -45,14 +45,22 @@ export default Vue.extend({
   components: { SelectLayoutView, ClipboardView, ActiveFilters, CartSelectionToast },
   computed: {
     ...mapState([
-      'showShoppingCart',
+      'showSelected',
       'tableName',
       'tableMeta',
       'tableSettings',
       'searchText',
       'filters',
-      'shoppedEntityItems'
+      'selectedItemIds'
     ]),
+    handleSelectionItems: {
+      get () {
+        return this.selectedItemIds
+      },
+      set (value) {
+        this.setShoppingItems(value)
+      }
+    },
     searchText: {
       get () {
         return this.$store.state.searchText
@@ -76,7 +84,8 @@ export default Vue.extend({
   methods: {
     ...mapMutations([
       'setFilterSelection',
-      'setSearchText'
+      'setSearchText',
+      'setShoppingItems'
     ]),
     selectionAction () {
 

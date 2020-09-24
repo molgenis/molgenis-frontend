@@ -31,15 +31,18 @@ export default {
     state.tableName = entity
   },
   setShowShoppingCart (state: ApplicationState, cart: boolean) {
-    state.showShoppingCart = cart
+    state.showSelected = cart
   },
   toggleShoppingItems (state: ApplicationState, id: string) {
-    const index = state.shoppedEntityItems.indexOf(id)
+    const index = state.selectedItemIds.indexOf(id)
     if (index !== -1) {
-      state.shoppedEntityItems.splice(index, 1)
+      state.selectedItemIds.splice(index, 1)
     } else {
-      state.shoppedEntityItems.push(id)
+      state.selectedItemIds.push(id)
     }
+  },
+  setShoppingItems (state: ApplicationState, items: Array<string>) {
+    state.selectedItemIds = items
   },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {
     const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'

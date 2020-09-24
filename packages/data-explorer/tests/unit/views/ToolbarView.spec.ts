@@ -74,24 +74,24 @@ describe('ToolbarView.vue', () => {
     })
 
     it('should not be shown in shoppingcart mode', () => {
-      store.state.showShoppingCart = true
+      store.state.showSelected = true
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       expect(wrapper.find('.toolbar > a').exists()).toBe(false)
     })
 
     it('should not show the button without edit rights', () => {
-      store.state.showShoppingCart = true
+      store.state.showSelected = true
       getters.hasEditRights.mockReturnValueOnce(false)
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       expect(wrapper.find('.toolbar > a').exists()).toBe(false)
     })
 
-    afterEach(() => { store.state.showShoppingCart = false })
+    afterEach(() => { store.state.showSelected = false })
   })
 
   describe('searchString value is set', () => {
     it('should persist the value in the store', () => {
-      store.state.showShoppingCart = true
+      store.state.showSelected = true
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       wrapper.setData({ searchText: 'demo' })
       expect(mutations.setSearchText).toHaveBeenCalled()

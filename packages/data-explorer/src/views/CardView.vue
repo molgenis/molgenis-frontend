@@ -32,7 +32,7 @@ export default {
   },
   components: { ExplorerCard },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableSettings', 'tableName']),
+    ...mapState(['tableMeta', 'selectedItemIds', 'tableSettings', 'tableName']),
     ...mapGetters(['filterRsql', 'hasEditRights']),
     idAttribute () {
       return this.tableMeta.idAttribute
@@ -53,7 +53,7 @@ export default {
       return this.labelAttribute && entity[this.labelAttribute.name] ? entity[this.labelAttribute.name].toString() : this.getEntityId(entity).toString()
     },
     isSelected (entity) {
-      return this.shoppedEntityItems.includes(this.getEntityId(entity))
+      return this.selectedItemIds.includes(this.getEntityId(entity))
     },
     handleExpandCard (entity) {
       this.fetchRowDataLabels({ rowId: this.getEntityId(entity) })

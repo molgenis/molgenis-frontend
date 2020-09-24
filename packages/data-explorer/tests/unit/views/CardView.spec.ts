@@ -16,7 +16,7 @@ describe('CardView.vue', () => {
       shoppingFilter: false,
       tableMeta: { idAttribute: { name: 'tableID' }, labelAttribute: { name: 'label' }, attributes: [{ type: 'compound' }, { type: 'string' }, { type: 'string' }] },
       dataDisplayLayout: 'ClipboardView',
-      shoppedEntityItems: ['1', '3']
+      selectedItemIds: ['1', '3']
     }
     mutations = {
       toggleShoppingItems: jest.fn()
@@ -83,7 +83,7 @@ describe('CardView.vue', () => {
       shoppingFilter: false,
       tableMeta: { idAttribute: { name: 'tableID' } },
       dataDisplayLayout: 'ClipboardView',
-      shoppedEntityItems: [1, 3]
+      selectedItemIds: [1, 3]
     }
     store = new Vuex.Store({
       state, mutations, getters, actions

@@ -36,7 +36,7 @@ describe('TableView.vue', () => {
       },
       dataDisplayLayout: 'TableView',
       tableName: 'tableName',
-      shoppedEntityItems: [1, 3]
+      selectedItemIds: [1, 3]
     }
     mutations = {
       toggleShoppingItems: jest.fn()

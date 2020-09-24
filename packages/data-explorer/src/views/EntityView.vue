@@ -48,17 +48,6 @@
         </button>
       </div>
     </div>
-
-    <cart-selection-toast
-      v-if="shoppedEntityItems.length > 0"
-      :cartSelectionText="`${shoppedEntityItems.length} items(s) selected`"
-      :clickHandler="selectionAction"
-      title="Selection"
-    >
-      <template v-slot:buttonText>
-        Action
-      </template>
-    </cart-selection-toast>
   </div>
 </template>
 
@@ -70,7 +59,6 @@ import { mapState, mapActions } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { CartSelectionToast } from '@molgenis-ui/components-library'
 
 library.add(faShoppingBag)
 
@@ -85,7 +73,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'tableMeta', 'shoppedEntityItems', 'defaultEntityData', 'tableData', 'CartSelectionToast']),
+    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'tableMeta', 'selectedItemIds', 'defaultEntityData', 'tableData', 'CartSelectionToast']),
     idAttribute () {
       return this.tableMeta.idAttribute.name
     },
@@ -97,7 +85,7 @@ export default {
     },
     entitiesToShow () {
       if (this.shoppingFilter) {
-        return this.tableData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
+        return this.tableData.items.filter((entity) => this.selectedItemIds.includes(this.getEntityId(entity)))
       } else {
         return this.tableData.items
       }
@@ -109,7 +97,7 @@ export default {
       return entity[this.idAttribute].toString()
     },
     isSelected (entity) {
-      return this.shoppedEntityItems.includes(this.getEntityId(entity))
+      return this.selectedItemIds.includes(this.getEntityId(entity))
     },
     getEntityLabel (entity) {
       return this.labelAttribute ? entity[this.labelAttribute].toString() : ''
