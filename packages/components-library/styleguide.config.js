@@ -6,16 +6,16 @@ module.exports = {
     './styleguidist-setup.js'
   ],
   title: 'Molgenis Style Guide',
-  // components: 'src/components/**/[A-Z]*.vue',
-  // defaultExample: true,
-  // sections: [
-  //   {
-  //     name: 'First Section',
-  //     components: 'src/components/**/[A-Z]*.vue'
-  //   }
-  // ],
-  // webpackConfig: {
-  //   // custom config goes here
-  // },
+  components: 'src/components/**/[A-Z]*.vue',
+  sections: [
+    {
+      name: 'Filters',
+      components: 'src/components/filters/*.vue'
+    },
+    {
+      name: 'UI',
+      components: 'src/components/ui/*.vue'
+    }
+  ],
   exampleMode: 'expand'
 }
