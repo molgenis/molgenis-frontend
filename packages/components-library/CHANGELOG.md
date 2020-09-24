@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.3.0...@molgenis-ui/components-library@0.3.1) (2020-09-24)
+
+
+### Bug Fixes
+
+* **components-library:** change use if i-tag to span-tag, removes sonar warning ([#384](https://github.com/molgenis/molgenis-frontend/issues/384)) ([007cae4](https://github.com/molgenis/molgenis-frontend/commit/007cae4))
+
+
+
+
+
 # [0.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.2.2...@molgenis-ui/components-library@0.3.0) (2020-09-24)
 
 
