@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/components-library",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "license": "LGPL-3.0",
   "description": "Vue component library for molgenis web frontend",
   "publishConfig": {
