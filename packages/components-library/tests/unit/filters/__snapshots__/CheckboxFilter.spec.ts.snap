@@ -1,10 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CheckboxFilter.vue render the component matches the snapshot 1`] = `
-<div
-  label="label"
-  name="name"
->
+exports[`CheckboxFilter.vue Parsing only required props matches the snapshot 1`] = `
+<div>
   <div
     class="bv-no-focus-ring"
     id="__BVID__4"

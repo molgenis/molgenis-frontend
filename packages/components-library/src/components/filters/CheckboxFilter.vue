@@ -44,7 +44,7 @@ export default {
      */
     value: {
       type: Array,
-      default: () => []
+      required: true
     },
     /**
      * Whether to use (De)Select All or not.
