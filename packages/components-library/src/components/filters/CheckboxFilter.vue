@@ -74,6 +74,7 @@ export default {
         return this.value
       },
       set (value) {
+        console.log('EMIT INPUT', value)
         this.$emit('input', value.length === 0 ? undefined : value)
       }
     },
@@ -105,7 +106,13 @@ export default {
   },
   methods: {
     toggleSelect () {
-      this.selection = this.selection && this.selection.length ? [] : this.resolvedOptions.map(option => option.value)
+      if (this.selection && this.selection.length) {
+        console.log('UNSET ALL')
+        this.selection = []
+      } else {
+        console.log('SELECTION', this.resolvedOptions.map(option => option.value))
+        this.selection = this.resolvedOptions.map(option => option.value)
+      }
     },
     toggleSlice () {
       this.sliceOptions = !this.sliceOptions
