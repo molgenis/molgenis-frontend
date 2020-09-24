@@ -1130,14 +1130,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@molgenis/rsql@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@molgenis/rsql/-/rsql-0.2.5.tgz#db252f6bacb7df027ed8d51bf926fb27c8860c7c"
-  integrity sha512-tY2IMbbSMFAnxmlBY6qISbIgKmuaJeBOzRp036NV1OdmK38PA+5NI8kJ6xueobGQ5PnUKSwkXfchlx2UZKkKyg==
-  dependencies:
-    "@types/mdurl" "^1.0.2"
-    mdurl "^1.0.1"
-
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1377,11 +1369,6 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
-
-"@types/mdurl@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@types/mdurl/-/mdurl-1.0.2.tgz#e2ce9d83a613bacf284c7be7d491945e39e1f8e9"
-  integrity sha512-eC4U9MlIcu2q0KQmXszyn5Akca/0jrQmwDRgpAMJai7qBWq4amIQhZyNau4VYGtCeALvW1/NtjzJJ567aZxfKA==
 
 "@types/mime@*":
   version "2.0.3"
@@ -8608,11 +8595,6 @@ mdn-data@2.0.6:
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.6.tgz#852dc60fcaa5daa2e8cf6c9189c440ed3e042978"
   integrity sha512-rQvjv71olwNHgiTbfPZFkJtjNMciWgswYeciZhtvWLO8bmX3TnhyA62I6sTWOyZssWHJJjY6/KiWwqQsWWsqOA==
 
-mdurl@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
-  integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
-
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
@@ -13563,14 +13545,7 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue2-daterange-picker@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/vue2-daterange-picker/-/vue2-daterange-picker-0.5.1.tgz#f41f3cd20b242b7f34ce16eeea9534d9cbe9f4d7"
-  integrity sha512-p0y9RyI6wqqwffKM5EYgxvNM51un/fBu9hLZ/GxXVOBqTMxjDuV8mz9iUTj4p5R80lWSBwIY7GshW5RYgS8+rw==
-  dependencies:
-    vue "^2.6.10"
-
-vue@^2.6.10, vue@^2.6.11:
+vue@^2.6.11:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
