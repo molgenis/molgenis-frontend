@@ -2,5 +2,12 @@
     "sonarlint.connectedMode.project": {
         "serverId": "sonarcloud_molgenis",
         "projectKey": "molgenis_molgenis-frontend"
-    }
+    },
+    "eslint.enable": true,
+    "eslint.validate": ["javascript", "typescript", "vue"],
+    "vetur.validation.template": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+
 }
