@@ -87,9 +87,6 @@ export default {
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
     },
-    maxVisibleOptions () {
-      this.sliceOptions = this.showToggleSlice
-    },
     selection (newValue) {
       const newSelection = [...newValue]
       this.$emit('input', newSelection)

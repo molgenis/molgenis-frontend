@@ -13,8 +13,7 @@ const options = async () => {
   ]
 }
 
-
-const buildWrapper = (value: string[] | undefined) => {
+const buildWrapper = (value?: string[], maxVisibleOptions?: number) => {
   const wrapper = mount(CheckboxFilter, {
     localVue,
     stubs,
@@ -22,7 +21,8 @@ const buildWrapper = (value: string[] | undefined) => {
       name: 'name',
       label: 'label',
       value,
-      options
+      options,
+      maxVisibleOptions
     },
     listeners: {
       input: (newVal: any) => { 
@@ -101,28 +101,22 @@ describe('CheckboxFilter.vue', () => {
 
   })
 
+  describe('maxVisibleOptions', () => {
+    beforeEach(() => {
+      wrapper = buildWrapper(undefined, 1)
+    })
 
-  // it('can hide elements based on maxVisibleOptions', async () => {
-  //   expect(wrapper.findAll('.custom-control.custom-checkbox').length).toBe(1)
-  //   console.log('BEFORE CLICK')
-  //   wrapper.find('a.toggle-slice').trigger('click')
-  //   await localVue.nextTick()
-  //   console.log('AFTER CLICK')
-  //   expect(wrapper.findAll('.custom-control.custom-checkbox').length).toBe(3)
-  //   wrapper.find('a.toggle-slice').trigger('click')
-  //   await localVue.nextTick()
-  //   expect(wrapper.findAll('.custom-control.custom-checkbox').length).toBe(1)
-  // })
-
-  // it('use function as options property', async (done) => {
-  //   // wait one frame to let the options resolve by the created() function
-  //   await localVue.nextTick()
-  //   wrapper.find('a.toggle-select.card-link').trigger('click') // select all
-  //   expect(wrapper.emitted('input')[0]).toEqual([['foo', 'bar', 'baz']])
-
-  //   wrapper.find('a.toggle-select.card-link').trigger('click') // deselect all
-  //   await localVue.nextTick()
-  //   expect(wrapper.emitted('input')[0]).toEqual([undefined])
-
-  // })
+    it('can hide elements based on maxVisibleOptions', async () => {
+      expect(wrapper.findAll('.custom-control.custom-checkbox').length).toBe(1)
+     
+      wrapper.find('a.toggle-slice').trigger('click')
+      await localVue.nextTick()
+      
+      expect(wrapper.findAll('.custom-control.custom-checkbox').length).toBe(3)
+      wrapper.find('a.toggle-slice').trigger('click')
+      await localVue.nextTick()
+   
+      expect(wrapper.findAll('.custom-control.custom-checkbox').length).toBe(1)
+    })
+  })
 })
