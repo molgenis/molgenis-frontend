@@ -5,6 +5,9 @@
     no-auto-hide
     :toaster="location"
     :variant="backgroundVariant"
+    :toastClass="toastClass"
+    :bodyClass="bodyClass"
+    :headerClass="headerClass"
   >
     <div class="container">
       <div v-if="previewToggle && value.length > 0" class="mb-4">
@@ -44,6 +47,25 @@
 export default {
   name: 'CartSelectionToast',
   props: {
+    /**
+     * Passthrough setting from BootstrapVue
+     */
+    toastClass: {
+      type: [String, Object, Array]
+    },
+    /**
+     * Passthrough setting from BootstrapVue
+     */
+    headerClass: {
+      type: [String, Object, Array]
+    },
+    /**
+     * Passthrough setting from BootstrapVue
+     */
+    bodyClass: {
+      type: [String, Object, Array]
+    },
+    /**
     /**
      * Default descriptive text.
      * Use this to specify the amount of selected items in the cart
