@@ -5,12 +5,15 @@
     no-auto-hide
     :toaster="location"
     :variant="backgroundVariant"
+    :toastClass="toastClass"
+    :bodyClass="bodyClass"
+    :headerClass="headerClass"
   >
     <div class="container">
       <div v-if="previewToggle && value.length > 0" class="mb-4">
         <div class="row" v-for="(item, index) in value" :key="index">
           <div class="col">
-            {{item}}
+            {{ item }}
           </div>
           <div class="col-auto mb-2">
             <span role="button" @click="removeItem(item)">
@@ -21,12 +24,16 @@
         </div>
       </div>
       <div class="row">
-        <div class="col d-flex flex-column justify-content-start align-self-center">
+        <div
+          class="col d-flex flex-column justify-content-start align-self-center"
+        >
           <div class="font-weight-bold">
             {{ cartSelectionText }}
           </div>
           <div v-if="value.length > 0">
-            <span role="button" @click="previewToggle = !previewToggle">{{selectionText}} selection</span>
+            <span role="button" @click="previewToggle = !previewToggle"
+              >{{ selectionText }} selection</span
+            >
           </div>
         </div>
         <div class="col-auto">
@@ -44,6 +51,24 @@
 export default {
   name: 'CartSelectionToast',
   props: {
+    /**
+     * Passthrough setting from BootstrapVue
+     */
+    toastClass: {
+      type: [String, Object, Array]
+    },
+    /**
+     * Passthrough setting from BootstrapVue
+     */
+    headerClass: {
+      type: [String, Object, Array]
+    },
+    /**
+     * Passthrough setting from BootstrapVue
+     */
+    bodyClass: {
+      type: [String, Object, Array]
+    },
     /**
      * Default descriptive text.
      * Use this to specify the amount of selected items in the cart
@@ -111,7 +136,10 @@ export default {
        * @event input
        * @property {Array} Returns new array without the deleted item
        */
-      this.$emit('input', this.value.filter(item => item !== itemName))
+      this.$emit(
+        'input',
+        this.value.filter((item) => item !== itemName)
+      )
     }
   }
 }
@@ -142,7 +170,7 @@ export default {
   <b-toaster name="demo2"></b-toaster>
   <cart-selection-toast location="demo2" v-model="items" v-bind:clickHandler="click" v-bind:cartSelectionText="items.length + ' item(s) selected'">
     <template v-slot:buttonText>Checkout <i class="fa fa-shopping-basket"></i></template>
-    <template v-slot:cartSelection>{{items.length}} item(s) selected</template>
+    <template v-slot:cartSelection>{{ items.length }} item(s) selected</template>
     <template v-slot:removeButton><i class="far fa-times-circle"></i></template>
   </cart-selection-toast>
   ```
