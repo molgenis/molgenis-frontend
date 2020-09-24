@@ -10,7 +10,7 @@
       <div v-if="previewToggle && value.length > 0" class="mb-4">
         <div class="row" v-for="(item, index) in value" :key="index">
           <div class="col">
-            {{item}}
+            {{ previewLabel(item) }}
           </div>
           <div class="col-auto mb-2">
             <span role="button" @click="removeItem(item)">
@@ -80,12 +80,21 @@ export default {
     },
     /**
      * If this array is set (via v-model), then in will allow you to preview your selection
-     * Expects a array of strings
+     * Expects a array of strings or a Array of objects
+     * When using a array of objects provide the 'labelAttribute' to select the field to display
      */
     value: {
       type: Array,
       required: false,
       default: () => []
+    },
+    /**
+     * Label attribute to display for use with object based store data.
+     */
+    labelAttribute: {
+      type: String,
+      required: false,
+      default: () => 'name'
     },
     /**
      * Button click handler
@@ -104,6 +113,16 @@ export default {
     }
   },
   methods: {
+    previewLabel (item) {
+      if (typeof item === 'string') {
+        return item
+      } else if (typeof item === 'object') {
+        if (typeof item[this.labelAttribute] === 'string') {
+          return item[this.labelAttribute]
+        }
+      }
+      return ''
+    },
     removeItem (itemName) {
       /**
        * v-model return value
@@ -127,7 +146,10 @@ export default {
     alert('clicked')
   }
   <b-toaster name="demo"></b-toaster>
-  <cart-selection-toast location="demo" v-bind:clickHandler="click" cartSelectionText="3 items selected">
+  <cart-selection-toast
+    location="demo"
+    v-bind:clickHandler="click"
+    cartSelectionText="3 items selected">
     <template v-slot:buttonText>To cart</template>
     <template v-slot:cartSelection>10 items selected</template>
   </cart-selection-toast>
@@ -135,15 +157,40 @@ export default {
   ## Example with filled slots and selection preview
 
   ```jsx
-  let items = ['Apple', 'Pear', 'Banana'];
+  let items = ['Apple', 'Pear', 'Banana']
   function click(){
     alert('clicked')
   }
   <b-toaster name="demo2"></b-toaster>
-  <cart-selection-toast location="demo2" v-model="items" v-bind:clickHandler="click" v-bind:cartSelectionText="items.length + ' item(s) selected'">
+  <cart-selection-toast
+    location="demo2"
+    v-model="items"
+    v-bind:clickHandler="click"
+    v-bind:cartSelectionText="items.length + ' item(s) selected'">
     <template v-slot:buttonText>Checkout <i class="fa fa-shopping-basket"></i></template>
     <template v-slot:cartSelection>{{items.length}} item(s) selected</template>
     <template v-slot:removeButton><i class="far fa-times-circle"></i></template>
+  </cart-selection-toast>
+  ```
+
+  ## Example with id and label
+
+  ```jsx
+  let items = [
+    { label: 'Apple', id: 1 },
+    { label: 'Pear', id: 2 },
+    { label: 'Banana', id: 3 }
+  ]
+  function click(){
+    alert('clicked')
+  }
+  <b-toaster name="demo3"></b-toaster>
+  <cart-selection-toast
+    location="demo3"
+    v-model="items"
+    v-bind:clickHandler="click"
+    v-bind:cartSelectionText="items.length + ' item(s) selected'"
+    labelAttribute="label">
   </cart-selection-toast>
   ```
 </docs>
