@@ -1,7 +1,8 @@
-import CartSelectionToast from './components/CartSelectionToast.vue'
+import CartSelectionToast from './components/ui/CartSelectionToast.vue'
+import CheckboxFilter from './components/filters/CheckboxFilter.vue'
 
-export { CartSelectionToast }
+export { CartSelectionToast, CheckboxFilter }
 
 export default {
-  CartSelectionToast
+  CartSelectionToast, CheckboxFilter
 }

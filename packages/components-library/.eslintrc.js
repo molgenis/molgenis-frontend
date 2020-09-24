@@ -1,7 +1,11 @@
 module.exports = {
   root: true,
   env: {
+    browser: true,
     node: true
+  },
+  globals: {
+    globalThis: true
   },
   extends: [
     'plugin:vue/essential',
@@ -17,7 +21,8 @@ module.exports = {
     'ban-ts-ignore': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
     'no-empty-function': 'off',
-    '@typescript-eslint/no-empty-function': 'off'
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-explicit-any': 'off'
   },
   overrides: [
     {
