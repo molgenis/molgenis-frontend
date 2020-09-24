@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     ...mapActions(['fetchTableViewData']),
-    ...mapMutations(['setShowShoppingCart', 'setHideFilters']),
+    ...mapMutations(['setShowSelected', 'setHideFilters']),
     getEntityId (entity) {
       return entity[this.idAttribute.name].toString()
     },
@@ -70,7 +70,7 @@ export default {
       return this.selectedItemIds.includes(this.getEntityId(entity))
     },
     closeShoppingCart () {
-      this.setShowShoppingCart(false)
+      this.setShowSelected(false)
       this.setHideFilters(false)
     }
   }

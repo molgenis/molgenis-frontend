@@ -32,7 +32,7 @@ describe('DataView.vue', () => {
     mutations = {
       setSearchText: jest.fn(),
       setHideFilters: jest.fn(),
-      setShowShoppingCart: jest.fn(),
+      setShowSelected: jest.fn(),
       setFilterSelection: jest.fn()
     }
     actions = {
@@ -82,7 +82,7 @@ describe('DataView.vue', () => {
       const wrapper = shallowMount(DataView, { store, localVue })
       // @ts-ignore
       wrapper.vm.openSelectionList()
-      expect(mutations.setShowShoppingCart).toHaveBeenCalledWith(state, true)
+      expect(mutations.setShowSelected).toHaveBeenCalledWith(state, true)
       expect(mutations.setHideFilters).toHaveBeenCalledWith(state, true)
     })
   })

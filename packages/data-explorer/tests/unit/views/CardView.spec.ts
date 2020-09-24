@@ -19,7 +19,7 @@ describe('CardView.vue', () => {
       selectedItemIds: ['1', '3']
     }
     mutations = {
-      toggleShoppingItems: jest.fn()
+      toggleSelectedItems: jest.fn()
     }
     actions = {
       fetchRowDataLabels: jest.fn(),

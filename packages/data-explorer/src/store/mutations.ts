@@ -30,10 +30,10 @@ export default {
   setTableName (state: ApplicationState, entity: string) {
     state.tableName = entity
   },
-  setShowShoppingCart (state: ApplicationState, cart: boolean) {
+  setShowSelected (state: ApplicationState, cart: boolean) {
     state.showSelected = cart
   },
-  toggleShoppingItems (state: ApplicationState, id: string) {
+  toggleSelectedItems (state: ApplicationState, id: string) {
     const index = state.selectedItemIds.indexOf(id)
     if (index !== -1) {
       state.selectedItemIds.splice(index, 1)
@@ -41,7 +41,7 @@ export default {
       state.selectedItemIds.push(id)
     }
   },
-  setShoppingItems (state: ApplicationState, items: Array<string>) {
+  setSelectedItems (state: ApplicationState, items: Array<string>) {
     state.selectedItemIds = items
   },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {

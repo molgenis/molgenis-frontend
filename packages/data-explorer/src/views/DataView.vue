@@ -66,10 +66,13 @@ export default Vue.extend({
     },
     handleSelectionItems: {
       get () {
-        return this.selectedItemIds.map(id => ({ id: id, name: this.tableData.items.find(item => item.id === id)[this.displayName] }))
+        if (this.tableData.items && this.tableData.items.length > 0) {
+          return this.selectedItemIds.map(id => ({ id: id, name: this.tableData.items.find(item => item.id === id)[this.displayName] }))
+        }
+        return []
       },
       set (value) {
-        this.setShoppingItems(value.map(item => item.id))
+        this.setSelectedItems(value.map(item => item.id))
       }
     },
     searchText: {
@@ -96,12 +99,12 @@ export default Vue.extend({
     ...mapMutations([
       'setFilterSelection',
       'setSearchText',
-      'setShowShoppingCart',
+      'setShowSelected',
       'setHideFilters',
-      'setShoppingItems'
+      'setSelectedItems'
     ]),
     openSelectionList () {
-      this.setShowShoppingCart(true)
+      this.setShowSelected(true)
       this.setHideFilters(true)
     },
     saveFilterState (newSelections) {
