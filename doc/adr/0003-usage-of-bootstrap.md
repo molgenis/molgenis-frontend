@@ -14,12 +14,12 @@ Vue wrapper for this framework, called Bootstrap-Vue.
 
 ## Decision
 
-We will stop using Bootstrap Vue and organically refactor the usage overtime
+We will stop using Bootstrap Vue and organically refactor the usage over time
 to remove the additional external dependancy.
 
 ### reason
 
-We want to have more control about the look and feeel of our components and do not want to be tied to the vision of BootstrapVue
+We want to have more control about the look and feel of our components and do not want to be tied to the vision of BootstrapVue
 
 ## Consequences
 
