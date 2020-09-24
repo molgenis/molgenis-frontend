@@ -18,7 +18,7 @@
           <div class="col-auto mb-2">
             <span role="button" @click="removeItem(item)">
               <!-- @slot pass an icon for the remove button -->
-              <slot name="removeButton"><em class="fa fa-times"></em></slot>
+              <slot name="removeButton"><span class="fa fa-times"></span></slot>
             </span>
           </div>
         </div>
@@ -189,7 +189,7 @@ export default {
     v-model="items"
     v-bind:clickHandler="click"
     v-bind:cartSelectionText="items.length + ' item(s) selected'">
-    <template v-slot:buttonText>Checkout <em class="fa fa-shopping-basket"></em></template>
+    <template v-slot:buttonText>Checkout <span class="fa fa-shopping-basket"></span></template>
     <template v-slot:cartSelection>{{items.length}} item(s) selected</template>
     <template v-slot:removeButton><i class="far fa-times-circle"></i></template>
   </cart-selection-toast>
