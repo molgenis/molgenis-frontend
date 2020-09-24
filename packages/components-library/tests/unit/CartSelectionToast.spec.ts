@@ -19,6 +19,15 @@ describe('CartSelectionToast.vue', () => {
     // @ts-ignore
     expect(wrapper.emitted().input[0][0]).toEqual(['1', '3'])
   })
+  it('Can display items even if (value/v-model) is a list of objects', async () => {
+    const wrapper = shallowMount(CartSelectionToast, { localVue, propsData: { ...propsData, labelAttribute: 'label' } })
+    // @ts-ignore
+    expect(wrapper.vm.previewLabel('string')).toEqual('string')
+    // @ts-ignore
+    expect(wrapper.vm.previewLabel({name: 'wrong labelAttribute'})).toEqual('')
+    // @ts-ignore
+    expect(wrapper.vm.previewLabel({label: 'object'})).toEqual('object')
+  })
   it('Can displays show/hide according to previewToggle status', () => {
     const wrapper = shallowMount(CartSelectionToast, { localVue, propsData })
     // @ts-ignore
