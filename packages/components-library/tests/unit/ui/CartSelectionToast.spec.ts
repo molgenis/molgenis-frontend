@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import CartSelectionToast from '@/components/CartSelectionToast.vue'
+import CartSelectionToast from '@/components/ui/CartSelectionToast.vue'
 
 import { BootstrapVue } from 'bootstrap-vue'
 const localVue = createLocalVue()
