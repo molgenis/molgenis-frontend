@@ -64,20 +64,12 @@ export default {
   },
   data () {
     return {
+      selection: this.value,
       resolvedOptions: [],
       sliceOptions: this.maxVisibleOptions && this.resolvedOptions && this.maxVisibleOptions < this.resolvedOptions.length
     }
   },
   computed: {
-    selection: {
-      get () {
-        return this.value
-      },
-      set (value) {
-        console.log('EMIT INPUT', value)
-        this.$emit('input', value.length === 0 ? undefined : value)
-      }
-    },
     visibleOptions () {
       return this.sliceOptions ? this.resolvedOptions.slice(0, this.maxVisibleOptions) : (typeof this.resolvedOptions === 'function' ? [] : this.resolvedOptions)
     },
@@ -97,6 +89,10 @@ export default {
     },
     maxVisibleOptions () {
       this.sliceOptions = this.showToggleSlice
+    },
+    selection (newValue) {
+      const newSelection = [...newValue]
+      this.$emit('input', newSelection)
     }
   },
   created () {
@@ -107,10 +103,8 @@ export default {
   methods: {
     toggleSelect () {
       if (this.selection && this.selection.length) {
-        console.log('UNSET ALL')
         this.selection = []
       } else {
-        console.log('SELECTION', this.resolvedOptions.map(option => option.value))
         this.selection = this.resolvedOptions.map(option => option.value)
       }
     },

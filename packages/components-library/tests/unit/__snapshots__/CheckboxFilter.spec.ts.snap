@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CheckboxFilter.vue matches the snapshot 1`] = `
+exports[`CheckboxFilter.vue render the component matches the snapshot 1`] = `
 <div
   label="label"
   name="name"
