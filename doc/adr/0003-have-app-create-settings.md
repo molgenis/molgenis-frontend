@@ -12,8 +12,7 @@ Apps (for example the data-explorer-2 or the biobank-explorer) may need settings
 
 ## Decision
 
-We leave it up to the app to create the settings entity. Each app creates 0 or 1 settings entities. By default everyone can read the settings data. Depending on the app the entity contains 1 or more rows ( in case of multiple rows the app is responsible using the correct row(s) in each context).
-
+We leave it up to the app to create the settings entity. Each app creates 0 or 1 settings entities. By default everyone can read the settings data. Depending on the app the entity contains 1 or more rows ( in case of multiple rows the app is responsible using the correct row(s) in each context). 
 Rejected alternatives:
 
 - Add settings via bootstrapped entity in molgenis core; This was deemed as insufficiently flexible due to the dependance on Java knowledge and (possible major version) core release.  
@@ -23,4 +22,4 @@ Rejected alternatives:
 
 ## Consequences
 
-If an app needs setting data to function properly, a user with sufficient rights needs to trigger the creation of the settings entity. If settings data may not been seen by some users/roles the app developer must use the permission api to restrict access. If a user without the rights to create settings data uses the app while the expected settings data is not there, the app should handle this. The app for example may use default settings or show a error message. 
+If an app needs settings data to function properly, these settings need to be created. If settings data may not been seen by some users/roles the app developer must use the permission api to restrict access. An app should use no settings or default settings (stored in the app code) to be releasable without any dependency. Settings data may be created using the default molgenis features (emx, cli script, api, webapp). Just like any of the molgenis entity a settings row may contain a single attribute ( type text) that uses a json blob to store the settings data. 
