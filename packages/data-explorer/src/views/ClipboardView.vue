@@ -46,12 +46,12 @@ export default {
   name: 'ClipboardView',
   components: { TableRow, TableHeader, FontAwesomeIcon },
   computed: {
-    ...mapState(['tableMeta', 'shoppedEntityItems', 'tableData', 'tableName']),
+    ...mapState(['tableMeta', 'selectedItemIds', 'tableData', 'tableName']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
     entitiesToShow () {
-      return this.tableData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
+      return this.tableData.items.filter((entity) => this.selectedItemIds.includes(this.getEntityId(entity)))
     },
     visibleColumns () {
       return this.tableMeta.attributes
@@ -62,15 +62,15 @@ export default {
   },
   methods: {
     ...mapActions(['fetchTableViewData']),
-    ...mapMutations(['setShowShoppingCart', 'setHideFilters']),
+    ...mapMutations(['setShowSelected', 'setHideFilters']),
     getEntityId (entity) {
       return entity[this.idAttribute.name].toString()
     },
     isSelected (entity) {
-      return this.shoppedEntityItems.includes(this.getEntityId(entity))
+      return this.selectedItemIds.includes(this.getEntityId(entity))
     },
     closeShoppingCart () {
-      this.setShowShoppingCart(false)
+      this.setShowSelected(false)
       this.setHideFilters(false)
     }
   }

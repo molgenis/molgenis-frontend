@@ -37,7 +37,7 @@ describe('ClipboardView.vue', () => {
             lookupAttributeIndex: 0
           }
         ] },
-      shoppedEntityItems: ['1', '3'],
+      selectedItemIds: ['1', '3'],
       tableData: {
         items: [
           { tableID: '1' },
@@ -48,7 +48,7 @@ describe('ClipboardView.vue', () => {
       tableName: 'tableID'
     }
     mutations = {
-      setShowShoppingCart: jest.fn(),
+      setShowSelected: jest.fn(),
       setHideFilters: jest.fn()
     }
 
@@ -67,7 +67,7 @@ describe('ClipboardView.vue', () => {
     const wrapper = shallowMount(ClipboardView, { store, localVue })
     const button = wrapper.find('button.cart-back')
     button.trigger('click')
-    expect(mutations.setShowShoppingCart).toHaveBeenCalledWith(state, false)
+    expect(mutations.setShowSelected).toHaveBeenCalledWith(state, false)
     expect(mutations.setHideFilters).toHaveBeenCalledWith(state, false)
   })
 

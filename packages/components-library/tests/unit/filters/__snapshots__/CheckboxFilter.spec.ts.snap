@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckboxFilter.vue Parsing only required props matches the snapshot 1`] = `
+<div>
+  <div
+    class="bv-no-focus-ring"
+    id="__BVID__4"
+    role="group"
+    tabindex="-1"
+  >
+    <div
+      class="custom-control custom-checkbox"
+    >
+      <input
+        class="custom-control-input"
+        id="__BVID__4_BV_option_0"
+        name="__BVID__4"
+        type="checkbox"
+        value="foo"
+      />
+      <label
+        class="custom-control-label"
+        for="__BVID__4_BV_option_0"
+      >
+        <span>
+          Foo
+        </span>
+      </label>
+    </div>
+    <div
+      class="custom-control custom-checkbox"
+    >
+      <input
+        class="custom-control-input"
+        id="__BVID__4_BV_option_1"
+        name="__BVID__4"
+        type="checkbox"
+        value="bar"
+      />
+      <label
+        class="custom-control-label"
+        for="__BVID__4_BV_option_1"
+      >
+        <span>
+          Bar
+        </span>
+      </label>
+    </div>
+    <div
+      class="custom-control custom-checkbox"
+    >
+      <input
+        class="custom-control-input"
+        id="__BVID__4_BV_option_2"
+        name="__BVID__4"
+        type="checkbox"
+        value="baz"
+      />
+      <label
+        class="custom-control-label"
+        for="__BVID__4_BV_option_2"
+      >
+        <span>
+          Baz
+        </span>
+      </label>
+    </div>
+  </div>
+   
+  <span>
+    <!---->
+     
+    <a
+      class="toggle-select card-link"
+      href="#"
+      target="_self"
+    >
+      
+      Select all
+    
+    </a>
+  </span>
+</div>
+`;

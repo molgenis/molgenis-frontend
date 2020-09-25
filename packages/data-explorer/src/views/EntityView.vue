@@ -48,7 +48,6 @@
         </button>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -74,7 +73,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['dataDisplayLayout', 'shoppingFilter', 'tableMeta', 'shoppedEntityItems', 'defaultEntityData', 'tableData']),
+    ...mapState(['dataDisplayLayout', 'tableMeta', 'selectedItemIds', 'defaultEntityData', 'tableData', 'CartSelectionToast']),
     idAttribute () {
       return this.tableMeta.idAttribute.name
     },
@@ -86,7 +85,7 @@ export default {
     },
     entitiesToShow () {
       if (this.shoppingFilter) {
-        return this.tableData.items.filter((entity) => this.shoppedEntityItems.includes(this.getEntityId(entity)))
+        return this.tableData.items.filter((entity) => this.selectedItemIds.includes(this.getEntityId(entity)))
       } else {
         return this.tableData.items
       }
@@ -98,7 +97,7 @@ export default {
       return entity[this.idAttribute].toString()
     },
     isSelected (entity) {
-      return this.shoppedEntityItems.includes(this.getEntityId(entity))
+      return this.selectedItemIds.includes(this.getEntityId(entity))
     },
     getEntityLabel (entity) {
       return this.labelAttribute ? entity[this.labelAttribute].toString() : ''

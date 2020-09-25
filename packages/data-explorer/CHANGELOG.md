@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.35.5...@molgenis-ui/data-explorer@0.36.0) (2020-09-25)
+
+
+### Features
+
+* **data-explorer:** Add cart-selection component ([3d08dd9](https://github.com/molgenis/molgenis-frontend/commit/3d08dd9))
+* **data-explorer:** moved shop button to new component ([38d072d](https://github.com/molgenis/molgenis-frontend/commit/38d072d))
+
+
+
+
+
+## [0.35.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.35.4...@molgenis-ui/data-explorer@0.35.5) (2020-09-23)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
 ## [0.35.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.35.3...@molgenis-ui/data-explorer@0.35.4) (2020-09-04)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer

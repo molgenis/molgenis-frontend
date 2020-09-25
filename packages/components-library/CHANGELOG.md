@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.3.1...@molgenis-ui/components-library@0.4.0) (2020-09-25)
+
+
+### Features
+
+* **components-library:** Add string-filter component ([#385](https://github.com/molgenis/molgenis-frontend/issues/385)) ([210793b](https://github.com/molgenis/molgenis-frontend/commit/210793b))
+
+
+
+
+
+## [0.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.3.0...@molgenis-ui/components-library@0.3.1) (2020-09-24)
+
+
+### Bug Fixes
+
+* **components-library:** change use if i-tag to span-tag, removes sonar warning ([#384](https://github.com/molgenis/molgenis-frontend/issues/384)) ([007cae4](https://github.com/molgenis/molgenis-frontend/commit/007cae4))
+
+
+
+
+
+# [0.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.2.2...@molgenis-ui/components-library@0.3.0) (2020-09-24)
+
+
+### Features
+
+* **components-library:** added passthrough classes so you can style the toast ([#382](https://github.com/molgenis/molgenis-frontend/issues/382)) ([08e9bde](https://github.com/molgenis/molgenis-frontend/commit/08e9bde))
+* **components-library:** Allow object data in cartselectiontoast ([c7136d0](https://github.com/molgenis/molgenis-frontend/commit/c7136d0))
+
+
+
+
+
 ## [0.2.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.2.1...@molgenis-ui/components-library@0.2.2) (2020-09-22)
 
 

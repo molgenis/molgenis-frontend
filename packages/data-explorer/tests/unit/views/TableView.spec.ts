@@ -13,7 +13,6 @@ describe('TableView.vue', () => {
 
   beforeEach(() => {
     state = {
-      shoppingFilter: false,
       tableMeta: {
         idAttribute: { name: 'id' },
         attributes: [
@@ -36,10 +35,10 @@ describe('TableView.vue', () => {
       },
       dataDisplayLayout: 'TableView',
       tableName: 'tableName',
-      shoppedEntityItems: [1, 3]
+      selectedItemIds: [1, 3]
     }
     mutations = {
-      toggleShoppingItems: jest.fn()
+      toggleSelectedItems: jest.fn()
     }
     actions = {
       fetchTableViewData: jest.fn()
