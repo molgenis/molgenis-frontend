@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="toggleShoppingItems(id)"
+    @click="toggleSelectedItems(id)"
     type="button"
     :class="{'btn-primary': isSelected, 'btn-outline-secondary': !isSelected}"
     class="btn-sm float-right text-nowrap shopping-button">
@@ -32,7 +32,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapMutations(['toggleShoppingItems'])
+    ...mapMutations(['toggleSelectedItems'])
   },
   components: { FontAwesomeIcon }
 })

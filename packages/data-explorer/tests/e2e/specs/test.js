@@ -21,7 +21,7 @@ module.exports = {
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('.shopping-button', timeOutDelay)
       .click('.shopping-button')
-      .click('.show-cart')
+      .click('.toast-body button.btn.btn-secondary')
       .waitForElementPresent('.cart-order', timeOutDelay)
       .assert.elementNotPresent('.alert.alert-warning')
       .waitForElementPresent('.shopping-button', timeOutDelay)

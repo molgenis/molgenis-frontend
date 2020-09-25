@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <clipboard-view v-if="showShoppingCart"></clipboard-view>
+        <clipboard-view v-if="showSelected"></clipboard-view>
         <div v-else>
           <div class="row">
             <div class="col">
@@ -17,6 +17,19 @@
         </div>
       </div>
     </div>
+    <cart-selection-toast
+      v-if="selectedItemIds.length > 0 && !showSelected"
+      :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"
+      :clickHandler="openSelectionList"
+      title="Selection"
+      v-model="handleSelectionItems"
+    >
+      <template v-slot:removeButton><font-awesome-icon icon="times"></font-awesome-icon></template>
+      <template v-slot:buttonText>
+        <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
+        Show cart
+      </template>
+    </cart-selection-toast>
   </div>
 </template>
 
@@ -26,19 +39,42 @@ import SelectLayoutView from './SelectLayoutView'
 import ClipboardView from './ClipboardView'
 import { mapState, mapMutations } from 'vuex'
 import ActiveFilters from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/ActiveFilters.vue'
+import { CartSelectionToast } from '@molgenis-ui/components-library'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTimes, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faTimes, faShoppingCart)
 
 export default Vue.extend({
   name: 'DataView',
-  components: { SelectLayoutView, ClipboardView, ActiveFilters },
+  components: { SelectLayoutView, ClipboardView, ActiveFilters, CartSelectionToast, FontAwesomeIcon },
   computed: {
     ...mapState([
-      'showShoppingCart',
+      'showSelected',
       'tableName',
       'tableMeta',
       'tableSettings',
       'searchText',
-      'filters'
+      'filters',
+      'selectedItemIds',
+      'tableData',
+      'tableMeta'
     ]),
+    displayName () {
+      return (this.tableMeta && this.tableMeta.labelAttribute && this.tableMeta.labelAttribute.name) || 'name'
+    },
+    handleSelectionItems: {
+      get () {
+        if (this.tableData.items && this.tableData.items.length > 0) {
+          return this.selectedItemIds.map(id => ({ id: id, name: this.tableData.items.find(item => item.id === id)[this.displayName] }))
+        }
+        return []
+      },
+      set (value) {
+        this.setSelectedItems(value.map(item => item.id))
+      }
+    },
     searchText: {
       get () {
         return this.$store.state.searchText
@@ -62,8 +98,15 @@ export default Vue.extend({
   methods: {
     ...mapMutations([
       'setFilterSelection',
-      'setSearchText'
+      'setSearchText',
+      'setShowSelected',
+      'setHideFilters',
+      'setSelectedItems'
     ]),
+    openSelectionList () {
+      this.setShowSelected(true)
+      this.setHideFilters(true)
+    },
     saveFilterState (newSelections) {
       if (newSelections['_search'] === undefined) {
         this.setSearchText('')
