@@ -92,7 +92,8 @@ export default Vue.extend({
       'fetchTableMeta',
       'fetchCardViewData',
       'fetchTableViewData',
-      'fetchTableMeta'
+      'fetchTableMeta',
+      'hasSettingsTable'
     ]),
     ...mapActions('header', [
       'fetchBreadcrumbs',
@@ -123,6 +124,7 @@ export default Vue.extend({
     }
   },
   created () {
+    this.hasSettingsTable()
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })

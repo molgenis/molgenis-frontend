@@ -22,7 +22,7 @@ async function createSettings () {
   await client.post(metaDataEndpoint, applicationSettings.entitySettings)
   return {
     type: 'success',
-    message: 'The application has been succesfully initialized!'
+    message: 'The application has been successfully initialized!'
   }
 }
 

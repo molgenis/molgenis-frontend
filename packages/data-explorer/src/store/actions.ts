@@ -5,6 +5,7 @@ import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 import bootstrapExplorer from '@/lib/bootstrapExplorer'
+import { DataApiResponse } from '@/types/ApiResponse'
 
 export default {
   fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
@@ -15,16 +16,16 @@ export default {
     commit('setFilterSelection', {})
     commit('setSearchText', '')
 
-    try {
-      const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
-      if (response.data.items.length === 1) {
-        commit('setTableSettings', response.data.items[0].data)
+    if (state.hasSettingsTable) {
+      try {
+        const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+        if (response.data.items.length === 1) {
+          commit('setTableSettings', response.data.items[0].data)
+        }
+      } catch (e) {
+        // dont show error to user, just keep the default settings
       }
-    } catch (e) {
-      // dont show error to user, just keep the default settings
     }
-
-    bootstrapExplorer()
 
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
     const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
@@ -128,5 +129,9 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
+  },
+  hasSettingsTable: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
+    const resp = await client.get<DataApiResponse>(`/api/data/sys_md_EntityType?q=id==${state.settingsTable}`)
+    commit('hasSettingsTable', resp.data.page.totalElements === 1)
   }
 }
