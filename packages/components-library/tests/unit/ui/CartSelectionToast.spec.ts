@@ -24,9 +24,9 @@ describe('CartSelectionToast.vue', () => {
     // @ts-ignore
     expect(wrapper.vm.previewLabel('string')).toEqual('string')
     // @ts-ignore
-    expect(wrapper.vm.previewLabel({name: 'wrong labelAttribute'})).toEqual('')
+    expect(wrapper.vm.previewLabel({ name: 'wrong labelAttribute' })).toEqual('')
     // @ts-ignore
-    expect(wrapper.vm.previewLabel({label: 'object'})).toEqual('object')
+    expect(wrapper.vm.previewLabel({ label: 'object' })).toEqual('object')
   })
   it('Can displays show/hide according to previewToggle status', () => {
     const wrapper = shallowMount(CartSelectionToast, { localVue, propsData })
