@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.4.0...@molgenis-ui/components-library@0.5.0) (2020-09-25)
+
+
+### Features
+
+* **components-library:** Add Number filter component ([#386](https://github.com/molgenis/molgenis-frontend/issues/386)) ([9459d17](https://github.com/molgenis/molgenis-frontend/commit/9459d17))
+
+
+
+
+
 # [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.3.1...@molgenis-ui/components-library@0.4.0) (2020-09-25)
 
 
