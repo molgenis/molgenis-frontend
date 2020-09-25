@@ -71,7 +71,7 @@ export default Vue.extend({
       get () {
         return this.value
       },
-            /**
+      /**
        * v-model return value
        *
        * @event input
