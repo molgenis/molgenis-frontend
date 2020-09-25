@@ -71,11 +71,23 @@ export default Vue.extend({
       get () {
         return this.value
       },
+            /**
+       * v-model return value
+       *
+       * @event input
+       * @property {Array} Returns new array without the deleted item
+       */
       set (value) {
         if (typeof value === 'string' && value === '') {
           this.$emit('input', undefined)
         } else {
           value = Math.min(Math.max(value, this.min), this.max)
+          /**
+          * v-model return value
+          *
+          * @event input
+          * @property {Float} Returns new filter value or NaN
+          */
           this.$emit('input', parseFloat(value))
         }
       }
