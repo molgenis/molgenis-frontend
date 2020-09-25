@@ -62,7 +62,7 @@ export default Vue.extend({
       'tableMeta'
     ]),
     displayName () {
-      return this.tableMeta.labelAttribute.name || 'name'
+      return (this.tableMeta && this.tableMeta.labelAttribute && this.tableMeta.labelAttribute.name) || 'name'
     },
     handleSelectionItems: {
       get () {
