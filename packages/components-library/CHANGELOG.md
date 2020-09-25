@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.3.1...@molgenis-ui/components-library@0.4.0) (2020-09-25)
+
+
+### Features
+
+* **components-library:** Add string-filter component ([#385](https://github.com/molgenis/molgenis-frontend/issues/385)) ([210793b](https://github.com/molgenis/molgenis-frontend/commit/210793b))
+
+
+
+
+
 ## [0.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.3.0...@molgenis-ui/components-library@0.3.1) (2020-09-24)
 
 
