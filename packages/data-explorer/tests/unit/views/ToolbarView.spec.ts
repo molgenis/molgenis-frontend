@@ -17,9 +17,7 @@ describe('ToolbarView.vue', () => {
     state.tableName = 'root_hospital_patients'
 
     mutations = {
-      setHideFilters: jest.fn(),
       setDataDisplayLayout: jest.fn(),
-      setShowShoppingCart: jest.fn(),
       setFilterSelection: jest.fn(),
       setSearchText: jest.fn()
     }
@@ -56,15 +54,6 @@ describe('ToolbarView.vue', () => {
     expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'CardView')
   })
 
-  it('opens shoppingcart', () => {
-    state.tableSettings.isShop = true
-    const wrapper = shallowMount(ToolbarView, { store, localVue })
-    const button = wrapper.find('button.show-cart')
-    button.trigger('click')
-    expect(mutations.setShowShoppingCart).toHaveBeenCalledWith(state, true)
-    expect(mutations.setHideFilters).toHaveBeenCalledWith(state, true)
-  })
-
   describe('add row button', () => {
     beforeEach(() => getters.hasEditRights.mockReturnValueOnce(true))
 
@@ -74,24 +63,24 @@ describe('ToolbarView.vue', () => {
     })
 
     it('should not be shown in shoppingcart mode', () => {
-      store.state.showShoppingCart = true
+      store.state.showSelected = true
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       expect(wrapper.find('.toolbar > a').exists()).toBe(false)
     })
 
     it('should not show the button without edit rights', () => {
-      store.state.showShoppingCart = true
+      store.state.showSelected = true
       getters.hasEditRights.mockReturnValueOnce(false)
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       expect(wrapper.find('.toolbar > a').exists()).toBe(false)
     })
 
-    afterEach(() => { store.state.showShoppingCart = false })
+    afterEach(() => { store.state.showSelected = false })
   })
 
   describe('searchString value is set', () => {
     it('should persist the value in the store', () => {
-      store.state.showShoppingCart = true
+      store.state.showSelected = true
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       wrapper.setData({ searchText: 'demo' })
       expect(mutations.setSearchText).toHaveBeenCalled()

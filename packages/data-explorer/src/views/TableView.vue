@@ -34,7 +34,7 @@ export default {
   },
   components: { TableRow, TableHeader },
   computed: {
-    ...mapState(['tableName', 'tableMeta', 'shoppedEntityItems', 'isShop']),
+    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'isShop']),
     ...mapGetters(['filterRsql', 'hasEditRights']),
     idAttribute () {
       return this.tableMeta.idAttribute
@@ -51,7 +51,7 @@ export default {
       return entity[this.idAttribute.name].toString()
     },
     isSelected (entity) {
-      return this.shoppedEntityItems.includes(this.getEntityId(entity))
+      return this.selectedItemIds.includes(this.getEntityId(entity))
     }
   },
   /**

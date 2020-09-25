@@ -23,7 +23,7 @@
           type="button"
           class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
           title="Show Filters"
-          v-if="filters.hideSidebar && !showShoppingCart"
+          v-if="filters.hideSidebar && !showSelected"
           @click="setHideFilters(false)">
           <font-awesome-icon icon="chevron-up"></font-awesome-icon>
           <span class="ml-2">Filters</span>
@@ -65,7 +65,7 @@ export default Vue.extend({
     ...mapState([
       'filters',
       'toast',
-      'showShoppingCart',
+      'showSelected',
       'dataDisplayLayout',
       'tableName'
     ]),

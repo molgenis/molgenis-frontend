@@ -9,8 +9,8 @@ const state: ApplicationState = {
   dataDisplayLayout: 'CardView',
   dataDisplayLimit: 100,
   defaultEntityData: null,
-  showShoppingCart: false,
-  shoppedEntityItems: [],
+  showSelected: false,
+  selectedItemIds: [],
   tableSettings: {
     settingsRowId: null,
     collapseLimit: 5,

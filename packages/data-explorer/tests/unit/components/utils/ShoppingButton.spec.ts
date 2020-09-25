@@ -10,7 +10,7 @@ describe('ShoppingButton.vue', () => {
 
   beforeEach(() => {
     mutations = {
-      toggleShoppingItems: jest.fn()
+      toggleSelectedItems: jest.fn()
     }
     store = new Vuex.Store({
       mutations
@@ -26,6 +26,6 @@ describe('ShoppingButton.vue', () => {
   it('add items to shoppingcart', () => {
     const wrapper = shallowMount(ShoppingButton, { store, localVue, propsData: { id: 'test', isSelected: false } })
     wrapper.find('.shopping-button').trigger('click')
-    expect(mutations.toggleShoppingItems).toBeCalledTimes(1)
+    expect(mutations.toggleSelectedItems).toBeCalledTimes(1)
   })
 })
