@@ -4,7 +4,6 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
-import bootstrapExplorer from '@/lib/bootstrapExplorer'
 import { DataApiResponse } from '@/types/ApiResponse'
 
 export default {
@@ -23,7 +22,7 @@ export default {
           commit('setTableSettings', response.data.items[0].data)
         }
       } catch (e) {
-        // dont show error to user, just keep the default settings
+        // don't show error to user, just keep the default settings
       }
     }
 

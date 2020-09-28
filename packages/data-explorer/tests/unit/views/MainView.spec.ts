@@ -51,7 +51,8 @@ describe('MainView.vue', () => {
       deleteRow: jest.fn(),
       fetchTableMeta: jest.fn(),
       fetchCardViewData: jest.fn(),
-      fetchTableViewData: jest.fn()
+      fetchTableViewData: jest.fn(),
+      hasSettingsTable: jest.fn()
     }
 
     modules = {

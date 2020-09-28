@@ -123,8 +123,9 @@ export default Vue.extend({
       this.loading = false
     }
   },
-  created () {
-    this.hasSettingsTable()
+  async created () {
+    this.loading = true
+    await this.hasSettingsTable()
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
