@@ -128,6 +128,9 @@ module.exports = {
       app.get('/api/data/TableWithCustomCard', function (req, res) {
         res.json(require('./tests/e2e/resources/tableWithMoreColumns.js'))
       })
+      app.get('/api/data/sys_md_EntityType', function (req, res) {
+        res.json({ page: { totalElements: 1 } })
+      })
     }
   }
 }
