@@ -6,7 +6,6 @@ exports[`Datetimefilter.vue matches the snapshot 1`] = `
   label="Datetime"
   name="datetime"
   role="group"
-  type="date-time-filter"
 >
   <!---->
   <div
