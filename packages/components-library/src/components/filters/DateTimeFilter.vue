@@ -110,7 +110,9 @@ export default Vue.extend({
   computed: {
     formattedDate: function () {
       const date = this.dateRange
-      if (!date.startDate || !date.endDate) return 'Select...'
+      if (!date.startDate || !date.endDate) {
+        return 'Select...'
+      }
       if (date.startDate.toISOString() === date.endDate.toISOString()) {
         return this.formatDate(date.startDate)
       } else {
@@ -118,8 +120,7 @@ export default Vue.extend({
       }
     },
     pickerFormat () {
-      if (this.time) return 'yyyy-mm-dd HH:MM:ss'
-      else return 'yyyy-mm-dd'
+      return this.time ? 'yyyy-mm-dd HH:MM:ss' : 'yyyy-mm-dd'
     }
   },
   watch: {
@@ -140,22 +141,24 @@ export default Vue.extend({
       this.$emit('input', undefined)
     },
     setDateRange (value) {
-      if (!value) return
-      this.dateRange.startDate = this.createDateFromValue(value[0])
-      this.dateRange.endDate = this.createDateFromValue(value[1])
+      if (value) {
+        this.dateRange.startDate = this.createDateFromValue(value[0])
+        this.dateRange.endDate = this.createDateFromValue(value[1])
+      }
     },
     updateValues: function () {
       this.$emit('input', [this.dateRange.startDate, this.dateRange.endDate])
     },
     createDateFromValue (value) {
       if (value) {
-        if (!isNaN(value)) return new Date(value)
+        if (!isNaN(value)) {
+          return new Date(value)
+        }
         return new Date(Date.parse(value))
       }
     },
     formatDate (dateTime) {
-      if (this.time) return dateTime.toLocaleString()
-      else return dateTime.toLocaleDateString()
+      return this.time ? dateTime.toLocaleString() : dateTime.toLocaleDateString()
     }
   }
 })
@@ -188,8 +191,7 @@ const model = [defaultMin.toISOString(), defaultMax.toISOString()]
     v-bind:min='selectMin.toISOString()'
     v-bind:range='true'
     v-bind:time='true'
-    v-model='model'
-    type='date-time-filter'>
+    v-model='model'>
 </DateTimeFilter>
 <div>{{model}}</div>
 ```

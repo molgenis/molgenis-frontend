@@ -16,8 +16,7 @@ describe('Datetimefilter.vue', () => {
     min: null,
     opens: 'right',
     range: true,
-    time: true,
-    type: 'date-time-filter'
+    time: true
   }
 
   const wrapper = mount(DateTimeFilter, {
