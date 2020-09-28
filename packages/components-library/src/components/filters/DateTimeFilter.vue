@@ -151,10 +151,7 @@ export default Vue.extend({
     },
     createDateFromValue (value) {
       if (value) {
-        if (!isNaN(value)) {
-          return new Date(value)
-        }
-        return new Date(Date.parse(value))
+        return isNaN(value) ? new Date(Date.parse(value)) : new Date(value)
       }
     },
     formatDate (dateTime) {

@@ -7,17 +7,7 @@ import { BootstrapVue } from 'bootstrap-vue'
 const localVue = createLocalVue()
 localVue.use(BootstrapVue)
 
-describe('Datetimefilter.vue', () => {
-  const propsData = {
-    name: 'datetime',
-    label: 'Datetime',
-    collapsed: false,
-    max: null,
-    min: null,
-    opens: 'right',
-    range: true,
-    time: true
-  }
+const buildWrapper = (propsData: any) => {
 
   const wrapper = mount(DateTimeFilter, {
     listeners: {
@@ -28,28 +18,69 @@ describe('Datetimefilter.vue', () => {
     localVue,
     propsData
   })
-  const vm:any = wrapper.vm
 
-  it('matches the snapshot', () => {
-    expect(wrapper.element).toMatchSnapshot()
+  return wrapper
+}
+
+describe('Datetimefilter.vue', () => {
+
+  describe('in date time mode', () => {
+  
+    const wrapper = buildWrapper({
+      name: 'datetime',
+      label: 'Datetime',
+      collapsed: false,
+      max: null,
+      min: null,
+      opens: 'right',
+      range: true,
+      time: true
+    })
+    const vm:any = wrapper.vm
+  
+    it('sets a date range', async () => {
+      await wrapper.find('.vue-daterange-picker div').trigger('click')
+      await wrapper.findAll('.yearselect').setValue('2020')
+  
+      await wrapper.find('.drp-calendar.left .monthselect').setValue('3')
+      await wrapper.find('.drp-calendar.left .monthselect').setValue('3')
+  
+      await wrapper.find('.vue-daterange-picker div table tr:nth-child(2) td:nth-child(7)').trigger('click')
+      await wrapper.find('.vue-daterange-picker div table tr:nth-child(4) td:nth-child(1)').trigger('click')
+      await wrapper.find('.applyBtn').trigger('click')
+  
+      expect(vm.dateRange.startDate.toISOString()).toBe('2020-03-01T12:00:00.000Z')
+      expect(vm.dateRange.endDate.toISOString()).toBe('2020-03-09T12:00:00.000Z')
+      expect(wrapper.emitted().input).toBeTruthy()
+      await wrapper.find('.t-btn-clear').trigger('click')
+      expect(vm.dateRange.startDate).toBe(null)
+      expect(vm.dateRange.endDate).toBe(null)
+    })
+
+    describe('when createDateFromValue is passed a string value', () => {
+      const parsed = vm.createDateFromValue('04 Dec 1995 00:12:00 GMT')
+      it('should parse the string to date', () => {
+        expect(parsed).toEqual(new Date(Date.parse('04 Dec 1995 00:12:00 GMT')))
+      })
+    })
+
   })
 
-  it('sets a date range', async () => {
-    await wrapper.find('.vue-daterange-picker div').trigger('click')
-    await wrapper.findAll('.yearselect').setValue('2020')
+  describe('in date only mode', () => {
+    const wrapper = buildWrapper({
+      name: 'datetime',
+      label: 'Datetime',
+      max: null,
+      min: null,
+      range: true,
+      time: false
+    })
+    const vm:any = wrapper.vm
 
-    await wrapper.find('.drp-calendar.left .monthselect').setValue('3')
-    await wrapper.find('.drp-calendar.left .monthselect').setValue('3')
+    it('formatDate should leave of the time part', async () => {
+      expect(vm.formatDate(new Date(Date.parse('04 Dec 1995 00:12:00 GMT')))).toEqual('12/4/1995')
+    })
 
-    await wrapper.find('.vue-daterange-picker div table tr:nth-child(2) td:nth-child(7)').trigger('click')
-    await wrapper.find('.vue-daterange-picker div table tr:nth-child(4) td:nth-child(1)').trigger('click')
-    await wrapper.find('.applyBtn').trigger('click')
-
-    expect(vm.dateRange.startDate.toISOString()).toBe('2020-03-01T12:00:00.000Z')
-    expect(vm.dateRange.endDate.toISOString()).toBe('2020-03-09T12:00:00.000Z')
-    expect(wrapper.emitted().input).toBeTruthy()
-    await wrapper.find('.t-btn-clear').trigger('click')
-    expect(vm.dateRange.startDate).toBe(null)
-    expect(vm.dateRange.endDate).toBe(null)
   })
+
 })
