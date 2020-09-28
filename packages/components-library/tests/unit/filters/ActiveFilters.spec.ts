@@ -5,11 +5,13 @@ import { findItemByText } from '../__testhelpers__/vueTestUtilHelpers'
 import Vue from 'vue'
 
 describe('ActiveFilters.vue', () => {
-  const startDate = new Date('10/20/2019')
-  const endDate = new Date('10/10/2019')
+  let endDate:Date
+  let startDate:Date
   let wrapper: any
 
   beforeEach(() => {
+    startDate = new Date('09/11/2019')
+    endDate = new Date('10/10/2020')
     wrapper = mount(ActiveFilters, {
       propsData: {
         filters,
@@ -49,12 +51,14 @@ describe('ActiveFilters.vue', () => {
   })
 
   it('will show dateTime type as "[start] - [end]"', async () => {
-    expect(findItemByText(wrapper.findAll('button.active-filter'), 'Datetime: 10/20/2019 - 10/10/2019')).toBeTruthy()
+    const expectedDatetime = `Datetime: ${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
+    expect(findItemByText(wrapper.findAll('button.active-filter'), expectedDatetime)).toBeTruthy()
   })
 
   it('will show dateTime type single date if start is equal to end dataTime', async () => {
     await wrapper.setProps({ value: { datetime: [startDate, startDate] } })
-    expect(findItemByText(wrapper.findAll('button.active-filter'), 'Datetime: 10/20/2019')).toBeTruthy()
+    const expectedDatetime = `Datetime: ${startDate.toLocaleDateString()}`
+    expect(findItemByText(wrapper.findAll('button.active-filter'), expectedDatetime)).toBeTruthy()
   })
 
   it('will show separate items for each selected checkbox type ', async () => {
