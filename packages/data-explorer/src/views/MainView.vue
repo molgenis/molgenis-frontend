@@ -122,7 +122,7 @@ export default Vue.extend({
       this.loading = false
     }
   },
-  async created () {
+  created () {
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
