@@ -3,10 +3,12 @@
 const timeOutDelay = 5000
 const animationDelay = 300
 
+const patientsLocation = `${process.env.VUE_DEV_SERVER_URL}#/root_hospital_patients`
+
 module.exports = {
   'show table layout and card layout': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + '#/root_hospital_patients')
+      .url(patientsLocation)
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('.card-deck', timeOutDelay)
       .click('.table-layout')
@@ -17,7 +19,7 @@ module.exports = {
   },
   'add and remove items from shoppingcart': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + '#/root_hospital_patients')
+      .url(patientsLocation)
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('.shopping-button', timeOutDelay)
       .click('.shopping-button')
@@ -42,7 +44,7 @@ module.exports = {
   },
   'expand and collapse default card in card layout': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + '#/root_hospital_patients')
+      .url(patientsLocation)
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('#app div.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(4)', timeOutDelay)
       .assert.visible('#app div.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(4)')
@@ -57,7 +59,7 @@ module.exports = {
   },
   'open/close filters sidebar': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + '#/root_hospital_patients')
+      .url(patientsLocation)
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('.btn.hide-filters', timeOutDelay)
       .assert.elementNotPresent('show-filters-button')
@@ -72,7 +74,7 @@ module.exports = {
   },
   'Add and remove filters': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + '#/root_hospital_patients')
+      .url(patientsLocation)
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('.filter-container .dropdown-toggle.dropdown-toggle-no-caret', timeOutDelay)
       .click('.filter-container .dropdown-toggle.dropdown-toggle-no-caret')
