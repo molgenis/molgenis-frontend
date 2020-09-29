@@ -3,7 +3,6 @@ import ApplicationState from '@/types/ApplicationState'
 const state: ApplicationState = {
   toast: null,
   settingsTable: 'sys_ts_DataExplorerEntitySettings',
-  hasSettingsTable: false,
   tableName: null,
   tableData: null,
   tableMeta: null,

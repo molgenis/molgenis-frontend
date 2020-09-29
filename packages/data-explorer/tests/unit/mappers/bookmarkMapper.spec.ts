@@ -33,13 +33,13 @@ describe('bookmarkMapper.ts', () => {
     store.state.filters.selections = testfilterSelections
     createBookmark(router)
     // @ts-ignore
-    expect(router.history.current.fullPath).toBe(`/root_hospital_patients?bookmark=${testBookmark}`)
+    expect(router.history.current.fullPath).toBe(`/sys_ts_DataExplorerEntitySettings?bookmark=${testBookmark}`)
   })
 
   it('should not show a bookmark when shown array is empty', () => {
     createBookmark(router)
     // @ts-ignore
-    expect(router.history.current.fullPath).toBe('/root_hospital_patients')
+    expect(router.history.current.fullPath).toBe('/sys_ts_DataExplorerEntitySettings')
   })
 
   it('sets filters based on bookmark', () => {

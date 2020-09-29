@@ -288,7 +288,6 @@ describe('actions', () => {
       metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
       // @ts-ignore
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      state.hasSettingsTable = true
       await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
       expect(commit.mock.calls).toEqual([
         [ 'setTableSettings', {} ],

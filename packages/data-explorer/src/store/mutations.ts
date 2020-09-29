@@ -44,9 +44,6 @@ export default {
   setSelectedItems (state: ApplicationState, items: Array<string>) {
     state.selectedItemIds = items
   },
-  hasSettingsTable (state: ApplicationState, hasSettingsTable: boolean) {
-    state.hasSettingsTable = hasSettingsTable
-  },
   setTableSettings (state: ApplicationState, tableSettings: StringMap) {
     const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'
     state.tableSettings.isShop = isPropSet('shop') ? Boolean(tableSettings.shop) : defaultSettings.isShop

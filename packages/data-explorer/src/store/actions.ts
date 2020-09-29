@@ -15,15 +15,9 @@ export default {
     commit('setFilterSelection', {})
     commit('setSearchText', '')
 
-    if (state.hasSettingsTable) {
-      try {
-        const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
-        if (response.data.items.length === 1) {
-          commit('setTableSettings', response.data.items[0].data)
-        }
-      } catch (e) {
-        // don't show error to user, just keep the default settings
-      }
+    const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+    if (response.data.items.length === 1) {
+      commit('setTableSettings', response.data.items[0].data)
     }
 
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
@@ -128,9 +122,5 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
-  },
-  hasSettingsTable: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
-    const resp = await client.get<DataApiResponse>(`/api/data/sys_md_EntityType?q=id==${state.settingsTable}`)
-    commit('hasSettingsTable', resp.data.page.totalElements === 1)
   }
 }
