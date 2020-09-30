@@ -75,7 +75,7 @@ export default Vue.extend({
      */
     value: {
       type: Array,
-      default: () => []
+      required: true
     }
   },
   data () {
