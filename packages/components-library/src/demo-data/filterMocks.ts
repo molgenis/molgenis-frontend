@@ -34,7 +34,7 @@ export const colorOptions = [
   { value: 'black', text: 'Black' }
 ]
 
-export const multiFilterOptions = ({ count , query }: {count?: number, query?: string}) => {
+export const multiFilterOptions = ({ count, query }: {count?: number; query?: string}) => {
   return new Promise((resolve) => {
     let filteredOptions = fruitOptions
     if (query) {
