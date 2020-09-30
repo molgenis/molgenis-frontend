@@ -3,12 +3,10 @@ import { createLocalVue, mount } from '@vue/test-utils'
 import DateTimeFilter from '@/components/filters/DateTimeFilter.vue'
 import { BootstrapVue } from 'bootstrap-vue'
 
-
 const localVue = createLocalVue()
 localVue.use(BootstrapVue)
 
 const buildWrapper = (propsData: any) => {
-
   const wrapper = mount(DateTimeFilter, {
     listeners: {
       input: (newVal: any) => {
@@ -23,9 +21,7 @@ const buildWrapper = (propsData: any) => {
 }
 
 describe('Datetimefilter.vue', () => {
-
   describe('in date time mode', () => {
-  
     const wrapper = buildWrapper({
       name: 'datetime',
       label: 'Datetime',
@@ -36,19 +32,19 @@ describe('Datetimefilter.vue', () => {
       range: true,
       time: true
     })
-    const vm:any = wrapper.vm
-  
+    const vm: any = wrapper.vm
+
     it('sets a date range', async () => {
       await wrapper.find('.vue-daterange-picker div').trigger('click')
       await wrapper.findAll('.yearselect').setValue('2020')
-  
+
       await wrapper.find('.drp-calendar.left .monthselect').setValue('3')
       await wrapper.find('.drp-calendar.left .monthselect').setValue('3')
-  
+
       await wrapper.find('.vue-daterange-picker div table tr:nth-child(2) td:nth-child(7)').trigger('click')
       await wrapper.find('.vue-daterange-picker div table tr:nth-child(4) td:nth-child(1)').trigger('click')
       await wrapper.find('.applyBtn').trigger('click')
-  
+
       expect(vm.dateRange.startDate.toISOString()).toBe('2020-03-01T12:00:00.000Z')
       expect(vm.dateRange.endDate.toISOString()).toBe('2020-03-09T12:00:00.000Z')
       expect(wrapper.emitted().input).toBeTruthy()
@@ -63,7 +59,6 @@ describe('Datetimefilter.vue', () => {
         expect(parsed).toEqual(new Date(Date.parse('04 Dec 1995 00:12:00 GMT')))
       })
     })
-
   })
 
   describe('in date only mode', () => {
@@ -75,12 +70,10 @@ describe('Datetimefilter.vue', () => {
       range: true,
       time: false
     })
-    const vm:any = wrapper.vm
+    const vm: any = wrapper.vm
 
     it('formatDate should leave of the time part', async () => {
       expect(vm.formatDate(new Date(Date.parse('04 Dec 1995 00:12:00 GMT')))).toEqual('12/4/1995')
     })
-
   })
-
 })
