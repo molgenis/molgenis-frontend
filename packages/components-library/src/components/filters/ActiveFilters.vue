@@ -87,7 +87,7 @@ export default Vue.extend({
             const option = await filter.options()
             current.forEach(subKey => {
               const findTextFromValue = option.filter(
-                filter => filter.value === subKey
+                filterOption => filterOption.value === subKey
               )[0]
               activeValues.push({
                 key,
@@ -123,7 +123,7 @@ export default Vue.extend({
             const options = await filter.options({ nameAttribute: false, queryType: 'in', query: current.join(',') })
             current.forEach(subKey => {
               const findTextFromValue = options.filter(
-                filter => filter.value === subKey
+                filterOption => filterOption.value === subKey
               )[0]
               activeValues.push({
                 key,
@@ -146,15 +146,13 @@ export default Vue.extend({
       return this.filters.filter(filter => filter.name === key)[0]
     },
     removeFilter ({ key, subKey }) {
+      const selections = { ...this.value }
       if (subKey === undefined) {
-        const selections = { ...this.value }
         delete selections[key]
-        this.$emit('input', selections)
       } else {
-        const selections = { ...this.value }
-        selections[key] = selections[key].filter(key => key !== subKey)
-        this.$emit('input', selections)
+        selections[key] = selections[key].filter(selectionKey => selectionKey !== subKey)
       }
+      this.$emit('input', selections)
     }
   }
 })
