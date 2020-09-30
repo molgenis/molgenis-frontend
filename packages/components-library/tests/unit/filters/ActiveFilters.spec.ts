@@ -1,7 +1,7 @@
 import { createLocalVue, mount } from '@vue/test-utils'
 import { BootstrapVue } from 'bootstrap-vue'
 import ActiveFilters from '@/components/filters/ActiveFilters.vue'
-import { colorOptions } from '@/demo-data/filterMocks'
+import { colorOptions } from '../../demo-data/filterMocks'
 const localVue = createLocalVue()
 localVue.use(BootstrapVue)
 
