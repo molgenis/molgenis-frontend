@@ -58,7 +58,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faCaretRight, faTimes)
 
 export default Vue.extend({
-  name: 'AddFilterModal',
+  name: 'ChangeFilters',
   components: { FontAwesomeIcon },
   props: {
     /**
@@ -169,25 +169,32 @@ export default Vue.extend({
 </style>
 
 <docs>
-Browser number input filter with additional options.
+Filter selector
 ### Usage
 ```jsx
 const filters = [
   {
-    name: 'datetime',
-    label: 'Datetime',
-    type: 'date-time-filter',
+    name: 'color',
+    label: 'Color',
   },
   {
-    name: 'age',
-    label: 'Age',
-    type: 'range-filter'
+    name: 'Region',
+    label: 'region',
+  },
+  {
+    name: 'name',
+    label: 'Name',
   },
 ]
 const model = []
-<ChangeFilters
-  v-bind:filters="filters"
-  v-model="model">
-</ChangeFilters>
+<div class="row">
+  <div class="col-2">
+    <ChangeFilters
+      v-bind:filters="filters"
+      v-model="model">
+    </ChangeFilters>
+  </div>
+</div>
+
 <div>{{model}}</div>
 ```
