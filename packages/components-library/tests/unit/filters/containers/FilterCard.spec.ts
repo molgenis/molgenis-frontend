@@ -32,14 +32,14 @@ describe('FilterCard.vue', () => {
 
   describe('setting collapsable to false', () => {
     const wrapper = mount(FilterCard, { localVue, propsData: { name, collapsable: false, collapsed: true } })
-    it('wil force the card open al the time', () => {
+    it('will force the card to be open all the time', async () => {
       expect(wrapper.find('div#name').element.style.display).toEqual('') // Open
-      wrapper.find('.card-header').trigger('click')
+      await wrapper.find('.card-header').trigger('click')
       expect(wrapper.find('div#name').element.style.display).toEqual('') // Still open, no collapsable
     })
   })
 
-  it('Emits an event if the close button is clicked', () => {
+  it('emits an event if the close button is clicked', async () => {
     const close = mount(FilterCard, {
       localVue,
       propsData: {
@@ -50,7 +50,7 @@ describe('FilterCard.vue', () => {
       }
     })
     expect(close.emitted().removeFilter).toBeUndefined()
-    close.find('.remove-button').trigger('click')
+    await close.find('.remove-button').trigger('click')
     // @ts-ignore
     expect(close.emitted().removeFilter[0]).toEqual(['name'])
   })
