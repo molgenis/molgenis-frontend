@@ -176,15 +176,27 @@ const filters = [
   {
     name: 'color',
     label: 'Color',
+    description: 'pick a color',
   },
   {
-    name: 'Region',
-    label: 'region',
+    name: 'region',
+    label: 'Region',
   },
   {
-    name: 'name',
-    label: 'Name',
+    name: 'health',
+    label: 'Health',
+    type: 'compound-title'
   },
+  {
+    name: 'drugs',
+    label: 'Drug use',
+    compound: 'health'
+  },
+  {
+    name: 'mental-health',
+    label: 'Mental health',
+    compound: 'health'
+  }
 ]
 const model = []
 <div class="row">
