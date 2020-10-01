@@ -10,7 +10,16 @@ module.exports = {
   sections: [
     {
       name: 'Filters',
-      components: 'src/components/filters/*.vue'
+      sections: [
+        {
+          name: 'Components',
+          components: 'src/components/filters/*.vue'
+        },
+        {
+          name: 'Containers',
+          components: 'src/components/filters/containers/*.vue'
+        }
+      ]
     },
     {
       name: 'UI',

@@ -1,5 +1,5 @@
 import { mount, createLocalVue } from '@vue/test-utils'
-import FilterCard from '@/components/filters/FilterCard.vue'
+import FilterCard from '@/components/filters/containers/FilterCard.vue'
 import { BootstrapVue } from 'bootstrap-vue'
 
 const localVue = createLocalVue()
