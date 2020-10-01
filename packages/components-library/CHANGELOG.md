@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.5.0...@molgenis-ui/components-library@0.6.0) (2020-09-30)
+
+
+### Features
+
+* **components-library:** [#7576](https://github.com/molgenis/molgenis-frontend/issues/7576) add DateTimeFilter to styleguidist ([#390](https://github.com/molgenis/molgenis-frontend/issues/390)) ([814173c](https://github.com/molgenis/molgenis-frontend/commit/814173c))
+
+
+
+
+
 # [0.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.4.0...@molgenis-ui/components-library@0.5.0) (2020-09-25)
 
 
