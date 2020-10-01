@@ -76,9 +76,4 @@ describe('ChangeFilters.vue', () => {
     wrapper.findAll('.custom-control-input').at(3).trigger('click')
     expect(wrapper.emitted().input[3]).toEqual([['search']])
   })
-
-  it('can make a array unique', () => {
-    // @ts-ignore
-    expect(['a', 'b', 'b', 'c', 'c', 'c'].filter(wrapper.vm.unique)).toEqual(['a', 'b', 'c'])
-  })
 })
