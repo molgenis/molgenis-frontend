@@ -77,7 +77,7 @@ export const filters = [
     type: 'range-filter'
   },
   {
-    name: 'fruit', // attribute name
+    name: 'fruit',
     label: 'Filter with multiple options',
     collapsed: false,
     options: multiFilterOptions,

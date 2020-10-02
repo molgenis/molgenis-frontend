@@ -64,7 +64,9 @@ export default Vue.extend({
         const filter = this.selectFilter(key)
 
         // Clean op the values by removing undefined entry's
-        if (current === undefined || (Array.isArray(current) && !current.length)) return
+        if (current === undefined || (Array.isArray(current) && !current.length)) {
+          return
+        }
 
         if (filter.type === 'date-time-filter') {
           let value
@@ -119,6 +121,7 @@ export default Vue.extend({
               })
             }
           }
+
           if (filter.type === 'multi-filter') {
             const options = await filter.options({ nameAttribute: false, queryType: 'in', query: current.join(',') })
             current.forEach(subKey => {
