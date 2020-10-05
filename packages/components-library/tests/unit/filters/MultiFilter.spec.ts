@@ -17,13 +17,7 @@ const checkboxLotsOptions = [
 
 describe('MultiFilter.vue', () => {
   let wrapper: any
-  const optionsPromise = () => {
-    return new Promise(
-      function (resolve) {
-        resolve(checkboxLotsOptions)
-      }
-    )
-  }
+  const optionsPromise = jest.fn(() => Promise.resolve(checkboxLotsOptions))
 
   const propsData = {
     name: 'multi-filter',
@@ -99,5 +93,14 @@ describe('MultiFilter.vue', () => {
     const checkbox = wrapperFromBookmark.find('input[type=checkbox]').element as HTMLInputElement
     expect(checkbox.value).toBe('red')
     expect(checkbox.checked).toBeTruthy()
+  })
+
+  it('should update the options list', async () => {
+    optionsPromise.mockClear()
+    jest.useFakeTimers()
+    const searchInput = wrapper.find('input[name="multi-filter"]')
+    await searchInput.setValue('Blue')
+    jest.runAllTimers()
+    expect(optionsPromise).toHaveBeenCalledWith({ nameAttribute: 'label', query: 'Blue' })
   })
 })
