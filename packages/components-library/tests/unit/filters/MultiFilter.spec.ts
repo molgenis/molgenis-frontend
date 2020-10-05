@@ -5,25 +5,18 @@ import { BootstrapVue } from 'bootstrap-vue'
 const localVue = createLocalVue()
 localVue.use(BootstrapVue)
 
-
 const checkboxLotsOptions = [
-    { value: 'red', text: 'Red' },
-    { value: 'green', text: 'Green' },
-    { value: 'blue', text: 'Blue' },
-    { value: 'yellow', text: 'Yellow' },
-    { value: 'white', text: 'White' },
-    { value: 'purple', text: 'Purple' },
-    { value: 'black', text: 'Black' }
-  ]
-
+  { value: 'red', text: 'Red' },
+  { value: 'green', text: 'Green' },
+  { value: 'blue', text: 'Blue' },
+  { value: 'yellow', text: 'Yellow' },
+  { value: 'white', text: 'White' },
+  { value: 'purple', text: 'Purple' },
+  { value: 'black', text: 'Black' }
+]
 
 describe('MultiFilter.vue', () => {
   let wrapper: any
-
-  beforeEach(() => {
-    wrapper = mount(MultiFilter, {localVue, propsData})
-  })
-
   const optionsPromise = () => {
     return new Promise(
       function (resolve) {
@@ -41,12 +34,16 @@ describe('MultiFilter.vue', () => {
     type: 'multi-filter'
   }
 
+  beforeEach(() => {
+    wrapper = mount(MultiFilter, { localVue, propsData })
+  })
+
   it('matches the snapshot', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
   it('does not show checkbox fields when input options are not resolved yet', () => {
-    wrapper = mount(MultiFilter, {localVue, propsData})
+    wrapper = mount(MultiFilter, { localVue, propsData })
     const background = wrapper.find('.checkbox-list')
     expect(background.exists()).toBeFalsy()
   })

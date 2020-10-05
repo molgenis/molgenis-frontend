@@ -148,7 +148,7 @@ export default {
     }
   },
   watch: {
-    query: function (newVal) {
+    query: function () {
       const previousSelection = this.multifilterOptions.filter(
         option => this.selection.indexOf(option.value) >= 0
       )
@@ -159,24 +159,24 @@ export default {
       }
       this.triggerQuery = setTimeout(async () => {
         clearTimeout(this.triggerQuery)
-        if (newVal.length) {
-          this.showCount = this.maxVisibleOptions
-          this.isLoading = true
+        this.showCount = this.maxVisibleOptions
+        this.isLoading = true
 
-          const fetched = await this.options({ nameAttribute: 'label', query: this.query })
-          const valuesPresent = previousSelection.map(prev => prev.value)
+        const fetched = this.query.length
+          ? await this.options({ nameAttribute: 'label', query: this.query })
+          : this.initialOptions
 
-          if (valuesPresent.length) {
-            const difference = fetched.filter(
-              prev => !valuesPresent.includes(prev.value)
-            )
-            this.inputOptions = previousSelection.concat(difference)
-          } else {
-            this.inputOptions = fetched
-          }
+        const valuesPresent = previousSelection.map(prev => prev.value)
 
-          this.isLoading = false
+        if (valuesPresent.length) {
+          const difference = fetched.filter(
+            prev => !valuesPresent.includes(prev.value)
+          )
+          this.inputOptions = previousSelection.concat(difference)
+        } else {
+          this.inputOptions = fetched
         }
+        this.isLoading = false
       }, 500)
     }
   },
@@ -226,7 +226,7 @@ Item-based Filter. Search box is used to find items in the table.
 
 ### Usage
 ```jsx
-const options = [
+const fruitOptions = [
   { text: 'Orange', value: 'orange' },
   { text: 'Apple', value: 'apple' },
   { text: 'Pineapple', value: 'pineapple' },
@@ -247,9 +247,9 @@ const options = [
 
 const optionsMethod = ({count, nameAttribute, queryType, query}) => {
   return new Promise((resolve) => {
-    let filteredOptions = options
+    let filteredOptions = JSON.parse(JSON.stringify(fruitOptions));
     if (query) {
-      filteredOptions = options.filter((i) => i.text.includes(query))
+      filteredOptions = filteredOptions.filter((i) => i.text.includes(query))
     }
     if (count) {
       filteredOptions = filteredOptions.splice(0, count)
