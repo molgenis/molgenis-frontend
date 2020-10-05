@@ -180,7 +180,7 @@ const selections = {
   search: 'test',
   name: 'John',
   age: [32, 45],
-  fruit: 'orange',
+  fruit: ['orange', 'apple'],
   color: ['red', 'green'],
   datetime: [new Date('10/01/1980'), new Date('03/12/2020')],
 }

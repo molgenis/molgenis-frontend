@@ -38,7 +38,10 @@ export const multiFilterOptions = ({ count, query }: {count?: number; query?: st
   return new Promise((resolve) => {
     let filteredOptions = fruitOptions
     if (query) {
-      filteredOptions = fruitOptions.filter((i) => i.text.includes(query))
+      const queryItems = query.split(',')
+      filteredOptions = fruitOptions.filter((option) => {
+        return queryItems.includes(option.value)
+      })
     }
     if (count) {
       filteredOptions = filteredOptions.splice(0, count)

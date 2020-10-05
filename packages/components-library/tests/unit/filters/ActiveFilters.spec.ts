@@ -1,16 +1,12 @@
 import { createLocalVue, mount } from '@vue/test-utils'
 import { BootstrapVue } from 'bootstrap-vue'
 import ActiveFilters from '@/components/filters/ActiveFilters.vue'
-import { filters, fruitOptions } from '../../demo-data/filterMocks'
-import { findItemByText, logWrapperArray } from '../__testhelpers__/vueTestUtilHelpers'
+import { filters } from '../../demo-data/filterMocks'
+import { findItemByText } from '../__testhelpers__/vueTestUtilHelpers'
 import Vue from 'vue'
 
 const localVue = createLocalVue()
 localVue.use(BootstrapVue)
-
-// Mock filtered query result for multi-filter example
-// @ts-ignore
-filters[3].options = jest.fn(() => Promise.resolve(fruitOptions))
 
 describe('ActiveFilters.vue', () => {
   const startDate = new Date('10/20/2019')
@@ -27,7 +23,7 @@ describe('ActiveFilters.vue', () => {
           checkbox: ['blue', 'purple'],
           datetime: [startDate, endDate],
           search: 'kimkierkegaard',
-          fruit: ['orange']
+          fruit: ['orange', 'apple']
         }
       },
       listeners: {
@@ -73,15 +69,14 @@ describe('ActiveFilters.vue', () => {
   it('removes filter values on click', async () => {
     // Remove 'john' filter
     const items = wrapper.findAll('button.active-filter')
-    logWrapperArray(items)
-    expect(items.length).toEqual(7)
+    expect(items.length).toEqual(8)
     const toRemove: any = findItemByText(items, 'Label: john')
     expect(toRemove).toBeTruthy()
     await toRemove.trigger('click') // remove item
     await Vue.nextTick() // second await needed to wait for async 'buildActiveValues' to update the dom
     await Vue.nextTick() // third await needed to wait for async options fetch when updating checkbox options
     let itemsAfterRemove = wrapper.findAll('button.active-filter')
-    expect(itemsAfterRemove.length).toEqual(6)
+    expect(itemsAfterRemove.length).toEqual(7)
     expect(findItemByText(itemsAfterRemove, 'Label: john')).toBeFalsy()
 
     // Remove 'Blue' filter
@@ -91,7 +86,7 @@ describe('ActiveFilters.vue', () => {
     await Vue.nextTick() // second await needed to wait for async 'buildActiveValues' to update the dom
     await Vue.nextTick() // third await needed to wait for async options fetch when updating checkbox options
     itemsAfterRemove = wrapper.findAll('button.active-filter')
-    expect(itemsAfterRemove.length).toEqual(5)
+    expect(itemsAfterRemove.length).toEqual(6)
     expect(findItemByText(itemsAfterRemove, 'Checkbox: Blue')).toBeFalsy()
     expect(findItemByText(itemsAfterRemove, 'Checkbox: Purple')).toBeTruthy()
   })
