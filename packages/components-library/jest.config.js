@@ -11,6 +11,6 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^.+.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub'
   },
-  coveragePathIgnorePatterns: ['/node_modules/', '/demo-data/'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/__testhelpers__/', '/demo-data/'],
   collectCoverage: true
 }
