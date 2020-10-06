@@ -9,7 +9,6 @@ const uiContextModule = require('@molgenis/molgenis-ui-context').default
 Vue.use(Vuex)
 
 const state: SecurityModel = {
-  loginUser: {},
   groups: [],
   groupMembers: {},
   groupRoles: {},

@@ -1,18 +1,6 @@
 import getters from '@/store/getters.ts'
 
 describe('getters', () => {
-  describe('getLoginUser', () => {
-    it('should return a user', () => {
-      const state: any = {
-        loginUser: {
-          name: 'admin',
-          isSuperUser: true
-        }
-      }
-      expect(getters.getLoginUser(state)).toEqual(state.loginUser)
-    })
-  })
-
   describe('groups', () => {
     it('should return groups from the store', () => {
       const state: any = {

@@ -21,7 +21,7 @@
     <div class="row mb-3  ">
       <div class="col">
         <h1>{{ 'security-ui-members-page-title' | i18n }} {{name}}</h1>
-        <b-button id="delete-group-btn" variant="danger" v-if="getLoginUser.isSuperUser"
+        <b-button id="delete-group-btn" variant="danger" v-if="hasSuperUserRights"
                   v-b-modal.deleteModal>
           <i :class="['fa', 'fa-trash', 'fa-lg', 'fa-enabled']"></i></b-button>
       </div>
@@ -142,7 +142,6 @@ export default {
     ...mapGetters([
       'groupMembers',
       'groupPermissions',
-      'getLoginUser',
       'getAnonymousGroupRightsBool',
       'getUserGroupRightsString',
       'hasSuperUserRights'

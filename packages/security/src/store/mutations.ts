@@ -3,15 +3,11 @@ import { SecurityModel } from '@/types/SecurityModel'
 import { Group } from '@/types/Group'
 import { User } from '@/types/User'
 import { Toast } from '@/types/Toast'
-import { LoginUser } from '@/types/LoginUser'
 import { GroupMember } from '@/types/GroupMember'
 import { GroupRole } from '@/types/GroupRole'
 import { GroupRollSubSelection } from '@/types/GroupRollSubSelection'
 
 const mutations = {
-  setLoginUser (state: SecurityModel, loginUser: LoginUser) {
-    state.loginUser = loginUser
-  },
   setGroups (state: SecurityModel, groups: Array<Group>) {
     state.groups = groups
   },

@@ -47,11 +47,6 @@ describe('GroupDetail component', () => {
     group1: ['ADD_MEMBERSHIP']
   }
 
-  const loginUser = {
-    name: 'admin',
-    isSuperUser: true
-  }
-
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
@@ -59,7 +54,6 @@ describe('GroupDetail component', () => {
     localVue.directive('b-modal', {})
 
     state = {
-      loginUser: loginUser,
       groups: [],
       groupMembers: groupMembers,
       groupRoles: {},
@@ -79,7 +73,6 @@ describe('GroupDetail component', () => {
     getters = {
       groupMembers: () => groupMembers,
       groupPermissions: () => groupPermissions,
-      getLoginUser: () => loginUser,
       getAnonymousGroupRightsBool: () => jest.fn(),
       getUserGroupRightsString: () => jest.fn(),
       hasSuperUserRights: jest.fn().mockReturnValue(true)
