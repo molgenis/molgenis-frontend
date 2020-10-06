@@ -736,10 +736,10 @@
     i18next-xhr-backend "^1.4.1"
     moment "^2.18.1"
 
-"@molgenis/molgenis-ui-form@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.0.0.tgz#cf80822a52bd2ebe2c68a7b248d6a4eb6f3c87fc"
-  integrity sha512-legD41uBRQXAuTpZsOPnuJcassBu7mbgDC/xp8GXmi51Te7eLSJTmHrnJ/LbNJsFSvMPRf4INL+k5yriYgPE1A==
+"@molgenis/molgenis-ui-form@^5.1.2":
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.1.2.tgz#e0737689fa0d22ba9ae87cca234a3e85d7de4ca8"
+  integrity sha512-U/MWeqsQcF38kbemdj9/GnELhf9mQf4coqc8cHQ+xjVqPyW2tOIWwnHy042Kc4MltgIQsxCoeFp/ycrjIdEE0w==
   dependencies:
     "@molgenis/molgenis-api-client" "^2.1.2"
     "@molgenis/rsql" "^0.1.1"
