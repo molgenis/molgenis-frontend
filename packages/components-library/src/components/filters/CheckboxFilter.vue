@@ -116,19 +116,11 @@ Filter that renders a list of options as a set of checkboxes
 
 ## Usage
 ```jsx
-const options = () => Promise.resolve(
- [
-  { text: 'Orange', value: 'orange' },
-  { text: 'Apple', value: 'apple' },
-  { text: 'Pineapple', value: 'pineapple' },
-  { text: 'Grape', value: 'grape' }
- ]
-)
 const model = []
 <CheckboxFilter
-  v-bind:maxVisibleOptions="null"
+  v-bind:maxVisibleOptions="5"
   v-bind:bulkOperation="true"
-  v-bind:options="options"
+  v-bind:options="fruitOptionsFunction"
   v-model="model">
 </CheckboxFilter>
 <div>model: {{model}}</div>
