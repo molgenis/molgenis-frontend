@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.4.1...@molgenis-ui/security@0.4.2) (2020-10-07)
+
+
+### Bug Fixes
+
+* **security:** fixes [#352](https://github.com/molgenis/molgenis-frontend/issues/352) - console errors ([5630557](https://github.com/molgenis/molgenis-frontend/commit/5630557))
+* **security:** removed duplicate user authentication ([7b0a30c](https://github.com/molgenis/molgenis-frontend/commit/7b0a30c))
+
+
+
+
+
 ## [0.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.4.0...@molgenis-ui/security@0.4.1) (2020-08-27)
 
 

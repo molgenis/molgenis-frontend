@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.7.0...@molgenis-ui/components-library@0.8.0) (2020-10-07)
+
+
+### Features
+
+* **components-library:** Add active filters component ([#393](https://github.com/molgenis/molgenis-frontend/issues/393)) ([cfcc51d](https://github.com/molgenis/molgenis-frontend/commit/cfcc51d))
+
+
+
+
+
 # [0.7.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.6.0...@molgenis-ui/components-library@0.7.0) (2020-10-07)
 
 
