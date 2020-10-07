@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.6.0...@molgenis-ui/components-library@0.7.0) (2020-10-07)
+
+
+### Features
+
+* **components-library:** add filter card component ([#391](https://github.com/molgenis/molgenis-frontend/issues/391)) ([9a598cf](https://github.com/molgenis/molgenis-frontend/commit/9a598cf))
+
+
+
+
+
 # [0.6.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.5.0...@molgenis-ui/components-library@0.6.0) (2020-09-30)
 
 
