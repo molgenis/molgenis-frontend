@@ -1,5 +1,4 @@
 import { SecurityModel } from '@/types/SecurityModel'
-import { LoginUser } from '@/types/LoginUser'
 import { Group } from '@/types/Group'
 import { GroupMember } from '@/types/GroupMember'
 import { GroupRole } from '@/types/GroupRole'
@@ -7,9 +6,6 @@ import { User } from '@/types/User'
 import { Toast } from '@/types/Toast'
 
 const getters = {
-  getLoginUser: (state: SecurityModel): LoginUser | {} => {
-    return state.loginUser
-  },
   groups: (state: SecurityModel): Array<Group> => {
     return state.groups
   },
@@ -46,6 +42,15 @@ const getters = {
       }
     }
     return ''
+  },
+  hasSuperUserRights: (state: SecurityModel, getters: any): boolean => {
+    return getters.isUserAuthenticated && getters.userRoles.includes('ROLE_SU')
+  },
+  isUserAuthenticated: (state: SecurityModel, getters: any, rootState: any): boolean => {
+    return rootState.account.context ? rootState.account.context.authenticated : false
+  },
+  userRoles: (state: SecurityModel, getters: any, rootState: any): string[] => {
+    return rootState.account.context ? rootState.account.context.roles : []
   }
 }
 export default getters

@@ -2,21 +2,6 @@ import mutations from '@/store/mutations'
 import Vue from 'vue'
 
 describe('mutations', () => {
-  describe('setLoginUser', () => {
-    it('should set the loginUser in the store', () => {
-      const state: any = {
-        loginUser: {}
-      }
-
-      const payload: any = [
-        { name: 'admin', isSuperUSer: true }
-      ]
-
-      mutations.setLoginUser(state, payload)
-
-      expect(state.loginUser).toEqual(payload)
-    })
-  })
   describe('setGroups', () => {
     it('should set an list of groups in the store', () => {
       const state: any = {

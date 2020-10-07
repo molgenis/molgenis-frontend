@@ -22,22 +22,13 @@ describe('GroupCreate component', () => {
     path: '/group'
   }
 
-  const loginUser = {
-    name: 'admin',
-    isSuperUser: true
-  }
-
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
     localVue.filter('i18n', $t)
 
-    state = {
-      loginUser: loginUser
-    }
-
     getters = {
-      getLoginUser: () => loginUser
+      hasSuperUserRights: jest.fn().mockReturnValue(true)
     }
 
     actions = {

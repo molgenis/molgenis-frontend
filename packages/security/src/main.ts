@@ -11,7 +11,7 @@ import 'font-awesome/css/font-awesome.min.css'
 Vue.use(BootstrapVue)
 
 // @ts-ignore
-const { lng, fallbackLng, isSuperUser } = window.__INITIAL_STATE__
+const { lng, fallbackLng } = window.__INITIAL_STATE__
 
 Vue.config.productionTip = false
 
@@ -26,7 +26,5 @@ Vue.use(i18n, {
       store,
       render: h => h(SecurityApp)
     }).$mount('#security-ui-plugin')
-
-    store.commit('setLoginUser', { name: 'admin', isSuperUser: isSuperUser })
   }
 })
