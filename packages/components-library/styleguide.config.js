@@ -12,7 +12,7 @@ module.exports = {
       name: 'Filters',
       sections: [
         {
-          name: 'Components',
+          name: 'Types',
           components: 'src/components/filters/*.vue'
         },
         {
