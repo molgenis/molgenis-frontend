@@ -36,10 +36,10 @@ export const colorOptions = [
 
 export const multiFilterOptions = ({ count, query }: {count?: number; query?: string}) => {
   return new Promise((resolve) => {
-    let filteredOptions = fruitOptions
+    let filteredOptions = [...fruitOptions] // keep original unfiltered to use as mock data-store
     if (query) {
-      const queryItems = query.split(',')
-      filteredOptions = fruitOptions.filter((option) => {
+      const queryItems = query.toLowerCase().split(',')
+      filteredOptions = [...fruitOptions].filter((option) => {
         return queryItems.includes(option.value)
       })
     }

@@ -129,8 +129,9 @@ export default {
       }
     },
     multifilterOptions () {
-      if (this.inputOptions.length > 0) return this.inputOptions
-      else return this.initialOptions
+      return this.inputOptions.length > 0 || this.query.length
+        ? this.inputOptions
+        : this.initialOptions
     },
     slicedOptions () {
       return this.multifilterOptions.slice(0, this.showCount)
@@ -226,42 +227,10 @@ Item-based Filter. Search box is used to find items in the table.
 
 ### Usage
 ```jsx
-const fruitOptions = [
-  { text: 'Orange', value: 'orange' },
-  { text: 'Apple', value: 'apple' },
-  { text: 'Pineapple', value: 'pineapple' },
-  { text: 'Grape', value: 'grape' },
-  { text: 'Melon', value: 'melon' },
-  { text: 'Kiwi', value: 'kiwi' },
-  { text: 'Blueberry', value: 'blueberry' },
-  { text: 'Pear', value: 'pear' },
-  { text: 'Apricot', value: 'apricot' },
-  { text: 'Mango', value: 'mango' },
-  { text: 'Breadfruit', value: 'breadfruit' },
-  { text: 'Cherry', value: 'cherry' },
-  { text: 'Cranberry', value: 'cranberry' },
-  { text: 'Durian', value: 'durian' },
-  { text: 'Guava', value: 'guuva' },
-  { text: 'Papaya', value: 'papaya' },
-]
-
-const optionsMethod = ({count, nameAttribute, queryType, query}) => {
-  return new Promise((resolve) => {
-    let filteredOptions = JSON.parse(JSON.stringify(fruitOptions));
-    if (query) {
-      filteredOptions = filteredOptions.filter((i) => i.text.includes(query))
-    }
-    if (count) {
-      filteredOptions = filteredOptions.splice(0, count)
-    }
-
-    resolve(filteredOptions)
-  })
-}
 
 const model = []
 <MultiFilter
-  v-bind:options="optionsMethod"
+  v-bind:options="multiFilterOptions"
   v-bind:collapses="false"
   v-bind:initialDisplayItems="5"
   v-bind:maxVisibleOptions="5"

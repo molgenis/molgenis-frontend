@@ -44,7 +44,6 @@ describe('MultiFilter.vue', () => {
 
   it('shows checkbox fields when input options are set', async () => {
     jest.useFakeTimers()
-    wrapper.setData({ query: 'search' })
     jest.runAllTimers()
     await wrapper.vm.$nextTick()
     const background = wrapper.find('.checkbox-list')
