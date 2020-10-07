@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.8.0...@molgenis-ui/components-library@0.9.0) (2020-10-07)
+
+
+### Features
+
+* **components-library:** [#7576](https://github.com/molgenis/molgenis-frontend/issues/7576) add MultiFilter to styleguidist ([#388](https://github.com/molgenis/molgenis-frontend/issues/388)) ([bc3c9b1](https://github.com/molgenis/molgenis-frontend/commit/bc3c9b1))
+
+
+
+
+
 # [0.8.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.7.0...@molgenis-ui/components-library@0.8.0) (2020-10-07)
 
 
