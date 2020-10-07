@@ -21,6 +21,10 @@ module.exports = {
     proxy: process.env.NODE_ENV === 'production' ? undefined : {
       '/login': { target },
       '/api': { target },
+      '^/app-ui-context': {
+        target: target,
+        keepOrigin: true
+      },
       '/plugin/security': { target }
     }
   },

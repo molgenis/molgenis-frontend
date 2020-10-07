@@ -31,18 +31,12 @@ describe('GroupOverview component', () => {
     { name: 'group2', label: 'My group 2' }
   ]
 
-  const loginUser = {
-    name: 'admin',
-    isSuperUser: true
-  }
-
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(Vuex)
     localVue.filter('i18n', $t)
 
     state = {
-      loginUser: loginUser
     }
 
     actions = {
@@ -51,7 +45,7 @@ describe('GroupOverview component', () => {
 
     getters = {
       groups: () => groups,
-      getLoginUser: () => loginUser
+      hasSuperUserRights: jest.fn().mockReturnValue(true)
     }
 
     mutations = {
