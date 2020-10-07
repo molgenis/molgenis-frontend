@@ -13,7 +13,7 @@ export {
   DateTimeFilter,
   FilterCard,
   NumberFilter,
-  StringFilter,
+  StringFilter
 }
 
 export default {
