@@ -66,19 +66,32 @@ export default {
   name: 'FilterContainer',
   components: { ChangeFilters, draggable, FilterCard, ...components },
   props: {
+    /**
+     * An array of filters to render.
+     */
     filters: {
       type: Array,
       required: true
     },
+    /**
+     * Object Key/values of filter names/values from all concerned filters.
+     * @model
+     */
     value: {
       type: Object,
       default: () => ({})
     },
+    /**
+     * The filters to show; an array of filter name properties.
+     */
     filtersShown: {
       type: Array,
       required: false,
       default: () => []
     },
+    /**
+     * Lock or unluck filter addition/removal.
+     */
     canEdit: {
       type: Boolean,
       required: false,
@@ -121,6 +134,11 @@ export default {
     },
     removeFilter (name) {
       this.filtersToShow = this.filtersToShow.filter(filter => name !== filter)
+      /**
+       * Emit the filters that are supposed to be visible.
+       * @property {Array} filtersToShow - An array of filter name properties
+       * @event update
+       */
       this.$emit('update', this.filtersToShow)
 
       const selections = { ...this.value }
@@ -128,6 +146,11 @@ export default {
       this.$emit('input', selections)
     },
     selectionChange (name, value) {
+      /**
+       * Update the model with the updated values from related filters.
+       * @property {Object} - Filter name/value
+       * @event input
+       */
       this.$emit('input', { ...this.value, [name]: value })
     },
     selectionUpdate () {
