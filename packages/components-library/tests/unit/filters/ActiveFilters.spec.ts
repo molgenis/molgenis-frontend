@@ -1,12 +1,8 @@
-import { createLocalVue, mount } from '@vue/test-utils'
-import { BootstrapVue } from 'bootstrap-vue'
+import { mount } from '@vue/test-utils'
 import ActiveFilters from '@/components/filters/ActiveFilters.vue'
 import { filters } from '../../demo-data/filterMocks'
 import { findItemByText } from '../__testhelpers__/vueTestUtilHelpers'
 import Vue from 'vue'
-
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
 
 describe('ActiveFilters.vue', () => {
   const startDate = new Date('10/20/2019')
