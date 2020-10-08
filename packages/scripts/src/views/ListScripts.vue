@@ -45,7 +45,6 @@
 <script>
 import Vue from 'vue'
 import { mapState } from 'vuex'
-import { ReadyState } from '@/types/state'
 import ExecuteButton from '../components/ExecuteButton'
 
 export default Vue.extend({
