@@ -5,6 +5,7 @@ import NumberFilter from './components/filters/NumberFilter.vue'
 import DateTimeFilter from './components/filters/DateTimeFilter.vue'
 import ActiveFilters from './components/filters/ActiveFilters.vue'
 import FilterCard from './components/filters/containers/FilterCard.vue'
+import FilterContainer from './components/filters/containers/FilterContainer.vue'
 
 export {
   ActiveFilters,
@@ -13,7 +14,8 @@ export {
   DateTimeFilter,
   FilterCard,
   NumberFilter,
-  StringFilter
+  StringFilter,
+  FilterContainer
 }
 
 export default {
@@ -23,5 +25,6 @@ export default {
   DateTimeFilter,
   FilterCard,
   NumberFilter,
-  StringFilter
+  StringFilter,
+  FilterContainer
 }

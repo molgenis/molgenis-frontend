@@ -56,7 +56,7 @@ export default Vue.extend({
      */
     value: {
       type: Number,
-      required: true
+      default: () => 0
     },
     /**
      * Whether to use an additional UI slider to set the input value.

@@ -108,6 +108,7 @@ export const filters = [
     label: 'Color',
     collapsed: false,
     bulkOperation: true,
+    maxVisibleOptions: 1,
     options: () => {
       return new Promise(
         function (resolve) {

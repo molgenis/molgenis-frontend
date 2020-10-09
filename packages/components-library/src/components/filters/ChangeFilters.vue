@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="change-filters">
     <b-dropdown
       ref="addFilter"
       variant="primary"
