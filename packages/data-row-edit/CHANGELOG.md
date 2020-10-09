@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.0.0...@molgenis-ui/data-row-edit@5.0.1) (2020-10-09)
+
+
+### Bug Fixes
+
+* **data-row-edit:** cli version bump and fixed linter issues ([00ca0aa](https://github.com/molgenis/molgenis-frontend/commit/00ca0aa))
+
+
+
+
+
 # [5.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@4.0.3...@molgenis-ui/data-row-edit@5.0.0) (2020-08-27)
 
 
