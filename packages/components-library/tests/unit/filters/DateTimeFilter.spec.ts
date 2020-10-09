@@ -73,7 +73,8 @@ describe('Datetimefilter.vue', () => {
     const vm: any = wrapper.vm
 
     it('formatDate should leave of the time part', async () => {
-      expect(vm.formatDate(new Date(Date.parse('04 Dec 1995 00:12:00 GMT')))).toEqual('12/4/1995')
+      const date = new Date(Date.parse('04 Dec 1995 00:12:00 GMT'))
+      expect(vm.formatDate(date)).toEqual(date.toLocaleDateString())
     })
   })
 })
