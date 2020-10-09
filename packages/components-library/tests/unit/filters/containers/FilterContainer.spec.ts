@@ -45,10 +45,6 @@ describe('FilterContainer.vue', () => {
     expect(wrapper.emitted().input).toEqual([[{ checkbox: ['red'] }]])
   })
 
-  it('cannot add filters by default', () => {
-    expect(wrapper.find('.add-button').exists()).toBe(false)
-  })
-
   it('can add filters when editable', async () => {
     await wrapper.setProps({ canEdit: true })
     expect(wrapper.find('button.dropdown-toggle')).toBeTruthy()
