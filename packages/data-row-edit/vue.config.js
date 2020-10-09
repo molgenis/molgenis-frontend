@@ -1,3 +1,4 @@
+/* eslint-disable */
 const BannerPlugin = require('webpack').BannerPlugin
 const pkgVersion = require('./package.json').version
 const pkgName = require('./package.json').name
@@ -21,7 +22,7 @@ module.exports = {
     proxy: process.env.NODE_ENV === 'production' ? undefined : {
       '/login': { target },
       '/api': { target }
-    }  
+    }
   },
   configureWebpack: config => {
     config.optimization = {

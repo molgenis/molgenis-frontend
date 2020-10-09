@@ -121,11 +121,11 @@ export default {
           showEyeButton: true,
           allowAddingOptions: true,
           inputDebounceTime: 500
-        }, 
+        },
         showRef: false,
         idAttribute: null,
         labelAttribute: null,
-        referenceMap: {} // Map from field id to entityName for all reference entities 
+        referenceMap: {} // Map from field id to entityName for all reference entities
       }
     },
     methods: {
@@ -144,10 +144,10 @@ export default {
         const refDataRowEdit = new ComponentClass({
             propsData: { dataTableId: referenceTableId, parent: this }
         })
-        refDataRowEdit.$mount() 
+        refDataRowEdit.$mount()
 
         // Show the reference option form and hide the parent form
-        this.showRef = true // hide parent
+        this.setRef(true) // hide parent
         this.$refs.refContainer.appendChild(refDataRowEdit.$el) // show child
       },
       touchField (field) {
@@ -173,7 +173,7 @@ export default {
             } else {
               this.goBackToPluginCaller()
             }
-          
+
           } catch (e) {
             this.handleError(e)
           }
@@ -190,8 +190,11 @@ export default {
       clearAlert () {
         this.alert = null
       },
+      setRef(ref){
+        this.showRef = ref
+      },
       showParent () {
-        this.parent.showRef = false // show parent
+        this.parent.setRef(false) // show parent
         this.parent.$refs.refContainer.removeChild(this.$el) // destroy child
       },
       handleError (message) {
