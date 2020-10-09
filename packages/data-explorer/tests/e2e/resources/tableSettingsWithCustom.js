@@ -1,11 +1,11 @@
 module.exports = {
   links: {
-    self: 'https://data-v3.test.molgenis.org/api/data/app_set_DataExplorerEntitySettings?q=table==%22root_hospital_lab_results%22'
+    self: 'https://data-v3.test.molgenis.org/api/data/sys_ts_DataExplorerEntitySettings?q=table==%22root_hospital_lab_results%22'
   },
   items: [
     {
       links: {
-        self: 'https://data-v3.test.molgenis.org/api/data/app_set_DataExplorerEntitySettings/aaaac3ifucuqqys5qvh6agiaae'
+        self: 'https://data-v3.test.molgenis.org/api/data/sys_ts_DataExplorerEntitySettings/aaaac3ifucuqqys5qvh6agiaae'
       },
       data: {
         id: 'aaaac3ifucuqqys5qvh6agiaae',
