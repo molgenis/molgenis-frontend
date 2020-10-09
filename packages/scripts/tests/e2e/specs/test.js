@@ -24,7 +24,8 @@ module.exports = {
       .pause(2000)
       .click('.CodeMirror')
       .pause(2000)
-      .setValue('textarea', 'Hello dearest nightwatch world!')
+      .keys("print('Hello world')")
+      .setValue('textarea', 'Hi!')
       .pause(2000)
       .click('#save-btn') // Save
       .pause(2000)
@@ -51,7 +52,8 @@ module.exports = {
       .waitForElementVisible('#cancel-btn', 5000)
       .click('.CodeMirror')
       .pause(2000)
-      .setValue('textarea', 'Hello dearest nightwatch world!')
+      .keys("print('Hello world')")
+      .setValue('textarea', 'Hi!')
       .click('#save-btn') // Save
 
       .waitForElementVisible('button[name="Hello World"].btn.editButton', 5000)
