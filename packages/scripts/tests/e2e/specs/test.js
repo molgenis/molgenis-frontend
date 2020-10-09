@@ -24,7 +24,7 @@ module.exports = {
       .setValue('textarea', 'Hello dearest nightwatch world!')
       .click('#save-btn') // Save
 
-      .waitForElementVisible('.navigator-actions button.btn', 5000)
+      .waitForElementVisible('.navigator-actions button.btn', 10000)
       .assert.visible('table.b-table.table-hover') // The list of scripts is visible
       .end()
   },
