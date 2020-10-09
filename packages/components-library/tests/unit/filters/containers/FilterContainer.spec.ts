@@ -50,10 +50,10 @@ describe('FilterContainer.vue', () => {
     expect(wrapper.find('button.dropdown-toggle')).toBeTruthy()
   })
 
-  it('shows the filters in the correct order ( based on filtersToShow ) ', () => {
+  it('shows the filters in the correct order ( based on filtersToShow ) ', async () => {
     expect((wrapper.vm).listOfVisibleFilters[0].label).toBe('String')
     expect((wrapper.vm).listOfVisibleFilters[1].label).toBe('Checkbox')
-    wrapper.setData({ filtersToShow: ['checkbox', 'string'] }) // flip order
+    await wrapper.setData({ filtersToShow: ['checkbox', 'string'] }) // flip order
     expect((wrapper.vm).listOfVisibleFilters[0].label).toBe('Checkbox')
     expect((wrapper.vm).listOfVisibleFilters[1].label).toBe('String')
   })
