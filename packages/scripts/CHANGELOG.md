@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/scripts@3.0.0...@molgenis-ui/scripts@3.0.1) (2020-10-09)
+
+
+### Bug Fixes
+
+* **e2:** added some pause ([cb0c53f](https://github.com/molgenis/molgenis-frontend/commit/cb0c53f))
+* **e2e:** added pause for ie ([f8fd180](https://github.com/molgenis/molgenis-frontend/commit/f8fd180))
+* **e2e:** for ie needs to have setKeys ([d9c1f88](https://github.com/molgenis/molgenis-frontend/commit/d9c1f88))
+* **e2e:** replaced keys with setValue ([e7488ff](https://github.com/molgenis/molgenis-frontend/commit/e7488ff))
+* **e2e:** test framework was not backwards compatible. Adjusted tests accordingly ([cfd0eaf](https://github.com/molgenis/molgenis-frontend/commit/cfd0eaf))
+* **scripts:** fixed linter ([bbfaaf3](https://github.com/molgenis/molgenis-frontend/commit/bbfaaf3))
+* updated versions and fixed old bootstrap code ([400fded](https://github.com/molgenis/molgenis-frontend/commit/400fded))
+* **scripts:** forms version bump ([de59ce4](https://github.com/molgenis/molgenis-frontend/commit/de59ce4))
+
+
+
+
+
 # [3.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/scripts@2.0.2...@molgenis-ui/scripts@3.0.0) (2020-08-27)
 
 
