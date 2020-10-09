@@ -21,6 +21,8 @@ module.exports = {
 
       .waitForElementVisible('#cancel-btn', 5000)
       .setValue('input#name', 'Hello world')
+      .click('.CodeMirror')
+      .pause(2000) // give the modal time to close.
       .setValue('textarea', 'Hello dearest nightwatch world!')
       .click('#save-btn') // Save
 
