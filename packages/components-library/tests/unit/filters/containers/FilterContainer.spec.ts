@@ -57,4 +57,12 @@ describe('FilterContainer.vue', () => {
     expect((wrapper.vm).listOfVisibleFilters[0].label).toBe('Checkbox')
     expect((wrapper.vm).listOfVisibleFilters[1].label).toBe('String')
   })
+
+  it('emits the filtersToShow when selection is changed', async () => {
+    await wrapper.setProps({ canEdit: true })
+    expect(wrapper.findAll('.card-header').length).toEqual(2)
+    await wrapper.find('.change-filters button.btn').trigger('click')
+    await wrapper.find('.change-filters ul form input[type=checkbox').trigger('click')
+    expect(wrapper.findAll('.card-header').length).toEqual(3)
+  })
 })
