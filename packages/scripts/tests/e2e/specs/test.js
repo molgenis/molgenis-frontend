@@ -21,14 +21,11 @@ module.exports = {
 
       .waitForElementVisible('#cancel-btn', 5000)
       .setValue('input#name', 'Hello world')
-      .pause(2000)
       .click('.CodeMirror')
-      .pause(2000)
-      .keys("print('Hello world')")
-      .setValue('textarea', 'Hi!')
-      .pause(2000)
+      .keys("print('Hello world')") // for IE11
+      .setValue('textarea', 'Hi!') // For other browsers
       .click('#save-btn') // Save
-      .pause(2000)
+
       .waitForElementVisible('.navigator-actions button.btn', 5000)
       .assert.visible('table.b-table.table-hover') // The list of scripts is visible
       .end()
@@ -51,9 +48,8 @@ module.exports = {
 
       .waitForElementVisible('#cancel-btn', 5000)
       .click('.CodeMirror')
-      .pause(2000)
-      .keys("print('Hello world')")
-      .setValue('textarea', 'Hi!')
+      .keys("print('Hello world')") // for IE11
+      .setValue('textarea', 'Hi!') // For other browsers
       .click('#save-btn') // Save
 
       .waitForElementVisible('button[name="Hello World"].btn.editButton', 5000)
