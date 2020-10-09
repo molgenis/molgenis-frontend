@@ -22,11 +22,11 @@ module.exports = {
       .waitForElementVisible('#cancel-btn', 5000)
       .setValue('input#name', 'Hello world')
       .click('.CodeMirror')
-      .pause(2000) // give the modal time to close.
+      .pause(2000)
       .setValue('textarea', 'Hello dearest nightwatch world!')
       .click('#save-btn') // Save
 
-      .waitForElementVisible('.navigator-actions button.btn', 10000)
+      .waitForElementVisible('.navigator-actions button.btn', 5000)
       .assert.visible('table.b-table.table-hover') // The list of scripts is visible
       .end()
   },
@@ -47,6 +47,8 @@ module.exports = {
       .click('button[name="Hello World"].btn.editButton') // Click edit "hello world" script
 
       .waitForElementVisible('#cancel-btn', 5000)
+      .click('.CodeMirror')
+      .pause(2000)
       .setValue('textarea', 'Hello dearest nightwatch world!')
       .click('#save-btn') // Save
 
