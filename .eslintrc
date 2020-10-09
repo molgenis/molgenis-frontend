@@ -1,0 +1,51 @@
+{
+    "parserOptions": {
+        "ecmaFeatures": {
+            "modules": true
+        },
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "root": true,
+    "globals": {
+        "globalThis": true
+    },
+    "overrides": [
+        {
+            "files": ["**/*.ts"],
+            "parser": "@typescript-eslint/parser",
+            "plugins": [
+                "@typescript-eslint"
+            ],
+            "extends": [
+                "eslint:recommended",
+                "plugin:@typescript-eslint/recommended"
+            ]
+        },
+        {
+            "parser": "vue-eslint-parser",
+            "files": ["**/*.vue"],
+            "extends": [
+                "plugin:vue/recommended",
+                "@vue/standard",
+                "@vue/typescript/recommended"
+            ],
+            "rules": {
+                "vue/html-self-closing": "off",
+                "vue/html-indent": ["error", 2],
+                "vue/max-attributes-per-line": ["error", {
+                    "singleline": 3,
+                    "multiline": {
+                      "max": 2,
+                      "allowFirstLine": false
+                    }
+                }]
+            }
+        }
+    ]
+}

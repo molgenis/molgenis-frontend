@@ -1,3 +1,4 @@
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const webpack = require('webpack')
 const BannerPlugin = require('webpack').BannerPlugin
 const packageJson = require('./package.json')
@@ -28,6 +29,7 @@ module.exports = {
     ? pkgName + '/dist/'
     : '/',
   configureWebpack: config => {
+    config.plugins = config.plugins.filter((p) => !(p instanceof ForkTsCheckerWebpackPlugin))
     config.plugins.push(
       new BannerPlugin({
         banner: bannerText

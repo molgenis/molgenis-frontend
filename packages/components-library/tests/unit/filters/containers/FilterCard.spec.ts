@@ -1,57 +1,58 @@
 import { mount, createLocalVue } from '@vue/test-utils'
-import FilterCard from '@/components/filters/containers/FilterCard.vue'
+import StringFilter from '@/components/filters/StringFilter.vue'
 import { BootstrapVue } from 'bootstrap-vue'
 
 const localVue = createLocalVue()
 localVue.use(BootstrapVue)
 
-const name = 'name'
-
-describe('FilterCard.vue', () => {
-  describe('starts closed', () => {
-    const wrapper = mount(FilterCard, { localVue, propsData: { name } })
-    it('can open and close', async () => {
-      expect(wrapper.find('div#name').element.style.display).toEqual('none') // Closed
-      await wrapper.find('.card-header').trigger('click')
-      expect(wrapper.find('div#name').element.style.display).toEqual('') // Open
-      await wrapper.find('.card-header').trigger('click')
-      expect(wrapper.find('div#name').element.style.display).toEqual('none') // Closed again
-    })
-  })
-
-  describe('starts open', () => {
-    const wrapper = mount(FilterCard, { localVue, propsData: { name, collapsed: false } })
-    it('can open and close (starts open)', async () => {
-      expect(wrapper.find('div#name').element.style.display).toEqual('') // Open
-      await wrapper.find('.card-header').trigger('click')
-      expect(wrapper.find('div#name').element.style.display).toEqual('none') // Closed
-      await wrapper.find('.card-header').trigger('click')
-      expect(wrapper.find('div#name').element.style.display).toEqual('') // Open again
-    })
-  })
-
-  describe('setting collapsable to false', () => {
-    const wrapper = mount(FilterCard, { localVue, propsData: { name, collapsable: false, collapsed: true } })
-    it('will force the card to be open all the time', async () => {
-      expect(wrapper.find('div#name').element.style.display).toEqual('') // Open
-      await wrapper.find('.card-header').trigger('click')
-      expect(wrapper.find('div#name').element.style.display).toEqual('') // Still open, no collapsable
-    })
-  })
-
-  it('emits an event if the close button is clicked', async () => {
-    const close = mount(FilterCard, {
+describe('StringFilter.vue', () => {
+  let wrapper: any
+  beforeEach(() => {
+    wrapper = mount(StringFilter, {
       localVue,
       propsData: {
-        name,
-        collapsable: false,
-        collapsed: true,
-        canRemove: true
+        name: 'name',
+        label: 'label',
+        value: 'value'
       }
     })
-    expect(close.emitted().removeFilter).toBeUndefined()
-    await close.find('.remove-button').trigger('click')
+  })
+
+  it('matches the snapshot', () => {
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('sets value property on inner input', () => {
+    const inputElement = wrapper.find('input').element as HTMLInputElement
+    expect(inputElement.value).toBe('value')
+  })
+
+  it('emits undefined when clear button is clicked', () => {
+    wrapper.find('button').trigger('click')
     // @ts-ignore
-    expect(close.emitted().removeFilter[0]).toEqual(['name'])
+    expect(wrapper.emitted().input[0]).toEqual([undefined])
+  })
+
+  it('should emit an input event when the input value changes', async () => {
+    const input = wrapper.find('input')
+    // @ts-ignore
+    input.element.value = 'change me'
+    await input.trigger('input')
+    // @ts-ignore
+    expect(wrapper.emitted().input[0]).toEqual(['change me'])
+  })
+
+  describe('not passing a model prop', () => {
+    const wrapper = mount(StringFilter, {
+      localVue,
+      propsData: {
+        name: 'name',
+        label: 'label'
+      }
+    })
+    it('should use a empty string as default value', () => {
+      const inputElement = wrapper.find('input').element as HTMLInputElement
+      expect(inputElement.value).toBe('')
+    })
   })
 })

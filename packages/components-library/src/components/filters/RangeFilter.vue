@@ -59,16 +59,16 @@
   </div>
 </template>
 
-<script>
-import Vue from 'vue'
+<script lang="ts">
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faTimes)
 
-export default Vue.extend({
+export default {
   name: 'RangeFilter',
   components: { VueSlider, FontAwesomeIcon },
   props: {
@@ -152,7 +152,7 @@ export default Vue.extend({
       this.$emit('input', [...this.rangeValue])
     }
   }
-})
+}
 </script>
 <docs>
 Browser number input filter with additional options.

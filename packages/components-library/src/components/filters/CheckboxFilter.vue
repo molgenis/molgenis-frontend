@@ -27,7 +27,7 @@
   .card-link { font-style: italic; font-size: small; }
 </style>
 
-<script>
+<script lang="ts">
 export default {
   name: 'CheckboxFilter',
   props: {
@@ -44,7 +44,7 @@ export default {
      */
     value: {
       type: Array,
-      default: () => []
+      default: ():Array<string> => []
     },
     /**
      * Whether to use (De)Select All or not.
@@ -52,17 +52,17 @@ export default {
     bulkOperation: {
       type: Boolean,
       required: false,
-      default: () => true
+      default: ():boolean => true
     },
     /**
      * Limit the maximum number of visible items.
      */
     maxVisibleOptions: {
       type: Number,
-      default: () => undefined
+      default: ():number => undefined
     }
   },
-  data () {
+  data ():Record<string, unknown> {
     return {
       selection: this.value,
       resolvedOptions: [],
@@ -70,42 +70,42 @@ export default {
     }
   },
   computed: {
-    visibleOptions () {
+    visibleOptions ():Array<string> {
       return this.sliceOptions ? this.resolvedOptions.slice(0, this.maxVisibleOptions) : (typeof this.resolvedOptions === 'function' ? [] : this.resolvedOptions)
     },
-    showToggleSlice () {
+    showToggleSlice ():boolean {
       return this.maxVisibleOptions && this.maxVisibleOptions < this.resolvedOptions.length
     },
-    toggleSelectText () {
+    toggleSelectText ():string {
       return this.value.length ? 'Deselect all' : 'Select all'
     },
-    toggleSliceText () {
+    toggleSliceText ():string {
       return this.sliceOptions ? `Show ${this.resolvedOptions.length - this.maxVisibleOptions} more` : 'Show less'
     }
   },
   watch: {
-    resolvedOptions () {
+    resolvedOptions ():void {
       this.sliceOptions = this.showToggleSlice
     },
-    selection (newValue) {
+    selection (newValue:Array<string>):void {
       const newSelection = [...newValue]
       this.$emit('input', newSelection)
     }
   },
-  created () {
+  created ():void {
     this.options().then(response => {
       this.resolvedOptions = response
     })
   },
   methods: {
-    toggleSelect () {
+    toggleSelect ():void {
       if (this.selection && this.selection.length) {
         this.selection = []
       } else {
         this.selection = this.resolvedOptions.map(option => option.value)
       }
     },
-    toggleSlice () {
+    toggleSlice ():void {
       this.sliceOptions = !this.sliceOptions
     }
   }

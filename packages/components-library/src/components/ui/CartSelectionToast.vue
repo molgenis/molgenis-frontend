@@ -5,13 +5,13 @@
     no-auto-hide
     :toaster="location"
     :variant="backgroundVariant"
-    :toastClass="toastClass"
-    :bodyClass="bodyClass"
-    :headerClass="headerClass"
+    :toast-class="toastClass"
+    :body-class="bodyClass"
+    :header-class="headerClass"
   >
     <div class="container">
       <div v-if="previewToggle && value.length > 0" class="mb-4">
-        <div class="row" v-for="(item, index) in value" :key="index">
+        <div v-for="(item, index) in value" :key="index" class="row">
           <div class="col">
             {{ previewLabel(item) }}
           </div>
@@ -29,13 +29,15 @@
             {{ cartSelectionText }}
           </div>
           <div v-if="value.length > 0">
-            <span role="button" @click="previewToggle = !previewToggle">{{selectionText}} selection</span>
+            <span role="button" @click="previewToggle = !previewToggle">{{ selectionText }} selection</span>
           </div>
         </div>
         <div class="col-auto">
-          <b-button @click="clickHandler" :variant="buttonVariant">
+          <b-button :variant="buttonVariant" @click="clickHandler">
             <!-- @slot display tekst of button -->
-            <slot name="buttonText">Request items</slot>
+            <slot name="buttonText">
+              Request items
+            </slot>
           </b-button>
         </div>
       </div>
@@ -43,25 +45,28 @@
   </b-toast>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'CartSelectionToast',
   props: {
     /**
      * Passthrough setting from BootstrapVue
      */
+    // eslint-disable-next-line vue/require-default-prop
     toastClass: {
       type: [String, Object, Array]
     },
     /**
      * Passthrough setting from BootstrapVue
      */
+    // eslint-disable-next-line vue/require-default-prop
     headerClass: {
       type: [String, Object, Array]
     },
     /**
      * Passthrough setting from BootstrapVue
      */
+    // eslint-disable-next-line vue/require-default-prop
     bodyClass: {
       type: [String, Object, Array]
     },
@@ -82,7 +87,7 @@ export default {
     location: {
       type: String,
       required: false,
-      default: () => 'b-toaster-bottom-right'
+      default: ():string => 'b-toaster-bottom-right'
     },
     /**
      * See: https://bootstrap-vue.org/docs/reference/color-variants#color-variants-and-css-class-mapping
@@ -90,7 +95,7 @@ export default {
     backgroundVariant: {
       type: String,
       required: false,
-      default: () => 'info'
+      default: ():string => 'info'
     },
     /**
      * See: https://bootstrap-vue.org/docs/components/button#contextual-variants
@@ -98,7 +103,7 @@ export default {
     buttonVariant: {
       type: String,
       required: false,
-      default: () => 'secondary'
+      default: ():string => 'secondary'
     },
     /**
      * If this array is set (via v-model), then in will allow you to preview your selection
@@ -108,7 +113,7 @@ export default {
     value: {
       type: Array,
       required: false,
-      default: () => []
+      default: ():Array<Record<string, unknown>> => []
     },
     /**
      * Label attribute to display for use with object based store data.
@@ -116,7 +121,7 @@ export default {
     labelAttribute: {
       type: String,
       required: false,
-      default: () => 'name'
+      default: ():string => 'name'
     },
     /**
      * Button click handler
@@ -126,16 +131,16 @@ export default {
       required: true
     }
   },
-  data: () => ({
+  data: ():Record<string, unknown> => ({
     previewToggle: false
   }),
   computed: {
-    selectionText () {
+    selectionText ():string {
       return this.previewToggle ? 'Hide' : 'Show'
     }
   },
   methods: {
-    previewLabel (item) {
+    previewLabel (item:any):string {
       if (typeof item === 'string') {
         return item
       } else if (typeof item === 'object') {
@@ -145,7 +150,7 @@ export default {
       }
       return ''
     },
-    removeItem (itemName) {
+    removeItem (itemName:string):void {
       /**
        * v-model return value
        *
