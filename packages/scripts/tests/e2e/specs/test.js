@@ -24,8 +24,8 @@ module.exports = {
       .click('.CodeMirror')
       .pause(2000)
       .setValue('textarea', 'Hello dearest nightwatch world!')
+      .pause(2000)
       .click('#save-btn') // Save
-
       .waitForElementVisible('.navigator-actions button.btn', 5000)
       .assert.visible('table.b-table.table-hover') // The list of scripts is visible
       .end()
