@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.9.1...@molgenis-ui/components-library@0.10.0) (2020-10-09)
+
+
+### Features
+
+* **components-library:** add RangeFilter to styleguidist ([#387](https://github.com/molgenis/molgenis-frontend/issues/387)) ([650ac74](https://github.com/molgenis/molgenis-frontend/commit/650ac74))
+
+
+
+
+
 ## [0.9.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.9.0...@molgenis-ui/components-library@0.9.1) (2020-10-09)
 
 **Note:** Version bump only for package @molgenis-ui/components-library
