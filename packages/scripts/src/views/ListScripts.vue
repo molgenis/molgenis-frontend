@@ -19,33 +19,23 @@
       class="text-left"
       @row-clicked="editScript"
       show-empty>
-      <template
-        slot="edit"
-        slot-scope="data">
+      <template v-slot:cell(edit)="data">
         <b-button :name="data.item.name" class="editButton" size="sm" variant="primary" @click="editScript({name: data.item.name})" :title="'scripts-edit-script' | i18n">
           <font-awesome-icon icon="edit" size="lg" />
         </b-button>
       </template>
-      <template
-        slot="remove"
-        slot-scope="data">
+      <template v-slot:cell(remove)="data">
         <b-button :name="data.item.name" class="removeButton" size="sm" variant="danger" @click="doOpenModal(data.item.name)" :title="'scripts-delete-script' | i18n">
           <font-awesome-icon icon="trash" size="lg" />
         </b-button>
       </template>
-      <template
-        slot="name"
-        slot-scope="data">
+      <template v-slot:cell(name)="data">
         {{ data.item.name }} <b-badge>{{ data.item.type.name }} </b-badge>
       </template>
-      <template
-        slot="parameters"
-        slot-scope="data">
+      <template v-slot:cell(parameters)="data">
         <span v-for="(parameter, key) in data.item.parameters" :key="`parameter-${key}`"><span v-if="key!=0">,</span> {{ parameter.name }}</span>
       </template>
-      <template
-        slot="execute"
-        slot-scope="data">
+      <template v-slot:cell(execute)="data">
         <ExecuteButton v-if="loaded" size="sm" :parameters="simpleParameters(data.item.parameters)" :name="data.item.name" :title="'scripts-run-script' | i18n">{{ 'scripts-run-label' | i18n }}</ExecuteButton>
       </template>
     </b-table>
@@ -55,43 +45,48 @@
 <script>
 import Vue from 'vue'
 import { mapState } from 'vuex'
-import { ReadyState } from '@/types/state'
 import ExecuteButton from '../components/ExecuteButton'
 
 export default Vue.extend({
   name: 'ScriptList',
   data () {
     return {
-      fields: {
-        edit: {
+      fields: [
+        {
+          key: 'edit',
           label: '',
           'class': 'compact align-middle'
         },
-        remove: {
+        {
+          key: 'remove',
           label: '',
           'class': 'compact align-middle'
         },
-        name: {
+        {
+          key: 'name',
           label: 'scripts-name-label' | this.i18n,
           sortable: true,
           'class': 'align-middle'
         },
-        parameters: {
+        {
+          key: 'parameters',
           label: 'scripts-parameters-label' | this.i18n,
           sortable: false,
           'class': 'align-middle'
         },
-        resultFileExtension: {
+        {
+          key: 'resultFileExtension',
           label: 'scripts-result-file-extension' | this.i18n,
           sortable: false,
           'class': 'compact align-middle'
         },
-        execute: {
+        {
+          key: 'execute',
           label: '',
           sortable: false,
           'class': 'compact'
         }
-      },
+      ],
       hover: true,
       showRemoveModal: false,
       confirmedToRemove: '',

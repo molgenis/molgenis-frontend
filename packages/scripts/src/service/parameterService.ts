@@ -8,7 +8,7 @@ const isNotStartingWithChar = (word: string) => validFirstChar.test(word.charAt(
 
 const extractCandidates = (codeString: string, regEx: RegExp) => {
   let result
-  let list = []
+  const list = []
   while ((result = regEx.exec(codeString)) !== null) {
     list.push(result[1] || result[2]) // add the capture group
   }

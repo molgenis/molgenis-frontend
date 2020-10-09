@@ -1,4 +1,4 @@
-// vue.config.js
+/* eslint-disable */
 const schemas = require('./tests/test-schemas.js')
 const BannerPlugin = require('webpack').BannerPlugin
 const pkgVersion = require('./package.json').version

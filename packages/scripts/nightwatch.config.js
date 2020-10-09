@@ -3,7 +3,12 @@ var packageJson = require('./package.json')
 const buildName = packageJson.name + '#PR-' + process.env.CHANGE_ID + '-build-' + process.env.BUILD_NUMBER
 
 module.exports = {
-
+  selenium: {
+    cli_args: {
+      'webdriver.firefox.driver': require('geckodriver').path,
+      'webdriver.chrome.driver': require('chromedriver').path
+    }
+  },
   test_settings: {
     ci_chrome: {
       launch_url: 'http://ondemand.saucelabs.com:80',
@@ -69,11 +74,6 @@ module.exports = {
         javascriptEnabled: true,
         acceptSslCerts: true,
         marionette: true
-      },
-      selenium: {
-        cli_args: {
-          'webdriver.firefox.driver': require('geckodriver').path
-        }
       }
     },
     safari: {
