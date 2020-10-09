@@ -14,7 +14,6 @@ module.exports = {
       .assert.visible('input#fileExtension')
       .assert.visible('#generateToken')
       .click('#cancel-btn') // Cancel
-      .pause(1000) // give the modal time to close.
 
       .waitForElementVisible('.navigator-actions button.btn', 5000)
       .assert.visible('table.b-table.table-hover') // The list of scripts is visible
@@ -40,15 +39,13 @@ module.exports = {
       .assert.visible('input#fileExtension')
       .assert.visible('#generateToken')
       .click('#cancel-btn') // Cancel
-      .pause(1000) // give the modal time to close.
 
       .waitForElementVisible('button[name="Hello World"].btn.editButton', 5000)
       .assert.visible('table.b-table.table-hover') // The list of scripts is visible
       .click('button[name="Hello World"].btn.editButton') // Click edit "hello world" script
 
       .waitForElementVisible('#cancel-btn', 5000)
-      .click('.CodeMirror')
-      .keys("print('Hallo world')")
+      .setValue('textarea', 'Hello dearest nightwatch world!')
       .click('#save-btn') // Save
 
       .waitForElementVisible('button[name="Hello World"].btn.editButton', 5000)
