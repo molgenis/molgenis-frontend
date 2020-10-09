@@ -56,14 +56,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue, { PropType } from 'vue'
 import ChangeFilters from '../ChangeFilters.vue'
 import FilterCard from './FilterCard.vue'
 import * as components from '../index'
+// @ts-ignore
 import draggable from 'vuedraggable'
 
-export default {
-  name: 'FilterContainer',
+export default Vue.extend({
   components: { ChangeFilters, draggable, FilterCard, ...components },
   props: {
     /**
@@ -79,15 +80,15 @@ export default {
      */
     value: {
       type: Object,
-      default: () => ({})
+      default: ():Record<string, unknown> => ({})
     },
     /**
      * The filters to show; an array of filter name properties.
      */
     filtersShown: {
-      type: Array,
+      type: Array as PropType<any>,
       required: false,
-      default: () => []
+      default: ():Array<string> => []
     },
     /**
      * Lock or unluck filter addition/removal.
@@ -95,10 +96,10 @@ export default {
     canEdit: {
       type: Boolean,
       required: false,
-      default: () => false
+      default: ():boolean => false
     }
   },
-  data () {
+  data ():any {
     return {
       filtersToShow: this.filtersShown,
       filterToAdd: null,
@@ -108,32 +109,32 @@ export default {
     }
   },
   computed: {
-    doCollapse () {
+    doCollapse ():boolean {
       // Bootstrap's mobile collapse width
       return this.width <= 576
     },
-    doDragDrop () {
+    doDragDrop ():boolean {
       return this.canEdit && !this.doCollapse
     },
-    listOfVisibleFilters () {
-      return this.filtersToShow.map(id => this.filters.find(filter => filter.name === id))
-        .filter(item => item !== undefined)
-        .filter(item => item.type !== 'compound-title')
+    listOfVisibleFilters ():Array<Record<string, unknown>> {
+      return this.filtersToShow.map((id:any) => this.filters.find((filter:any) => filter.name === id))
+        .filter((item:any) => item !== undefined)
+        .filter((item:any) => item.type !== 'compound-title')
     }
   },
-  created () {
+  created ():void {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
   },
-  destroyed () {
+  destroyed ():void {
     window.removeEventListener('resize', this.handleResize)
   },
   methods: {
-    handleResize () {
+    handleResize ():void {
       this.width = window.innerWidth
     },
-    removeFilter (name) {
-      this.filtersToShow = this.filtersToShow.filter(filter => name !== filter)
+    removeFilter (name:string):void {
+      this.filtersToShow = this.filtersToShow.filter((filter:any) => name !== filter)
       /**
        * Emit the filters that are supposed to be visible.
        * @property {Array} filtersToShow - An array of filter name properties
@@ -145,7 +146,7 @@ export default {
       delete selections[name]
       this.$emit('input', selections)
     },
-    selectionChange (name, value) {
+    selectionChange (name:any, value:any):void {
       /**
        * Update the model with the updated values from related filters.
        * @property {Object} - Filter name/value
@@ -153,11 +154,11 @@ export default {
        */
       this.$emit('input', { ...this.value, [name]: value })
     },
-    selectionUpdate () {
+    selectionUpdate ():void {
       this.$emit('update', this.filtersToShow)
     }
   }
-}
+})
 </script>
 
 <style>

@@ -1,8 +1,8 @@
-import { createLocalVue, mount } from '@vue/test-utils'
-import { BootstrapVue } from 'bootstrap-vue'
+import { mount } from '@vue/test-utils'
 import CheckboxFilter from '@/components/filters/CheckboxFilter.vue'
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+import { localVue as getLocalVue} from '../../lib/helpers'
+
+const localVue = getLocalVue()
 
 function getWrapper (props = {}) {
   const propsData = {

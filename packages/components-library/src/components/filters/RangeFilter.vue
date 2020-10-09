@@ -59,25 +59,27 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
 import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/default.css'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import 'vue-slider-component/theme/default.css'
+
 library.add(faTimes)
+// @ts-ignore
+Vue.component('FontAwesomeIcon', FontAwesomeIcon)
+Vue.component('VueSlider', VueSlider)
 
 export default Vue.extend({
-  name: 'RangeFilter',
-  components: { VueSlider, FontAwesomeIcon },
   props: {
     /**
      * The minimum allowed filter value.
      */
     min: {
       type: Number,
-      default: () => Number.MIN_SAFE_INTEGER
+      default: ():number => Number.MIN_SAFE_INTEGER
     },
     /**
      * The maximum allowed filter value.
@@ -122,11 +124,11 @@ export default Vue.extend({
     }
   },
   methods: {
-    setRangeValue (id, value) {
+    setRangeValue (id:any, value:any) {
       this.rangeValue[id] = value
       this.handleRangeValueChange()
     },
-    clampValue (value, max, min) {
+    clampValue (value:any, max:any, min:any) {
       return Math.min(Math.max(value, min), max)
     },
     handleRangeValueChange () {

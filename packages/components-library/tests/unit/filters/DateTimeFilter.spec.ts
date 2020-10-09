@@ -1,10 +1,8 @@
 // @ts-ignore
-import { createLocalVue, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import DateTimeFilter from '@/components/filters/DateTimeFilter.vue'
-import { BootstrapVue } from 'bootstrap-vue'
+import { localVue } from '../../lib/helpers'
 
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
 
 const buildWrapper = (propsData: any) => {
   const wrapper = mount(DateTimeFilter, {
@@ -13,7 +11,7 @@ const buildWrapper = (propsData: any) => {
         wrapper.setProps({ value: newVal })
       }
     },
-    localVue,
+    localVue: localVue(),
     propsData
   })
 

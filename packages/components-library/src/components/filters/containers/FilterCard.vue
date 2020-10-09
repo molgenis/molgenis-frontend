@@ -41,17 +41,14 @@
   </b-card>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
-
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCaretRight, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 library.add(faCaretRight, faTimes)
 
 export default Vue.extend({
-  name: 'FilterCard',
-  components: { FontAwesomeIcon },
   props: {
     /**
      * Unique filter identifier
@@ -66,7 +63,7 @@ export default Vue.extend({
     label: {
       type: String,
       required: false,
-      default: () => ''
+      default: ():string => ''
     },
     /**
      * Indicates if filter is shown in collapsed state or not
@@ -74,7 +71,7 @@ export default Vue.extend({
     collapsed: {
       type: Boolean,
       required: false,
-      default: () => true
+      default: ():boolean => true
     },
     /**
      * Indicates if the user can collapse the filter
@@ -82,7 +79,7 @@ export default Vue.extend({
     collapsable: {
       type: Boolean,
       required: false,
-      default: () => true
+      default: ():boolean => true
     },
     /**
      * Human readable text with aditional description of the filter
@@ -90,7 +87,7 @@ export default Vue.extend({
     description: {
       type: String,
       required: false,
-      default: () => ''
+      default: ():string => ''
     },
     /**
      * Whether or not the user can remove the filter or not
@@ -98,16 +95,16 @@ export default Vue.extend({
     canRemove: {
       type: Boolean,
       required: false,
-      default: () => false
+      default: ():boolean => false
     }
   },
-  data () {
+  data ():any {
     return {
       isOpen: this.collapsable ? !this.collapsed : true
     }
   },
   computed: {
-    iconStyle () {
+    iconStyle ():Record<string, unknown> {
       return {
         transform: `rotate(${this.isOpen ? 90 : 0}deg)`,
         transition: 'transform 0.2s'
@@ -115,10 +112,11 @@ export default Vue.extend({
     }
   },
   methods: {
-    removeFilter () {
+    removeFilter ():void {
+      // @ts-ignore
       this.$emit('removeFilter', this.name)
     },
-    toggleState () {
+    toggleState ():boolean {
       if (this.collapsable) {
         this.isOpen = !this.isOpen
         return this.isOpen

@@ -1,22 +1,24 @@
 <template>
-  <table class="table" v-if="entitiesToShow.length">
-    <table-header :visibleColumns="visibleColumns" :isShop="isShop"></table-header>
+  <table v-if="entitiesToShow.length" class="table">
+    <table-header :visible-columns="visibleColumns" :is-shop="isShop"></table-header>
     <tbody>
-    <table-row v-for="(entity, index) in entitiesToShow"
-               :key="index"
-               :id="getEntityId(entity)"
-               :tableName="tableName"
-               :rowData="entity"
-               :visibleColumns="visibleColumns"
-               :isSelected="isSelected(entity)"
-               :isShop="isShop"
-               :isEditable="hasEditRights"
-               ></table-row>
+      <table-row
+        v-for="(entity, index) in entitiesToShow"
+        :id="getEntityId(entity)"
+        :key="index"
+        :table-name="tableName"
+        :row-data="entity"
+        :visible-columns="visibleColumns"
+        :is-selected="isSelected(entity)"
+        :is-shop="isShop"
+        :is-editable="hasEditRights"
+      ></table-row>
     </tbody>
   </table>
 </template>
 
 <script>
+import Vue from 'vue'
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions, mapGetters } from 'vuex'
@@ -24,15 +26,15 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 library.add(faShoppingBag)
 
-export default {
+export default Vue.extends({
   name: 'TableView',
+  components: { TableRow, TableHeader },
   props: {
     entitiesToShow: {
       type: Array,
       required: true
     }
   },
-  components: { TableRow, TableHeader },
   computed: {
     ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'isShop']),
     ...mapGetters(['filterRsql', 'hasEditRights']),
@@ -65,5 +67,5 @@ export default {
       immediate: true
     }
   }
-}
+})
 </script>

@@ -5,8 +5,8 @@ import actions from '@/store/actions'
 import mutations from '@/store/mutations'
 import getters from '@/store/getters'
 import headerModule from '@/store/header/headerModule'
-
-const uiContextModule = require('@molgenis/molgenis-ui-context').default
+// @ts-ignore
+import uiContextModule from '@molgenis/molgenis-ui-context/src/module.ts'
 
 Vue.use(Vuex)
 

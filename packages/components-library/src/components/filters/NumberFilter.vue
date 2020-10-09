@@ -20,35 +20,34 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
+Vue.component('VueSlider', VueSlider)
 
 export default Vue.extend({
-  name: 'NumberFilter',
-  components: { VueSlider },
   props: {
     /**
      * The minimum allowed filter value.
      */
     min: {
       type: Number,
-      default: () => Number.MIN_SAFE_INTEGER
+      default: ():number => Number.MIN_SAFE_INTEGER
     },
     /**
      * The maximum allowed filter value.
      */
     max: {
       type: Number,
-      default: () => Number.MAX_SAFE_INTEGER
+      default: ():number => Number.MAX_SAFE_INTEGER
     },
     /**
      * Step size when using browser UI controls.
      */
     step: {
       type: Number,
-      default: () => 1
+      default: ():number => 1
     },
     /**
      * The number to be used in filtering items.
@@ -56,19 +55,19 @@ export default Vue.extend({
      */
     value: {
       type: Number,
-      default: () => 0
+      default: ():number => 0
     },
     /**
      * Whether to use an additional UI slider to set the input value.
      */
     useSlider: {
       type: Boolean,
-      default: () => false
+      default: ():boolean => false
     }
   },
   computed: {
     model: {
-      get () {
+      get ():number {
         return this.value
       },
       /**
@@ -77,7 +76,7 @@ export default Vue.extend({
        * @event input
        * @property {Array} Returns new array without the deleted item
        */
-      set (value) {
+      set (value:any):void {
         if (typeof value === 'string' && value === '') {
           this.$emit('input', undefined)
         } else {

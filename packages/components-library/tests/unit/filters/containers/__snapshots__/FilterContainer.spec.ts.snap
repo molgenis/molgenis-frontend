@@ -178,7 +178,13 @@ exports[`FilterContainer.vue matches the snapshot 1`] = `
             class="card filter-card mb-2"
             maxvisibleoptions="1"
             options="() => {
+    /* istanbul ignore next */
+    cov_i2szuoh44.f[8]++;
+    cov_i2szuoh44.s[27]++;
     return new Promise(function (resolve) {
+      /* istanbul ignore next */
+      cov_i2szuoh44.f[9]++;
+      cov_i2szuoh44.s[28]++;
       resolve(colorOptions);
     });
   }"

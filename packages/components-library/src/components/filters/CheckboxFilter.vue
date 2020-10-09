@@ -23,13 +23,10 @@
   </div>
 </template>
 
-<style>
-  .card-link { font-style: italic; font-size: small; }
-</style>
+<script lang="ts">
+import Vue from 'vue'
 
-<script>
-export default {
-  name: 'CheckboxFilter',
+export default Vue.extend({
   props: {
     /**
      * A Promise-function that resolves with an array of options.
@@ -44,7 +41,7 @@ export default {
      */
     value: {
       type: Array,
-      default: () => []
+      default: ():Array<string> => []
     },
     /**
      * Whether to use (De)Select All or not.
@@ -52,65 +49,71 @@ export default {
     bulkOperation: {
       type: Boolean,
       required: false,
-      default: () => true
+      default: ():boolean => true
     },
     /**
      * Limit the maximum number of visible items.
      */
     maxVisibleOptions: {
       type: Number,
-      default: () => undefined
+      default: ():number | undefined => undefined
     }
   },
-  data () {
+  data ():any {
     return {
       selection: this.value,
       resolvedOptions: [],
+      // @ts-ignore
       sliceOptions: this.maxVisibleOptions && this.resolvedOptions && this.maxVisibleOptions < this.resolvedOptions.length
     }
   },
   computed: {
-    visibleOptions () {
+    visibleOptions ():Array<string> {
       return this.sliceOptions ? this.resolvedOptions.slice(0, this.maxVisibleOptions) : (typeof this.resolvedOptions === 'function' ? [] : this.resolvedOptions)
     },
-    showToggleSlice () {
+    showToggleSlice ():boolean {
       return this.maxVisibleOptions && this.maxVisibleOptions < this.resolvedOptions.length
     },
-    toggleSelectText () {
+    toggleSelectText ():string {
       return this.value.length ? 'Deselect all' : 'Select all'
     },
-    toggleSliceText () {
+    toggleSliceText ():string {
       return this.sliceOptions ? `Show ${this.resolvedOptions.length - this.maxVisibleOptions} more` : 'Show less'
     }
   },
   watch: {
-    resolvedOptions () {
+    resolvedOptions ():void {
       this.sliceOptions = this.showToggleSlice
     },
-    selection (newValue) {
+    selection (newValue:Array<string>):void {
       const newSelection = [...newValue]
       this.$emit('input', newSelection)
     }
   },
-  created () {
-    this.options().then(response => {
+  created ():void {
+    this.options().then((response:any) => {
       this.resolvedOptions = response
     })
   },
   methods: {
-    toggleSelect () {
+    toggleSelect ():void {
       if (this.selection && this.selection.length) {
         this.selection = []
       } else {
-        this.selection = this.resolvedOptions.map(option => option.value)
+        this.selection = this.resolvedOptions.map((option:any) => option.value)
       }
     },
-    toggleSlice () {
+    toggleSlice ():void {
       this.sliceOptions = !this.sliceOptions
     }
   }
-}
+})
 </script>
+
+<style>
+  .card-link { font-style: italic; font-size: small; }
+</style>
+
 <docs>
 Filter that renders a list of options as a set of checkboxes
 

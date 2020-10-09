@@ -1,17 +1,15 @@
-import { createLocalVue, mount } from '@vue/test-utils'
-import { BootstrapVue } from 'bootstrap-vue'
+import { mount } from '@vue/test-utils'
 import FilterContainer from '@/components/filters/containers/FilterContainer.vue'
-import { filters } from '../../../demo-data/filterMocks'
+import { filters } from '../../../lib/mocks'
+import { localVue } from '../../../lib/helpers'
 
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
 
 describe('FilterContainer.vue', () => {
   let wrapper: any
 
   beforeEach(() => {
     wrapper = mount(FilterContainer, {
-      localVue,
+      localVue: localVue(),
       propsData: {
         value: { checkbox: ['red'], string: 'blah' },
         filters,

@@ -3,9 +3,19 @@
   "license": "LGPL-3.0",
   "private": true,
   "devDependencies": {
+    "@typescript-eslint/parser": "^4.4.0",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/eslint-config-typescript": "^7.0.0",
     "commitizen": "^3.0.6",
     "cz-conventional-changelog": "2.1.0",
-    "lerna": "^3.4.3"
+    "eslint": "^7.11.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^7.0.1",
+    "lerna": "^3.4.3",
+    "typescript": "3.9.x"
   },
   "scripts": {
     "commit": "git-cz"
@@ -18,5 +28,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.4.0"
   }
 }

@@ -18,17 +18,16 @@ const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaDat
   }, {})
 
   const row: DataObject = rowData.data
-  let result:any = {}
-  let keys = Object.keys(row)
+  const result:any = {}
+  const keys = Object.keys(row)
 
   for (let i = 0; i < keys.length; i++) {
     const columnKey = keys[i]
-    const value = row[columnKey]
+    const value:any = row[columnKey]
     const attributeMetadata = metadataAttributeMap[columnKey]
     const isReference = attributeMetadata.isReference
     let resolvedValue
     if (isReference && attributeMetadata.refEntityType) {
-      // @ts-ignore
       if (value.items) {
         resolvedValue = await getMrefLabel(attributeMetadata, value)
       } else {
@@ -93,7 +92,7 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
   return rsqlFilter ? `${request}&q=${encodeRsqlValue(rsqlFilter)}` : request
 }
 
-const _buildSizeQueryParam = (dataDisplayLimit?: Number) => {
+const _buildSizeQueryParam = (dataDisplayLimit?: number) => {
   return typeof dataDisplayLimit === 'number' ? `size=${dataDisplayLimit}&` : ''
 }
 
@@ -102,7 +101,7 @@ const getTableDataDeepReference = async (
   metaData: MetaData,
   coloms: string[],
   rsqlQuery?: string,
-  dataDisplayLimit?: Number
+  dataDisplayLimit?: number
 ) => {
   if (!coloms.includes(metaData.idAttribute.name)) {
     coloms.push(metaData.idAttribute.name)
@@ -120,7 +119,7 @@ const getTableDataDeepReference = async (
   return result
 }
 
-const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, dataDisplayLimit?: Number) => {
+const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, dataDisplayLimit?: number) => {
   const columnSet = new Set([...columns])
   columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
@@ -138,7 +137,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
 }
 
 // called on row expand
-const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: Number) => {
+const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: number) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
   // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
   // Adding id and label makes sure we get these fields.

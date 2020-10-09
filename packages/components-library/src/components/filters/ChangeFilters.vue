@@ -9,7 +9,7 @@
       no-caret
       block
     >
-      <template v-slot:button-content>
+      <template #button-content>
         Change filters
         <font-awesome-icon icon="caret-right" class="ml-2" />
       </template>
@@ -50,16 +50,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCaretRight, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 library.add(faCaretRight, faTimes)
 
 export default Vue.extend({
-  name: 'ChangeFilters',
-  components: { FontAwesomeIcon },
   props: {
     /**
      * The filters to select from
@@ -78,33 +76,33 @@ export default Vue.extend({
       required: true
     }
   },
-  data () {
+  data ():any {
     return {
-      selected: this.value
+      selected: this.value as string[]
     }
   },
   watch: {
     value: {
-      handler (newValue) {
+      handler (newValue:Array<string>):void {
         this.selected = [...newValue]
       },
       immediate: true
     }
   },
   methods: {
-    unique: (value, index, items) => items.indexOf(value) === index,
-    checkboxHandler (option, state) {
+    unique: (value:any, index:any, items:any):boolean => items.indexOf(value) === index,
+    checkboxHandler (option:Record<string, unknown>, state:Record<string, unknown>):void {
       if (state) {
         this.selected.push(option.name)
       } else {
-        this.selected = this.selected.filter((item) => item !== option.name)
+        this.selected = this.selected.filter((item:any) => item !== option.name)
       }
 
       // parent compound toggle
       if (option.type === 'compound-title') {
         const subCompounds = this.filters
-          .filter((item) => item.compound === option.name)
-          .map((item) => item.name)
+          .filter((item:any) => item.compound === option.name)
+          .map((item:any) => item.name)
         if (this.selected.includes(option.name)) {
           // Select all and make unique
           this.selected = [...this.selected, ...subCompounds].filter(
@@ -113,7 +111,7 @@ export default Vue.extend({
         } else {
           // Deselect all
           this.selected = this.selected.filter(
-            (item) => !subCompounds.includes(item)
+            (item:any) => !subCompounds.includes(item)
           )
         }
       }
@@ -121,13 +119,13 @@ export default Vue.extend({
       // child compound toggle
       if (option.compound) {
         const subCompounds = this.filters
-          .filter((item) => item.compound === option.compound)
-          .map((item) => item.name)
-        const allSelected = subCompounds.every((item) =>
+          .filter((item:any) => item.compound === option.compound)
+          .map((item:any) => item.name)
+        const allSelected = subCompounds.every((item:any) =>
           this.selected.includes(item)
         )
         const noneSelected = subCompounds.every(
-          (item) => !this.selected.includes(item)
+          (item:any) => !this.selected.includes(item)
         )
         const partialSelected = !allSelected && !noneSelected
         if (allSelected) {
@@ -137,12 +135,12 @@ export default Vue.extend({
         }
         if (noneSelected) {
           this.selected = this.selected.filter(
-            (item) => item !== option.compound
+            (item:any) => item !== option.compound
           )
         }
         if (partialSelected) {
           this.selected = this.selected.filter(
-            (item) => item !== option.compound
+            (item:any) => item !== option.compound
           )
         }
       }

@@ -1,15 +1,12 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import StringFilter from '@/components/filters/StringFilter.vue'
-import { BootstrapVue } from 'bootstrap-vue'
-
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+import { localVue } from '../../lib/helpers'
 
 describe('StringFilter.vue', () => {
   let wrapper: any
   beforeEach(() => {
     wrapper = mount(StringFilter, {
-      localVue,
+      localVue: localVue(),
       propsData: {
         name: 'name',
         label: 'label',
@@ -44,7 +41,7 @@ describe('StringFilter.vue', () => {
 
   describe('not passing a model prop', () => {
     const wrapper = mount(StringFilter, {
-      localVue,
+      localVue: localVue(),
       propsData: {
         name: 'name',
         label: 'label'

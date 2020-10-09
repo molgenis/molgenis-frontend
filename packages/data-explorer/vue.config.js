@@ -1,3 +1,4 @@
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const webpack = require('webpack')
 const BannerPlugin = require('webpack').BannerPlugin
 const packageJson = require('./package.json')
@@ -28,6 +29,8 @@ module.exports = {
     ? pkgName + '/dist/'
     : '/',
   configureWebpack: config => {
+    config.plugins = config.plugins.filter((p) => !(p instanceof ForkTsCheckerWebpackPlugin))
+    console.log(config.plugins)
     config.plugins.push(
       new BannerPlugin({
         banner: bannerText
@@ -36,7 +39,7 @@ module.exports = {
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery',
-        Popper: ['popper.js', 'default']
+        Popper: ['popper.js', 'default'],
       })
     )
   },

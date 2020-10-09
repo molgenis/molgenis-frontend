@@ -17,15 +17,17 @@
   </b-input-group>
 </template>
 
-<script>
-import Vue from 'vue'
+<script lang="ts">
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Vue from 'vue'
+
 library.add(faTimes)
+// @ts-ignore
+Vue.component('FontAwesomeIcon', FontAwesomeIcon)
+
 export default Vue.extend({
-  name: 'StringFilter',
-  components: { FontAwesomeIcon },
   props: {
     /**
      * The HTML input element name.
@@ -40,7 +42,7 @@ export default Vue.extend({
     placeholder: {
       type: String,
       required: false,
-      default: () => ''
+      default: ():string => ''
     },
     /**
      * The StringFilter model value.
@@ -48,21 +50,22 @@ export default Vue.extend({
      */
     value: {
       type: String,
-      default: () => ''
+      default: ():string => ''
     }
   },
   computed: {
     model: {
-      get () {
+      get ():string {
         return this.value || ''
       },
-      set (value) {
+      set (value:any):void {
         this.$emit('input', value === '' ? undefined : value)
       }
     }
   }
 })
 </script>
+
 <docs>
 Browser input filter with additional options.
 ### Usage

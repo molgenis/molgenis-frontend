@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import ActiveFilters from '@/components/filters/ActiveFilters.vue'
-import { filters } from '../../demo-data/filterMocks'
-import { findItemByText } from '../__testhelpers__/vueTestUtilHelpers'
+import { filters } from '../../lib/mocks'
+import { findItemByText, localVue } from '../../lib/helpers'
 import Vue from 'vue'
 
 describe('ActiveFilters.vue', () => {
@@ -13,6 +13,7 @@ describe('ActiveFilters.vue', () => {
     startDate = new Date('09/11/2019')
     endDate = new Date('10/10/2020')
     wrapper = mount(ActiveFilters, {
+      localVue: localVue(),
       propsData: {
         filters,
         value: {

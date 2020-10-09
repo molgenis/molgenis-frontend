@@ -1,0 +1,72 @@
+{
+    "parserOptions": {
+        "ecmaFeatures": {
+            "modules": true
+        },
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "root": true,
+    "globals": {
+        "globalThis": true
+    },
+    "overrides": [
+        {
+            "files": ["**/*.ts"],
+            "parser": "@typescript-eslint/parser",
+            "plugins": [
+                "@typescript-eslint"
+            ],
+            "extends": [
+                "eslint:recommended",
+                "plugin:@typescript-eslint/recommended"
+            ],
+            "rules": {
+                "no-console": "warn",
+                "no-debugger": "warn",
+                "ban-ts-ignore": "off",
+                "@typescript-eslint/ban-ts-ignore": "off",
+                "@typescript-eslint/ban-ts-comment": "off",
+                "no-empty-function": "off",
+                "@typescript-eslint/no-empty-function": "off",
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/explicit-module-boundary-types": ["error", {"allowArgumentsExplicitlyTypedAsAny": true}]
+            }
+        },
+        {
+            "parser": "vue-eslint-parser",
+            "files": ["**/*.vue"],
+            "extends": [
+                "plugin:vue/recommended",
+                "@vue/standard",
+                "@vue/typescript/recommended"
+            ],
+            "rules": {
+                "vue/html-self-closing": "off",
+                "vue/html-indent": ["error", 2],
+                "vue/max-attributes-per-line": ["error", {
+                    "singleline": 3,
+                    "multiline": {
+                      "max": 2,
+                      "allowFirstLine": false
+                    }
+                }],
+                "no-console": "warn",
+                "no-debugger": "warn",
+                "ban-ts-ignore": "off",
+                "@typescript-eslint/ban-ts-ignore": "off",
+                "@typescript-eslint/ban-ts-comment": "off",
+                "vue/custom-event-name-casing": "off",
+                "no-empty-function": "off",
+                "@typescript-eslint/no-empty-function": "off",
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/explicit-module-boundary-types": ["error", {"allowArgumentsExplicitlyTypedAsAny": true}]
+            }
+        }
+    ]
+}

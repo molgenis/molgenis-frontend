@@ -36,42 +36,37 @@
   </b-input-group>
 </template>
 
-<script>
-import Vue from 'vue'
-import DateRangePicker from 'vue2-daterange-picker'
-import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
-
+<script lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Vue, { PropType } from 'vue'
+
 library.add(faTimes)
 
 export default Vue.extend({
-  name: 'DateTimeFilter',
-  components: { DateRangePicker, FontAwesomeIcon },
   props: {
     /**
      * Define the start of your calendar range.
      * @values ISOString, null
      */
     min: {
-      default: () => null,
-      type: [String, null]
+      default: ():number | null => null,
+      type: [String, null] as PropType<any>
     },
     /**
      * Define the end of your calendar range.
      * @values ISOString, null
      */
     max: {
-      default: () => null,
-      type: [String, null]
+      default: ():number | null => null,
+      type: [String, null] as PropType<any>
     },
     /**
      * Defines a maximal Date/Datetime thats selectable in the calendar widget.
      * @values right, left, top, bottom
      */
     opens: {
-      default: () => 'right',
+      default: ():string => 'right',
       type: String
     },
     /**
@@ -80,7 +75,7 @@ export default Vue.extend({
      */
     time: {
       type: Boolean,
-      default: () => true
+      default: ():boolean => true
     },
     /**
      * Toggles single date selection; uses only min property in that case.
@@ -88,7 +83,7 @@ export default Vue.extend({
      */
     range: {
       type: Boolean,
-      default: () => true
+      default: ():boolean => true
     },
     /**
      * The default selected date.
@@ -96,10 +91,10 @@ export default Vue.extend({
      */
     value: {
       type: Array,
-      default: () => [null, null]
+      default: ():Array<string | null> => [null, null]
     }
   },
-  data: function () {
+  data: function ():any {
     return {
       dateRange: {
         startDate: null,
@@ -108,7 +103,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    formattedDate: function () {
+    formattedDate: function ():string {
       const date = this.dateRange
       if (!date.startDate || !date.endDate) {
         return 'Select...'
@@ -119,20 +114,20 @@ export default Vue.extend({
         return `${this.formatDate(date.startDate)} - ${this.formatDate(date.endDate)}`
       }
     },
-    pickerFormat () {
+    pickerFormat ():string {
       return this.time ? 'yyyy-mm-dd HH:MM:ss' : 'yyyy-mm-dd'
     }
   },
   watch: {
-    value (newValue) {
+    value (newValue:string):void {
       this.setDateRange(newValue)
     }
   },
-  beforeMount () {
+  beforeMount ():void {
     this.setDateRange(this.value)
   },
   methods: {
-    clearValue: function () {
+    clearValue: function ():void {
       this.dateRange = {
         startDate: null,
         endDate: null
@@ -140,26 +135,27 @@ export default Vue.extend({
 
       this.$emit('input', undefined)
     },
-    setDateRange (value) {
+    setDateRange (value:string):void {
       if (value) {
         this.dateRange.startDate = this.createDateFromValue(value[0])
         this.dateRange.endDate = this.createDateFromValue(value[1])
       }
     },
-    updateValues: function () {
+    updateValues: function ():void {
       this.$emit('input', [this.dateRange.startDate, this.dateRange.endDate])
     },
-    createDateFromValue (value) {
+    createDateFromValue (value:any):any {
       if (value) {
         return isNaN(value) ? new Date(Date.parse(value)) : new Date(value)
       }
     },
-    formatDate (dateTime) {
+    formatDate (dateTime:Date):string {
       return this.time ? dateTime.toLocaleString() : dateTime.toLocaleDateString()
     }
   }
 })
 </script>
+
 <style lang="css">
 .form-control.reportrange-text {
   text-overflow: ellipsis;

@@ -1,13 +1,11 @@
-import { mount, createLocalVue } from '@vue/test-utils'
-import { BootstrapVue } from 'bootstrap-vue'
+import { mount } from '@vue/test-utils'
 import ChangeFilters from '@/components/filters/ChangeFilters.vue'
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+import { localVue } from '../../lib/helpers'
 
 describe('ChangeFilters.vue', () => {
   let wrapper: any
   const options = {
-    localVue,
+    localVue: localVue(),
     propsData: {
       filters: [{
         name: 'search',
@@ -38,6 +36,7 @@ describe('ChangeFilters.vue', () => {
   }
 
   beforeEach(() => {
+    // @ts-ignore
     wrapper = mount(ChangeFilters, options)
   })
 

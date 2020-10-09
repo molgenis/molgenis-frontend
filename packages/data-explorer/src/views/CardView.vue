@@ -3,34 +3,36 @@
     <explorer-card
       v-for="(entity, index) in entitiesToShow"
       :key="index"
-      :dataId="getEntityId(entity)"
-      :dataTable="tableName"
-      :isSelected="isSelected(entity)"
-      :isShop="tableSettings.isShop"
-      :collapseLimit="tableSettings.collapseLimit"
-      :dataLabel="getEntityLabel(entity)"
-      :dataContents="entity"
-      :numberOfAttributes="numberOfAttributes"
-      :customCode="tableSettings.customCardCode"
-      :isEditable="hasEditRights"
-      @expandCard="handleExpandCard(entity)">
+      :data-id="getEntityId(entity)"
+      :data-table="tableName"
+      :is-selected="isSelected(entity)"
+      :is-shop="tableSettings.isShop"
+      :collapse-limit="tableSettings.collapseLimit"
+      :data-label="getEntityLabel(entity)"
+      :data-contents="entity"
+      :number-of-attributes="numberOfAttributes"
+      :custom-code="tableSettings.customCardCode"
+      :is-editable="hasEditRights"
+      @expandCard="handleExpandCard(entity)"
+    >
     </explorer-card>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import { mapState, mapActions, mapGetters } from 'vuex'
 
-export default {
+export default Vue.extends({
   name: 'CardView',
+  components: { ExplorerCard },
   props: {
     entitiesToShow: {
       type: Array,
       required: true
     }
   },
-  components: { ExplorerCard },
   computed: {
     ...mapState(['tableMeta', 'selectedItemIds', 'tableSettings', 'tableName']),
     ...mapGetters(['filterRsql', 'hasEditRights']),
@@ -70,7 +72,7 @@ export default {
       immediate: true
     }
   }
-}
+})
 </script>
 
 <style scoped>
