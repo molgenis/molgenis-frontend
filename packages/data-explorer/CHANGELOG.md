@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.36.0...@molgenis-ui/data-explorer@1.0.0) (2020-10-09)
+
+
+### Features
+
+* **data-explorer:** use sys_ts_DataExplorerEntitySettings entity for storing settings ([ca89bce](https://github.com/molgenis/molgenis-frontend/commit/ca89bce))
+
+
+### BREAKING CHANGES
+
+* **data-explorer:** expects 'sys_ts_DataExplorerEntitySettings' to be available in backend.
+
+- Remove check for settings table at startup
+- Assume settings table can be found at 'sys_ts_DataExplorerEntitySettings'
+- Replace router fallback table with settings table as 'root_hospital_patients' is not guaranteed to exist in backend
+
+
+
+
+
 # [0.36.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@0.35.5...@molgenis-ui/data-explorer@0.36.0) (2020-09-25)
 
 

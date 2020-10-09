@@ -18,7 +18,7 @@ export default new Router({
       path: '*',
       redirect: {
         name: 'main-view',
-        params: { entity: 'root_hospital_patients' }
+        params: { entity: 'sys_ts_DataExplorerEntitySettings' }
       }
     }
   ]
