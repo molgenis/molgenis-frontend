@@ -4,7 +4,6 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
-import bootstrapExplorer from '@/lib/bootstrapExplorer'
 
 export default {
   fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
@@ -15,16 +14,10 @@ export default {
     commit('setFilterSelection', {})
     commit('setSearchText', '')
 
-    try {
-      const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
-      if (response.data.items.length === 1) {
-        commit('setTableSettings', response.data.items[0].data)
-      }
-    } catch (e) {
-      // dont show error to user, just keep the default settings
+    const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+    if (response.data.items.length === 1) {
+      commit('setTableSettings', response.data.items[0].data)
     }
-
-    bootstrapExplorer()
 
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
     const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
