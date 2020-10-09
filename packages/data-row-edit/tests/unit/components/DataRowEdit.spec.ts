@@ -51,7 +51,7 @@ describe('DataRowEdit.vue', () => {
     // @ts-ignore
     repository.save.mockReset()
     // @ts-ignore ts does not know its a mock
-    repository.fetch.mockResolvedValue({ 
+    repository.fetch.mockResolvedValue({
       meta: {
         id: 'my-id',
         label: 'lbl',
@@ -83,7 +83,7 @@ describe('DataRowEdit.vue', () => {
 
     wrapper = await shallowMount(DataRowEdit, {
       localVue,
-      propsData: { 
+      propsData: {
         dataTableId: 'dataTableId'
       },
       mocks: {
@@ -160,7 +160,7 @@ describe('DataRowEdit.vue', () => {
       EntityToFormMapper.generateForm.mockReset()
       wrapper = await shallowMount(DataRowEdit, {
         localVue,
-        propsData: { 
+        propsData: {
           dataTableId: 'dataTableId',
           dataRowId: 'dataRowId'
         },
@@ -190,7 +190,7 @@ describe('DataRowEdit.vue', () => {
         expect.objectContaining({mapperMode: 'UPDATE'})
       )
     })
-    
+
   })
 
   describe('when adding a reference option', () => {
@@ -229,7 +229,7 @@ describe('DataRowEdit.vue', () => {
 
       const mockParent = await shallowMount(DataRowEdit, {
         localVue,
-        propsData: { 
+        propsData: {
           dataTableId: 'dataTableId',
         },
         mocks: {
@@ -239,6 +239,8 @@ describe('DataRowEdit.vue', () => {
 
       // @ts-ignore
       mockParent.optionCreatedCallback = callBack
+      // @ts-ignore
+      mockParent.setRef = () => null;
       //@ts-ignore
       mockParent.$refs = {
         refContainer: {
@@ -248,7 +250,7 @@ describe('DataRowEdit.vue', () => {
 
       wrapper = await shallowMount(DataRowEdit, {
         localVue,
-        propsData: { 
+        propsData: {
           dataTableId: 'refTableId',
           parent: mockParent
         },
