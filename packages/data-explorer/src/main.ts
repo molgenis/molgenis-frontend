@@ -1,3 +1,4 @@
+import { BootstrapVue } from 'bootstrap-vue'
 import Vue from 'vue'
 import 'bootstrap'
 import App from './App.vue'
@@ -9,6 +10,7 @@ import i18n from '@molgenis/molgenis-i18n-js'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
+Vue.use(BootstrapVue)
 
 // Catch query parameters to render them when accessing a bookmark
 router.beforeEach((to, from, next) => {

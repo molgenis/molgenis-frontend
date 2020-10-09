@@ -24,7 +24,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faTimes)
 
-export default Vue.extend({
+export default {
   name: 'ActiveFilters',
   components: { FontAwesomeIcon },
   props: {
@@ -158,7 +158,7 @@ export default Vue.extend({
       this.$emit('input', selections)
     }
   }
-})
+}
 </script>
 
 <style scoped>

@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 
@@ -46,7 +45,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faTimes)
 
-export default Vue.extend({
+export default {
   name: 'DateTimeFilter',
   components: { DateRangePicker, FontAwesomeIcon },
   props: {
@@ -158,7 +157,7 @@ export default Vue.extend({
       return this.time ? dateTime.toLocaleString() : dateTime.toLocaleDateString()
     }
   }
-})
+}
 </script>
 <style lang="css">
 .form-control.reportrange-text {

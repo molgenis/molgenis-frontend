@@ -18,12 +18,11 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faTimes)
-export default Vue.extend({
+export default {
   name: 'StringFilter',
   components: { FontAwesomeIcon },
   props: {
@@ -61,7 +60,7 @@ export default Vue.extend({
       }
     }
   }
-})
+}
 </script>
 <docs>
 Browser input filter with additional options.
