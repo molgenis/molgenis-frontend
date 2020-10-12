@@ -17,7 +17,7 @@
   </b-input-group>
 </template>
 
-<script>
+<script lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -39,7 +39,7 @@ export default {
     placeholder: {
       type: String,
       required: false,
-      default: () => ''
+      default: ():string => ''
     },
     /**
      * The StringFilter model value.
@@ -47,15 +47,15 @@ export default {
      */
     value: {
       type: String,
-      default: () => ''
+      default: ():string => ''
     }
   },
   computed: {
     model: {
-      get () {
+      get ():string {
         return this.value || ''
       },
-      set (value) {
+      set (value):void {
         this.$emit('input', value === '' ? undefined : value)
       }
     }

@@ -36,7 +36,7 @@
   </b-input-group>
 </template>
 
-<script>
+<script lang="ts">
 import DateRangePicker from 'vue2-daterange-picker'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 
@@ -54,7 +54,7 @@ export default {
      * @values ISOString, null
      */
     min: {
-      default: () => null,
+      default: ():number | null => null,
       type: [String, null]
     },
     /**
@@ -62,7 +62,7 @@ export default {
      * @values ISOString, null
      */
     max: {
-      default: () => null,
+      default: ():number | null => null,
       type: [String, null]
     },
     /**
@@ -70,7 +70,7 @@ export default {
      * @values right, left, top, bottom
      */
     opens: {
-      default: () => 'right',
+      default: ():string => 'right',
       type: String
     },
     /**
@@ -79,7 +79,7 @@ export default {
      */
     time: {
       type: Boolean,
-      default: () => true
+      default: ():boolean => true
     },
     /**
      * Toggles single date selection; uses only min property in that case.
@@ -87,7 +87,7 @@ export default {
      */
     range: {
       type: Boolean,
-      default: () => true
+      default: ():boolean => true
     },
     /**
      * The default selected date.
@@ -95,10 +95,10 @@ export default {
      */
     value: {
       type: Array,
-      default: () => [null, null]
+      default: ():Array<string> => [null, null]
     }
   },
-  data: function () {
+  data: function ():Record<string, unknown> {
     return {
       dateRange: {
         startDate: null,
@@ -107,7 +107,7 @@ export default {
     }
   },
   computed: {
-    formattedDate: function () {
+    formattedDate: function ():string {
       const date = this.dateRange
       if (!date.startDate || !date.endDate) {
         return 'Select...'
@@ -118,20 +118,20 @@ export default {
         return `${this.formatDate(date.startDate)} - ${this.formatDate(date.endDate)}`
       }
     },
-    pickerFormat () {
+    pickerFormat ():string {
       return this.time ? 'yyyy-mm-dd HH:MM:ss' : 'yyyy-mm-dd'
     }
   },
   watch: {
-    value (newValue) {
+    value (newValue:string):void {
       this.setDateRange(newValue)
     }
   },
-  beforeMount () {
+  beforeMount ():void {
     this.setDateRange(this.value)
   },
   methods: {
-    clearValue: function () {
+    clearValue: function ():void {
       this.dateRange = {
         startDate: null,
         endDate: null
@@ -139,21 +139,21 @@ export default {
 
       this.$emit('input', undefined)
     },
-    setDateRange (value) {
+    setDateRange (value:string):void {
       if (value) {
         this.dateRange.startDate = this.createDateFromValue(value[0])
         this.dateRange.endDate = this.createDateFromValue(value[1])
       }
     },
-    updateValues: function () {
+    updateValues: function ():void {
       this.$emit('input', [this.dateRange.startDate, this.dateRange.endDate])
     },
-    createDateFromValue (value) {
+    createDateFromValue (value:any):Date {
       if (value) {
         return isNaN(value) ? new Date(Date.parse(value)) : new Date(value)
       }
     },
-    formatDate (dateTime) {
+    formatDate (dateTime:Date):string {
       return this.time ? dateTime.toLocaleString() : dateTime.toLocaleDateString()
     }
   }

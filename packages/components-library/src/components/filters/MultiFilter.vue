@@ -51,7 +51,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faSpinner,
@@ -77,7 +77,7 @@ export default {
     placeholder: {
       type: String,
       required: false,
-      default: () => 'Type to search more'
+      default: ():string => 'Type to search more'
     },
     /**
      * The async method returning filter options.
@@ -92,24 +92,24 @@ export default {
     initialDisplayItems: {
       type: Number,
       required: false,
-      default: () => 1
+      default: ():number => 1
     },
     /**
      * @model
      */
     value: {
       type: Array,
-      default: () => []
+      default: ():Array<Record<string, unknown>> => []
     },
     /**
      * The amount of options to show after filtering the checkbox options.
      */
     maxVisibleOptions: {
       type: Number,
-      default: () => 10
+      default: ():number => 10
     }
   },
-  data () {
+  data ():Record<string, unknown> {
     return {
       showCount: 0,
       isLoading: false,
@@ -121,25 +121,25 @@ export default {
   },
   computed: {
     selection: {
-      get () {
+      get ():Array<Record<string, unknown>> {
         return this.value
       },
-      set (value) {
+      set (value:Array<Record<string, unknown>>):void {
         this.$emit('input', value.length === 0 ? undefined : value)
       }
     },
-    multifilterOptions () {
+    multifilterOptions ():Array<Record<string, unknown>> {
       return this.inputOptions.length > 0 || this.query.length
         ? this.inputOptions
         : this.initialOptions
     },
-    slicedOptions () {
+    slicedOptions ():Array<Record<string, unknown>> {
       return this.multifilterOptions.slice(0, this.showCount)
     },
-    foundOptionCount () {
+    foundOptionCount ():number {
       return this.multifilterOptions.length
     },
-    showMoreText () {
+    showMoreText ():string {
       const remaining = this.foundOptionCount - this.showCount
       if (remaining <= this.maxVisibleOptions) {
         return `Show remaining ${remaining}`
@@ -149,7 +149,7 @@ export default {
     }
   },
   watch: {
-    query: function () {
+    query: function ():void {
       const previousSelection = this.multifilterOptions.filter(
         option => this.selection.indexOf(option.value) >= 0
       )
@@ -181,17 +181,17 @@ export default {
       }, 500)
     }
   },
-  created () {
+  created ():void {
     this.showCount = this.maxVisibleOptions
   },
-  beforeMount () {
+  beforeMount ():void {
     this.initializeFilter()
   },
   methods: {
-    showMore () {
+    showMore ():void {
       this.showCount += this.maxVisibleOptions
     },
-    async initializeFilter () {
+    async initializeFilter ():Promise<void> {
       let fetched = []
       if (this.value && this.value.length > 0) {
         fetched = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.value.join(',') })

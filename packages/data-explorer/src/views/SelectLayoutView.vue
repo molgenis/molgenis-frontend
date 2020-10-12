@@ -1,7 +1,7 @@
 <template>
   <div class="entity-table" v-if="tableMeta && tableData">
     <div v-if="tableData && tableData.items && tableData.items.length === 0" class="alert alert-warning">
-      {{ 'dataexplorer_empty_table' | i18n}}
+      {{ 'empty table' }}
     </div>
     <component
       :is="dataDisplayLayout"

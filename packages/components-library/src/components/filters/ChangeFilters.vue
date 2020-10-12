@@ -50,7 +50,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCaretRight, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -77,22 +77,22 @@ export default {
       required: true
     }
   },
-  data () {
+  data ():Record<string, unknown> {
     return {
       selected: this.value
     }
   },
   watch: {
     value: {
-      handler (newValue) {
+      handler (newValue:Array<string>):void {
         this.selected = [...newValue]
       },
       immediate: true
     }
   },
   methods: {
-    unique: (value, index, items) => items.indexOf(value) === index,
-    checkboxHandler (option, state) {
+    unique: (value:any, index:any, items:any):boolean => items.indexOf(value) === index,
+    checkboxHandler (option:Record<string, unknown>, state:Record<string, unknown>):void {
       if (state) {
         this.selected.push(option.name)
       } else {

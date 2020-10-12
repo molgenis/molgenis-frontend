@@ -5,7 +5,6 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 
-// @ts-ignore
 import i18n from '@molgenis/molgenis-i18n-js'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
