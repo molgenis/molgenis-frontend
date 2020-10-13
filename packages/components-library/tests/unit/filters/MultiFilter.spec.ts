@@ -1,9 +1,8 @@
-import { createLocalVue, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import MultiFilter from '@/components/filters/MultiFilter.vue'
-import { BootstrapVue } from 'bootstrap-vue'
+import { localVue as getLocalVue } from '../../lib/helpers'
 
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+const localVue = getLocalVue()
 
 const checkboxLotsOptions = [
   { value: 'red', text: 'Red' },
@@ -30,10 +29,6 @@ describe('MultiFilter.vue', () => {
 
   beforeEach(() => {
     wrapper = mount(MultiFilter, { localVue, propsData })
-  })
-
-  it('matches the snapshot', () => {
-    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('does not show checkbox fields when input options are not resolved yet', () => {

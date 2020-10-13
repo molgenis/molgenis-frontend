@@ -1,8 +1,9 @@
-import BootstrapVue from 'bootstrap-vue'
 import Vue from 'vue'
-import { filters, fruitOptionsFunction, multiFilterOptions } from './tests/demo-data/filterMocks'
+import { BootstrapVue } from 'bootstrap-vue'
+import { filters, fruitOptionsFunction, multiFilterOptions } from './tests/lib/mocks'
+import devDependencies from '@/dev-dependencies'
 
-Vue.use(BootstrapVue)
+devDependencies(BootstrapVue, Vue)
 
 Vue.mixin({
   data () {

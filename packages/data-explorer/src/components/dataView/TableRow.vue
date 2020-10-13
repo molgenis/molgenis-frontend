@@ -26,11 +26,7 @@
 
 <script>
 import ShoppingButton from '../utils/ShoppingButton'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faEdit)
 export default {
   name: 'TableRow',
   props: {
@@ -65,6 +61,6 @@ export default {
       default: () => false
     }
   },
-  components: { ShoppingButton, FontAwesomeIcon }
+  components: { ShoppingButton }
 }
 </script>

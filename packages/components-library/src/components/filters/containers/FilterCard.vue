@@ -42,16 +42,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCaretRight, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faCaretRight, faTimes)
-
-export default Vue.extend({
+export default {
   name: 'FilterCard',
-  components: { FontAwesomeIcon },
   props: {
     /**
      * Unique filter identifier
@@ -126,22 +118,25 @@ export default Vue.extend({
       return false
     }
   }
-})
+}
 </script>
 
 <style scoped>
   .card-header.collapsable {
     cursor: pointer;
   }
+
   .form-group {
     margin-bottom:0;
   }
-  .title{
+
+  .title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .remove-button{
+
+  .remove-button {
     transition: opacity 0.2s, color 0.2s;
     opacity: 0;
     height: inherit;
@@ -152,12 +147,15 @@ export default Vue.extend({
     right: 10px;
     cursor: pointer;
   }
-  .remove-button:hover{
+
+  .remove-button:hover {
     color: var(--danger);
   }
+
   .filter-card:hover .remove-button{
     opacity: 1;
   }
+
   .sortable-ghost{
     border-style: dashed;
   }
@@ -198,3 +196,4 @@ const model = []
   </CheckboxFilter>
 </FilterCard>
 ```
+</docs>

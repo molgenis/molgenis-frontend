@@ -21,13 +21,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/default.css'
-
-export default Vue.extend({
+export default {
   name: 'NumberFilter',
-  components: { VueSlider },
   props: {
     /**
      * The minimum allowed filter value.
@@ -93,8 +88,9 @@ export default Vue.extend({
       }
     }
   }
-})
+}
 </script>
+
 <docs>
 Browser number input filter with additional options.
 ### Usage
@@ -113,3 +109,4 @@ const model = 5
 </NumberFilter>
 <div>{{model}}</div>
 ```
+</docs>

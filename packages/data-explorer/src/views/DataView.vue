@@ -34,21 +34,14 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import SelectLayoutView from './SelectLayoutView'
 import ClipboardView from './ClipboardView'
 import { mapState, mapMutations } from 'vuex'
-import ActiveFilters from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/ActiveFilters.vue'
-import { CartSelectionToast } from '@molgenis-ui/components-library'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTimes, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { ActiveFilters, CartSelectionToast } from '@molgenis-ui/components-library'
 
-library.add(faTimes, faShoppingCart)
-
-export default Vue.extend({
+export default {
   name: 'DataView',
-  components: { SelectLayoutView, ClipboardView, ActiveFilters, CartSelectionToast, FontAwesomeIcon },
+  components: { ActiveFilters, CartSelectionToast, SelectLayoutView, ClipboardView },
   computed: {
     ...mapState([
       'showSelected',
@@ -114,5 +107,5 @@ export default Vue.extend({
       this.setFilterSelection(newSelections)
     }
   }
-})
+}
 </script>

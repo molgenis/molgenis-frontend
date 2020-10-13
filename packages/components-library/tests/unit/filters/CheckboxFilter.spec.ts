@@ -1,8 +1,8 @@
-import { createLocalVue, mount } from '@vue/test-utils'
-import { BootstrapVue } from 'bootstrap-vue'
+import { mount } from '@vue/test-utils'
 import CheckboxFilter from '@/components/filters/CheckboxFilter.vue'
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+import { localVue as getLocalVue } from '../../lib/helpers'
+
+const localVue = getLocalVue()
 
 function getWrapper (props = {}) {
   const propsData = {
@@ -34,10 +34,6 @@ describe('CheckboxFilter.vue', () => {
   describe('Parsing only required props', () => {
     let wrapper: any
     beforeEach(() => { wrapper = getWrapper() })
-
-    it('matches the snapshot', () => {
-      expect(wrapper.element).toMatchSnapshot()
-    })
 
     it('can set and unset values', async () => {
       const inputElements = wrapper.findAll('input')

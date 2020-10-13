@@ -18,14 +18,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faTimes)
-export default Vue.extend({
+export default {
   name: 'StringFilter',
-  components: { FontAwesomeIcon },
   props: {
     /**
      * The HTML input element name.
@@ -61,8 +55,9 @@ export default Vue.extend({
       }
     }
   }
-})
+}
 </script>
+
 <docs>
 Browser input filter with additional options.
 ### Usage
@@ -75,3 +70,4 @@ const model = 'bla'
 </StringFilter>
 <div>{{model}}</div>
 ```
+</docs>

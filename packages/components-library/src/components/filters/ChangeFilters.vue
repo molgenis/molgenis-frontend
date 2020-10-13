@@ -51,15 +51,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCaretRight, faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faCaretRight, faTimes)
-
-export default Vue.extend({
+export default {
   name: 'ChangeFilters',
-  components: { FontAwesomeIcon },
   props: {
     /**
      * The filters to select from
@@ -149,7 +142,7 @@ export default Vue.extend({
       this.$emit('input', this.selected)
     }
   }
-})
+}
 </script>
 
 <style scoped>
@@ -163,6 +156,7 @@ export default Vue.extend({
   right: 10px;
   cursor: pointer;
 }
+
 .remove-button:hover {
   color: var(--danger);
 }
@@ -210,3 +204,4 @@ const model = []
 
 <div>{{model}}</div>
 ```
+</docs>

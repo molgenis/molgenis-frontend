@@ -1,16 +1,13 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import RangeFilter from '@/components/filters/RangeFilter.vue'
-import { BootstrapVue } from 'bootstrap-vue'
-
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+import { localVue } from '../../lib/helpers'
 
 describe('RangeFilter.vue', () => {
   let wrapper: any = null
 
   beforeEach(() => {
     wrapper = mount(RangeFilter, {
-      localVue,
+      localVue: localVue(),
       propsData: {
         name: 'name',
         value: [1, 2]

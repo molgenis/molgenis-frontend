@@ -1,25 +1,18 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import NumberFilter from '@/components/filters/NumberFilter.vue'
-import { BootstrapVue } from 'bootstrap-vue'
-
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+import { localVue } from '../../lib/helpers'
 
 describe('NumberFilter.vue', () => {
   let wrapper: any
   beforeEach(() => {
     wrapper = mount(NumberFilter, {
-      localVue,
+      localVue: localVue(),
       propsData: {
         name: 'name',
         label: 'label',
         value: 42
       }
     })
-  })
-
-  it('matches the snapshot', () => {
-    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('sets value property on inner input', () => {

@@ -1,18 +1,18 @@
 import { mount } from '@vue/test-utils'
 import ActiveFilters from '@/components/filters/ActiveFilters.vue'
-import { filters } from '../../demo-data/filterMocks'
-import { findItemByText } from '../__testhelpers__/vueTestUtilHelpers'
-import Vue from 'vue'
+import { filters } from '../../lib/mocks'
+import { findItemByText, localVue } from '../../lib/helpers'
 
 describe('ActiveFilters.vue', () => {
-  let endDate:Date
-  let startDate:Date
+  let endDate: Date
+  let startDate: Date
   let wrapper: any
 
   beforeEach(() => {
     startDate = new Date('09/11/2019')
     endDate = new Date('10/10/2020')
     wrapper = mount(ActiveFilters, {
+      localVue: localVue(),
       propsData: {
         filters,
         value: {
@@ -73,8 +73,8 @@ describe('ActiveFilters.vue', () => {
     const toRemove: any = findItemByText(items, 'Label: john')
     expect(toRemove).toBeTruthy()
     await toRemove.trigger('click') // remove item
-    await Vue.nextTick() // second await needed to wait for async 'buildActiveValues' to update the dom
-    await Vue.nextTick() // third await needed to wait for async options fetch when updating checkbox options
+    await wrapper.vm.$nextTick() // second await needed to wait for async 'buildActiveValues' to update the dom
+    await wrapper.vm.$nextTick() // third await needed to wait for async options fetch when updating checkbox options
     let itemsAfterRemove = wrapper.findAll('button.active-filter')
     expect(itemsAfterRemove.length).toEqual(7)
     expect(findItemByText(itemsAfterRemove, 'Label: john')).toBeFalsy()
@@ -83,8 +83,8 @@ describe('ActiveFilters.vue', () => {
     const checkboxToRemove: any = findItemByText(wrapper.findAll('button.active-filter'), 'Checkbox: Blue')
     expect(checkboxToRemove).toBeTruthy()
     await checkboxToRemove.trigger('click') // remove item
-    await Vue.nextTick() // second await needed to wait for async 'buildActiveValues' to update the dom
-    await Vue.nextTick() // third await needed to wait for async options fetch when updating checkbox options
+    await wrapper.vm.$nextTick() // second await needed to wait for async 'buildActiveValues' to update the dom
+    await wrapper.vm.$nextTick() // third await needed to wait for async options fetch when updating checkbox options
     itemsAfterRemove = wrapper.findAll('button.active-filter')
     expect(itemsAfterRemove.length).toEqual(6)
     expect(findItemByText(itemsAfterRemove, 'Checkbox: Blue')).toBeFalsy()

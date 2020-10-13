@@ -10,9 +10,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
 
-export default Vue.extend({
+export default {
   name: 'ToastComponent',
   props: {
     type: {
@@ -24,7 +23,7 @@ export default Vue.extend({
       required: true
     }
   }
-})
+}
 </script>
 
 <style>

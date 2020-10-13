@@ -20,12 +20,8 @@
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions, mapGetters } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
-library.add(faShoppingBag)
 
 export default {
-  name: 'TableView',
   props: {
     entitiesToShow: {
       type: Array,
