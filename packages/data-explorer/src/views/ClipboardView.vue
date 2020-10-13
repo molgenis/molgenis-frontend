@@ -45,7 +45,7 @@ import { faShoppingBag, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faShoppingBag, faChevronLeft)
 
-export default Vue.extends({
+export default Vue.extend({
   name: 'ClipboardView',
   components: { TableRow, TableHeader, FontAwesomeIcon },
   computed: {

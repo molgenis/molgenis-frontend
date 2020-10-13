@@ -26,7 +26,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 library.add(faShoppingBag)
 
-export default Vue.extends({
+export default Vue.extend({
   name: 'TableView',
   components: { TableRow, TableHeader },
   props: {

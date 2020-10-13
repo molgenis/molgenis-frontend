@@ -22,7 +22,7 @@ import TableHeader from '../components/dataView/TableHeader'
 import EndOfResults from '../components/dataView/EndOfResults'
 import { mapState } from 'vuex'
 
-export default Vue.extends({
+export default Vue.extend({
   name: 'SelectLayoutView',
   components: { ExplorerCard, TableRow, TableHeader, CardView, TableView, EndOfResults },
   computed: {

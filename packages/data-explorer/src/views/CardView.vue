@@ -19,12 +19,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import { mapState, mapActions, mapGetters } from 'vuex'
 
-export default Vue.extends({
+export default Vue.extend({
   name: 'CardView',
   components: { ExplorerCard },
   props: {

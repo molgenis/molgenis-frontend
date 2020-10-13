@@ -1,6 +1,7 @@
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const webpack = require('webpack')
 const BannerPlugin = require('webpack').BannerPlugin
+const path = require('path')
 const packageJson = require('./package.json')
 const pkgVersion = packageJson.version
 const pkgName = packageJson.name
@@ -25,12 +26,26 @@ if (process.env.DATA_EXPLORER_DEV_PW) {
 module.exports = {
   runtimeCompiler: true,
   outputDir: 'dist',
-  publicPath: process.env.NODE_ENV === 'production'
-    ? pkgName + '/dist/'
-    : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? pkgName + '/dist/' : '/',
+  devServer: {
+    overlay: {
+      warnings: true,
+      errors: true
+    }
+  },
+  chainWebpack: config => {
+    config.plugin('html')
+    .tap(args => {
+      args[0].template = path.join(__dirname, 'src', 'index.html')
+      return args
+    })
+  },
   configureWebpack: config => {
-    config.plugins = config.plugins.filter((p) => !(p instanceof ForkTsCheckerWebpackPlugin))
+    // config.externals = ['Vue']
     console.log(config.plugins)
+
+    // Disable type checking service
+    config.plugins = config.plugins.filter((p) => !(p instanceof ForkTsCheckerWebpackPlugin))
     config.plugins.push(
       new BannerPlugin({
         banner: bannerText
