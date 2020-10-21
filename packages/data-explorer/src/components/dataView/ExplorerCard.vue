@@ -31,11 +31,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import ShoppingButton from '../utils/ShoppingButton'
 import DefaultCardContent from './DefaultCardContent'
 import CustomCardContent from './CustomCardContent'
 
-export default {
+export default Vue.extend({
   name: 'ExplorerCard',
   props: {
     dataId: {
@@ -88,7 +89,7 @@ export default {
       this.$emit('expandCard', { id: this.dataId })
     }
   }
-}
+})
 </script>
 
 <style scoped>

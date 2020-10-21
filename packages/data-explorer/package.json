@@ -55,8 +55,6 @@
     "babel-eslint": "^10.0.1",
     "banner-webpack-plugin": "^0.2.3",
     "chromedriver": "^76.0.1",
-    "esbuild": "^0.7.17",
-    "esbuild-jest": "^0.3.0-beta.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "geckodriver": "^1.16.2",

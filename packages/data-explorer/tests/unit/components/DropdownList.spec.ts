@@ -1,10 +1,9 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import DropdownList from '@/components/DropdownList.vue'
 
 describe('DropdownList', () => {
-  const localVue = createLocalVue()
   let wrapper: any
-  let stubs = ['router-link', 'router-view', 'font-awesome-icon']
+  let stubs = ['router-link', 'router-view']
   let propsData = {
     listId: 'list-1',
     isShown: false,
@@ -42,7 +41,7 @@ describe('DropdownList', () => {
         isShown: false,
         items: []
       }
-      wrapper = shallowMount(DropdownList, { propsData, stubs })
+      wrapper = shallowMount(DropdownList, { propsData })
     })
     it('should fire fetchItems event', async (done) => {
       await wrapper.setProps({ isShown: true })

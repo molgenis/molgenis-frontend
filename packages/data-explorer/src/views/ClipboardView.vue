@@ -37,10 +37,14 @@
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faShoppingBag, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faShoppingBag, faChevronLeft)
 
 export default {
   name: 'ClipboardView',
-  components: { TableRow, TableHeader },
+  components: { TableRow, TableHeader, FontAwesomeIcon },
   computed: {
     ...mapState(['tableMeta', 'selectedItemIds', 'tableData', 'tableName']),
     idAttribute () {

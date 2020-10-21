@@ -30,11 +30,13 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import ToolbarView from './ToolbarView'
 import TableSettingsButton from '../components/utils/TableSettingsButton'
 import { mapState, mapGetters } from 'vuex'
 
-export default {
+export default Vue.extend({
+  name: 'PageHeaderView',
   components: { ToolbarView, TableSettingsButton },
   computed: {
     ...mapState([
@@ -45,5 +47,5 @@ export default {
     ]),
     ...mapGetters(['hasEditSettingsRights'])
   }
-}
+})
 </script>
