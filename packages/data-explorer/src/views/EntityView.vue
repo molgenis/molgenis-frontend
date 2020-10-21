@@ -56,15 +56,9 @@ import ExplorerCard from '../components/dataView/ExplorerCard'
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-library.add(faShoppingBag)
 
 export default {
-  name: 'EntityView',
-  components: { ExplorerCard, TableRow, TableHeader, FontAwesomeIcon },
+  components: { ExplorerCard, TableRow, TableHeader },
   props: {
     isShop: {
       type: Boolean,

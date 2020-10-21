@@ -6,8 +6,8 @@ import mutations from '@/store/mutations'
 import getters from '@/store/getters'
 import headerModule from '@/store/header/headerModule'
 
-const uiContextModule = require('@molgenis/molgenis-ui-context').default
-
+// @ts-ignore
+import context from '@molgenis/molgenis-ui-context'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -19,8 +19,8 @@ export default new Vuex.Store({
     header: headerModule,
     account: {
       namespaced: true,
-      state: uiContextModule.store.state,
-      mutations: uiContextModule.store.mutations
+      state: context.store.state,
+      mutations: context.store.mutations
     }
   }
 })

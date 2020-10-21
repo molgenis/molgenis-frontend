@@ -37,18 +37,12 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import FiltersView from './FiltersView'
 import ToastComponent from '../components/utils/ToastComponent'
 import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
 import DataView from './DataView'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import PageHeaderView from './PageHeaderView'
-
-library.add(faChevronUp)
 
 const deleteConfirmOptions = {
   okVariant: 'danger',
@@ -58,9 +52,8 @@ const deleteConfirmOptions = {
   centered: true
 }
 
-export default Vue.extend({
-  name: 'MainView',
-  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon, PageHeaderView, BreadcrumbBar },
+export default {
+  components: { FiltersView, DataView, ToastComponent, PageHeaderView, BreadcrumbBar },
   computed: {
     ...mapState([
       'filters',
@@ -135,7 +128,7 @@ export default Vue.extend({
     await this.fetchViewData(to.params.entity)
     next()
   }
-})
+}
 </script>
 
 <style scoped>

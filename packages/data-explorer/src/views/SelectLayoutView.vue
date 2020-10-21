@@ -22,7 +22,6 @@ import EndOfResults from '../components/dataView/EndOfResults'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'SelectLayoutView',
   components: { ExplorerCard, TableRow, TableHeader, CardView, TableView, EndOfResults },
   computed: {
     ...mapState(['dataDisplayLayout', 'dataDisplayLimit', 'tableMeta', 'tableData'])
