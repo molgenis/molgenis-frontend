@@ -17,16 +17,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faTimes)
-
-export default Vue.extend({
+export default {
   name: 'ActiveFilters',
-  components: { FontAwesomeIcon },
   props: {
     /**
      * List of filter objects
@@ -158,7 +150,7 @@ export default Vue.extend({
       this.$emit('input', selections)
     }
   }
-})
+}
 </script>
 
 <style scoped>

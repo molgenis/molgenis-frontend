@@ -52,17 +52,8 @@
 </template>
 
 <script>
-import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-  faSpinner,
-  faTimes,
-  faExclamationTriangle
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faTimes, faExclamationTriangle, faSpinner)
-
 export default {
-  components: { FontAwesomeIcon },
+  name: 'MultiFilter',
   props: {
     /**
      * The HTML input element name.
@@ -214,14 +205,13 @@ export default {
   overflow-y: auto;
   margin: 0.75rem 0;
 }
-</style>
 
-<style>
 .card-link {
   font-style: italic;
   font-size: small;
 }
 </style>
+
 <docs>
 Item-based Filter. Search box is used to find items in the table.
 
@@ -239,3 +229,4 @@ const model = []
 </MultiFilter>
 <div>{{model}}</div>
 ```
+</docs>

@@ -1,9 +1,8 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import StringFilter from '@/components/filters/StringFilter.vue'
-import { BootstrapVue } from 'bootstrap-vue'
+import { localVue as getLocalVue } from '../../lib/helpers'
 
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+const localVue = getLocalVue()
 
 describe('StringFilter.vue', () => {
   let wrapper: any
@@ -16,10 +15,6 @@ describe('StringFilter.vue', () => {
         value: 'value'
       }
     })
-  })
-
-  it('matches the snapshot', () => {
-    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('sets value property on inner input', () => {

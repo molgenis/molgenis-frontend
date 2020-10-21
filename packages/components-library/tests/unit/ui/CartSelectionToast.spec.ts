@@ -1,9 +1,8 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import CartSelectionToast from '@/components/ui/CartSelectionToast.vue'
+import { localVue as getLocalVue } from '../../lib/helpers'
 
-import { BootstrapVue } from 'bootstrap-vue'
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+const localVue = getLocalVue()
 
 const propsData = { clickHandler: () => {}, cartSelectionText: 'test' }
 describe('CartSelectionToast.vue', () => {

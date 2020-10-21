@@ -57,14 +57,30 @@
 </template>
 
 <script>
-import ChangeFilters from '../ChangeFilters.vue'
 import FilterCard from './FilterCard.vue'
-import * as components from '../index'
-import draggable from 'vuedraggable'
+
+import ActiveFilters from '../ActiveFilters.vue'
+import ChangeFilters from '../ChangeFilters.vue'
+import CheckboxFilter from '../CheckboxFilter.vue'
+import DateTimeFilter from '../DateTimeFilter.vue'
+import MultiFilter from '../MultiFilter.vue'
+import NumberFilter from '../NumberFilter.vue'
+import RangeFilter from '../RangeFilter.vue'
+import StringFilter from '../StringFilter.vue'
 
 export default {
   name: 'FilterContainer',
-  components: { ChangeFilters, draggable, FilterCard, ...components },
+  components: {
+    ActiveFilters,
+    ChangeFilters,
+    CheckboxFilter,
+    DateTimeFilter,
+    MultiFilter,
+    NumberFilter,
+    RangeFilter,
+    StringFilter,
+    FilterCard
+  },
   props: {
     /**
      * An array of filters to render.
@@ -195,3 +211,4 @@ const filtersShown = ['datetime']
   <div>{{model}}</div>
 </div>
 ```
+</docs>

@@ -23,10 +23,6 @@
   </div>
 </template>
 
-<style>
-  .card-link { font-style: italic; font-size: small; }
-</style>
-
 <script>
 export default {
   name: 'CheckboxFilter',
@@ -111,6 +107,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.card-link { font-style: italic; font-size: small; }
+</style>
+
 <docs>
 Filter that renders a list of options as a set of checkboxes
 

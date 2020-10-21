@@ -1,27 +1,20 @@
-import { createLocalVue, mount } from '@vue/test-utils'
-import { BootstrapVue } from 'bootstrap-vue'
+import { mount } from '@vue/test-utils'
 import FilterContainer from '@/components/filters/containers/FilterContainer.vue'
-import { filters } from '../../../demo-data/filterMocks'
-
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+import { filters } from '../../../lib/mocks'
+import { localVue } from '../../../lib/helpers'
 
 describe('FilterContainer.vue', () => {
   let wrapper: any
 
   beforeEach(() => {
     wrapper = mount(FilterContainer, {
-      localVue,
+      localVue: localVue(),
       propsData: {
         value: { checkbox: ['red'], string: 'blah' },
         filters,
         filtersShown: ['string', 'checkbox']
       }
     })
-  })
-
-  it('matches the snapshot', () => {
-    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('consolidates all filter output and sends them via input event', async () => {

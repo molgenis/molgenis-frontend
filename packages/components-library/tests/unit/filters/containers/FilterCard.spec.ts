@@ -1,9 +1,8 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import FilterCard from '@/components/filters/containers/FilterCard.vue'
-import { BootstrapVue } from 'bootstrap-vue'
+import { localVue as getLocalVue } from '../../../lib/helpers'
 
-const localVue = createLocalVue()
-localVue.use(BootstrapVue)
+const localVue = getLocalVue()
 
 const name = 'name'
 
