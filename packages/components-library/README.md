@@ -16,8 +16,7 @@ yarn lint  # Lint files
 
 ## Usage
 
-The Vue components library depends on a few third-party libraries.
-Dependencies that you need:
+The Vue components library depends on a few third-party libraries:
 
 ```bash
 yarn add @fortawesome/fontawesome-free@5.14
