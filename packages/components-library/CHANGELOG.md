@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.10.0...@molgenis-ui/components-library@1.0.0) (2020-10-21)
+
+
+### chore
+
+* make vue-bootstrap an external dependency ([#409](https://github.com/molgenis/molgenis-frontend/issues/409)) ([02c7e2d](https://github.com/molgenis/molgenis-frontend/commit/02c7e2d)), closes [#7576](https://github.com/molgenis/molgenis-frontend/issues/7576)
+
+
+### Features
+
+* **components-library:** [#7576](https://github.com/molgenis/molgenis-frontend/issues/7576) components-library as library ([931b16b](https://github.com/molgenis/molgenis-frontend/commit/931b16b))
+
+
+### BREAKING CHANGES
+
+* **components-library:** Third-party dependencies need to be included separately; see README.md
+* Third-party dependencies need to be included separately; see README.md
+
+
+
+
+
 # [0.10.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@0.9.1...@molgenis-ui/components-library@0.10.0) (2020-10-09)
 
 
