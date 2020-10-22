@@ -1,5 +1,5 @@
-import alias from '@rollup/plugin-alias'
 import analyze from 'rollup-plugin-analyzer'
+import babel from 'rollup-plugin-babel'
 import replace from '@rollup/plugin-replace'
 
 import resolve from '@rollup/plugin-node-resolve'
@@ -7,15 +7,10 @@ import vue from 'rollup-plugin-vue'
 import esbuild from 'rollup-plugin-esbuild'
 import css from 'rollup-plugin-css-only'
 
-const production = !process.env.ROLLUP_WATCH
-
 const plugins = [
-  alias({
-    entries: [{ find: '@', replacement: __dirname + '/src/' }],
-  }),
   // Filters inline css from vue files
-  css({output: 'dist/components-library.css'}),
-  vue({css: false, needMap: false }),
+  css({ output: 'dist/components-library.css' }),
+  vue({ css: false, needMap: false }),
   replace({
     'process.env.NODE_ENV': JSON.stringify('production'),
   }),
@@ -24,8 +19,8 @@ const plugins = [
     browser: true
   }),
   esbuild({
-    minify: production,
-    sourceMap: false,
+    minify: true,
+    sourceMap: true,
     target: 'es2020'
   })
 ]
@@ -34,15 +29,27 @@ if (process.env.ROLLUP_ANALYZE) {
   plugins.push(analyze())
 }
 
-export default {
-  input: 'src/main.ts',
-  output: {
-    file: 'dist/components-library.esm.js',
-    format: 'esm',
-    sourcemap: true
+export default [
+  {
+    input: 'src/main.ts',
+    output: {
+      file: 'dist/components-library.esm.js',
+      format: 'esm',
+      sourcemap: true
+    },
+    plugins
   },
-  plugins,
-  watch: {
-    clearScreen: true
+  {
+    input: 'src/main.ts',
+    output: {
+      file: 'dist/components-library.common.js',
+      format: 'cjs',
+      sourcemap: true
+    },
+    plugins: [...plugins, babel({
+      extensions: ['.js', '.vue', '.ts'],
+      runtimeHelpers: true,
+      sourceMap: true
+    })]
   }
-};
+]
