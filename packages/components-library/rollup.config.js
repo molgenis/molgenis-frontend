@@ -7,6 +7,8 @@ import vue from 'rollup-plugin-vue'
 import esbuild from 'rollup-plugin-esbuild'
 import css from 'rollup-plugin-css-only'
 
+process.env.ROLLUP_BUILD=1
+
 const plugins = [
   // Filters inline css from vue files
   css({ output: 'dist/components-library.css' }),
