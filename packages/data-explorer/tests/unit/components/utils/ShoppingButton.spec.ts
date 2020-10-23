@@ -5,6 +5,8 @@ import Vuex from 'vuex'
 describe('ShoppingButton.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+
+  const stubs = ['font-awesome-icon']
   let store: any
   let mutations: any
 
@@ -18,13 +20,13 @@ describe('ShoppingButton.vue', () => {
   })
 
   it('toggles state', () => {
-    const wrapper = shallowMount(ShoppingButton, { store, localVue, propsData: { id: 'test', isSelected: true } })
+    const wrapper = shallowMount(ShoppingButton, { store, stubs, localVue, propsData: { id: 'test', isSelected: true } })
     expect(wrapper.classes()).toContain('btn-primary')
     wrapper.setProps({ isSelected: false })
     expect(wrapper.classes()).toContain('btn-outline-secondary')
   })
   it('add items to shoppingcart', () => {
-    const wrapper = shallowMount(ShoppingButton, { store, localVue, propsData: { id: 'test', isSelected: false } })
+    const wrapper = shallowMount(ShoppingButton, { store, stubs, localVue, propsData: { id: 'test', isSelected: false } })
     wrapper.find('.shopping-button').trigger('click')
     expect(mutations.toggleSelectedItems).toBeCalledTimes(1)
   })

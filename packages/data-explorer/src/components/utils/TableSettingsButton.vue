@@ -10,17 +10,10 @@
 
 <script>
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-library.add(faCog)
-
 const SETTINGS_APP_URL = '/plugin/data-row-edit'
 
 export default {
   name: 'TableSettingsButton',
-  components: { FontAwesomeIcon },
   props: {
     settingsTableId: {
       type: String,

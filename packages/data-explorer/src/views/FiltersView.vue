@@ -28,24 +28,17 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import { mapState, mapMutations, createNamespacedHelpers } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import FilterContainer from '../../node_modules/@molgenis/molgenis-ui-filter/src/components/FilterContainer.vue'
 import { createBookmark } from '../mappers/bookmarkMapper'
+import { FilterContainer } from '@molgenis-ui/components-library'
 
-library.add(faChevronLeft)
-
-export default Vue.extend({
-  name: 'FiltersView',
-  components: { FilterContainer, FontAwesomeIcon },
+export default {
   data: () => {
     return {
       renderCount: 0
     }
   },
+  components: { FilterContainer },
   computed: {
     ...mapState([
       'filters',
@@ -105,5 +98,5 @@ export default Vue.extend({
       } else this.setComponentRoute(false)
     }
   }
-})
+}
 </script>

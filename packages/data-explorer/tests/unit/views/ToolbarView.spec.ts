@@ -7,6 +7,8 @@ import ApplicationState from '@/types/ApplicationState'
 describe('ToolbarView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  const stubs = ['font-awesome-icon']
+
   let store: any
   let state: ApplicationState
   let mutations: any
@@ -32,12 +34,12 @@ describe('ToolbarView.vue', () => {
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(ToolbarView, { store, localVue })
+    const wrapper = shallowMount(ToolbarView, { store, stubs, localVue })
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('can change to table layout', () => {
-    const wrapper = shallowMount(ToolbarView, { store, localVue })
+    const wrapper = shallowMount(ToolbarView, { store, stubs, localVue })
     wrapper.find('button.table-layout').trigger('click')
     // @ts-ignore
     expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'TableView')
@@ -48,7 +50,7 @@ describe('ToolbarView.vue', () => {
     store = new Vuex.Store({
       state, mutations, getters
     })
-    const wrapper = shallowMount(ToolbarView, { store, localVue })
+    const wrapper = shallowMount(ToolbarView, { store, stubs, localVue })
     wrapper.find('button.card-layout').trigger('click')
     // @ts-ignore
     expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'CardView')
@@ -58,20 +60,20 @@ describe('ToolbarView.vue', () => {
     beforeEach(() => getters.hasEditRights.mockReturnValueOnce(true))
 
     it('should render the add button as a link to the data-row-edit', () => {
-      const wrapper = shallowMount(ToolbarView, { store, localVue })
+      const wrapper = shallowMount(ToolbarView, { store, stubs, localVue })
       expect(wrapper.find('.toolbar > div > a').attributes().href).toEqual('/plugin/data-row-edit/root_hospital_patients')
     })
 
     it('should not be shown in shoppingcart mode', () => {
       store.state.showSelected = true
-      const wrapper = shallowMount(ToolbarView, { store, localVue })
+      const wrapper = shallowMount(ToolbarView, { store, stubs, localVue })
       expect(wrapper.find('.toolbar > a').exists()).toBe(false)
     })
 
     it('should not show the button without edit rights', () => {
       store.state.showSelected = true
       getters.hasEditRights.mockReturnValueOnce(false)
-      const wrapper = shallowMount(ToolbarView, { store, localVue })
+      const wrapper = shallowMount(ToolbarView, { store, stubs, localVue })
       expect(wrapper.find('.toolbar > a').exists()).toBe(false)
     })
 
@@ -81,7 +83,7 @@ describe('ToolbarView.vue', () => {
   describe('searchString value is set', () => {
     it('should persist the value in the store', () => {
       store.state.showSelected = true
-      const wrapper = shallowMount(ToolbarView, { store, localVue })
+      const wrapper = shallowMount(ToolbarView, { store, stubs, localVue })
       wrapper.setData({ searchText: 'demo' })
       expect(mutations.setSearchText).toHaveBeenCalled()
     })
