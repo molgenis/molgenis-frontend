@@ -2,11 +2,13 @@ import { shallowMount } from '@vue/test-utils'
 import TableSettingsButton from '@/components/utils/TableSettingsButton.vue'
 
 describe('TableSettingsButton.vue', () => {
+  const stubs = ['font-awesome-icon']
   describe('when no settings row has previously been created', () => {
     let wrapper:any
 
     beforeEach(() => {
       wrapper = shallowMount(TableSettingsButton, {
+        stubs,
         propsData: {
           settingsTableId: 'my-settings-table'
         }
@@ -23,6 +25,7 @@ describe('TableSettingsButton.vue', () => {
 
     beforeEach(() => {
       wrapper = shallowMount(TableSettingsButton, {
+        stubs,
         propsData: {
           settingsTableId: 'my-settings-table',
           settingsRowId: 'settings-row-id'
