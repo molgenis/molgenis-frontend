@@ -6,8 +6,6 @@ describe('ClipboardView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.filter('i18n', jest.fn())
-
-  const stubs = ['font-awesome-icon']
   let store: any
   let state: any
   let mutations: any
@@ -61,12 +59,12 @@ describe('ClipboardView.vue', () => {
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(ClipboardView, { store, localVue, stubs })
+    const wrapper = shallowMount(ClipboardView, { store, localVue })
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('closes shoppingcart', () => {
-    const wrapper = shallowMount(ClipboardView, { store, localVue, stubs })
+    const wrapper = shallowMount(ClipboardView, { store, localVue })
     const button = wrapper.find('button.cart-back')
     button.trigger('click')
     expect(mutations.setShowSelected).toHaveBeenCalledWith(state, false)
@@ -74,14 +72,14 @@ describe('ClipboardView.vue', () => {
   })
 
   it('returns true for selected shopping item', () => {
-    const wrapper = shallowMount(ClipboardView, { store, localVue, stubs })
+    const wrapper = shallowMount(ClipboardView, { store, localVue })
     const entity = { tableID: '1', label: 'blaat1' }
     // @ts-ignore
     expect(wrapper.vm.isSelected(entity)).toBe(true)
   })
 
   it('returns false for item that is not selected', () => {
-    const wrapper = shallowMount(ClipboardView, { store, localVue, stubs })
+    const wrapper = shallowMount(ClipboardView, { store, localVue })
     const entity = { tableID: '2', label: 'blaat2' }
     // @ts-ignore
     expect(wrapper.vm.isSelected(entity)).toBe(false)

@@ -5,7 +5,9 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+
+export default Vue.extend({
   name: 'EndOfResults',
   props: {
     dataDisplayLimit: {
@@ -13,5 +15,5 @@ export default {
       required: true
     }
   }
-}
+})
 </script>

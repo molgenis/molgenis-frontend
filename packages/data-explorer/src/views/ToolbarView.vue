@@ -33,11 +33,18 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapState, mapMutations, mapGetters } from 'vuex'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faStore, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
 
-export default {
-  components: { SearchComponent },
+library.add(faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare)
+
+export default Vue.extend({
+  name: 'ToolbarView',
+  components: { FontAwesomeIcon, SearchComponent },
   computed: {
     ...mapState([
       'dataDisplayLayout',
@@ -70,5 +77,5 @@ export default {
       this.setDataDisplayLayout(value)
     }
   }
-}
+})
 </script>
