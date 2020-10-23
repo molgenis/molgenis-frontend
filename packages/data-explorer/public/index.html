@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>data-explorer</title>
+    <script>
+      // Detect IE 10 and IE 11
+    document.addEventListener('DOMContentLoaded', function () {
+      if (/Trident\/|MSIE/.test(window.navigator.userAgent)) {
+        var d = document.getElementsByClassName('unsupported-browser');
+          d[0].innerHTML = '<h5>Unsupported Browser!</h5> We\'re sorry but data-explorer doesn\'t work properly in IE 11. We only support the recent versions of major browsers like Chrome, Firefox, Safari, and Edge.';
+          d[0].style.display = 'block';
+          d[0].style.position = 'absolute';
+          d[0].style.left = 0;
+          d[0].style.width = '100%';
+          d[0].style.top = 0;
+          d[0].style['z-index'] = 1070; // bs-4 top of stack
+          d[0].style['background-color'] = 'white';
+      }
+    });
+    </script>
     <!-- Molgenis stylesheet -->
     <link rel="stylesheet" href="<%= BASE_URL %>bootstrap-molgenis-blue.min.css">
     <style>
@@ -23,6 +39,7 @@
     <noscript>
       <strong>We're sorry but data-explorer doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <div class="alert unsupported-browser" style="display: none;"></div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
