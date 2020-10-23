@@ -7,14 +7,6 @@ module.exports = {
     'ts',
     'tsx'
   ],
-  'modulePaths': [
-    '<rootDir>',
-    './node_modules'
-  ],
-  'moduleDirectories': [
-    'node_modules',
-    'node_modules/@molgenis-ui/components-library'
-  ],
   transform: {
     '^.+\\.vue$': 'vue-jest',
     '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
@@ -22,7 +14,7 @@ module.exports = {
     '^.+\\.esm?.js$': 'babel-jest'
   },
   transformIgnorePatterns: [
-    '/node_modules/(?!(@molgenis*))'
+    '/node_modules/(?!(@molgenis/*))'
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
