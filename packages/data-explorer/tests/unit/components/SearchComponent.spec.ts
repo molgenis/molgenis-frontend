@@ -3,10 +3,11 @@ import SearchComponent from '@/components/SearchComponent.vue'
 import router from '@/router'
 
 describe('SearchComponent', () => {
+  const stubs = ['font-awesome-icon']
   let wrapper: any
 
   beforeEach(() => {
-    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router })
+    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router, stubs })
   })
 
   it('should render the component', () => {

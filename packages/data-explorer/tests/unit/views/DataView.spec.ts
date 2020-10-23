@@ -5,6 +5,8 @@ import Vuex from 'vuex'
 describe('DataView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  const stubs = ['font-awesome-icon']
+
   let store: any
   let state: any
   let getters: any
@@ -47,14 +49,14 @@ describe('DataView.vue', () => {
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(DataView, { store, localVue })
+    const wrapper = shallowMount(DataView, { store, stubs, localVue })
     expect(wrapper.exists()).toBeTruthy()
   })
 
   describe('when the search text model updates', () => {
     let wrapper
     beforeEach(() => {
-      wrapper = shallowMount(DataView, { store, localVue })
+      wrapper = shallowMount(DataView, { store, stubs, localVue })
       wrapper.setData({ searchText: 'test' })
     })
 
@@ -66,7 +68,7 @@ describe('DataView.vue', () => {
   describe('saveFilterState method', () => {
     let wrapper: any
     beforeEach(() => {
-      wrapper = shallowMount(DataView, { store, localVue })
+      wrapper = shallowMount(DataView, { store, stubs, localVue })
     })
 
     it('should clear the search text if search is not part of the filter', () => {
@@ -85,7 +87,7 @@ describe('DataView.vue', () => {
 
   describe('cartSelectionToast component', () => {
     it('should hide filters and change to selection list when openSelectionList is called', () => {
-      const wrapper = shallowMount(DataView, { store, localVue })
+      const wrapper = shallowMount(DataView, { store, stubs, localVue })
       // @ts-ignore
       wrapper.vm.openSelectionList()
       expect(mutations.setShowSelected).toHaveBeenCalledWith(state, true)
@@ -93,18 +95,18 @@ describe('DataView.vue', () => {
     })
 
     it('should find a name to use as display label', () => {
-      const wrapper = shallowMount(DataView, { store, localVue })
+      const wrapper = shallowMount(DataView, { store, stubs, localVue })
       // @ts-ignore
       expect(wrapper.vm.displayName).toEqual('name')
 
       store.state.tableMeta = { labelAttribute: { name: 'label' } }
-      const wrapper2 = shallowMount(DataView, { store, localVue })
+      const wrapper2 = shallowMount(DataView, { store, stubs, localVue })
       // @ts-ignore
       expect(wrapper2.vm.displayName).toEqual('label')
     })
 
     it('should add names to display to the items in the shoppingcart', () => {
-      const wrapper = shallowMount(DataView, { store, localVue })
+      const wrapper = shallowMount(DataView, { store, stubs, localVue })
       // @ts-ignore
       expect(wrapper.vm.handleSelectionItems).toEqual([])
 
@@ -112,13 +114,13 @@ describe('DataView.vue', () => {
       store.state.tableData = { items: [{ label: 'item1', id: '1' }, { label: 'item2', id: '2' }] }
       store.state.selectedItemIds = ['1', '2']
 
-      const wrapper2 = shallowMount(DataView, { store, localVue })
+      const wrapper2 = shallowMount(DataView, { store, stubs, localVue })
       // @ts-ignore
       expect(wrapper2.vm.handleSelectionItems).toEqual([{ name: 'item1', id: '1' }, { name: 'item2', id: '2' }])
     })
 
     it('should remove names to display from items before returning them', () => {
-      const wrapper = shallowMount(DataView, { store, localVue })
+      const wrapper = shallowMount(DataView, { store, stubs, localVue })
       // @ts-ignore
       wrapper.vm.handleSelectionItems = [{ name: 'item1', id: '1' }, { name: 'item2', id: '2' }]
       expect(mutations.setSelectedItems).toHaveBeenCalledWith(state, ['1', '2'])
@@ -129,7 +131,7 @@ describe('DataView.vue', () => {
     let wrapper: any
     beforeEach(() => {
       store.state.searchText = 'my search'
-      wrapper = shallowMount(DataView, { store, localVue })
+      wrapper = shallowMount(DataView, { store, stubs, localVue })
     })
 
     it('should add search to the active filter selection', () => {
