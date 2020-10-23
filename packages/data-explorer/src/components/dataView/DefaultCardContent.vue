@@ -43,7 +43,14 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSearch, faChevronUp, faChevronRight, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faSearch, faChevronRight, faChevronUp, faEdit, faTrash)
+
+export default Vue.extend({
   name: 'DefaultCardContent',
   data: () => {
     return {
@@ -80,6 +87,7 @@ export default {
       default: () => false
     }
   },
+  components: { FontAwesomeIcon },
   computed: {
     expandBtnText () {
       return this.cardState === 'closed' ? 'Expand' : 'Collapse'
@@ -112,7 +120,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style scoped>

@@ -24,10 +24,9 @@ if (process.env.DATA_EXPLORER_DEV_PW) {
 module.exports = {
   runtimeCompiler: true,
   outputDir: 'dist',
-  publicPath: process.env.NODE_ENV === 'production' ? pkgName + '/dist/' : '/',
-  chainWebpack: (config) => {
-    config.resolve.symlinks(false)
-  },
+  publicPath: process.env.NODE_ENV === 'production'
+    ? pkgName + '/dist/'
+    : '/',
   configureWebpack: config => {
     config.plugins.push(
       new BannerPlugin({
