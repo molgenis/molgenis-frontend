@@ -44,6 +44,7 @@ pipeline {
                     sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
+                    sh "yarn lerna run build --scope @molgenis-ui/components-library"
                     sh "yarn lerna run unit"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
@@ -136,6 +137,7 @@ pipeline {
                 container('node') {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
+                    sh "yarn lerna run build --scope @molgenis-ui/components-library"
                     sh "yarn lerna run unit"
                     // Todo reenable safari when bug is fixed, https://bugs.webkit.org/show_bug.cgi?id=202589
                     sh "yarn lerna run e2e -- --scope @molgenis-ui/questionnaires -- --env ci_chrome,ci_ie11,ci_firefox"
