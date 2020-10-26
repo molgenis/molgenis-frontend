@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.0.1...@molgenis-ui/data-explorer@1.1.0) (2020-10-26)
+
+
+### Features
+
+* **data-explorer:** Add warning that data-explorer does not support ie11 ( or 10) ([#423](https://github.com/molgenis/molgenis-frontend/issues/423)) ([a9b016e](https://github.com/molgenis/molgenis-frontend/commit/a9b016e))
+
+
+
+
+
 ## [1.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.0.0...@molgenis-ui/data-explorer@1.0.1) (2020-10-26)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
