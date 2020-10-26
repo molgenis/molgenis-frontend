@@ -1,5 +1,4 @@
-import { buildExpandedAttributesQuery } from './queryBuilder'
-import { getAttributesfromMeta } from './metaDataService'
+import { buildExpandedAttributesQuery, buildSizeQueryParam, buildRowQuery } from './queryBuilder'
 import * as metaDataRepository from './metaDataRepository'
 import { DataApiResponse, DataApiResponseItem, DataObject } from '@/types/ApiResponse'
 import { MetaData, Attribute } from '@/types/MetaData'
@@ -93,10 +92,6 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
   return rsqlFilter ? `${request}&q=${encodeRsqlValue(rsqlFilter)}` : request
 }
 
-const _buildSizeQueryParam = (dataDisplayLimit?: Number) => {
-  return typeof dataDisplayLimit === 'number' ? `size=${dataDisplayLimit}&` : ''
-}
-
 const getTableDataDeepReference = async (
   tableId: string,
   metaData: MetaData,
@@ -113,7 +108,7 @@ const getTableDataDeepReference = async (
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
-  const size = _buildSizeQueryParam(dataDisplayLimit)
+  const size = buildSizeQueryParam(dataDisplayLimit)
   const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
   const result = { items: response.items.map((item: DataApiResponseItem) => levelNRowMapper(item)) }
@@ -128,7 +123,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const size = _buildSizeQueryParam(dataDisplayLimit)
+  const size = buildSizeQueryParam(dataDisplayLimit)
   const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
   const result = { items: await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
@@ -137,29 +132,41 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
   return result
 }
 
-// called on row expand
 const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: Number) => {
-  const attributes: string[] = getAttributesfromMeta(metaData)
-  // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
-  // Adding id and label makes sure we get these fields.
-  const columnSet = new Set([...attributes])
-  columnSet.add(metaData.idAttribute.name)
-  if (metaData.labelAttribute !== undefined) {
-    columnSet.add(metaData.labelAttribute.name)
-  }
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const size = _buildSizeQueryParam(dataDisplayLimit)
-  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${size}${expandReferencesQuery}`)
+  const query = buildRowQuery(metaData, dataDisplayLimit)
+  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${query}`)
   return levelOneRowMapper(response.data, metaData)
+}
+
+const getRowData = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: Number) => {
+  const query = buildRowQuery(metaData, dataDisplayLimit)
+  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${query}`)
+  return levelNRowMapper(response.data)
 }
 
 const deleteRow = async (tableId: string, rowId: string) => {
   return client.delete(`/api/data/${tableId}/${rowId}`)
 }
 
+const getTableRowOptions = async (tableId: string, metaData: MetaData) => {
+  const columnSet:Set<string> = new Set()
+  columnSet.add(metaData.idAttribute.name)
+  if (metaData.labelAttribute !== undefined) {
+    columnSet.add(metaData.labelAttribute.name)
+  }
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
+  const size = buildSizeQueryParam(100)
+  const response = await client.get<DataApiResponse>(`/api/data/${tableId}?${size}${expandReferencesQuery}`)
+  return { items: await Promise.all(response.data.items.map(async (item: DataApiResponseItem) => {
+    return levelOneRowMapper(item, metaData)
+  })) }
+}
+
 export {
   getTableDataDeepReference,
   getTableDataWithLabel,
+  getRowData,
   getRowDataWithReferenceLabels,
+  getTableRowOptions,
   deleteRow
 }

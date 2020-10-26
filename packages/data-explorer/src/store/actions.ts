@@ -69,13 +69,12 @@ export default {
     }
   },
   fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { tableName: string }) => {
-    if (state.tableName === null) {
-      commit('setToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
-      return
-    }
-
     if (state.tableMeta === null) {
       commit('setToast', { message: 'cannot fetch table view data without meta data', type: 'danger' })
+      return
+    }
+    if (state.tableMeta.id === null) {
+      commit('setToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
       return
     }
 
@@ -83,7 +82,7 @@ export default {
 
     commit('setTableData', [])
     const tableData = await dataRepository.getTableDataWithLabel(
-      state.tableName,
+      state.tableMeta.id,
       state.tableMeta,
       metaDataService.getAttributesfromMeta(state.tableMeta),
       rsqlQuery,
@@ -95,20 +94,19 @@ export default {
   },
   // expanded default card
   fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {
-    if (state.tableName === null) {
-      commit('setToast', { message: 'cannot fetch row data without table name', type: 'danger' })
+    if (state.tableMeta === null) {
+      commit('setToast', { message: 'cannot fetch table view data without meta data', type: 'danger' })
       return
     }
-
-    if (state.tableMeta === null) {
-      commit('setToast', { message: 'cannot fetch row data without meta data', type: 'danger' })
+    if (state.tableMeta.id === null) {
+      commit('setToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
       return
     }
 
     const rsqlQuery = getters.filterRsql
 
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.dataDisplayLimit)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableMeta.id, payload.rowId, state.tableMeta, state.dataDisplayLimit)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })
@@ -121,5 +119,28 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
+  },
+  fetchPreviewOptions: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
+    if (state.tableMeta === null) {
+      commit('setToast', { message: 'cannot fetch row data without meta data', type: 'danger' })
+      return
+    }
+    return dataRepository.getTableRowOptions(state.tableMeta.id, state.tableMeta)
+  },
+  fetchRowData: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string }) => {
+    if (state.tableMeta === null) {
+      commit('setToast', { message: 'cannot fetch row data without meta data', type: 'danger' })
+      return
+    }
+    return dataRepository.getRowData(state.tableMeta.id, payload.rowId, state.tableMeta)
+  },
+  saveTemplate: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
+    if (state.tableMeta === null) {
+      commit('setToast', { message: 'cannot save template without meta data', type: 'danger' })
+      return
+    }
+    const data = { card_template: state.tableSettings.customCardCode }
+    const result = await client.patch(`/api/data/${state.settingsTable}/${state.tableSettings.settingsRowId}`, data)
+    return result
   }
 }

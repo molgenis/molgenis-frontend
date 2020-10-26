@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import MainView from './views/MainView.vue'
+import MainView from '@/views/MainView.vue'
+import TemplateEditor from '@/views/TemplateEditor.vue'
 
 Vue.use(Router)
 
@@ -13,6 +14,11 @@ export default new Router({
       path: '/:entity',
       name: 'main-view',
       component: MainView
+    },
+    {
+      path: '/:entity/editor',
+      name: 'template-editor',
+      component: TemplateEditor
     },
     {
       path: '*',
