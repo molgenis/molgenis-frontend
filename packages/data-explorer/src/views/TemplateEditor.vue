@@ -57,25 +57,25 @@
     <div class="row">
       <div class="col-6">
 
-      <label for="template-props">Active template properties</label>
-      <div id="template-props" class="mb-3" v-if="tableSettings.customCardAttrs">
-        <span class="badge badge-info ml-1" style="font-size: 1em;" v-for="(attr, index) in tableSettings.customCardAttrs.split(',')" :key="index">
-          {{attr}}
-        </span>
-      </div>
+      <div class="row mb-3">
+        <div class="col-6">
+          <label for="template-props">Active template properties</label>
+          <div id="template-props" class="mb-3" v-if="tableSettings.customCardAttrs">
+            <span class="badge badge-info ml-1" style="font-size: 1em;" v-for="(attr, index) in tableSettings.customCardAttrs.split(',')" :key="index">
+              {{attr}}
+            </span>
+          </div>
+          <div><em class="pl-3">no properties selected</em></div>
+        </div>
+     </div>
 
       <label for="record-props">Property options</label>
-      <ul id="record-props" v-if="record" class="list-group">
-        <li class="list-group-item" v-for="(item, index) in Object.keys(record)" :key="index">
-          <template>{{item}}<span v-if="typeof record[item] !== 'object'"> : {{record[item]}}</span></template>
-          <ul class="list-group" v-if="typeof record[item] === 'object'">
-            <li class="list-group-item" v-for="(subItem, subIndex) in Object.keys(record[item])" :key="index +'_'+ subIndex">
-              {{subItem}}: {{record[item][subItem]}}
-            </li>
-          </ul>
-        </li>
-      </ul>
-
+      <editor-property
+        id="record-props"
+        v-if="recordProps"
+        :propertyData="recordProps"
+        @change="onTemplatePropChange">
+      </editor-property>
       </div>
     </div>
   </div>
@@ -83,21 +83,34 @@
 
 <script>
 import CustomCardContent from '@/components/dataView/CustomCardContent'
-import ToastComponent from '../components/utils/ToastComponent'
-import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
+import EditorProperty from '@/components/editor/EditorProperty'
+
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   name: 'TemplateEditor',
-  components: { CustomCardContent, ToastComponent },
-  computed: {
-    ...mapState(['toast', 'tableMeta', 'tableSettings'])
-  },
+  components: { CustomCardContent, EditorProperty },
   data () {
     return {
+      /**
+       * Data object to serve as template model
+       */
+      record: null,
+      /**
+       * Data object containing posible properties to use in template
+       */
+      recordProps: null,
+      /**
+       * List of records to use in preview
+       */
       recordOptions: [],
-      selectedOption: null,
-      record: null
+      /**
+       * Selected record to use in preview
+       */
+      selectedOption: null
     }
+  },
+  computed: {
+    ...mapState(['toast', 'tableMeta', 'tableSettings'])
   },
   methods: {
     ...mapMutations([
@@ -108,28 +121,31 @@ export default {
       'fetchTableMeta',
       'fetchTableMeta',
       'fetchPreviewOptions',
+      'fetchTemplateData',
       'fetchRowData',
       'saveTemplate'
     ]),
     async onRecordChange () {
       this.record = await this.fetchRowData({ rowId: this.selectedOption })
+      this.recordProps = await this.fetchRowData({ rowId: this.selectedOption })
     },
     async onSaveTemplate () {
       await this.saveTemplate()
+    },
+    onTemplatePropChange (pay) {
+      console.log(pay)
     }
   },
   async mounted () {
     const tableName = this.$route.params.entity
-    if (this.tableName !== tableName) {
-      await this.fetchTableMeta({ tableName })
-      const optionItems = await this.fetchPreviewOptions()
-      this.recordOptions = optionItems.items
-      this.selectedOption = this.recordOptions[0][this.tableMeta.idAttribute.name]
+    await this.fetchTableMeta({ tableName })
+    this.recordOptions = (await this.fetchPreviewOptions()).items
+    this.selectedOption = this.recordOptions[0][this.tableMeta.idAttribute.name]
 
-      this.record = await this.fetchRowData({ rowId: this.selectedOption })
+    this.record = await this.fetchTemplateData({ rowId: this.selectedOption })
+    this.recordProps = await this.fetchRowData({ rowId: this.selectedOption })
 
-      this.setTableName(tableName)
-    }
+    this.setTableName(tableName)
   }
 }
 </script>

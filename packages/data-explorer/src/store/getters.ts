@@ -4,6 +4,12 @@ import { createRSQLQuery } from '@/mappers/rsqlMapper'
 export default {
   filterRsql: (state: ApplicationState): string | null =>
     state.tableMeta && createRSQLQuery(state.filters, state.searchText),
+  customCardAttrs: (state: ApplicationState): string[] => {
+    return state.tableSettings.customCardAttrs
+      .split(',')
+      .filter(f => f !== '')
+      .map(a => a.trim())
+  },
   userRoles: (state: ApplicationState, getters: any, rootState:any): string[] => {
     return rootState.account.context ? rootState.account.context.roles : []
   },

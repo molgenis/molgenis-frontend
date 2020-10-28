@@ -95,19 +95,19 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
 const getTableDataDeepReference = async (
   tableId: string,
   metaData: MetaData,
-  coloms: string[],
+  attrs: string[],
   rsqlQuery?: string,
   dataDisplayLimit?: Number
 ) => {
-  if (!coloms.includes(metaData.idAttribute.name)) {
-    coloms.push(metaData.idAttribute.name)
+  if (!attrs.includes(metaData.idAttribute.name)) {
+    attrs.push(metaData.idAttribute.name)
   }
 
-  if (metaData.labelAttribute !== undefined && !coloms.includes(metaData.labelAttribute.name)) {
-    coloms.push(metaData.labelAttribute.name)
+  if (metaData.labelAttribute !== undefined && !attrs.includes(metaData.labelAttribute.name)) {
+    attrs.push(metaData.labelAttribute.name)
   }
 
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, attrs)
   const size = buildSizeQueryParam(dataDisplayLimit)
   const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
@@ -115,14 +115,21 @@ const getTableDataDeepReference = async (
   return result
 }
 
-const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, dataDisplayLimit?: Number) => {
-  const columnSet = new Set([...columns])
-  columnSet.add(metaData.idAttribute.name)
-  if (metaData.labelAttribute !== undefined) {
-    columnSet.add(metaData.labelAttribute.name)
-  }
+const getRowDataDeepReference = async (
+  tableId: string,
+  rowId: string,
+  metaData: MetaData,
+  attrs: string[],
+  rsqlQuery?: string
+) => {
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, attrs)
+  const request = addFilterIfSet(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`, rsqlQuery)
+  const response = (await client.get<DataApiResponse>(request)).data
+  return levelNRowMapper(response)
+}
 
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
+const getTableDataWithLabel = async (tableId: string, metaData: MetaData, attrs: string[], rsqlQuery?: string, dataDisplayLimit?: Number) => {
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, attrs)
   const size = buildSizeQueryParam(dataDisplayLimit)
   const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
@@ -149,12 +156,7 @@ const deleteRow = async (tableId: string, rowId: string) => {
 }
 
 const getTableRowOptions = async (tableId: string, metaData: MetaData) => {
-  const columnSet:Set<string> = new Set()
-  columnSet.add(metaData.idAttribute.name)
-  if (metaData.labelAttribute !== undefined) {
-    columnSet.add(metaData.labelAttribute.name)
-  }
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [])
   const size = buildSizeQueryParam(100)
   const response = await client.get<DataApiResponse>(`/api/data/${tableId}?${size}${expandReferencesQuery}`)
   return { items: await Promise.all(response.data.items.map(async (item: DataApiResponseItem) => {
@@ -166,6 +168,7 @@ export {
   getTableDataDeepReference,
   getTableDataWithLabel,
   getRowData,
+  getRowDataDeepReference,
   getRowDataWithReferenceLabels,
   getTableRowOptions,
   deleteRow

@@ -40,28 +40,21 @@ export default {
       return
     }
 
-    let columns: string[]
     let tableData
     const isCustomCard = state.dataDisplayLayout === 'CardView' && state.tableSettings.customCardCode
-
     const rsqlQuery = getters.filterRsql
 
     commit('setTableData', [])
     if (isCustomCard) {
-      columns = state.tableSettings.customCardAttrs
-        .split(',')
-        .filter(f => f !== '')
-        .map(a => a.trim())
-
       tableData = await dataRepository.getTableDataDeepReference(
         state.tableName,
         state.tableMeta,
-        columns,
+        getters.customCardAttrs,
         rsqlQuery,
         state.dataDisplayLimit)
     } else {
-      columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
-      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, state.dataDisplayLimit)
+      const attrs = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
+      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, attrs, rsqlQuery, state.dataDisplayLimit)
     }
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
@@ -119,6 +112,13 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
+  },
+  fetchTemplateData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {
+    if (state.tableMeta === null) {
+      commit('setToast', { message: 'cannot fetch template data without meta data', type: 'danger' })
+      return
+    }
+    return dataRepository.getRowDataDeepReference(state.tableMeta.id, payload.rowId, state.tableMeta, getters.customCardAttrs)
   },
   fetchPreviewOptions: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
     if (state.tableMeta === null) {
