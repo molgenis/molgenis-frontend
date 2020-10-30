@@ -27,6 +27,10 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
     ? pkgName + '/dist/'
     : '/',
+  chainWebpack: (config) => {
+    // stop lerna from sym linking to empty components-library folder in prod or e2e test mode
+    config.resolve.symlinks(!(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test'))
+  },
   configureWebpack: config => {
     config.plugins.push(
       new BannerPlugin({
