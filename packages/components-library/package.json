@@ -18,7 +18,8 @@
     "test:e2e": "vue-cli-service test:e2e --url localhost:6060",
     "lint": "vue-cli-service lint",
     "styleguide": "vue-cli-service styleguidist",
-    "styleguide:build": "vue-cli-service styleguidist:build"
+    "styleguide:build": "vue-cli-service styleguidist:build",
+    "prepare": "yarn build"
   },
   "main": "./dist/components-library.common.js",
   "devDependencies": {
