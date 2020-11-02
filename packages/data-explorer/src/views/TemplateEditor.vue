@@ -55,27 +55,31 @@
 
     </div>
     <div class="row">
-      <div class="col-6">
+      <div class="col">
 
       <div class="row mb-3">
         <div class="col-6">
           <label for="template-props">Active template properties</label>
-          <div id="template-props" class="mb-3" v-if="tableSettings.customCardAttrs">
-            <span class="badge badge-info ml-1" style="font-size: 1em;" v-for="(attr, index) in tableSettings.customCardAttrs.split(',')" :key="index">
+          <div id="template-props" class="mb-3">
+            <span class="badge badge-info ml-1 mb-1" style="font-size: 1em;" v-for="(attr, index) in selectedRecordProps" :key="index">
               {{attr}}
             </span>
+            <em v-if="!selectedRecordProps.length" class="pl-3">no properties selected</em>
           </div>
-          <div><em class="pl-3">no properties selected</em></div>
         </div>
+
+         <div class="col-6">
+          <label for="record-props">Property options</label>
+          <editor-property
+            id="record-props"
+            v-if="recordProps"
+            :propertyData="recordProps"
+            :selectedRecordProps="customCardAttrs"
+            @change="onTemplatePropChange">
+          </editor-property>
+         </div>
      </div>
 
-      <label for="record-props">Property options</label>
-      <editor-property
-        id="record-props"
-        v-if="recordProps"
-        :propertyData="recordProps"
-        @change="onTemplatePropChange">
-      </editor-property>
       </div>
     </div>
   </div>
@@ -100,6 +104,10 @@ export default {
        */
       recordProps: null,
       /**
+       * Data object containing selected properties to use in template
+       */
+      selectedRecordProps: [],
+      /**
        * List of records to use in preview
        */
       recordOptions: [],
@@ -110,7 +118,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['toast', 'tableMeta', 'tableSettings'])
+    ...mapState(['toast', 'tableMeta', 'tableSettings']),
+    customCardAttrs () {
+      return this.tableSettings.customCardAttrs ? this.tableSettings.customCardAttrs.split(',') : []
+    }
   },
   methods: {
     ...mapMutations([
@@ -132,8 +143,13 @@ export default {
     async onSaveTemplate () {
       await this.saveTemplate()
     },
-    onTemplatePropChange (pay) {
-      console.log(pay)
+    async onTemplatePropChange (payload) {
+      if (payload.isSelected && !this.selectedRecordProps.includes(payload.property)) {
+        this.selectedRecordProps.push(payload.property)
+      } else {
+        this.selectedRecordProps = this.selectedRecordProps.filter(selectedProp => selectedProp !== payload.property)
+      }
+      this.record = await this.fetchTemplateData({ rowId: this.selectedOption, attrs: this.selectedRecordProps })
     }
   },
   async mounted () {
@@ -142,9 +158,9 @@ export default {
     this.recordOptions = (await this.fetchPreviewOptions()).items
     this.selectedOption = this.recordOptions[0][this.tableMeta.idAttribute.name]
 
-    this.record = await this.fetchTemplateData({ rowId: this.selectedOption })
+    this.selectedRecordProps = this.customCardAttrs
+    this.record = await this.fetchTemplateData({ rowId: this.selectedOption, attrs: this.selectedRecordProps })
     this.recordProps = await this.fetchRowData({ rowId: this.selectedOption })
-
     this.setTableName(tableName)
   }
 }

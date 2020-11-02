@@ -99,14 +99,6 @@ const getTableDataDeepReference = async (
   rsqlQuery?: string,
   dataDisplayLimit?: Number
 ) => {
-  if (!attrs.includes(metaData.idAttribute.name)) {
-    attrs.push(metaData.idAttribute.name)
-  }
-
-  if (metaData.labelAttribute !== undefined && !attrs.includes(metaData.labelAttribute.name)) {
-    attrs.push(metaData.labelAttribute.name)
-  }
-
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, attrs)
   const size = buildSizeQueryParam(dataDisplayLimit)
   const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)

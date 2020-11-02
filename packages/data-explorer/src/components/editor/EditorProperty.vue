@@ -4,7 +4,7 @@
 
     <template>
       <span class="pl-2">
-        <input type="checkbox" class="form-check-input" @change="onPropSelectionChange($event, propertyKey)">
+        <input type="checkbox" class="form-check-input" :checked="isSelected(propertyKey)" @change="onPropSelectionChange($event, propertyKey)">
       </span>
       {{propertyKey}}:<span v-if="typeof propertyData[propertyKey] !== 'object'"> {{propertyData[propertyKey]}}</span>
     </template>
@@ -30,6 +30,11 @@ export default {
       type: Object,
       required: true
     },
+    selectedRecordProps: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
     path: {
       type: String,
       required: false,
@@ -45,6 +50,9 @@ export default {
         isSelected: event.target.checked,
         property: this.propertyPath(propertyKey)
       })
+    },
+    isSelected (propertyKey) {
+      return this.selectedRecordProps.includes(this.propertyPath(propertyKey))
     }
   }
 }

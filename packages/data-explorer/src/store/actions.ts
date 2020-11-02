@@ -113,12 +113,12 @@ export default {
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
   },
-  fetchTemplateData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {
+  fetchTemplateData: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string, attrs: string[] }) => {
     if (state.tableMeta === null) {
       commit('setToast', { message: 'cannot fetch template data without meta data', type: 'danger' })
       return
     }
-    return dataRepository.getRowDataDeepReference(state.tableMeta.id, payload.rowId, state.tableMeta, getters.customCardAttrs)
+    return dataRepository.getRowDataDeepReference(state.tableMeta.id, payload.rowId, state.tableMeta, payload.attrs)
   },
   fetchPreviewOptions: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
     if (state.tableMeta === null) {
