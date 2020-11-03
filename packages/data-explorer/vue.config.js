@@ -29,7 +29,7 @@ module.exports = {
     : '/',
   chainWebpack: (config) => {
     // stop lerna from sym linking to empty components-library folder
-    config.resolve.symlinks(false)
+    config.resolve.symlinks(true)
   },
   configureWebpack: config => {
     config.plugins.push(
