@@ -54,6 +54,8 @@ Vue.component('VueSlider', VueSlider)
 // FilterContainer
 import draggable from 'vuedraggable'
 Vue.component('draggable', draggable)
+
+import '@molgenis-ui/components-library/dist/components-library.css'
 ```
 
 > See [preview-build](https://preview-frontend-pr-[PR_NUMBER].dev.molgenis.org/styleguide) when reviewing a PR
