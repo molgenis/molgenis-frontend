@@ -8,26 +8,27 @@ Proposal
 
 ## Context
 
-See [frontend architecture sessions](https://docs.google.com/document/d/1VW3ah5VAvAz2KnqNZlNmVqCzFhBMlIcjPPUlsHMFRIY/)
-for additional background information on micro-frontend/SPA architecture.
+*See [frontend architecture sessions](https://docs.google.com/document/d/1VW3ah5VAvAz2KnqNZlNmVqCzFhBMlIcjPPUlsHMFRIY/)
+for background information on micro-frontend/SPA architecture.*
 
-Molgenis is flexible software that enables its users to create their own apps.
-This is useful for custom applications, made on top of the Molgenis backend.
-However, the same micro-architecture paradigm is also applied to parts of
-the frontend that are *always* being shipped with Molgenis. We call these
-admin-like Molgenis apps "core packages".
+Molgenis is flexible software that enables its users to create their own
+frontend apps. This is useful for custom applications, made on top of a
+Molgenis backend. However, the same micro-architecture paradigm is
+applied to parts of the frontend that are *always* being shipped with
+Molgenis. We call these admin-like Molgenis apps "core packages".
 
-At the moment there are 11 legacy admin-like apps. These apps have freemarker
-templates and Java controllers, but also legacy JavaScript files within Molgenis:
+At the moment there are 11 legacy admin-like apps in Molgenis. They are comprised
+of freemarker templates, Java controllers and legacy JavaScript files:
 
 ```code
 feedback logmanager jobs mappingservice permissionmanager scheduledjobs
 sorta tagwizard thememanager useraccount usermanager data-explorer 1
 ```
 
-There are 12 Unpkg-style frontend core apps. These apps still have Java Controllers
-and freemarker templates, but have external JavaScript frontend projects. The Data
-Explorer 2 is slightly different; it also comes with its own static index file:
+There are 12 Unpkg-style admin-like apps. These apps still consist of Java
+Controllers and freemarker templates, but have external JavaScript frontend
+projects. The Data Explorer 2 is slightly different; it also comes with its own
+static index file:
 
 ```code
 appmanager data-row-edit importwizard navigator one-click-importer questionnaires
@@ -35,25 +36,28 @@ scripts searchAll security-ui settings data-explorer 2 metadata-manager
 ```
 
 The Unpkg JavaScript frontend apps all include their own package configuration,
-release cycle, build tools and testsuites; glued together in the Nginx proxy.
-In theory, by separating parts of the frontend application in packages, some
-form of compartmentalization between components and application parts is
-enforced. In practice, it seems to lead to some problematic issues:
+versioning, release cycles, build tools and testsuites; glued together in the
+Nginx [proxy config](https://github.com/molgenis/molgenis-frontend/blob/master/docker/proxy-config/proxy.d/frontend/stable.conf). In theory, by splitting the frontend application in
+loose packages, some form of compartmentalization between components and
+application parts is being enforced through separate versioning. In practice
+however, it leads to some problematic issues, which mostly have to do with a
+lack of DRY:
 
-* Toolchains become out-of-date and out-of-sync
-* Frontend styling and layout is inconsistent between apps
-* Slow app experience due to sub-optimal use of Vue-router (page reloads when unnecessary)
-* Inconsistent/mixed use of urls (routes & hardcoded paths)
-* Uncommon UX-patterns due to the lack of shareable components; components that
-should only be sharable within the context of molgenis core apps (e.g. no components-library)
-* Fixes are applied partially, due to release-cycles and dependencies that discourage applying them beyond one app
+* Sub-optimal build tools - too many toolchains to maintain
+* Incomplete fixes - changes may well be beyond app boundaries
+* Inconsistent html & styling - app boundaries discourage consistency refactoring
+* Poor app performance - excessive bundle size, unnecessary page-reloads(Vue-router)
+* Inconsistent UX - lack of component reuse within the context of molgenis core apps
 
-As a result, features take longer than necessary to implement and quality
-suffers. By incrementally merging core apps together, we would be able to
-gradually reduce the amount of packaging and versioning, making it easier to
-keep the build toolchain up-to-date and develop the frontend from a more
-holistic perspective. At the same time, users and E2E tests will benefit from
-a faster app, due to maintaining state between views.
+As a result, features take longer to implement and quality decreases. By
+incrementally merging core apps together, we would be able to gradually reduce
+the amount of required packaging and versioning, making the release process
+easier. Also, we would be able to keep build tools up-to-date and optimize the
+app for better performance for its user anad and E2E tests.
+
+
+Th and develop the
+frontend from a more holistic perspective.
 
 ## Decision
 
