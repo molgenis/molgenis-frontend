@@ -82,14 +82,14 @@ export default {
   },
   watch: {
     value () {
-      this.externalUpdate = true
-      this.selection = this.value
+      this.setValue()
     },
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
     },
     selection (newValue) {
       if (!this.externalUpdate) {
+        console.log(newValue)
         const newSelection = [...newValue]
         this.$emit('input', newSelection)
       }
@@ -100,7 +100,7 @@ export default {
     this.options().then(response => {
       this.resolvedOptions = response
     })
-    this.selection = this.value
+    this.setValue()
   },
   methods: {
     toggleSelect () {
@@ -112,6 +112,10 @@ export default {
     },
     toggleSlice () {
       this.sliceOptions = !this.sliceOptions
+    },
+    setValue () {
+      this.externalUpdate = true
+      this.selection = this.value
     }
   }
 }
