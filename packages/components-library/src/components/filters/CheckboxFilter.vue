@@ -89,7 +89,6 @@ export default {
     },
     selection (newValue) {
       if (!this.externalUpdate) {
-        console.log(newValue)
         const newSelection = [...newValue]
         this.$emit('input', newSelection)
       }
