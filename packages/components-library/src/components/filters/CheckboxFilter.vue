@@ -1,7 +1,8 @@
 <template>
   <div>
     <b-form-checkbox-group
-      v-model="selection"
+      v-model="checkboxSelection"
+      @input="selectionChanged"
       stacked
       :options="visibleOptions"
     />
@@ -60,12 +61,15 @@ export default {
   },
   data () {
     return {
-      selection: this.value,
+      selection: [],
       resolvedOptions: [],
       sliceOptions: this.maxVisibleOptions && this.resolvedOptions && this.maxVisibleOptions < this.resolvedOptions.length
     }
   },
   computed: {
+    checkboxSelection () {
+      return this.selection
+    },
     visibleOptions () {
       return this.sliceOptions ? this.resolvedOptions.slice(0, this.maxVisibleOptions) : (typeof this.resolvedOptions === 'function' ? [] : this.resolvedOptions)
     },
@@ -80,22 +84,22 @@ export default {
     }
   },
   watch: {
+    value () {
+      this.selection = this.value
+    },
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
-    },
-    selection (newValue) {
-      const newSelection = [...newValue]
-      this.$emit('input', newSelection)
     }
   },
   created () {
     this.options().then(response => {
       this.resolvedOptions = response
     })
+    this.selection = this.value
   },
   methods: {
     toggleSelect () {
-      if (this.selection && this.selection.length) {
+      if (this.selection && this.selection.length > 0) {
         this.selection = []
       } else {
         this.selection = this.resolvedOptions.map(option => option.value)
@@ -103,6 +107,11 @@ export default {
     },
     toggleSlice () {
       this.sliceOptions = !this.sliceOptions
+    },
+    selectionChanged (newValue) {
+      this.selection = [...newValue]
+      const newSelection = [...newValue]
+      this.$emit('input', newSelection)
     }
   }
 }
