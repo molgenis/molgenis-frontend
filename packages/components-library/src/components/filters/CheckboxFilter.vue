@@ -2,7 +2,6 @@
   <div>
     <b-form-checkbox-group
       v-model="selection"
-      @input="selectionChanged"
       stacked
       :options="visibleOptions"
     />
@@ -61,6 +60,7 @@ export default {
   },
   data () {
     return {
+      externalUpdate: false,
       selection: [],
       resolvedOptions: [],
       sliceOptions: this.maxVisibleOptions && this.resolvedOptions && this.maxVisibleOptions < this.resolvedOptions.length
@@ -82,17 +82,24 @@ export default {
   },
   watch: {
     value () {
-      this.selection = this.value
+      this.setValue()
     },
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
+    },
+    selection (newValue) {
+      if (!this.externalUpdate) {
+        const newSelection = [...newValue]
+        this.$emit('input', newSelection)
+      }
+      this.externalUpdate = false
     }
   },
   created () {
     this.options().then(response => {
       this.resolvedOptions = response
     })
-    this.selection = this.value
+    this.setValue()
   },
   methods: {
     toggleSelect () {
@@ -105,10 +112,9 @@ export default {
     toggleSlice () {
       this.sliceOptions = !this.sliceOptions
     },
-    selectionChanged (newValue) {
-      this.selection = [...newValue]
-      const newSelection = [...newValue]
-      this.$emit('input', newSelection)
+    setValue () {
+      this.externalUpdate = true
+      this.selection = this.value
     }
   }
 }
