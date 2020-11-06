@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.1...@molgenis-ui/components-library@1.1.2) (2020-11-06)
+
+
+### Bug Fixes
+
+* **components-library:** removed computed in favour of v-model ([8372665](https://github.com/molgenis/molgenis-frontend/commit/8372665))
+
+
+
+
+
 ## [1.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.0...@molgenis-ui/components-library@1.1.1) (2020-11-06)
 
 **Note:** Version bump only for package @molgenis-ui/components-library
