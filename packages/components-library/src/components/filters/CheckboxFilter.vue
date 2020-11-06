@@ -68,7 +68,6 @@ export default {
   },
   computed: {
     checkboxSelection () {
-      console.log('compu', this.selection)
       return this.selection
     },
     visibleOptions () {
@@ -86,7 +85,6 @@ export default {
   },
   watch: {
     value () {
-      console.log('hello')
       this.selection = this.value
     },
     resolvedOptions () {
@@ -97,17 +95,13 @@ export default {
     this.options().then(response => {
       this.resolvedOptions = response
     })
-    console.log(' created', this.value)
     this.selection = this.value
   },
   methods: {
     toggleSelect () {
-      console.log(this.selection, this.resolvedOptions)
       if (this.selection && this.selection.length > 0) {
-        console.log('que')
         this.selection = []
       } else {
-        console.log(' ce')
         this.selection = this.resolvedOptions.map(option => option.value)
       }
     },
