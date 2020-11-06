@@ -80,6 +80,9 @@ export default {
     }
   },
   watch: {
+    value () {
+      this.selection = this.value
+    },
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
     },
