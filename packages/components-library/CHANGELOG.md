@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.2...@molgenis-ui/components-library@1.1.3) (2020-11-06)
+
+
+### Bug Fixes
+
+* **components-library:** fixed infinite loop sometimes occurring ([#429](https://github.com/molgenis/molgenis-frontend/issues/429)) ([56dd873](https://github.com/molgenis/molgenis-frontend/commit/56dd873))
+
+
+
+
+
 ## [1.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.1...@molgenis-ui/components-library@1.1.2) (2020-11-06)
 
 
