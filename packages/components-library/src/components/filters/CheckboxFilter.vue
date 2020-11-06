@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-form-checkbox-group
-      v-model="checkboxSelection"
+      v-model="selection"
       @input="selectionChanged"
       stacked
       :options="visibleOptions"
@@ -67,9 +67,6 @@ export default {
     }
   },
   computed: {
-    checkboxSelection () {
-      return this.selection
-    },
     visibleOptions () {
       return this.sliceOptions ? this.resolvedOptions.slice(0, this.maxVisibleOptions) : (typeof this.resolvedOptions === 'function' ? [] : this.resolvedOptions)
     },
