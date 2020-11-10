@@ -27,6 +27,10 @@
 export default {
   name: 'CheckboxFilter',
   props: {
+    returnObject: {
+      type: Boolean,
+      required: false
+    },
     /**
      * A Promise-function that resolves with an array of options.
      * {text: 'foo', value: 'bar'}
@@ -89,7 +93,13 @@ export default {
     },
     selection (newValue) {
       if (!this.externalUpdate) {
-        const newSelection = [...newValue]
+        let newSelection = []
+
+        if (this.returnObject) {
+          newSelection = Object.assign(newSelection, this.resolvedOptions.filter(of => newValue.includes(of.value)))
+        } else {
+          newSelection = [...newValue]
+        }
         this.$emit('input', newSelection)
       }
       this.externalUpdate = false
@@ -114,7 +124,11 @@ export default {
     },
     setValue () {
       this.externalUpdate = true
-      this.selection = this.value
+      if (this.value && this.value.length > 0 && typeof this.value[0] === 'object') {
+        this.selection = this.value.map(vo => vo.value)
+      } else {
+        this.selection = this.value
+      }
     }
   }
 }
