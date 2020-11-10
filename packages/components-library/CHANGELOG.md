@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.3...@molgenis-ui/components-library@1.2.0) (2020-11-10)
+
+
+### Features
+
+* **components-library:** option to return text and value in checkbox filter instead of only value(id) ([1bf8ac1](https://github.com/molgenis/molgenis-frontend/commit/1bf8ac1))
+
+
+
+
+
 ## [1.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.2...@molgenis-ui/components-library@1.1.3) (2020-11-06)
 
 
