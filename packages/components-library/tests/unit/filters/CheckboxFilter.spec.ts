@@ -45,6 +45,17 @@ describe('CheckboxFilter.vue', () => {
       expect(wrapper.emitted('input')[0]).toEqual([['foo', 'baz']])
     })
 
+    it('can return objects', async () => {
+      wrapper.setProps({ returnObject: true })
+
+      const inputElements = wrapper.findAll('input')
+      inputElements.at(0).trigger('click') // select foo
+      inputElements.at(1).trigger('click') // select bar
+      await localVue.nextTick()
+      expect(wrapper.emitted('input')[0]).toEqual([[{ value: 'foo', text: 'Foo' },
+        { value: 'bar', text: 'Bar' }]])
+    })
+
     it('can select all and deselect all', async () => {
       const toggleSelect = wrapper.find('.toggle-select')
       expect(toggleSelect.text()).toBe('Select all')

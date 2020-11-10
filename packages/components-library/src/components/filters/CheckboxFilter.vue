@@ -27,6 +27,10 @@
 export default {
   name: 'CheckboxFilter',
   props: {
+    /**
+     * Boolean to give the selected checkboxes back
+     * returns array { text, value } objects
+     */
     returnObject: {
       type: Boolean,
       required: false
@@ -41,6 +45,7 @@ export default {
     },
     /**
      * This is the v-model value; an array of selected options.
+     * Can also be a { text, value } object array
      */
     value: {
       type: Array,
