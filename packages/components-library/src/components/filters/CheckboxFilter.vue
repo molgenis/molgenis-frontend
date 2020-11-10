@@ -28,6 +28,14 @@ export default {
   name: 'CheckboxFilter',
   props: {
     /**
+     * Boolean to give the selected checkboxes back
+     * returns array { text, value } objects
+     */
+    returnObject: {
+      type: Boolean,
+      required: false
+    },
+    /**
      * A Promise-function that resolves with an array of options.
      * {text: 'foo', value: 'bar'}
      */
@@ -37,6 +45,7 @@ export default {
     },
     /**
      * This is the v-model value; an array of selected options.
+     * Can also be a { text, value } object array
      */
     value: {
       type: Array,
@@ -89,7 +98,13 @@ export default {
     },
     selection (newValue) {
       if (!this.externalUpdate) {
-        const newSelection = [...newValue]
+        let newSelection = []
+
+        if (this.returnObject) {
+          newSelection = Object.assign(newSelection, this.resolvedOptions.filter(of => newValue.includes(of.value)))
+        } else {
+          newSelection = [...newValue]
+        }
         this.$emit('input', newSelection)
       }
       this.externalUpdate = false
@@ -114,7 +129,11 @@ export default {
     },
     setValue () {
       this.externalUpdate = true
-      this.selection = this.value
+      if (this.value && this.value.length > 0 && typeof this.value[0] === 'object') {
+        this.selection = this.value.map(vo => vo.value)
+      } else {
+        this.selection = this.value
+      }
     }
   }
 }
