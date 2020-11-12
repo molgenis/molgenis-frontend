@@ -9,8 +9,7 @@
     <toast-component
       class="toast-component mt-2"
       v-if="toast"
-      :type="toast.type"
-      :message="toast.message"
+      :toast="toast"
       @toastCloseBtnClicked="clearToast">
     </toast-component>
     <page-header-view v-if="!loading"></page-header-view>

@@ -50,6 +50,10 @@ module.exports = {
     // Used to proxy a external API server to have someone to talk to during development
     proxy: process.env.NODE_ENV !== 'development' ? undefined : {
       '^/api': apiDevServerProxyConf,
+      '^/files': {
+        target: PROXY_TARGET,
+        keepOrigin: true
+      },
       '^/fonts': {
         target: PROXY_TARGET,
         keepOrigin: true
