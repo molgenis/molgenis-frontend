@@ -56,6 +56,14 @@ export default {
   name: 'MultiFilter',
   props: {
     /**
+     * Boolean to give the selected checkboxes back
+     * returns array { text, value } objects
+     */
+    returnObject: {
+      type: Boolean,
+      required: false
+    },
+    /**
      * The HTML input element name.
      */
     name: {
@@ -102,23 +110,17 @@ export default {
   },
   data () {
     return {
+      externalUpdate: false,
       showCount: 0,
       isLoading: false,
       triggerQuery: Number,
       inputOptions: [],
       initialOptions: [],
+      selection: [],
       query: ''
     }
   },
   computed: {
-    selection: {
-      get () {
-        return this.value
-      },
-      set (value) {
-        this.$emit('input', value.length === 0 ? undefined : value)
-      }
-    },
     multifilterOptions () {
       return this.inputOptions.length > 0 || this.query.length
         ? this.inputOptions
@@ -140,9 +142,24 @@ export default {
     }
   },
   watch: {
+    selection (newValue) {
+      if (!this.externalUpdate) {
+        let newSelection = []
+
+        if (this.returnObject) {
+          console.log(newValue)
+          newSelection = Object.assign(newSelection, this.multifilterOptions.filter(of => newValue.includes(of.value)))
+          console.log(this.multifilterOptions.filter(of => newValue.includes(of.value)))
+        } else {
+          newSelection = [...newValue]
+        }
+        this.$emit('input', newSelection)
+      }
+      this.externalUpdate = false
+    },
     query: function () {
       const previousSelection = this.multifilterOptions.filter(
-        option => this.selection.indexOf(option.value) >= 0
+        option => this.inputOptions.indexOf(option.value) >= 0
       )
       this.inputOptions = previousSelection
 
@@ -174,8 +191,6 @@ export default {
   },
   created () {
     this.showCount = this.maxVisibleOptions
-  },
-  beforeMount () {
     this.initializeFilter()
   },
   methods: {
@@ -185,7 +200,15 @@ export default {
     async initializeFilter () {
       let fetched = []
       if (this.value && this.value.length > 0) {
-        fetched = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.value.join(',') })
+        this.externalUpdate = true
+        let queryIds = this.value
+
+        if (typeof this.value[0] === 'object') {
+          queryIds = this.value.map(vo => vo.value)
+        }
+        this.selection = queryIds
+
+        fetched = await this.options({ nameAttribute: 'label', queryType: 'in', query: queryIds.join(',') })
       } else {
         fetched = await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })
       }
