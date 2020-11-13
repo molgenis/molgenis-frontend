@@ -22,6 +22,10 @@ module.exports = {
       ]
     },
     {
+      name: 'Table',
+      components: 'src/components/table/*.vue'
+    },
+    {
       name: 'UI',
       components: 'src/components/ui/*.vue'
     }

@@ -7,14 +7,14 @@ import vue from 'rollup-plugin-vue'
 import esbuild from 'rollup-plugin-esbuild'
 import css from 'rollup-plugin-css-only'
 
-process.env.ROLLUP_BUILD=1
+process.env.ROLLUP_BUILD = 1
 
 const plugins = [
   // Filters inline css from vue files
   css({ output: 'dist/components-library.css' }),
   vue({ css: false, needMap: false }),
   replace({
-    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env.NODE_ENV': JSON.stringify('production')
   }),
   resolve({
     extensions: ['.ts', '.vue'],

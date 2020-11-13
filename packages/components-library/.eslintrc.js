@@ -22,7 +22,8 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': 'off',
     'no-empty-function': 'off',
     '@typescript-eslint/no-empty-function': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/camelcase': ['error', { properties: 'never' }]
   },
   overrides: [
     {
