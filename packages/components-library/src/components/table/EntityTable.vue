@@ -18,21 +18,19 @@
     </div>
   </div>
 
-  <div class="scrollme mg-data-table">
+  <div class="mg-data-table-container">
     <table class="table table-bordered table-hover">
 
       <thead>
         <tr>
-          <th v-if="enableRowSelect" class="checkbox-cell align-middle">
-            <input class="form-check-input" type="checkbox" value="" >
-          </th>
-          <th v-if="enableRowDetail || enableEditActions" class="row-actions-col-head">
+          <th v-if="showRowSelect || showRowActions" class="checkbox-cell top-left-corner">
+            <input v-if="showRowSelect" class="form-check-input" type="checkbox" value="" >
           </th>
           <th scope="col" v-for="attr in Object.values(tableMeta.attributes)" :key="attr.name">
             <span class="text-nowrap">{{attr.label}}
-              <i v-show="enableColumnActions && attr.name === 'xbool'" class="col-header-action fas fa-sort pl-1"></i>
-              <i v-show="enableColumnActions" class="col-header-action fas fa-filter pl-2"></i>
-              <i v-show="enableColumnActions" class="col-header-action fas fa-eye pl-2"></i>
+              <i v-show="showColumnActions" class="cell-action fas fa-sort pl-1"></i>
+              <i v-show="showColumnActions" class="cell-action fas fa-filter pl-2"></i>
+              <i v-show="showColumnActions" class="cell-action fas fa-eye pl-2"></i>
             </span>
           </th>
         </tr>
@@ -40,20 +38,12 @@
 
       <tbody>
         <tr v-for="row in tableData.items" :key="row.id">
-          <td v-if="enableRowSelect" class="checkbox-cell  align-middle">
-            <input class="form-check-input" type="checkbox" value="" >
-          </td>
-          <td v-if="enableRowDetail || enableEditActions" class="text-nowrap">
-            <!-- <button type="button" class="btn btn-sm btn-secondary"> -->
-              <i class="fas fa-xs fa-search"></i>
-            <!-- </button> -->
-            <!-- <button type="button" class="btn btn-sm btn-secondary ml-1"> -->
-              <i class="fas fa-xs fa-edit ml-1"></i>
-            <!-- </button>
-            <button type="button" class="btn btn-sm btn-secondary ml-1"> -->
-              <i class="fas fa-xs fa-trash ml-1"></i>
-            <!-- </button> -->
-          </td>
+          <th v-if="showRowSelect || showRowActions" class="checkbox-cell align-middle text-nowrap">
+            <input v-if="showRowSelect" class="form-check-input" type="checkbox" value="" >
+              <i v-if="showRowActions" class="fas fa-s fa-search cell-action ml-2"></i>
+              <i v-if="showRowActions" class="fas fa-s fa-edit cell-action ml-1"></i>
+              <i v-if="showRowActions" class="fas fa-s fa-trash cell-action ml-1"></i>
+          </th>
           <td v-for="(col, index) in Object.values(row)" :key="index" class="text-nowrap text-truncate mg-data-column">
             {{col}}
           </td>
@@ -63,7 +53,7 @@
     </table>
   </div>
 
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation example" class="mt-3">
     <ul class="pagination justify-content-center">
       <li class="page-item disabled">
         <a class="page-link" href="#" tabindex="-1">Previous</a>
@@ -90,19 +80,15 @@ export default {
     tableMeta: {
       type: Object
     },
-    enableRowSelect: {
+    showRowSelect: {
       type: Boolean,
       default: () => true
     },
-    enableRowDetail: {
+    showRowActions: {
       type: Boolean,
       default: () => true
     },
-    enableEditActions: {
-      type: Boolean,
-      default: () => false
-    },
-    enableColumnActions: {
+    showColumnActions: {
       type: Boolean,
       default: () => false
     }
@@ -113,13 +99,91 @@ export default {
 
 <style scoped>
 
-  .scrollme {
-      overflow-x: auto;
+  .mg-data-table-container {
+    max-height: 30rem;
+    overflow-y: auto;
+    overflow-x: auto;
   }
 
-  .mg-data-table {
-    max-height: 40rem;
-    overflow-y: auto;
+  .top-left-corner:before {
+    pointer-events: none;
+    content: '';
+    position: absolute;
+    height: auto;
+    width: auto;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    border: 1px solid #dee2e6;
+  }
+
+  /**
+   * Fix borders in the head
+   */
+
+  thead th:after,
+  thead th:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+
+  thead th:before {
+    top: -1px;
+    border-top: 1px solid #dee2e6;
+  }
+
+  thead th:after {
+    bottom: -1px;
+    border-bottom:
+    1px solid #dee2e6;
+  }
+
+  /**
+   * Fix borders in the first column
+   */
+  tbody th:after,
+  tbody th:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+  }
+
+  tbody th:before {
+    left: -1px;
+    border-left: 1px solid #dee2e6;
+  }
+
+  tbody th:after {
+    right: -1px;
+    border-right: 1px solid #dee2e6;
+  }
+
+  thead th {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    border: 1px #dee2e6 solid;
+    /* color: #FFF; */
+  }
+
+  thead th:first-child {
+    left: 0;
+    z-index: 1;
+    box-sizing: border-box;
+  }
+
+  tbody th {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    left: 0;
+    background: #ffffff;
+    border-right: 1px #dee2e6 solid;
+    /* border-right: 1px solid #CCC; */
   }
 
   .mg-data-column {
@@ -128,12 +192,8 @@ export default {
     /* text-overflow: ellipsis; */
   }
 
-  .col-header-action {
+  .cell-action {
     color: #767676;
-  }
-
-  .checkbox-cell {
-    text-align: center;
   }
 
   .checkbox-cell .form-check-input {
@@ -148,10 +208,9 @@ Display entity data in table view
 ### Usage
 ```jsx
 // bool props
-const enableRowSelect = true // toggle row selection on/off
-const enableRowDetail = true // toglge row detail btn on/off
-const enableEditActions = false // toglge row detail btn on/off
-const enableColumnActions = false
+const showRowSelect = true // toggle row selection on/off
+const showRowActions = false // toglge row action on/off
+const showColumnActions = false // toglge column header action on/off
 
 // const tableData = {
 //       1: { // 1 is the value of the idAttribute of the entity
@@ -184,10 +243,9 @@ const tableMeta = {
 <EntityTable
   v-bind:tableData="typeTestData"
   v-bind:tableMeta="typeTestMetaData"
-  v-bind:enableRowSelect="enableRowSelect"
-  v-bind:enableRowDetail="enableRowDetail"
-  v-bind:enableEditActions="enableEditActions"
-  v-bind:enableColumnActions="enableColumnActions">
+  v-bind:showRowSelect="showRowSelect"
+  v-bind:showRowActions="showRowActions"
+  v-bind:showColumnActions="showColumnActions">
 </EntityTable>
 ```
 </docs>
