@@ -181,8 +181,11 @@ export default {
         selectedOptions = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.selection.join(',') })
       }
 
-      // fetch the other options and deduplicate (incase of value filled)
-      this.initialOptions = [...new Set(selectedOptions.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })))]
+      // fetch the other options and concat
+      const completeInitialOptions = selectedOptions.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems }))
+
+      // deduplicate by first mapping the id's then getting the first matching object back.
+      this.initialOptions = Array.from(new Set(completeInitialOptions.map(cio => cio.value))).map(value => completeInitialOptions.find(cio => cio.value === value))
     }
   }
 }
