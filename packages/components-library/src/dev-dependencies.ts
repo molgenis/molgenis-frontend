@@ -9,7 +9,9 @@ import {
   faCaretRight,
   faExclamationTriangle,
   faSpinner,
-  faTimes
+  faTimes,
+  faEye,
+  faEyeSlash
 } from '@fortawesome/free-solid-svg-icons'
 
 // @ts-ignore
@@ -21,16 +23,22 @@ import draggable from 'vuedraggable'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 import 'vue-slider-component/theme/default.css'
+// @ts-ignore
+import VueColumnsResizable from 'vue-columns-resizable'
+import { VBHoverPlugin } from 'bootstrap-vue'
 
 export default function (BootstrapVue: any, Vue: any) {
   library.add(
     faCaretRight,
     faExclamationTriangle,
     faSpinner,
-    faTimes
+    faTimes,
+    faEye,
+    faEyeSlash
   )
-
   Vue.use(BootstrapVue)
+  Vue.use(VueColumnsResizable)
+  Vue.use(VBHoverPlugin)
   Vue.component('FontAwesomeIcon', FontAwesomeIcon)
   Vue.component('DateRangePicker', DateRangePicker)
   Vue.component('VueSlider', VueSlider)

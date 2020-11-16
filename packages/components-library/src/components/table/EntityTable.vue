@@ -1,36 +1,54 @@
 <template>
 <div>
+
   <div class="btn-toolbar justify-content-between pb-1" role="toolbar" aria-label="Table actions Toolbar">
     <div class="btn-group" role="group" aria-label="Row actions group">
-      <button type="button" class="btn btn-outline-secondary">Add</button>
-      <button type="button" class="btn btn-outline-secondary">Remove</button>
+      <button type="button" class="btn btn-outline-secondary"><i class="fas fa-plus"></i></button>
+      <button type="button" class="btn btn-outline-secondary" :disabled="!selectedRows.length"><i class="fas fa-trash"></i></button>
     </div>
-    <div class="btn-group" role="group" aria-label="Colum group">
-      <button type="button" class="btn btn-outline-secondary">Hide</button>
-      <button type="button" class="btn btn-outline-secondary">Sort</button>
-      <button type="button" class="btn btn-outline-secondary">Filter</button>
-      <button type="button" class="btn btn-outline-secondary">Move Left</button>
-      <button type="button" class="btn btn-outline-secondary">Move Right</button>
+    <div class="btn-group" role="group" aria-label="Colum actions group">
+      <button type="button" class="btn btn-outline-secondary"
+        :disabled="!this.hiddenColumns.length"
+        @click="toggleUnhide">
+        <i class="fas fa-eye"></i>
+      </button>
+      <button type="button" class="btn btn-outline-secondary" v-b-modal.modal-1>
+        <i class="fas fa-eye-slash"></i>
+      </button>
+        <b-modal id="modal-1" title="Hidden columns" ok-only scrollable>
+          <div class="form-check" v-for="attr in Object.values(this.tableMeta.attributes)" :key="attr.name">
+            <input class="form-check-input" type="checkbox" :value="attr.name" v-model="hiddenColumns">
+            <label class="form-check-label">
+              {{attr.label}}
+            </label>
+          </div>
+       </b-modal>
+      <button type="button" class="btn btn-outline-secondary" :disabled="!selectedColumns.length"><i class="fas fa-arrow-left"></i></button>
+      <button type="button" class="btn btn-outline-secondary" :disabled="!selectedColumns.length"><i class="fas fa-arrow-right"></i></button>
     </div>
 
     <div class="btn-group" role="group" aria-label="Table actions group">
-      <button type="button" class="btn btn-outline-secondary">Download</button>
+      <button type="button" class="btn btn-outline-secondary"><i class="fas fa-download"></i></button>
     </div>
   </div>
 
   <div class="mg-data-table-container">
-    <table class="table table-bordered table-hover">
-
+    <table class="table table-bordered table-hover" v-columns-resizable>
       <thead>
         <tr>
           <th v-if="showRowSelect || showRowActions" class="checkbox-cell top-left-corner">
             <input v-if="showRowSelect" class="form-check-input" type="checkbox" value="" >
           </th>
-          <th scope="col" v-for="attr in Object.values(tableMeta.attributes)" :key="attr.name">
-            <span class="text-nowrap">{{attr.label}}
-              <i v-show="showColumnActions" class="cell-action fas fa-sort pl-1"></i>
-              <i v-show="showColumnActions" class="cell-action fas fa-filter pl-2"></i>
-              <i v-show="showColumnActions" class="cell-action fas fa-eye pl-2"></i>
+          <th scope="col" v-for="attr in visibleColumns" :key="attr.name"
+          :class="{ 'col-hover': attr.name ===  hovercol, 'selected': selectedColumns.includes(attr.name) }"
+          @mouseover="hovercol = attr.name"
+          @mouseleave="hovercol = ''"
+          @click.meta.exact="selectMultiColumn(attr.name)"
+          @click.exact="selectColumn(attr.name)"
+          >
+            <span class="text-nowrap pr-3 col-header-label">{{attr.label}}
+              <i class="cell-action fas fa-sort pl-1"></i>
+              <i class="cell-action fas fa-eye-slash pl-2" @click="hideColumn(attr.name)"></i>
             </span>
           </th>
         </tr>
@@ -39,13 +57,14 @@
       <tbody>
         <tr v-for="row in tableData.items" :key="row.id">
           <th v-if="showRowSelect || showRowActions" class="checkbox-cell align-middle text-nowrap">
-            <input v-if="showRowSelect" class="form-check-input" type="checkbox" value="" >
+            <input v-if="showRowSelect" class="form-check-input" type="checkbox" v-model="selectedRows" :value="row.id" >
               <i v-if="showRowActions" class="fas fa-s fa-search cell-action ml-2"></i>
               <i v-if="showRowActions" class="fas fa-s fa-edit cell-action ml-1"></i>
               <i v-if="showRowActions" class="fas fa-s fa-trash cell-action ml-1"></i>
           </th>
-          <td v-for="(col, index) in Object.values(row)" :key="index" class="text-nowrap text-truncate mg-data-column">
-            {{col}}
+          <td v-for="attr in visibleColumns" :key="attr.name" class="text-nowrap text-truncate mg-data-column"
+            :class="{ 'col-hover': attr.name ===  hovercol, 'selected': selectedColumns.includes(attr.name) }">
+            {{row[attr.name]}}
           </td>
         </tr>
       </tbody>
@@ -73,6 +92,14 @@
 <script>
 export default {
   name: 'EntityTable',
+  data () {
+    return {
+      hovercol: '',
+      selectedColumns: [],
+      hiddenColumns: [],
+      selectedRows: []
+    }
+  },
   props: {
     tableData: {
       type: Object
@@ -93,11 +120,44 @@ export default {
       default: () => false
     }
   },
-  computed: {}
+  computed: {
+    visibleColumns () {
+      return Object.values(this.tableMeta.attributes).filter(attr => {
+        return !this.hiddenColumns.includes(attr.name)
+      })
+    }
+  },
+  methods: {
+    selectColumn (columnName) {
+      const index = this.selectedColumns.indexOf(columnName)
+      this.selectedColumns.splice(0, this.selectedColumns.length)
+      if (index === -1) {
+        this.selectedColumns.push(columnName)
+      }
+    },
+    selectMultiColumn (columnName) {
+      const index = this.selectedColumns.indexOf(columnName)
+      index === -1 ? this.selectedColumns.push(columnName) : this.selectedColumns.splice(index, 1)
+    },
+    hideColumn (columnName) {
+      this.hiddenColumns.push(columnName)
+    },
+    unHideColumn (columnName) {
+      const index = this.hiddenColumns.indexOf(columnName)
+      this.hiddenColumns.splice(index, 1)
+    },
+    toggleUnhide () {
+      this.hiddenColumns.splice(0, this.hiddenColumns.length)
+    }
+  }
 }
 </script>
 
 <style scoped>
+
+  table {
+    table-layout: fixed;
+  }
 
   .mg-data-table-container {
     max-height: 30rem;
@@ -116,6 +176,26 @@ export default {
     bottom: -1px;
     left: -1px;
     border: 1px solid #dee2e6;
+  }
+
+  .col-header-label:hover {
+    cursor: pointer;
+  }
+
+  th:hover .col-header-label i.fa-sort {
+    display: inline;
+  }
+
+  th:hover .col-header-label i.fa-eye-slash {
+    display: inline;
+  }
+
+  .col-hover {
+    background-color: #c0c0c0;
+  }
+
+  .selected {
+    background-color: #c0c0c0;
   }
 
   /**
@@ -139,6 +219,10 @@ export default {
     bottom: -1px;
     border-bottom:
     1px solid #dee2e6;
+  }
+
+  thead th.col-hover {
+    cursor: pointer;
   }
 
   /**
@@ -168,7 +252,11 @@ export default {
     top: 0;
     background-color: #ffffff;
     border: 1px #dee2e6 solid;
-    /* color: #FFF; */
+    width: 12rem;
+  }
+
+  thead th.top-left-corner {
+    width: 3rem;
   }
 
   thead th:first-child {
@@ -183,13 +271,11 @@ export default {
     left: 0;
     background: #ffffff;
     border-right: 1px #dee2e6 solid;
-    /* border-right: 1px solid #CCC; */
   }
 
   .mg-data-column {
     max-width: 8rem;
     overflow: hidden;
-    /* text-overflow: ellipsis; */
   }
 
   .cell-action {
@@ -201,6 +287,11 @@ export default {
     margin-top: 0;
     margin-left: 0;
   }
+
+  .col-header-label i {
+    display: none;
+  }
+
 </style>
 
 <docs>
