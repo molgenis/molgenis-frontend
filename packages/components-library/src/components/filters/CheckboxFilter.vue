@@ -28,12 +28,12 @@ export default {
   name: 'CheckboxFilter',
   props: {
     /**
-     * Boolean to give the selected checkboxes back
-     * returns array { text, value } objects
+     * Toggle to switch between returning an array of value or entire option object
      */
-    returnObject: {
+    returnTypeAsObject: {
       type: Boolean,
-      required: false
+      required: false,
+      default: () => false
     },
     /**
      * A Promise-function that resolves with an array of options.
@@ -100,7 +100,7 @@ export default {
       if (!this.externalUpdate) {
         let newSelection = []
 
-        if (this.returnObject) {
+        if (this.returnTypeAsObject) {
           newSelection = Object.assign(newSelection, this.resolvedOptions.filter(of => newValue.includes(of.value)))
         } else {
           newSelection = [...newValue]
