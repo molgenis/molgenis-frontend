@@ -129,6 +129,9 @@ export default {
       const newSelection = this.returnTypeAsObject ? this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)) : newValue
       this.$emit('input', newSelection)
     },
+    value () {
+      this.setValue()
+    },
     query: function () {
       const previousSelection = this.multifilterOptions.filter(
         option => this.inputOptions.indexOf(option.value) >= 0
@@ -168,6 +171,10 @@ export default {
     this.initializeFilter()
   },
   methods: {
+    setValue () {
+      this.externalUpdate = true
+      this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
+    },
     showMore () {
       this.showCount += this.maxVisibleOptions
     },
@@ -175,8 +182,7 @@ export default {
       let selectedOptions = []
 
       if (this.value && this.value.length) {
-        this.externalUpdate = true
-        this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
+        this.setValue()
         // Get the initial selected
         selectedOptions = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.selection.join(',') })
       }
