@@ -35,12 +35,12 @@ export default {
   name: 'MultiFilter',
   props: {
     /**
-     * Boolean to give the selected checkboxes back
-     * returns array { text, value } objects
+     * Toggle to switch between returning an array of value or entire option object
      */
-    returnObject: {
+    returnTypeAsObject: {
       type: Boolean,
-      required: false
+      required: false,
+      default: () => false
     },
     /**
      * The HTML input element name.
@@ -122,19 +122,12 @@ export default {
   },
   watch: {
     selection (newValue) {
-      if (!this.externalUpdate) {
-        let newSelection = []
-
-        if (this.returnObject) {
-          console.log(newValue)
-          newSelection = Object.assign(newSelection, this.multifilterOptions.filter(of => newValue.includes(of.value)))
-          console.log(this.multifilterOptions.filter(of => newValue.includes(of.value)))
-        } else {
-          newSelection = [...newValue]
-        }
-        this.$emit('input', newSelection)
+      if (this.externalUpdate) {
+        this.externalUpdate = false
+        return
       }
-      this.externalUpdate = false
+      const newSelection = this.returnTypeAsObject ? this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)) : newValue
+      this.$emit('input', newSelection)
     },
     query: function () {
       const previousSelection = this.multifilterOptions.filter(
@@ -170,6 +163,8 @@ export default {
   },
   created () {
     this.showCount = this.maxVisibleOptions
+  },
+  beforeMount () {
     this.initializeFilter()
   },
   methods: {
@@ -177,21 +172,17 @@ export default {
       this.showCount += this.maxVisibleOptions
     },
     async initializeFilter () {
-      let fetched = []
-      if (this.value && this.value.length > 0) {
-        this.externalUpdate = true
-        let queryIds = this.value
+      let selectedOptions = []
 
-        if (typeof this.value[0] === 'object') {
-          queryIds = this.value.map(vo => vo.value)
-        }
-        this.selection = queryIds
+      if (this.value && this.value.length) {
+        this.externalUpdate = true
+        this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
         // Get the initial selected
-        fetched = await this.options({ nameAttribute: 'label', queryType: 'in', query: queryIds.join(',') })
+        selectedOptions = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.selection.join(',') })
       }
+
       // fetch the other options and deduplicate (incase of value filled)
-      fetched = [...new Set(fetched.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })))]
-      this.initialOptions = fetched
+      this.initialOptions = [...new Set(selectedOptions.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })))]
     }
   }
 }
@@ -222,6 +213,7 @@ Item-based Filter. Search box is used to find items in the table.
 
 const model = []
 <MultiFilter
+  v-bind:returnTypeAsObject="false"
   v-bind:options="multiFilterOptions"
   v-bind:collapses="false"
   v-bind:initialDisplayItems="5"
