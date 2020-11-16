@@ -46,7 +46,7 @@ describe('CheckboxFilter.vue', () => {
     })
 
     it('can return objects', async () => {
-      wrapper.setProps({ returnObject: true })
+      wrapper.setProps({ returnTypeAsObject: true })
 
       const inputElements = wrapper.findAll('input')
       inputElements.at(0).trigger('click') // select foo
