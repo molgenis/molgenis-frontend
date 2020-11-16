@@ -1,28 +1,11 @@
 <template>
   <div>
     <b-input-group>
-      <b-form-input
-        v-model="query"
-        :name="name"
-        :placeholder="placeholder"
-        trim
-      />
+      <b-form-input v-model="query" :name="name" :placeholder="placeholder" trim />
       <b-input-group-append>
-        <b-button
-          variant="outline-secondary"
-          :disabled="isLoading"
-          @click.prevent="query= ''"
-        >
-          <font-awesome-icon
-            v-if="isLoading"
-            icon="spinner"
-            class="fa-spin"
-            size="xs"
-          />
-          <font-awesome-icon
-            v-else
-            icon="times"
-          />
+        <b-button variant="outline-secondary" :disabled="isLoading" @click.prevent="query = ''">
+          <font-awesome-icon v-if="isLoading" icon="spinner" class="fa-spin" size="xs" />
+          <font-awesome-icon v-else icon="times" />
         </b-button>
       </b-input-group-append>
     </b-input-group>
@@ -35,11 +18,7 @@
       stacked
     />
 
-    <b-link
-      v-if="showCount < multifilterOptions.length"
-      class="card-link"
-      @click="showMore"
-    >
+    <b-link v-if="showCount < multifilterOptions.length" class="card-link" @click="showMore">
       {{ showMoreText }}
     </b-link>
     <font-awesome-icon
@@ -207,11 +186,11 @@ export default {
           queryIds = this.value.map(vo => vo.value)
         }
         this.selection = queryIds
-
+        // Get the initial selected
         fetched = await this.options({ nameAttribute: 'label', queryType: 'in', query: queryIds.join(',') })
-      } else {
-        fetched = await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })
       }
+      // fetch the other options and deduplicate (incase of value filled)
+      fetched = [...new Set(fetched.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })))]
       this.initialOptions = fetched
     }
   }
