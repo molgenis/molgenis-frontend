@@ -16,7 +16,7 @@
         <i class="fas fa-eye-slash"></i>
       </button>
         <b-modal id="modal-1" title="Hidden columns" ok-only scrollable>
-          <div class="form-check" v-for="attr in Object.values(this.tableMeta.attributes)" :key="attr.name">
+          <div class="form-check" v-for="attr in this.tableMeta.attributes" :key="attr.name">
             <input class="form-check-input" type="checkbox" :value="attr.name" v-model="hiddenColumns">
             <label class="form-check-label">
               {{attr.label}}
@@ -114,15 +114,11 @@ export default {
     showRowActions: {
       type: Boolean,
       default: () => true
-    },
-    showColumnActions: {
-      type: Boolean,
-      default: () => false
     }
   },
   computed: {
     visibleColumns () {
-      return Object.values(this.tableMeta.attributes).filter(attr => {
+      return this.tableMeta.attributes.filter(attr => {
         return !this.hiddenColumns.includes(attr.name)
       })
     }
@@ -301,42 +297,12 @@ Display entity data in table view
 // bool props
 const showRowSelect = true // toggle row selection on/off
 const showRowActions = false // toglge row action on/off
-const showColumnActions = false // toglge column header action on/off
-
-// const tableData = {
-//       1: { // 1 is the value of the idAttribute of the entity
-//         id: 1, // id is the name of the attribute, 1 is the value of the attribute
-//         firstName: 'Mark', lastName: 'Otto', handle: '@mdo'
-//       },
-//       2: {id: 2, firstName: 'Jacob', lastName: 'Thornton', handle: '@fat' },
-//       3: {id: 3, firstName: 'Larry', lastName: 'the Bird', handle: '@twitter'}
-//     }
-
-const tableMeta = {
-  id: "demo_twitter_devs",
-  label: "Developers",
-  description: "a list of bootstrap devs",
-  package: "http://localhost:443/api/data/demo_twitter",
-  idAttribute: {
-    name: "id",
-    label: "id",
-    type: "string",
-    idAttribute: true,
-  },
-  attributes: {
-    id: { name: "id", label: "id", type: "string", idAttribute: true },
-    firstName: { name: "firstName", label: "First", type: "string", idAttribute: false },
-    lastName: { name: "lastName", label: "Last", type: "string", idAttribute: false },
-    handle: { name: "handle", label: "Handle", type: "string", idAttribute: false }
-  }
-}
 
 <EntityTable
   v-bind:tableData="typeTestData"
   v-bind:tableMeta="typeTestMetaData"
   v-bind:showRowSelect="showRowSelect"
-  v-bind:showRowActions="showRowActions"
-  v-bind:showColumnActions="showColumnActions">
+  v-bind:showRowActions="showRowActions">
 </EntityTable>
 ```
 </docs>

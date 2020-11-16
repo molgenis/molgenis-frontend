@@ -5,8 +5,8 @@ export const typeTestMetaData = {
   package: 'https://master.dev.molgenis.org/api/data/sys_md_Package/test',
   abstract: false,
   indexingDepth: 1,
-  attributes: {
-    id: {
+  attributes: [
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaei',
       label: 'id label',
       name: 'id',
@@ -22,7 +22,7 @@ export const typeTestMetaData = {
       readOnly: true,
       aggregatable: false
     },
-    xbool: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaeu',
       label: 'xbool',
       description: 'TypeTest boolean attribute',
@@ -39,7 +39,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: 'false'
     },
-    xboolnillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqafa',
       label: 'xboolnillable label',
       description: 'TypeTest nillable boolean attribute',
@@ -56,7 +56,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: 'true'
     },
-    xcompound: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqafe',
       label: 'xcompound label',
       description: 'TypeTest compound attribute',
@@ -72,7 +72,7 @@ export const typeTestMetaData = {
       readOnly: false,
       aggregatable: false
     },
-    xcompound_int: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqafi',
       label: 'xcompound_int label',
       name: 'xcompound_int',
@@ -89,7 +89,7 @@ export const typeTestMetaData = {
       parentAttributeId: 'aaaac3nlqmipbmszilr3bfqafe',
       defaultValue: '1'
     },
-    xcompound_string: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqafm',
       label: 'xcompound_string label',
       description: 'TypeTest compound string attribute',
@@ -107,7 +107,7 @@ export const typeTestMetaData = {
       parentAttributeId: 'aaaac3nlqmipbmszilr3bfqafe',
       defaultValue: 'xcompound_string'
     },
-    xcategorical_value: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqafq',
       label: 'xcategorical_value label',
       description: 'TypeTest categorical attribute',
@@ -161,7 +161,7 @@ export const typeTestMetaData = {
       ],
       defaultValue: 'ref1'
     },
-    xcategoricalnillable_value: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqafu',
       label: 'xcategoricalnillable_value',
       description: 'TypeTest nillable categorical attribute',
@@ -215,7 +215,7 @@ export const typeTestMetaData = {
       ],
       defaultValue: 'ref2'
     },
-    xcategoricalmref_value: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqafy',
       label: 'xcategoricalmref_value',
       description: 'TypeTest categorical mref attribute',
@@ -269,7 +269,7 @@ export const typeTestMetaData = {
       ],
       defaultValue: 'ref1,ref2'
     },
-    xcatmrefnillable_value: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaf4',
       label: 'xcatmrefnillable_value',
       description: 'TypeTest nillable categorical mref attribute',
@@ -323,7 +323,7 @@ export const typeTestMetaData = {
       ],
       defaultValue: 'ref1,ref3'
     },
-    xdate: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaga',
       label: 'xdate label',
       description: 'Typetest date attribute',
@@ -340,7 +340,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: '2014-08-01T00:00'
     },
-    xdatenillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqage',
       label: 'xdatenillable label',
       description: 'Typetest nillable date attribute',
@@ -357,7 +357,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: '2015-04-01T00:00'
     },
-    xdatetime: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqagi',
       label: 'xdatetime label',
       name: 'xdatetime',
@@ -373,7 +373,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: '1985-08-12T11:12:13+0500'
     },
-    xdatetimenillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqagm',
       label: 'xdatetimenillable label',
       description: 'Typetest nillable datetime attribute',
@@ -390,7 +390,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: '1985-08-12T11:12:13+0500'
     },
-    xdecimal: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqagq',
       label: 'xdecimal label',
       description: 'Typetest decimal attribute',
@@ -407,7 +407,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: '10.234'
     },
-    xdecimalnillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqagu',
       label: 'xdecimalnillable label',
       description: 'Typetest nillable decimal attribute',
@@ -424,7 +424,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: '15.666'
     },
-    xemail: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqagy',
       label: 'xemail label',
       description: 'Typetest email attribute',
@@ -441,7 +441,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: 'test@x.y.z'
     },
-    xemailnillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqag4',
       label: 'xemailnillable label',
       description: 'Typetest nillable email attribute',
@@ -458,7 +458,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: 'molgenis@gmail.com'
     },
-    xenum: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaha',
       label: 'xenum',
       description: 'Typetest enum attribute',
@@ -480,7 +480,7 @@ export const typeTestMetaData = {
       ],
       defaultValue: 'enum1'
     },
-    xenumnillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqahe',
       label: 'xenumnillable label',
       description: 'Typetest nillable enum attribute',
@@ -502,7 +502,7 @@ export const typeTestMetaData = {
       ],
       defaultValue: 'enum3'
     },
-    xhtml: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqahi',
       label: 'xhtml label',
       name: 'xhtml',
@@ -518,7 +518,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: '<h1>html</h1>'
     },
-    xhtmlnillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqahm',
       label: 'xhtmlnillable label',
       description: 'Typetest nillable html attribute',
@@ -535,7 +535,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: '<h1>html 2</h1>'
     },
-    xhyperlink: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqahq',
       label: 'xhyperlink label',
       description: 'Typetest hyperlink attribute',
@@ -552,7 +552,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: 'http://www.nu.nl/'
     },
-    xhyperlinknillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqahu',
       label: 'xhyperlinknillable label',
       description: 'Typetest nillable hyperlink attribute',
@@ -569,7 +569,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: 'http://www.github.com/'
     },
-    xint: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqahy',
       label: 'xint label',
       description: 'Typetest int attribute',
@@ -586,7 +586,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: '3'
     },
-    xintnillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqah4',
       label: 'xintnillable label',
       name: 'xintnillable',
@@ -602,7 +602,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: '1'
     },
-    xintrange: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaia',
       label: 'xintrange label',
       description: 'Typetest int range attribute',
@@ -622,7 +622,7 @@ export const typeTestMetaData = {
       },
       defaultValue: '6'
     },
-    xintrangenillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaie',
       label: 'xintrangenillable label',
       description: 'Typetest nillable intrange attribute',
@@ -642,7 +642,7 @@ export const typeTestMetaData = {
       },
       defaultValue: '77'
     },
-    xlong: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaii',
       label: 'xlong label',
       description: 'Typetest long attribute',
@@ -659,7 +659,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: '12342151234'
     },
-    xlongnillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaim',
       label: 'xlongnillable label',
       name: 'xlongnillable',
@@ -675,7 +675,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: '12342151234'
     },
-    xlongrange: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaiq',
       label: 'xlongrange label',
       description: 'Typetest longrange attribute',
@@ -696,7 +696,7 @@ export const typeTestMetaData = {
       },
       defaultValue: '5'
     },
-    xlongrangenillable: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaiu',
       label: 'xlongrangenillable label',
       description: 'Typetest nillable longrange attribute',
@@ -717,7 +717,7 @@ export const typeTestMetaData = {
       },
       defaultValue: '3'
     },
-    xmref_value: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqaiy',
       label: 'xmref_value',
       description: 'Typetest mref attribute',
@@ -736,7 +736,7 @@ export const typeTestMetaData = {
       readOnly: false,
       aggregatable: true
     },
-    xmrefnillable_value: {
+    {
       id: 'aaaac3nlqmipbmszilr3bfqai4',
       label: 'xmrefnillable_value',
       name: 'xmrefnillable_value',
@@ -754,7 +754,7 @@ export const typeTestMetaData = {
       readOnly: false,
       aggregatable: false
     },
-    xstring: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqaae',
       label: 'xstring label',
       description: 'Typetest string attribute',
@@ -771,7 +771,7 @@ export const typeTestMetaData = {
       aggregatable: true,
       defaultValue: 'xstring'
     },
-    xstringnillable: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqaai',
       label: 'xstringnillable label',
       description: 'Typetest nillable string attribute',
@@ -788,7 +788,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: 'xstringnillable'
     },
-    xtext: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqaam',
       label: 'xtext label',
       name: 'xtext',
@@ -804,7 +804,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: 'xtext'
     },
-    xtextnillable: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqaaq',
       label: 'xtextnillable label',
       description: 'Typetest nillable text attribute',
@@ -821,7 +821,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: 'xtextnillable'
     },
-    xxref_value: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqaau',
       label: 'xxref_value',
       description: 'Typetest xref attribute',
@@ -840,7 +840,7 @@ export const typeTestMetaData = {
       readOnly: false,
       aggregatable: true
     },
-    xxrefnillable_value: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqaay',
       label: 'xxrefnillable_value',
       description: 'Typetest nillable xref attribute_value',
@@ -859,7 +859,7 @@ export const typeTestMetaData = {
       readOnly: false,
       aggregatable: false
     },
-    xstring_hidden: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqaa4',
       label: 'xstring_hidden label',
       description: 'Typetest hidden string attribute',
@@ -876,7 +876,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: 'xstring'
     },
-    xstringnillable_hidden: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqaba',
       label: 'xstringnillable_hidden label',
       description: 'Typetest nillable hidden string attribute',
@@ -893,7 +893,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       defaultValue: 'xstringhidden'
     },
-    xstring_unique: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqabe',
       label: 'xstring_unique label',
       name: 'xstring_unique',
@@ -908,7 +908,7 @@ export const typeTestMetaData = {
       readOnly: false,
       aggregatable: false
     },
-    xint_unique: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqabi',
       label: 'xint_unique label',
       description: 'Typetest unique int attribute',
@@ -924,7 +924,7 @@ export const typeTestMetaData = {
       readOnly: false,
       aggregatable: false
     },
-    xxref_unique: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqabq',
       label: 'xxref_unique',
       description: 'Typetest unique xref attribute',
@@ -943,7 +943,7 @@ export const typeTestMetaData = {
       readOnly: false,
       aggregatable: false
     },
-    xfile: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqabu',
       label: 'xfile',
       name: 'xfile',
@@ -961,7 +961,7 @@ export const typeTestMetaData = {
       readOnly: false,
       aggregatable: false
     },
-    xcomputedxref: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqaby',
       label: 'xcomputedxref label',
       description: 'Typetest computed xref attribute',
@@ -981,7 +981,7 @@ export const typeTestMetaData = {
       aggregatable: false,
       expression: '{Chromosome: xstring, Position: xint}'
     },
-    xcomputedint: {
+    {
       id: 'aaaac3nlqmipdmszilr3bfqab4',
       label: 'xcomputedint label',
       description: 'Typetest computed int attribute',
@@ -998,5 +998,5 @@ export const typeTestMetaData = {
       aggregatable: false,
       expression: 'xint'
     }
-  }
+  ]
 }
