@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.2.0...@molgenis-ui/components-library@1.3.0) (2020-11-16)
+
+
+### Features
+
+* first steps to make returning objects from multi-filter possible ([daa0331](https://github.com/molgenis/molgenis-frontend/commit/daa0331))
+* multifilter can now return an recieve objects. Also fixed a bug where the initial value was not shown correctly on creation ([d2261c0](https://github.com/molgenis/molgenis-frontend/commit/d2261c0))
+
+
+
+
+
 # [1.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.3...@molgenis-ui/components-library@1.2.0) (2020-11-10)
 
 
