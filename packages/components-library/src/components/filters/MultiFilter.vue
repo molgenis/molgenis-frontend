@@ -122,11 +122,18 @@ export default {
   },
   watch: {
     selection (newValue) {
+      let newSelection
       if (this.externalUpdate) {
         this.externalUpdate = false
         return
       }
-      const newSelection = this.returnTypeAsObject ? this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)) : newValue
+
+      if (this.returnTypeAsObject) {
+        newSelection = Object.assign(newValue, this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)))
+      } else {
+        newSelection = [...newValue]
+      }
+
       this.$emit('input', newSelection)
     },
     value () {
@@ -172,6 +179,7 @@ export default {
   },
   methods: {
     setValue () {
+      this.externalUpdate = true
       this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
     },
     showMore () {
@@ -181,7 +189,6 @@ export default {
       let selectedOptions = []
 
       if (this.value && this.value.length) {
-        this.externalUpdate = true
         this.setValue()
         // Get the initial selected
         selectedOptions = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.selection.join(',') })
