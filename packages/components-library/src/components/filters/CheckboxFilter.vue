@@ -28,7 +28,7 @@ export default {
   name: 'CheckboxFilter',
   props: {
     /**
-     * Toggle to switch between returning an array of value or entire option object
+     * Toggle to switch between returning an array with values or an array with the full option
      */
     returnTypeAsObject: {
       type: Boolean,

@@ -172,7 +172,6 @@ export default {
   },
   methods: {
     setValue () {
-      this.externalUpdate = true
       this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
     },
     showMore () {
@@ -182,6 +181,7 @@ export default {
       let selectedOptions = []
 
       if (this.value && this.value.length) {
+        this.externalUpdate = true
         this.setValue()
         // Get the initial selected
         selectedOptions = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.selection.join(',') })
