@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.1...@molgenis-ui/components-library@1.3.2) (2020-11-17)
+
+
+### Bug Fixes
+
+* typo ([1786880](https://github.com/molgenis/molgenis-frontend/commit/1786880))
+* **components-library:** added reactiveness from changes made by active filter ([9d68a02](https://github.com/molgenis/molgenis-frontend/commit/9d68a02))
+* **components-library:** deduplicate options when fetching based on initial value ([dd5f950](https://github.com/molgenis/molgenis-frontend/commit/dd5f950))
+* **components-library:** small bug in reactiveness ([6a089dd](https://github.com/molgenis/molgenis-frontend/commit/6a089dd))
+
+
+
+
+
 ## [1.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.0...@molgenis-ui/components-library@1.3.1) (2020-11-16)
 
 **Note:** Version bump only for package @molgenis-ui/components-library
