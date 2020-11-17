@@ -126,7 +126,7 @@ export default {
         this.externalUpdate = false
         return
       }
-      const newSelection = this.returnOptionsObject ? this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)) : newValue
+      const newSelection = this.returnTypeAsObject ? this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)) : newValue
       this.$emit('input', newSelection)
     },
     value () {
