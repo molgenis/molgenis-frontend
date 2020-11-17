@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.2...@molgenis-ui/components-library@1.3.3) (2020-11-17)
+
+
+### Bug Fixes
+
+* **components-library:** Object assign is really required for correct responsiveness of v-model of checkbox group ([52e6b63](https://github.com/molgenis/molgenis-frontend/commit/52e6b63))
+
+
+
+
+
 ## [1.3.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.1...@molgenis-ui/components-library@1.3.2) (2020-11-17)
 
 
