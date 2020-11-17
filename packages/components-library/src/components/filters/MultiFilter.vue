@@ -35,7 +35,7 @@ export default {
   name: 'MultiFilter',
   props: {
     /**
-     * Toggle to switch between returning an array of value or entire option object
+     * Toggle to switch between returning an array with values or an array with the full option
      */
     returnTypeAsObject: {
       type: Boolean,
@@ -126,7 +126,7 @@ export default {
         this.externalUpdate = false
         return
       }
-      const newSelection = this.returnTypeAsObject ? this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)) : newValue
+      const newSelection = this.returnOptionsObject ? this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)) : newValue
       this.$emit('input', newSelection)
     },
     value () {
@@ -222,7 +222,7 @@ Item-based Filter. Search box is used to find items in the table.
 
 const model = []
 <MultiFilter
-  v-bind:returnTypeAsObject="false"
+  v-bind:returnOptionsObject="false"
   v-bind:options="multiFilterOptions"
   v-bind:collapses="false"
   v-bind:initialDisplayItems="5"
