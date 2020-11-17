@@ -35,7 +35,7 @@ export default {
   name: 'MultiFilter',
   props: {
     /**
-     * Toggle to switch between returning an array of value or entire option object
+     * Toggle to switch between returning an array with values or an array with the full option
      */
     returnTypeAsObject: {
       type: Boolean,
@@ -129,6 +129,9 @@ export default {
       const newSelection = this.returnTypeAsObject ? this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)) : newValue
       this.$emit('input', newSelection)
     },
+    value () {
+      this.setValue()
+    },
     query: function () {
       const previousSelection = this.multifilterOptions.filter(
         option => this.inputOptions.indexOf(option.value) >= 0
@@ -168,6 +171,9 @@ export default {
     this.initializeFilter()
   },
   methods: {
+    setValue () {
+      this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
+    },
     showMore () {
       this.showCount += this.maxVisibleOptions
     },
@@ -176,13 +182,16 @@ export default {
 
       if (this.value && this.value.length) {
         this.externalUpdate = true
-        this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
+        this.setValue()
         // Get the initial selected
         selectedOptions = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.selection.join(',') })
       }
 
-      // fetch the other options and deduplicate (incase of value filled)
-      this.initialOptions = [...new Set(selectedOptions.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })))]
+      // fetch the other options and concat
+      const completeInitialOptions = selectedOptions.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems }))
+
+      // deduplicate by first mapping the id's then getting the first matching object back.
+      this.initialOptions = Array.from(new Set(completeInitialOptions.map(cio => cio.value))).map(value => completeInitialOptions.find(cio => cio.value === value))
     }
   }
 }
@@ -213,7 +222,7 @@ Item-based Filter. Search box is used to find items in the table.
 
 const model = []
 <MultiFilter
-  v-bind:returnTypeAsObject="false"
+  v-bind:returnOptionsObject="false"
   v-bind:options="multiFilterOptions"
   v-bind:collapses="false"
   v-bind:initialDisplayItems="5"
