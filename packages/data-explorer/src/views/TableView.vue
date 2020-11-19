@@ -1,5 +1,5 @@
 <template>
-  <table class="table" v-if="entitiesToShow.length">
+  <!-- <table class="table" v-if="entitiesToShow.length">
     <table-header :visibleColumns="visibleColumns" :isShop="isShop"></table-header>
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"
@@ -13,7 +13,13 @@
                :isEditable="hasEditRights"
                ></table-row>
     </tbody>
-  </table>
+  </table> -->
+  <EntityTable
+    :tableData="entitiesToShow"
+    :tableMeta="tableMeta"
+    :showRowSelect="true"
+    :showRowActions="false">
+  </EntityTable>
 </template>
 
 <script>
@@ -22,6 +28,7 @@ import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+import { EntityTable } from '@molgenis-ui/components-library'
 library.add(faShoppingBag)
 
 export default {
@@ -32,7 +39,7 @@ export default {
       required: true
     }
   },
-  components: { TableRow, TableHeader },
+  components: { EntityTable },
   computed: {
     ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'isShop']),
     ...mapGetters(['filterRsql', 'hasEditRights']),

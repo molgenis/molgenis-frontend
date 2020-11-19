@@ -1,4 +1,6 @@
 const webpack = require('webpack')
+const path = require('path')
+const fs = require('fs')
 const BannerPlugin = require('webpack').BannerPlugin
 const packageJson = require('./package.json')
 const pkgVersion = packageJson.version
@@ -29,7 +31,8 @@ module.exports = {
     : '/',
   chainWebpack: (config) => {
     // stop lerna from sym linking to empty components-library folder
-    config.resolve.symlinks(false)
+    // config.resolve.symlinks(false)
+    config.resolve.alias.set('@molgenis-ui/components-library', '/Users/connor/Code/molgenis-frontend/packages/data-explorer/node_modules/@molgenis-ui/components-library/dist/components-library.esm.js')
   },
   configureWebpack: config => {
     config.plugins.push(

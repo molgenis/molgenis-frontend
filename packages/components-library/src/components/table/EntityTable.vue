@@ -55,7 +55,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="row in tableData.items" :key="row.id">
+        <tr v-for="row in tableData" :key="row.id">
           <th v-if="showRowSelect || showRowActions" class="checkbox-cell align-middle text-nowrap">
             <input v-if="showRowSelect" class="form-check-input" type="checkbox" v-model="selectedRows" :value="row.id" >
               <i v-if="showRowActions" class="fas fa-s fa-search cell-action ml-2"></i>
@@ -102,7 +102,7 @@ export default {
   },
   props: {
     tableData: {
-      type: Object
+      type: Array
     },
     tableMeta: {
       type: Object
