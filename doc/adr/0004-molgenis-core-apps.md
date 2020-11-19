@@ -18,16 +18,3 @@ We are going to merge the following apps together in a *@molgenis-ui/core* app:
 * navigator
 * data explorer 2
 * data-row-edit
-
-## Consequences
-
-* Pick the preferred index file delivery method (through separate ADR)
-* use Vue-router to connect the views together
-* separate Vuex stores with Vuex modules
-* Use clean history api urls, e.g.:
-
-  ```bash
-  /explorer
-  /navigator
-  /themes
-  ```
