@@ -9,6 +9,7 @@ import MultiFilter from './components/filters/MultiFilter.vue'
 import NumberFilter from './components/filters/NumberFilter.vue'
 import RangeFilter from './components/filters/RangeFilter.vue'
 import StringFilter from './components/filters/StringFilter.vue'
+import Toaster from './components/ui/Toaster.vue'
 
 export {
   ActiveFilters,
@@ -21,5 +22,7 @@ export {
   MultiFilter,
   NumberFilter,
   RangeFilter,
-  StringFilter
+  StringFilter,
+  Toaster
 }
+

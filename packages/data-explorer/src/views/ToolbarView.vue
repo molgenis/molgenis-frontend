@@ -14,27 +14,33 @@
       <search-component v-model="searchText"></search-component>
     </div>
     <div class="col-4">
-      <button
-        v-if="!showSelected && dataDisplayLayout === 'TableView'"
-        @click="toggleDataDisplayLayout"
-        class="btn btn-light ml-1 float-right btn-outline-secondary card-layout">
-        <font-awesome-icon icon="th"></font-awesome-icon>
-        Card layout
-      </button>
-      <button
-        v-else-if="!showSelected"
-        @click="toggleDataDisplayLayout"
-        class="btn btn-light ml-1 float-right btn-outline-secondary table-layout">
-        <font-awesome-icon icon="th-list"></font-awesome-icon>
-        Table layout
-      </button>
+
+      <div class="btn-group float-right">
+        <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary">{{$t('Download')}}</button>
+
+        <button
+          v-if="!showSelected && dataDisplayLayout === 'TableView'"
+          @click="toggleDataDisplayLayout"
+          class="btn btn-light btn-outline-secondary card-layout">
+          <font-awesome-icon icon="th"></font-awesome-icon>
+          Card layout
+        </button>
+        <button
+          v-else-if="!showSelected"
+          @click="toggleDataDisplayLayout"
+          class="btn btn-light btn-outline-secondary table-layout">
+          <font-awesome-icon icon="th-list"></font-awesome-icon>
+          Table layout
+        </button>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import { mapState, mapMutations, mapGetters } from 'vuex'
+import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStore, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -48,6 +54,7 @@ export default Vue.extend({
   computed: {
     ...mapState([
       'dataDisplayLayout',
+      'tableMeta',
       'tableSettings',
       'searchText',
       'tableName',
@@ -65,12 +72,26 @@ export default Vue.extend({
       }
     }
   },
+  data: function () {
+    return {
+      isDownloading: false
+    }
+  },
   methods: {
+    ...mapActions(['downloadResources']),
     ...mapMutations([
       'setDataDisplayLayout',
       'setFilterSelection',
       'setSearchText'
     ]),
+    downloadData: async function () {
+      this.isDownloading = true
+      await this.downloadResources([{
+        id: this.tableMeta.id,
+        type: 'ENTITY_TYPE'
+      }])
+      this.isDownloading = false
+    },
     toggleDataDisplayLayout () {
       const value =
         this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'

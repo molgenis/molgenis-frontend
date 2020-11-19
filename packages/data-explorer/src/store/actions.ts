@@ -6,6 +6,32 @@ import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 export default {
+  downloadResources: async function (store, resources) {
+    const res = await client.post('/plugin/navigator/download', {
+      resources: resources.map(resource => ({
+        id: resource.id,
+        type: resource.type
+      }))
+    })
+
+    const fetchJob = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
+    store.commit('addToast', { type: 'info', message: fetchJob.data.progressMessage, timeout: 0 })
+    const interval = setInterval(async () => {
+      const fetchJob = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
+      if (fetchJob.data.status === 'SUCCESS') {
+        store.commit('addToast', {
+          message: `Download data from <a href="${fetchJob.data.resultUrl}">${fetchJob.data.resultUrl}</a>`,
+          type: 'success',
+          timeout: 0
+        })
+        clearInterval(interval)
+      } else if (fetchJob.data.status === 'FAILED') {
+        store.commit('addToast', { type: 'danger', message: fetchJob.data.progressMessage })
+        clearInterval(interval)
+      }
+    }, 1000)
+  },
+
   fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
     commit('setTableSettings', {})
     commit('setMetaData', null)
