@@ -1,14 +1,14 @@
 <template>
-  <div class="c-toaster" :class="{[format]: true}">
+  <div class="c-toaster" :class="{[position]: true}">
     <div v-for="(toast, index) in toasts" :key="index"
-      class="alert alert-success alert-dismissible fade show"
+      class="mg-toast alert alert-success alert-dismissible fade show"
       :class="{[`alert-${toast.type}`]: true}"
     >
-    <div v-html="toast.message"></div>
+      <div class="mg-toast-message" v-html="toast.message"></div>
 
-    <button type="button" class="close" @click="clearToast(toast)">
-      <span aria-hidden="true">&times;</span>
-    </button>
+      <button type="button" class="close" @click="clearToast(toast)">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   </div>
 </template>
@@ -18,26 +18,38 @@ const defaultTimeout = 3000
 export default {
   data: function () {
     return {
-      toasts: [...this.value],
-      oldToastsAmount: this.value.length
+      toasts: [...this.value]
     }
   },
   name: 'Toaster',
   methods: {
     clearToast (toast) {
       this.toasts.splice(this.toasts.indexOf(toast), 1)
-      console.log(this.toasts)
+      /**
+      * v-model return value
+      * @event input
+      * @property {Object[]} Toasts array with toast removed
+      */
       this.$emit('input', [...this.toasts])
     }
   },
   props: {
-    format: {
-      type: String,
-      default: 'bottom-right'
-    },
+    /**
+     * List of toasts to show (see types/Toast.ts)
+     * @model
+     */
     value: {
       type: Array,
       required: true
+    },
+    /**
+     * Position of toast in window
+     * Fixed positioning: 'top-left', 'bottom-left', 'top-right', 'bottom-right'
+     * Or Inline using: 'inline'
+     */
+    position: {
+      type: String,
+      default: () => 'bottom-right'
     }
   },
   watch: {
@@ -55,16 +67,15 @@ export default {
           // New toast has an explicitly disabled timeout.
           if (toast.timeout === 0) continue
 
-          // if (!toast.timeout) {
-          //   toast.timeout = defaultTimeout
-          // }
+          if (!toast.timeout) {
+            toast.timeout = defaultTimeout
+          }
 
-          // console.log('setTimeout', toast.timeout)
-          // setTimeout(() => {
-          //   this.clearToast(toast)
-          // }, toast.timeout)
+          setTimeout(() => {
+            this.clearToast(toast)
+          }, toast.timeout)
 
-          // toast.timeout = -1
+          toast.timeout = -1
         }
       },
       immediate: true
@@ -128,17 +139,11 @@ $spacer: 1rem;
   ## Example
 
   ```jsx
-  const model = [
-    // {message: 'i am a danger toast with a timeout', type: 'danger', timeout: 1500},
-    // {message: 'i am a warning toast with a default timeout', type: 'warning'},
-    // {message: 'i am a success toast without timeout', type: 'success', timeout: 0}
-  ]
+  let model = []
+  const addToast = (message, type, timeout) => model.push({message, type, timeout})
+  const mockVuex = (e) => model = e
 
-  const addToast = function(message, type, timeout) {
-    model.push({message, type, timeout})
-  }
-
-  <Toaster v-model="model"></Toaster>
+  <Toaster v-model="model" v-on:input="mockVuex"></Toaster>
   <button class="btn btn-primary" v-on:click="addToast('new message', 'success', 0)">Add toast</button>
   <button class="btn btn-primary" v-on:click="addToast('timeout message', 'danger', 1500)">Add toast (timeout)</button>
   <div>{{model}}</div>
