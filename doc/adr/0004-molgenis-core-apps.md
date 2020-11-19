@@ -17,7 +17,6 @@ We are going to merge the following apps together in a *@molgenis-ui/core* app:
 
 * navigator
 * data explorer 2
-* searchall
 * data-row-edit
 
 ## Consequences
