@@ -3,6 +3,7 @@ const BannerPlugin = require('webpack').BannerPlugin
 const packageJson = require('./package.json')
 const pkgVersion = packageJson.version
 const pkgName = packageJson.name
+const path = require('path')
 
 const now = new Date()
 const buildDate = now.toUTCString()
@@ -50,6 +51,10 @@ module.exports = {
     // Used to proxy a external API server to have someone to talk to during development
     proxy: process.env.NODE_ENV !== 'development' ? undefined : {
       '^/api': apiDevServerProxyConf,
+      '^/files': {
+        target: PROXY_TARGET,
+        keepOrigin: true
+      },
       '^/fonts': {
         target: PROXY_TARGET,
         keepOrigin: true

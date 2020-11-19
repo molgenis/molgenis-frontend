@@ -56,18 +56,10 @@ describe('mutations', () => {
     baseAppState.tableName = 'root_hospital_patients'
   })
 
-  describe('setToast', () => {
+  describe('addToast', () => {
     it('replace the toast with the passed toast', () => {
-      mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
-      expect(baseAppState.toast).toEqual({ type: 'danger', message: 'message' })
-    })
-  })
-
-  describe('clearToast', () => {
-    it('clears the toast', () => {
-      mutations.setToast(baseAppState, { type: 'danger', message: 'message' })
-      mutations.clearToast(baseAppState)
-      expect(baseAppState.toast).toEqual(null)
+      mutations.addToast(baseAppState, { type: 'danger', message: 'message' })
+      expect(baseAppState.toasts).toEqual({ type: 'danger', message: 'message' })
     })
   })
 

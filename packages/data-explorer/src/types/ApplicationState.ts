@@ -3,7 +3,8 @@ import { MetaData } from './MetaData'
 
 export type Toast = {
   type: 'danger' | 'success'
-  message: string
+  message: string,
+  timeout?: number | null
 }
 
 export type FilterOptionsPromise = Promise<FilterOption[]>
@@ -52,7 +53,7 @@ export type FilterGroup = {
   selections: FilterSelections
 }
 export default interface ApplicationState {
-  toast: Toast | null
+  toasts: Toast[]
   settingsTable: string
   dataDisplayLayout: 'CardView' | 'TableView'
   dataDisplayLimit: Number

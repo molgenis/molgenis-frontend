@@ -1,10 +1,11 @@
 <template>
   <transition name="slide">
-    <div id="alert-message" v-if="message" :class="'alert alert-' + type" role="alert">
+    <div id="alert-message" :class="'alert alert-' + toast.type" role="alert">
       <button @click="$emit('toastCloseBtnClicked')" type="button" class="close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <span id="message-span">{{ message }}</span>
+      <span id="message-span" v-if="toast.message">{{ toast.message }}</span>
+      <a :href="toast.link.href" v-if="toast.link">{{toast.link.title}}</a>
     </div>
   </transition>
 </template>
@@ -15,12 +16,8 @@ import Vue from 'vue'
 export default Vue.extend({
   name: 'ToastComponent',
   props: {
-    type: {
-      type: String,
-      required: true
-    },
-    message: {
-      type: String,
+    toast: {
+      type: Object,
       required: true
     }
   }
