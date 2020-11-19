@@ -15,23 +15,18 @@ export default {
     })
 
     const fetchJob = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
-    store.commit('setToast', { type: 'info', message: fetchJob.data.progressMessage })
-
+    store.commit('addToast', { type: 'info', message: fetchJob.data.progressMessage, timeout: 0 })
     const interval = setInterval(async () => {
       const fetchJob = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
       if (fetchJob.data.status === 'SUCCESS') {
-        store.commit('setToast', {
-          message: 'Download data from ',
+        store.commit('addToast', {
+          message: `Download data from <a href="${fetchJob.data.resultUrl}">${fetchJob.data.resultUrl}</a>`,
           type: 'success',
-          link: {
-            href: fetchJob.data.resultUrl,
-            title: fetchJob.data.resultUrl
-          }
+          timeout: 0
         })
-        console.log(fetchJob.data.resultUrl)
         clearInterval(interval)
       } else if (fetchJob.data.status === 'FAILED') {
-        store.commit('setToast', { type: 'danger', message: fetchJob.data.progressMessage })
+        store.commit('addToast', { type: 'danger', message: fetchJob.data.progressMessage })
         clearInterval(interval)
       }
     }, 1000)

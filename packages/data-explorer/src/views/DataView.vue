@@ -13,6 +13,7 @@
               ></active-filters>
             </div>
           </div>
+
           <select-layout-view ></select-layout-view>
         </div>
       </div>
@@ -30,16 +31,12 @@
         Show cart
       </template>
     </cart-selection-toast>
-
-    <TableActions/>
-
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import SelectLayoutView from './SelectLayoutView'
-import TableActions from '@/components/TableActions'
 import ClipboardView from './ClipboardView'
 import { mapState, mapMutations } from 'vuex'
 import { ActiveFilters, CartSelectionToast } from '@molgenis-ui/components-library'
@@ -51,7 +48,7 @@ library.add(faTimes, faShoppingCart)
 
 export default Vue.extend({
   name: 'DataView',
-  components: { SelectLayoutView, ClipboardView, ActiveFilters, CartSelectionToast, FontAwesomeIcon, TableActions },
+  components: { SelectLayoutView, ClipboardView, ActiveFilters, CartSelectionToast, FontAwesomeIcon },
   computed: {
     ...mapState([
       'showSelected',

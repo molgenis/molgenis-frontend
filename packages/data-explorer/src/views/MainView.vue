@@ -6,12 +6,9 @@
       @fetchItems="fetchPackageTables"
       >
     </breadcrumb-bar>
-    <toast-component
-      class="toast-component mt-2"
-      v-if="toast"
-      :toast="toast"
-      @toastCloseBtnClicked="clearToast">
-    </toast-component>
+
+    <Toaster v-model="toasts"/>
+
     <page-header-view v-if="!loading"></page-header-view>
     <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
       <div class="flex-filter">
@@ -38,8 +35,9 @@
 <script>
 import Vue from 'vue'
 import FiltersView from './FiltersView'
-import ToastComponent from '../components/utils/ToastComponent'
 import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
+import { Toaster } from '@molgenis-ui/components-library'
+
 import DataView from './DataView'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -59,11 +57,18 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
-  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon, PageHeaderView, BreadcrumbBar },
+  components: { FiltersView, DataView, FontAwesomeIcon, PageHeaderView, BreadcrumbBar, Toaster },
   computed: {
+    toasts: {
+      get: function () {
+        return this.$store.state.toasts
+      },
+      set: function (value) {
+        this.setToasts(value)
+      }
+    },
     ...mapState([
       'filters',
-      'toast',
       'showSelected',
       'dataDisplayLayout',
       'tableName'
@@ -82,9 +87,9 @@ export default Vue.extend({
   },
   methods: {
     ...mapMutations([
-      'clearToast',
       'setHideFilters',
-      'setTableName'
+      'setTableName',
+      'setToasts'
     ]),
     ...mapActions([
       'deleteRow',

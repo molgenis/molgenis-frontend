@@ -15,11 +15,11 @@ const defaultSettings = {
 }
 
 export default {
-  setToast (state: ApplicationState, toast: Toast) {
-    state.toast = toast
+  addToast (state: ApplicationState, toast: Toast) {
+    state.toasts.push(toast)
   },
-  clearToast (state: ApplicationState) {
-    state.toast = null
+  setToasts (state: ApplicationState, toasts: Toast[]) {
+    Vue.set(state, 'toasts', toasts)
   },
   setDataDisplayLayout (state: ApplicationState, layout: ApplicationState['dataDisplayLayout']) {
     state.dataDisplayLayout = layout
