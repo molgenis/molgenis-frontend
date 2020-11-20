@@ -3,17 +3,22 @@
 
   <div class="btn-toolbar justify-content-between pb-1" role="toolbar" aria-label="Table actions Toolbar">
     <div class="btn-group" role="group" aria-label="Row actions group">
-      <button type="button" class="btn btn-outline-secondary"><i class="fas fa-plus"></i></button>
-      <button type="button" class="btn btn-outline-secondary" :disabled="!selectedRows.length"><i class="fas fa-trash"></i></button>
+      <button type="button" class="btn btn-outline-secondary">
+        <font-awesome-icon icon="plus" />
+      </button>
+      <button type="button" class="btn btn-outline-secondary" :disabled="!selectedRows.length">
+        <font-awesome-icon icon="trash" />
+      </button>
     </div>
+
     <div class="btn-group" role="group" aria-label="Colum actions group">
       <button type="button" class="btn btn-outline-secondary"
         :disabled="!this.hiddenColumns.length"
         @click="toggleUnhide">
-        <i class="fas fa-eye"></i>
+        <font-awesome-icon icon="eye" />
       </button>
       <button type="button" class="btn btn-outline-secondary" v-b-modal.modal-1>
-        <i class="fas fa-eye-slash"></i>
+        <font-awesome-icon icon="eye-slash" />
       </button>
         <b-modal id="modal-1" title="Hidden columns" ok-only scrollable>
           <div class="form-check" v-for="attr in this.tableMeta.attributes" :key="attr.name">
@@ -23,13 +28,20 @@
             </label>
           </div>
        </b-modal>
-      <button type="button" class="btn btn-outline-secondary" :disabled="!selectedColumns.length"><i class="fas fa-arrow-left"></i></button>
-      <button type="button" class="btn btn-outline-secondary" :disabled="!selectedColumns.length"><i class="fas fa-arrow-right"></i></button>
+      <button type="button" class="btn btn-outline-secondary" :disabled="!selectedColumns.length">
+        <font-awesome-icon icon="arrow-left" />
+      </button>
+      <button type="button" class="btn btn-outline-secondary" :disabled="!selectedColumns.length">
+        <font-awesome-icon icon="arrow-right" />
+      </button>
     </div>
 
     <div class="btn-group" role="group" aria-label="Table actions group">
-      <button type="button" class="btn btn-outline-secondary"><i class="fas fa-download"></i></button>
+      <button type="button" class="btn btn-outline-secondary">
+        <font-awesome-icon icon="download" />
+      </button>
     </div>
+
   </div>
 
   <div class="mg-data-table-container">

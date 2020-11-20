@@ -37,6 +37,7 @@
     "popper.js": "^1.15.0",
     "v-runtime-template": "^1.10.0",
     "vue": "^2.6.10",
+    "vue-columns-resizable": "^0.0.1",
     "vue-router": "^3.0.7",
     "vue-slider-component": "^3.2.9",
     "vue2-daterange-picker": "^0.6.1",

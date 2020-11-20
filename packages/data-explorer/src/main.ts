@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 import { BootstrapVue } from 'bootstrap-vue'
+import '@molgenis-ui/components-library/dist/components-library.css'
 
 // @ts-ignore
 import i18n from '@molgenis/molgenis-i18n-js'
@@ -18,6 +19,8 @@ import 'vue-slider-component/theme/default.css'
 // @ts-ignore
 import draggable from 'vuedraggable'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// @ts-ignore
+import VueColumnsResizable from 'vue-columns-resizable'
 
 import { faCaretRight,
   faChevronRight,
@@ -40,15 +43,22 @@ import { faCaretRight,
   faThList,
   faTimes,
   faTrash,
-  faUpload
+  faUpload,
+  faEye,
+  faEyeSlash,
+  faArrowLeft,
+  faArrowRight,
+  faDownload
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faCaretRight, faChevronLeft, faChevronRight, faChevronUp, faCog, faEdit, faExclamationTriangle,
   faMinus, faPlay, faPlus, faPlusSquare, faShoppingBag, faSlidersH, faShoppingCart, faSpinner,
-  faSearch, faStore, faTh, faThList, faTimes, faTrash, faUpload
+  faSearch, faStore, faTh, faThList, faTimes, faTrash, faUpload, faEye, faEyeSlash, faArrowLeft, faArrowRight,
+  faDownload
 )
 
 Vue.use(BootstrapVue)
+Vue.use(VueColumnsResizable)
 Vue.component('draggable', draggable)
 Vue.component('DateRangePicker', DateRangePicker)
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)

@@ -30,9 +30,7 @@ module.exports = {
     ? pkgName + '/dist/'
     : '/',
   chainWebpack: (config) => {
-    // stop lerna from sym linking to empty components-library folder
-    // config.resolve.symlinks(false)
-    config.resolve.alias.set('@molgenis-ui/components-library', '/Users/connor/Code/molgenis-frontend/packages/data-explorer/node_modules/@molgenis-ui/components-library/dist/components-library.esm.js')
+    config.resolve.symlinks(false)
   },
   configureWebpack: config => {
     config.plugins.push(

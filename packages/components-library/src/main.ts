@@ -24,7 +24,7 @@ export {
   NumberFilter,
   RangeFilter,
   StringFilter,
-  Toaster
-  EntityTable,
+  Toaster,
+  EntityTable
 }
 
