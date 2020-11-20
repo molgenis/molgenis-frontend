@@ -16,7 +16,7 @@
     <div class="col-4">
 
       <div class="btn-group float-right">
-        <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary">{{$t('Download')}}</button>
+        <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary">Download</button>
 
         <button
           v-if="!showSelected && dataDisplayLayout === 'TableView'"

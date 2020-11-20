@@ -56,13 +56,6 @@ describe('mutations', () => {
     baseAppState.tableName = 'root_hospital_patients'
   })
 
-  describe('addToast', () => {
-    it('replace the toast with the passed toast', () => {
-      mutations.addToast(baseAppState, { type: 'danger', message: 'message' })
-      expect(baseAppState.toasts).toEqual({ type: 'danger', message: 'message' })
-    })
-  })
-
   describe('setDataDisplayLayout', () => {
     it('sets the display layout', () => {
       mutations.setDataDisplayLayout(baseAppState, 'TableView')

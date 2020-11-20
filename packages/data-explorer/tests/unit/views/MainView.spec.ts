@@ -28,6 +28,7 @@ describe('MainView.vue', () => {
 
   beforeEach(() => {
     state = {
+      toasts: [],
       dataDisplayLayout: 'CardView',
       tableName: 'tableName',
       activeEntity: 'it_emx_datatypes_TypeTest',
