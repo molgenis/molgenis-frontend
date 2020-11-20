@@ -14,8 +14,9 @@ export default {
       }))
     })
 
-    const fetchJob = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
-    store.commit('addToast', { type: 'info', message: fetchJob.data.progressMessage })
+    const fetchJobImmediate = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
+    store.commit('addToast', { type: 'info', message: fetchJobImmediate.data.progressMessage })
+
     const interval = setInterval(async () => {
       const fetchJob = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
       if (fetchJob.data.status === 'SUCCESS') {
