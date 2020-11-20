@@ -169,7 +169,6 @@ export default {
   },
   methods: {
     setValue () {
-      console.log(this.value)
       this.externalUpdate = true
       this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
     },
