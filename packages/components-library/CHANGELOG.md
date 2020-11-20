@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.3...@molgenis-ui/components-library@1.4.0) (2020-11-20)
+
+
+### Features
+
+* add Toaster component ([#439](https://github.com/molgenis/molgenis-frontend/issues/439)) ([5e8252c](https://github.com/molgenis/molgenis-frontend/commit/5e8252c))
+
+
+
+
+
 ## [1.3.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.2...@molgenis-ui/components-library@1.3.3) (2020-11-17)
 
 
