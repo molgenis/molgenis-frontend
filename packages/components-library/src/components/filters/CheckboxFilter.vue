@@ -2,7 +2,6 @@
   <div>
     <b-form-checkbox-group
       v-model="selection"
-      @input="selectionChanged"
       stacked
       :options="visibleOptions"
     />
@@ -29,6 +28,14 @@ export default {
   name: 'CheckboxFilter',
   props: {
     /**
+     * Toggle to switch between returning an array with values or an array with the full option
+     */
+    returnTypeAsObject: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+    /**
      * A Promise-function that resolves with an array of options.
      * {text: 'foo', value: 'bar'}
      */
@@ -38,6 +45,7 @@ export default {
     },
     /**
      * This is the v-model value; an array of selected options.
+     * Can also be a { text, value } object array
      */
     value: {
       type: Array,
@@ -61,6 +69,7 @@ export default {
   },
   data () {
     return {
+      externalUpdate: false,
       selection: [],
       resolvedOptions: [],
       sliceOptions: this.maxVisibleOptions && this.resolvedOptions && this.maxVisibleOptions < this.resolvedOptions.length
@@ -82,17 +91,30 @@ export default {
   },
   watch: {
     value () {
-      this.selection = this.value
+      this.setValue()
     },
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
+    },
+    selection (newValue) {
+      if (!this.externalUpdate) {
+        let newSelection = []
+
+        if (this.returnTypeAsObject) {
+          newSelection = Object.assign(newSelection, this.resolvedOptions.filter(of => newValue.includes(of.value)))
+        } else {
+          newSelection = [...newValue]
+        }
+        this.$emit('input', newSelection)
+      }
+      this.externalUpdate = false
     }
   },
   created () {
     this.options().then(response => {
       this.resolvedOptions = response
     })
-    this.selection = this.value
+    this.setValue()
   },
   methods: {
     toggleSelect () {
@@ -105,10 +127,13 @@ export default {
     toggleSlice () {
       this.sliceOptions = !this.sliceOptions
     },
-    selectionChanged (newValue) {
-      this.selection = [...newValue]
-      const newSelection = [...newValue]
-      this.$emit('input', newSelection)
+    setValue () {
+      this.externalUpdate = true
+      if (this.value && this.value.length > 0 && typeof this.value[0] === 'object') {
+        this.selection = this.value.map(vo => vo.value)
+      } else {
+        this.selection = this.value
+      }
     }
   }
 }

@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.10](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.9...@molgenis-ui/data-explorer@1.1.10) (2020-11-20)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [1.1.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.8...@molgenis-ui/data-explorer@1.1.9) (2020-11-17)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [1.1.8](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.7...@molgenis-ui/data-explorer@1.1.8) (2020-11-17)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [1.1.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.6...@molgenis-ui/data-explorer@1.1.7) (2020-11-16)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [1.1.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.5...@molgenis-ui/data-explorer@1.1.6) (2020-11-16)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [1.1.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.4...@molgenis-ui/data-explorer@1.1.5) (2020-11-10)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [1.1.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.3...@molgenis-ui/data-explorer@1.1.4) (2020-11-06)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
 ## [1.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.2...@molgenis-ui/data-explorer@1.1.3) (2020-11-06)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer

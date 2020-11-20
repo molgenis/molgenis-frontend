@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.3...@molgenis-ui/components-library@1.4.0) (2020-11-20)
+
+
+### Features
+
+* add Toaster component ([#439](https://github.com/molgenis/molgenis-frontend/issues/439)) ([5e8252c](https://github.com/molgenis/molgenis-frontend/commit/5e8252c))
+
+
+
+
+
+## [1.3.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.2...@molgenis-ui/components-library@1.3.3) (2020-11-17)
+
+
+### Bug Fixes
+
+* **components-library:** Object assign is really required for correct responsiveness of v-model of checkbox group ([52e6b63](https://github.com/molgenis/molgenis-frontend/commit/52e6b63))
+
+
+
+
+
+## [1.3.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.1...@molgenis-ui/components-library@1.3.2) (2020-11-17)
+
+
+### Bug Fixes
+
+* typo ([1786880](https://github.com/molgenis/molgenis-frontend/commit/1786880))
+* **components-library:** added reactiveness from changes made by active filter ([9d68a02](https://github.com/molgenis/molgenis-frontend/commit/9d68a02))
+* **components-library:** deduplicate options when fetching based on initial value ([dd5f950](https://github.com/molgenis/molgenis-frontend/commit/dd5f950))
+* **components-library:** small bug in reactiveness ([6a089dd](https://github.com/molgenis/molgenis-frontend/commit/6a089dd))
+
+
+
+
+
+## [1.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.0...@molgenis-ui/components-library@1.3.1) (2020-11-16)
+
+**Note:** Version bump only for package @molgenis-ui/components-library
+
+
+
+
+
+# [1.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.2.0...@molgenis-ui/components-library@1.3.0) (2020-11-16)
+
+
+### Features
+
+* first steps to make returning objects from multi-filter possible ([daa0331](https://github.com/molgenis/molgenis-frontend/commit/daa0331))
+* multifilter can now return an recieve objects. Also fixed a bug where the initial value was not shown correctly on creation ([d2261c0](https://github.com/molgenis/molgenis-frontend/commit/d2261c0))
+
+
+
+
+
+# [1.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.3...@molgenis-ui/components-library@1.2.0) (2020-11-10)
+
+
+### Features
+
+* **components-library:** option to return text and value in checkbox filter instead of only value(id) ([1bf8ac1](https://github.com/molgenis/molgenis-frontend/commit/1bf8ac1))
+
+
+
+
+
+## [1.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.2...@molgenis-ui/components-library@1.1.3) (2020-11-06)
+
+
+### Bug Fixes
+
+* **components-library:** fixed infinite loop sometimes occurring ([#429](https://github.com/molgenis/molgenis-frontend/issues/429)) ([56dd873](https://github.com/molgenis/molgenis-frontend/commit/56dd873))
+
+
+
+
+
 ## [1.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.1.1...@molgenis-ui/components-library@1.1.2) (2020-11-06)
 
 

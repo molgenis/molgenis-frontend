@@ -1,28 +1,11 @@
 <template>
   <div>
     <b-input-group>
-      <b-form-input
-        v-model="query"
-        :name="name"
-        :placeholder="placeholder"
-        trim
-      />
+      <b-form-input v-model="query" :name="name" :placeholder="placeholder" trim />
       <b-input-group-append>
-        <b-button
-          variant="outline-secondary"
-          :disabled="isLoading"
-          @click.prevent="query= ''"
-        >
-          <font-awesome-icon
-            v-if="isLoading"
-            icon="spinner"
-            class="fa-spin"
-            size="xs"
-          />
-          <font-awesome-icon
-            v-else
-            icon="times"
-          />
+        <b-button variant="outline-secondary" :disabled="isLoading" @click.prevent="query = ''">
+          <font-awesome-icon v-if="isLoading" icon="spinner" class="fa-spin" size="xs" />
+          <font-awesome-icon v-else icon="times" />
         </b-button>
       </b-input-group-append>
     </b-input-group>
@@ -35,11 +18,7 @@
       stacked
     />
 
-    <b-link
-      v-if="showCount < multifilterOptions.length"
-      class="card-link"
-      @click="showMore"
-    >
+    <b-link v-if="showCount < multifilterOptions.length" class="card-link" @click="showMore">
       {{ showMoreText }}
     </b-link>
     <font-awesome-icon
@@ -55,6 +34,14 @@
 export default {
   name: 'MultiFilter',
   props: {
+    /**
+     * Toggle to switch between returning an array with values or an array with the full option
+     */
+    returnTypeAsObject: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
     /**
      * The HTML input element name.
      */
@@ -102,23 +89,17 @@ export default {
   },
   data () {
     return {
+      externalUpdate: false,
       showCount: 0,
       isLoading: false,
       triggerQuery: Number,
       inputOptions: [],
       initialOptions: [],
+      selection: [],
       query: ''
     }
   },
   computed: {
-    selection: {
-      get () {
-        return this.value
-      },
-      set (value) {
-        this.$emit('input', value.length === 0 ? undefined : value)
-      }
-    },
     multifilterOptions () {
       return this.inputOptions.length > 0 || this.query.length
         ? this.inputOptions
@@ -140,9 +121,27 @@ export default {
     }
   },
   watch: {
+    selection (newValue) {
+      let newSelection
+      if (this.externalUpdate) {
+        this.externalUpdate = false
+        return
+      }
+
+      if (this.returnTypeAsObject) {
+        newSelection = Object.assign(newValue, this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)))
+      } else {
+        newSelection = [...newValue]
+      }
+
+      this.$emit('input', newSelection)
+    },
+    value () {
+      this.setValue()
+    },
     query: function () {
       const previousSelection = this.multifilterOptions.filter(
-        option => this.selection.indexOf(option.value) >= 0
+        option => this.inputOptions.indexOf(option.value) >= 0
       )
       this.inputOptions = previousSelection
 
@@ -179,17 +178,27 @@ export default {
     this.initializeFilter()
   },
   methods: {
+    setValue () {
+      this.externalUpdate = true
+      this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
+    },
     showMore () {
       this.showCount += this.maxVisibleOptions
     },
     async initializeFilter () {
-      let fetched = []
-      if (this.value && this.value.length > 0) {
-        fetched = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.value.join(',') })
-      } else {
-        fetched = await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })
+      let selectedOptions = []
+
+      if (this.value && this.value.length) {
+        this.setValue()
+        // Get the initial selected
+        selectedOptions = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.selection.join(',') })
       }
-      this.initialOptions = fetched
+
+      // fetch the other options and concat
+      const completeInitialOptions = selectedOptions.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems }))
+
+      // deduplicate by first mapping the id's then getting the first matching object back.
+      this.initialOptions = Array.from(new Set(completeInitialOptions.map(cio => cio.value))).map(value => completeInitialOptions.find(cio => cio.value === value))
     }
   }
 }
@@ -220,6 +229,7 @@ Item-based Filter. Search box is used to find items in the table.
 
 const model = []
 <MultiFilter
+  v-bind:returnOptionsObject="false"
   v-bind:options="multiFilterOptions"
   v-bind:collapses="false"
   v-bind:initialDisplayItems="5"

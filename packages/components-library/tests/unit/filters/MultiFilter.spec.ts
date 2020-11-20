@@ -97,4 +97,24 @@ describe('MultiFilter.vue', () => {
     jest.runAllTimers()
     expect(optionsPromise).toHaveBeenCalledWith({ nameAttribute: 'label', query: 'Blue' })
   })
+
+  it('does not emit an input event when value is set from outside the component', async () => {
+    wrapper.setProps({ value: ['orange'] })
+    expect(wrapper.emitted().input).toBeFalsy()
+  })
+
+  describe('prop: returnTypeAsObject', () => {
+    it('should return only the value when falsy [default]', async () => {
+      const checkbox = wrapper.find('input[type=checkbox]').element as HTMLInputElement
+      await checkbox.click()
+      expect(wrapper.emitted().input).toEqual([[['red']]])
+    })
+
+    it('should return the complete option object when true', async () => {
+      wrapper.setProps({ returnTypeAsObject: true })
+      const checkbox = wrapper.find('input[type=checkbox]').element as HTMLInputElement
+      await checkbox.click()
+      expect(wrapper.emitted().input).toEqual([[[{ text: 'Red', value: 'red' }]]])
+    })
+  })
 })
