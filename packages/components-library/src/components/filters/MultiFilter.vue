@@ -101,9 +101,7 @@ export default {
   },
   computed: {
     multifilterOptions () {
-      return this.inputOptions.length > 0 || this.query.length
-        ? this.inputOptions
-        : this.initialOptions
+      return this.inputOptions
     },
     slicedOptions () {
       return this.multifilterOptions.slice(0, this.showCount)
@@ -139,34 +137,26 @@ export default {
     value () {
       this.setValue()
     },
-    query: function () {
-      const previousSelection = this.multifilterOptions.filter(
-        option => this.inputOptions.indexOf(option.value) >= 0
-      )
-      this.inputOptions = previousSelection
-
+    query (queryValue) {
       if (this.triggerQuery) {
         clearTimeout(this.triggerQuery)
       }
-      this.triggerQuery = setTimeout(async () => {
+
+      if (!queryValue.length) {
+        this.inputOptions = this.initialOptions
+        return
+      }
+
+      this.triggerQuery = setTimeout(() => {
         clearTimeout(this.triggerQuery)
         this.showCount = this.maxVisibleOptions
         this.isLoading = true
 
-        const fetched = this.query.length
-          ? await this.options({ nameAttribute: 'label', query: this.query })
-          : this.initialOptions
+        this.options({ nameAttribute: 'label', query: this.query }).then(searchResults => {
+          const allOptions = searchResults.concat(this.inputOptions)
+          this.inputOptions = allOptions
+        })
 
-        const valuesPresent = previousSelection.map(prev => prev.value)
-
-        if (valuesPresent.length) {
-          const difference = fetched.filter(
-            prev => !valuesPresent.includes(prev.value)
-          )
-          this.inputOptions = previousSelection.concat(difference)
-        } else {
-          this.inputOptions = fetched
-        }
         this.isLoading = false
       }, 500)
     }
@@ -179,6 +169,7 @@ export default {
   },
   methods: {
     setValue () {
+      console.log(this.value)
       this.externalUpdate = true
       this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
     },
@@ -199,6 +190,7 @@ export default {
 
       // deduplicate by first mapping the id's then getting the first matching object back.
       this.initialOptions = Array.from(new Set(completeInitialOptions.map(cio => cio.value))).map(value => completeInitialOptions.find(cio => cio.value === value))
+      this.inputOptions = this.initialOptions
     }
   }
 }
