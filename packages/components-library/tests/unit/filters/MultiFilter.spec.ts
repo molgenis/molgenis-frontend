@@ -98,6 +98,22 @@ describe('MultiFilter.vue', () => {
     expect(optionsPromise).toHaveBeenCalledWith({ nameAttribute: 'label', query: 'Blue' })
   })
 
+  it('should sort the list based on current selection', () => {
+    wrapper.setData({ selection: ['yellow'] })
+
+    const before = [...checkboxLotsOptions]
+    expect(before[0]).toStrictEqual({
+      text: 'Red',
+      value: 'red'
+    })
+
+    const sortedList = wrapper.vm.inputOptionsSort(before)
+    expect(sortedList[0]).toStrictEqual({
+      text: 'Yellow',
+      value: 'yellow'
+    })
+  })
+
   it('does not emit an input event when value is set from outside the component', async () => {
     wrapper.setProps({ value: ['orange'] })
     expect(wrapper.emitted().input).toBeFalsy()

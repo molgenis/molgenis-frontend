@@ -144,12 +144,7 @@ export default {
 
       if (!queryValue.length) {
         const newInititalOptions = [].concat(this.multifilterOptions)
-        newInititalOptions.sort((a, b) => {
-          if (!this.selection.includes(a.value) && !this.selection.includes(b.value)) return 0
-          else if (this.selection.includes(a.value) && !this.selection.includes(b.value)) return -1
-          else return 1
-        })
-        this.inputOptions = newInititalOptions
+        this.inputOptions = this.inputOptionsSort(newInititalOptions)
         return
       }
 
@@ -160,12 +155,7 @@ export default {
 
         this.options({ nameAttribute: 'label', query: this.query }).then(searchResults => {
           const allOptions = searchResults ? searchResults.concat(this.inputOptions) : this.inputOptions
-          allOptions.sort((a, b) => {
-            if (!this.selection.includes(a.value) && !this.selection.includes(b.value)) return 0
-            else if (this.selection.includes(a.value) && !this.selection.includes(b.value)) return -1
-            else return 1
-          })
-          this.inputOptionsSort(allOptions)
+          this.inputOptions = this.inputOptionsSort(allOptions)
         })
 
         this.isLoading = false
@@ -186,7 +176,7 @@ export default {
         else return 1
       })
 
-      this.inputOptions = Array.from(new Set(optionsArray.map(cio => cio.value)))
+      return Array.from(new Set(optionsArray.map(cio => cio.value)))
         .map(value => optionsArray.find(cio => cio.value === value)
         )
     },
@@ -208,14 +198,9 @@ export default {
 
       // fetch the other options and concat
       const completeInitialOptions = selectedOptions.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems }))
-      completeInitialOptions.sort((a, b) => {
-        if (!this.selection.includes(a.value) && !this.selection.includes(b.value)) return 0
-        else if (this.selection.includes(a.value) && !this.selection.includes(b.value)) return -1
-        else return 1
-      })
 
       // deduplicate by first mapping the id's then getting the first matching object back.
-      this.initialOptions = Array.from(new Set(completeInitialOptions.map(cio => cio.value))).map(value => completeInitialOptions.find(cio => cio.value === value))
+      this.initialOptions = this.inputOptionsSort(completeInitialOptions)
       this.inputOptions = this.initialOptions
     }
   }
