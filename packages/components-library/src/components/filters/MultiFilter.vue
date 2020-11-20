@@ -143,7 +143,13 @@ export default {
       }
 
       if (!queryValue.length) {
-        this.inputOptions = this.initialOptions
+        const newInititalOptions = [].concat(this.multifilterOptions)
+        newInititalOptions.sort((a, b) => {
+          if (!this.selection.includes(a.value) && !this.selection.includes(b.value)) return 0
+          else if (this.selection.includes(a.value) && !this.selection.includes(b.value)) return -1
+          else return 1
+        })
+        this.inputOptions = newInititalOptions
         return
       }
 
@@ -153,8 +159,13 @@ export default {
         this.isLoading = true
 
         this.options({ nameAttribute: 'label', query: this.query }).then(searchResults => {
-          const allOptions = searchResults.concat(this.inputOptions)
-          this.inputOptions = allOptions
+          const allOptions = searchResults ? searchResults.concat(this.inputOptions) : this.inputOptions
+          allOptions.sort((a, b) => {
+            if (!this.selection.includes(a.value) && !this.selection.includes(b.value)) return 0
+            else if (this.selection.includes(a.value) && !this.selection.includes(b.value)) return -1
+            else return 1
+          })
+          this.inputOptionsSort(allOptions)
         })
 
         this.isLoading = false
@@ -168,6 +179,17 @@ export default {
     this.initializeFilter()
   },
   methods: {
+    inputOptionsSort (optionsArray) {
+      optionsArray.sort((a, b) => {
+        if (!this.selection.includes(a.value) && !this.selection.includes(b.value)) return 0
+        else if (this.selection.includes(a.value) && !this.selection.includes(b.value)) return -1
+        else return 1
+      })
+
+      this.inputOptions = Array.from(new Set(optionsArray.map(cio => cio.value)))
+        .map(value => optionsArray.find(cio => cio.value === value)
+        )
+    },
     setValue () {
       this.externalUpdate = true
       this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
@@ -186,6 +208,11 @@ export default {
 
       // fetch the other options and concat
       const completeInitialOptions = selectedOptions.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems }))
+      completeInitialOptions.sort((a, b) => {
+        if (!this.selection.includes(a.value) && !this.selection.includes(b.value)) return 0
+        else if (this.selection.includes(a.value) && !this.selection.includes(b.value)) return -1
+        else return 1
+      })
 
       // deduplicate by first mapping the id's then getting the first matching object back.
       this.initialOptions = Array.from(new Set(completeInitialOptions.map(cio => cio.value))).map(value => completeInitialOptions.find(cio => cio.value === value))
@@ -220,7 +247,7 @@ Item-based Filter. Search box is used to find items in the table.
 
 const model = []
 <MultiFilter
-  v-bind:returnOptionsObject="false"
+  v-bind:returnTypeAsObject="false"
   v-bind:options="multiFilterOptions"
   v-bind:collapses="false"
   v-bind:initialDisplayItems="5"
