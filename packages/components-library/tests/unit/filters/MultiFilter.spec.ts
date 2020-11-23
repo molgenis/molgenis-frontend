@@ -3,6 +3,7 @@ import MultiFilter from '@/components/filters/MultiFilter.vue'
 import { localVue as getLocalVue } from '../../lib/helpers'
 
 const localVue = getLocalVue()
+jest.useFakeTimers()
 
 const checkboxLotsOptions = [
   { value: 'red', text: 'Red' },
@@ -91,11 +92,36 @@ describe('MultiFilter.vue', () => {
 
   it('should update the options list', async () => {
     optionsPromise.mockClear()
-    jest.useFakeTimers()
+
     const searchInput = wrapper.find('input[name="multi-filter"]')
     await searchInput.setValue('Blue')
     jest.runAllTimers()
     expect(optionsPromise).toHaveBeenCalledWith({ nameAttribute: 'label', query: 'Blue' })
+  })
+
+  it('should sort the list based on current selection when query is emptied', async () => {
+    // Set the data to replicate the scenario where someone searched yellow and selected the checkbox with yellow
+    wrapper.setData({ query: 'yellow', selection: ['yellow'] })
+
+    // Assert that the order is still the way it was initialized
+    expect(wrapper.vm.inputOptions[0]).toStrictEqual({
+      text: 'Red',
+      value: 'red'
+    })
+
+    // Find the searchbox
+    const searchInput = wrapper.find('input[name="multi-filter"]')
+
+    // give it an empty string, which would be the same as deleting the current input
+    await searchInput.setValue('')
+    jest.runAllTimers() // wait for the setTimeout
+    await wrapper.vm.$nextTick() // await the Vue reactiveness
+
+    // assert if Yellow is now indeed on top of the input options
+    expect(wrapper.vm.inputOptions[0]).toStrictEqual({
+      text: 'Yellow',
+      value: 'yellow'
+    })
   })
 
   it('does not emit an input event when value is set from outside the component', async () => {
