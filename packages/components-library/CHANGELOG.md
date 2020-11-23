@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.4.0...@molgenis-ui/components-library@1.4.1) (2020-11-23)
+
+
+### Bug Fixes
+
+* query & sorting ([4304be4](https://github.com/molgenis/molgenis-frontend/commit/4304be4))
+* **components-library:** Searching inside multifilter no longer clears checkboxes. Newly found options are appended on top. ([df567d4](https://github.com/molgenis/molgenis-frontend/commit/df567d4))
+
+
+
+
+
 # [1.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.3.3...@molgenis-ui/components-library@1.4.0) (2020-11-20)
 
 
