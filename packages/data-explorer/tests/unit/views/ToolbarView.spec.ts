@@ -93,7 +93,7 @@ describe('ToolbarView.vue', () => {
   })
 
   describe('downloadData', () => {
-    it.only('download action called', async () => {
+    it('download action called', async () => {
       store.state.tableMeta = { id: '123' }
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       // @ts-ignore

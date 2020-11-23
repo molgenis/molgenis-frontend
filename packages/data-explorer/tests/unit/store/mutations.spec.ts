@@ -1,6 +1,6 @@
 import mutations from '@/store/mutations'
 import mockState from '../mocks/mockState'
-import ApplicationState from '@/types/ApplicationState'
+import ApplicationState, { Toast } from '@/types/ApplicationState'
 import { Attribute, MetaData } from '@/types/MetaData'
 
 describe('mutations', () => {
@@ -213,6 +213,20 @@ describe('mutations', () => {
       const filterDef: any = { filter: 'def' }
       mutations.setFilterDefinition(baseAppState, filterDef)
       expect(baseAppState.filters.definition).toEqual(filterDef)
+    })
+  })
+  describe('addToast', () => {
+    it('pushes a toast', () => {
+      const toast:Toast = { message: 'foo', type: 'success' }
+      mutations.addToast(baseAppState, toast)
+      expect(baseAppState.toasts).toEqual([toast])
+    })
+  })
+  describe('setToasts', () => {
+    it('sets the toasts', () => {
+      const toasts:Toast[] = [{ message: 'foo', type: 'success' }]
+      mutations.setToasts(baseAppState, toasts)
+      expect(baseAppState.toasts).toEqual(toasts)
     })
   })
 })
