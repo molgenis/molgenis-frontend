@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.11...@molgenis-ui/data-explorer@1.2.0) (2020-11-23)
+
+
+### Features
+
+* add download with toaster ([#440](https://github.com/molgenis/molgenis-frontend/issues/440)) ([dbd27a8](https://github.com/molgenis/molgenis-frontend/commit/dbd27a8))
+
+
+
+
+
 ## [1.1.11](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.1.10...@molgenis-ui/data-explorer@1.1.11) (2020-11-23)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
