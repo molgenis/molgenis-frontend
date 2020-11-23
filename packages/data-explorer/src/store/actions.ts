@@ -27,7 +27,7 @@ export default {
         })
         clearInterval(interval)
       } else if (fetchJob.data.status === 'FAILED') {
-        store.commit('addToast', { type: 'danger', message: fetchJob.data.progressMessage })
+        store.commit('addToast', { type: 'danger', message: fetchJob.data.progressMessage, timeout: 0 })
         clearInterval(interval)
       }
     }, 1000)
