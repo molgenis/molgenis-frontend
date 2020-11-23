@@ -547,7 +547,7 @@ describe('actions', () => {
       expect(setInterval).toHaveBeenCalledTimes(1)
       expect(commit).toHaveBeenCalledTimes(2)
       expect(commit).nthCalledWith(1, 'addToast', { message: 'failed', type: 'info' })
-      expect(commit).nthCalledWith(2, 'addToast', { message: 'failed', type: 'danger' })
+      expect(commit).nthCalledWith(2, 'addToast', { message: 'failed', type: 'danger', timeout: 0 })
     })
   })
 })

@@ -179,7 +179,7 @@ describe('MainView.vue', () => {
       wrapper = shallowMount(MainView, { store, localVue, mocks })
       done()
     })
-    it.only('should trigger getter and setter for toasts', async () => {
+    it('should trigger getter and setter for toasts', async () => {
       expect(mutations.setToasts).toHaveBeenCalledTimes(0)
       wrapper.vm.toasts = [{ message: 'bar', type: 'success' }]
       expect(mutations.setToasts).toHaveBeenCalledTimes(1)
