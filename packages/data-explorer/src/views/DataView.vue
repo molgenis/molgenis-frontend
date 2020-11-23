@@ -13,6 +13,7 @@
               ></active-filters>
             </div>
           </div>
+
           <select-layout-view ></select-layout-view>
         </div>
       </div>

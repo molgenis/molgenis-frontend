@@ -5,6 +5,7 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
+import Vue from 'vue'
 
 const metaResponse = {
   meta: {
@@ -203,12 +204,37 @@ const dataResponse = {
 
 const mockResponses: {[key:string]: Object} = {
   '/api/data/entity': { 'loaded': true },
+  '/api/v2/sys_job_ResourceDownloadJobExecution/failure': {
+    data: {
+      progressMessage: 'failed',
+      status: 'FAILED'
+    }
+  },
+  '/api/v2/sys_job_ResourceDownloadJobExecution/success': {
+    data: {
+      progressMessage: 'progress',
+      resultUrl: '/foo/bar',
+      status: 'SUCCESS'
+    }
+  },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
   '/api/data/sys_ts_DataExplorerEntitySettings': {}
 }
+
+const mockPostResponses = {
+  '/plugin/navigator/download': {
+    '{"resources":[{"id":"success","type":"ENTITY_TYPE"}]}': {
+      data: { identifier: 'success' }
+    },
+    '{"resources":[{"id":"failure","type":"ENTITY_TYPE"}]}': {
+      data: { identifier: 'failure' }
+    }
+  }
+}
+
 jest.mock('@/lib/client', () => {
   return {
     get: (url: string) => {
@@ -218,7 +244,13 @@ jest.mock('@/lib/client', () => {
       }
       return Promise.resolve(mockResp)
     },
-    post: jest.fn()
+    post: (url: string, postData) => {
+      const mockRespons = mockPostResponses[url][JSON.stringify(postData)]
+      if (!mockRespons) {
+        console.warn(`mock url (${url}) called but not found inz ${JSON.stringify(mockPostResponses, null, 4)}`)
+      }
+      return Promise.resolve(mockPostResponses[url][JSON.stringify(postData)])
+    }
   }
 })
 
@@ -485,8 +517,37 @@ describe('actions', () => {
     it('should throw an error when the table name is not set', async (done) => {
       state.tableName = null
       await actions.deleteRow({ state, commit }, { rowId: 'my-row' })
-      expect(commit).toHaveBeenCalledWith('setToast', { message: 'cannot delete row from unknown table', type: 'danger' })
+      expect(commit).toHaveBeenCalledWith('addToast', { message: 'cannot delete row from unknown table', type: 'danger' })
+
       done()
+    })
+  })
+
+  describe('downloadResources', () => {
+    it('downloads the data', async () => {
+      jest.useFakeTimers()
+      const commit = jest.fn()
+      const resources = [{ id: 'success', type: 'ENTITY_TYPE' }]
+
+      await actions.downloadResources({ state, commit }, resources)
+      jest.advanceTimersByTime(1000)
+      await Vue.nextTick()
+      expect(setInterval).toHaveBeenCalledTimes(1)
+      expect(commit).toHaveBeenCalledTimes(2)
+      expect(commit).nthCalledWith(1, 'addToast', { message: 'progress', type: 'info' })
+      expect(commit).nthCalledWith(2, 'addToast', { message: 'Download data from <a href="/foo/bar">/foo/bar</a>', type: 'success', timeout: 0 })
+    })
+
+    it('fails to download data', async () => {
+      jest.useFakeTimers()
+      const commit = jest.fn()
+      await actions.downloadResources({ state, commit }, [{ id: 'failure', type: 'ENTITY_TYPE' }])
+      jest.advanceTimersByTime(1000)
+      await Vue.nextTick()
+      expect(setInterval).toHaveBeenCalledTimes(1)
+      expect(commit).toHaveBeenCalledTimes(2)
+      expect(commit).nthCalledWith(1, 'addToast', { message: 'failed', type: 'info' })
+      expect(commit).nthCalledWith(2, 'addToast', { message: 'failed', type: 'danger', timeout: 0 })
     })
   })
 })

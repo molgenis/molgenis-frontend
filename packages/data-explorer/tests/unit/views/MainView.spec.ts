@@ -28,6 +28,7 @@ describe('MainView.vue', () => {
 
   beforeEach(() => {
     state = {
+      toasts: [],
       dataDisplayLayout: 'CardView',
       tableName: 'tableName',
       activeEntity: 'it_emx_datatypes_TypeTest',
@@ -38,6 +39,7 @@ describe('MainView.vue', () => {
 
     mutations = {
       clearToast: jest.fn(),
+      setToasts: jest.fn(),
       setHideFilters: jest.fn(),
       setActiveEntity: jest.fn(),
       setTableName: jest.fn()
@@ -169,6 +171,18 @@ describe('MainView.vue', () => {
     it('should add the Breadcrumb bar', () => {
       expect(wrapper.find('breadcrumb-bar-stub').exists()).toBeTruthy()
       expect(modules.header.actions.fetchBreadcrumbs).toHaveBeenCalled()
+    })
+  })
+
+  describe('toasts getter and setter called', () => {
+    beforeEach(async (done) => {
+      wrapper = shallowMount(MainView, { store, localVue, mocks })
+      done()
+    })
+    it('should trigger getter and setter for toasts', async () => {
+      expect(mutations.setToasts).toHaveBeenCalledTimes(0)
+      wrapper.vm.toasts = [{ message: 'bar', type: 'success' }]
+      expect(mutations.setToasts).toHaveBeenCalledTimes(1)
     })
   })
 })

@@ -7,6 +7,7 @@ import ApplicationState from '@/types/ApplicationState'
 describe('ToolbarView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  let actions: any
   let store: any
   let state: ApplicationState
   let mutations: any
@@ -15,6 +16,10 @@ describe('ToolbarView.vue', () => {
   beforeEach(() => {
     state = mockState()
     state.tableName = 'root_hospital_patients'
+
+    actions = {
+      downloadResources: jest.fn()
+    }
 
     mutations = {
       setDataDisplayLayout: jest.fn(),
@@ -27,7 +32,7 @@ describe('ToolbarView.vue', () => {
     }
 
     store = new Vuex.Store({
-      state, mutations, getters
+      actions, state, mutations, getters
     })
   })
 
@@ -84,6 +89,16 @@ describe('ToolbarView.vue', () => {
       const wrapper = shallowMount(ToolbarView, { store, localVue })
       wrapper.setData({ searchText: 'demo' })
       expect(mutations.setSearchText).toHaveBeenCalled()
+    })
+  })
+
+  describe('downloadData', () => {
+    it('download action called', async () => {
+      store.state.tableMeta = { id: '123' }
+      const wrapper = shallowMount(ToolbarView, { store, localVue })
+      // @ts-ignore
+      await wrapper.vm.downloadData()
+      expect(actions.downloadResources).toHaveBeenCalledWith(expect.anything(), [{ id: '123', type: 'ENTITY_TYPE' }], undefined)
     })
   })
 })

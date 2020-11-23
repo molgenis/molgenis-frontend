@@ -43,15 +43,12 @@ describe('SearchComponent', () => {
   })
 
   describe('when the searchString value is changed to empty string (by html5 search clear action)', () => {
-    beforeEach(() => {
-      wrapper.setProps({ searchText: '' })
+    beforeEach(async () => {
+      await wrapper.setProps({ value: '' })
     })
-
-    it('should emit a event from the search component', () => {
-      wrapper.vm.$nextTick().then(() => {
-        expect(wrapper.emitted('input')).toBeTruthy()
-        expect(wrapper.emitted('input')[0]).toEqual([''])
-      })
+    it('should emit an event from the search component', async () => {
+      expect(wrapper.emitted('input')).toBeTruthy()
+      expect(wrapper.emitted('input')[0]).toEqual([''])
     })
   })
 })

@@ -12,7 +12,7 @@ export const errorReponse = (error: any) => {
       window.location.href = '/login'
     }
   }
-  store.commit('setToast', { message, type: 'danger' })
+  store.commit('addToast', { message, type: 'danger' })
   return Promise.reject(error)
 }
 

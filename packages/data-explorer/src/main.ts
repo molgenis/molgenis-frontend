@@ -19,6 +19,8 @@ import 'vue-slider-component/theme/default.css'
 import draggable from 'vuedraggable'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import '@molgenis-ui/components-library/dist/components-library.css'
+
 import { faCaretRight,
   faChevronRight,
   faChevronLeft,
