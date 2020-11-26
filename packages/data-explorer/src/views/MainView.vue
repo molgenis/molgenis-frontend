@@ -9,12 +9,13 @@
 
     <Toaster v-model="toasts"/>
 
-    <page-header-view v-if="!loading"></page-header-view>
+    <page-header-view v-if="!loading && dataDisplayLayout !== 'TableView' "></page-header-view>
     <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
       <div class="flex-filter">
         <filters-view v-if="!loading"></filters-view>
       </div>
       <div class="flex-data ml-4" >
+         <toolbar-view class="mb-2"></toolbar-view>
         <button
           type="button"
           class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
@@ -44,6 +45,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import PageHeaderView from './PageHeaderView'
+import ToolbarView from './ToolbarView'
 
 library.add(faChevronUp)
 
@@ -57,7 +59,7 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
-  components: { FiltersView, DataView, FontAwesomeIcon, PageHeaderView, BreadcrumbBar, Toaster },
+  components: { FiltersView, DataView, FontAwesomeIcon, PageHeaderView, BreadcrumbBar, Toaster, ToolbarView },
   computed: {
     toasts: {
       get: function () {

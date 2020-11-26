@@ -1,17 +1,8 @@
 <template>
-  <div class="container-fluid mb-3">
+  <div>
     <div class="row">
-      <div class="col-3">
+      <div class="col-9">
         <h1>{{tableMeta.label}}</h1>
-      </div>
-      <div class="col-6"></div>
-      <div v-if="hasEditSettingsRights" class="col-3">
-        <table-settings-button
-          class="float-right"
-          :settingsRowId="tableSettings.settingsRowId"
-          :settingsTableId="settingsTable"
-        >
-        </table-settings-button>
       </div>
     </div>
     <div class="row">
@@ -21,23 +12,18 @@
         </small>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <toolbar-view></toolbar-view>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import ToolbarView from './ToolbarView'
+
 import TableSettingsButton from '../components/utils/TableSettingsButton'
 import { mapState, mapGetters } from 'vuex'
 
 export default Vue.extend({
   name: 'PageHeaderView',
-  components: { ToolbarView, TableSettingsButton },
+  components: { TableSettingsButton },
   computed: {
     ...mapState([
       'tableName',

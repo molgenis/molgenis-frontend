@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="">
     <div class="row">
       <div class="col">
         <clipboard-view v-if="showSelected"></clipboard-view>

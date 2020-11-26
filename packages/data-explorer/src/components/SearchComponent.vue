@@ -1,6 +1,6 @@
 <template>
   <div class="input-group">
-    <form class="form-group w-100" @submit.prevent="handleSearchAction">
+    <form class="w-100" @submit.prevent="handleSearchAction">
       <div class="input-group">
       <input
         type="search"

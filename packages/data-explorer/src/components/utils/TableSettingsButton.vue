@@ -1,10 +1,9 @@
 <template>
   <a :href="href"
-    type="button"
-    class="btn btn-sm m-2 text-nowrap btn-light"
+    type="button" role="button"
+    class="btn btn-light btn-outline-secondary"
     title="Table settings">
     <font-awesome-icon icon="cog"></font-awesome-icon>
-    Table settings
   </a>
 </template>
 

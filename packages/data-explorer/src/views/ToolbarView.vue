@@ -1,40 +1,47 @@
 <template>
-  <div class="toolbar row">
-    <div class="col-4">
-      <a
-        v-if="hasEditRights && !showSelected"
-        class="btn btn-light btn-outline-secondary card-layout"
-        role="button"
-        :href="'/plugin/data-row-edit/' + tableName">
+  <div class="btn-toolbar justify-content-between" role="toolbar">
+
+    <div class="btn-group" role="group" aria-label="Row actions group">
+      <a type="button" role="button" class="btn btn-outline-secondary"
+      v-if="hasEditRights && !showSelected"
+      :href="'/plugin/data-row-edit/' + tableName">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
-        Add
       </a>
+      <button type="button" class="btn btn-outline-secondary">
+        <font-awesome-icon icon="trash" />
+      </button>
     </div>
-    <div class="col-4">
+
+    <div class="btn-group" role="group" aria-label="Colum actions group">
       <search-component v-model="searchText"></search-component>
     </div>
-    <div class="col-4">
 
-      <div class="btn-group float-right">
-        <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary">Download</button>
+    <div class="btn-group" role="group" aria-label="Table actions group">
 
-        <button
-          v-if="!showSelected && dataDisplayLayout === 'TableView'"
-          @click="toggleDataDisplayLayout"
-          class="btn btn-light btn-outline-secondary card-layout">
-          <font-awesome-icon icon="th"></font-awesome-icon>
-          Card layout
-        </button>
-        <button
-          v-else-if="!showSelected"
-          @click="toggleDataDisplayLayout"
-          class="btn btn-light btn-outline-secondary table-layout">
-          <font-awesome-icon icon="th-list"></font-awesome-icon>
-          Table layout
-        </button>
-      </div>
+      <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary">
+        <font-awesome-icon icon="download" />
+      </button>
 
+      <button type="button" role="button"
+        v-if="!showSelected && dataDisplayLayout === 'TableView'"
+        @click="toggleDataDisplayLayout"
+        class="btn btn-light btn-outline-secondary">
+        <font-awesome-icon icon="th"></font-awesome-icon>
+      </button>
+
+      <button type="button" role="button"
+        v-else-if="!showSelected"
+        @click="toggleDataDisplayLayout"
+        class="btn btn-light btn-outline-secondary">
+        <font-awesome-icon icon="th-list"></font-awesome-icon>
+      </button>
+
+      <table-settings-button v-if="hasEditSettingsRights"
+        :settingsRowId="tableSettings.settingsRowId"
+        :settingsTableId="settingsTable"
+      ></table-settings-button>
     </div>
+
   </div>
 </template>
 
@@ -42,15 +49,16 @@
 import Vue from 'vue'
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faStore, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faStore, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare, faDownload, faCog } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
+import TableSettingsButton from '../components/utils/TableSettingsButton'
 
-library.add(faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare)
+library.add(faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare, faDownload, faCog)
 
 export default Vue.extend({
   name: 'ToolbarView',
-  components: { FontAwesomeIcon, SearchComponent },
+  components: { FontAwesomeIcon, SearchComponent, TableSettingsButton },
   computed: {
     ...mapState([
       'dataDisplayLayout',
@@ -58,10 +66,12 @@ export default Vue.extend({
       'tableSettings',
       'searchText',
       'tableName',
-      'showSelected'
+      'showSelected',
+      'settingsTable'
     ]),
     ...mapGetters([
-      'hasEditRights'
+      'hasEditRights',
+      'hasEditSettingsRights'
     ]),
     searchText: {
       get () {
