@@ -1,9 +1,7 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col">
+  <div class="d-flex h-100">
         <clipboard-view v-if="showSelected"></clipboard-view>
-        <div v-else>
+        <template v-else>
           <div class="row">
             <div class="col">
               <active-filters
@@ -15,9 +13,7 @@
           </div>
 
           <select-layout-view ></select-layout-view>
-        </div>
-      </div>
-    </div>
+    </template>
     <cart-selection-toast
       v-if="selectedItemIds.length > 0 && !showSelected"
       :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"

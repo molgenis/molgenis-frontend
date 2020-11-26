@@ -1,16 +1,16 @@
 <template>
-  <div class="container-fluid">
-    <breadcrumb-bar
-      v-if="isUserAuthenticated"
-      :breadcrumbs="breadcrumbs"
-      @fetchItems="fetchPackageTables"
-      >
-    </breadcrumb-bar>
-
-    <Toaster v-model="toasts"/>
-
-    <page-header-view v-if="!loading"></page-header-view>
-    <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
+  <div class="d-flex flex-column h-100">
+    <div class="container-fluid">
+      <breadcrumb-bar
+        v-if="isUserAuthenticated"
+        :breadcrumbs="breadcrumbs"
+        @fetchItems="fetchPackageTables"
+        >
+      </breadcrumb-bar>
+      <Toaster v-model="toasts"/>
+      <page-header-view v-if="!loading"></page-header-view>
+    </div>
+    <div class="flex-mainview d-flex h-100" :class="{'hidefilters': filters.hideSidebar}">
       <div class="flex-filter">
         <filters-view v-if="!loading"></filters-view>
       </div>
@@ -28,7 +28,6 @@
         <data-view v-if="!loading"></data-view>
       </div>
     </div>
-
   </div>
 </template>
 

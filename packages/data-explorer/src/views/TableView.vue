@@ -1,5 +1,5 @@
 <template>
-  <table class="table" v-if="entitiesToShow.length">
+  <table class="table test-table-holder h-100" v-if="entitiesToShow.length">
     <table-header :visibleColumns="visibleColumns" :isShop="isShop"></table-header>
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"
@@ -67,3 +67,10 @@ export default {
   }
 }
 </script>
+
+<style>
+  .test-table-holder{
+    border:1px solid red;
+    table-layout: fixed
+  }
+</style>

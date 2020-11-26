@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+    html, body, .main{
+        padding: 0;
+        margin: 0;
+        height: 100%;
+    }
+    .main{
+        display: flex;
+        flex-direction:column;
+    }
+    .header{
+        background-color: red;
+    }
+    .content{
+        overflow: auto;
+        background-color: blue;
+    }
+    .footer{
+        background-color: green;
+    }
+    .flextest{
+        border:1px solid red;
+        width:100px;
+        margin:10px;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+    }
+    .tableholder{
+        border:1px solid green;
+        height: 150px;
+    }
+table{
+    table-layout: fixed;
+    height: inherit;
+}
+</style>
+<div class="main">
+    <div class="header">
+        header
+    </div>
+    <div class="content">
+        <div class="flextest">
+            <div>a</div>
+            <div class="tableholder">
+                b
+            </div>
+            <div>c</div>
+        </div>
+        <!--
+        <table>
+            <tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr><tr><td>bla</td></tr>
+        </table>
+        -->
+    </div>
+    <div class="footer">
+        footer
+    </div>
+</div>
+</body>
+</html>
