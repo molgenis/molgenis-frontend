@@ -6,7 +6,7 @@ const state: ApplicationState = {
   tableName: null,
   tableData: null,
   tableMeta: null,
-  dataDisplayLayout: 'CardView',
+  dataDisplayLayout: 'TableView',
   dataDisplayLimit: 100,
   defaultEntityData: null,
   showSelected: false,

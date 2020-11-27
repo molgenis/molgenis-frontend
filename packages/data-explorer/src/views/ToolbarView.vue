@@ -1,9 +1,8 @@
 <template>
   <div class="btn-toolbar justify-content-between" role="toolbar">
 
-    <div class="btn-group" role="group" aria-label="Row actions group">
+    <div v-if="hasEditRights && !showSelected" class="btn-group" role="group" aria-label="Row actions group">
       <a type="button" role="button" class="btn btn-outline-secondary"
-      v-if="hasEditRights && !showSelected"
       :href="'/plugin/data-row-edit/' + tableName"
       v-b-tooltip.hover.bottom="'Add'">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>

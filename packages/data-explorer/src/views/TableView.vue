@@ -1,5 +1,5 @@
 <template>
-  <table class="table h-100" v-if="entitiesToShow.length">
+  <table class="table table-bordered h-100" v-if="entitiesToShow.length">
     <table-header :visibleColumns="visibleColumns" :isShop="isShop"></table-header>
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"
@@ -15,6 +15,18 @@
     </tbody>
   </table>
 </template>
+
+<style scoped>
+  table {
+    table-layout: fixed;
+  }
+
+  tbody th {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    left: 0;
+  }
+</style>
 
 <script>
 import TableRow from '../components/dataView/TableRow'
