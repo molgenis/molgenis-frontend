@@ -1,11 +1,11 @@
 <template>
   <div>
     <div>
-      <div class="p-0 pl-3 d-flex justify-content-between align-items-center">
-        <h2>Filters</h2>
+      <div class="p-0 px-2 d-flex justify-content-between align-items-center">
+        <h2 class="m-0">Filters</h2>
         <button
           type="button"
-          class="btn btn-light m-2 btn-outline-secondary hide-filters"
+          class="btn btn-light btn-outline-secondary hide-filters"
           title="Hide Filters"
           @click="setHideFilters(true)"
         >

@@ -11,10 +11,10 @@
       <page-header-view v-if="!loading && dataDisplayLayout !== 'TableView' "></page-header-view>
     </div>
     <div class="mg-content d-flex h-100 overflow-control" :class="{'hidefilters': filters.hideSidebar}">
-      <div class="mg-filter">
+      <div class="mg-filter mr-2">
         <filters-view v-if="!loading"></filters-view>
       </div>
-      <div class="d-flex flex-column h-100 overflow-control w-100">
+      <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
         <toolbar-view class="mb-2"></toolbar-view>
         <active-filters
           @input="saveFilterState"
@@ -177,6 +177,7 @@ export default Vue.extend({
     left: -1px;
     transform: rotate(90deg);
     transform-origin: 0 100%;
+    z-index: 2;
   }
   .mg-content {
     white-space: normal;
@@ -187,7 +188,6 @@ export default Vue.extend({
     min-width: 20rem;
     max-width: 20rem;
     transform: translateX( 0 );
-    margin-right: 1rem;
   }
 
   .mg-data-view-container {

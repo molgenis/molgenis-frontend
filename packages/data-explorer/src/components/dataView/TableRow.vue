@@ -1,8 +1,9 @@
 <template>
   <tr>
     <th v-if="isShop"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
-    <th v-else>
-      <div v-if="isEditable" class="btn-group" role="group" aria-label="row actions">
+    <th v-else class="text-nowrap">
+      <input class="form-check-input" type="checkbox" v-model="isSelected" :value="id" >
+      <span v-if="isEditable" class="pl-3 btn-group align-middle" role="group" aria-label="row actions">
         <button
           class="btn btn-sm btn-link"
           role="button"
@@ -16,7 +17,13 @@
           :href="'/plugin/data-row-edit/' + tableName + '/' + id">
           <font-awesome-icon icon="edit"></font-awesome-icon>
         </a>
-      </div>
+        <a
+          class="btn btn-sm btn-link"
+          role="button"
+          :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
+          <font-awesome-icon icon="search"></font-awesome-icon>
+        </a>
+      </span>
     </th>
     <td v-for="(column, index) in visibleColumns" :key="index" class="text-nowrap text-truncate mg-data-column">
       {{rowData[column.name]}}
@@ -55,12 +62,25 @@
   }
 
   /**
-  * Style columns
+  * Style row actions
   */
   .mg-data-column {
     max-width: 8rem;
     overflow: hidden;
   }
+  [role="button"]{
+    padding: 0 0.2rem;
+  }
+  input[type="checkbox"]{
+    position: static;
+    margin:0;
+    top:0;
+    vertical-align: middle;
+  }
+  td, th{
+    vertical-align: middle;
+  }
+
 </style>
 
 <script>
