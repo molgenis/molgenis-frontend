@@ -4,10 +4,11 @@
     <div class="btn-group" role="group" aria-label="Row actions group">
       <a type="button" role="button" class="btn btn-outline-secondary"
       v-if="hasEditRights && !showSelected"
-      :href="'/plugin/data-row-edit/' + tableName">
+      :href="'/plugin/data-row-edit/' + tableName"
+      v-b-tooltip.hover.bottom="'Add'">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
       </a>
-      <button type="button" class="btn btn-outline-secondary">
+      <button type="button" class="btn btn-outline-secondary" v-b-tooltip.hover.bottom="'Delete'">
         <font-awesome-icon icon="trash" />
       </button>
     </div>
@@ -18,21 +19,24 @@
 
     <div class="btn-group" role="group" aria-label="Table actions group">
 
-      <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary">
+      <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary"
+        v-b-tooltip.hover.bottom="'Download'">
         <font-awesome-icon icon="download" />
       </button>
 
       <button type="button" role="button"
         v-if="!showSelected && dataDisplayLayout === 'TableView'"
         @click="toggleDataDisplayLayout"
-        class="btn btn-light btn-outline-secondary">
+        class="btn btn-light btn-outline-secondary"
+        v-b-tooltip.hover.bottom="'Card view'">
         <font-awesome-icon icon="th"></font-awesome-icon>
       </button>
 
       <button type="button" role="button"
         v-else-if="!showSelected"
         @click="toggleDataDisplayLayout"
-        class="btn btn-light btn-outline-secondary">
+        class="btn btn-light btn-outline-secondary"
+        v-b-tooltip.hover.bottom="'Tabel view'">
         <font-awesome-icon icon="th-list"></font-awesome-icon>
       </button>
 

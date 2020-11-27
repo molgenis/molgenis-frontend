@@ -1,5 +1,6 @@
 <template>
   <a :href="href"
+    v-b-tooltip.hover.bottom="'Settings'"
     type="button" role="button"
     class="btn btn-light btn-outline-secondary"
     title="Table settings">

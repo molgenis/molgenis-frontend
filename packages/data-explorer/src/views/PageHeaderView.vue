@@ -23,7 +23,6 @@ import { mapState, mapGetters } from 'vuex'
 
 export default Vue.extend({
   name: 'PageHeaderView',
-  components: { TableSettingsButton },
   computed: {
     ...mapState([
       'tableName',

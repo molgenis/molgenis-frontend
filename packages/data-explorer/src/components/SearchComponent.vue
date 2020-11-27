@@ -15,6 +15,7 @@
           class="btn btn-outline-secondary"
           type="submit"
           id="mg-data-explorer-search"
+          v-b-tooltip.hover.bottom="'Search'"
         >
           <font-awesome-icon icon="search"></font-awesome-icon>
         </button>
