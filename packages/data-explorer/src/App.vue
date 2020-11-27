@@ -1,5 +1,5 @@
 <template>
-  <page-component id="app" @contextLoaded="setContext">
+  <page-component id="app" @contextLoaded="setContext"  :class="{ 'app-like': dataDisplayLayout=='TableView' }">
     <router-view />
   </page-component>
 </template>
@@ -8,11 +8,27 @@
 import Vue from 'vue'
 import PageComponent from '../node_modules/@molgenis/molgenis-ui-context/src/components/PageComponent.vue'
 import '../node_modules/@molgenis/molgenis-ui-context/public/sticky-footer.css'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 export default Vue.extend({
   name: 'app',
   components: { PageComponent },
+  computed: { ...mapState(['dataDisplayLayout']) },
   methods: { ...mapMutations('account', ['setContext']) }
 })
 </script>
+
+<style>
+  /* todo add doc */
+  .app-like main.mg-page-content{
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+  .app-like .overflow-control{
+    overflow: hidden;
+  }
+  .app-like .mg-data-view-container,
+  .app-like .mg-filter{
+    overflow: auto;
+  }
+</style>

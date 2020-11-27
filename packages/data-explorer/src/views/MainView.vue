@@ -1,35 +1,41 @@
 <template>
-  <div class="container-fluid">
-    <breadcrumb-bar
-      v-if="isUserAuthenticated"
-      :breadcrumbs="breadcrumbs"
-      @fetchItems="fetchPackageTables"
-      >
-    </breadcrumb-bar>
-
-    <Toaster v-model="toasts"/>
-
-    <page-header-view v-if="!loading && dataDisplayLayout !== 'TableView' "></page-header-view>
-    <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
-      <div class="flex-filter">
+  <div class="mg-mainview d-flex flex-column h-100 overflow-control">
+    <div class="container-fluid">
+      <breadcrumb-bar
+        v-if="isUserAuthenticated"
+        :breadcrumbs="breadcrumbs"
+        @fetchItems="fetchPackageTables"
+        >
+      </breadcrumb-bar>
+      <Toaster v-model="toasts"/>
+      <page-header-view v-if="!loading && dataDisplayLayout !== 'TableView' "></page-header-view>
+    </div>
+    <div class="mg-content d-flex h-100 overflow-control" :class="{'hidefilters': filters.hideSidebar}">
+      <div class="mg-filter">
         <filters-view v-if="!loading"></filters-view>
       </div>
-      <div class="flex-data ml-4" >
-         <toolbar-view class="mb-2"></toolbar-view>
-        <button
-          type="button"
-          class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
-          title="Show Filters"
-          v-if="filters.hideSidebar && !showSelected"
-          @click="setHideFilters(false)">
-          <font-awesome-icon icon="chevron-up"></font-awesome-icon>
-          <span class="ml-2">Filters</span>
-        </button>
+      <div class="d-flex flex-column h-100 overflow-control w-100">
+        <toolbar-view class="mb-2"></toolbar-view>
+        <active-filters
+          @input="saveFilterState"
+          :value="activeFilterSelections"
+          :filters="filterDefinitions"
+        ></active-filters>
+        <div class="mg-data-view-container" >
+          <button
+            type="button"
+            class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
+            title="Show Filters"
+            v-if="filters.hideSidebar && !showSelected"
+            @click="setHideFilters(false)">
+            <font-awesome-icon icon="chevron-up"></font-awesome-icon>
+            <span class="ml-2">Filters</span>
+          </button>
 
-        <data-view v-if="!loading"></data-view>
-      </div>
+          <data-view v-if="!loading"></data-view>
+        </div>
+        </div>
     </div>
-
   </div>
 </template>
 
@@ -37,7 +43,7 @@
 import Vue from 'vue'
 import FiltersView from './FiltersView'
 import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
-import { Toaster } from '@molgenis-ui/components-library'
+import { ActiveFilters, Toaster } from '@molgenis-ui/components-library'
 
 import DataView from './DataView'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
@@ -59,7 +65,7 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
-  components: { FiltersView, DataView, FontAwesomeIcon, PageHeaderView, BreadcrumbBar, Toaster, ToolbarView },
+  components: { FiltersView, DataView, FontAwesomeIcon, PageHeaderView, BreadcrumbBar, Toaster, ToolbarView, ActiveFilters },
   computed: {
     toasts: {
       get: function () {
@@ -80,7 +86,18 @@ export default Vue.extend({
     ]),
     ...mapGetters([
       'isUserAuthenticated'
-    ])
+    ]),
+    activeFilterSelections: (vm) => {
+      return vm.searchText ? { ...vm.filters.selections, _search: vm.searchText } : vm.filters.selections
+    },
+    filterDefinitions: (vm) => {
+      const searchDef = {
+        type: 'string',
+        label: 'search',
+        name: '_search'
+      }
+      return vm.searchText ? [ ...vm.filters.definition, searchDef ] : vm.filters.definition
+    }
   },
   data () {
     return {
@@ -91,7 +108,9 @@ export default Vue.extend({
     ...mapMutations([
       'setHideFilters',
       'setTableName',
-      'setToasts'
+      'setToasts',
+      'setSearchText',
+      'setFilterSelection'
     ]),
     ...mapActions([
       'deleteRow',
@@ -104,6 +123,12 @@ export default Vue.extend({
       'fetchBreadcrumbs',
       'fetchPackageTables'
     ]),
+    saveFilterState (newSelections) {
+      if (newSelections['_search'] === undefined) {
+        this.setSearchText('')
+      }
+      this.setFilterSelection(newSelections)
+    },
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, deleteConfirmOptions)
@@ -153,38 +178,37 @@ export default Vue.extend({
     transform: rotate(90deg);
     transform-origin: 0 100%;
   }
-  .flex-mainview {
+  .mg-content {
     white-space: normal;
   }
-  .flex-filter {
+  .mg-filter {
     z-index: 1; /* prioritizes stacking index of sidebar: needed for datepicker */
     transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
     min-width: 20rem;
     max-width: 20rem;
-    padding-right: 1rem;
     transform: translateX( 0 );
+    margin-right: 1rem;
   }
 
-  .flex-data {
-    max-width: calc(100% - 22rem);
+  .mg-data-view-container {
     width: 100%;
   }
-  .hidefilters .flex-filter {
+  .hidefilters .mg-filter {
     transition: max-width 0.3s, min-width 0.3s, transform 0.6s;
     transform: translateX( -20rem );
     max-width: 0;
     min-width: 0;
     padding-right: 0;
   }
-  .hidefilters .flex-data {
+  .hidefilters .mg-data-view-container{
     max-width: 100%;
   }
 
   @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
-    .flex-mainview {
+    .mg-content {
       display: block;
     }
-    .flex-mainview .flex-filter {
+    .mg-content .mg-filter {
       min-width: 0;
       max-width: none;
       padding: 0;
@@ -192,7 +216,7 @@ export default Vue.extend({
   }
 
   .container-fluid >>> .breadcrumb {
-    margin-left: -1rem;
-    margin-right: -1rem;
+    margin-left: -15px;
+    margin-right: -15px;
   }
 </style>

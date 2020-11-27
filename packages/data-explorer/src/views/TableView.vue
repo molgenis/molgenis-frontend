@@ -1,5 +1,5 @@
 <template>
-  <table class="table" v-if="entitiesToShow.length">
+  <table class="table h-100" v-if="entitiesToShow.length">
     <table-header :visibleColumns="visibleColumns" :isShop="isShop"></table-header>
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"

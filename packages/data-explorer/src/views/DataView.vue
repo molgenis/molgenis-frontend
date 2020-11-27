@@ -1,23 +1,9 @@
 <template>
-  <div class="">
-    <div class="row">
-      <div class="col">
-        <clipboard-view v-if="showSelected"></clipboard-view>
-        <div v-else>
-          <div class="row">
-            <div class="col">
-              <active-filters
-                @input="saveFilterState"
-                :value="activeFilterSelections"
-                :filters="filterDefinitions"
-              ></active-filters>
-            </div>
-          </div>
-
-          <select-layout-view ></select-layout-view>
-        </div>
-      </div>
-    </div>
+  <div class="d-flex h-100">
+    <clipboard-view v-if="showSelected"></clipboard-view>
+    <template v-else>
+      <select-layout-view ></select-layout-view>
+    </template>
     <cart-selection-toast
       v-if="selectedItemIds.length > 0 && !showSelected"
       :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"
@@ -39,7 +25,7 @@ import Vue from 'vue'
 import SelectLayoutView from './SelectLayoutView'
 import ClipboardView from './ClipboardView'
 import { mapState, mapMutations } from 'vuex'
-import { ActiveFilters, CartSelectionToast } from '@molgenis-ui/components-library'
+import { CartSelectionToast } from '@molgenis-ui/components-library'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimes, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
@@ -48,7 +34,7 @@ library.add(faTimes, faShoppingCart)
 
 export default Vue.extend({
   name: 'DataView',
-  components: { SelectLayoutView, ClipboardView, ActiveFilters, CartSelectionToast, FontAwesomeIcon },
+  components: { SelectLayoutView, ClipboardView, CartSelectionToast, FontAwesomeIcon },
   computed: {
     ...mapState([
       'showSelected',
@@ -106,12 +92,6 @@ export default Vue.extend({
     openSelectionList () {
       this.setShowSelected(true)
       this.setHideFilters(true)
-    },
-    saveFilterState (newSelections) {
-      if (newSelections['_search'] === undefined) {
-        this.setSearchText('')
-      }
-      this.setFilterSelection(newSelections)
     }
   }
 })

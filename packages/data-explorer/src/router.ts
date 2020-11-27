@@ -18,7 +18,7 @@ export default new Router({
       path: '*',
       redirect: {
         name: 'main-view',
-        params: { entity: 'sys_ts_DataExplorerEntitySettings' }
+        params: { entity: 'test_TypeTest' }
       }
     }
   ]
