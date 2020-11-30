@@ -146,9 +146,9 @@ export default {
       required: false,
       default: () => false
     },
-    /*
-    * Enum to set active filters selection dialogue style, select one of ['dropdown', 'modal']
-    * Optional, default to 'dropdown'
+    /**
+    * Set active filters selection dialogue style, choose between 'dropdown' or 'modal'.
+    * Defaults to using 'dropdown'
     */
     dialogStyle: {
       type: String,
