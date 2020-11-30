@@ -15,7 +15,7 @@ const plugins = [
   css({ output: 'dist/components-library.css' }),
   vue({ css: false, needMap: false }),
   replace({
-    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env.NODE_ENV': JSON.stringify('production')
   }),
   resolve({
     extensions: ['.ts', '.vue'],
