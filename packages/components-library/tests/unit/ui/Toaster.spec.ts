@@ -5,15 +5,15 @@ import { Toast } from '@/types/Toast'
 
 const localVue = getLocalVue()
 
-let toasts: Toast[] = []
+const toasts: Toast[] = []
 
-let propsData = { 
+const propsData = {
   value: toasts
 }
 describe('Toaster.vue', () => {
   it('renders the Toaster with default position', () => {
     const wrapper = shallowMount(Toaster, { localVue, propsData })
-    expect(wrapper.html()).toMatch('<div class=\"c-toaster bottom-right\"></div>')
+    expect(wrapper.html()).toMatch('<div class="c-toaster bottom-right"></div>')
   })
 
   it('renders the Toaster with default position and remove it after timeout', async () => {
@@ -40,12 +40,11 @@ describe('Toaster.vue', () => {
     }
     propsData.value = [toast]
     const wrapper = shallowMount(Toaster, { localVue, propsData })
-   
+
     expect(wrapper.findAll('.mg-toast').length).toEqual(1)
     jest.runAllTimers()
     await localVue.nextTick()
     expect(wrapper.findAll('.mg-toast').length).toEqual(0)
-    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000);
+    expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 3000)
   })
-
 })

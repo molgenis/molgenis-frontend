@@ -46,12 +46,45 @@
           </filter-card>
         </transition-group>
       </draggable>
-      <change-filters
-        v-if="canEdit && filters.length > 0"
-        v-model="filtersToShow"
-        :filters="filters"
-        @input="selectionUpdate"
-      />
+      <div v-if="canEdit && filters.length > 0" class="change-filters">
+        <b-dropdown
+          v-if="dialogStyle == 'dropdown'"
+          ref="addFilter"
+          variant="primary"
+          boundary="window"
+          menu-class="shadow ml-2"
+          dropright
+          no-caret
+          block
+        >
+          <template v-slot:button-content>
+            Change filters <font-awesome-icon icon="caret-right" class="ml-1" />
+          </template>
+          <b-dropdown-text>
+            Change filters
+            <span class="float-right remove-button" @click.stop="$refs.addFilter.hide(true)">
+              <font-awesome-icon icon="times" />
+            </span>
+          </b-dropdown-text>
+          <b-dropdown-form>
+            <change-filters
+              v-model="filtersToShow"
+              :filters="filters"
+              @input="selectionUpdate">
+            </change-filters>
+          </b-dropdown-form>
+        </b-dropdown>
+        <button v-else class="btn btn-block btn-primary text-nowrap" v-b-modal.change-filters-modal>
+          Change Filter<font-awesome-icon icon="caret-right" class="ml-1"/>
+        </button>
+        <b-modal id="change-filters-modal" title="Change filters" hide-footer hide-header scrollable>
+          <change-filters
+            v-model="filtersToShow"
+            :filters="filters"
+            @input="selectionUpdate">
+          </change-filters>
+        </b-modal>
+      </div>
     </b-collapse>
   </div>
 </template>
@@ -112,6 +145,15 @@ export default {
       type: Boolean,
       required: false,
       default: () => false
+    },
+    /**
+    * Set active filters selection dialogue style, choose between 'dropdown' or 'modal'.
+    * Defaults to using 'dropdown'
+    */
+    dialogStyle: {
+      type: String,
+      required: false,
+      default: () => 'dropdown'
     }
   },
   data () {
@@ -176,13 +218,28 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .dragdrop .drag-handle {
     cursor: grab;
   }
 
   .dragdrop.dragging .drag-handle {
     cursor: grabbing;
+  }
+
+  .remove-button {
+    transition: color 0.2s;
+    height: inherit;
+    width: 1.5em;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  .remove-button:hover {
+    color: var(--danger);
   }
 </style>
 
