@@ -39,20 +39,7 @@ describe('ChangeFilters.vue', () => {
     wrapper = mount(ChangeFilters, options)
   })
 
-  it('can add a filter', async () => {
-    await wrapper.find('button.dropdown-toggle').trigger('click')
-    await wrapper.findAll('.custom-control-input').at(1).trigger('click')
-    expect(wrapper.emitted().input[0]).toEqual([['search', 'compound-title', 'string', 'checkbox']])
-  })
-
-  it('can remove a filter', async () => {
-    await wrapper.find('button.dropdown-toggle').trigger('click')
-    await wrapper.findAll('.custom-control-input').at(0).trigger('click')
-    expect(wrapper.emitted().input[0]).toEqual([[]])
-  })
-
   it('can select all and deselect all with compounds', async () => {
-    wrapper.find('button.dropdown-toggle').trigger('click')
     // Select all
     wrapper.findAll('.custom-control-input').at(1).trigger('click')
     expect(wrapper.emitted().input[0]).toEqual([['search', 'compound-title', 'string', 'checkbox']])
@@ -62,7 +49,6 @@ describe('ChangeFilters.vue', () => {
   })
 
   it('can select and deselect sub-compounds', () => {
-    wrapper.find('button.dropdown-toggle').trigger('click')
     // Select all sub-compounds (with all sub-compounds selected compound parent also gets selected)
     wrapper.findAll('.custom-control-input').at(2).trigger('click')
     wrapper.findAll('.custom-control-input').at(3).trigger('click')
