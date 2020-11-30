@@ -25,4 +25,3 @@ export {
   StringFilter,
   Toaster
 }
-

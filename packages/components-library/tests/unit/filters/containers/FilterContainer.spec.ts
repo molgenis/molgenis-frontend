@@ -58,4 +58,16 @@ describe('FilterContainer.vue', () => {
     await wrapper.find('.change-filters ul form input[type=checkbox').trigger('click')
     expect(wrapper.findAll('.card-header').length).toEqual(3)
   })
+
+  it('by default uses a dropdown to select active filters', async () => {
+    await wrapper.setProps({ canEdit: true })
+    await wrapper.find('.dropdown-toggle').trigger('click')
+    expect(wrapper.find('.dropdown-menu')).toBeDefined()
+  })
+
+  it('uses a modal to select active filters if dialogStyle is set to modal', async () => {
+    await wrapper.setProps({ canEdit: true, dialogStyle: 'modal' })
+    await wrapper.find('.btn.btn-block.btn-primary').trigger('click')
+    expect(wrapper.find('.modal-dialog')).toBeDefined()
+  })
 })
