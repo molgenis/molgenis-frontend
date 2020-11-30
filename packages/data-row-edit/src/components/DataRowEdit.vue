@@ -67,6 +67,11 @@
                   class="alert text-danger">
                 {{ 'data-row-edit-invalid-fields-msg' | i18n }}
             </span>
+            <span v-else-if="alert && alert.type === 'danger' && alert.message"
+                  class="alert text-danger">
+                {{ alert.message }}
+            </span>
+
           </div>
         </div>
 
@@ -197,14 +202,20 @@ export default {
         this.parent.setRef(false) // show parent
         this.parent.$refs.refContainer.removeChild(this.$el) // destroy child
       },
-      handleError (message) {
-        this.alert = {
-          message: typeof message !== 'string' ? this.$t('data-row-edit-default-error-message')
-            : message,
-          type: 'danger'
-        }
+      handleError (error) {
+        const alertMsg = this.errorToMessage(error)
         this.showForm = true
         this.isSaving = false
+        this.alert = {message: alertMsg, type: 'danger'}
+      },
+      errorToMessage (error) {
+        if(typeof error === 'string') {
+          return error
+        } else if (error && Array.isArray(error.errors) && error.errors.length) {
+          return `${error.errors[0].message} (${error.errors[0].code})`
+        } else {
+          return this.$t('data-row-edit-default-error-message')
+        }
       },
       /**
        * Takes molgenis api-v2 metaData object and build map from fieldName to referenceEntity name
