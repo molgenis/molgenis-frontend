@@ -14,13 +14,14 @@
       </div>
       <div class="p-2">
         <filter-container
-         v-if="isFilterDataLoaded"
+          v-if="isFilterDataLoaded"
           :key="renderCount"
           v-model="filterSelections"
           :filters="filters.definition"
           :filters-shown="filterShown"
           @update="updateState"
           :can-edit="true"
+          dialogStyle="modal"
         ></filter-container>
       </div>
     </div>
