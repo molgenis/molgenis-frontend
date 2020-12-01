@@ -113,3 +113,10 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style scoped>
+  /* safari scrollbar fix */
+  .btn-toolbar{
+    min-height: 36px;
+  }
+</style>

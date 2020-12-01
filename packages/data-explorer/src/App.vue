@@ -23,6 +23,7 @@ export default Vue.extend({
   .app-like main.mg-page-content{
     flex: 1 1 auto;
     overflow: hidden;
+    height: 100%;
   }
   .app-like .overflow-control{
     overflow: hidden;
@@ -30,5 +31,17 @@ export default Vue.extend({
   .app-like .mg-data-view-container,
   .app-like .mg-filter{
     overflow: auto;
+  }
+
+  /* fix for safari scroll bug
+    https://stackoverflow.com/questions/32971425/overflow-auto-not-working-in-safari-osx
+  */
+  @supports (-webkit-touch-callout: none) {
+    .app-like .mg-data-view-container,
+    .app-like .mg-filter{
+      white-space:nowrap;
+      overflow: scroll !important;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 </style>
