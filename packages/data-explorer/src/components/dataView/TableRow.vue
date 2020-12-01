@@ -6,19 +6,22 @@
       <b-popover v-if="isEditable"  :target="'table-row-'+id" triggers="hover" placement="right" custom-class="row-actions-position">
         <span class="btn-group align-middle" role="group" aria-label="row actions">
           <a
+            v-b-tooltip.hover.bottom="'Edit row'"
             class="btn btn-sm btn-link"
             role="button"
             :href="'/plugin/data-row-edit/' + tableName + '/' + id">
             <font-awesome-icon icon="edit"></font-awesome-icon>
           </a>
           <a
+            v-b-tooltip.hover.bottom="'display row'"
             class="btn btn-sm btn-link"
             role="button"
             :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
             <font-awesome-icon icon="search"></font-awesome-icon>
           </a>
           <button
-            class="btn btn-sm btn-link"
+            v-b-tooltip.hover.bottom="'remove row'"
+            class="btn btn-sm btn-link text-danger"
             role="button"
             @click="$eventBus.$emit('delete-item', id)"
           >
