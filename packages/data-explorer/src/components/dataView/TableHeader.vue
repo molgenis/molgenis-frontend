@@ -12,7 +12,7 @@
 
 <style scoped>
   thead th.top-left-corner {
-    width: 7rem;
+    width: 2.5rem;
     left: 0;
     z-index: 1;
     box-sizing: border-box;

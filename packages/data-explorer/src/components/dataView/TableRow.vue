@@ -1,29 +1,31 @@
 <template>
-  <tr>
+  <tr :id="'table-row-'+id">
     <th v-if="isShop"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
     <th v-else class="text-nowrap">
       <input class="form-check-input" type="checkbox" v-model="isSelected" :value="id" >
-      <span v-if="isEditable" class="pl-3 btn-group align-middle" role="group" aria-label="row actions">
-        <button
-          class="btn btn-sm btn-link"
-          role="button"
-          @click="$eventBus.$emit('delete-item', id)"
+      <b-popover v-if="isEditable"  :target="'table-row-'+id" triggers="hover" placement="right" custom-class="row-actions-position">
+        <span class="btn-group align-middle" role="group" aria-label="row actions">
+          <a
+            class="btn btn-sm btn-link"
+            role="button"
+            :href="'/plugin/data-row-edit/' + tableName + '/' + id">
+            <font-awesome-icon icon="edit"></font-awesome-icon>
+          </a>
+          <a
+            class="btn btn-sm btn-link"
+            role="button"
+            :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
+            <font-awesome-icon icon="search"></font-awesome-icon>
+          </a>
+          <button
+            class="btn btn-sm btn-link"
+            role="button"
+            @click="$eventBus.$emit('delete-item', id)"
           >
-          <font-awesome-icon icon="trash"></font-awesome-icon>
-        </button>
-        <a
-          class="btn btn-sm btn-link"
-          role="button"
-          :href="'/plugin/data-row-edit/' + tableName + '/' + id">
-          <font-awesome-icon icon="edit"></font-awesome-icon>
-        </a>
-        <a
-          class="btn btn-sm btn-link"
-          role="button"
-          :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
-          <font-awesome-icon icon="search"></font-awesome-icon>
-        </a>
-      </span>
+            <font-awesome-icon icon="trash"></font-awesome-icon>
+          </button>
+        </span>
+      </b-popover>
     </th>
     <td v-for="(column, index) in visibleColumns" :key="index" class="text-nowrap text-truncate mg-data-column">
       {{rowData[column.name]}}
@@ -32,6 +34,9 @@
 </template>
 
 <style scoped>
+  .row-actions-position{
+    left: -6rem !important;
+  }
   /**
    * Make actions column stick
    */
