@@ -1,5 +1,5 @@
 <template>
-  <tr :id="'table-row-'+id">
+  <tr :id="'table-row-'+id" :class="{'row-selected': isSelected}">
     <th v-if="isShop"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
     <th v-else class="text-nowrap">
       <input class="form-check-input" type="checkbox" v-model="isSelected" :value="id" >
@@ -35,8 +35,10 @@
     </td>
   </tr>
 </template>
-
 <style scoped>
+  .row-selected{
+    background-color: #017FFD10;
+  }
   .row-actions-position{
     left: -6rem !important;
   }
