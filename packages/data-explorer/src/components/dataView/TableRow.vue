@@ -3,7 +3,7 @@
     <th v-if="isShop"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
     <th v-else class="text-nowrap">
       <input class="form-check-input" type="checkbox" v-model="isSelected" :value="id" >
-      <b-popover v-if="isEditable"  :target="'table-row-'+id" triggers="hover" placement="right" custom-class="row-actions-position">
+      <b-popover v-if="isEditable"  :target="'table-row-'+id" triggers="hover" placement="right" :custom-class="(filters.hideSidebar && !showSelected) ? 'row-actions-position-side' : 'row-actions-position-top'">
         <span class="btn-group align-middle" role="group" aria-label="row actions">
           <a
             v-b-tooltip.hover.bottom="'Edit row'"
@@ -39,8 +39,12 @@
   .row-selected{
     background-color: #017FFD10;
   }
-  .row-actions-position{
+  .row-actions-position-top{
     left: -6rem !important;
+  }
+  .row-actions-position-side{
+    left: 2rem !important;
+    top: -2rem !important;
   }
   /**
    * Make actions column stick
