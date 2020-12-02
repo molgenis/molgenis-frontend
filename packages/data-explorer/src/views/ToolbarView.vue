@@ -7,7 +7,7 @@
       v-b-tooltip.hover.bottom="'Add'">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
       </a>
-      <button type="button" class="btn btn-outline-danger" v-b-tooltip.hover.bottom="'Delete'">
+      <button type="button" class="btn btn-outline-secondary" v-b-tooltip.hover.bottom="'Delete'">
         <font-awesome-icon icon="trash" />
       </button>
     </div>
