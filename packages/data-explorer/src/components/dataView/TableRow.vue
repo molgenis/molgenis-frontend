@@ -98,6 +98,7 @@ import ShoppingButton from '../utils/ShoppingButton'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { mapState } from 'vuex'
 
 library.add(faEdit)
 export default {
@@ -133,6 +134,12 @@ export default {
       type: Boolean,
       default: () => false
     }
+  },
+  computed: {
+    ...mapState([
+      'filters',
+      'showSelected'
+    ])
   },
   components: { ShoppingButton, FontAwesomeIcon }
 }

@@ -2,6 +2,13 @@
   <div class="btn-toolbar justify-content-between" role="toolbar">
 
     <div v-if="hasEditRights && !showSelected" class="btn-group" role="group" aria-label="Row actions group">
+      <button type="button" class="btn btn-outline-secondary"
+        v-b-tooltip.hover.bottom="'Show Filters'"
+        v-if="filters.hideSidebar && !showSelected"
+        @click="setHideFilters(false)">
+        <font-awesome-icon icon="chevron-right"></font-awesome-icon>
+      </button>
+
       <a type="button" role="button" class="btn btn-outline-secondary"
       :href="'/plugin/data-row-edit/' + tableName"
       v-b-tooltip.hover.bottom="'Add'">
@@ -17,7 +24,6 @@
     </div>
 
     <div class="btn-group" role="group" aria-label="Table actions group">
-
       <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary"
         v-b-tooltip.hover.bottom="'Download'">
         <font-awesome-icon icon="download" />
@@ -64,6 +70,7 @@ export default Vue.extend({
   components: { FontAwesomeIcon, SearchComponent, TableSettingsButton },
   computed: {
     ...mapState([
+      'filters',
       'dataDisplayLayout',
       'tableMeta',
       'tableSettings',
@@ -93,6 +100,7 @@ export default Vue.extend({
   methods: {
     ...mapActions(['downloadResources']),
     ...mapMutations([
+      'setHideFilters',
       'setDataDisplayLayout',
       'setFilterSelection',
       'setSearchText'

@@ -15,23 +15,13 @@
         <filters-view v-if="!loading"></filters-view>
       </div>
       <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
-        <toolbar-view class="mb-2"></toolbar-view>
         <active-filters
           @input="saveFilterState"
           :value="activeFilterSelections"
           :filters="filterDefinitions"
         ></active-filters>
+        <toolbar-view class="mb-2"></toolbar-view>
         <div class="mg-data-view-container" >
-          <button
-            type="button"
-            class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
-            title="Show Filters"
-            v-if="filters.hideSidebar && !showSelected"
-            @click="setHideFilters(false)">
-            <font-awesome-icon icon="chevron-up"></font-awesome-icon>
-            <span class="ml-2">Filters</span>
-          </button>
-
           <data-view v-if="!loading"></data-view>
         </div>
         </div>
@@ -170,15 +160,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .show-filters-button {
-    display: inline-block;
-    white-space: nowrap;
-    position: absolute;
-    left: -1px;
-    transform: rotate(90deg);
-    transform-origin: 0 100%;
-    z-index: 2;
-  }
   .mg-content {
     white-space: normal;
   }
