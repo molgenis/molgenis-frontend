@@ -39,15 +39,6 @@
   .row-selected{
     background-color: #017FFD10;
   }
-  /*
-  .row-actions-position-top{
-    left: -6rem !important;
-  }
-  .row-actions-position-side{
-    left: 2rem !important;
-    top: -2rem !important;
-  }
-  */
   /**
    * Make actions column stick
    */

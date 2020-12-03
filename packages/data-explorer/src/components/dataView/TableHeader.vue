@@ -41,8 +41,12 @@
     width: 100%;
   }
   thead th:before {
-    top: -1px;
-    border-top: 1px solid #dee2e6;
+    /**
+    * making the line a bit thicker to hide text that sometimes is visible behind header on retina screens
+    * bug: https://bugs.chromium.org/p/chromium/issues/detail?id=673538
+    */
+    top: -2px;
+    border-top: 2px solid #dee2e6;
   }
   thead th:after {
     bottom: -1px;
