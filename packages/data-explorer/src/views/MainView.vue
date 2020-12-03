@@ -37,13 +37,8 @@ import { ActiveFilters, Toaster } from '@molgenis-ui/components-library'
 
 import DataView from './DataView'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import PageHeaderView from './PageHeaderView'
 import ToolbarView from './ToolbarView'
-
-library.add(faChevronUp)
 
 const deleteConfirmOptions = {
   okVariant: 'danger',
@@ -55,7 +50,7 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
-  components: { FiltersView, DataView, FontAwesomeIcon, PageHeaderView, BreadcrumbBar, Toaster, ToolbarView, ActiveFilters },
+  components: { FiltersView, DataView, PageHeaderView, BreadcrumbBar, Toaster, ToolbarView, ActiveFilters },
   computed: {
     toasts: {
       get: function () {
