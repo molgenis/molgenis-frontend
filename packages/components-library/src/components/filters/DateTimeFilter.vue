@@ -90,7 +90,7 @@ export default {
       default: () => [null, null]
     },
     /**
-     * Append the dialog to the body tag, useful if filter is withing overflow:scroll
+     * Append the dialog to the body tag, useful if filter is used within a container that uses overflow:scroll 
      * @model
      */
     appendToBody: {
