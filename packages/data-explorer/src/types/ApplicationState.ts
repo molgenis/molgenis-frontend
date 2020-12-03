@@ -44,6 +44,7 @@ export type FilterDefinition = {
   useSlider?: boolean
   step?: number
   time?: boolean
+  appendToBody?: boolean
 }
 
 export type FilterGroup = {
