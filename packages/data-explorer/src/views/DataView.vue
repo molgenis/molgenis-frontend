@@ -5,7 +5,7 @@
       <select-layout-view ></select-layout-view>
     </template>
     <cart-selection-toast
-      v-if="selectedItemIds.length > 0 && !showSelected"
+      v-if="isShop && selectedItemIds.length > 0 && !showSelected"
       :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"
       :clickHandler="openSelectionList"
       title="Selection"
@@ -37,6 +37,7 @@ export default Vue.extend({
   components: { SelectLayoutView, ClipboardView, CartSelectionToast, FontAwesomeIcon },
   computed: {
     ...mapState([
+      'isShop',
       'showSelected',
       'tableName',
       'tableMeta',
