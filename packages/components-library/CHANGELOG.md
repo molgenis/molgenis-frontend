@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.5.0...@molgenis-ui/components-library@1.5.1) (2020-12-04)
+
+
+### Bug Fixes
+
+* **components-library:** removed negative margins when active filters are empty ([c5a2c9c](https://github.com/molgenis/molgenis-frontend/commit/c5a2c9c))
+
+
+
+
+
 # [1.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.4.3...@molgenis-ui/components-library@1.5.0) (2020-12-03)
 
 
