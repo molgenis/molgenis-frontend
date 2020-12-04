@@ -33,8 +33,9 @@ export default Vue.extend({
     overflow: auto;
   }
 
-  /* fix for safari scroll bug
-    https://stackoverflow.com/questions/32971425/overflow-auto-not-working-in-safari-osx
+  /*
+  * fix for safari scroll bug
+  * https://stackoverflow.com/questions/32971425/overflow-auto-not-working-in-safari-osx
   */
   @supports (-webkit-touch-callout: none) {
     .app-like .mg-data-view-container,
@@ -43,5 +44,20 @@ export default Vue.extend({
       overflow: scroll !important;
       -webkit-overflow-scrolling: touch;
     }
+  }
+
+  /*
+  * temporary fix for strange molgenis theme behaviour
+  */
+  .breadcrumb{
+    background-color: #e9ecef;
+    padding: .75rem 1rem;
+    list-style: none;
+  }
+  .mg-page .mg-page-content{
+    margin-top: 0;
+  }
+  .table-bordered, .table-bordered td, .table-bordered th{
+    border: 1px solid #dee2e6 !important;
   }
 </style>
