@@ -9,7 +9,7 @@
         <font-awesome-icon icon="chevron-right"></font-awesome-icon>
       </button>
 
-      <a type="button" role="button" class="btn btn-outline-secondary"
+      <a type="button" role="button" class="btn btn-outline-secondary add-row"
       :href="'/plugin/data-row-edit/' + tableName"
       v-b-tooltip.hover.bottom="'Add'">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
@@ -32,7 +32,7 @@
       <button type="button" role="button"
         v-if="!showSelected && dataDisplayLayout === 'TableView'"
         @click="toggleDataDisplayLayout"
-        class="btn btn-light btn-outline-secondary"
+        class="btn btn-light btn-outline-secondary card-layout"
         v-b-tooltip.hover.bottom="'Card view'">
         <font-awesome-icon icon="th"></font-awesome-icon>
       </button>
@@ -40,7 +40,7 @@
       <button type="button" role="button"
         v-else-if="!showSelected"
         @click="toggleDataDisplayLayout"
-        class="btn btn-light btn-outline-secondary"
+        class="btn btn-light btn-outline-secondary table-layout"
         v-b-tooltip.hover.bottom="'Tabel view'">
         <font-awesome-icon icon="th-list"></font-awesome-icon>
       </button>

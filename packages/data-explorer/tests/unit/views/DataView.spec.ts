@@ -36,7 +36,7 @@ describe('DataView.vue', () => {
       setHideFilters: jest.fn(),
       setShowSelected: jest.fn(),
       setSelectedItems: jest.fn(),
-      setFilterSelection: jest.fn()
+      setFilterSelection: jest.fn(),
     }
     actions = {
       getTableData: jest.fn()
@@ -60,26 +60,6 @@ describe('DataView.vue', () => {
 
     it('should mutate the value to the store', () => {
       expect(mutations.setSearchText).toHaveBeenCalled()
-    })
-  })
-
-  describe('saveFilterState method', () => {
-    let wrapper: any
-    beforeEach(() => {
-      wrapper = shallowMount(DataView, { store, localVue })
-    })
-
-    it('should clear the search text if search is not part of the filter', () => {
-      const newSelections = {}
-      wrapper.vm.saveFilterState(newSelections)
-      expect(mutations.setSearchText).toHaveBeenCalled()
-    })
-
-    it('should not clear the search text if search is part of the filter', () => {
-      const newSelections = { _search: 'mock selection' }
-      // @ts-ignore
-      wrapper.vm.saveFilterState(newSelections)
-      expect(mutations.setSearchText).not.toHaveBeenCalled()
     })
   })
 

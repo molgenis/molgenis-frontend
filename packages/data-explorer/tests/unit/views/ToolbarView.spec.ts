@@ -42,6 +42,10 @@ describe('ToolbarView.vue', () => {
   })
 
   it('can change to table layout', () => {
+    state.dataDisplayLayout = 'CardView'
+    store = new Vuex.Store({
+      state, mutations, getters
+    })
     const wrapper = shallowMount(ToolbarView, { store, localVue })
     wrapper.find('button.table-layout').trigger('click')
     // @ts-ignore
@@ -64,20 +68,20 @@ describe('ToolbarView.vue', () => {
 
     it('should render the add button as a link to the data-row-edit', () => {
       const wrapper = shallowMount(ToolbarView, { store, localVue })
-      expect(wrapper.find('.toolbar > div > a').attributes().href).toEqual('/plugin/data-row-edit/root_hospital_patients')
+      expect(wrapper.find('.btn-toolbar > div > a.add-row').attributes().href).toEqual('/plugin/data-row-edit/root_hospital_patients')
     })
 
     it('should not be shown in shoppingcart mode', () => {
       store.state.showSelected = true
       const wrapper = shallowMount(ToolbarView, { store, localVue })
-      expect(wrapper.find('.toolbar > a').exists()).toBe(false)
+      expect(wrapper.find('.btn-toolbar > a').exists()).toBe(false)
     })
 
     it('should not show the button without edit rights', () => {
       store.state.showSelected = true
       getters.hasEditRights.mockReturnValueOnce(false)
       const wrapper = shallowMount(ToolbarView, { store, localVue })
-      expect(wrapper.find('.toolbar > a').exists()).toBe(false)
+      expect(wrapper.find('.btn-toolbar > a').exists()).toBe(false)
     })
 
     afterEach(() => { store.state.showSelected = false })

@@ -2,7 +2,7 @@
   <a :href="href"
     v-b-tooltip.hover.bottom="'Settings'"
     type="button" role="button"
-    class="btn btn-light btn-outline-secondary"
+    class="btn btn-light btn-outline-secondary table-settings"
     title="Table settings">
     <font-awesome-icon icon="cog"></font-awesome-icon>
   </a>
