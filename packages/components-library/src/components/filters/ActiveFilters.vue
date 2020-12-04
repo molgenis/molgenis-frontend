@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{'m-n1': activeValues.length > 0}">
     <button
       v-for="(item, key) in activeValues"
       :key="key"
