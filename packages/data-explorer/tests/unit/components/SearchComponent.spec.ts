@@ -6,7 +6,7 @@ describe('SearchComponent', () => {
   let wrapper: any
 
   beforeEach(() => {
-    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router })
+    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router, directives: { 'b-tooltip': () => {} } })
   })
 
   it('should render the component', () => {
