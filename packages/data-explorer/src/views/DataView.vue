@@ -3,20 +3,20 @@
     <clipboard-view v-if="showSelected"></clipboard-view>
     <template v-else>
       <select-layout-view ></select-layout-view>
+      <cart-selection-toast
+        v-if="tableSettings.isShop && selectedItemIds.length > 0"
+        :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"
+        :clickHandler="openSelectionList"
+        title="Selection"
+        v-model="handleSelectionItems"
+      >
+        <template v-slot:removeButton><font-awesome-icon icon="times"></font-awesome-icon></template>
+        <template v-slot:buttonText>
+          <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
+          Show cart
+        </template>
+      </cart-selection-toast>
     </template>
-    <cart-selection-toast
-      v-if="isShop && selectedItemIds.length > 0 && !showSelected"
-      :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"
-      :clickHandler="openSelectionList"
-      title="Selection"
-      v-model="handleSelectionItems"
-    >
-      <template v-slot:removeButton><font-awesome-icon icon="times"></font-awesome-icon></template>
-      <template v-slot:buttonText>
-        <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
-        Show cart
-      </template>
-    </cart-selection-toast>
   </div>
 </template>
 
@@ -37,7 +37,6 @@ export default Vue.extend({
   components: { SelectLayoutView, ClipboardView, CartSelectionToast, FontAwesomeIcon },
   computed: {
     ...mapState([
-      'isShop',
       'showSelected',
       'tableName',
       'tableMeta',

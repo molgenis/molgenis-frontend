@@ -1,20 +1,20 @@
 <template>
   <div class="btn-toolbar justify-content-between" role="toolbar">
 
-    <div v-if="hasEditRights && !showSelected" class="btn-group" role="group" aria-label="Row actions group">
-      <button type="button" class="btn btn-outline-secondary"
+    <div v-if="!showSelected" class="btn-group" role="group" aria-label="Row actions group">
+      <button type="button" class="btn btn-outline-secondary show-filters-button"
         v-b-tooltip.hover.bottom="'Show Filters'"
-        v-if="filters.hideSidebar && !showSelected"
+        v-if="filters.hideSidebar"
         @click="setHideFilters(false)">
         <font-awesome-icon icon="chevron-right"></font-awesome-icon>
       </button>
 
-      <a type="button" role="button" class="btn btn-outline-secondary add-row"
+      <a v-if="hasEditRights" type="button" role="button" class="btn btn-outline-secondary add-row"
       :href="'/plugin/data-row-edit/' + tableName"
       v-b-tooltip.hover.bottom="'Add'">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
       </a>
-      <button type="button" class="btn btn-outline-secondary" v-b-tooltip.hover.bottom="'Delete'">
+      <button v-if="hasEditRights" type="button" class="btn btn-outline-secondary" v-b-tooltip.hover.bottom="'Delete'">
         <font-awesome-icon icon="trash" />
       </button>
     </div>
