@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.4.3...@molgenis-ui/components-library@1.5.0) (2020-12-03)
+
+
+### Features
+
+* **components-library:** added new appendToBody property to datetime filter ([31c9bd7](https://github.com/molgenis/molgenis-frontend/commit/31c9bd7))
+
+
+
+
+
+## [1.4.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.4.2...@molgenis-ui/components-library@1.4.3) (2020-12-03)
+
+
+### Bug Fixes
+
+* **components-library:** fix button margin with negative margins ([e7ad3ba](https://github.com/molgenis/molgenis-frontend/commit/e7ad3ba))
+
+
+
+
+
 ## [1.4.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.4.1...@molgenis-ui/components-library@1.4.2) (2020-11-30)
 
 **Note:** Version bump only for package @molgenis-ui/components-library
