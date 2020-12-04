@@ -190,9 +190,4 @@ export default Vue.extend({
       padding: 0;
     }
   }
-
-  .container-fluid >>> .breadcrumb {
-    margin-left: -15px;
-    margin-right: -15px;
-  }
 </style>
