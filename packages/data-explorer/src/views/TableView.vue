@@ -1,6 +1,6 @@
 <template>
   <table class="table table-bordered h-100" v-if="entitiesToShow.length">
-    <table-header :visibleColumns="visibleColumns" :isShop="isShop"></table-header>
+    <table-header :visibleColumns="visibleColumns" :isShop="tableSettings.isShop"></table-header>
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"
                :key="index"
