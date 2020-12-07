@@ -218,16 +218,21 @@ export default {
         }
       },
       /**
-       * Takes molgenis api-v2 metaData object and build map from fieldName to referenceEntity name
+       * Takes molgenis api-v2 metaData object and builds a map from fieldName to referenceEntity name
        * Only field that have a reference entity are included in the map
        */
       buildReferenceMap (metaData) {
-        this.referenceMap = metaData.attributes
+        // recursily walk compound
+        const flattenAttr = (attr) => attr.attributes && attr.attributes.length ? attr.attributes.flatMap(flattenAttr) : [attr] 
+        
+        return metaData.attributes
+          .flatMap(flattenAttr)
           .filter(attr => Object.prototype.hasOwnProperty.call(attr, 'refEntity'))
           .reduce((accum, attr) => {
-            accum[attr.name] = attr.refEntity.name
+          accum[attr.name] = attr.refEntity.name
             return accum
           }, {})
+
       },
       async fetchTableData (dataTableId, dataRowId) {
         const mapperOptions = {
@@ -243,7 +248,7 @@ export default {
           const resp = await repository.fetch(dataTableId, dataRowId)
           this.idAttribute = resp.meta.idAttribute
           this.labelAttribute = resp.meta.labelAttribute
-          this.buildReferenceMap(resp.meta)
+          this.referenceMap = this.buildReferenceMap(resp.meta)
           this.dataTableLabel = resp.meta.label
           const mappedData = EntityToFormMapper.generateForm(resp.meta, resp.rowData, mapperOptions)
           this.formFields = mappedData.formFields
