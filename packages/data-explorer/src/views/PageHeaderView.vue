@@ -17,8 +17,6 @@
 
 <script>
 import Vue from 'vue'
-
-import TableSettingsButton from '../components/utils/TableSettingsButton'
 import { mapState, mapGetters } from 'vuex'
 
 export default Vue.extend({

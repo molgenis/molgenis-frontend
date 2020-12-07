@@ -36,7 +36,7 @@ describe('DataView.vue', () => {
       setHideFilters: jest.fn(),
       setShowSelected: jest.fn(),
       setSelectedItems: jest.fn(),
-      setFilterSelection: jest.fn(),
+      setFilterSelection: jest.fn()
     }
     actions = {
       getTableData: jest.fn()
