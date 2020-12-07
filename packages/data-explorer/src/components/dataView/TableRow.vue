@@ -1,6 +1,6 @@
 <template>
   <tr :class="{'row-selected': isSelected}">
-    <th v-if="isShop"><shopping-button :isSelected="isSelected" :id="id" scope="col"></shopping-button></th>
+    <th v-if="isShop" scope="col"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
     <th v-else class="text-nowrap" :id="'table-row-'+id" scope="col">
       <input class="form-check-input" type="checkbox" :checked="isSelected" :value="id" @click="toggleSelectedItems(id)">
       <b-popover v-if="isEditable"  boundary='viewport' :target="'table-row-'+id" triggers="hover" placement="topleft" :custom-class="(filters.hideSidebar && !showSelected) ? 'row-actions-position-side' : 'row-actions-position-top'">
