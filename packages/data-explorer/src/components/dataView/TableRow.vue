@@ -3,32 +3,30 @@
     <th v-if="isShop" scope="col"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
     <th v-else class="text-nowrap" :id="'table-row-'+id" scope="col">
       <input class="form-check-input" type="checkbox" :checked="isSelected" :value="id" @click="toggleSelectedItems(id)">
-      <b-popover v-if="isEditable"  boundary='viewport' :target="'table-row-'+id" triggers="hover" placement="topleft" :custom-class="(filters.hideSidebar && !showSelected) ? 'row-actions-position-side' : 'row-actions-position-top'">
-        <span class="btn-group align-middle" role="group" aria-label="row actions">
-          <a
-            v-b-tooltip.hover.bottom="'Edit row'"
-            class="btn btn-sm text-secondary"
-            role="button"
-            :href="'/plugin/data-row-edit/' + tableName + '/' + id">
-            <font-awesome-icon icon="edit"></font-awesome-icon>
-          </a>
-          <a
-            v-b-tooltip.hover.bottom="'display row'"
-            class="btn btn-sm text-secondary"
-            role="button"
-            :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
-            <font-awesome-icon icon="search"></font-awesome-icon>
-          </a>
-          <button
-            v-b-tooltip.hover.bottom="'remove row'"
-            class="btn btn-sm text-secondary"
-            role="button"
-            @click="$eventBus.$emit('delete-item', id)"
-          >
-            <font-awesome-icon icon="trash"></font-awesome-icon>
-          </button>
-        </span>
-      </b-popover>
+      <span v-if="isEditable"  class="pl-1 btn-group align-middle" role="group" aria-label="row actions">
+        <a
+          v-b-tooltip.hover.bottom="'Edit row'"
+          class="btn btn-sm text-secondary"
+          role="button"
+          :href="'/plugin/data-row-edit/' + tableName + '/' + id">
+          <font-awesome-icon icon="edit"></font-awesome-icon>
+        </a>
+        <a
+          v-b-tooltip.hover.bottom="'display row'"
+          class="btn btn-sm text-secondary"
+          role="button"
+          :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
+          <font-awesome-icon icon="search"></font-awesome-icon>
+        </a>
+        <button
+          v-b-tooltip.hover.bottom="'remove row'"
+          class="btn btn-sm text-secondary"
+          role="button"
+          @click="$eventBus.$emit('delete-item', id)"
+        >
+          <font-awesome-icon icon="trash"></font-awesome-icon>
+        </button>
+      </span>
     </th>
     <td v-for="(column, index) in visibleColumns" :key="index" class="text-nowrap text-truncate mg-data-column">
       {{rowData[column.name]}}
