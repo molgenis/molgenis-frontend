@@ -129,9 +129,13 @@ export default Vue.extend({
   .btn-toolbar{
     min-height: 36px;
   }
-
-  .btn-toolbar .btn:focus,.btn:active {
-   outline: none;
-   box-shadow: none;
-}
+  .btn-toolbar .btn.btn-outline-secondary:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  .btn-toolbar .btn.btn-outline-secondary:not(:hover):focus, .btn-toolbar .btn.btn-outline-secondary:not(:hover):active {
+    background-color: inherit;
+    color: var(--secondary);
+    border-color: var(--secondary);
+  }
 </style>
