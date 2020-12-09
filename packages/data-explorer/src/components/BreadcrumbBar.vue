@@ -14,7 +14,14 @@
           v-on="$listeners"
         ></dropdown-list>
       </li>
-      <li v-if="head" class="breadcrumb-item active" aria-current="page">{{head.label}}</li>
+      <li v-if="head" class="breadcrumb-item active" aria-current="page">
+        <span id="headItemTooltipID">
+          {{head.label}}
+        </span>
+        <b-tooltip v-if="headItemTooltip" placement='bottom' target="headItemTooltipID" triggers="hover">
+          {{headItemTooltip}}
+        </b-tooltip>
+      </li>
     </ol>
   </nav>
 </template>
@@ -30,6 +37,9 @@ export default {
     breadcrumbs: {
       type: Array,
       required: true
+    },
+    headItemTooltip: {
+      type: String
     }
   },
   computed: {

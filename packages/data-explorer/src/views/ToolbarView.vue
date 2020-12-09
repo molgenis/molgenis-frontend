@@ -14,11 +14,13 @@
       v-b-tooltip.hover.bottom="'Add'">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
       </a>
+      <!--
       <button v-if="hasEditRights && dataDisplayLayout === 'TableView'"
         type="button" class="btn btn-outline-secondary"
         v-b-tooltip.hover. bottom="'Delete'">
         <font-awesome-icon icon="trash" />
       </button>
+      -->
     </div>
 
     <div class="btn-group" role="group" aria-label="Colum actions group">
@@ -128,6 +130,7 @@ export default Vue.extend({
   /* safari scrollbar fix */
   .btn-toolbar{
     min-height: 2.2rem;
+    flex-wrap: nowrap;
   }
   .btn-toolbar .btn.btn-outline-secondary:focus {
     outline: none;

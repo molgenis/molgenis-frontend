@@ -17,7 +17,7 @@
     box-sizing: border-box;
   }
   thead th.top-left-corner.edit-mode {
-    width: 5.5rem;
+    width: 6rem;
   }
   thead th.top-left-corner.view-mode {
     width: 1rem;

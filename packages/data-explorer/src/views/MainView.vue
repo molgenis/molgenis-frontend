@@ -5,10 +5,22 @@
         v-if="isUserAuthenticated"
         :breadcrumbs="breadcrumbs"
         @fetchItems="fetchPackageTables"
+        :headItemTooltip="tableMeta && tableMeta.description"
         >
       </breadcrumb-bar>
+      <nav v-else aria-label="breadcrumb">
+        <ol v-if="tableMeta" class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            <span id="mainView-headItemTooltipID">
+              {{tableMeta.label}}
+            </span>
+            <b-tooltip placement='bottom' target="mainView-headItemTooltipID" triggers="hover">
+              {{tableMeta.description}}
+            </b-tooltip>
+          </li>
+        </ol>
+      </nav>
       <Toaster v-model="toasts"/>
-      <page-header-view v-if="!loading && dataDisplayLayout !== 'TableView' "></page-header-view>
     </div>
     <div class="mg-content d-flex h-100 overflow-control" :class="{'hidefilters': filters.hideSidebar}">
       <div class="mg-filter mr-2">
@@ -37,7 +49,6 @@ import { ActiveFilters, Toaster } from '@molgenis-ui/components-library'
 
 import DataView from './DataView'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
-import PageHeaderView from './PageHeaderView'
 import ToolbarView from './ToolbarView'
 
 const deleteConfirmOptions = {
@@ -50,7 +61,7 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
-  components: { FiltersView, DataView, PageHeaderView, BreadcrumbBar, Toaster, ToolbarView, ActiveFilters },
+  components: { FiltersView, DataView, BreadcrumbBar, Toaster, ToolbarView, ActiveFilters },
   computed: {
     toasts: {
       get: function () {
@@ -64,7 +75,8 @@ export default Vue.extend({
       'filters',
       'showSelected',
       'dataDisplayLayout',
-      'tableName'
+      'tableName',
+      'tableMeta'
     ]),
     ...mapState('header', [
       'breadcrumbs'
@@ -155,6 +167,9 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+  >>> .breadcrumb {
+    margin: -16px -16px 16px -16px;
+  }
   .mg-content {
     white-space: normal;
   }

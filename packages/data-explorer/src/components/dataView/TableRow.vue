@@ -17,7 +17,6 @@
         :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
         <font-awesome-icon icon="search"></font-awesome-icon>
       </a>
-      <!--
       <button
         v-if="isEditable"
         v-b-tooltip.hover.bottom="'remove row'"
@@ -27,7 +26,6 @@
       >
         <font-awesome-icon icon="trash"></font-awesome-icon>
       </button>
-      -->
     </th>
     <td v-for="(column, index) in visibleColumns" :key="index" class="text-nowrap text-truncate mg-data-column">
       {{rowData[column.name]}}

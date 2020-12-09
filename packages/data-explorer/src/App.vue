@@ -19,6 +19,12 @@ export default Vue.extend({
 </script>
 
 <style>
+  .mg-page{
+    padding: 0;
+  }
+  .mg-mainview{
+    padding: 16px;
+  }
   /* todo add doc */
   .app-like main.mg-page-content{
     flex: 1 1 auto;
