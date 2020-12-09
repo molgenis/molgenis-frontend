@@ -127,7 +127,7 @@ export default Vue.extend({
 <style scoped>
   /* safari scrollbar fix */
   .btn-toolbar{
-    min-height: 36px;
+    min-height: 2.2rem;
   }
   .btn-toolbar .btn.btn-outline-secondary:focus {
     outline: none;

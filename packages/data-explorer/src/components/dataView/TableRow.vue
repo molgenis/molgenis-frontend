@@ -1,32 +1,33 @@
 <template>
   <tr :class="{'row-selected': isSelected}">
-    <th v-if="isShop" scope="col"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
-    <th v-else class="text-nowrap" :id="'table-row-'+id" scope="col">
-      <input class="form-check-input" type="checkbox" :checked="isSelected" :value="id" @click="toggleSelectedItems(id)">
-      <span v-if="isEditable"  class="pl-1 btn-group align-middle" role="group" aria-label="row actions">
-        <a
-          v-b-tooltip.hover.bottom="'Edit row'"
-          class="btn btn-sm text-secondary"
-          role="button"
-          :href="'/plugin/data-row-edit/' + tableName + '/' + id">
-          <font-awesome-icon icon="edit"></font-awesome-icon>
-        </a>
-        <a
-          v-b-tooltip.hover.bottom="'display row'"
-          class="btn btn-sm text-secondary"
-          role="button"
-          :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
-          <font-awesome-icon icon="search"></font-awesome-icon>
-        </a>
-        <button
-          v-b-tooltip.hover.bottom="'remove row'"
-          class="btn btn-sm text-secondary"
-          role="button"
-          @click="$eventBus.$emit('delete-item', id)"
-        >
-          <font-awesome-icon icon="trash"></font-awesome-icon>
-        </button>
-      </span>
+    <th class="text-nowrap" :id="'table-row-'+id" scope="col">
+      <input v-if="isEditable" class="form-check-input" type="checkbox" :checked="isSelected" :value="id" @click="toggleSelectedItems(id)">
+      <a
+        v-if="isEditable"
+        v-b-tooltip.hover.bottom="'Edit row'"
+        class="btn btn-sm text-secondary pl-2"
+        role="button"
+        :href="'/plugin/data-row-edit/' + tableName + '/' + id">
+        <font-awesome-icon icon="edit"></font-awesome-icon>
+      </a>
+      <a
+        v-b-tooltip.hover.bottom="'display row'"
+        class="btn btn-sm text-secondary"
+        role="button"
+        :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
+        <font-awesome-icon icon="search"></font-awesome-icon>
+      </a>
+      <!--
+      <button
+        v-if="isEditable"
+        v-b-tooltip.hover.bottom="'remove row'"
+        class="btn btn-sm text-secondary"
+        role="button"
+        @click="$eventBus.$emit('delete-item', id)"
+      >
+        <font-awesome-icon icon="trash"></font-awesome-icon>
+      </button>
+      -->
     </th>
     <td v-for="(column, index) in visibleColumns" :key="index" class="text-nowrap text-truncate mg-data-column">
       {{rowData[column.name]}}
@@ -41,6 +42,7 @@
    * Make actions column stick
    */
   th {
+    text-align: center;
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     left: 0;
@@ -89,11 +91,10 @@
 </style>
 
 <script>
-import ShoppingButton from '../utils/ShoppingButton'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 
 library.add(faEdit)
 export default {
@@ -130,15 +131,9 @@ export default {
       default: () => false
     }
   },
-  computed: {
-    ...mapState([
-      'filters',
-      'showSelected'
-    ])
-  },
   methods: {
     ...mapMutations(['toggleSelectedItems'])
   },
-  components: { ShoppingButton, FontAwesomeIcon }
+  components: { FontAwesomeIcon }
 }
 </script>
