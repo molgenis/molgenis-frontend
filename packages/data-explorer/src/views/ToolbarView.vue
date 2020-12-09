@@ -127,4 +127,9 @@ export default Vue.extend({
   .btn-toolbar{
     min-height: 36px;
   }
+
+  .btn-toolbar .btn:focus,.btn:active {
+   outline: none;
+   box-shadow: none;
+}
 </style>
