@@ -14,7 +14,9 @@
       v-b-tooltip.hover.bottom="'Add'">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
       </a>
-      <button v-if="hasEditRights" type="button" class="btn btn-outline-secondary" v-b-tooltip.hover.bottom="'Delete'">
+      <button v-if="hasEditRights && dataDisplayLayout === 'TableView'"
+        type="button" class="btn btn-outline-secondary"
+        v-b-tooltip.hover. bottom="'Delete'">
         <font-awesome-icon icon="trash" />
       </button>
     </div>
