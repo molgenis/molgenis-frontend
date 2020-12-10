@@ -1,17 +1,18 @@
 <template>
   <tr :class="{'row-selected': isSelected}">
-    <th class="text-nowrap" :id="'table-row-'+id" scope="col">
+    <th v-if="showSelected" scope="col"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
+    <th v-else class="text-nowrap" :id="'table-row-'+id" scope="col">
       <input v-if="isEditable" class="form-check-input" type="checkbox" :checked="isSelected" :value="id" @click="toggleSelectedItems(id)">
       <a
         v-if="isEditable"
-        v-b-tooltip.hover.bottom="'Edit row'"
+        v-b-tooltip.hover.bottom="'edit'"
         class="btn btn-sm text-secondary pl-2"
         role="button"
         :href="'/plugin/data-row-edit/' + tableName + '/' + id">
         <font-awesome-icon icon="edit"></font-awesome-icon>
       </a>
       <a
-        v-b-tooltip.hover.bottom="'display row'"
+        v-b-tooltip.hover.bottom="'details'"
         class="btn btn-sm text-secondary"
         role="button"
         :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
@@ -19,7 +20,7 @@
       </a>
       <button
         v-if="isEditable"
-        v-b-tooltip.hover.bottom="'remove row'"
+        v-b-tooltip.hover.bottom="'delete'"
         class="btn btn-sm text-secondary"
         role="button"
         @click="$eventBus.$emit('delete-item', id)"
@@ -89,14 +90,15 @@
 </style>
 
 <script>
+import ShoppingButton from '../utils/ShoppingButton'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { mapMutations } from 'vuex'
 
 library.add(faEdit)
 export default {
   name: 'TableRow',
+  components: { ShoppingButton, FontAwesomeIcon },
   props: {
     id: {
       type: String,
@@ -119,19 +121,14 @@ export default {
       required: false,
       default: () => false
     },
-    isShop: {
-      type: Boolean,
-      required: false,
-      default: () => false
-    },
     isEditable: {
       type: Boolean,
       default: () => false
+    },
+    showSelected: {
+      type: Boolean,
+      required: true
     }
-  },
-  methods: {
-    ...mapMutations(['toggleSelectedItems'])
-  },
-  components: { FontAwesomeIcon }
+  }
 }
 </script>

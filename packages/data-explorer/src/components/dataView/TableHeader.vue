@@ -18,9 +18,11 @@
   }
   thead th.top-left-corner.edit-mode {
     width: 6rem;
+    max-width: 6rem;
   }
   thead th.top-left-corner.view-mode {
-    width: 1rem;
+    width: 3rem;
+    max-width: 3rem;
   }
 
   .top-left-corner:before {

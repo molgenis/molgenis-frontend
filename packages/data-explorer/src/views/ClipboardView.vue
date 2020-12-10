@@ -20,7 +20,8 @@
                    :rowData="entity"
                    :visibleColumns="visibleColumns"
                    :isSelected="isSelected(entity)"
-                   :isShop="true"></table-row>
+                   :isShop="true"
+                   :showSelected="showSelected"></table-row>
         </tbody>
       </table>
     </div>
@@ -46,7 +47,7 @@ export default {
   name: 'ClipboardView',
   components: { TableRow, TableHeader, FontAwesomeIcon },
   computed: {
-    ...mapState(['tableMeta', 'selectedItemIds', 'tableData', 'tableName']),
+    ...mapState(['tableMeta', 'selectedItemIds', 'tableData', 'tableName', 'showSelected']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },

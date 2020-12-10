@@ -11,6 +11,7 @@
                :isSelected="isSelected(entity)"
                :isShop="tableSettings.isShop"
                :isEditable="hasEditRights"
+               :showSelected="showSelected"
                ></table-row>
     </tbody>
   </table>
@@ -46,7 +47,7 @@ export default {
   },
   components: { TableRow, TableHeader },
   computed: {
-    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings']),
+    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected']),
     ...mapGetters(['filterRsql', 'hasEditRights']),
     idAttribute () {
       return this.tableMeta.idAttribute
