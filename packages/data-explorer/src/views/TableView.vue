@@ -19,10 +19,6 @@
 </template>
 
 <style scoped>
-  table {
-    table-layout: fixed;
-  }
-
   tbody th {
     position: -webkit-sticky; /* for Safari */
     position: sticky;
