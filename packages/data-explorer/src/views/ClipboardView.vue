@@ -10,7 +10,7 @@
       <button class="btn btn-success cart-order mr-2" v-if="entitiesToShow.length > 5">
         <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
       </button>
-      <table class="table">
+      <table class="table table-bordered overflow-hidden">
         <table-header :visibleColumns="visibleColumns" :isShop="true"></table-header>
         <tbody>
         <table-row v-for="(entity, index) in entitiesToShow"

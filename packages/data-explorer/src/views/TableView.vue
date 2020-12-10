@@ -12,6 +12,7 @@
                :isShop="tableSettings.isShop"
                :isEditable="hasEditRights"
                :showSelected="showSelected"
+               @toggleSelectedItemsHandler="toggleSelectedItems"
                ></table-row>
     </tbody>
   </table>
@@ -32,7 +33,7 @@
 <script>
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 library.add(faShoppingBag)
@@ -59,6 +60,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['toggleSelectedItems']),
     ...mapActions(['fetchTableViewData']),
     getEntityId (entity) {
       return entity[this.idAttribute.name].toString()

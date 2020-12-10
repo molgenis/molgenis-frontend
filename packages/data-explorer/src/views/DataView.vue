@@ -2,7 +2,7 @@
   <div class="d-flex h-100">
     <clipboard-view v-if="showSelected"></clipboard-view>
     <template v-else>
-      <select-layout-view ></select-layout-view>
+      <select-layout-view></select-layout-view>
       <cart-selection-toast
         v-if="tableSettings.isShop && selectedItemIds.length > 0"
         :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"

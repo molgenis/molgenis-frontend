@@ -2,7 +2,7 @@
   <tr :class="{'row-selected': isSelected}">
     <th v-if="showSelected" scope="col"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
     <th v-else class="text-nowrap" :id="'table-row-'+id" scope="col">
-      <input v-if="isEditable" class="form-check-input" type="checkbox" :checked="isSelected" :value="id" @click="toggleSelectedItems(id)">
+      <input v-if="isEditable" class="form-check-input" type="checkbox" :checked="isSelected" :value="id" @click="$emit('toggleSelectedItemsHandler', id)">
       <a
         v-if="isEditable"
         v-b-tooltip.hover.bottom="'edit'"
@@ -35,7 +35,7 @@
 </template>
 <style scoped>
   .row-selected{
-    background-color: #017FFD10;
+    background-color: var( --tertiary );
   }
   /**
    * Make actions column stick
@@ -45,7 +45,7 @@
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     left: 0;
-    background: #f7f7f7;
+    background-color: #f7f7f7;
     border-right: 1px #dee2e6 solid;
   }
   /**
