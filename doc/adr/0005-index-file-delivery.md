@@ -19,7 +19,3 @@ application.
 We are going to use a clientside index file for the *@molgenis-ui/core*
 app, so we can easily and efficiently pass context from the Molgenis server to our
 client application.
-
-## Consequences
-
-* Index templates (e.g. view-navigator.ftl, view-search-all.ftl) should be merged
