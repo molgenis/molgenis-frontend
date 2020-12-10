@@ -61,7 +61,7 @@
     1px solid #dee2e6;
   }
 
-  thead th {
+  table.table thead th {
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     top: 0;
