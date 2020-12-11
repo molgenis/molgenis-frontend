@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.2.4...@molgenis-ui/data-explorer@1.3.0) (2020-12-11)
+
+
+### Features
+
+* **data-explorer:** New tabel view scroll style ([#448](https://github.com/molgenis/molgenis-frontend/issues/448)) ([3e498a6](https://github.com/molgenis/molgenis-frontend/commit/3e498a6))
+
+
+
+
+
 ## [1.2.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.2.3...@molgenis-ui/data-explorer@1.2.4) (2020-12-04)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
