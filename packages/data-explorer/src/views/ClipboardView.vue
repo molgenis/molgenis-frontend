@@ -10,7 +10,7 @@
       <button class="btn btn-success cart-order mr-2" v-if="entitiesToShow.length > 5">
         <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
       </button>
-      <table class="table">
+      <table class="table table-bordered overflow-hidden">
         <table-header :visibleColumns="visibleColumns" :isShop="true"></table-header>
         <tbody>
         <table-row v-for="(entity, index) in entitiesToShow"
@@ -20,7 +20,8 @@
                    :rowData="entity"
                    :visibleColumns="visibleColumns"
                    :isSelected="isSelected(entity)"
-                   :isShop="true"></table-row>
+                   :isShop="true"
+                   :showSelected="showSelected"></table-row>
         </tbody>
       </table>
     </div>
@@ -46,7 +47,7 @@ export default {
   name: 'ClipboardView',
   components: { TableRow, TableHeader, FontAwesomeIcon },
   computed: {
-    ...mapState(['tableMeta', 'selectedItemIds', 'tableData', 'tableName']),
+    ...mapState(['tableMeta', 'selectedItemIds', 'tableData', 'tableName', 'showSelected']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },

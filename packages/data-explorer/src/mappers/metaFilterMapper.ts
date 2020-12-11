@@ -68,6 +68,9 @@ const mapMetaToFilters = async (metaData: MetaData) => {
     if (attribute.type.includes('datetime')) {
       filterDefinition.time = true
     }
+    if (attribute.type.includes('date') || attribute.type.includes('datetime')) {
+      filterDefinition.appendToBody = true
+    }
 
     // Range (number)
     if (filterDefinition.type === 'range-filter' && attribute.range) {

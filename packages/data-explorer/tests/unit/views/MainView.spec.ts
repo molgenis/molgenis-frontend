@@ -33,7 +33,10 @@ describe('MainView.vue', () => {
       tableName: 'tableName',
       activeEntity: 'it_emx_datatypes_TypeTest',
       filters: {
-        hideSidebar: false
+        hideSidebar: false,
+        definition: [],
+        shown: [],
+        selections: {}
       }
     }
 
@@ -42,7 +45,9 @@ describe('MainView.vue', () => {
       setToasts: jest.fn(),
       setHideFilters: jest.fn(),
       setActiveEntity: jest.fn(),
-      setTableName: jest.fn()
+      setTableName: jest.fn(),
+      setFilterSelection: jest.fn(),
+      setSearchText: jest.fn()
     }
 
     getters = {
@@ -82,6 +87,27 @@ describe('MainView.vue', () => {
 
   it('exists', () => {
     expect(wrapper.exists()).toBeTruthy()
+  })
+
+  describe('saveFilterState method', () => {
+    let wrapper: any
+    beforeEach(() => {
+      wrapper = shallowMount(MainView, { store, localVue, mocks })
+    })
+
+    it('should clear the search text if search is not part of the filter', () => {
+      const newSelections = {}
+      // @ts-ignore
+      wrapper.vm.saveFilterState(newSelections)
+      expect(mutations.setSearchText).toHaveBeenCalled()
+    })
+
+    it('should not clear the search text if search is part of the filter', () => {
+      const newSelections = { _search: 'mock selection' }
+      // @ts-ignore
+      wrapper.vm.saveFilterState(newSelections)
+      expect(mutations.setSearchText).not.toHaveBeenCalled()
+    })
   })
 
   describe('handle delete events', () => {

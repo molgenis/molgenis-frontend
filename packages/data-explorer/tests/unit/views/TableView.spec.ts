@@ -13,6 +13,9 @@ describe('TableView.vue', () => {
 
   beforeEach(() => {
     state = {
+      tableSettings: {
+        isShop: false
+      },
       tableMeta: {
         idAttribute: { name: 'id' },
         attributes: [

@@ -7,6 +7,9 @@ describe('TableSettingsButton.vue', () => {
 
     beforeEach(() => {
       wrapper = shallowMount(TableSettingsButton, {
+        directives: {
+          'b-tooltip': () => {}
+        },
         propsData: {
           settingsTableId: 'my-settings-table'
         }
@@ -23,6 +26,9 @@ describe('TableSettingsButton.vue', () => {
 
     beforeEach(() => {
       wrapper = shallowMount(TableSettingsButton, {
+        directives: {
+          'b-tooltip': () => {}
+        },
         propsData: {
           settingsTableId: 'my-settings-table',
           settingsRowId: 'settings-row-id'

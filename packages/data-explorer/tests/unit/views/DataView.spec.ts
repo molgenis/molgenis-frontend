@@ -63,26 +63,6 @@ describe('DataView.vue', () => {
     })
   })
 
-  describe('saveFilterState method', () => {
-    let wrapper: any
-    beforeEach(() => {
-      wrapper = shallowMount(DataView, { store, localVue })
-    })
-
-    it('should clear the search text if search is not part of the filter', () => {
-      const newSelections = {}
-      wrapper.vm.saveFilterState(newSelections)
-      expect(mutations.setSearchText).toHaveBeenCalled()
-    })
-
-    it('should not clear the search text if search is part of the filter', () => {
-      const newSelections = { _search: 'mock selection' }
-      // @ts-ignore
-      wrapper.vm.saveFilterState(newSelections)
-      expect(mutations.setSearchText).not.toHaveBeenCalled()
-    })
-  })
-
   describe('cartSelectionToast component', () => {
     it('should hide filters and change to selection list when openSelectionList is called', () => {
       const wrapper = shallowMount(DataView, { store, localVue })

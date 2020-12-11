@@ -1,6 +1,6 @@
 <template>
   <div class="input-group">
-    <form class="form-group w-100" @submit.prevent="handleSearchAction">
+    <form class="w-100" @submit.prevent="handleSearchAction">
       <div class="input-group">
       <input
         type="search"
@@ -15,6 +15,7 @@
           class="btn btn-outline-secondary"
           type="submit"
           id="mg-data-explorer-search"
+          v-b-tooltip.hover.bottom="'Search'"
         >
           <font-awesome-icon icon="search"></font-awesome-icon>
         </button>

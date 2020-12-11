@@ -24,7 +24,8 @@ describe('EntityTableRow.vue', () => {
         visibleColumns: [{ name: 'name' }, { name: 'title' }, { content: 'content' }]
       }
     })
-    expect(wrapper.findAll('td').length).toEqual(4) // length + 1 for edit btn
+    expect(wrapper.findAll('td').length).toEqual(3)
+    expect(wrapper.findAll('th').length).toEqual(1) // edit btn
   })
 
   it('only renders visible columns', () => {
@@ -34,6 +35,7 @@ describe('EntityTableRow.vue', () => {
       rowData: { name: 'name', title: 'title', content: 'content' },
       visibleColumns: [{ name: 'name' }, { content: 'content' }]
     } })
-    expect(wrapper.findAll('td').length).toEqual(3) // length + 1 for edit btn
+    expect(wrapper.findAll('td').length).toEqual(2)
+    expect(wrapper.findAll('th').length).toEqual(1) // edit btn
   })
 })
