@@ -63,8 +63,8 @@ export default Vue.extend({
   .mg-page .mg-page-content{
     margin-top: 0;
   }
-  .table-bordered, .table-bordered td, .table-bordered th{
-    border: 1px solid var(--border) !important;
-    padding: 0.5rem !important;
+  main.mg-page-content .table-bordered, main.mg-page-content .table-bordered td, main.mg-page-content .table-bordered th{
+    border: 1px solid var(--border);
+    padding: 0.5rem;
   }
 </style>
