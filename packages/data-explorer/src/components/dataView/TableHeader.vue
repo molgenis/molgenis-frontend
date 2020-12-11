@@ -62,7 +62,6 @@
     top: 0;
     background-color: var(--gray-light);
     border: 1px var(--border) solid;
-    width: 12rem;
   }
 </style>
 
