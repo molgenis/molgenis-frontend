@@ -45,8 +45,8 @@
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     left: 0;
-    background-color: #f7f7f7;
-    border-right: 1px #dee2e6 solid;
+    background-color: var(--gray-light);
+    border-right: 1px var(--border) solid;
   }
   /**
    * Fix borders in the first column
@@ -60,11 +60,11 @@
   }
   th:before {
     left: -1px;
-    border-left: 1px solid #dee2e6;
+    border-left: 1px solid var(--border);
   }
   th:after {
     right: -1px;
-    border-right: 1px solid #dee2e6;
+    border-right: 1px solid var(--border);
   }
 
   /**

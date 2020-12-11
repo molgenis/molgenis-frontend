@@ -35,7 +35,7 @@
     right: -1px;
     bottom: -1px;
     left: -1px;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--border);
   }
   /**
    * Fix borders in the head
@@ -53,20 +53,19 @@
     * bug: https://bugs.chromium.org/p/chromium/issues/detail?id=673538
     */
     top: -2px;
-    border-top: 2px solid #dee2e6;
+    border-top: 2px solid var(--border);
   }
   thead th:after {
     bottom: -1px;
-    border-bottom:
-    1px solid #dee2e6;
+    border-bottom: 1px solid var(--border);
   }
 
   table.table thead th {
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     top: 0;
-    background-color: #f7f7f7;
-    border: 1px #dee2e6 solid;
+    background-color: var(--gray-light);
+    border: 1px var(--border) solid;
     width: 12rem;
   }
 </style>

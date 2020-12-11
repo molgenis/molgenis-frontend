@@ -56,7 +56,7 @@ export default Vue.extend({
   * temporary fix for strange molgenis theme behaviour
   */
   .breadcrumb{
-    background-color: #e9ecef;
+    background-color: var(--gray-light);
     padding: .75rem 1rem;
     list-style: none;
   }
@@ -64,7 +64,7 @@ export default Vue.extend({
     margin-top: 0;
   }
   .table-bordered, .table-bordered td, .table-bordered th{
-    border: 1px solid #dee2e6 !important;
+    border: 1px solid var(--border) !important;
     padding: 0.5rem !important;
   }
 </style>
