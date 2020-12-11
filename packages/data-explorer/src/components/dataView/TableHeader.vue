@@ -1,7 +1,7 @@
 <template>
   <thead>
   <tr>
-    <th class="top-left-corner" :class="isEditable ? 'edit-mode' : 'view-mode'" scope="col"></th>
+    <th class="top-left-corner" scope="col"></th>
     <th scope="col"
         v-for="(column, index) in visibleColumns" :key="index">
       {{ column.name }}
@@ -16,13 +16,9 @@
     z-index: 1;
     box-sizing: border-box;
   }
-  thead th.top-left-corner.edit-mode {
-    width: 6rem;
-    max-width: 6rem;
-  }
-  thead th.top-left-corner.view-mode {
-    width: 3rem;
-    max-width: 3rem;
+
+  thead th.top-left-corner {
+    width: auto;
   }
 
   .top-left-corner:before {
@@ -77,10 +73,6 @@ export default {
     visibleColumns: {
       type: Array,
       required: true
-    },
-    isEditable: {
-      type: Boolean,
-      default: () => false
     },
     isShop: {
       type: Boolean,
