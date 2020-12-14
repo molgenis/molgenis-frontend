@@ -37,7 +37,7 @@
 <script>
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -48,9 +48,7 @@ export default {
   components: { TableRow, TableHeader, FontAwesomeIcon },
   computed: {
     ...mapState(['tableMeta', 'selectedItemIds', 'tableData', 'tableName', 'showSelected']),
-    idAttribute () {
-      return this.tableMeta.idAttribute
-    },
+    ...mapGetters(['tableIdAttributeName']),
     entitiesToShow () {
       return this.tableData.items.filter((entity) => this.selectedItemIds.includes(this.getEntityId(entity)))
     },
@@ -65,7 +63,7 @@ export default {
     ...mapActions(['fetchTableViewData']),
     ...mapMutations(['setShowSelected', 'setHideFilters']),
     getEntityId (entity) {
-      return entity[this.idAttribute.name].toString()
+      return entity[this.tableIdAttributeName].toString()
     },
     isSelected (entity) {
       return this.selectedItemIds.includes(this.getEntityId(entity))

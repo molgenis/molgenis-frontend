@@ -29,7 +29,10 @@ describe('DataView.vue', () => {
       searchText: ''
     }
     getters = {
-      activeEntityData: jest.fn()
+      activeEntityData: jest.fn(),
+      tableIdAttributeName: jest.fn(),
+      tableLabelAttributeName: jest.fn(),
+      clipBoardItems: jest.fn()
     }
     mutations = {
       setSearchText: jest.fn(),
@@ -72,29 +75,11 @@ describe('DataView.vue', () => {
       expect(mutations.setHideFilters).toHaveBeenCalledWith(state, true)
     })
 
-    it('should find a name to use as display label', () => {
+    it('should add names to display to the items in the shopping cart', () => {
+      getters.clipBoardItems.mockReturnValueOnce([{ name: 'item1', id: '1' }])
       const wrapper = shallowMount(DataView, { store, localVue })
       // @ts-ignore
-      expect(wrapper.vm.displayName).toEqual('name')
-
-      store.state.tableMeta = { labelAttribute: { name: 'label' } }
-      const wrapper2 = shallowMount(DataView, { store, localVue })
-      // @ts-ignore
-      expect(wrapper2.vm.displayName).toEqual('label')
-    })
-
-    it('should add names to display to the items in the shoppingcart', () => {
-      const wrapper = shallowMount(DataView, { store, localVue })
-      // @ts-ignore
-      expect(wrapper.vm.handleSelectionItems).toEqual([])
-
-      store.state.tableMeta = { labelAttribute: { name: 'label' } }
-      store.state.tableData = { items: [{ label: 'item1', id: '1' }, { label: 'item2', id: '2' }] }
-      store.state.selectedItemIds = ['1', '2']
-
-      const wrapper2 = shallowMount(DataView, { store, localVue })
-      // @ts-ignore
-      expect(wrapper2.vm.handleSelectionItems).toEqual([{ name: 'item1', id: '1' }, { name: 'item2', id: '2' }])
+      expect(wrapper.vm.handleSelectionItems).toEqual([{ name: 'item1', id: '1' }])
     })
 
     it('should remove names to display from items before returning them', () => {

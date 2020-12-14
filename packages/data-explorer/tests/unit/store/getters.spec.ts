@@ -98,4 +98,66 @@ describe('getters', () => {
       expect(getters.hasEditSettingsRights(state, localGetters)).toEqual(true)
     })
   })
+
+  describe('tableIdAttributeName', () => {
+    let state: any = {}
+
+    it('should return undefined if not set', () => {
+      expect(getters.tableIdAttributeName(state)).toEqual(undefined)
+    })
+
+    it('should return name of the id field if set', () => {
+      state = {
+        tableMeta: {
+          idAttribute: {
+            name: 'some-name'
+          }
+        }
+      }
+      expect(getters.tableIdAttributeName(state)).toEqual('some-name')
+    })
+  })
+
+  describe('tableLabelAttributeName', () => {
+    let state: any = {}
+
+    it('should return undefined if not set', () => {
+      expect(getters.tableLabelAttributeName(state)).toEqual(undefined)
+    })
+
+    it('should return name of the label field if set', () => {
+      state = {
+        tableMeta: {
+          labelAttribute: {
+            name: 'some-label'
+          }
+        }
+      }
+      expect(getters.tableLabelAttributeName(state)).toEqual('some-label')
+    })
+  })
+
+  describe('clipBoardItems', () => {
+    let state: any = {}
+
+    it('should return an empty list if table has no items', () => {
+      expect(getters.clipBoardItems(state, {})).toEqual([])
+    })
+
+    it('should return a list of selected items if set', () => {
+      state.tableData = {
+        items: [
+          { colA: 'my-id', colB: 'my-label' }
+        ]
+      }
+      state.selectedItemIds = ['my-id']
+      let localGetters = {
+        tableIdAttributeName: 'colA',
+        tableLabelAttributeName: 'colB'
+      }
+      expect(getters.clipBoardItems(state, localGetters)).toEqual([
+        { id: 'my-id', name: 'my-label' }
+      ])
+    })
+  })
 })

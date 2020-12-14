@@ -1,5 +1,6 @@
 import ApplicationState from '@/types/ApplicationState'
 import { createRSQLQuery } from '@/mappers/rsqlMapper'
+import { ClipBoardItem } from '@/types/ClipBoardItem'
 
 export default {
   filterRsql: (state: ApplicationState): string | null =>
@@ -17,5 +18,31 @@ export default {
   },
   hasEditSettingsRights: (state: ApplicationState, getters: any): boolean => {
     return getters.isUserAuthenticated && getters.userRoles.includes('ROLE_SU')
+  },
+  tableIdAttributeName: (state: ApplicationState): string | undefined => {
+    return state.tableMeta && state.tableMeta.idAttribute ? state.tableMeta.idAttribute.name : undefined
+  },
+  tableLabelAttributeName: (state: ApplicationState): string | undefined => {
+    return state.tableMeta && state.tableMeta.labelAttribute && state.tableMeta.labelAttribute.name ? state.tableMeta.labelAttribute.name : undefined
+  },
+  clipBoardItems: (state: ApplicationState, getters: any): ClipBoardItem[] => {
+    if (!state.tableData || !state.tableData.items) {
+      return []
+    }
+
+    const tableIdAttributeName = getters.tableIdAttributeName
+    const tableLabelAttributeName = getters.tableLabelAttributeName
+
+    return state.tableData.items
+      .filter(item => state.selectedItemIds.includes(item[tableIdAttributeName]))
+      .map(selectedItem => {
+        const clipBoardItem:any = {
+          id: selectedItem[tableIdAttributeName]
+        }
+        if (tableLabelAttributeName) {
+          clipBoardItem.name = selectedItem[tableLabelAttributeName]
+        }
+        return clipBoardItem
+      })
   }
 }
