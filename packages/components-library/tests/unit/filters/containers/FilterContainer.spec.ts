@@ -23,7 +23,7 @@ describe('FilterContainer.vue', () => {
 
     expect(wrapper.emitted().input).toEqual([
       [{ checkbox: ['red'], string: 'test' }],
-      [{ checkbox: [], string: 'blah' }]
+      [{ string: 'blah' }]
     ])
   })
 
