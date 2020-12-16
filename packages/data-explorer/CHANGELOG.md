@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.3.0...@molgenis-ui/data-explorer@1.3.1) (2020-12-16)
+
+
+### Bug Fixes
+
+* **data-explorer:** Fix 461 Errors in the dataexplorer disappear ([#467](https://github.com/molgenis/molgenis-frontend/issues/467)) ([2603e89](https://github.com/molgenis/molgenis-frontend/commit/2603e89)), closes [#461](https://github.com/molgenis/molgenis-frontend/issues/461)
+* **data-explorer:** Fix selecting items with non standerd id and label fields ([#465](https://github.com/molgenis/molgenis-frontend/issues/465)) ([f8d780c](https://github.com/molgenis/molgenis-frontend/commit/f8d780c)), closes [#463](https://github.com/molgenis/molgenis-frontend/issues/463)
+
+
+
+
+
 # [1.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.2.4...@molgenis-ui/data-explorer@1.3.0) (2020-12-11)
 
 
