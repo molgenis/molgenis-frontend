@@ -34,7 +34,7 @@ describe('client', () => {
     } catch (e) {
       expect(e).toBe(data)
     }
-    expect(store.commit).toBeCalledWith('addToast', { 'message': 'world not found', 'type': 'danger' })
+    expect(store.commit).toBeCalledWith('addToast', { message: 'world not found', type: 'danger', timeout: 0 })
   })
 
   it('should create a axios instance', async () => {
