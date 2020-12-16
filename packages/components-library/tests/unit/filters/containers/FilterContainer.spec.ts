@@ -59,6 +59,15 @@ describe('FilterContainer.vue', () => {
     expect(wrapper.findAll('.card-header').length).toEqual(3)
   })
 
+  it('will not add empty filter value to the selection', async () => {
+    await wrapper.setProps({ value: {} })
+    wrapper.vm.selectionChange('string', undefined)
+    wrapper.vm.selectionChange('age', [null, null])
+    wrapper.vm.selectionChange('checkbox', [])
+    wrapper.vm.selectionChange('non-empty', 'value')
+    expect(wrapper.emitted().input).toEqual([[{}], [{}], [{}], [{"non-empty": "value"}]])
+  })
+
   it('by default uses a dropdown to select active filters', async () => {
     await wrapper.setProps({ canEdit: true })
     await wrapper.find('.dropdown-toggle').trigger('click')
