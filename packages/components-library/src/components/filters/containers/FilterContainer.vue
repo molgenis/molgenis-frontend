@@ -209,7 +209,20 @@ export default {
        * @property {Object} - Filter name/value
        * @event input
        */
-      this.$emit('input', { ...this.value, [name]: value })
+
+      // clear an empty checkbox and range filter
+      if (Array.isArray(value)) {
+        if (value.length === 0) {
+          value = undefined
+        } else if (value.every(item => item === null)) {
+          value = undefined
+        }
+      }
+
+      const newSelection = { ...this.value, [name]: value }
+      // remove all undefined properties
+      Object.keys(newSelection).forEach(key => newSelection[key] === undefined && delete newSelection[key])
+      this.$emit('input', newSelection)
     },
     selectionUpdate () {
       this.$emit('update', this.filtersToShow)
