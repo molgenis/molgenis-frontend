@@ -24,7 +24,7 @@
 import Vue from 'vue'
 import SelectLayoutView from './SelectLayoutView'
 import ClipboardView from './ClipboardView'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import { CartSelectionToast } from '@molgenis-ui/components-library'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -47,15 +47,10 @@ export default Vue.extend({
       'tableData',
       'tableMeta'
     ]),
-    displayName () {
-      return (this.tableMeta && this.tableMeta.labelAttribute && this.tableMeta.labelAttribute.name) || 'name'
-    },
+    ...mapGetters(['tableLabelAttributeName', 'clipBoardItems']),
     handleSelectionItems: {
       get () {
-        if (this.tableData.items && this.tableData.items.length > 0) {
-          return this.selectedItemIds.map(id => ({ id: id, name: this.tableData.items.find(item => item.id === id)[this.displayName] }))
-        }
-        return []
+        return this.clipBoardItems
       },
       set (value) {
         this.setSelectedItems(value.map(item => item.id))
