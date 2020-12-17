@@ -16,3 +16,7 @@ We need a consistent method to serve the index file for our frontend application
 ## Decision
 
 We are going to use a clientside index file for the *@molgenis-ui/core* app.
+
+## Consequences
+
+All info that we need in the client must be accessible via API. E.g. logged in, theme, roles.
