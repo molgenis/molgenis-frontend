@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.5.1...@molgenis-ui/components-library@1.5.2) (2020-12-17)
+
+
+### Bug Fixes
+
+* **components-library:** remove undefined, empty arrays, empty strings, etz from the selected filters ([8b4886c](https://github.com/molgenis/molgenis-frontend/commit/8b4886c))
+
+
+
+
+
 ## [1.5.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.5.0...@molgenis-ui/components-library@1.5.1) (2020-12-04)
 
 
