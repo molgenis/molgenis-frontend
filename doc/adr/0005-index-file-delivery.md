@@ -20,3 +20,5 @@ We are going to use a clientside index file for the *@molgenis-ui/core* app.
 ## Consequences
 
 All info that we need in the client must be accessible via API. E.g. logged in, theme, roles.
+Everytime we create new app, or existing apps that we refactor, we will change to this design.
+Everytime we find we need something extra client side it must be available via API.
