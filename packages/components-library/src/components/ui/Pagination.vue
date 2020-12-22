@@ -1,8 +1,7 @@
 <template>
 <nav class="c-pagination">
 
-  <div class="button-container">
-
+  <div class="button-container mb-2 mr-2">
     <button v-if="localValue.count > localValue.size" :class="styles" class="t-page-prev btn btn-outline-primary mr-4"
       :disabled="localValue.page <= 1"
       @click="navigate(localValue.page - 1)">
@@ -38,20 +37,22 @@
         &raquo;
       </button>
     </div>
+  </div>
 
-    <form v-if="localValue.count > localValue.size" class="pagination-controls form-inline ml-2">
+  <div class="pagination-controls mb-2">
+    <form class="mr-2" v-if="localValue.count > localValue.size">
       <div class="btn-group">
-        <select  class="form-control-sm ml-2 mr-2" v-model="localValue.size">
+        <select name="page-size" class="form-control-sm mr-2" v-model="localValue.size">
           <option value="10">10</option>
           <option value="20">20 </option>
           <option value="50">50</option>
         </select>
-        <label for="exampleInputEmail1">{{this.text.perPage}}</label>
+        <label for="page-size">{{this.text.perPage}}</label>
       </div>
     </form>
-  </div>
 
-  <div class="item-count mt-2">{{localValue.count}} {{this.text.total}}</div>
+    <div class="item-count form-inline">{{localValue.count}} {{this.text.total}}</div>
+  </div>
 </nav>
 </template>
 
@@ -190,8 +191,8 @@ export default {
     text: {
       type: Object,
       default: () => ({
-        perPage: 'per page',
-        total: 'entities total'
+        perPage: 'items per page',
+        total: 'items'
       })
     },
     /**
@@ -249,6 +250,8 @@ export default {
 <style lang="scss">
 .c-pagination {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 
   .button-container {
     display: flex;
@@ -263,10 +266,23 @@ export default {
         width: auto;
       }
     }
+  }
 
-    .pagination-controls {
+  .pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    flex: 1;
+    white-space: nowrap;
+
+    form {
       select {
         width: 4rem;
+      }
+      label {
+        align-items: center;
+        display: flex;
+        font-weight: 500;
       }
     }
   }
