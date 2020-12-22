@@ -283,6 +283,7 @@ export default {
         align-items: center;
         display: flex;
         font-weight: 500;
+        margin-bottom: 0;
       }
     }
   }
