@@ -40,16 +40,15 @@
   </div>
 
   <div class="pagination-controls mb-2">
-    <form class="mr-2" v-if="localValue.count > localValue.size">
-      <div class="btn-group">
-        <select name="page-size" class="form-control-sm mr-2" v-model="localValue.size">
-          <option value="10">10</option>
-          <option value="20">20 </option>
-          <option value="50">50</option>
-        </select>
-        <label for="page-size">{{this.text.perPage}}</label>
-      </div>
-    </form>
+
+    <div class="form-check form-check-inline" v-if="localValue.count > localValue.size">
+      <select class="form-check-input mr-2" id="page-size" v-model="localValue.size">
+        <option value="10">10</option>
+        <option value="20">20 </option>
+        <option value="50">50</option>
+      </select>
+      <label class="form-check-label" for="page-size">{{this.text.perPage}}</label>
+    </div>
 
     <div class="item-count form-inline">{{localValue.count}} {{this.text.total}}</div>
   </div>
@@ -259,7 +258,7 @@ export default {
     .btn {
       // Use fixed width for buttons, so their position
       // remains stable while navigation
-      width: 2.5rem;
+      // width: 2.5rem;
 
       &.ellipsis {
         margin: 0 0.5rem;
@@ -274,18 +273,6 @@ export default {
     flex-wrap: nowrap;
     flex: 1;
     white-space: nowrap;
-
-    form {
-      select {
-        width: 4rem;
-      }
-      label {
-        align-items: center;
-        display: flex;
-        font-weight: 500;
-        margin-bottom: 0;
-      }
-    }
   }
 
   .item-count {
