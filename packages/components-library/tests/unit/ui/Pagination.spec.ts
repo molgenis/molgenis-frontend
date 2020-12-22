@@ -27,17 +27,17 @@ const buildWrapper = async (propsData: any, attrs: any = null) => {
 
 describe('Pagination.vue', () => {
   describe('Regardless of using a router', () => {
-    it('navigates within a paginated range', async () => {
-      propsData = { method: () => ({ count: 100 }), useRouter: false, value: { size: 20, page: 4 } }
+    it.only('navigates within a paginated range', async () => {
+      propsData = { fetchItems: () => ({ count: 100 }), useRouter: false, value: { size: 20, page: 4 } }
       const wrapper = await buildWrapper(propsData)
 
       // The model is leading to determine the current page:
-      expect(wrapper.vm.val).toEqual({ count: 0, loading: true, page: 4, size: 20 })
+      expect(wrapper.vm.localValue).toEqual({ count: 0, loading: true, page: 4, size: 20 })
 
       await wrapper.vm.$nextTick()
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.vm.val).toEqual({ count: 100, loading: false, page: 4, size: 20 })
+      expect(wrapper.vm.localValue).toEqual({ count: 100, loading: false, page: 4, size: 20 })
 
       await wrapper.find('.t-page-next').trigger('click')
       expect(propsData.value).toEqual({ count: 100, loading: false, page: 5, size: 20 })
@@ -58,7 +58,7 @@ describe('Pagination.vue', () => {
 
     it('redirects to a route with a valid pagination state', async () => {
       router.replace = jest.fn()
-      propsData = { method: () => ({ count: 100 }), useRouter: true, value: { page: 3, size: 20 } }
+      propsData = { fetchItems: () => ({ count: 100 }), useRouter: true, value: { page: 3, size: 20 } }
       await buildWrapper(propsData, { router })
 
       // The url is leading to determine the current page:
@@ -67,7 +67,7 @@ describe('Pagination.vue', () => {
 
     it('leaves existing querystring data intact', async () => {
       router.push({ path: '/', query: { bookmark: 'base64_encoded_string' } })
-      propsData = { method: () => ({ count: 100 }), useRouter: true, value: { size: 20 } }
+      propsData = { fetchItems: () => ({ count: 100 }), useRouter: true, value: { size: 20 } }
       await buildWrapper(propsData, { router })
 
       expect(router.currentRoute.fullPath).toEqual('/?bookmark=base64_encoded_string&page=1&size=20')
@@ -76,7 +76,7 @@ describe('Pagination.vue', () => {
 
     it('triggers the fetch method on route change', async () => {
       router.push({ path: '/', query: { page: 3, size: 10 } })
-      propsData = { method: () => ({ count: 100 }), useRouter: true, value: { size: 20 } }
+      propsData = { fetchItems: () => ({ count: 100 }), useRouter: true, value: { size: 20 } }
       await buildWrapper(propsData, { router })
       router.push({ path: '/', query: { page: 4, size: 10 } })
       await wrapper.vm.$nextTick()

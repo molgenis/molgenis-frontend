@@ -3,9 +3,9 @@
 
   <div class="button-container">
 
-    <button v-if="val.count > val.size" :class="styles" class="t-page-prev btn btn-outline-primary mr-4"
-      :disabled="val.page <= 1"
-      @click="navigate(val.page - 1)">
+    <button v-if="localValue.count > localValue.size" :class="styles" class="t-page-prev btn btn-outline-primary mr-4"
+      :disabled="localValue.page <= 1"
+      @click="navigate(localValue.page - 1)">
         &laquo;
     </button>
 
@@ -19,7 +19,7 @@
 
       <button
         class="btn btn-outline-primary"
-        :class="{'active': pageNumber === val.page, ...styles}" v-for="pageNumber in pages" :key="pageNumber"
+        :class="{'active': pageNumber === localValue.page, ...styles}" v-for="pageNumber in pages" :key="pageNumber"
         @click="navigate(pageNumber)">
         {{pageNumber}}
       </button>
@@ -31,41 +31,41 @@
         </button>
       </template>
 
-      <button v-if="val.count > val.size"
+      <button v-if="localValue.count > localValue.size"
         :class="styles" class="t-page-next btn btn-outline-primary ml-4"
-        :disabled="val.page >= pageCount"
-        @click="navigate(val.page + 1)">
+        :disabled="localValue.page >= pageCount"
+        @click="navigate(localValue.page + 1)">
         &raquo;
       </button>
     </div>
 
-    <form v-if="val.count > val.size" class="pagination-controls form-inline ml-2">
+    <form v-if="localValue.count > localValue.size" class="pagination-controls form-inline ml-2">
       <div class="btn-group">
-        <select  class="form-control-sm ml-2 mr-2" v-model="val.size">
+        <select  class="form-control-sm ml-2 mr-2" v-model="localValue.size">
           <option value="10">10</option>
           <option value="20">20 </option>
           <option value="50">50</option>
         </select>
-        <label for="exampleInputEmail1">per page</label>
+        <label for="exampleInputEmail1">{{this.text.perPage}}</label>
       </div>
     </form>
   </div>
 
-  <div class="item-count mt-2">{{val.count}} entities total</div>
+  <div class="item-count mt-2">{{localValue.count}} {{this.text.total}}</div>
 </nav>
 </template>
 
 <script>
 export default {
   async created () {
-    this.val = { ...this.val, ...this.value }
+    this.localValue = { ...this.localValue, ...this.value }
     // Life-cycle hook for router-less pagination.
     if (!this.useRouter) {
       // Allow Vue instance listeners to initialize in tests.
       await this.$nextTick()
       // Pagination state is leading for the initial page,
       // in case no router is being use.
-      this.fetchData(this.val.page)
+      this.fetchData(this.localValue.page)
     }
   },
   computed: {
@@ -80,27 +80,27 @@ export default {
       return null
     },
     pageCount () {
-      if (!this.val.count) { return 0 }
-      return Math.floor(parseInt(this.val.count, 10) / this.val.size)
+      if (!this.localValue.count) { return 0 }
+      return Math.floor(parseInt(this.localValue.count, 10) / this.localValue.size)
     },
     pages () {
       const pages = []
 
-      const midPage = Math.floor(this.midPageSize / 2)
-      const isMidRange = this.val.page > midPage && !(this.pageCount < this.relativePageSize)
-      if (isMidRange) {
+      const edgeRange = Math.floor(this.rangeSize / 2)
+      const inStartRange = this.localValue.page <= edgeRange
+
+      if (inStartRange) {
+        const rightEdge = (this.pageCount > this.rangeSize) ? this.rangeSize : this.pageCount
+        for (let i = 1; i <= rightEdge; i++) pages.push(i)
+      } else {
         // Generate first part of the middle range.
-        for (let i = this.val.page - midPage; i < this.val.page; i++) {
+        for (let i = this.localValue.page - edgeRange; i < this.localValue.page; i++) {
           if (i > 0) { pages.push(i) }
         }
         // Generate the second part of the middle range.
-        for (let i = this.val.page; i <= this.val.page + midPage; i++) {
+        for (let i = this.localValue.page; i <= this.localValue.page + edgeRange; i++) {
           if (i > 0 && i <= this.pageCount) { pages.push(i) }
         }
-      } else {
-        // Render until pageCount or relativePageSize max.
-        const _r = (this.pageCount > this.midPageSize) ? this.midPageSize : this.pageCount
-        for (let i = 1; i <= _r; i++) pages.push(i)
       }
 
       // Pagination is structured like: [start] [midrange] [end]
@@ -118,22 +118,20 @@ export default {
   },
   data: function () {
     return {
-      val: { size: 20, page: 1, loading: false, count: 0 }
+      localValue: { size: 20, page: 1, loading: false, count: 0 }
     }
   },
   methods: {
     async fetchData (page) {
       // Omit the Pagination method when you're using multiple
       // Pagination components with the same data source.
-      if (!this.method) { return }
-      page = parseInt(page, 10)
+      if (!this.fetchItems) { return }
 
       this.updateValue({ loading: true, page })
-
-      const { count } = await this.method()
+      const { count } = await this.fetchItems()
       this.updateValue({ loading: false, count, page })
 
-      this.val = { ...this.value, ...{ loading: false, count, page } }
+      this.localValue = { ...this.value, ...{ loading: false, count, page } }
     },
     navigate (page) {
       if (!this.useRouter) { return this.fetchData(page) }
@@ -157,10 +155,11 @@ export default {
       }
     },
     updateValue (value) {
-      this.val = { ...this.val, ...this.value, ...value }
-      this.$emit('input', { ...this.value, ...this.val, ...value })
+      this.localValue = { ...this.localValue, ...this.value, ...value }
+      this.$emit('input', { ...this.value, ...this.localValue, ...value })
     }
   },
+  name: 'Pagination',
   props: {
     /**
      * Add css classes to pagination buttons.
@@ -174,16 +173,26 @@ export default {
      * The method to retrieve items with.
      * @returns {Object} {count: Number}
      */
-    method: {
+    fetchItems: {
       type: Function,
       required: false
     },
     /**
      * Amount of navigational page buttons around the current page button.
      */
-    midPageSize: {
+    rangeSize: {
       type: Number,
       default: () => 4
+    },
+    /**
+     * The texts being used.
+     */
+    text: {
+      type: Object,
+      default: () => ({
+        perPage: 'per page',
+        total: 'entities total'
+      })
     },
     /**
      * Whether to integrate with Vue-router.
@@ -192,8 +201,9 @@ export default {
       type: Boolean,
       default: () => true
     },
+
     /**
-     * The internal pagination model
+     * Reflects the pagination state
      * @model
      */
     value: {
@@ -204,11 +214,12 @@ export default {
   watch: {
     '$route.query': {
       handler: function (query) {
-        if (!this.method || !this.useRouter) { return }
+        if (!this.fetchItems || !this.useRouter) { return }
 
         if (query.page) {
           this.fetchData(parseInt(query.page, 10))
         } else {
+          // Defaults by setting the pagination to page 1.
           this.navigate(1)
         }
       },
@@ -216,17 +227,20 @@ export default {
       immediate: true
     },
     value: {
-      handler: function (newVal) {
-        this.val = newVal
+      handler: function (value) {
+        if (value.size !== this.localValue.size) {
+          if (this.fetchItems) {
+            // Changing the amount of items per page results
+            // in going back to page 1 and recalculation of
+            // the paginator, but only when the paginator is
+            // not passive; e.g. it provides a method to fetch
+            // items.
+            this.navigate(1)
+          }
+        }
+        this.localValue = value
       },
       deep: true
-    },
-    'value.size' () {
-      if (!this.method) return
-      // Changing the amount of items per page results
-      // in going back to page 1 and recalculation of
-      // the paginator.
-      this.navigate(1)
     }
   }
 }
@@ -267,10 +281,12 @@ export default {
 ## Basic example
 
 ```jsx
+  // Always provide at least 'size' and 'page'; the other properties
+  // are added from the pagination component itself.
   let model = { size: 20, page: 1 }
   const mockStore = (e) => { model = e }
 
-  const paginateItems = async function() {
+  const fetchItems = async function() {
     // Retrieve items and feed the pagination component
     // with the api results for paginated content.
     return {count: 250 }
@@ -278,7 +294,7 @@ export default {
 
   <Pagination
     v-model="model"
-    v-bind:method="paginateItems"
+    v-bind:fetchItems="fetchItems"
     v-on:input="mockStore"
     v-bind:useRouter="false"
     v-bind:styles="{'btn-sm': true}"/>
