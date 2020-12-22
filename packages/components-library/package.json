@@ -67,13 +67,12 @@
     "typescript": "~3.9.3",
     "vue": "^2.6.11",
     "vue-cli-plugin-styleguidist": "^4.32.3",
+    "vue-router": "^3.4.9",
     "vue-slider-component": "^3.2.5",
     "vue-template-compiler": "^2.6.12",
     "vue2-daterange-picker": "^0.5.1",
     "vuedraggable": "2.23.2",
     "webpack-bundle-analyzer": "^3.9.0"
   },
-  "dependencies": {
-    "vue-router": "^3.4.9"
-  }
+  "dependencies": {}
 }

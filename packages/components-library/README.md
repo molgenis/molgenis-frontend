@@ -27,6 +27,7 @@ yarn add bootstrap-vue@2.17
 yarn add vue-slider-component@3.2
 yarn add vue2-daterange-picker@0.5
 yarn add vuedraggable@2.23
+yarn add vue-router@3.4.9
 ```
 
 ```javascript
@@ -56,6 +57,10 @@ import draggable from 'vuedraggable'
 Vue.component('draggable', draggable)
 
 import '@molgenis-ui/components-library/dist/components-library.css'
+
+// Pagination (with routing)
+import Router from 'vue-router'
+// Initialize router and set its useRouter property to true.
 ```
 
 > See [preview-build](https://preview-frontend-pr-[PR_NUMBER].dev.molgenis.org/styleguide) when reviewing a PR
