@@ -72,5 +72,8 @@
     "vue2-daterange-picker": "^0.5.1",
     "vuedraggable": "2.23.2",
     "webpack-bundle-analyzer": "^3.9.0"
+  },
+  "dependencies": {
+    "vue-router": "^3.4.9"
   }
 }

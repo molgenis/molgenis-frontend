@@ -1,0 +1,287 @@
+<template>
+<nav class="c-pagination">
+
+  <div class="button-container">
+
+    <button v-if="val.count > val.size" :class="styles" class="t-page-prev btn btn-outline-primary mr-4"
+      :disabled="val.page <= 1"
+      @click="navigate(val.page - 1)">
+        &laquo;
+    </button>
+
+    <div class="btn-group">
+      <template v-if="ellipsisFirst">
+        <button :class="styles" class="btn btn-outline-primary" @click="navigate(ellipsisFirst)">
+            {{ellipsisFirst}}
+        </button>
+        <button :class="styles" class="btn ellipsis" disabled>...</button>
+      </template>
+
+      <button
+        class="btn btn-outline-primary"
+        :class="{'active': pageNumber === val.page, ...styles}" v-for="pageNumber in pages" :key="pageNumber"
+        @click="navigate(pageNumber)">
+        {{pageNumber}}
+      </button>
+
+      <template v-if="ellipsisLast">
+        <button :class="styles" class="btn ellipsis" disabled>...</button>
+        <button :class="styles" class="btn btn-outline-primary" @click="navigate(ellipsisLast)">
+          {{ellipsisLast}}
+        </button>
+      </template>
+
+      <button v-if="val.count > val.size"
+        :class="styles" class="t-page-next btn btn-outline-primary ml-4"
+        :disabled="val.page >= pageCount"
+        @click="navigate(val.page + 1)">
+        &raquo;
+      </button>
+    </div>
+
+    <form v-if="val.count > val.size" class="pagination-controls form-inline ml-2">
+      <div class="btn-group">
+        <select  class="form-control-sm ml-2 mr-2" v-model="val.size">
+          <option value="10">10</option>
+          <option value="20">20 </option>
+          <option value="50">50</option>
+        </select>
+        <label for="exampleInputEmail1">per page</label>
+      </div>
+    </form>
+  </div>
+
+  <div class="item-count mt-2">{{val.count}} entities total</div>
+</nav>
+</template>
+
+<script>
+export default {
+  async created () {
+    this.val = { ...this.val, ...this.value }
+    // Life-cycle hook for router-less pagination.
+    if (!this.useRouter) {
+      // Allow Vue instance listeners to initialize in tests.
+      await this.$nextTick()
+      // Pagination state is leading for the initial page,
+      // in case no router is being use.
+      this.fetchData(this.val.page)
+    }
+  },
+  computed: {
+    ellipsisFirst () {
+      const firstPage = this.pages[0]
+      if (firstPage > 2) { return 1 }
+      return null
+    },
+    ellipsisLast () {
+      const lastPage = this.pages[this.pages.length - 1]
+      if (lastPage <= (this.pageCount - 2)) { return this.pageCount }
+      return null
+    },
+    pageCount () {
+      if (!this.val.count) { return 0 }
+      return Math.floor(parseInt(this.val.count, 10) / this.val.size)
+    },
+    pages () {
+      const pages = []
+
+      const midPage = Math.floor(this.midPageSize / 2)
+      const isMidRange = this.val.page > midPage && !(this.pageCount < this.relativePageSize)
+      if (isMidRange) {
+        // Generate first part of the middle range.
+        for (let i = this.val.page - midPage; i < this.val.page; i++) {
+          if (i > 0) { pages.push(i) }
+        }
+        // Generate the second part of the middle range.
+        for (let i = this.val.page; i <= this.val.page + midPage; i++) {
+          if (i > 0 && i <= this.pageCount) { pages.push(i) }
+        }
+      } else {
+        // Render until pageCount or relativePageSize max.
+        const _r = (this.pageCount > this.midPageSize) ? this.midPageSize : this.pageCount
+        for (let i = 1; i <= _r; i++) pages.push(i)
+      }
+
+      // Pagination is structured like: [start] [midrange] [end]
+      // This add the start in the following situation: 1 2 3 [4] 5 6
+      // Otherwise, it would become: 2 3 [4] 5 6
+      const firstPage = pages[0]
+      if (firstPage === 2) { pages.unshift(1) }
+
+      // The same with the end part:
+      const lastPage = pages[pages.length - 1]
+      if (lastPage === (this.pageCount - 1)) { pages.push(this.pageCount) }
+
+      return pages
+    }
+  },
+  data: function () {
+    return {
+      val: { size: 20, page: 1, loading: false, count: 0 }
+    }
+  },
+  methods: {
+    async fetchData (page) {
+      // Omit the Pagination method when you're using multiple
+      // Pagination components with the same data source.
+      if (!this.method) { return }
+      page = parseInt(page, 10)
+
+      this.updateValue({ loading: true, page })
+
+      const { count } = await this.method()
+      this.updateValue({ loading: false, count, page })
+
+      this.val = { ...this.value, ...{ loading: false, count, page } }
+    },
+    navigate (page) {
+      if (!this.useRouter) { return this.fetchData(page) }
+
+      if (this.$route.query.page) {
+        if (
+          parseInt(this.$route.query.page, 10) !== page ||
+          parseInt(this.$route.query.size, 10) !== this.value.size
+        ) {
+          // (!) Merge with existing query; e.g. bookmarks
+          this.$router.push({
+            path: this.$route.path,
+            query: { ...this.$route.query, page, size: this.value.size }
+          })
+        }
+      } else {
+        this.$router.replace({
+          path: this.$route.path,
+          query: { ...this.$route.query, page, size: this.value.size }
+        })
+      }
+    },
+    updateValue (value) {
+      this.val = { ...this.val, ...this.value, ...value }
+      this.$emit('input', { ...this.value, ...this.val, ...value })
+    }
+  },
+  props: {
+    /**
+     * Add css classes to pagination buttons.
+     */
+    styles: {
+      type: Object,
+      required: false,
+      default: () => ({})
+    },
+    /**
+     * The method to retrieve items with.
+     * @returns {Object} {count: Number}
+     */
+    method: {
+      type: Function,
+      required: false
+    },
+    /**
+     * Amount of navigational page buttons around the current page button.
+     */
+    midPageSize: {
+      type: Number,
+      default: () => 4
+    },
+    /**
+     * Whether to integrate with Vue-router.
+     */
+    useRouter: {
+      type: Boolean,
+      default: () => true
+    },
+    /**
+     * The internal pagination model
+     * @model
+     */
+    value: {
+      type: Object,
+      required: true
+    }
+  },
+  watch: {
+    '$route.query': {
+      handler: function (query) {
+        if (!this.method || !this.useRouter) { return }
+
+        if (query.page) {
+          this.fetchData(parseInt(query.page, 10))
+        } else {
+          this.navigate(1)
+        }
+      },
+      deep: true,
+      immediate: true
+    },
+    value: {
+      handler: function (newVal) {
+        this.val = newVal
+      },
+      deep: true
+    },
+    'value.size' () {
+      if (!this.method) return
+      // Changing the amount of items per page results
+      // in going back to page 1 and recalculation of
+      // the paginator.
+      this.navigate(1)
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.c-pagination {
+  width: 100%;
+
+  .button-container {
+    display: flex;
+
+    .btn {
+      // Use fixed width for buttons, so their position
+      // remains stable while navigation
+      width: 2.5rem;
+
+      &.ellipsis {
+        margin: 0 0.5rem;
+        width: auto;
+      }
+    }
+
+    .pagination-controls {
+      select {
+        width: 4rem;
+      }
+    }
+  }
+
+  .item-count {
+    font-weight: 600;
+  }
+}
+</style>
+
+<docs>
+## Basic example
+
+```jsx
+  let model = { size: 20, page: 1 }
+  const mockStore = (e) => { model = e }
+
+  const paginateItems = async function() {
+    // Retrieve items and feed the pagination component
+    // with the api results for paginated content.
+    return {count: 250 }
+  }
+
+  <Pagination
+    v-model="model"
+    v-bind:method="paginateItems"
+    v-on:input="mockStore"
+    v-bind:useRouter="false"
+    v-bind:styles="{'btn-sm': true}"/>
+  Model: {{model}}
+```
+</docs>
