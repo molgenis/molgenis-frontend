@@ -67,7 +67,7 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue": "^2.6.11",
-    "vue-cli-plugin-i18n": "^1.0.1",
+    "vue-cli-plugin-i18n": "~1.0.1",
     "vue-cli-plugin-styleguidist": "^4.32.3",
     "vue-i18n": "^8.22.2",
     "vue-router": "^3.4.9",

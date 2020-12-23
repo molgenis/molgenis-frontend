@@ -42,7 +42,7 @@ export default function (BootstrapVue: any, Vue: any) {
   // Requires vue-i18n to provide translations.
   Vue.mixin({
     i18n: new VueI18n({
-      locale: 'nl',
+      locale: 'nl'
       messages: {
         en: {
           'result found': 'no results found | one result found | {count} results found',
