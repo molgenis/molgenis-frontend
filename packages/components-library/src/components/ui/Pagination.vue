@@ -1,57 +1,42 @@
 <template>
 <nav class="c-pagination">
 
-  <div class="button-container mb-2 mr-2">
-    <button v-if="localValue.count > localValue.size" :class="styles" class="t-page-prev btn btn-outline-primary mr-4"
+  <div v-if="localValue.count > localValue.size" class="btn-group mb-2 mr-3">
+    <button :class="css" class="t-page-prev btn btn-outline-primary"
       :disabled="localValue.page <= 1"
       @click="navigate(localValue.page - 1)">
         &laquo;
     </button>
 
-    <div class="btn-group">
-      <template v-if="ellipsisFirst">
-        <button :class="styles" class="btn btn-outline-primary" @click="navigate(ellipsisFirst)">
-            {{ellipsisFirst}}
-        </button>
-        <button :class="styles" class="btn ellipsis" disabled>...</button>
-      </template>
+    <button
+      v-for="pageNumber in pageNumbers" :key="pageNumber"
+      class="btn btn-outline-primary"
+      :class="{'active': pageNumber === localValue.page, ...css}"
+      @click="navigate(pageNumber)">
+      {{pageNumber}}
+    </button>
 
-      <button
-        class="btn btn-outline-primary"
-        :class="{'active': pageNumber === localValue.page, ...styles}" v-for="pageNumber in pages" :key="pageNumber"
-        @click="navigate(pageNumber)">
-        {{pageNumber}}
-      </button>
-
-      <template v-if="ellipsisLast">
-        <button :class="styles" class="btn ellipsis" disabled>...</button>
-        <button :class="styles" class="btn btn-outline-primary" @click="navigate(ellipsisLast)">
-          {{ellipsisLast}}
-        </button>
-      </template>
-
-      <button v-if="localValue.count > localValue.size"
-        :class="styles" class="t-page-next btn btn-outline-primary ml-4"
-        :disabled="localValue.page >= pageCount"
-        @click="navigate(localValue.page + 1)">
-        &raquo;
-      </button>
-    </div>
+    <button
+      :class="css" class="t-page-next btn btn-outline-primary"
+      :disabled="localValue.page >= pageCount"
+      @click="navigate(localValue.page + 1)">
+      &raquo;
+    </button>
   </div>
 
-  <div class="pagination-controls mb-2">
+  <div v-if="localValue.count > localValue.size" class="controls mb-2">
+    <div class="item-count form-inline mr-2">
+      {{pageCount}} {{$t('pages')}} / {{localValue.count}} {{$t('items')}}
+    </div>
 
-    <div class="form-check form-check-inline" v-if="localValue.count > localValue.size">
-      <select class="form-check-input mr-2" id="page-size" v-model="localValue.size">
-        <option value="10">10</option>
-        <option value="20">20 </option>
-        <option value="50">50</option>
+    <div class="form-check form-check-inline">
+      <select class="form-control mr-2" id="page-size" v-model="localValue.size">
+        <option v-for="pageSize of pageSizes" :value="pageSize" :key="pageSize">{{pageSize}}</option>
       </select>
-      <label class="form-check-label" for="page-size">{{this.text.perPage}}</label>
+      <label class="form-check-label" for="page-size">{{$t('items per page')}}</label>
     </div>
-
-    <div class="item-count form-inline">{{localValue.count}} {{this.text.total}}</div>
   </div>
+
 </nav>
 </template>
 
@@ -69,51 +54,39 @@ export default {
     }
   },
   computed: {
-    ellipsisFirst () {
-      const firstPage = this.pages[0]
-      if (firstPage > 2) { return 1 }
-      return null
-    },
-    ellipsisLast () {
-      const lastPage = this.pages[this.pages.length - 1]
-      if (lastPage <= (this.pageCount - 2)) { return this.pageCount }
-      return null
-    },
     pageCount () {
       if (!this.localValue.count) { return 0 }
-      return Math.floor(parseInt(this.localValue.count, 10) / this.localValue.size)
+      return Math.ceil(this.localValue.count / this.localValue.size)
     },
-    pages () {
+    pageNumbers () {
       const pages = []
+      for (let i = this.pageRange.left; i <= this.pageRange.right; i++) { pages.push(i) }
+      return pages
+    },
+    /**
+     * Calculations that determine which pages must be rendered.
+     * See the `pages` computed method for its usage.
+     */
+    pageRange () {
+      const edge = Math.floor(this.visiblePages / 2)
+      const start = this.localValue.page <= edge
+      const end = this.localValue.page >= (Math.floor(this.localValue.count / this.localValue.size) - edge)
 
-      const edgeRange = Math.floor(this.rangeSize / 2)
-      const inStartRange = this.localValue.page <= edgeRange
+      let left, right
 
-      if (inStartRange) {
-        const rightEdge = (this.pageCount > this.rangeSize) ? this.rangeSize : this.pageCount
-        for (let i = 1; i <= rightEdge; i++) pages.push(i)
+      if (start) {
+        left = 1
+        right = (this.pageCount > this.visiblePages) ? this.visiblePages : this.pageCount
+      } else if (end) {
+        left = (this.pageCount - this.visiblePages) > 0 ? (this.pageCount - this.visiblePages + 1) : 1
+        right = this.pageCount
       } else {
-        // Generate first part of the middle range.
-        for (let i = this.localValue.page - edgeRange; i < this.localValue.page; i++) {
-          if (i > 0) { pages.push(i) }
-        }
-        // Generate the second part of the middle range.
-        for (let i = this.localValue.page; i <= this.localValue.page + edgeRange; i++) {
-          if (i > 0 && i <= this.pageCount) { pages.push(i) }
-        }
+        // Must be within the mid-range.
+        left = this.localValue.page - edge
+        right = this.localValue.page + edge
       }
 
-      // Pagination is structured like: [start] [midrange] [end]
-      // This add the start in the following situation: 1 2 3 [4] 5 6
-      // Otherwise, it would become: 2 3 [4] 5 6
-      const firstPage = pages[0]
-      if (firstPage === 2) { pages.unshift(1) }
-
-      // The same with the end part:
-      const lastPage = pages[pages.length - 1]
-      if (lastPage === (this.pageCount - 1)) { pages.push(this.pageCount) }
-
-      return pages
+      return { left, right }
     }
   },
   data: function () {
@@ -164,7 +137,7 @@ export default {
     /**
      * Add css classes to pagination buttons.
      */
-    styles: {
+    css: {
       type: Object,
       required: false,
       default: () => ({})
@@ -177,22 +150,10 @@ export default {
       type: Function,
       required: false
     },
-    /**
-     * Amount of navigational page buttons around the current page button.
-     */
-    rangeSize: {
-      type: Number,
-      default: () => 4
-    },
-    /**
-     * The texts being used.
-     */
-    text: {
-      type: Object,
-      default: () => ({
-        perPage: 'items per page',
-        total: 'items'
-      })
+    pageSizes: {
+      type: Array,
+      required: false,
+      default: () => [10, 20, 50]
     },
     /**
      * Whether to integrate with Vue-router.
@@ -201,7 +162,6 @@ export default {
       type: Boolean,
       default: () => true
     },
-
     /**
      * Reflects the pagination state
      * @model
@@ -209,6 +169,16 @@ export default {
     value: {
       type: Object,
       required: true
+    },
+    /**
+     * Number of navigational page buttons. This must be an uneven number.
+     */
+    visiblePages: {
+      type: Number,
+      default: () => 7,
+      validator (value) {
+        return (value % 2 !== 0)
+      }
     }
   },
   watch: {
@@ -226,21 +196,33 @@ export default {
       deep: true,
       immediate: true
     },
+    /**
+     * Sync the local state when the external state changes.
+     */
     value: {
-      handler: function (value) {
-        if (value.size !== this.localValue.size) {
-          if (this.fetchItems) {
-            // Changing the amount of items per page results
-            // in going back to page 1 and recalculation of
-            // the paginator, but only when the paginator is
-            // not passive; e.g. it provides a method to fetch
-            // items.
-            this.navigate(1)
-          }
-        }
-        this.localValue = value
-      },
+      handler (value) { this.localValue = value },
       deep: true
+    },
+    /**
+     * A separate listener is needed here, because its
+     * not feasible to detect size property changes from
+     * the deep value watcher (See https://vuejs.org/v2/api/#vm-watch)
+     */
+    'value.size' (newSize, oldSize) {
+      // Only navigate when the paginator is not in passive mode.
+      if (this.fetchItems) {
+        let currentPosition = this.localValue.page * oldSize
+        // Keep in mind that with 201 items, the current page may be 3 when
+        // showing 100 items per page. When switching back to 50 items per
+        // page, there are only 5 pages left. Make sure the currentPosition
+        // never exceeds the actual count.
+        if (currentPosition > this.localValue.count) {
+          currentPosition = this.localValue.count
+        }
+
+        const currentNewPage = Math.ceil(currentPosition / newSize)
+        this.navigate(currentNewPage)
+      }
     }
   }
 }
@@ -252,31 +234,33 @@ export default {
   display: flex;
   flex-wrap: wrap;
 
-  .button-container {
+  .btn-group {
     display: flex;
 
     .btn {
-      // Use fixed width for buttons, so their position
-      // remains stable while navigation
-      // width: 2.5rem;
-
-      &.ellipsis {
-        margin: 0 0.5rem;
-        width: auto;
-      }
+      // Use fixed width buttons, so their position remains stable during navigation.
+      width: 2.25rem;
     }
   }
 
-  .pagination-controls {
+  // The controls container fills up the rest of the space and flows
+  // beneath the navigation buttons when there is no more room.
+  .controls {
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
     flex: 1;
     white-space: nowrap;
-  }
 
-  .item-count {
-    font-weight: 600;
+    select {
+      width: 4rem;
+    }
+
+    label,
+    .item-count {
+      color: var(--gray-dark);
+      font-weight: 600;
+    }
   }
 }
 </style>
@@ -300,8 +284,10 @@ export default {
     v-model="model"
     v-bind:fetchItems="fetchItems"
     v-on:input="mockStore"
+    v-bind:visiblePages="9"
+    v-bind:pageSizes="[10, 20, 50, 100]"
     v-bind:useRouter="false"
-    v-bind:styles="{'btn-sm': true}"/>
+    v-bind:css="{'btn-sm': true}"/>
   Model: {{model}}
 ```
 </docs>

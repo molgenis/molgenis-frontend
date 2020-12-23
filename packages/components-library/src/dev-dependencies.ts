@@ -11,6 +11,7 @@ import {
   faSpinner,
   faTimes
 } from '@fortawesome/free-solid-svg-icons'
+import VueI18n from 'vue-i18n'
 
 // @ts-ignore
 import DateRangePicker from 'vue2-daterange-picker'
@@ -30,11 +31,23 @@ export default function (BootstrapVue: any, Vue: any) {
     faTimes
   )
 
+  Vue.use(VueI18n)
+
   Vue.use(BootstrapVue)
   Vue.component('FontAwesomeIcon', FontAwesomeIcon)
   Vue.component('DateRangePicker', DateRangePicker)
   Vue.component('VueSlider', VueSlider)
   Vue.component('draggable', draggable)
+
+  // This can be molgenis-i18n-js or vue-i18n, as long the i18n library
+  // supports the $t('translation') convention. The importance is
+  // that all components use i18n tags for texts.
+  Vue.mixin({
+    i18n: new VueI18n({
+      locale: 'nl',
+      messages: {}
+    })
+  })
 
   return Vue
 }

@@ -18,8 +18,11 @@ const buildWrapper = async (propsData: any, attrs: any = null) => {
       }
     },
     localVue,
+    mocks: {
+      $t: (msg:any) => msg
+    },
     propsData,
-    ...attrs
+    ...attrs,
   })
 
   return wrapper
@@ -27,7 +30,7 @@ const buildWrapper = async (propsData: any, attrs: any = null) => {
 
 describe('Pagination.vue', () => {
   describe('Regardless of using a router', () => {
-    it.only('navigates within a paginated range', async () => {
+    it('navigates within a paginated range', async () => {
       propsData = { fetchItems: () => ({ count: 100 }), useRouter: false, value: { size: 20, page: 4 } }
       const wrapper = await buildWrapper(propsData)
 
