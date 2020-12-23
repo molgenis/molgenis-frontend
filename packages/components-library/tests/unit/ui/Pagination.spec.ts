@@ -19,6 +19,7 @@ const buildWrapper = async (propsData: any, attrs: any = null) => {
     },
     localVue,
     mocks: {
+      $tc: (msg:any) => msg,
       $t: (msg:any) => msg
     },
     propsData,

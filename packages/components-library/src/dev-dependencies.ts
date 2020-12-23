@@ -39,13 +39,24 @@ export default function (BootstrapVue: any, Vue: any) {
   Vue.component('VueSlider', VueSlider)
   Vue.component('draggable', draggable)
 
-  // This can be molgenis-i18n-js or vue-i18n, as long the i18n library
-  // supports the $t('translation') convention. The importance is
-  // that all components use i18n tags for texts.
+  // Requires vue-i18n to provide translations.
   Vue.mixin({
     i18n: new VueI18n({
       locale: 'nl',
-      messages: {}
+      messages: {
+        en: {
+          'result found': 'no results found | one result found | {count} results found',
+          'page size': 'per page',
+          result: 'one result | {count} results',
+          page: 'page | {count} pages'
+        },
+        nl: {
+          'item found': 'geen resultaat gevonden |  één resultaat gevonden | {count} resultaten gevonden',
+          'per page': 'per pagina',
+          result: 'één resultaat | {count} resultaten',
+          page: 'pagina | {count} pagina\'s'
+        }
+      }
     })
   })
 

@@ -1,11 +1,34 @@
+<i18n>
+{
+    "en": {
+          "result found": "no results found | one result found | {count} results found",
+          "page size": "per page",
+          "result": "one result | {count} results",
+          "page": "page | {count} pages"
+        },
+        "nl": {
+          "item found": "geen resultaat gevonden |  één resultaat gevonden | {count} resultaten gevonden",
+          "per page": "per pagina",
+          "result": "één resultaat | {count} resultaten",
+          "page": "pagina | {count} pagina's"
+        }
+}
+</i18n>
+
 <template>
 <nav class="c-pagination">
 
   <div v-if="localValue.count > localValue.size" class="btn-group mb-2 mr-3">
+    <button :class="css" class="btn btn-outline-primary"
+      :disabled="localValue.page <= 1"
+      @click="navigate(1)">
+      «
+    </button>
+
     <button :class="css" class="t-page-prev btn btn-outline-primary"
       :disabled="localValue.page <= 1"
       @click="navigate(localValue.page - 1)">
-        &laquo;
+      ‹
     </button>
 
     <button
@@ -20,20 +43,27 @@
       :class="css" class="t-page-next btn btn-outline-primary"
       :disabled="localValue.page >= pageCount"
       @click="navigate(localValue.page + 1)">
-      &raquo;
+      ›
+    </button>
+
+    <button
+      :class="css" class="btn btn-outline-primary"
+      :disabled="localValue.page >= pageCount"
+      @click="navigate(pageCount)">
+      »
     </button>
   </div>
 
-  <div v-if="localValue.count > localValue.size" class="controls mb-2">
+  <div class="controls mb-2">
     <div class="item-count form-inline mr-2">
-      {{pageCount}} {{$t('pages')}} / {{localValue.count}} {{$t('items')}}
+      <span class="cf">{{navigationText}}</span>
     </div>
 
     <div class="form-check form-check-inline">
-      <select class="form-control mr-2" id="page-size" v-model="localValue.size">
+      <label class="form-check-label mr-2" for="page-size">{{$t('per page')}}</label>
+      <select class="form-control" id="page-size" v-model="localValue.size">
         <option v-for="pageSize of pageSizes" :value="pageSize" :key="pageSize">{{pageSize}}</option>
       </select>
-      <label class="form-check-label" for="page-size">{{$t('items per page')}}</label>
     </div>
   </div>
 
@@ -54,6 +84,13 @@ export default {
     }
   },
   computed: {
+    navigationText () {
+      if (this.pageCount <= 1) {
+        return this.$tc('result found', this.localValue.count)
+      } else {
+        return `${this.$tc('page', this.pageCount)} / ${this.$tc('result', this.localValue.count)}`
+      }
+    },
     pageCount () {
       if (!this.localValue.count) { return 0 }
       return Math.ceil(this.localValue.count / this.localValue.size)
@@ -234,6 +271,11 @@ export default {
   display: flex;
   flex-wrap: wrap;
 
+  .cf {
+    display: inline-block;
+    &::first-letter {text-transform: uppercase;}
+  }
+
   .btn-group {
     display: flex;
 
@@ -253,13 +295,13 @@ export default {
     white-space: nowrap;
 
     select {
-      width: 4rem;
+      width: 4.5rem;
     }
 
     label,
     .item-count {
       color: var(--gray-dark);
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 }
