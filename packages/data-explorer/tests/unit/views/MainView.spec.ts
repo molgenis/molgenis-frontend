@@ -58,7 +58,8 @@ describe('MainView.vue', () => {
       deleteRow: jest.fn(),
       fetchTableMeta: jest.fn(),
       fetchCardViewData: jest.fn(),
-      fetchTableViewData: jest.fn()
+      fetchTableViewData: jest.fn(),
+      fetchViewData: jest.fn()
     }
 
     modules = {
@@ -142,33 +143,6 @@ describe('MainView.vue', () => {
     })
   })
 
-  describe('fetchViewData', () => {
-    it('if table name is changed, should fetch settings and metaData ', async (done) => {
-      // @ts-ignore
-      await wrapper.vm.fetchViewData('new table name')
-      expect(actions.fetchTableMeta).toHaveBeenCalled()
-      expect(mutations.setTableName).toHaveBeenCalled()
-      done()
-    })
-
-    it('if table name is not changed, should not fetch settings and meta ', async (done) => {
-      actions.fetchTableMeta.mockReset()
-      mutations.setTableName.mockReset()
-      // @ts-ignore
-      await wrapper.vm.fetchViewData('tableName')
-      expect(actions.fetchTableMeta).not.toHaveBeenCalled()
-      expect(mutations.setTableName).not.toHaveBeenCalled()
-      done()
-    })
-
-    it('if selected view is cardView, should fetch card data', async (done) => {
-      // @ts-ignore
-      await wrapper.vm.fetchViewData('tableName')
-      expect(actions.fetchCardViewData).toHaveBeenCalled()
-      done()
-    })
-  })
-
   describe('before route update', () => {
     it('fetch data before calling next', async (done) => {
       // @ts-ignore
@@ -196,7 +170,6 @@ describe('MainView.vue', () => {
     })
     it('should add the Breadcrumb bar', () => {
       expect(wrapper.find('breadcrumb-bar-stub').exists()).toBeTruthy()
-      expect(modules.header.actions.fetchBreadcrumbs).toHaveBeenCalled()
     })
   })
 

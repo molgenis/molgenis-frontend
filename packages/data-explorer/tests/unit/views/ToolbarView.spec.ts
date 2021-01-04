@@ -42,6 +42,18 @@ describe('ToolbarView.vue', () => {
     }
   })
 
+  describe('when the search text model updates', () => {
+    let wrapper
+    beforeEach(() => {
+      wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+      wrapper.setData({ searchText: 'test' })
+    })
+
+    it('should mutate the value to the store', () => {
+      expect(mutations.setSearchText).toHaveBeenCalled()
+    })
+  })
+
   it('exists', () => {
     const wrapper = shallowMount(ToolbarView, { store, localVue, directives })
     expect(wrapper.exists()).toBeTruthy()

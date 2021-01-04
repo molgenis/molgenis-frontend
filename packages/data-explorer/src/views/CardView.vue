@@ -45,7 +45,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchCardViewData', 'fetchRowDataLabels']),
+    ...mapActions(['fetchRowDataLabels']),
     getEntityId (entity) {
       return entity[this.idAttribute.name] ? entity[this.idAttribute.name].toString() : ''
     },
@@ -57,17 +57,6 @@ export default {
     },
     handleExpandCard (entity) {
       this.fetchRowDataLabels({ rowId: this.getEntityId(entity) })
-    }
-  },
-  /**
-   * Todo temp watch, remove watch when sync is done via url
-   */
-  watch: {
-    filterRsql: {
-      handler: function () {
-        this.fetchCardViewData()
-      },
-      immediate: true
     }
   }
 }

@@ -24,7 +24,7 @@
     </div>
 
     <div class="btn-group" role="group" aria-label="Colum actions group">
-      <search-component v-model="searchText"></search-component>
+      <search-component v-model="searchText"/>
     </div>
 
     <div class="btn-group" role="group" aria-label="Table actions group">
@@ -66,6 +66,7 @@ import { faStore, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare, faDow
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
 import TableSettingsButton from '../components/utils/TableSettingsButton'
+import { createBookmark } from '../mappers/bookmarkMapper'
 
 library.add(faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare, faDownload, faCog)
 
@@ -78,7 +79,6 @@ export default Vue.extend({
       'dataDisplayLayout',
       'tableMeta',
       'tableSettings',
-      'searchText',
       'tableName',
       'showSelected',
       'settingsTable'
@@ -93,6 +93,7 @@ export default Vue.extend({
       },
       set (value) {
         this.$store.commit('setSearchText', value)
+        createBookmark(this.$router)
       }
     }
   },

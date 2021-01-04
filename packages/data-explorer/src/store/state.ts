@@ -7,7 +7,6 @@ const state: ApplicationState = {
   tableData: null,
   tableMeta: null,
   dataDisplayLayout: 'CardView',
-  dataDisplayLimit: 100,
   defaultEntityData: null,
   showSelected: false,
   selectedItemIds: [],
@@ -26,8 +25,7 @@ const state: ApplicationState = {
     selections: {}
   },
   searchText: '',
-  bookmark: '',
-  componentRoute: false
+  bookmark: ''
 }
 
 export default state

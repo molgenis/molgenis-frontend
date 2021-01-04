@@ -24,7 +24,7 @@
     </div>
     <div class="mg-content d-flex h-100 overflow-control" :class="{'hidefilters': filters.hideSidebar}">
       <div class="mg-filter mr-2">
-        <filters-view v-if="!loading"></filters-view>
+        <filters-view></filters-view>
       </div>
       <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
         <active-filters
@@ -33,9 +33,21 @@
           :filters="filterDefinitions"
         ></active-filters>
         <toolbar-view class="mb-2"></toolbar-view>
+        <pagination v-if="dataDisplayLayout === 'CardView'" class="mt-2 mb-1" v-model="pagination" />
         <div class="mg-data-view-container" >
-          <data-view v-if="!loading"></data-view>
+          <data-view v-if="!pagination.loading"></data-view>
         </div>
+        <!--
+          (!) This pagination component is always rendered, because it is
+          responsible for the data fetching in the background. It is only
+          visible in the CardView when the amount of items justifies an
+          extra pagination ui at the bottom of the page.
+        -->
+        <pagination
+          v-show="(dataDisplayLayout === 'TableView') || (!pagination.loading && itemsCount > pagination.size)" class="mt-2"
+          v-model="pagination"
+          :fetchItems="paginateEntities"
+        />
         </div>
     </div>
   </div>
@@ -45,7 +57,7 @@
 import Vue from 'vue'
 import FiltersView from './FiltersView'
 import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
-import { ActiveFilters, Toaster } from '@molgenis-ui/components-library'
+import { ActiveFilters, Pagination, Toaster } from '@molgenis-ui/components-library'
 
 import DataView from './DataView'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
@@ -60,8 +72,14 @@ const deleteConfirmOptions = {
 }
 
 export default Vue.extend({
+  data () {
+    return {
+      itemsCount: [],
+      pagination: { size: 20 }
+    }
+  },
   name: 'MainView',
-  components: { FiltersView, DataView, BreadcrumbBar, Toaster, ToolbarView, ActiveFilters },
+  components: { FiltersView, DataView, BreadcrumbBar, Pagination, Toaster, ToolbarView, ActiveFilters },
   computed: {
     toasts: {
       get: function () {
@@ -76,7 +94,8 @@ export default Vue.extend({
       'showSelected',
       'dataDisplayLayout',
       'tableName',
-      'tableMeta'
+      'tableMeta',
+      'tableSettings'
     ]),
     ...mapState('header', [
       'breadcrumbs'
@@ -96,11 +115,6 @@ export default Vue.extend({
       return vm.searchText ? [ ...vm.filters.definition, searchDef ] : vm.filters.definition
     }
   },
-  data () {
-    return {
-      loading: false
-    }
-  },
   methods: {
     ...mapMutations([
       'setHideFilters',
@@ -111,13 +125,9 @@ export default Vue.extend({
     ]),
     ...mapActions([
       'deleteRow',
-      'fetchTableMeta',
-      'fetchCardViewData',
-      'fetchTableViewData',
-      'fetchTableMeta'
+      'fetchViewData'
     ]),
     ...mapActions('header', [
-      'fetchBreadcrumbs',
       'fetchPackageTables'
     ]),
     saveFilterState (newSelections) {
@@ -133,34 +143,31 @@ export default Vue.extend({
         this.deleteRow({ rowId: itemId })
       }
     },
-    async fetchViewData (tableName) {
-      if (this.tableName !== tableName) {
-        this.loading = true
-        await this.fetchTableMeta({ tableName })
-        if (this.isUserAuthenticated) {
-          this.fetchBreadcrumbs()
-        }
-        this.setTableName(tableName)
-      }
-      if (this.dataDisplayLayout === 'CardView') {
-        this.fetchCardViewData()
+    async paginateEntities () {
+      // The data-API uses zero-based page numbering, where pagination is one-based.
+      const pagination = { ...this.pagination, page: this.pagination.page - 1 }
+      const request = await this.fetchViewData({ tableName: this.$route.params.entity, pagination })
+      if (!request || !request.items.length) {
+        this.itemsCount = 0
       } else {
-        this.fetchTableViewData()
+        this.itemsCount = request.response.data.page.totalElements
       }
-      this.loading = false
+
+      return { count: this.itemsCount }
     }
   },
   created () {
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
-    this.fetchViewData(this.$route.params.entity)
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
-    await this.fetchViewData(to.params.entity)
+    if (this.$route.params.entity !== to.params.entity) {
+      await this.fetchViewData({ tableName: to.params.entity, pagination: this.pagination })
+    }
     next()
   }
 })
