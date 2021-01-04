@@ -52,7 +52,7 @@ export default {
     visibleColumns () {
       return this.tableMeta.attributes
         .filter(a => a.visible)
-        .map(a => ({ id: a.id, name: a.name }))
+        .map(a => ({ id: a.id, name: a.name, type: a.type }))
     }
   },
   methods: {
