@@ -30,6 +30,8 @@ pipeline {
                 }
                 container('node') {
                     sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
+                    env.SAUCE_TUNNEL_PID = sh(script: "ps aux | grep /usr/local/bin/sc", returnStdout: true)
+                    sh "echo ${SAUCE_TUNNEL_PID}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
