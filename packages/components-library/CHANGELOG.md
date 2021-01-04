@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.5.2...@molgenis-ui/components-library@1.6.0) (2021-01-04)
+
+
+### Features
+
+* **components-library:** add pagination component ([4744fbd](https://github.com/molgenis/molgenis-frontend/commit/4744fbd))
+
+
+
+
+
 ## [1.5.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.5.1...@molgenis-ui/components-library@1.5.2) (2020-12-17)
 
 
