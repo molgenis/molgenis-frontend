@@ -11,7 +11,6 @@ import {
   faSpinner,
   faTimes
 } from '@fortawesome/free-solid-svg-icons'
-import VueI18n from 'vue-i18n'
 
 // @ts-ignore
 import DateRangePicker from 'vue2-daterange-picker'
@@ -31,34 +30,11 @@ export default function (BootstrapVue: any, Vue: any) {
     faTimes
   )
 
-  Vue.use(VueI18n)
-
   Vue.use(BootstrapVue)
   Vue.component('FontAwesomeIcon', FontAwesomeIcon)
   Vue.component('DateRangePicker', DateRangePicker)
   Vue.component('VueSlider', VueSlider)
   Vue.component('draggable', draggable)
-
-  // Requires vue-i18n to provide translations.
-  Vue.mixin({
-    i18n: new VueI18n({
-      locale: 'nl'
-      messages: {
-        en: {
-          'result found': 'no results found | one result found | {count} results found',
-          'page size': 'per page',
-          result: 'one result | {count} results',
-          page: 'page | {count} pages'
-        },
-        nl: {
-          'item found': 'geen resultaat gevonden |  één resultaat gevonden | {count} resultaten gevonden',
-          'per page': 'per pagina',
-          result: 'één resultaat | {count} resultaten',
-          page: 'pagina | {count} pagina\'s'
-        }
-      }
-    })
-  })
 
   return Vue
 }

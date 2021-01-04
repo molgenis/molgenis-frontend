@@ -1,20 +1,3 @@
-<i18n>
-{
-    "en": {
-          "result found": "no results found | one result found | {count} results found",
-          "page size": "per page",
-          "result": "one result | {count} results",
-          "page": "page | {count} pages"
-        },
-        "nl": {
-          "item found": "geen resultaat gevonden |  één resultaat gevonden | {count} resultaten gevonden",
-          "per page": "per pagina",
-          "result": "één resultaat | {count} resultaten",
-          "page": "pagina | {count} pagina's"
-        }
-}
-</i18n>
-
 <template>
 <nav class="c-pagination">
 
@@ -56,11 +39,11 @@
 
   <div class="controls mb-2">
     <div class="item-count form-inline mr-2">
-      <span class="cf">{{navigationText}}</span>
+      <span>{{navigationText}}</span>
     </div>
 
     <div class="form-check form-check-inline">
-      <label class="form-check-label mr-2" for="page-size">{{$t('per page')}}</label>
+      <label class="form-check-label mr-2" for="page-size">{{i18n['per page']}}</label>
       <select class="form-control" id="page-size" v-model="localValue.size">
         <option v-for="pageSize of pageSizes" :value="pageSize" :key="pageSize">{{pageSize}}</option>
       </select>
@@ -86,9 +69,9 @@ export default {
   computed: {
     navigationText () {
       if (this.pageCount <= 1) {
-        return this.$tc('result found', this.localValue.count)
+        return `${this.i18n.results}: ${this.localValue.count}`
       } else {
-        return `${this.$tc('page', this.pageCount)} / ${this.$tc('result', this.localValue.count)}`
+        return `${this.i18n.page} ${this.localValue.page}/${this.pageCount} (${this.localValue.count} ${this.i18n.items})`
       }
     },
     pageCount () {
@@ -102,7 +85,7 @@ export default {
     },
     /**
      * Calculations that determine which pages must be rendered.
-     * See the `pages` computed method for its usage.
+     * See the computed `pageNumbers` method for its usage.
      */
     pageRange () {
       const edge = Math.floor(this.visiblePages / 2)
@@ -172,7 +155,7 @@ export default {
   name: 'Pagination',
   props: {
     /**
-     * Add css classes to pagination buttons.
+     * Extra css classes for the pagination buttons.
      */
     css: {
       type: Object,
@@ -180,27 +163,41 @@ export default {
       default: () => ({})
     },
     /**
-     * The method to retrieve items with.
+     * Async method to retrieve items with.
      * @returns {Object} {count: Number}
      */
     fetchItems: {
       type: Function,
       required: false
     },
+    /**
+     * Translatable texts.
+     */
+    i18n: {
+      type: Object,
+      default: () => ({
+        page: 'page',
+        'per page': 'per page',
+        items: 'items'
+      })
+    },
+    /**
+     * Select choices for the page size.
+     */
     pageSizes: {
       type: Array,
       required: false,
       default: () => [10, 20, 50]
     },
     /**
-     * Whether to integrate with Vue-router.
+     * Optional vue-router integration.
      */
     useRouter: {
       type: Boolean,
       default: () => true
     },
     /**
-     * Reflects the pagination state
+     * Reflects the pagination state.
      * @model
      */
     value: {
@@ -208,7 +205,7 @@ export default {
       required: true
     },
     /**
-     * Number of navigational page buttons. This must be an uneven number.
+     * Number of navigational page buttons; this must be uneven.
      */
     visiblePages: {
       type: Number,
@@ -270,11 +267,6 @@ export default {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-
-  .cf {
-    display: inline-block;
-    &::first-letter {text-transform: uppercase;}
-  }
 
   .btn-group {
     display: flex;
