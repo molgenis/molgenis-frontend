@@ -1,6 +1,6 @@
 # About
 
-This is the reusable Vue component styleguide for Molgenis.
+This is the Vue component styleguide for Molgenis.
 
 ## Development
 
