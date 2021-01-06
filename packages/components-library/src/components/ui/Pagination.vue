@@ -69,7 +69,7 @@ export default {
   computed: {
     navigationText () {
       if (this.pageCount <= 1) {
-        return `${this.i18n.results}: ${this.localValue.count}`
+        return `${this.i18n.items}: ${this.localValue.count}`
       } else {
         return `${this.i18n.page} ${this.localValue.page}/${this.pageCount} (${this.localValue.count} ${this.i18n.items})`
       }
@@ -223,7 +223,7 @@ export default {
         if (query.page) {
           this.fetchData(parseInt(query.page, 10))
         } else {
-          // Defaults by setting the pagination to page 1.
+          // Defaults by setting the pagination to the first page.
           this.navigate(1)
         }
       },
@@ -294,6 +294,10 @@ export default {
     .item-count {
       color: var(--gray-dark);
       font-weight: 500;
+    }
+
+    .form-check {
+      margin: 0;
     }
   }
 }
