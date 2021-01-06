@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.1...@molgenis-ui/components-library@1.6.2) (2021-01-06)
+
+
+### Bug Fixes
+
+* **components-library:** bump release ([#475](https://github.com/molgenis/molgenis-frontend/issues/475)) ([fa0b426](https://github.com/molgenis/molgenis-frontend/commit/fa0b426))
+
+
+
+
+
 ## [1.6.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.0...@molgenis-ui/components-library@1.6.1) (2021-01-06)
 
 
