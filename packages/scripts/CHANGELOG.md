@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/scripts@3.0.1...@molgenis-ui/scripts@3.1.0) (2021-01-04)
+
+
+### Features
+
+* **data-row-edit, settings, questionnaires, scripts:** version bump  ([#471](https://github.com/molgenis/molgenis-frontend/issues/471)) ([d32482c](https://github.com/molgenis/molgenis-frontend/commit/d32482c))
+
+
+
+
+
 ## [3.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/scripts@3.0.0...@molgenis-ui/scripts@3.0.1) (2020-10-09)
 
 

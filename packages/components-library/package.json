@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/components-library",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "license": "LGPL-3.0",
   "homepage": "https://molgenis.org",
   "description": "Vue component library for molgenis web frontend",
@@ -67,6 +67,7 @@
     "typescript": "~3.9.3",
     "vue": "^2.6.11",
     "vue-cli-plugin-styleguidist": "^4.32.3",
+    "vue-router": "^3.4.9",
     "vue-slider-component": "^3.2.5",
     "vue-template-compiler": "^2.6.12",
     "vue2-daterange-picker": "^0.5.1",
