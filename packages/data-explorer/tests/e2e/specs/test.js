@@ -23,13 +23,13 @@ module.exports = {
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('.shopping-button', timeOutDelay)
       .click('.shopping-button')
-      .click('.toast-body button.btn.btn-secondary')
+      .waitForElementPresent('.toast-body .btn-secondary', timeOutDelay)
+      .click('.toast-body .btn-secondary')
       .waitForElementPresent('.cart-order', timeOutDelay)
       .assert.elementNotPresent('.alert.alert-warning')
       .waitForElementPresent('.shopping-button', timeOutDelay)
       .click('.shopping-button')
-      .pause(animationDelay)
-      .waitForElementPresent('.alert.alert-warning', timeOutDelay)
+      .waitForElementPresent('.alert.alert-warning', (timeOutDelay * 2))
       .end()
   },
   'should display custom card': browser => {
@@ -68,8 +68,8 @@ module.exports = {
       .assert.cssClassPresent('.mg-content', 'hidefilters')
       .waitForElementPresent('.btn.show-filters-button', timeOutDelay)
       .click('.btn.show-filters-button')
+      .waitForElementPresent('.btn.hide-filters', timeOutDelay)
       .assert.elementNotPresent('show-filters-button')
-      .assert.cssClassNotPresent('.mg-content', 'hidefilters')
       .end()
   }
 }
