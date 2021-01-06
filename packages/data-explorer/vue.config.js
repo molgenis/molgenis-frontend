@@ -98,6 +98,9 @@ module.exports = {
     },
     // Used as mock in e2e tests
     before: process.env.NODE_ENV !== 'test' ? undefined : function (app) {
+      app.get('/theme/style.css', function (req, res) {
+        res.redirect('https://unpkg.com/@molgenis-ui/molgenis-theme/dist/themes/mg-molgenis-blue-4.css')
+      })
       app.get('/app-ui-context', function (req, res) {
         res.json(require('./tests/e2e/resources/uiContext.js'))
       })
