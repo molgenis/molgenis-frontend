@@ -79,9 +79,9 @@ describe('dataRepository', () => {
       const metaData = mockmeta as MetaData
       const coloms = ['foo']
       const rsqlQuery = 'rsqlQuery'
-      const dataDisplayLimit = 10
-      await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, dataDisplayLimit)
-      expect(client.get).toBeCalledWith('/api/data/tableId?size=10&expanded-attributes-query&q=rsqlQuery')
+      const pagination = { size: 10, page: 1 }
+      await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, pagination)
+      expect(client.get).toBeCalledWith('/api/data/tableId?size=10&page=1&expanded-attributes-query&q=rsqlQuery')
       done()
     })
   })

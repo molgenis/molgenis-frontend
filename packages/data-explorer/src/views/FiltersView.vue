@@ -15,7 +15,6 @@
       <div class="p-2">
         <filter-container
           v-if="isFilterDataLoaded"
-          :key="renderCount"
           v-model="filterSelections"
           :filters="filters.definition"
           :filters-shown="filterShown"
@@ -52,8 +51,7 @@ export default Vue.extend({
       'filters',
       'tableMeta',
       'bookmarkedShownFilters',
-      'bookmarkedSelections',
-      'componentRoute'
+      'bookmarkedSelections'
     ]),
     isFilterDataLoaded () {
       return this.tableMeta !== null
@@ -64,7 +62,7 @@ export default Vue.extend({
       },
       set (val) {
         this.setFilterSelection(val)
-        this.addBookmark()
+        createBookmark(this.$router)
       }
     },
     filterShown: {
@@ -73,7 +71,7 @@ export default Vue.extend({
       },
       set (val) {
         this.setFiltersShown(val)
-        this.addBookmark()
+        createBookmark(this.$router)
       }
     }
   },
@@ -82,28 +80,16 @@ export default Vue.extend({
       'setHideFilters',
       'applyBookmark',
       'setFiltersShown',
-      'setFilterSelection',
-      'setComponentRoute'
+      'setFilterSelection'
     ]),
     updateState (shownFilters) {
       this.setFiltersShown(shownFilters)
-      this.addBookmark()
-    },
-    addBookmark () {
       createBookmark(this.$router)
-    },
-    refreshFilterView () {
-      // Refresh the filtercomponent
-      this.renderCount++
     }
   },
   watch: {
     '$route.query': function (query) {
-      // need to check if component triggered query, if so ignore.
-      if (!this.componentRoute) {
-        this.applyBookmark(query.bookmark)
-        this.refreshFilterView()
-      } else this.setComponentRoute(false)
+      this.applyBookmark(query.bookmark)
     }
   }
 })

@@ -6,20 +6,12 @@ Vue.use(Router)
 
 const packageJson = require('../package.json')
 
-export default new Router({
+const router = new Router({
   base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
   routes: [
-    {
-      path: '/:entity',
-      name: 'main-view',
-      component: MainView
-    },
-    {
-      path: '*',
-      redirect: {
-        name: 'main-view',
-        params: { entity: 'sys_ts_DataExplorerEntitySettings' }
-      }
-    }
+    { component: MainView, name: 'main-view', path: '/:entity' },
+    { path: '*', redirect: { name: 'main-view', params: { entity: 'sys_ts_DataExplorerEntitySettings' }, query: { page: '1', size: '20' } } }
   ]
 })
+
+export default router

@@ -53,18 +53,6 @@ function convertBookmarkValue (value: any, dataType: string): any[] | string | u
   }
 }
 
-function setBookmark (router: any, bookmark: any) {
-  router.push(
-    {
-      name: router.name,
-      path: router.path,
-      query: encodeBookmark(bookmark)
-    },
-    // to prevent error, which occurs on routing to same page (Vue issue)
-    () => { }
-  )
-}
-
 function parseBookmark (encodedBookmark: string = '') {
   if (encodedBookmark === '') return
 
@@ -89,19 +77,21 @@ function parseBookmark (encodedBookmark: string = '') {
   return output
 }
 
-export const createBookmark = (router: any) => {
-  store.commit('setComponentRoute', true)
-
-  const shown = store.state.filters.shown
-  const selections = store.state.filters.selections
+export const createBookmark = async (router: any) => {
+  const visibleFilters = store.state.filters.shown
   const searchText = store.state.searchText
-  if (shown.length === 0) {
-    setBookmark(router, null)
+  // A searchText will always trigger a bookmark, regardless
+  // whether there are filters active or not.
+  if (visibleFilters.length === 0 && !searchText) {
     return
   }
+
   const bookmark: any = {}
+  bookmark.shown = encodeURI(visibleFilters.join(','))
+
+  const selections = store.state.filters.selections
+
   bookmark.searchText = searchText
-  bookmark.shown = encodeURI(shown.join(','))
 
   if (Object.keys(selections).length > 0) {
     for (let property in selections) {
@@ -120,10 +110,18 @@ export const createBookmark = (router: any) => {
       }
     }
   }
-  setBookmark(router, bookmark)
+
+  await router.push({
+    name: router.currentRoute.name,
+    path: router.currentRoute.path,
+    query: encodeBookmark(bookmark)
+  })
 }
 
-// Bookmark is the source of truth. If no bookmark, then default.
+/**
+ * Commit the stored bookmark querystring to the store or
+ * use a default set of filters.
+ */
 export const applyFilters = (query?: string, defaultShownFilters?: string[]) => {
   const bookmarkedFilters = parseBookmark(query)
 

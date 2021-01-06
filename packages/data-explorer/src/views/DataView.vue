@@ -56,14 +56,6 @@ export default Vue.extend({
         this.setSelectedItems(value.map(item => item.id))
       }
     },
-    searchText: {
-      get () {
-        return this.$store.state.searchText
-      },
-      set (value) {
-        this.$store.commit('setSearchText', value)
-      }
-    },
     activeFilterSelections: (vm) => {
       return vm.searchText ? { ...vm.filters.selections, _search: vm.searchText } : vm.filters.selections
     },
@@ -79,7 +71,6 @@ export default Vue.extend({
   methods: {
     ...mapMutations([
       'setFilterSelection',
-      'setSearchText',
       'setShowSelected',
       'setHideFilters',
       'setSelectedItems'

@@ -57,7 +57,6 @@ export default interface ApplicationState {
   toasts: Toast[]
   settingsTable: string
   dataDisplayLayout: 'CardView' | 'TableView'
-  dataDisplayLimit: Number
   tableName: string | null
   tableData: DataApiResponse | null
   tableMeta: MetaData | null
@@ -68,5 +67,4 @@ export default interface ApplicationState {
   filters: FilterGroup
   searchText: string
   bookmark: string
-  componentRoute: boolean
 }

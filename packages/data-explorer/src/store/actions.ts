@@ -39,7 +39,6 @@ export default {
     commit('setFilterDefinition', [])
     commit('setFiltersShown', [])
     commit('setFilterSelection', {})
-    commit('setSearchText', '')
 
     const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
     if (response.data.items.length === 1) {
@@ -56,7 +55,23 @@ export default {
       commit('applyBookmark')
     }
   },
-  fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
+  async fetchViewData (store, { tableName, pagination }) {
+    if (store.state.tableName !== tableName) {
+      await store.dispatch('fetchTableMeta', { tableName })
+      if (store.getters.isUserAuthenticated) {
+        await store.dispatch('header/fetchBreadcrumbs', null, { root: true })
+      }
+
+      store.commit('setTableName', tableName)
+    }
+
+    if (store.state.dataDisplayLayout === 'CardView') {
+      return store.dispatch('fetchCardViewData', { pagination })
+    } else {
+      return store.dispatch('fetchTableViewData', { tableName, pagination })
+    }
+  },
+  fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, { pagination }) => {
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot load card data without table name', type: 'danger' })
       return
@@ -68,34 +83,32 @@ export default {
     }
 
     let columns: string[]
-    let tableData
+    let request
     const isCustomCard = state.dataDisplayLayout === 'CardView' && state.tableSettings.customCardCode
-
     const rsqlQuery = getters.filterRsql
 
     commit('setTableData', [])
+
     if (isCustomCard) {
       columns = state.tableSettings.customCardAttrs
         .split(',')
         .filter(f => f !== '')
         .map(a => a.trim())
 
-      tableData = await dataRepository.getTableDataDeepReference(
-        state.tableName,
-        state.tableMeta,
-        columns,
-        rsqlQuery,
-        state.dataDisplayLimit)
+      request = await dataRepository.getTableDataDeepReference(state.tableName, state.tableMeta, columns, rsqlQuery, pagination)
     } else {
       columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
-      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, state.dataDisplayLimit)
+      request = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, pagination)
     }
+
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
-      commit('setTableData', tableData)
+      commit('setTableData', request)
     }
+
+    return request
   },
-  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { tableName: string }) => {
+  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, { pagination }) => {
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
       return
@@ -109,16 +122,18 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('setTableData', [])
-    const tableData = await dataRepository.getTableDataWithLabel(
+    const request = await dataRepository.getTableDataWithLabel(
       state.tableName,
       state.tableMeta,
       metaDataService.getAttributesfromMeta(state.tableMeta),
       rsqlQuery,
-      state.dataDisplayLimit)
+      pagination)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
-      commit('setTableData', tableData)
+      commit('setTableData', request)
     }
+
+    return request
   },
   // expanded default card
   fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {
@@ -135,7 +150,7 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.dataDisplayLimit)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })
