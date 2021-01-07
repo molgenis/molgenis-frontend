@@ -56,19 +56,21 @@ export default {
     }
   },
   async fetchViewData (store, { tableName, pagination }) {
+    // Data-API is using 0-based page-numbering.
+    pagination.page -= 1
     if (store.state.tableName !== tableName) {
       await store.dispatch('fetchTableMeta', { tableName })
       if (store.getters.isUserAuthenticated) {
-        await store.dispatch('header/fetchBreadcrumbs', null, { root: true })
+        await store.dispatch('header/fetchBreadcrumbs')
       }
 
       store.commit('setTableName', tableName)
     }
 
     if (store.state.dataDisplayLayout === 'CardView') {
-      return store.dispatch('fetchCardViewData', { pagination })
+      store.dispatch('fetchCardViewData', { pagination })
     } else {
-      return store.dispatch('fetchTableViewData', { tableName, pagination })
+      store.dispatch('fetchTableViewData', { tableName, pagination })
     }
   },
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, { pagination }) => {
@@ -83,11 +85,9 @@ export default {
     }
 
     let columns: string[]
-    let request
+    let tableData:any = []
     const isCustomCard = state.dataDisplayLayout === 'CardView' && state.tableSettings.customCardCode
     const rsqlQuery = getters.filterRsql
-
-    commit('setTableData', [])
 
     if (isCustomCard) {
       columns = state.tableSettings.customCardAttrs
@@ -95,18 +95,16 @@ export default {
         .filter(f => f !== '')
         .map(a => a.trim())
 
-      request = await dataRepository.getTableDataDeepReference(state.tableName, state.tableMeta, columns, rsqlQuery, pagination)
+      tableData = await dataRepository.getTableDataDeepReference(state.tableName, state.tableMeta, columns, rsqlQuery, pagination)
     } else {
       columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
-      request = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, pagination)
+      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, pagination)
     }
 
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
-      commit('setTableData', request)
+      commit('setTableData', tableData)
     }
-
-    return request
   },
   fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, { pagination }) => {
     if (state.tableName === null) {
@@ -120,9 +118,9 @@ export default {
     }
 
     const rsqlQuery = getters.filterRsql
+    let tableData:any = []
 
-    commit('setTableData', [])
-    const request = await dataRepository.getTableDataWithLabel(
+    tableData = await dataRepository.getTableDataWithLabel(
       state.tableName,
       state.tableMeta,
       metaDataService.getAttributesfromMeta(state.tableMeta),
@@ -130,10 +128,8 @@ export default {
       pagination)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
-      commit('setTableData', request)
+      commit('setTableData', tableData)
     }
-
-    return request
   },
   // expanded default card
   fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {

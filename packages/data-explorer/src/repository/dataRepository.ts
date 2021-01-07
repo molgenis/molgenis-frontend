@@ -121,7 +121,7 @@ const getTableDataDeepReference = async (
   const response = (await client.get<DataApiResponse>(request)).data
 
   const items = response.items.map((item: DataApiResponseItem) => levelNRowMapper(item))
-  return { items, response }
+  return { items, page: response.page }
 }
 
 const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, pagination?: Object) => {
@@ -137,13 +137,13 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
     pageQuery = `${buildQueryString(pagination)}&`
   }
   const request = addFilterIfSet(`/api/data/${tableId}?${pageQuery}${expandReferencesQuery}`, rsqlQuery)
-  const response = (await client.get<DataApiResponse>(request))
+  const response = (await client.get<DataApiResponse>(request)).data
   // @ts-ignore
-  const items = await Promise.all(response.data.items.map(async (item: DataApiResponseItem) => {
+  const items = await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
     return levelOneRowMapper(item, metaData)
   }))
 
-  return { items, response }
+  return { items, page: response.page }
 }
 
 // called on row expand

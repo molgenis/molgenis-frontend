@@ -33,6 +33,7 @@
           :filters="filterDefinitions"
         ></active-filters>
         <toolbar-view class="mb-2"></toolbar-view>
+
         <pagination v-if="dataDisplayLayout === 'CardView'" class="mt-2 mb-1" v-model="pagination" />
         <div class="mg-data-view-container" >
           <data-view v-if="!pagination.loading"></data-view>
@@ -46,7 +47,7 @@
         <pagination
           v-show="(dataDisplayLayout === 'TableView') || (!pagination.loading && itemsCount > pagination.size)" class="mt-2"
           v-model="pagination"
-          :fetchItems="paginateEntities"
+          :fetchItems="() => fetchViewData({ tableName: $route.params.entity, pagination: {...pagination} })"
         />
         </div>
     </div>
@@ -93,6 +94,7 @@ export default Vue.extend({
       'filters',
       'showSelected',
       'dataDisplayLayout',
+      'tableData',
       'tableName',
       'tableMeta',
       'tableSettings'
@@ -142,18 +144,11 @@ export default Vue.extend({
       if (isDeleteConfirmed) {
         this.deleteRow({ rowId: itemId })
       }
-    },
-    async paginateEntities () {
-      // The data-API uses zero-based page numbering, where pagination is one-based.
-      const pagination = { ...this.pagination, page: this.pagination.page - 1 }
-      const request = await this.fetchViewData({ tableName: this.$route.params.entity, pagination })
-      if (!request || !request.items.length) {
-        this.itemsCount = 0
-      } else {
-        this.itemsCount = request.response.data.page.totalElements
-      }
-
-      return { count: this.itemsCount }
+    }
+  },
+  watch: {
+    'tableData.page' () {
+      this.pagination.count = this.tableData.page.totalElements
     }
   },
   created () {
@@ -166,7 +161,7 @@ export default Vue.extend({
   },
   async beforeRouteUpdate (to, from, next) {
     if (this.$route.params.entity !== to.params.entity) {
-      await this.fetchViewData({ tableName: to.params.entity, pagination: this.pagination })
+      await this.fetchViewData({ tableName: to.params.entity, pagination: { ...this.pagination } })
     }
     next()
   }
@@ -174,7 +169,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  >>> .breadcrumb {
+  .breadcrumb {
     margin: -16px -16px 16px -16px;
   }
   .mg-content {
