@@ -55,9 +55,7 @@ export default {
       commit('applyBookmark')
     }
   },
-  async fetchViewData (store, { tableName, pagination }) {
-    // Data-API is using 0-based page-numbering.
-    pagination.page -= 1
+  async fetchViewData (store, { tableName }) {
     if (store.state.tableName !== tableName) {
       await store.dispatch('fetchTableMeta', { tableName })
       if (store.getters.isUserAuthenticated) {
@@ -68,12 +66,12 @@ export default {
     }
 
     if (store.state.dataDisplayLayout === 'CardView') {
-      store.dispatch('fetchCardViewData', { pagination })
+      store.dispatch('fetchCardViewData')
     } else {
-      store.dispatch('fetchTableViewData', { tableName, pagination })
+      store.dispatch('fetchTableViewData')
     }
   },
-  fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, { pagination }) => {
+  fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot load card data without table name', type: 'danger' })
       return
@@ -95,18 +93,22 @@ export default {
         .filter(f => f !== '')
         .map(a => a.trim())
 
-      tableData = await dataRepository.getTableDataDeepReference(state.tableName, state.tableMeta, columns, rsqlQuery, pagination)
+      tableData = await dataRepository.getTableDataDeepReference(
+        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination
+      )
     } else {
       columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
-      tableData = await dataRepository.getTableDataWithLabel(state.tableName, state.tableMeta, columns, rsqlQuery, pagination)
+      tableData = await dataRepository.getTableDataWithLabel(
+        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination)
     }
 
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
+      commit('setPagination', { ...state.tablePagination, ...{ count: tableData.page.totalElements } })
     }
   },
-  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, { pagination }) => {
+  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
       return
@@ -125,10 +127,13 @@ export default {
       state.tableMeta,
       metaDataService.getAttributesfromMeta(state.tableMeta),
       rsqlQuery,
-      pagination)
+      state.tablePagination
+    )
+
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
+      commit('setPagination', { ...state.tablePagination, ...{ count: tableData.page.totalElements } })
     }
   },
   // expanded default card
@@ -146,7 +151,7 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.tablePagination)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })

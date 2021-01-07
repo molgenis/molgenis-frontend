@@ -34,9 +34,9 @@
         ></active-filters>
         <toolbar-view class="mb-2"></toolbar-view>
 
-        <pagination v-if="dataDisplayLayout === 'CardView'" class="mt-2 mb-1" v-model="pagination" />
+        <pagination v-if="dataDisplayLayout === 'CardView'" class="mt-2 mb-1" v-model="tablePagination" />
         <div class="mg-data-view-container" >
-          <data-view v-if="!pagination.loading"></data-view>
+          <data-view v-if="!tablePagination.loading"></data-view>
         </div>
         <!--
           (!) This pagination component is always rendered, because it is
@@ -45,9 +45,9 @@
           extra pagination ui at the bottom of the page.
         -->
         <pagination
-          v-show="(dataDisplayLayout === 'TableView') || (!pagination.loading && itemsCount > pagination.size)" class="mt-2"
-          v-model="pagination"
-          :fetchItems="() => fetchViewData({ tableName: $route.params.entity, pagination: {...pagination} })"
+          v-show="(dataDisplayLayout === 'TableView') || (!tablePagination.loading && (tableData && tableData.items > tablePagination.size))" class="mt-2"
+          v-model="tablePagination"
+          :fetchItems="() => fetchViewData({ tableName: $route.params.entity })"
         />
         </div>
     </div>
@@ -73,15 +73,15 @@ const deleteConfirmOptions = {
 }
 
 export default Vue.extend({
-  data () {
-    return {
-      itemsCount: [],
-      pagination: { size: 20 }
-    }
-  },
   name: 'MainView',
   components: { FiltersView, DataView, BreadcrumbBar, Pagination, Toaster, ToolbarView, ActiveFilters },
   computed: {
+    tablePagination: {
+      get: function () {
+        return this.$store.state.tablePagination
+      },
+      set: function (value) { this.setPagination(value) }
+    },
     toasts: {
       get: function () {
         return this.$store.state.toasts
@@ -122,6 +122,7 @@ export default Vue.extend({
       'setHideFilters',
       'setTableName',
       'setToasts',
+      'setPagination',
       'setSearchText',
       'setFilterSelection'
     ]),
@@ -146,11 +147,6 @@ export default Vue.extend({
       }
     }
   },
-  watch: {
-    'tableData.page' () {
-      this.pagination.count = this.tableData.page.totalElements
-    }
-  },
   created () {
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
@@ -161,7 +157,9 @@ export default Vue.extend({
   },
   async beforeRouteUpdate (to, from, next) {
     if (this.$route.params.entity !== to.params.entity) {
-      await this.fetchViewData({ tableName: to.params.entity, pagination: { ...this.pagination } })
+      // Reset pagination to defaults before loading another entity.
+      this.setPagination()
+      await this.fetchViewData({ tableName: to.params.entity })
     }
     next()
   }

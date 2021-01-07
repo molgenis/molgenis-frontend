@@ -4,6 +4,8 @@ import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
 import { applyFilters } from '@/mappers/bookmarkMapper'
+import { Pagination } from '@molgenis-ui/components-library/src/types/Pagination'
+import { defaultPagination } from '@/store/state'
 
 const defaultSettings = {
   settingsRowId: null,
@@ -17,6 +19,13 @@ const defaultSettings = {
 export default {
   addToast (state: ApplicationState, toast: Toast) {
     state.toasts.push(toast)
+  },
+  setPagination (state: ApplicationState, pagination: Pagination|undefined) {
+    if (!pagination) {
+      state.tablePagination = defaultPagination
+    } else {
+      state.tablePagination = pagination
+    }
   },
   setToasts (state: ApplicationState, toasts: Toast[]) {
     Vue.set(state, 'toasts', toasts)

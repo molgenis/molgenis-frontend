@@ -288,9 +288,10 @@ let commit, dispatch: any
 
 describe('actions', () => {
   beforeEach(() => {
-    pagination = { page: 1, size: 10 }
     state = mockState()
     state.tableName = 'it_emx_datatypes_TypeTest'
+    state.tablePagination = { count: 0, loading: false, page: 1, size: 10 }
+
     getters = {
       filterRsql: null,
       isUserAuthenticated: jest.fn()
@@ -302,7 +303,7 @@ describe('actions', () => {
 
   describe('fetchViewData', () => {
     it('if table name is changed, should fetch settings and metaData ', async (done) => {
-      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'new table name', pagination })
+      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'new table name' })
 
       expect(dispatch).toHaveBeenCalledWith('fetchTableMeta', { tableName: 'new table name' })
       expect(commit).toHaveBeenCalledWith('setTableName', 'new table name')
@@ -311,7 +312,7 @@ describe('actions', () => {
 
     it('if table name is not changed, should not fetch settings and meta ', async (done) => {
       state.tableName = 'tableName'
-      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'tableName', pagination })
+      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'tableName' })
       expect(dispatch).not.toHaveBeenCalledWith('fetchTableMeta', expect.anything())
       expect(commit).not.toHaveBeenCalledWith('setTableName', expect.anything())
       done()
@@ -319,7 +320,7 @@ describe('actions', () => {
 
     it('if selected view is cardView, should fetch card data', async (done) => {
       state.dataDisplayLayout = 'CardView'
-      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'tableName', pagination })
+      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'tableName' })
       expect(dispatch).toHaveBeenCalledWith('fetchCardViewData', expect.anything())
       done()
     })
@@ -407,7 +408,7 @@ describe('actions', () => {
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataDeepReference.mockResolvedValue({ data: 'data' })
 
-      await actions.fetchCardViewData({ commit, state, getters }, { pagination })
+      await actions.fetchCardViewData({ commit, state, getters })
 
       expect(dataRepository.getTableDataDeepReference).toHaveBeenCalled()
       expect(commit).toHaveBeenCalledWith('setTableData', { data: 'data' })
@@ -429,7 +430,7 @@ describe('actions', () => {
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ data: 'data' })
 
-      await actions.fetchCardViewData({ commit, state, getters }, { pagination })
+      await actions.fetchCardViewData({ commit, state, getters })
 
       expect(dataRepository.getTableDataDeepReference).toHaveBeenCalled()
       expect(commit).toHaveBeenCalledWith('setTableData', { data: 'data' })
@@ -439,7 +440,7 @@ describe('actions', () => {
       const commit = jest.fn()
       state.tableName = null
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchCardViewData({ commit, state, getters }, { pagination }))
+      expect(actions.fetchCardViewData({ commit, state, getters }))
         .rejects
         .toThrow(new Error('cannot load card data without table name'))
     })
@@ -449,7 +450,7 @@ describe('actions', () => {
       state.tableName = 'tableName'
       state.tableMeta = null
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchCardViewData({ commit, state, getters }, { pagination }))
+      expect(actions.fetchCardViewData({ commit, state, getters }))
         .rejects
         .toThrow(new Error('cannot load table data without meta data'))
     })
@@ -503,7 +504,7 @@ describe('actions', () => {
       // @ts-ignore ts does not know its a mock
       metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
 
-      await actions.fetchTableViewData({ commit, state, getters }, { pagination })
+      await actions.fetchTableViewData({ commit, state, getters })
 
       expect(commit).toHaveBeenCalledWith('setTableData', [])
       expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('tableName', 'tableMeta', ['attr'], 'a==b', pagination)
@@ -514,7 +515,7 @@ describe('actions', () => {
       const commit = jest.fn()
       state.tableName = null
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchTableViewData({ commit, state, getters }, { pagination }))
+      expect(actions.fetchTableViewData({ commit, state, getters }))
         .rejects
         .toThrow(new Error('cannot fetch table view data without table name'))
     })
@@ -524,7 +525,7 @@ describe('actions', () => {
       state.tableName = 'tableName'
       state.tableMeta = null
       // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchTableViewData({ commit, state, getters }, { pagination }))
+      expect(actions.fetchTableViewData({ commit, state, getters }))
         .rejects
         .toThrow(new Error('cannot fetch table view data without meta data'))
     })

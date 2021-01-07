@@ -121,10 +121,8 @@ export default {
       if (!this.fetchItems) { return }
 
       this.updateValue({ loading: true, page })
-      const { count } = await this.fetchItems()
-      this.updateValue({ loading: false, count, page })
-
-      this.localValue = { ...this.value, ...{ loading: false, count, page } }
+      await this.fetchItems()
+      this.updateValue({ loading: false })
     },
     navigate (page) {
       if (!this.useRouter) { return this.fetchData(page) }

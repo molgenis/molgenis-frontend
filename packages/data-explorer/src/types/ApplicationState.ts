@@ -1,4 +1,5 @@
 import { DataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
+import { Pagination } from '@molgenis-ui/components-library/src/types/Pagination'
 import { MetaData } from './MetaData'
 
 export type Toast = {
@@ -60,6 +61,7 @@ export default interface ApplicationState {
   tableName: string | null
   tableData: DataApiResponse | null
   tableMeta: MetaData | null
+  tablePagination: Pagination
   defaultEntityData: DataApiResponseItem[] | null
   selectedItemIds: string[]
   showSelected: boolean
