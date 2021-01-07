@@ -65,6 +65,8 @@ export default interface ApplicationState {
   selectedItemIds: string[]
   showSelected: boolean
   tableSettings: TableSetting
+  sortColumnId: string | null,
+  isSortOrderReversed: boolean,
   filters: FilterGroup
   searchText: string
   bookmark: string

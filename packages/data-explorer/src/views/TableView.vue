@@ -1,6 +1,12 @@
 <template>
   <table class="table table-bordered h-100" v-if="entitiesToShow.length">
-    <table-header :visibleColumns="visibleColumns" :isShop="tableSettings.isShop"></table-header>
+    <table-header
+      :visibleColumns="visibleColumns"
+      :isShop="tableSettings.isShop"
+      :sortColumnId="sortColumnId"
+      :isSortOrderReversed="isSortOrderReversed"
+      @sort="handleSortEvent">
+    </table-header>
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"
                :key="index"
@@ -44,7 +50,7 @@ export default {
   },
   components: { TableRow, TableHeader },
   computed: {
-    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected']),
+    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sortColumnId', 'isSortOrderReversed']),
     ...mapGetters(['filterRsql', 'hasEditRights']),
     idAttribute () {
       return this.tableMeta.idAttribute
@@ -56,13 +62,20 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleSelectedItems']),
+    ...mapMutations(['toggleSelectedItems', 'setSortColumn', 'setIsSortOrderReversed']),
     ...mapActions(['fetchTableViewData']),
     getEntityId (entity) {
       return entity[this.idAttribute.name].toString()
     },
     isSelected (entity) {
       return this.selectedItemIds.includes(this.getEntityId(entity))
+    },
+    handleSortEvent (eventColumnId) {
+      if (eventColumnId === this.sortColumnId) {
+        this.setIsSortOrderReversed(!this.isSortOrderReversed)
+      } else {
+        this.setSortColumn(eventColumnId)
+      }
     }
   },
   /**

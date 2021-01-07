@@ -4,7 +4,20 @@
     <th class="top-left-corner" scope="col"></th>
     <th scope="col"
         v-for="(column, index) in visibleColumns" :key="index">
-      {{ column.name }}
+      <a class="header-label" href="#" @click="$emit('sort', column.id)">{{ column.name }}
+        <font-awesome-icon
+          v-if="column.id !== sortColumnId"
+          class="mr-1 sort-icon" icon="sort">
+        </font-awesome-icon>
+        <font-awesome-icon
+          v-if="column.id === sortColumnId && !isSortOrderReversed"
+          class="mr-1" icon="sort-alpha-up">
+        </font-awesome-icon>
+        <font-awesome-icon
+          v-if="column.id === sortColumnId && isSortOrderReversed"
+          class="mr-1" icon="sort-alpha-down">
+        </font-awesome-icon>
+      </a>
     </th>
   </tr>
   </thead>
@@ -63,17 +76,40 @@
     background-color: var(--gray-light);
     border: 1px var(--border) solid;
   }
+
+  .sort-icon {
+    display: none;
+  }
+
+  .header-label:hover .sort-icon{
+    display: inline;
+  }
 </style>
 
 <script>
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSort, faSortAlphaUp, faSortAlphaDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faSort, faSortAlphaUp, faSortAlphaDown)
 export default {
   name: 'TableHeader',
+  components: { FontAwesomeIcon },
   props: {
     visibleColumns: {
       type: Array,
       required: true
     },
     isShop: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+    sortColumnId: {
+      type: String,
+      required: false,
+      default: () => undefined
+    },
+    isSortOrderReversed: {
       type: Boolean,
       required: false,
       default: () => false

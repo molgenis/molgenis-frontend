@@ -53,6 +53,12 @@ export default {
     state.tableSettings.customCardAttrs = isPropSet('template_attrs') ? tableSettings.template_attrs : defaultSettings.customCardAttrs
     state.tableSettings.defaultFilters = isPropSet('default_filters') ? tableSettings.default_filters.split(',').map(f => f.trim()) : defaultSettings.defaultFilters
   },
+  setSortColumn (state: ApplicationState, columnId: string) {
+    state.sortColumnId = columnId
+  },
+  setIsSortOrderReversed (state: ApplicationState, isReversed: boolean) {
+    state.isSortOrderReversed = isReversed
+  },
   setMetaData (state: ApplicationState, metaData: MetaData) {
     Vue.set(state, 'tableMeta', metaData)
   },
