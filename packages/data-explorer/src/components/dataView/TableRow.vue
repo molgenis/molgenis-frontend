@@ -28,8 +28,8 @@
         <font-awesome-icon icon="trash"></font-awesome-icon>
       </button>
     </th>
-    <td v-for="(column, index) in visibleColumns" :key="index" class="text-nowrap text-truncate mg-data-column">
-      <DataDisplayCell :value="rowData[column.name]" :type="column.type"></DataDisplayCell>
+    <td v-for="(column, index) in visibleColumns" :key="index" class="mg-data-column">
+      <DataDisplayCell v-if="typeof getColumnName(column.name) != 'undefined'" :value="getColumnName(column.name)" :type="column.type" :data="column" :rowIndex="rowIndex"></DataDisplayCell>
     </td>
   </tr>
 </template>
@@ -70,6 +70,17 @@ export default {
     showSelected: {
       type: Boolean,
       required: true
+    },
+    rowIndex: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    getColumnName (name) {
+      if (name in this.rowData) {
+        return this.rowData[name].toString()
+      }
     }
   }
 }

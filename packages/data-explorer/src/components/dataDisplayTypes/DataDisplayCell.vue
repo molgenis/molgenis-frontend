@@ -1,49 +1,60 @@
 <template>
-  <component :is="getMapping" :value="value" :type="type"></component>
+  <component :is="getMapping()" :value="value" :type="type" :rowIndex="rowIndex" :data="data"></component>
 </template>
 
 <script>
 import LinkDisplay from './LinkDisplay'
 import StringDisplay from './StringDisplay'
+import DateDisplay from './DateDisplay'
+import EmailDisplay from './EmailDisplay'
+import HTMLDisplay from './HTMLDisplay'
+import RefDisplay from './RefDisplay'
 
 export default {
   name: 'DataDisplayCell',
-  components: { StringDisplay, LinkDisplay },
+  components: { StringDisplay, LinkDisplay, DateDisplay, EmailDisplay, HTMLDisplay, RefDisplay },
   props: {
     value: {
-      required: false
+      type: String,
+      required: true
     },
     type: {
       type: String,
+      required: true
+    },
+    rowIndex: {
+      type: Number,
+      required: true
+    },
+    data: {
+      type: Object,
       required: true
     }
   },
   methods: {
     getMapping () {
-      /*
       const fieldTypeToFilterType = {
         'string': 'StringDisplay',
         'text': 'StringDisplay',
-        'html': 'StringDisplay',
+        'html': 'HTMLDisplay',
         'int': 'StringDisplay',
         'long': 'StringDisplay',
         'decimal': 'StringDisplay',
         'bool': 'StringDisplay',
-        'date': 'StringDisplay',
-        'datetime': 'StringDisplay',
-        'email': 'StringDisplay',
-        'hyperlink': 'StringDisplay',
-        'categorical': 'StringDisplay',
-        'categorical_mref': 'StringDisplay',
-        'mref': 'StringDisplay',
-        'xref': 'StringDisplay',
-        'onetomany': 'StringDisplay',
+        'date': 'DateDisplay',
+        'datetime': 'DateDisplay',
+        'email': 'EmailDisplay',
+        'hyperlink': 'LinkDisplay',
+        'categorical': 'RefDisplay',
+        'categorical_mref': 'RefDisplay',
+        'mref': 'RefDisplay',
+        'xref': 'RefDisplay',
+        'onetomany': 'RefDisplay',
         'enum': 'StringDisplay',
-        'file': 'StringDisplay',
+        'file': 'LinkDisplay',
         'compound': 'StringDisplay'
       }
-      */
-      return 'StringDisplay'
+      return fieldTypeToFilterType[this.type] || 'StringDisplay'
     }
   }
 }

@@ -4,6 +4,7 @@
     <tbody>
     <table-row v-for="(entity, index) in entitiesToShow"
                :key="index"
+               :rowIndex="index"
                :id="getEntityId(entity)"
                :tableName="tableName"
                :rowData="entity"
@@ -52,7 +53,7 @@ export default {
     visibleColumns () {
       return this.tableMeta.attributes
         .filter(a => a.visible)
-        .map(a => ({ id: a.id, name: a.name, type: a.type }))
+        .map(a => ({ id: a.id, name: a.name, type: a.type, refEntityType: a.refEntityType }))
     }
   },
   methods: {

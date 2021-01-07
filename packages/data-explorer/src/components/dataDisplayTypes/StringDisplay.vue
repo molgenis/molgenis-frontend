@@ -1,17 +1,38 @@
 <template>
-  <span>{{value}}</span>
+  <div>
+    <div ref="stringPreview" :id="`string-preview-${rowIndex}-${data.id}`" class="text-nowrap text-truncate">{{value}}</div>
+    <b-popover v-if="value.length > 10" :target="getRef" triggers="hover" placement="top" boundary="viewport">
+      <template #title>String Preview</template>
+      <div v-if="value.length > 255" class="overflow-auto" style="max-height:10rem">{{value}}</div>
+      <div v-else>{{value}}</div>
+    </b-popover>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'LinkDisplay',
+  name: 'StringDisplay',
   props: {
     value: {
-      required: false
+      type: String,
+      required: true
     },
     type: {
       type: String,
       required: true
+    },
+    rowIndex: {
+      type: Number,
+      required: true
+    },
+    data: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    getRef () {
+      return this.$refs.stringPreview
     }
   }
 }
