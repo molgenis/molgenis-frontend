@@ -50,13 +50,12 @@ export default {
   methods: {
     handleSearchAction () {
       this.$emit('input', this.searchText)
+      createBookmark(this.$router)
     }
   },
   watch: {
     value: {
       handler: function (val, oldVal) {
-        this.searchText = val
-
         if (val === '') {
           this.searchText = ''
         }
@@ -65,12 +64,12 @@ export default {
     },
     searchText: {
       // Add handler to support html5 clear search action
-      handler: function (val) {
+      handler: function (val, oldVal) {
         if (val === '') {
           this.handleSearchAction()
         }
       },
-      immediate: false
+      immediate: true
     }
   }
 }
