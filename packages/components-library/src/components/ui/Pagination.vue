@@ -57,10 +57,11 @@
 export default {
   async created () {
     this.localValue = { ...this.localValue, ...this.value }
+
     // Life-cycle hook for router-less pagination.
     if (!this.useRouter) {
       // Allow Vue instance listeners to initialize in tests.
-      await this.$nextTick()
+
       // Pagination state is leading for the initial page,
       // in case no router is being use.
       this.fetchData(this.localValue.page)
