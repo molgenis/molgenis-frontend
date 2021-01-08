@@ -95,13 +95,12 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
 }
 
 const pageQuery = (pagination :Pagination|undefined) => {
-  if (!pagination) return ''
-
   // (!) Adapt page to 0-based data-api page property.
-  return Object.entries({
-    page: pagination.page - 1,
-    size: pagination.size
-  }).map(([k, v]) => `${k}=${v}`).join('&') + '&'
+  return pagination ? Object
+    .entries({ page: pagination.page - 1, size: pagination.size })
+    .map(([k, v]) => `${k}=${v}`)
+    .join('&') + '&'
+    : ''
 }
 
 const getTableDataDeepReference = async (

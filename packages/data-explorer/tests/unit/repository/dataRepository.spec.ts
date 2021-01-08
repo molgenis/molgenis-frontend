@@ -81,7 +81,7 @@ describe('dataRepository', () => {
       const rsqlQuery = 'rsqlQuery'
       const pagination = defaultPagination
       await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, pagination)
-      expect(client.get).toBeCalledWith('/api/data/tableId?size=10&page=1&expanded-attributes-query&q=rsqlQuery')
+      expect(client.get).toBeCalledWith('/api/data/tableId?page=0&size=20&expanded-attributes-query&q=rsqlQuery')
       done()
     })
   })

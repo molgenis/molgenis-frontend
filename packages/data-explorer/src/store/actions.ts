@@ -6,33 +6,6 @@ import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 export default {
-  downloadResources: async function (store, resources) {
-    const res = await client.post('/plugin/navigator/download', {
-      resources: resources.map(resource => ({
-        id: resource.id,
-        type: resource.type
-      }))
-    })
-
-    const fetchJobImmediate = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
-    store.commit('addToast', { type: 'info', message: fetchJobImmediate.data.progressMessage })
-
-    const interval = setInterval(async () => {
-      const fetchJob = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
-      if (fetchJob.data.status === 'SUCCESS') {
-        store.commit('addToast', {
-          message: `Download data from <a href="${fetchJob.data.resultUrl}">${fetchJob.data.resultUrl}</a>`,
-          type: 'success',
-          timeout: 0
-        })
-        clearInterval(interval)
-      } else if (fetchJob.data.status === 'FAILED') {
-        store.commit('addToast', { type: 'danger', message: fetchJob.data.progressMessage, timeout: 0 })
-        clearInterval(interval)
-      }
-    }, 1000)
-  },
-
   fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
     commit('setTableSettings', {})
     commit('setMetaData', null)
@@ -78,7 +51,7 @@ export default {
     }
 
     if (state.tableMeta === null) {
-      commit('addToast', { message: 'cannot load table data without meta data', type: 'danger' })
+      commit('addToast', { message: 'cannot load card data without meta data', type: 'danger' })
       return
     }
 
@@ -164,5 +137,32 @@ export default {
     }
     await dataRepository.deleteRow(state.tableName, payload.rowId)
     commit('removeRow', { rowId: payload.rowId })
+  },
+
+  downloadResources: async function (store, resources) {
+    const res = await client.post('/plugin/navigator/download', {
+      resources: resources.map(resource => ({
+        id: resource.id,
+        type: resource.type
+      }))
+    })
+
+    const fetchJobImmediate = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
+    store.commit('addToast', { type: 'info', message: fetchJobImmediate.data.progressMessage })
+
+    const interval = setInterval(async () => {
+      const fetchJob = await client.get(`/api/v2/sys_job_ResourceDownloadJobExecution/${res.data.identifier}`)
+      if (fetchJob.data.status === 'SUCCESS') {
+        store.commit('addToast', {
+          message: `Download data from <a href="${fetchJob.data.resultUrl}">${fetchJob.data.resultUrl}</a>`,
+          type: 'success',
+          timeout: 0
+        })
+        clearInterval(interval)
+      } else if (fetchJob.data.status === 'FAILED') {
+        store.commit('addToast', { type: 'danger', message: fetchJob.data.progressMessage, timeout: 0 })
+        clearInterval(interval)
+      }
+    }, 1000)
   }
 }

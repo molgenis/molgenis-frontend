@@ -37,7 +37,8 @@ describe('MainView.vue', () => {
         definition: [],
         shown: [],
         selections: {}
-      }
+      },
+      tablePagination: { count: 0, loading: false, page: 1, size: 20 }
     }
 
     mutations = {
@@ -47,7 +48,8 @@ describe('MainView.vue', () => {
       setActiveEntity: jest.fn(),
       setTableName: jest.fn(),
       setFilterSelection: jest.fn(),
-      setSearchText: jest.fn()
+      setSearchText: jest.fn(),
+      setPagination: jest.fn()
     }
 
     getters = {
