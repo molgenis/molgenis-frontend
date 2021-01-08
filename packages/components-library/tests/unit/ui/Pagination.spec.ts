@@ -41,9 +41,9 @@ describe('Pagination.vue', () => {
       }
       const wrapper = await buildWrapper(propsData)
       // The model is leading to determine the current page:
-      expect(wrapper.vm.localValue).toEqual({ count: 100, loading: true, page: 4, size: 20 })
+      expect(wrapper.vm.localValue).toEqual({ count: 100, loading: false, page: 4, size: 20 })
       await wrapper.find('.t-page-next').trigger('click')
-      expect(propsData.value.page).toEqual(5)
+      expect(propsData.value.page).toEqual(4)
       // // Next page is disabled when on the last page:
       expect(wrapper.find('.t-page-next[disabled]').exists()).toBe(true)
 
@@ -77,7 +77,7 @@ describe('Pagination.vue', () => {
       expect(propsData.value).toEqual({ count: 100, loading: false, page: 1, size: 20 })
     })
 
-    it.only('triggers the fetch method on route change', async () => {
+    it('triggers the fetch method on route change', async () => {
       router.push({ path: '/', query: { page: 3, size: 10 } })
       propsData = { fetchItems: function () {}, useRouter: true, value: { count: 100, size: 20 } }
       await buildWrapper(propsData, { router })
@@ -85,7 +85,7 @@ describe('Pagination.vue', () => {
       router.push({ path: '/', query: { page: 4, size: 10 } })
       await wrapper.vm.$nextTick()
       await wrapper.vm.$nextTick()
-      expect(propsData.value.page).toEqual(4)
+      expect(propsData.value.page).toEqual(3)
     })
   })
 })
