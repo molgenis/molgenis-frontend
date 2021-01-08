@@ -1,5 +1,5 @@
 import ApplicationState from '@/types/ApplicationState'
-import { Pagination } from '@molgenis-ui/components-library/src/types/Pagination'
+import { Pagination } from '@molgenis-ui/components-library'
 
 export const defaultPagination:Pagination = { count: 0, loading: false, page: 1, size: 20 }
 

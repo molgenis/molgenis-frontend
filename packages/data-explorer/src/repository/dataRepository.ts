@@ -5,7 +5,7 @@ import { DataApiResponse, DataApiResponseItem, DataObject } from '@/types/ApiRes
 import { MetaData, Attribute } from '@/types/MetaData'
 import client from '@/lib/client'
 import { encodeRsqlValue } from '@molgenis/rsql'
-import { Pagination } from '@molgenis-ui/components-library/src/types/Pagination'
+import { Pagination } from '@molgenis-ui/components-library'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaData) => {

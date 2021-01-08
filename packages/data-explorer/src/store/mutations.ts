@@ -4,8 +4,8 @@ import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
 import { applyFilters } from '@/mappers/bookmarkMapper'
-import { Pagination } from '@molgenis-ui/components-library/src/types/Pagination'
 import { defaultPagination } from '@/store/state'
+import { Pagination } from '@molgenis-ui/components-library'
 
 const defaultSettings = {
   settingsRowId: null,

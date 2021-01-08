@@ -1,6 +1,6 @@
 import { DataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
-import { Pagination } from '@molgenis-ui/components-library/src/types/Pagination'
 import { MetaData } from './MetaData'
+import { Pagination } from '@molgenis-ui/components-library'
 
 export type Toast = {
   type: 'danger' | 'success'
