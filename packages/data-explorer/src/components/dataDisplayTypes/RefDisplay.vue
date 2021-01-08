@@ -1,14 +1,9 @@
 <template>
   <div>
-    <div ref="refPreview" class="text-nowrap text-truncate">
-      <router-link :to="`/${getRouterLink()}`">
-        {{value}}
-      </router-link>
-    </div>
-    <b-popover :target="getRef" triggers="hover" placement="bottom">
-      <template #title>{{type}}</template>
+    <div @click="$refs['refPreview'].show()" class="text-nowrap text-truncate">{{value}}</div>
+    <b-modal ref="refPreview" hide-footer :title="type">
       <RefTable :value="value" :type="type" :tableId="getRouterLink()"></RefTable>
-    </b-popover>
+    </b-modal>
   </div>
 </template>
 
@@ -37,9 +32,6 @@ export default {
     }
   },
   methods: {
-    getRef () {
-      return this.$refs.refPreview
-    },
     getRouterLink () {
       return this.data.refEntityType.split('/').pop()
     }

@@ -43,7 +43,7 @@ export default {
       required: true
     }
   },
-  components: { TableRow, TableHeader },
+  components: { 'table-row': TableRow, TableHeader },
   computed: {
     ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected']),
     ...mapGetters(['filterRsql', 'hasEditRights']),

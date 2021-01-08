@@ -39,7 +39,7 @@ import DataDisplayCell from '@/components/dataDisplayTypes/DataDisplayCell'
 import ShoppingButton from '../utils/ShoppingButton'
 
 export default {
-  name: 'TableRow',
+  name: 'table-row',
   components: { ShoppingButton, DataDisplayCell },
   props: {
     id: {
