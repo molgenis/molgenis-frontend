@@ -19,11 +19,11 @@ const buildWrapper = async (propsData: any, attrs: any = null) => {
     },
     localVue,
     mocks: {
-      $tc: (msg:any) => msg,
-      $t: (msg:any) => msg
+      $tc: (msg: any) => msg,
+      $t: (msg: any) => msg
     },
     propsData,
-    ...attrs,
+    ...attrs
   })
 
   return wrapper
@@ -33,7 +33,7 @@ describe('Pagination.vue', () => {
   describe('Regardless of using a router', () => {
     it('navigates within a paginated range', async () => {
       propsData = {
-        fetchItems: async function() {},
+        fetchItems: async function () {},
         useRouter: false,
         value: {
           count: 100, loading: false, size: 20, page: 4
@@ -61,7 +61,7 @@ describe('Pagination.vue', () => {
 
     it('redirects to a route with a valid pagination state', async () => {
       router.replace = jest.fn()
-      propsData = { fetchItems: function(){}, useRouter: true, value: { page: 3, size: 20 } }
+      propsData = { fetchItems: function () {}, useRouter: true, value: { page: 3, size: 20 } }
       await buildWrapper(propsData, { router })
 
       // The url is leading to determine the current page:
@@ -70,7 +70,7 @@ describe('Pagination.vue', () => {
 
     it('leaves existing querystring data intact', async () => {
       router.push({ path: '/', query: { bookmark: 'base64_encoded_string' } })
-      propsData = { fetchItems: function(){}, useRouter: true, value: { count: 100, size: 20 } }
+      propsData = { fetchItems: function () {}, useRouter: true, value: { count: 100, size: 20 } }
       await buildWrapper(propsData, { router })
 
       expect(router.currentRoute.fullPath).toEqual('/?bookmark=base64_encoded_string&page=1&size=20')
@@ -79,7 +79,7 @@ describe('Pagination.vue', () => {
 
     it.only('triggers the fetch method on route change', async () => {
       router.push({ path: '/', query: { page: 3, size: 10 } })
-      propsData = { fetchItems: function(){}, useRouter: true, value: { count: 100, size: 20 } }
+      propsData = { fetchItems: function () {}, useRouter: true, value: { count: 100, size: 20 } }
       await buildWrapper(propsData, { router })
       expect(propsData.value.page).toEqual(3)
       router.push({ path: '/', query: { page: 4, size: 10 } })
