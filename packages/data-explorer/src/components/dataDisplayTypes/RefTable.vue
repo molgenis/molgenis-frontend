@@ -1,6 +1,7 @@
 <template>
   <div>
-    {{values}}
+    <b-table v-if="values && values.items" striped hover :items="values.items" :fields="values.fields"></b-table>
+    <b-spinner v-else label="Spinning"></b-spinner>
   </div>
 </template>
 
@@ -33,13 +34,18 @@ export default {
   computed: {
     values () {
       if (this.loaded) {
-        /*
-        const idAttribute = this.meta.data.data.attributes.items.filter(item => item.data.idAttribute === true)[0].data.name
-        console.log(idAttribute)
-        console.log(this.data.data)
-        console.log(this.data.data.items.filter(item => item[idAttribute] === value))
-           */
-        return null
+        let rows = []
+        let columns = []
+        const toFilter = this.value.split(', ')
+        // const idAttribute = this.meta.data.data.attributes.items.filter(item => item.data.idAttribute === true)[0].data.name
+        const labelAttribute = this.meta.data.data.attributes.items.filter(item => item.data.labelAttribute === true)[0].data.name
+        const selection = this.data.data.items.filter(item => toFilter.includes(item.data[labelAttribute]))
+
+        columns = this.meta.data.data.attributes.items.map(item => item.data.name)
+        if (Array.isArray(selection) && selection.length > 0) {
+          rows = selection.map(item => item.data)
+        }
+        return { fields: columns, items: rows }
       }
       return null
     }

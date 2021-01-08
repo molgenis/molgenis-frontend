@@ -5,7 +5,7 @@
         {{value}}
       </router-link>
     </div>
-    <b-popover :target="getRef" triggers="hover" placement="top">
+    <b-popover :target="getRef" triggers="hover" placement="bottom">
       <template #title>{{type}}</template>
       <RefTable :value="value" :type="type" :tableId="getRouterLink()"></RefTable>
     </b-popover>
