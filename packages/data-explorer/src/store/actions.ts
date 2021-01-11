@@ -4,6 +4,7 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
+import router from '@/router'
 
 export default {
   fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
@@ -23,10 +24,6 @@ export default {
     commit('setMetaData', metaData)
     commit('setFilterDefinition', definition)
     commit('setFiltersShown', state.tableSettings.defaultFilters)
-
-    if (state.bookmark !== '') {
-      commit('applyBookmark')
-    }
   },
   async fetchViewData (store, { tableName }) {
     if (store.state.tableName !== tableName) {
@@ -139,7 +136,7 @@ export default {
     commit('removeRow', { rowId: payload.rowId })
   },
 
-  downloadResources: async function (store, resources) {
+  downloadResources: async (store, resources) => {
     const res = await client.post('/plugin/navigator/download', {
       resources: resources.map(resource => ({
         id: resource.id,

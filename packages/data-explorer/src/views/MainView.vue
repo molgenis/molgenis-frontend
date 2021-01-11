@@ -97,24 +97,26 @@ export default Vue.extend({
       'tableData',
       'tableName',
       'tableMeta',
-      'tableSettings'
+      'tableSettings',
+      'searchText'
     ]),
     ...mapState('header', [
       'breadcrumbs'
     ]),
     ...mapGetters([
-      'isUserAuthenticated'
+      'isUserAuthenticated',
+      'compressedBookmark'
     ]),
-    activeFilterSelections: (vm) => {
-      return vm.searchText ? { ...vm.filters.selections, _search: vm.searchText } : vm.filters.selections
+    activeFilterSelections () {
+      return this.searchText ? { ...this.filters.selections, _search: this.searchText } : this.filters.selections
     },
-    filterDefinitions: (vm) => {
+    filterDefinitions () {
       const searchDef = {
         type: 'string',
         label: 'search',
         name: '_search'
       }
-      return vm.searchText ? [ ...vm.filters.definition, searchDef ] : vm.filters.definition
+      return this.searchText ? [ ...this.filters.definition, searchDef ] : this.filters.definition
     }
   },
   methods: {
@@ -124,7 +126,8 @@ export default Vue.extend({
       'setToasts',
       'setPagination',
       'setSearchText',
-      'setFilterSelection'
+      'setFilterSelection',
+      'applyBookmark'
     ]),
     ...mapActions([
       'deleteRow',
@@ -138,6 +141,11 @@ export default Vue.extend({
         this.setSearchText('')
       }
       this.setFilterSelection(newSelections)
+      this.$router.push({
+        name: this.$router.currentRoute.name,
+        path: this.$router.currentRoute.path,
+        query: { bookmark: this.compressedBookmark }
+      })
     },
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'
@@ -162,6 +170,11 @@ export default Vue.extend({
       await this.fetchViewData({ tableName: to.params.entity })
     }
     next()
+  },
+  watch: {
+    '$route.query': function (query) {
+      this.applyBookmark(query.bookmark || '')
+    }
   }
 })
 </script>

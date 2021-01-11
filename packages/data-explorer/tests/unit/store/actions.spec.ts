@@ -343,28 +343,6 @@ describe('actions', () => {
         [ 'setFiltersShown', [] ]
       ])
     })
-
-    it('should only commit bookmark if set', async () => {
-      const commit = jest.fn()
-      // @ts-ignore ts does not know its a mock
-      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
-      // @ts-ignore
-      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
-      expect(commit.mock.calls).not.toContain([ [ 'applyBookmark' ] ])
-    })
-
-    it('should commit bookmark if set', async () => {
-      state = mockState()
-      state.bookmark = 'bookmark'
-      const commit = jest.fn()
-      // @ts-ignore ts does not know its a mock
-      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
-      // @ts-ignore
-      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
-      expect(commit.mock.calls.pop()[0]).toEqual('applyBookmark')
-    })
   })
 
   describe('fetchViewData', () => {

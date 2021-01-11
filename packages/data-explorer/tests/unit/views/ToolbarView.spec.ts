@@ -13,6 +13,16 @@ describe('ToolbarView.vue', () => {
   let mutations: any
   let getters: any
   let directives: any
+  const mocks: any = {
+    $route: { params: {} },
+    $router: {
+      currentRoute: {
+        name: 'currentRouteName',
+        path: 'currentRoutePath'
+      },
+      push: jest.fn()
+    }
+  }
 
   beforeEach(() => {
     state = mockState()
@@ -30,7 +40,8 @@ describe('ToolbarView.vue', () => {
 
     getters = {
       hasEditRights: jest.fn(),
-      hasEditSettingsRights: jest.fn()
+      hasEditSettingsRights: jest.fn(),
+      compressedBookmark: jest.fn()
     }
 
     store = new Vuex.Store({
@@ -45,17 +56,18 @@ describe('ToolbarView.vue', () => {
   describe('when the search text model updates', () => {
     let wrapper
     beforeEach(() => {
-      wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+      wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
       wrapper.setData({ searchText: 'test' })
     })
 
     it('should mutate the value to the store', () => {
       expect(mutations.setSearchText).toHaveBeenCalled()
+      expect(mocks.$router.push).toHaveBeenCalled()
     })
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+    const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
     expect(wrapper.exists()).toBeTruthy()
   })
 
@@ -64,7 +76,7 @@ describe('ToolbarView.vue', () => {
     store = new Vuex.Store({
       state, mutations, getters
     })
-    const wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+    const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
     wrapper.find('button.table-layout').trigger('click')
     // @ts-ignore
     expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'TableView')
@@ -75,7 +87,7 @@ describe('ToolbarView.vue', () => {
     store = new Vuex.Store({
       state, mutations, getters
     })
-    const wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+    const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
     wrapper.find('button.card-layout').trigger('click')
     // @ts-ignore
     expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'CardView')
@@ -85,20 +97,20 @@ describe('ToolbarView.vue', () => {
     beforeEach(() => getters.hasEditRights.mockReturnValueOnce(true))
 
     it('should render the add button as a link to the data-row-edit', () => {
-      const wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+      const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
       expect(wrapper.find('.btn-toolbar > div > a.add-row').attributes().href).toEqual('/plugin/data-row-edit/root_hospital_patients')
     })
 
     it('should not be shown in shoppingcart mode', () => {
       store.state.showSelected = true
-      const wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+      const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
       expect(wrapper.find('.btn-toolbar > a').exists()).toBe(false)
     })
 
     it('should not show the button without edit rights', () => {
       store.state.showSelected = true
       getters.hasEditRights.mockReturnValueOnce(false)
-      const wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+      const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
       expect(wrapper.find('.btn-toolbar > a').exists()).toBe(false)
     })
 
@@ -108,7 +120,7 @@ describe('ToolbarView.vue', () => {
   describe('searchString value is set', () => {
     it('should persist the value in the store', () => {
       store.state.showSelected = true
-      const wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+      const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
       wrapper.setData({ searchText: 'demo' })
       expect(mutations.setSearchText).toHaveBeenCalled()
     })
@@ -117,7 +129,7 @@ describe('ToolbarView.vue', () => {
   describe('downloadData', () => {
     it('download action called', async () => {
       store.state.tableMeta = { id: '123' }
-      const wrapper = shallowMount(ToolbarView, { store, localVue, directives })
+      const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
       // @ts-ignore
       await wrapper.vm.downloadData()
       expect(actions.downloadResources).toHaveBeenCalledWith(expect.anything(), [{ id: '123', type: 'ENTITY_TYPE' }], undefined)

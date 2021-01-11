@@ -20,6 +20,13 @@ describe('MainView.vue', () => {
   let modules: any
   const mocks: any = {
     $route: { params: {} },
+    $router: {
+      currentRoute: {
+        name: 'currentRouteName',
+        path: 'currentRoutePath'
+      },
+      push: jest.fn()
+    },
     $eventBus: bus,
     $bvModal: {
       msgBoxConfirm: jest.fn()
@@ -53,7 +60,8 @@ describe('MainView.vue', () => {
     }
 
     getters = {
-      isUserAuthenticated: jest.fn()
+      isUserAuthenticated: jest.fn(),
+      compressedBookmark: jest.fn()
     }
 
     actions = {
@@ -103,6 +111,7 @@ describe('MainView.vue', () => {
       // @ts-ignore
       wrapper.vm.saveFilterState(newSelections)
       expect(mutations.setSearchText).toHaveBeenCalled()
+      expect(mocks.$router.push).toHaveBeenCalled()
     })
 
     it('should not clear the search text if search is part of the filter', () => {
@@ -110,6 +119,7 @@ describe('MainView.vue', () => {
       // @ts-ignore
       wrapper.vm.saveFilterState(newSelections)
       expect(mutations.setSearchText).not.toHaveBeenCalled()
+      expect(mocks.$router.push).toHaveBeenCalled()
     })
   })
 

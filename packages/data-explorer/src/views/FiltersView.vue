@@ -29,7 +29,7 @@
 
 <script>
 import Vue from 'vue'
-import { mapState, mapMutations, createNamespacedHelpers } from 'vuex'
+import { mapState, mapMutations, mapGetters, createNamespacedHelpers } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -53,6 +53,9 @@ export default Vue.extend({
       'bookmarkedShownFilters',
       'bookmarkedSelections'
     ]),
+    ...mapGetters([
+      'compressedBookmark'
+    ]),
     isFilterDataLoaded () {
       return this.tableMeta !== null
     },
@@ -62,7 +65,7 @@ export default Vue.extend({
       },
       set (val) {
         this.setFilterSelection(val)
-        createBookmark(this.$router)
+        this.updateRoute()
       }
     },
     filterShown: {
@@ -71,7 +74,7 @@ export default Vue.extend({
       },
       set (val) {
         this.setFiltersShown(val)
-        createBookmark(this.$router)
+        this.updateRoute()
       }
     }
   },
@@ -84,12 +87,14 @@ export default Vue.extend({
     ]),
     updateState (shownFilters) {
       this.setFiltersShown(shownFilters)
-      createBookmark(this.$router)
-    }
-  },
-  watch: {
-    '$route.query': function (query) {
-      this.applyBookmark(query.bookmark)
+      this.updateRoute()
+    },
+    updateRoute () {
+      this.$router.push({
+        name: this.$router.currentRoute.name,
+        path: this.$router.currentRoute.path,
+        query: { bookmark: this.compressedBookmark }
+      })
     }
   }
 })

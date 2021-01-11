@@ -3,7 +3,7 @@ import { DataApiResponse } from '@/types/ApiResponse'
 import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
-import { applyFilters } from '@/mappers/bookmarkMapper'
+import getters from '@/store/getters'
 import { defaultPagination } from '@/store/state'
 import { Pagination } from '@molgenis-ui/components-library'
 
@@ -77,11 +77,19 @@ export default {
   setFilterSelection (state: ApplicationState, selections: StringMap) {
     Vue.set(state.filters, 'selections', selections)
   },
-  setBookmark (state: ApplicationState, bookmark: string) {
-    Vue.set(state, 'bookmark', bookmark)
-  },
-  applyBookmark (state: ApplicationState, bookmark?: string) {
-    applyFilters(bookmark || state.bookmark, state.tableSettings.defaultFilters)
+  /**
+  * Commit the stored bookmark querystring to the store or
+  * use a default set of filters.
+  */
+  applyBookmark (state: ApplicationState, bookmark: string) {
+    if (bookmark === '') {
+      state.filters.shown = state.tableSettings.defaultFilters
+    } else {
+      const bookmarkedFilters = getters.parseBookmark(state, getters)(bookmark)
+      state.searchText = bookmarkedFilters.searchText
+      state.filters.shown = bookmarkedFilters.shown
+      state.filters.selections = bookmarkedFilters.selections
+    }
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {
     if (!state.tableData) {

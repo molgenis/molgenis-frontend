@@ -66,7 +66,6 @@ import { faStore, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare, faDow
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
 import TableSettingsButton from '../components/utils/TableSettingsButton'
-import { createBookmark } from '../mappers/bookmarkMapper'
 
 library.add(faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare, faDownload, faCog)
 
@@ -85,7 +84,8 @@ export default Vue.extend({
     ]),
     ...mapGetters([
       'hasEditRights',
-      'hasEditSettingsRights'
+      'hasEditSettingsRights',
+      'compressedBookmark'
     ]),
     searchText: {
       get () {
@@ -93,7 +93,11 @@ export default Vue.extend({
       },
       set (value) {
         this.$store.commit('setSearchText', value)
-        createBookmark(this.$router)
+        this.$router.push({
+          name: this.$router.currentRoute.name,
+          path: this.$router.currentRoute.path,
+          query: { bookmark: this.compressedBookmark }
+        })
       }
     }
   },

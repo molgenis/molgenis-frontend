@@ -1,63 +1,30 @@
-import { createBookmark, applyFilters } from '@/mappers/bookmarkMapper'
-import router from '@/router'
-import store from '@/store/store'
+import { toFilterValue } from '@/mappers/bookmarkMapper'
 
-const filterADefinition = {
-  name: 'a',
-  label: 'a',
-  type: 'multi-filter',
-  dataType: 'categorical'
-}
-const filterBDefinition = {
-  name: 'b',
-  label: 'b',
-  type: 'string-filter',
-  dataType: 'string'
-}
+describe('toFilterValue', () => {
+  it('should map the bookmark value to the filterValue', () => {
+    expect(toFilterValue(encodeURI('a string'), 'string')).toEqual('a string')
+    expect(toFilterValue('some%0Atext', 'text')).toEqual(`some
+text`)
+    expect(toFilterValue(encodeURI('<h1>Some text</h1>'), 'html')).toEqual('<h1>Some text</h1>')
+    expect(toFilterValue(encodeURI('file'), 'file')).toEqual('file') // todo check file filter
+    expect(toFilterValue(encodeURI('http://test.org'), 'hyperlink')).toEqual('http://test.org')
+    expect(toFilterValue(encodeURI('person@mail.com'), 'email')).toEqual('person@mail.com')
 
-store.state.filters.definition = [filterADefinition, filterBDefinition]
+    expect(toFilterValue('true', 'bool')).toEqual([true])
+    expect(toFilterValue('false', 'bool')).toEqual([false])
+    expect(toFilterValue(true, 'bool')).toEqual([true])
+    expect(toFilterValue(false, 'bool')).toEqual([false])
 
-const testShownFilters = ['a', 'b']
-const testfilterSelections = { 'a': ['1', '2', '3'], 'b': 'A' }
-const testBookmark = 'N4IgzgFg9g7gdiAXCAhgGgEYjeApigJwGMIAVXADwBckRtVaBGNAJjQGZ6tkBBEAXyA%3D'
-
-beforeEach(() => {
-  store.state.filters.shown = []
-  store.state.filters.selections = {}
-  store.state.bookmark = ''
-})
-
-describe('bookmarkMapper.ts', () => {
-  it('bookmarks shown filters and selection as a base64 encoded zipped string', async () => {
-    store.state.filters.shown = testShownFilters
-    store.state.filters.selections = testfilterSelections
-    await router.push({ name: 'main-view', params: { entity: 'sys_ts_DataExplorerEntitySettings' } })
-    await createBookmark(router)
-
-    // @ts-ignore
-    expect(router.history.current.fullPath).toBe(`/sys_ts_DataExplorerEntitySettings?bookmark=${testBookmark}`)
-  })
-
-  it('should not show a bookmark when shown array is empty', async () => {
-    await router.push({ name: 'main-view', params: { entity: 'sys_ts_DataExplorerEntitySettings' } })
-    createBookmark(router)
-    // @ts-ignore
-    expect(router.history.current.fullPath).toBe('/sys_ts_DataExplorerEntitySettings')
-  })
-
-  it('sets filters based on bookmark', () => {
-    applyFilters(testBookmark)
-    const shownFilters = store.state.filters.shown
-    const filterSelections = store.state.filters.selections
-
-    expect(shownFilters).toEqual(testShownFilters)
-    expect(filterSelections).toEqual(testfilterSelections)
-  })
-
-  it('sets default filters if no bookmark is given', () => {
-    applyFilters(undefined, ['defaultA', 'defaultB'])
-    const shownFilters = store.state.filters.shown
-
-    expect(shownFilters).toEqual(['defaultA', 'defaultB'])
+    expect(toFilterValue('ref1,ref2', 'categorical')).toEqual(['ref1', 'ref2'])
+    expect(toFilterValue('ref1,ref2', 'categorical_mref')).toEqual(['ref1', 'ref2'])
+    expect(toFilterValue('a,b', 'enum')).toEqual(['a', 'b'])
+    expect(toFilterValue('ref1,ref2', 'mref')).toEqual(['ref1', 'ref2'])
+    expect(toFilterValue('ref1,ref2', 'xref')).toEqual(['ref1', 'ref2'])
+    expect(toFilterValue('ref1,ref2', 'onetomany')).toEqual(['ref1', 'ref2'])
+    expect(toFilterValue('4.5,6.123', 'decimal')).toEqual(['4.5', '6.123'])
+    expect(toFilterValue('1', 'int')).toEqual(['1'])
+    expect(toFilterValue('1,2', 'long')).toEqual(['1', '2'])
+    expect(toFilterValue('2021-01-01T11:00:00.000Z,2021-02-26T11:00:00.000Z', 'date')).toEqual([new Date('2021-01-01T11:00:00.000Z'), new Date('2021-02-26T11:00:00.000Z')])
+    expect(toFilterValue('2021-01-01T11:00:00.000Z,2021-02-26T11:00:00.000Z', 'datetime')).toEqual([new Date('2021-01-01T11:00:00.000Z'), new Date('2021-02-26T11:00:00.000Z')])
   })
 })
