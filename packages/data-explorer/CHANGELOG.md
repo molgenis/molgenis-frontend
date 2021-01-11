@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.0.2...@molgenis-ui/data-explorer@2.1.0) (2021-01-11)
+
+
+### Features
+
+* **data-explorer:** add pagination to de2 ([#476](https://github.com/molgenis/molgenis-frontend/issues/476)) ([bb28649](https://github.com/molgenis/molgenis-frontend/commit/bb28649))
+
+
+
+
+
 ## [2.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.0.1...@molgenis-ui/data-explorer@2.0.2) (2021-01-08)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
