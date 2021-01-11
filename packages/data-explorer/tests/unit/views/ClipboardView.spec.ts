@@ -14,6 +14,7 @@ describe('ClipboardView.vue', () => {
 
   beforeEach(() => {
     state = {
+      showSelected: false,
       tableMeta: {
         idAttribute: { name: 'tableID' },
         attributes: [

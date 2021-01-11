@@ -13,6 +13,7 @@ describe('TableView.vue', () => {
 
   beforeEach(() => {
     state = {
+      showSelected: false,
       tableSettings: {
         isShop: false
       },

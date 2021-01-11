@@ -1,5 +1,6 @@
 import { DataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
 import { MetaData } from './MetaData'
+import { Pagination } from '@molgenis-ui/components-library'
 
 export type Toast = {
   type: 'danger' | 'success'
@@ -57,16 +58,14 @@ export default interface ApplicationState {
   toasts: Toast[]
   settingsTable: string
   dataDisplayLayout: 'CardView' | 'TableView'
-  dataDisplayLimit: Number
   tableName: string | null
   tableData: DataApiResponse | null
   tableMeta: MetaData | null
+  tablePagination: Pagination
   defaultEntityData: DataApiResponseItem[] | null
   selectedItemIds: string[]
   showSelected: boolean
   tableSettings: TableSetting
   filters: FilterGroup
   searchText: string
-  bookmark: string
-  componentRoute: boolean
 }
