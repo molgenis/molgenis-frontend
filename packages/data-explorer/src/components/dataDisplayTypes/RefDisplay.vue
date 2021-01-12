@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @click="$refs['refPreview'].show()" class="text-nowrap text-truncate">{{value}}</div>
+    <div @click="$refs['refPreview'].show()" class="text-nowrap text-truncate mouse-ref">{{value}}</div>
     <b-modal ref="refPreview" hide-footer :title="type">
       <RefTable :value="value" :type="type" :tableId="getRouterLink()"></RefTable>
     </b-modal>

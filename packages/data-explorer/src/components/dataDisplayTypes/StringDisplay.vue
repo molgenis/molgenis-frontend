@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="stringPreview" :id="`string-preview-${rowIndex}-${data.id}`" class="text-nowrap text-truncate">{{value}}</div>
+    <div ref="stringPreview" :id="`string-preview-${rowIndex}-${data.id}`" class="text-nowrap text-truncate" :class="{'mouse-help':value.length > 10}">{{value}}</div>
     <b-popover v-if="value.length > 10" :target="getRef" triggers="hover" placement="top" boundary="viewport">
       <template #title>String Preview</template>
       <div v-if="value.length > 255" class="overflow-auto" style="max-height:10rem">{{value}}</div>

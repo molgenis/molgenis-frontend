@@ -61,4 +61,10 @@ export default {
 </script>
 
 <style scoped>
+  >>> .mouse-help{
+    cursor: help;
+  }
+  >>> .mouse-ref{
+    cursor: pointer;
+  }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="htmlPreview" class="text-nowrap text-truncate">{{value}}</div>
+    <div ref="htmlPreview" class="text-nowrap text-truncate" :class="{'mouse-help':value.length > 10}">{{value}}</div>
     <b-popover :target="getRef" triggers="hover" placement="top">
       <template #title>HTML Preview</template>
       <span v-html="value"></span>

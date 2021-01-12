@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="datePreview" class="text-nowrap text-truncate">{{value}}</div>
+    <div ref="datePreview" class="text-nowrap text-truncate mouse-help">{{value}}</div>
     <b-popover :target="getRef" triggers="hover" placement="top">
       <template #title>Local Date{{ isDateTime ? '/Time' : '' }}</template>
       <span>{{new Date(value).toLocaleDateString()}} {{ isDateTime ? new Date(value).toLocaleTimeString() : '' }}</span>
