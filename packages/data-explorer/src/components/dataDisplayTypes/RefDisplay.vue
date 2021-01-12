@@ -1,7 +1,7 @@
 <template>
   <div>
     <div @click="$refs['refPreview'].show()" class="text-nowrap text-truncate mouse-ref">{{value}}</div>
-    <b-modal ref="refPreview" hide-footer :title="type">
+    <b-modal ref="refPreview" hide-footer :title="type" body-class="ref-modal-body" dialog-class="ref-modal-dialog">
       <RefTable :value="value" :type="type" :tableId="getRouterLink()"></RefTable>
     </b-modal>
   </div>
@@ -33,8 +33,22 @@ export default {
   },
   methods: {
     getRouterLink () {
-      return this.data.refEntityType.split('/').pop()
+      const link = this.data.refEntityType
+      if (typeof link === 'string') {
+        return link.split('/').pop()
+      } else {
+        return link.self.split('/').pop()
+      }
     }
   }
 }
 </script>
+
+<style>
+  .ref-modal-body{
+    padding: 0;
+  }
+  .ref-modal-dialog{
+    max-width: 90%;
+  }
+</style>

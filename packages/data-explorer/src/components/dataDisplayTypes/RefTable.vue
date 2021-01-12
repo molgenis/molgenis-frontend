@@ -14,24 +14,24 @@
                    :isShop="false"
                    :isEditable="false"
                    :showSelected="false"
-                   :isPreview="true"
         ></table-row>
       </tbody>
     </table>
-
-<!--    <b-table v-if="values && values.items" striped hover :items="values.items" :fields="values.fields"></b-table>
-    <b-spinner v-else label="Spinning"></b-spinner> -->
+    <div v-else><b-spinner label="Spinning" class="m-3 align-middle"></b-spinner> Requesting data </div>
   </div>
 </template>
 
 <script>
 import client from '@/lib/client'
-import TableHeader from '@/components/dataView/TableHeader'
-import TableRow from '@/components/dataView/TableRow'
 
 export default {
   name: 'RefTable',
-  components: { TableRow, TableHeader },
+  components: {
+    // Using a different way of importing to get around the Circular-References problem
+    // https://vuejs.org/v2/guide/components-edge-cases.html#Circular-References-Between-Components
+    TableHeader: () => import('@/components/dataView/TableHeader'),
+    TableRow: () => import('@/components/dataView/TableRow')
+  },
   props: {
     value: {
       type: String,
@@ -68,29 +68,9 @@ export default {
     },
     entitiesToShow () {
       if (this.loaded) {
-        console.log(this.data.data.items)
         return this.data.data.items.map(item => item.data)
       } else return []
     }
-    /*
-    values () {
-      if (this.loaded) {
-        let rows = []
-        let columns = []
-        const toFilter = this.value.split(', ')
-        // const idAttribute = this.meta.data.data.attributes.items.filter(item => item.data.idAttribute === true)[0].data.name
-        const labelAttribute = this.meta.data.data.attributes.items.filter(item => item.data.labelAttribute === true)[0].data.name
-        const selection = this.data.data.items.filter(item => toFilter.includes(item.data[labelAttribute]))
-
-        columns = this.meta.data.data.attributes.items.map(item => item.data.name)
-        if (Array.isArray(selection) && selection.length > 0) {
-          rows = selection.map(item => item.data)
-        }
-        return { fields: columns, items: rows }
-      }
-      return null
-    }
-       */
   },
   methods: {
     getEntityId (entity) {

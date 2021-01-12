@@ -67,10 +67,6 @@ export default {
       type: Boolean,
       default: () => false
     },
-    isPreview: {
-      type: Boolean,
-      default: () => false
-    },
     showSelected: {
       type: Boolean,
       required: true
