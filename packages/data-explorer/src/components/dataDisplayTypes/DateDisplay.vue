@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'StringDisplay',
+  name: 'DataDisplay',
   props: {
     value: {
       type: String,

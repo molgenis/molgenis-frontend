@@ -3,18 +3,19 @@
     <table class="table table-bordered h-100" v-if="entitiesToShow.length">
       <table-header :visibleColumns="visibleColumns"></table-header>
       <tbody>
-      <table-row v-for="(entity, index) in entitiesToShow"
-                 :key="index"
-                 :rowIndex="index"
-                 :id="getEntityId(entity)"
-                 :tableName="tableId"
-                 :rowData="entity"
-                 :visibleColumns="visibleColumns"
-                 :isSelected="false"
-                 :isShop="false"
-                 :isEditable="false"
-                 :showSelected="false"
-      ></table-row>
+        <table-row v-for="(entity, index) in entitiesToShow"
+                   :key="index"
+                   :rowIndex="index"
+                   :id="getEntityId(entity)"
+                   :tableName="tableId"
+                   :rowData="entity"
+                   :visibleColumns="visibleColumns"
+                   :isSelected="false"
+                   :isShop="false"
+                   :isEditable="false"
+                   :showSelected="false"
+                   :isPreview="true"
+        ></table-row>
       </tbody>
     </table>
 
@@ -60,13 +61,12 @@ export default {
       if (this.loaded) {
         console.log('visibleColumns', this.meta)
         return this.meta.data.data.attributes.items
-          .filter(a => a.visible)
-          .map(a => ({ id: a.id, name: a.name, type: a.type, refEntityType: a.refEntityType }))
+          .filter(a => a.data.visible)
+          .map(a => ({ id: a.data.id, name: a.data.name, type: a.data.type, refEntityType: a.data.refEntityType }))
       }
       return []
     },
     entitiesToShow () {
-      // return this.tableData.items.filter((entity) => this.selectedItemIds.includes(this.getEntityId(entity)))
       if (this.loaded) {
         console.log(this.data.data.items)
         return this.data.data.items.map(item => item.data)

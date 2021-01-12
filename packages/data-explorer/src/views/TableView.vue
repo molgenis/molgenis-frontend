@@ -11,6 +11,7 @@
                :visibleColumns="visibleColumns"
                :isSelected="isSelected(entity)"
                :isShop="tableSettings.isShop"
+               :isPreview="false"
                :isEditable="hasEditRights"
                :showSelected="showSelected"
                @toggleSelectedItemsHandler="toggleSelectedItems"

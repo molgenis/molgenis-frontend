@@ -39,7 +39,7 @@ import DataDisplayCell from '@/components/dataDisplayTypes/DataDisplayCell'
 import ShoppingButton from '../utils/ShoppingButton'
 
 export default {
-  name: 'table-row',
+  name: 'TableRow',
   components: { ShoppingButton, DataDisplayCell },
   props: {
     id: {
@@ -64,6 +64,10 @@ export default {
       default: () => false
     },
     isEditable: {
+      type: Boolean,
+      default: () => false
+    },
+    isPreview: {
       type: Boolean,
       default: () => false
     },
@@ -98,8 +102,8 @@ export default {
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     left: 0;
-    background-color: var(--gray-light);
-    border-right: 1px var(--border) solid;
+    background-color: var( --gray-light );
+    border-right: 1px var( --border ) solid;
   }
   /**
    * Fix borders in the first column
@@ -113,11 +117,11 @@ export default {
   }
   th:before {
     left: -1px;
-    border-left: 1px solid var(--border);
+    border-left: 1px solid var( --border );
   }
   th:after {
     right: -1px;
-    border-right: 1px solid var(--border);
+    border-right: 1px solid var( --border );
   }
 
   /**
