@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     getColumnName (name) {
-      if (name in this.rowData) {
+      if (name in this.rowData && this.rowData[name]) {
         return this.rowData[name].toString()
       }
     }

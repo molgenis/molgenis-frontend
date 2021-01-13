@@ -1,9 +1,9 @@
 <template>
   <div>
-    <table class="table table-bordered h-100" v-if="entitiesToShow.length">
+    <table class="table table-bordered h-100" v-if="data">
       <table-header :visibleColumns="visibleColumns"></table-header>
       <tbody>
-        <table-row v-for="(entity, index) in entitiesToShow"
+        <table-row v-for="(entity, index) in data"
                    :key="index"
                    :rowIndex="index"
                    :id="getEntityId(entity)"
@@ -17,12 +17,16 @@
         ></table-row>
       </tbody>
     </table>
-    <div v-else><b-spinner label="Spinning" class="m-3 align-middle"></b-spinner> Requesting data </div>
+    <div v-else><b-spinner label="Spinning" class="m-3 align-middle"></b-spinner> Requesting data... </div>
   </div>
 </template>
 
 <script>
 import client from '@/lib/client'
+import { toMetaData } from '@/repository/metaDataResponseMapper'
+import { getTableDataWithLabel } from '@/repository/dataRepository'
+import { buildExpandedAttributesQuery } from '@/repository/queryBuilder'
+import { getAttributesfromMeta } from '@/repository/metaDataService'
 
 export default {
   name: 'RefTable',
@@ -49,27 +53,21 @@ export default {
   data () {
     return {
       loaded: false,
-      data: {},
-      meta: {}
+      data: [],
+      meta: []
     }
   },
   computed: {
     idAttribute () {
-      return this.meta.data.data.attributes.items.filter(item => item.data.idAttribute === true)[0].data
+      return this.meta.attributes.filter(item => item.idAttribute === true)[0]
     },
     visibleColumns () {
       if (this.loaded) {
-        console.log('visibleColumns', this.meta)
-        return this.meta.data.data.attributes.items
-          .filter(a => a.data.visible)
-          .map(a => ({ id: a.data.id, name: a.data.name, type: a.data.type, refEntityType: a.data.refEntityType }))
+        return this.meta.attributes
+          .filter(a => a.visible)
+          .map(a => ({ id: a.id, name: a.name, type: a.type, refEntityType: a.refEntityType }))
       }
       return []
-    },
-    entitiesToShow () {
-      if (this.loaded) {
-        return this.data.data.items.map(item => item.data)
-      } else return []
     }
   },
   methods: {
@@ -77,8 +75,19 @@ export default {
       return entity[this.idAttribute.name].toString()
     },
     async load () {
-      this.meta = await client.get(`/api/metadata/${this.tableId}`)
-      this.data = await client.get(`/api/data/${this.tableId}`)
+      const metaResponse = await client.get(`/api/metadata/${this.tableId}`)
+      this.meta = toMetaData(metaResponse.data)
+
+      const attributes = getAttributesfromMeta(this.meta)
+      const columnSet = new Set([...attributes])
+      columnSet.add(this.meta.idAttribute.name)
+      if (this.meta.labelAttribute !== undefined) {
+        columnSet.add(this.meta.labelAttribute.name)
+      }
+
+      const dataResponse = await getTableDataWithLabel(this.tableId, this.meta, [...columnSet], null, 10000)
+      this.data = dataResponse.items.filter(item => item.label === this.value)
+      console.log(this.data)
       this.loaded = true
     }
   },
