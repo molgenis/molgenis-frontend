@@ -30,7 +30,7 @@ pipeline {
                     }
                 }
                 container('node') {
-                    sh "/usr/local/bin/sc -x ${SAUCE_DC} -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER} &"
+                    sh "exec /usr/local/bin/sc -x ${SAUCE_DC} -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER} &"
                     script {
                         env.SAUCE_PID = sh(script: 'echo $!', returnStdout: true)
                     }
