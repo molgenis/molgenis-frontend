@@ -5,6 +5,7 @@ pipeline {
         }
     }
     environment {
+        SAUCE_DC = 'https://eu-central-1.saucelabs.com/rest/v1'
         REPOSITORY = 'molgenis/molgenis-frontend'
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
         npm_config_registry = "https://registry.npmjs.org"
@@ -29,7 +30,7 @@ pipeline {
                     }
                 }
                 container('node') {
-                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
+                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc -x ${SAUCE_DC} -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
