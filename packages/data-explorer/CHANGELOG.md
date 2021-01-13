@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.0.2...@molgenis-ui/data-explorer@2.1.0) (2021-01-11)
+
+
+### Features
+
+* **data-explorer:** add pagination to de2 ([#476](https://github.com/molgenis/molgenis-frontend/issues/476)) ([bb28649](https://github.com/molgenis/molgenis-frontend/commit/bb28649))
+
+
+
+
+
+## [2.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.0.1...@molgenis-ui/data-explorer@2.0.2) (2021-01-08)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [2.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.0.0...@molgenis-ui/data-explorer@2.0.1) (2021-01-06)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+# [2.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.3.4...@molgenis-ui/data-explorer@2.0.0) (2021-01-06)
+
+
+### Features
+
+* **data-explorer:** Use '/theme/style.css' endpoint for styling ([#472](https://github.com/molgenis/molgenis-frontend/issues/472)) ([4ca0a16](https://github.com/molgenis/molgenis-frontend/commit/4ca0a16))
+
+
+### BREAKING CHANGES
+
+* **data-explorer:** expects backend to serve active theme at '/theme/style.css'
+
+
+
+
+
+## [1.3.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.3.3...@molgenis-ui/data-explorer@1.3.4) (2021-01-06)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
 ## [1.3.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@1.3.2...@molgenis-ui/data-explorer@1.3.3) (2021-01-04)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer

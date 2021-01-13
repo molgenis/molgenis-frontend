@@ -5,6 +5,7 @@ import { DataApiResponse, DataApiResponseItem, DataObject } from '@/types/ApiRes
 import { MetaData, Attribute } from '@/types/MetaData'
 import client from '@/lib/client'
 import { encodeRsqlValue } from '@molgenis/rsql'
+import { Pagination } from '@molgenis-ui/components-library'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaData) => {
@@ -93,8 +94,13 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
   return rsqlFilter ? `${request}&q=${encodeRsqlValue(rsqlFilter)}` : request
 }
 
-const _buildSizeQueryParam = (dataDisplayLimit?: Number) => {
-  return typeof dataDisplayLimit === 'number' ? `size=${dataDisplayLimit}&` : ''
+const pageQuery = (pagination :Pagination|undefined) => {
+  // (!) Adapt page to 0-based data-api page property.
+  return pagination ? Object
+    .entries({ page: pagination.page - 1, size: pagination.size })
+    .map(([k, v]) => `${k}=${v}`)
+    .join('&') + '&'
+    : ''
 }
 
 const getTableDataDeepReference = async (
@@ -102,7 +108,7 @@ const getTableDataDeepReference = async (
   metaData: MetaData,
   coloms: string[],
   rsqlQuery?: string,
-  dataDisplayLimit?: Number
+  pagination?: Pagination
 ) => {
   if (!coloms.includes(metaData.idAttribute.name)) {
     coloms.push(metaData.idAttribute.name)
@@ -113,14 +119,15 @@ const getTableDataDeepReference = async (
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
-  const size = _buildSizeQueryParam(dataDisplayLimit)
-  const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
+
+  const request = addFilterIfSet(`/api/data/${tableId}?${pageQuery(pagination)}${expandReferencesQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
-  const result = { items: response.items.map((item: DataApiResponseItem) => levelNRowMapper(item)) }
-  return result
+
+  const items = response.items.map((item: DataApiResponseItem) => levelNRowMapper(item))
+  return { items, page: response.page }
 }
 
-const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, dataDisplayLimit?: Number) => {
+const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, pagination?: Pagination) => {
   const columnSet = new Set([...columns])
   columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
@@ -128,17 +135,18 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
   }
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const size = _buildSizeQueryParam(dataDisplayLimit)
-  const request = addFilterIfSet(`/api/data/${tableId}?${size}${expandReferencesQuery}`, rsqlQuery)
+  const request = addFilterIfSet(`/api/data/${tableId}?${pageQuery(pagination)}${expandReferencesQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
-  const result = { items: await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
+  // @ts-ignore
+  const items = await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
     return levelOneRowMapper(item, metaData)
-  })) }
-  return result
+  }))
+
+  return { items, page: response.page }
 }
 
 // called on row expand
-const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: Number) => {
+const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, pagination?: Pagination) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
   // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
   // Adding id and label makes sure we get these fields.
@@ -148,8 +156,7 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
     columnSet.add(metaData.labelAttribute.name)
   }
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const size = _buildSizeQueryParam(dataDisplayLimit)
-  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${size}${expandReferencesQuery}`)
+  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${pageQuery(pagination)}${expandReferencesQuery}`)
   return levelOneRowMapper(response.data, metaData)
 }
 

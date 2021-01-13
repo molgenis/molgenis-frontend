@@ -85,7 +85,7 @@ export default {
         columnSet.add(this.meta.labelAttribute.name)
       }
 
-      const dataResponse = await getTableDataWithLabel(this.tableId, this.meta, [...columnSet], null, 10000)
+      const dataResponse = await getTableDataWithLabel(this.tableId, this.meta, [...columnSet], null, { count: 0, loading: false, page: 1, size: 20 })
       this.data = dataResponse.items.filter(item => item.label === this.value)
       this.loaded = true
     }

@@ -2,7 +2,9 @@ import ApplicationState, { Toast, FilterDefinition } from '@/types/ApplicationSt
 import { DataApiResponse } from '@/types/ApiResponse'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
-import { applyFilters } from '@/mappers/bookmarkMapper'
+import getters from '@/store/getters'
+import { defaultPagination } from '@/store/state'
+import { Pagination } from '@molgenis-ui/components-library'
 
 const defaultSettings = {
   settingsRowId: null,
@@ -16,6 +18,13 @@ const defaultSettings = {
 export default {
   addToast (state: ApplicationState, toast: Toast) {
     state.toasts.push(toast)
+  },
+  setPagination (state: ApplicationState, pagination: Pagination|undefined) {
+    if (!pagination) {
+      state.tablePagination = defaultPagination
+    } else {
+      state.tablePagination = pagination
+    }
   },
   setToasts (state: ApplicationState, toasts: Toast[]) {
     Vue.set(state, 'toasts', toasts)
@@ -67,11 +76,19 @@ export default {
   setFilterSelection (state: ApplicationState, selections: Record<string, string>) {
     Vue.set(state.filters, 'selections', selections)
   },
-  setBookmark (state: ApplicationState, bookmark: string) {
-    Vue.set(state, 'bookmark', bookmark)
-  },
-  applyBookmark (state: ApplicationState, bookmark?: string) {
-    applyFilters(bookmark || state.bookmark, state.tableSettings.defaultFilters)
+  /**
+  * Commit the stored bookmark querystring to the store or
+  * use a default set of filters.
+  */
+  applyBookmark (state: ApplicationState, bookmark: string) {
+    if (bookmark === '') {
+      state.filters.shown = state.tableSettings.defaultFilters
+    } else {
+      const bookmarkedFilters = getters.parseBookmark(state, getters)(bookmark)
+      state.searchText = bookmarkedFilters.searchText
+      state.filters.shown = bookmarkedFilters.shown
+      state.filters.selections = bookmarkedFilters.selections
+    }
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: Record<string, string> }) {
     if (!state.tableData) {
@@ -101,8 +118,5 @@ export default {
   },
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText
-  },
-  setComponentRoute (state: ApplicationState, componentRoute: boolean) {
-    state.componentRoute = componentRoute
   }
 }

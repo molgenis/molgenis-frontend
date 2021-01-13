@@ -24,7 +24,7 @@
     </div>
     <div class="mg-content d-flex h-100 overflow-control" :class="{'hidefilters': filters.hideSidebar}">
       <div class="mg-filter mr-2">
-        <filters-view v-if="!loading"></filters-view>
+        <filters-view></filters-view>
       </div>
       <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
         <active-filters
@@ -33,9 +33,22 @@
           :filters="filterDefinitions"
         ></active-filters>
         <toolbar-view class="mb-2"></toolbar-view>
+
+        <pagination v-if="dataDisplayLayout === 'CardView'" class="mt-2 mb-1" v-model="tablePagination" />
         <div class="mg-data-view-container" >
-          <data-view v-if="!loading"></data-view>
+          <data-view v-if="!tablePagination.loading"></data-view>
         </div>
+        <!--
+          (!) This pagination component is always rendered, because it is
+          responsible for the data fetching in the background. It is only
+          visible in the CardView when the amount of items justifies an
+          extra pagination ui at the bottom of the page.
+        -->
+        <pagination
+          v-show="(dataDisplayLayout === 'TableView') || (!tablePagination.loading && (tableData && tableData.items > tablePagination.size))" class="mt-2"
+          v-model="tablePagination"
+          :fetchItems="() => fetchViewData({ tableName: $route.params.entity })"
+        />
         </div>
     </div>
   </div>
@@ -45,7 +58,7 @@
 import Vue from 'vue'
 import FiltersView from './FiltersView'
 import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
-import { ActiveFilters, Toaster } from '@molgenis-ui/components-library'
+import { ActiveFilters, Pagination, Toaster } from '@molgenis-ui/components-library'
 
 import DataView from './DataView'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
@@ -61,8 +74,14 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
-  components: { FiltersView, DataView, BreadcrumbBar, Toaster, ToolbarView, ActiveFilters },
+  components: { FiltersView, DataView, BreadcrumbBar, Pagination, Toaster, ToolbarView, ActiveFilters },
   computed: {
+    tablePagination: {
+      get: function () {
+        return this.$store.state.tablePagination
+      },
+      set: function (value) { this.setPagination(value) }
+    },
     toasts: {
       get: function () {
         return this.$store.state.toasts
@@ -75,30 +94,29 @@ export default Vue.extend({
       'filters',
       'showSelected',
       'dataDisplayLayout',
+      'tableData',
       'tableName',
-      'tableMeta'
+      'tableMeta',
+      'tableSettings',
+      'searchText'
     ]),
     ...mapState('header', [
       'breadcrumbs'
     ]),
     ...mapGetters([
-      'isUserAuthenticated'
+      'isUserAuthenticated',
+      'compressedBookmark'
     ]),
-    activeFilterSelections: (vm) => {
-      return vm.searchText ? { ...vm.filters.selections, _search: vm.searchText } : vm.filters.selections
+    activeFilterSelections () {
+      return this.searchText ? { ...this.filters.selections, _search: this.searchText } : this.filters.selections
     },
-    filterDefinitions: (vm) => {
+    filterDefinitions () {
       const searchDef = {
         type: 'string',
         label: 'search',
         name: '_search'
       }
-      return vm.searchText ? [ ...vm.filters.definition, searchDef ] : vm.filters.definition
-    }
-  },
-  data () {
-    return {
-      loading: false
+      return this.searchText ? [ ...this.filters.definition, searchDef ] : this.filters.definition
     }
   },
   methods: {
@@ -106,18 +124,16 @@ export default Vue.extend({
       'setHideFilters',
       'setTableName',
       'setToasts',
+      'setPagination',
       'setSearchText',
-      'setFilterSelection'
+      'setFilterSelection',
+      'applyBookmark'
     ]),
     ...mapActions([
       'deleteRow',
-      'fetchTableMeta',
-      'fetchCardViewData',
-      'fetchTableViewData',
-      'fetchTableMeta'
+      'fetchViewData'
     ]),
     ...mapActions('header', [
-      'fetchBreadcrumbs',
       'fetchPackageTables'
     ]),
     saveFilterState (newSelections) {
@@ -125,6 +141,11 @@ export default Vue.extend({
         this.setSearchText('')
       }
       this.setFilterSelection(newSelections)
+      this.$router.push({
+        name: this.$router.currentRoute.name,
+        path: this.$router.currentRoute.path,
+        query: { bookmark: this.compressedBookmark }
+      })
     },
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'
@@ -132,42 +153,34 @@ export default Vue.extend({
       if (isDeleteConfirmed) {
         this.deleteRow({ rowId: itemId })
       }
-    },
-    async fetchViewData (tableName) {
-      if (this.tableName !== tableName) {
-        this.loading = true
-        await this.fetchTableMeta({ tableName })
-        if (this.isUserAuthenticated) {
-          this.fetchBreadcrumbs()
-        }
-        this.setTableName(tableName)
-      }
-      if (this.dataDisplayLayout === 'CardView') {
-        this.fetchCardViewData()
-      } else {
-        this.fetchTableViewData()
-      }
-      this.loading = false
     }
   },
   created () {
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
-    this.fetchViewData(this.$route.params.entity)
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
-    await this.fetchViewData(to.params.entity)
+    if (this.$route.params.entity !== to.params.entity) {
+      // Reset pagination to defaults before loading another entity.
+      this.setPagination()
+      await this.fetchViewData({ tableName: to.params.entity })
+    }
     next()
+  },
+  watch: {
+    '$route.query': function (query) {
+      this.applyBookmark(query.bookmark || '')
+    }
   }
 })
 </script>
 
 <style scoped>
-  >>> .breadcrumb {
+  .breadcrumb {
     margin: -16px -16px 16px -16px;
   }
   .mg-content {

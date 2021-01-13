@@ -24,7 +24,7 @@
     </div>
 
     <div class="btn-group" role="group" aria-label="Colum actions group">
-      <search-component v-model="searchText"></search-component>
+      <search-component v-model="searchText"/>
     </div>
 
     <div class="btn-group" role="group" aria-label="Table actions group">
@@ -78,14 +78,14 @@ export default Vue.extend({
       'dataDisplayLayout',
       'tableMeta',
       'tableSettings',
-      'searchText',
       'tableName',
       'showSelected',
       'settingsTable'
     ]),
     ...mapGetters([
       'hasEditRights',
-      'hasEditSettingsRights'
+      'hasEditSettingsRights',
+      'compressedBookmark'
     ]),
     searchText: {
       get () {
@@ -93,6 +93,11 @@ export default Vue.extend({
       },
       set (value) {
         this.$store.commit('setSearchText', value)
+        this.$router.push({
+          name: this.$router.currentRoute.name,
+          path: this.$router.currentRoute.path,
+          query: { bookmark: this.compressedBookmark }
+        })
       }
     }
   },

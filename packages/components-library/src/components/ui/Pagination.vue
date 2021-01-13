@@ -57,10 +57,11 @@
 export default {
   async created () {
     this.localValue = { ...this.localValue, ...this.value }
+
     // Life-cycle hook for router-less pagination.
     if (!this.useRouter) {
       // Allow Vue instance listeners to initialize in tests.
-      await this.$nextTick()
+
       // Pagination state is leading for the initial page,
       // in case no router is being use.
       this.fetchData(this.localValue.page)
@@ -69,7 +70,7 @@ export default {
   computed: {
     navigationText () {
       if (this.pageCount <= 1) {
-        return `${this.i18n.results}: ${this.localValue.count}`
+        return `${this.i18n.items}: ${this.localValue.count}`
       } else {
         return `${this.i18n.page} ${this.localValue.page}/${this.pageCount} (${this.localValue.count} ${this.i18n.items})`
       }
@@ -121,10 +122,8 @@ export default {
       if (!this.fetchItems) { return }
 
       this.updateValue({ loading: true, page })
-      const { count } = await this.fetchItems()
-      this.updateValue({ loading: false, count, page })
-
-      this.localValue = { ...this.value, ...{ loading: false, count, page } }
+      await this.fetchItems()
+      this.updateValue({ loading: false })
     },
     navigate (page) {
       if (!this.useRouter) { return this.fetchData(page) }
@@ -223,7 +222,7 @@ export default {
         if (query.page) {
           this.fetchData(parseInt(query.page, 10))
         } else {
-          // Defaults by setting the pagination to page 1.
+          // Defaults by setting the pagination to the first page.
           this.navigate(1)
         }
       },
@@ -294,6 +293,10 @@ export default {
     .item-count {
       color: var(--gray-dark);
       font-weight: 500;
+    }
+
+    .form-check {
+      margin: 0;
     }
   }
 }

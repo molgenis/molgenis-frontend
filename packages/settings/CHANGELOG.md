@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.1.0...@molgenis-ui/settings@4.1.1) (2021-01-12)
+
+
+### Bug Fixes
+
+* **settings:** update forms to 5.2.1 ([dccb739](https://github.com/molgenis/molgenis-frontend/commit/dccb739))
+
+
+
+
+
+# [4.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.0.2...@molgenis-ui/settings@4.1.0) (2021-01-04)
+
+
+### Features
+
+* **data-row-edit, settings, questionnaires, scripts:** version bump  ([#471](https://github.com/molgenis/molgenis-frontend/issues/471)) ([d32482c](https://github.com/molgenis/molgenis-frontend/commit/d32482c))
+
+
+
+
+
 ## [4.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.0.1...@molgenis-ui/settings@4.0.2) (2020-10-08)
 
 
