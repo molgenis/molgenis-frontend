@@ -30,7 +30,10 @@ pipeline {
                     }
                 }
                 container('node') {
-                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc -x ${SAUCE_DC} -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
+                    sh "/usr/local/bin/sc -x ${SAUCE_DC} -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER} &"
+                    script {
+                        env.SAUCE_PID = sh(script: 'echo $!', returnStdout: true)
+                    }
                 }
                 sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
@@ -200,7 +203,7 @@ pipeline {
     post {
         always {
             container('node') {
-                sh "daemon --name=sauceconnect --stop"
+                sh "kill -9 ${SAUCE_PID}"
             }
         }
         success {
