@@ -7,3 +7,4 @@
 **/selenium-debug.log
 **/*.spec.xml
 .DS_Store
+packages/data-row-edit/e2e-output/

@@ -16,7 +16,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "e2e": "jest --config ./jest.e2e.config.js"
   },
   "dependencies": {
     "@molgenis/molgenis-api-client": "^3.1.3",
@@ -40,8 +41,11 @@
     "@vue/eslint-config-typescript": "^6.0.0",
     "@vue/test-utils": "^1.1.0",
     "eslint": "^7.10.0",
+    "eslint-plugin-jest-playwright": "^0.2.1",
     "eslint-plugin-vue": "^7.0.1",
+    "jest-playwright-preset": "^1.4.4",
     "node-sass": "^4.12.0",
+    "playwright": "^1.7.1",
     "sass-loader": "^10.0.2",
     "typescript": "~4.0.3",
     "vue-template-compiler": "^2.6.12"

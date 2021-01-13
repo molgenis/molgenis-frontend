@@ -1,4 +1,8 @@
 {
+  "files": [
+    "node_modules/jest-playwright-preset/types/global.d.ts",
+    "node_modules/expect-playwright/global.d.ts"
+  ],
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
@@ -12,7 +16,10 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "jest"
+      "jest",
+      "@types/jest",
+      "jest-playwright-preset",
+      "expect-playwright"
     ],
     "paths": {
       "@/*": [
