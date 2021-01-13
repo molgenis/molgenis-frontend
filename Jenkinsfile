@@ -30,7 +30,7 @@ pipeline {
                     }
                 }
                 container('node') {
-                    sh "JENKINS_NODE_COOKIE=keepalive nohup /usr/local/bin/sc -x ${SAUCE_DC} -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER} &"
+                    sh "JENKINS_NODE_COOKIE=keepalive nohup /usr/local/bin/sc -x ${SAUCE_DC} -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER} > sc.log 2>&1"
                     script {
                         env.SAUCE_PID = sh(script: 'echo $!', returnStdout: true)
                     }
