@@ -87,7 +87,6 @@ export default {
 
       const dataResponse = await getTableDataWithLabel(this.tableId, this.meta, [...columnSet], null, 10000)
       this.data = dataResponse.items.filter(item => item.label === this.value)
-      console.log(this.data)
       this.loaded = true
     }
   },

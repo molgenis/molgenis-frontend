@@ -46,7 +46,7 @@ export default {
         'email': 'EmailDisplay',
         'hyperlink': 'LinkDisplay',
         'categorical': 'RefDisplay',
-        'categorical_mref': 'RefDisplay',
+        'categoricalmref': 'RefDisplay',
         'mref': 'RefDisplay',
         'xref': 'RefDisplay',
         'onetomany': 'RefDisplay',

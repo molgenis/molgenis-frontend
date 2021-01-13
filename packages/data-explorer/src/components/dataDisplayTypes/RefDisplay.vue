@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div @click="$refs['refPreview'].show()" class="text-nowrap text-truncate mouse-ref">{{value}}</div>
+    <div @click="$refs['refPreview'].show()" class="text-nowrap text-truncate mouse-ref">
+      <span class="mr-1">{{value}}</span>
+      <font-awesome-icon icon="share" size="xs"></font-awesome-icon>
+    </div>
     <b-modal ref="refPreview" hide-footer :title="type" body-class="ref-modal-body" dialog-class="ref-modal-dialog">
       <RefTable :value="value" :type="type" :tableId="getRouterLink()"></RefTable>
     </b-modal>
