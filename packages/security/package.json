@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/security",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "license": "LGPL-3.0",
   "description": "Interface for managing groups, users and permissions",
   "publishConfig": {
