@@ -1,5 +1,3 @@
-import { StringMap } from '@/types/GeneralTypes'
-
 export function isDataApiResponseItem (reponseValue: DataApiResponseItem | string | boolean | number): reponseValue is DataApiResponseItem {
   return (reponseValue as DataApiResponseItem).links !== undefined
 }
@@ -32,7 +30,7 @@ export type MetaDataAttribute = {
   fieldType: string,
   name: string,
   label: string,
-  attributes?: StringMap[],
+  attributes?: Record<string, string>[],
   auto: boolean,
   nillable: boolean,
   readOnly: boolean,

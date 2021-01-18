@@ -28,77 +28,19 @@
         <font-awesome-icon icon="trash"></font-awesome-icon>
       </button>
     </th>
-    <td v-for="(column, index) in visibleColumns" :key="index" class="text-nowrap text-truncate mg-data-column">
-      {{rowData[column.name]}}
+    <td v-for="(column, index) in visibleColumns" :key="index" class="mg-data-column">
+      <DataDisplayCell v-if="typeof getColumnName(column.name) != 'undefined'" :value="getColumnName(column.name)" :type="column.type" :data="column" :rowIndex="rowIndex"></DataDisplayCell>
     </td>
   </tr>
 </template>
-<style scoped>
-  .row-selected{
-    background-color: var( --tertiary );
-  }
-  /**
-   * Make actions column stick
-   */
-  th {
-    text-align: center;
-    position: -webkit-sticky; /* for Safari */
-    position: sticky;
-    left: 0;
-    background-color: var(--gray-light);
-    border-right: 1px var(--border) solid;
-  }
-  /**
-   * Fix borders in the first column
-   */
-  th:after,
-  th:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    height: 100%;
-  }
-  th:before {
-    left: -1px;
-    border-left: 1px solid var(--border);
-  }
-  th:after {
-    right: -1px;
-    border-right: 1px solid var(--border);
-  }
-
-  /**
-  * Style row actions
-  */
-  .mg-data-column {
-    max-width: 8rem;
-    overflow: hidden;
-  }
-  [role="button"]{
-    padding: 0 0.2rem;
-  }
-  input[type="checkbox"]{
-    position: static;
-    margin:0;
-    top:0;
-    vertical-align: middle;
-  }
-  td, th{
-    vertical-align: middle;
-  }
-
-</style>
 
 <script>
+import DataDisplayCell from '@/components/dataDisplayTypes/DataDisplayCell'
 import ShoppingButton from '../utils/ShoppingButton'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faEdit)
 export default {
   name: 'TableRow',
-  components: { ShoppingButton, FontAwesomeIcon },
+  components: { ShoppingButton, DataDisplayCell },
   props: {
     id: {
       type: String,
@@ -128,7 +70,74 @@ export default {
     showSelected: {
       type: Boolean,
       required: true
+    },
+    rowIndex: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    getColumnName (name) {
+      if (name in this.rowData && this.rowData[name]) {
+        return this.rowData[name].toString()
+      }
     }
   }
 }
 </script>
+
+<style scoped>
+  .row-selected{
+    background-color: var( --tertiary );
+  }
+  /**
+   * Make actions column stick
+   */
+  th {
+    text-align: center;
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    left: 0;
+    background-color: var( --gray-light );
+    border-right: 1px var( --border ) solid;
+  }
+  /**
+   * Fix borders in the first column
+   */
+  th:after,
+  th:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+  }
+  th:before {
+    left: -1px;
+    border-left: 1px solid var( --border );
+  }
+  th:after {
+    right: -1px;
+    border-right: 1px solid var( --border );
+  }
+
+  /**
+  * Style row actions
+  */
+  .mg-data-column {
+    max-width: 8rem;
+    overflow: hidden;
+  }
+  [role="button"]{
+    padding: 0 0.2rem;
+  }
+  input[type="checkbox"]{
+    position: static;
+    margin:0;
+    top:0;
+    vertical-align: middle;
+  }
+  td, th{
+    vertical-align: middle;
+  }
+
+</style>

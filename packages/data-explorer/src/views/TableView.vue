@@ -5,6 +5,7 @@
 
     <table-row v-for="(entity, index) in entitiesToShow"
                :key="index"
+               :rowIndex="index"
                :id="getEntityId(entity)"
                :tableName="tableName"
                :rowData="entity"
@@ -44,7 +45,7 @@ export default {
       required: true
     }
   },
-  components: { TableRow, TableHeader },
+  components: { 'table-row': TableRow, TableHeader },
   computed: {
     ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected']),
     ...mapGetters(['filterRsql', 'hasEditRights']),
@@ -54,7 +55,7 @@ export default {
     visibleColumns () {
       return this.tableMeta.attributes
         .filter(a => a.visible)
-        .map(a => ({ id: a.id, name: a.name }))
+        .map(a => ({ id: a.id, name: a.name, type: a.type, refEntityType: a.refEntityType }))
     }
   },
   methods: {

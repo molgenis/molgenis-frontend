@@ -1,6 +1,5 @@
 import ApplicationState, { Toast, FilterDefinition } from '@/types/ApplicationState'
 import { DataApiResponse } from '@/types/ApiResponse'
-import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
 import getters from '@/store/getters'
@@ -53,7 +52,7 @@ export default {
   setSelectedItems (state: ApplicationState, items: Array<string>) {
     state.selectedItemIds = items
   },
-  setTableSettings (state: ApplicationState, tableSettings: StringMap) {
+  setTableSettings (state: ApplicationState, tableSettings: Record<string, string>) {
     const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'
     state.tableSettings.isShop = isPropSet('shop') ? Boolean(tableSettings.shop) : defaultSettings.isShop
     state.tableSettings.collapseLimit = isPropSet('collapse_limit') ? parseInt(tableSettings.collapse_limit) : defaultSettings.collapseLimit
@@ -74,7 +73,7 @@ export default {
   setFiltersShown (state: ApplicationState, shown: string[]) {
     Vue.set(state.filters, 'shown', shown)
   },
-  setFilterSelection (state: ApplicationState, selections: StringMap) {
+  setFilterSelection (state: ApplicationState, selections: Record<string, string>) {
     Vue.set(state.filters, 'selections', selections)
   },
   /**
@@ -91,7 +90,7 @@ export default {
       state.filters.selections = bookmarkedFilters.selections
     }
   },
-  updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {
+  updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: Record<string, string> }) {
     if (!state.tableData) {
       throw new Error('cannot update empty table data')
     }
