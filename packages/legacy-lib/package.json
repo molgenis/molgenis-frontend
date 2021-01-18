@@ -12,7 +12,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@molgenis/molgenis-ui-context": "^1.6.3",
+    "@molgenis/molgenis-ui-context": "^1.6.5",
     "requirejs": "^2.3.6",
     "vue": "2.6.10"
   },
