@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.1...@molgenis-ui/data-explorer@2.1.2) (2021-01-20)
+
+
+### Bug Fixes
+
+* **data-explorer:** Only show pagination at bottom of page ([#483](https://github.com/molgenis/molgenis-frontend/issues/483)) ([f70b997](https://github.com/molgenis/molgenis-frontend/commit/f70b997))
+
+
+
+
+
 ## [2.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.0...@molgenis-ui/data-explorer@2.1.1) (2021-01-18)
 
 
