@@ -289,12 +289,6 @@ export default {
       width: 4.5rem;
     }
 
-    label,
-    .item-count {
-      color: var(--gray-dark);
-      font-weight: 500;
-    }
-
     .form-check {
       margin: 0;
     }
