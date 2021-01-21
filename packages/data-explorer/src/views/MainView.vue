@@ -173,9 +173,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .breadcrumb {
-    margin: -16px -16px 16px -16px;
-  }
   .mg-content {
     white-space: normal;
   }
