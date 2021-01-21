@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.2...@molgenis-ui/data-explorer@2.1.3) (2021-01-21)
+
+
+### Bug Fixes
+
+* **data-explorer:** Bump table view column width ([#502](https://github.com/molgenis/molgenis-frontend/issues/502)) ([c224635](https://github.com/molgenis/molgenis-frontend/commit/c224635))
+
+
+
+
+
 ## [2.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.1...@molgenis-ui/data-explorer@2.1.2) (2021-01-20)
 
 
