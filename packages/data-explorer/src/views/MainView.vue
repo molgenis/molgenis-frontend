@@ -14,7 +14,7 @@
             <span id="mainView-headItemTooltipID">
               {{tableMeta.label}}
             </span>
-            <b-tooltip placement='bottom' target="mainView-headItemTooltipID" triggers="hover">
+            <b-tooltip v-if="tableMeta.description" placement='bottom' target="mainView-headItemTooltipID" triggers="hover">
               {{tableMeta.description}}
             </b-tooltip>
           </li>
