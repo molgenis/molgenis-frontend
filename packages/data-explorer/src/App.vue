@@ -56,9 +56,12 @@ export default Vue.extend({
   * temporary fix for strange molgenis theme behaviour
   */
   .breadcrumb{
-    background-color: var(--gray-light);
-    padding: .75rem 1rem;
+    background-color: var(--border);
+    padding: .75rem 1.5rem;
     list-style: none;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    margin-top: -1rem;
   }
   .mg-page .mg-page-content{
     margin-top: 0;
