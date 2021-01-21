@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.4...@molgenis-ui/data-explorer@2.1.5) (2021-01-21)
+
+
+### Bug Fixes
+
+* **data-explorer:** table style ([#505](https://github.com/molgenis/molgenis-frontend/issues/505)) ([4df5098](https://github.com/molgenis/molgenis-frontend/commit/4df5098))
+
+
+
+
+
 ## [2.1.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.3...@molgenis-ui/data-explorer@2.1.4) (2021-01-21)
 
 
