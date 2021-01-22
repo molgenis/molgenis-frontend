@@ -20,6 +20,13 @@ describe('MainView.vue', () => {
   let modules: any
   const mocks: any = {
     $route: { params: {} },
+    $router: {
+      currentRoute: {
+        name: 'currentRouteName',
+        path: 'currentRoutePath'
+      },
+      push: jest.fn()
+    },
     $eventBus: bus,
     $bvModal: {
       msgBoxConfirm: jest.fn()
@@ -37,7 +44,8 @@ describe('MainView.vue', () => {
         definition: [],
         shown: [],
         selections: {}
-      }
+      },
+      tablePagination: { count: 0, loading: false, page: 1, size: 20 }
     }
 
     mutations = {
@@ -47,18 +55,21 @@ describe('MainView.vue', () => {
       setActiveEntity: jest.fn(),
       setTableName: jest.fn(),
       setFilterSelection: jest.fn(),
-      setSearchText: jest.fn()
+      setSearchText: jest.fn(),
+      setPagination: jest.fn()
     }
 
     getters = {
-      isUserAuthenticated: jest.fn()
+      isUserAuthenticated: jest.fn(),
+      compressedBookmark: jest.fn()
     }
 
     actions = {
       deleteRow: jest.fn(),
       fetchTableMeta: jest.fn(),
       fetchCardViewData: jest.fn(),
-      fetchTableViewData: jest.fn()
+      fetchTableViewData: jest.fn(),
+      fetchViewData: jest.fn()
     }
 
     modules = {
@@ -100,6 +111,7 @@ describe('MainView.vue', () => {
       // @ts-ignore
       wrapper.vm.saveFilterState(newSelections)
       expect(mutations.setSearchText).toHaveBeenCalled()
+      expect(mocks.$router.push).toHaveBeenCalled()
     })
 
     it('should not clear the search text if search is part of the filter', () => {
@@ -107,6 +119,7 @@ describe('MainView.vue', () => {
       // @ts-ignore
       wrapper.vm.saveFilterState(newSelections)
       expect(mutations.setSearchText).not.toHaveBeenCalled()
+      expect(mocks.$router.push).toHaveBeenCalled()
     })
   })
 
@@ -142,33 +155,6 @@ describe('MainView.vue', () => {
     })
   })
 
-  describe('fetchViewData', () => {
-    it('if table name is changed, should fetch settings and metaData ', async (done) => {
-      // @ts-ignore
-      await wrapper.vm.fetchViewData('new table name')
-      expect(actions.fetchTableMeta).toHaveBeenCalled()
-      expect(mutations.setTableName).toHaveBeenCalled()
-      done()
-    })
-
-    it('if table name is not changed, should not fetch settings and meta ', async (done) => {
-      actions.fetchTableMeta.mockReset()
-      mutations.setTableName.mockReset()
-      // @ts-ignore
-      await wrapper.vm.fetchViewData('tableName')
-      expect(actions.fetchTableMeta).not.toHaveBeenCalled()
-      expect(mutations.setTableName).not.toHaveBeenCalled()
-      done()
-    })
-
-    it('if selected view is cardView, should fetch card data', async (done) => {
-      // @ts-ignore
-      await wrapper.vm.fetchViewData('tableName')
-      expect(actions.fetchCardViewData).toHaveBeenCalled()
-      done()
-    })
-  })
-
   describe('before route update', () => {
     it('fetch data before calling next', async (done) => {
       // @ts-ignore
@@ -196,7 +182,6 @@ describe('MainView.vue', () => {
     })
     it('should add the Breadcrumb bar', () => {
       expect(wrapper.find('breadcrumb-bar-stub').exists()).toBeTruthy()
-      expect(modules.header.actions.fetchBreadcrumbs).toHaveBeenCalled()
     })
   })
 

@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/security",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "license": "LGPL-3.0",
   "description": "Interface for managing groups, users and permissions",
   "publishConfig": {
@@ -18,7 +18,7 @@
   "dependencies": {
     "@molgenis/molgenis-api-client": "^3.1.3",
     "@molgenis/molgenis-i18n-js": "^0.2.1",
-    "@molgenis/molgenis-ui-context": "^1.6.4",
+    "@molgenis/molgenis-ui-context": "^1.6.5",
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
     "font-awesome": "^4.7.0",

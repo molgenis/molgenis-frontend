@@ -4,7 +4,7 @@ import { buildExpandedAttributesQuery } from '@/repository/queryBuilder'
 
 import mockmeta from '../mocks/metaDataResponseMock'
 import mockRowResponse from '../mocks/rowDataResponseMock'
-
+import { defaultPagination } from '@/store/state'
 import client from '@/lib/client'
 
 jest.mock('@/lib/client', () => ({
@@ -79,9 +79,9 @@ describe('dataRepository', () => {
       const metaData = mockmeta as MetaData
       const coloms = ['foo']
       const rsqlQuery = 'rsqlQuery'
-      const dataDisplayLimit = 10
-      await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, dataDisplayLimit)
-      expect(client.get).toBeCalledWith('/api/data/tableId?size=10&expanded-attributes-query&q=rsqlQuery')
+      const pagination = defaultPagination
+      await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, pagination)
+      expect(client.get).toBeCalledWith('/api/data/tableId?page=0&size=20&expanded-attributes-query&q=rsqlQuery')
       done()
     })
   })

@@ -73,7 +73,7 @@
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     top: 0;
-    background-color: var(--gray-light);
+    background-color: var(--light);
     border: 1px var(--border) solid;
   }
 

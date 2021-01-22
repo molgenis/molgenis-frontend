@@ -160,4 +160,85 @@ describe('getters', () => {
       ])
     })
   })
+
+  describe('bookmark', () => {
+    let state: any = {
+      filters: {
+        shown: ['a', 'b'],
+        selections: {
+          'f1': 'val1',
+          'f2': ['val2', 'val3'],
+          'f3': [new Date('2021-01-01T11:00:00.000Z')],
+          'non-in-result': []
+        }
+      }
+    }
+    const mockGetter = {
+      getDataTypeForFilter: jest.fn()
+    }
+    mockGetter.getDataTypeForFilter
+      .mockReturnValueOnce('string')
+      .mockReturnValueOnce('xref')
+      .mockReturnValueOnce('date')
+      .mockReturnValueOnce('mref')
+
+    it('should build the bookmark object based on the state of the store', () => {
+      expect(getters.bookmark(state, mockGetter)).toEqual({
+        f1: 'val1',
+        f2: 'val2,val3',
+        f3: '2021-01-01T11:00:00.000Z',
+        searchText: undefined,
+        shown: 'a,b'
+      })
+    })
+  })
+
+  describe('compressedBookmark', () => {
+    let state: any = {}
+    const mockGetter = {
+      bookmark: { book: 'mark' }
+    }
+    it('should return the compressed and encoded bookmark', () => {
+      expect(getters.compressedBookmark(state, mockGetter)).toEqual('N4IgRg9hDWIFwgLYEMBOsC+Q')
+    })
+  })
+
+  describe('getDataTypeForFilter', () => {
+    let state: any = {
+      filters: {
+        definition: [
+          { name: 'filer1', dataType: 'my-filter-type' },
+          { label: 'filer2', dataType: 'my-filter-type' }
+        ]
+      }
+    }
+
+    it('should lookup the filter type using the filter name or label', () => {
+      expect(getters.getDataTypeForFilter(state)('filer1')).toEqual('my-filter-type')
+      expect(getters.getDataTypeForFilter(state)('filer2')).toEqual('my-filter-type')
+    })
+
+    it('should throw an error if the type is not found', () => {
+      try {
+        getters.getDataTypeForFilter(state)('missing')
+      } catch (e) {
+        expect(e.toString()).toEqual('Error: Missing filter definition for identifier: missing')
+      }
+    })
+  })
+
+  describe('parseBookmark', () => {
+    let state: any = {}
+    const mockGetter = {
+      getDataTypeForFilter: () => () => 'my-filter-type'
+    }
+    it('should take a encoded bookmark and use the state to decode it in a filter object', () => {
+      const encodedBookmark = 'N4IgzgFg9g7gdiAXOaAHANAFwIYCMA2ApiOuIdgE4DGEAKoQB6ZIiaFjOmRSosBm2fGGIBfIA==='
+      expect(getters.parseBookmark(state, mockGetter)(encodedBookmark)).toEqual({ 
+        searchText: 'test',
+        selections: { 'shop': undefined },
+        shown: ['shop', 'table']
+      })
+    })
+  })
 })

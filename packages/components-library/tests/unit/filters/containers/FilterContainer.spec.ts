@@ -65,7 +65,7 @@ describe('FilterContainer.vue', () => {
     wrapper.vm.selectionChange('age', [null, null])
     wrapper.vm.selectionChange('checkbox', [])
     wrapper.vm.selectionChange('non-empty', 'value')
-    expect(wrapper.emitted().input).toEqual([[{}], [{}], [{}], [{"non-empty": "value"}]])
+    expect(wrapper.emitted().input).toEqual([[{}], [{}], [{}], [{ 'non-empty': 'value' }]])
   })
 
   it('by default uses a dropdown to select active filters', async () => {

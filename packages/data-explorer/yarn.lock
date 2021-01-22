@@ -754,10 +754,10 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@molgenis-ui/components-library@^1.6.2":
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-1.6.2.tgz#188809b0cb3c8961d835727f8e158608c73fac5b"
-  integrity sha512-g4SDZWqYIGYBgOnXeneqlNFjpsC9RshBO11DTYhgTTDj4JNGDhJChxFWQrCeX8OhbXDhQhOX0th5HIqy7mpPVg==
+"@molgenis-ui/components-library@^1.6.3":
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-1.6.3.tgz#a97dc7a1f9cdaf7d3220cabdad8038bdb66e056c"
+  integrity sha512-39EAd5iT/+iKNVvZ06CWAMTojmvOiFVe/dNkpMWgJcyqd6SfpYCk9LUGYof6aucphE15Qu2k/p2owguCpiG7/g==
 
 "@molgenis/molgenis-api-client@^3.1.0", "@molgenis/molgenis-api-client@^3.1.3":
   version "3.1.3"
@@ -787,10 +787,10 @@
     i18next-xhr-backend "^1.4.1"
     moment "^2.18.1"
 
-"@molgenis/molgenis-ui-context@^1.6.4":
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-1.6.4.tgz#b7eb0f8df292c9cdbdc17b7c69284ada4dfbe3e8"
-  integrity sha512-cyBSKZb/Ome0ZsO65sR39WWtphVtRw8+FZZbi0AzYkQuP1Rj+2XlAefB3TnDTnSVTvigI+ELt0EoZxUx747NoQ==
+"@molgenis/molgenis-ui-context@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-context/-/molgenis-ui-context-1.6.5.tgz#760d892bd4a1d2a6e47879a0e698975b93b4781e"
+  integrity sha512-mhQay4VJwzW+e49pXmTxQB7wIsc1X1+9NMZPlqKykZ7XW1I7aXCyhjDZZW3Pm407wTOu36CAOoquIFkBquJvZA==
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 

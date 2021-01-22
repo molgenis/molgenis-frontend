@@ -8,6 +8,7 @@
       @sort="handleSortEvent">
     </table-header>
     <tbody>
+
     <table-row v-for="(entity, index) in entitiesToShow"
                :key="index"
                :id="getEntityId(entity)"
@@ -38,6 +39,7 @@ import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+
 library.add(faShoppingBag)
 
 export default {
@@ -76,17 +78,6 @@ export default {
       } else {
         this.setSortColumn(eventColumnId)
       }
-    }
-  },
-  /**
-  * Todo temp watch, remove watch when sync is done via url
-  */
-  watch: {
-    filterRsql: {
-      handler: function () {
-        this.fetchTableViewData({ tableName: this.tableName })
-      },
-      immediate: true
     }
   }
 }

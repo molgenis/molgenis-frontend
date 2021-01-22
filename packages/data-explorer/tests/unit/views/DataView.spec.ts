@@ -54,18 +54,6 @@ describe('DataView.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  describe('when the search text model updates', () => {
-    let wrapper
-    beforeEach(() => {
-      wrapper = shallowMount(DataView, { store, localVue })
-      wrapper.setData({ searchText: 'test' })
-    })
-
-    it('should mutate the value to the store', () => {
-      expect(mutations.setSearchText).toHaveBeenCalled()
-    })
-  })
-
   describe('cartSelectionToast component', () => {
     it('should hide filters and change to selection list when openSelectionList is called', () => {
       const wrapper = shallowMount(DataView, { store, localVue })

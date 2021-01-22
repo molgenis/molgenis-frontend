@@ -45,7 +45,7 @@
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     left: 0;
-    background-color: var(--gray-light);
+    background-color: var(--light);
     border-right: 1px var(--border) solid;
   }
   /**
@@ -71,7 +71,7 @@
   * Style row actions
   */
   .mg-data-column {
-    max-width: 8rem;
+    max-width: 32rem;
     overflow: hidden;
   }
   [role="button"]{

@@ -1,4 +1,7 @@
 import ApplicationState from '@/types/ApplicationState'
+import { Pagination } from '@molgenis-ui/components-library'
+
+export const defaultPagination:Pagination = { count: 0, loading: false, page: 1, size: 20 }
 
 const state: ApplicationState = {
   toasts: [],
@@ -6,8 +9,8 @@ const state: ApplicationState = {
   tableName: null,
   tableData: null,
   tableMeta: null,
+  tablePagination: defaultPagination,
   dataDisplayLayout: 'CardView',
-  dataDisplayLimit: 100,
   defaultEntityData: null,
   showSelected: false,
   selectedItemIds: [],
@@ -27,9 +30,7 @@ const state: ApplicationState = {
     shown: [],
     selections: {}
   },
-  searchText: '',
-  bookmark: '',
-  componentRoute: false
+  searchText: ''
 }
 
 export default state

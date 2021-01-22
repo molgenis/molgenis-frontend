@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.3...@molgenis-ui/components-library@1.6.4) (2021-01-22)
+
+
+### Bug Fixes
+
+* **components-library:** Fix 507 hard color in component ([#508](https://github.com/molgenis/molgenis-frontend/issues/508)) ([c72f651](https://github.com/molgenis/molgenis-frontend/commit/c72f651)), closes [#507](https://github.com/molgenis/molgenis-frontend/issues/507)
+
+
+
+
+
+## [1.6.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.2...@molgenis-ui/components-library@1.6.3) (2021-01-08)
+
+
+### Bug Fixes
+
+* **components-library:** fix pagination issues + lint code ([#482](https://github.com/molgenis/molgenis-frontend/issues/482)) ([36e0057](https://github.com/molgenis/molgenis-frontend/commit/36e0057))
+
+
+
+
+
 ## [1.6.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.1...@molgenis-ui/components-library@1.6.2) (2021-01-06)
 
 

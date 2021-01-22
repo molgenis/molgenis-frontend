@@ -15,7 +15,6 @@
       <div class="p-2">
         <filter-container
           v-if="isFilterDataLoaded"
-          :key="renderCount"
           v-model="filterSelections"
           :filters="filters.definition"
           :filters-shown="filterShown"
@@ -30,7 +29,7 @@
 
 <script>
 import Vue from 'vue'
-import { mapState, mapMutations, createNamespacedHelpers } from 'vuex'
+import { mapState, mapMutations, mapGetters, createNamespacedHelpers } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -52,8 +51,10 @@ export default Vue.extend({
       'filters',
       'tableMeta',
       'bookmarkedShownFilters',
-      'bookmarkedSelections',
-      'componentRoute'
+      'bookmarkedSelections'
+    ]),
+    ...mapGetters([
+      'compressedBookmark'
     ]),
     isFilterDataLoaded () {
       return this.tableMeta !== null
@@ -64,7 +65,7 @@ export default Vue.extend({
       },
       set (val) {
         this.setFilterSelection(val)
-        this.addBookmark()
+        this.updateRoute()
       }
     },
     filterShown: {
@@ -73,7 +74,7 @@ export default Vue.extend({
       },
       set (val) {
         this.setFiltersShown(val)
-        this.addBookmark()
+        this.updateRoute()
       }
     }
   },
@@ -82,28 +83,18 @@ export default Vue.extend({
       'setHideFilters',
       'applyBookmark',
       'setFiltersShown',
-      'setFilterSelection',
-      'setComponentRoute'
+      'setFilterSelection'
     ]),
     updateState (shownFilters) {
       this.setFiltersShown(shownFilters)
-      this.addBookmark()
+      this.updateRoute()
     },
-    addBookmark () {
-      createBookmark(this.$router)
-    },
-    refreshFilterView () {
-      // Refresh the filtercomponent
-      this.renderCount++
-    }
-  },
-  watch: {
-    '$route.query': function (query) {
-      // need to check if component triggered query, if so ignore.
-      if (!this.componentRoute) {
-        this.applyBookmark(query.bookmark)
-        this.refreshFilterView()
-      } else this.setComponentRoute(false)
+    updateRoute () {
+      this.$router.push({
+        name: this.$router.currentRoute.name,
+        path: this.$router.currentRoute.path,
+        query: { bookmark: this.compressedBookmark }
+      })
     }
   }
 })

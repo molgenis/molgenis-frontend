@@ -165,10 +165,12 @@ module.exports = {
       }
     }
   ],
-  page: {
-    size: 6,
-    totalElements: 6,
-    totalPages: 1,
-    number: 0
+  data: {
+    page: {
+      size: 6,
+      totalElements: 6,
+      totalPages: 1,
+      number: 0
+    }
   }
 }

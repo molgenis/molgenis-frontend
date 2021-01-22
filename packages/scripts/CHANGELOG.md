@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/scripts@3.1.1...@molgenis-ui/scripts@3.1.2) (2021-01-12)
+
+
+### Bug Fixes
+
+* **scripts:** update forms to 5.2.1 ([5ef51e9](https://github.com/molgenis/molgenis-frontend/commit/5ef51e9))
+
+
+
+
+
+## [3.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/scripts@3.1.0...@molgenis-ui/scripts@3.1.1) (2021-01-08)
+
+
+### Bug Fixes
+
+* **scripts:** add _ to parameter regex ([d632ef2](https://github.com/molgenis/molgenis-frontend/commit/d632ef2)), closes [#479](https://github.com/molgenis/molgenis-frontend/issues/479)
+
+
+
+
+
 # [3.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/scripts@3.0.1...@molgenis-ui/scripts@3.1.0) (2021-01-04)
 
 
