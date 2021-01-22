@@ -22,8 +22,10 @@ const state: ApplicationState = {
     isShop: false,
     defaultFilters: []
   },
-  sortColumnId: null,
-  isSortOrderReversed: false,
+  sort: {
+    sortColumnName: null,
+    isSortOrderReversed: false
+  },
   filters: {
     hideSidebar: false,
     definition: [],

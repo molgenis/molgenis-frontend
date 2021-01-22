@@ -180,13 +180,13 @@ describe('mutations', () => {
   describe('setSortColumn', () => {
     it('should update the sortColumn', () => {
       mutations.setSortColumn(baseAppState, 'column-to-sort-id')
-      expect(baseAppState.sortColumnId).toEqual('column-to-sort-id')
+      expect(baseAppState.sort.sortColumnName).toEqual('column-to-sort-id')
     })
   })
   describe('setIsSortOrderReversed', () => {
     it('should update the isSortOrderReversed', () => {
       mutations.setIsSortOrderReversed(baseAppState, true)
-      expect(baseAppState.isSortOrderReversed).toEqual(true)
+      expect(baseAppState.sort.isSortOrderReversed).toEqual(true)
     })
   })
   describe('updateRowData', () => {

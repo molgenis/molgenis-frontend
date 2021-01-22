@@ -1,6 +1,7 @@
 import { DataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
 import { MetaData } from './MetaData'
 import { Pagination } from '@molgenis-ui/components-library'
+import { Sort } from './Sort'
 
 export type Toast = {
   type: 'danger' | 'success'
@@ -66,8 +67,7 @@ export default interface ApplicationState {
   selectedItemIds: string[]
   showSelected: boolean
   tableSettings: TableSetting
-  sortColumnId: string | null,
-  isSortOrderReversed: boolean,
+  sort: Sort
   filters: FilterGroup
   searchText: string
 }

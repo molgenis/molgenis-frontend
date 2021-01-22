@@ -234,7 +234,7 @@ describe('getters', () => {
     }
     it('should take a encoded bookmark and use the state to decode it in a filter object', () => {
       const encodedBookmark = 'N4IgzgFg9g7gdiAXOaAHANAFwIYCMA2ApiOuIdgE4DGEAKoQB6ZIiaFjOmRSosBm2fGGIBfIA==='
-      expect(getters.parseBookmark(state, mockGetter)(encodedBookmark)).toEqual({ 
+      expect(getters.parseBookmark(state, mockGetter)(encodedBookmark)).toEqual({
         searchText: 'test',
         selections: { 'shop': undefined },
         shown: ['shop', 'table']

@@ -3,8 +3,8 @@
     <table-header
       :visibleColumns="visibleColumns"
       :isShop="tableSettings.isShop"
-      :sortColumnId="sortColumnId"
-      :isSortOrderReversed="isSortOrderReversed"
+      :sortColumnName="sort.sortColumnName"
+      :isSortOrderReversed="sort.isSortOrderReversed"
       @sort="handleSortEvent">
     </table-header>
     <tbody>
@@ -52,7 +52,7 @@ export default {
   },
   components: { TableRow, TableHeader },
   computed: {
-    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sortColumnId', 'isSortOrderReversed']),
+    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort']),
     ...mapGetters(['filterRsql', 'hasEditRights']),
     idAttribute () {
       return this.tableMeta.idAttribute
@@ -72,11 +72,11 @@ export default {
     isSelected (entity) {
       return this.selectedItemIds.includes(this.getEntityId(entity))
     },
-    handleSortEvent (eventColumnId) {
-      if (eventColumnId === this.sortColumnId) {
-        this.setIsSortOrderReversed(!this.isSortOrderReversed)
+    handleSortEvent (eventColumnName) {
+      if (eventColumnName === this.sort.sortColumnName) {
+        this.setIsSortOrderReversed(!this.sort.isSortOrderReversed)
       } else {
-        this.setSortColumn(eventColumnId)
+        this.setSortColumn(eventColumnName)
       }
     }
   }

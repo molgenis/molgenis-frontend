@@ -64,12 +64,12 @@ export default {
         .map(a => a.trim())
 
       tableData = await dataRepository.getTableDataDeepReference(
-        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination
+        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination, state.sort
       )
     } else {
       columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
       tableData = await dataRepository.getTableDataWithLabel(
-        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination)
+        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination, state.sort)
     }
 
     if (getters.filterRsql === rsqlQuery) {
@@ -97,7 +97,8 @@ export default {
       state.tableMeta,
       metaDataService.getAttributesfromMeta(state.tableMeta),
       rsqlQuery,
-      state.tablePagination
+      state.tablePagination,
+      state.sort
     )
 
     if (getters.filterRsql === rsqlQuery) {
@@ -121,7 +122,7 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.tablePagination)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.tablePagination, state.sort)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })

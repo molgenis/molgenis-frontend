@@ -2,20 +2,19 @@
   <thead>
   <tr>
     <th class="top-left-corner" scope="col"></th>
-    <th scope="col"
-        v-for="(column, index) in visibleColumns" :key="index">
-      <a class="header-label" href="#" @click="$emit('sort', column.id)">{{ column.name }}
+    <th class="header-column" scope="col" v-for="(column, index) in visibleColumns" :key="index">
+      <a class="header-label" href="#" @click="$emit('sort', column.name)">{{ column.name }}
         <font-awesome-icon
-          v-if="column.id !== sortColumnId"
+          v-if="column.name !== sortColumnName"
           class="mr-1 sort-icon" icon="sort">
         </font-awesome-icon>
         <font-awesome-icon
-          v-if="column.id === sortColumnId && !isSortOrderReversed"
-          class="mr-1" icon="sort-alpha-up">
+          v-if="column.name === sortColumnName && !isSortOrderReversed"
+          class="mr-1" icon="sort-alpha-down">
         </font-awesome-icon>
         <font-awesome-icon
-          v-if="column.id === sortColumnId && isSortOrderReversed"
-          class="mr-1" icon="sort-alpha-down">
+          v-if="column.name === sortColumnName && isSortOrderReversed"
+          class="mr-1" icon="sort-alpha-up">
         </font-awesome-icon>
       </a>
     </th>
@@ -81,8 +80,12 @@
     display: none;
   }
 
-  .header-label:hover .sort-icon{
+  .header-label:hover .sort-icon {
     display: inline;
+  }
+
+  .header-label {
+    white-space: nowrap;
   }
 </style>
 
@@ -104,10 +107,10 @@ export default {
       required: false,
       default: () => false
     },
-    sortColumnId: {
+    sortColumnName: {
       type: String,
       required: false,
-      default: () => undefined
+      default: () => null
     },
     isSortOrderReversed: {
       type: Boolean,

@@ -17,8 +17,10 @@ describe('TableView.vue', () => {
       tableSettings: {
         isShop: false
       },
-      sortColumnId: 'sortedColumnId',
-      isSortOrderReversed: false,
+      sort: {
+        sortColumnName: 'sortedColumnName',
+        isSortOrderReversed: false
+      },
       tableMeta: {
         idAttribute: { name: 'id' },
         attributes: [
@@ -82,7 +84,7 @@ describe('TableView.vue', () => {
     it('flips the sort order', () => {
       const wrapper = shallowMount(TableView, { store, localVue, propsData: { entitiesToShow: [{ id: '1' }] } })
       // @ts-ignore
-      wrapper.vm.handleSortEvent(state.sortColumnId)
+      wrapper.vm.handleSortEvent(state.sort.sortColumnName)
       expect(mutations.setIsSortOrderReversed).toHaveBeenCalledWith(expect.objectContaining({}), true)
     })
   })
