@@ -14,7 +14,7 @@
             <span id="mainView-headItemTooltipID">
               {{tableMeta.label}}
             </span>
-            <b-tooltip placement='bottom' target="mainView-headItemTooltipID" triggers="hover">
+            <b-tooltip v-if="tableMeta.description" placement='bottom' target="mainView-headItemTooltipID" triggers="hover">
               {{tableMeta.description}}
             </b-tooltip>
           </li>
@@ -34,18 +34,11 @@
         ></active-filters>
         <toolbar-view class="mb-2"></toolbar-view>
 
-        <pagination v-if="dataDisplayLayout === 'CardView'" class="mt-2 mb-1" v-model="tablePagination" />
         <div class="mg-data-view-container" >
           <data-view v-if="!tablePagination.loading"></data-view>
         </div>
-        <!--
-          (!) This pagination component is always rendered, because it is
-          responsible for the data fetching in the background. It is only
-          visible in the CardView when the amount of items justifies an
-          extra pagination ui at the bottom of the page.
-        -->
         <pagination
-          v-show="(dataDisplayLayout === 'TableView') || (!tablePagination.loading && (tableData && tableData.items > tablePagination.size))" class="mt-2"
+          class="mt-2"
           v-model="tablePagination"
           :fetchItems="() => fetchViewData({ tableName: $route.params.entity })"
         />
@@ -180,9 +173,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .breadcrumb {
-    margin: -16px -16px 16px -16px;
-  }
   .mg-content {
     white-space: normal;
   }

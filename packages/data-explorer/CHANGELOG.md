@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.6...@molgenis-ui/data-explorer@2.1.7) (2021-01-22)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [2.1.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.5...@molgenis-ui/data-explorer@2.1.6) (2021-01-21)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [2.1.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.4...@molgenis-ui/data-explorer@2.1.5) (2021-01-21)
+
+
+### Bug Fixes
+
+* **data-explorer:** table style ([#505](https://github.com/molgenis/molgenis-frontend/issues/505)) ([4df5098](https://github.com/molgenis/molgenis-frontend/commit/4df5098))
+
+
+
+
+
+## [2.1.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.3...@molgenis-ui/data-explorer@2.1.4) (2021-01-21)
+
+
+### Bug Fixes
+
+* **data-explorer:** Only show description if description is set ([#503](https://github.com/molgenis/molgenis-frontend/issues/503)) ([638ff96](https://github.com/molgenis/molgenis-frontend/commit/638ff96))
+
+
+
+
+
+## [2.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.2...@molgenis-ui/data-explorer@2.1.3) (2021-01-21)
+
+
+### Bug Fixes
+
+* **data-explorer:** Bump table view column width ([#502](https://github.com/molgenis/molgenis-frontend/issues/502)) ([c224635](https://github.com/molgenis/molgenis-frontend/commit/c224635))
+
+
+
+
+
+## [2.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.1...@molgenis-ui/data-explorer@2.1.2) (2021-01-20)
+
+
+### Bug Fixes
+
+* **data-explorer:** Only show pagination at bottom of page ([#483](https://github.com/molgenis/molgenis-frontend/issues/483)) ([f70b997](https://github.com/molgenis/molgenis-frontend/commit/f70b997))
+
+
+
+
+
+## [2.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.0...@molgenis-ui/data-explorer@2.1.1) (2021-01-18)
+
+
+### Bug Fixes
+
+* upgrade ui-context ([#496](https://github.com/molgenis/molgenis-frontend/issues/496)) ([3c557da](https://github.com/molgenis/molgenis-frontend/commit/3c557da))
+
+
+
+
+
 # [2.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.0.2...@molgenis-ui/data-explorer@2.1.0) (2021-01-11)
 
 

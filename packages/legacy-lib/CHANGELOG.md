@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/legacy-lib@1.1.2...@molgenis-ui/legacy-lib@1.1.3) (2021-01-18)
+
+
+### Bug Fixes
+
+* upgrade ui-context ([#496](https://github.com/molgenis/molgenis-frontend/issues/496)) ([3c557da](https://github.com/molgenis/molgenis-frontend/commit/3c557da))
+
+
+
+
+
 ## [1.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/legacy-lib@1.1.1...@molgenis-ui/legacy-lib@1.1.2) (2020-02-06)
 
 

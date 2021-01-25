@@ -15,14 +15,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <select v-model="selectedSetting" class="form-control">
-          <option v-for="option in settingsOptions" :value="option.id" :key="option.id">
-            {{option.label}}
-          </option>
-        </select>
-
-        <div class="float-right mt-2">
-
+        <div class="float-right">
           <button
             v-if="!isSaving"
             id="save-btn-top"
@@ -31,7 +24,6 @@
             @click.prevent="onSubmit">
             Save changes
           </button>
-
           <button
             v-else
             id="save-btn-saving"
@@ -40,9 +32,12 @@
             disabled="disabled">
             Saving.... <i class="fa fa-spinner fa-spin "></i>
           </button>
-
         </div>
-
+        <select v-model="selectedSetting" class="form-control">
+          <option v-for="option in settingsOptions" :value="option.id" :key="option.id">
+            {{option.label}}
+          </option>
+        </select>
       </div>
     </div>
 
