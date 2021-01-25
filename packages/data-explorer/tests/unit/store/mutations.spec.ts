@@ -6,7 +6,7 @@ import getters from '@/store/getters'
 
 jest.mock('@/store/getters', () => {
   return {
-    parseBookmark: () => () => {
+    parseRouteFilter: () => () => {
       return {
         searchText: 'searchText',
         shown: ['a', 'b'],
@@ -252,20 +252,6 @@ describe('mutations', () => {
       const toasts:Toast[] = [{ message: 'foo', type: 'success' }]
       mutations.setToasts(baseAppState, toasts)
       expect(baseAppState.toasts).toEqual(toasts)
-    })
-  })
-
-  describe('applyBookmark', () => {
-    it('if the bookmark is empty the default from the state is used', () => {
-      mutations.applyBookmark(baseAppState, '')
-      expect(baseAppState.filters.shown).toEqual([])
-    })
-
-    it('if the bookmark is not empty it should be parsed and used to update the state', () => {
-      mutations.applyBookmark(baseAppState, 'mock-bookmark')
-      expect(baseAppState.searchText).toEqual('searchText')
-      expect(baseAppState.filters.shown).toEqual(['a', 'b'])
-      expect(baseAppState.filters.selections).toEqual(['c'])
     })
   })
 })

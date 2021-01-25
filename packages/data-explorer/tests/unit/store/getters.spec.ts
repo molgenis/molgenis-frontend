@@ -161,7 +161,7 @@ describe('getters', () => {
     })
   })
 
-  describe('bookmark', () => {
+  describe('routeFilter', () => {
     let state: any = {
       filters: {
         shown: ['a', 'b'],
@@ -183,7 +183,7 @@ describe('getters', () => {
       .mockReturnValueOnce('mref')
 
     it('should build the bookmark object based on the state of the store', () => {
-      expect(getters.bookmark(state, mockGetter)).toEqual({
+      expect(getters.routeFilter(state, mockGetter)).toEqual({
         f1: 'val1',
         f2: 'val2,val3',
         f3: '2021-01-01T11:00:00.000Z',
@@ -193,13 +193,13 @@ describe('getters', () => {
     })
   })
 
-  describe('compressedBookmark', () => {
+  describe('compressedRouteFilter', () => {
     let state: any = {}
     const mockGetter = {
-      bookmark: { book: 'mark' }
+      routeFilter: { book: 'mark' }
     }
-    it('should return the compressed and encoded bookmark', () => {
-      expect(getters.compressedBookmark(state, mockGetter)).toEqual('N4IgRg9hDWIFwgLYEMBOsC+Q')
+    it('should return the compressed and encoded the filter object', () => {
+      expect(getters.compressedRouteFilter(state, mockGetter)).toEqual('N4IgRg9hDWIFwgLYEMBOsC+Q')
     })
   })
 
@@ -227,14 +227,14 @@ describe('getters', () => {
     })
   })
 
-  describe('parseBookmark', () => {
+  describe('parseRouteFilter', () => {
     let state: any = {}
     const mockGetter = {
       getDataTypeForFilter: () => () => 'my-filter-type'
     }
     it('should take a encoded bookmark and use the state to decode it in a filter object', () => {
       const encodedBookmark = 'N4IgzgFg9g7gdiAXOaAHANAFwIYCMA2ApiOuIdgE4DGEAKoQB6ZIiaFjOmRSosBm2fGGIBfIA==='
-      expect(getters.parseBookmark(state, mockGetter)(encodedBookmark)).toEqual({
+      expect(getters.parseRouteFilter(state, mockGetter)(encodedBookmark)).toEqual({
         searchText: 'test',
         selections: { 'shop': undefined },
         shown: ['shop', 'table']

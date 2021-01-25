@@ -61,7 +61,7 @@ describe('MainView.vue', () => {
 
     getters = {
       isUserAuthenticated: jest.fn(),
-      compressedBookmark: jest.fn()
+      compressedRouteFilter: jest.fn()
     }
 
     actions = {

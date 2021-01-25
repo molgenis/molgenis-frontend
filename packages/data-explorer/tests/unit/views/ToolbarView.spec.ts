@@ -41,7 +41,7 @@ describe('ToolbarView.vue', () => {
     getters = {
       hasEditRights: jest.fn(),
       hasEditSettingsRights: jest.fn(),
-      compressedBookmark: jest.fn()
+      compressedRouteFilter: jest.fn()
     }
 
     store = new Vuex.Store({

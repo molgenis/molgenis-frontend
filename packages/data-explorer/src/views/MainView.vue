@@ -73,7 +73,13 @@ export default Vue.extend({
       get: function () {
         return this.$store.state.tablePagination
       },
-      set: function (value) { this.setPagination(value) }
+      set: function (value) {
+        this.$router.push({
+          name: this.$router.currentRoute.name,
+          path: this.$router.currentRoute.path,
+          query: { ...this.$route.query, page: value.page, size: value.size }
+        })
+      }
     },
     toasts: {
       get: function () {
@@ -98,7 +104,7 @@ export default Vue.extend({
     ]),
     ...mapGetters([
       'isUserAuthenticated',
-      'compressedBookmark'
+      'compressedRouteFilter'
     ]),
     activeFilterSelections () {
       return this.searchText ? { ...this.filters.selections, _search: this.searchText } : this.filters.selections
@@ -120,7 +126,7 @@ export default Vue.extend({
       'setPagination',
       'setSearchText',
       'setFilterSelection',
-      'applyBookmark'
+      'setRouteQuery'
     ]),
     ...mapActions([
       'deleteRow',
@@ -137,7 +143,7 @@ export default Vue.extend({
       this.$router.push({
         name: this.$router.currentRoute.name,
         path: this.$router.currentRoute.path,
-        query: { bookmark: this.compressedBookmark }
+        query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     },
     async handeldeleteItem (itemId) {
@@ -162,13 +168,15 @@ export default Vue.extend({
       this.setPagination()
       await this.fetchViewData({ tableName: to.params.entity })
     }
+    this.setRouteQuery(to.query)
+    console.log('beforeRouteUpdate')
     next()
-  },
-  watch: {
-    '$route.query': function (query) {
-      this.applyBookmark(query.bookmark || '')
-    }
   }
+  // watch: {
+  //   '$route.query': function () {
+  //     this.setRouteQuery(this.$route.query)
+  //   }
+  // }
 })
 </script>
 

@@ -85,7 +85,7 @@ export default Vue.extend({
     ...mapGetters([
       'hasEditRights',
       'hasEditSettingsRights',
-      'compressedBookmark'
+      'compressedRouteFilter'
     ]),
     searchText: {
       get () {
@@ -96,7 +96,7 @@ export default Vue.extend({
         this.$router.push({
           name: this.$router.currentRoute.name,
           path: this.$router.currentRoute.path,
-          query: { bookmark: this.compressedBookmark }
+          query: { ...this.$route.query, filter: this.compressedRouteFilter }
         })
       }
     }

@@ -3,7 +3,7 @@
   <tr>
     <th class="top-left-corner" scope="col"></th>
     <th class="header-column" scope="col" v-for="(column, index) in visibleColumns" :key="index">
-      <a class="header-label" href="#" @click="$emit('sort', column.name)">{{ column.name }}
+      <a class="header-label" @click="$emit('sort', column.name)">{{ column.name }}
         <font-awesome-icon
           v-if="column.name !== sortColumnName"
           class="mr-1 sort-icon" icon="sort">
@@ -86,6 +86,10 @@
 
   .header-label {
     white-space: nowrap;
+  }
+
+  .header-label:hover {
+    cursor: pointer;
   }
 </style>
 

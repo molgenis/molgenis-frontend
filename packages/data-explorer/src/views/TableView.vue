@@ -53,7 +53,7 @@ export default {
   components: { TableRow, TableHeader },
   computed: {
     ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort']),
-    ...mapGetters(['filterRsql', 'hasEditRights']),
+    ...mapGetters(['filterRsql', 'hasEditRights', 'compressedRouteFilter']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -72,12 +72,15 @@ export default {
     isSelected (entity) {
       return this.selectedItemIds.includes(this.getEntityId(entity))
     },
-    handleSortEvent (eventColumnName) {
-      if (eventColumnName === this.sort.sortColumnName) {
-        this.setIsSortOrderReversed(!this.sort.isSortOrderReversed)
-      } else {
-        this.setSortColumn(eventColumnName)
-      }
+    handleSortEvent (sortOrderColumn) {
+      const isSortOrderReversed = sortOrderColumn === this.sort.sortColumnName ? !this.sort.isSortOrderReversed : false
+      const sortQueryParam = isSortOrderReversed ? '-' + sortOrderColumn : sortOrderColumn
+
+      this.$router.push({
+        name: this.$router.currentRoute.name,
+        path: this.$router.currentRoute.path,
+        query: { ...this.$route.query, sort: sortQueryParam }
+      })
     }
   }
 }

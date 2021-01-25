@@ -6,6 +6,7 @@ import { MetaData } from '@/types/MetaData'
 import getters from '@/store/getters'
 import { defaultPagination } from '@/store/state'
 import { Pagination } from '@molgenis-ui/components-library'
+import { RouteQuery } from '@/types/RouteQuery'
 
 const defaultSettings = {
   settingsRowId: null,
@@ -83,18 +84,25 @@ export default {
   setFilterSelection (state: ApplicationState, selections: StringMap) {
     Vue.set(state.filters, 'selections', selections)
   },
-  /**
-  * Commit the stored bookmark querystring to the store or
-  * use a default set of filters.
-  */
-  applyBookmark (state: ApplicationState, bookmark: string) {
-    if (bookmark === '') {
-      state.filters.shown = state.tableSettings.defaultFilters
+  setRouteQuery (state: ApplicationState, routeQuery: RouteQuery) {
+    // state.tablePagination.page = routeQuery.page !== undefined ? routeQuery.page : defaultPagination.page
+    // state.tablePagination.size = routeQuery.size !== undefined ? routeQuery.size : defaultPagination.size
+    if (routeQuery.sort !== undefined) {
+      if (routeQuery.sort.charAt(0) === '-') {
+        state.sort.isSortOrderReversed = true
+        state.sort.sortColumnName = routeQuery.sort.substring(1)
+      } else {
+        state.sort.isSortOrderReversed = false
+        state.sort.sortColumnName = routeQuery.sort
+      }
+    }
+    if (routeQuery.filter !== undefined) {
+      const routeFilters = getters.parseRouteFilter(state, getters)(routeQuery.filter)
+      state.searchText = routeFilters.searchText
+      state.filters.shown = routeFilters.shown
+      state.filters.selections = routeFilters.selections
     } else {
-      const bookmarkedFilters = getters.parseBookmark(state, getters)(bookmark)
-      state.searchText = bookmarkedFilters.searchText
-      state.filters.shown = bookmarkedFilters.shown
-      state.filters.selections = bookmarkedFilters.selections
+      state.filters.shown = state.tableSettings.defaultFilters
     }
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {

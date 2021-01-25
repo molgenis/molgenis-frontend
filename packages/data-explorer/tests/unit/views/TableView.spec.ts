@@ -1,10 +1,13 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import TableView from '@/views/TableView.vue'
 import Vuex from 'vuex'
+import VueRouter from 'vue-router'
 
 describe('TableView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  localVue.use(VueRouter)
+  let router = new VueRouter()
   let store: any
   let state: any
   let mutations: any
@@ -65,6 +68,7 @@ describe('TableView.vue', () => {
   it('exists', () => {
     const wrapper = shallowMount(TableView, { store,
       localVue,
+      router,
       propsData: {
         entitiesToShow: [{ id: '1' }]
       } })
@@ -73,19 +77,19 @@ describe('TableView.vue', () => {
 
   describe('handleSortEvent on non sorted column', () => {
     it('sets the column to sort', () => {
-      const wrapper = shallowMount(TableView, { store, localVue, propsData: { entitiesToShow: [{ id: '1' }] } })
+      const wrapper = shallowMount(TableView, { store, localVue, router, propsData: { entitiesToShow: [{ id: '1' }] } })
       // @ts-ignore
       wrapper.vm.handleSortEvent('my-column-id')
-      expect(mutations.setSortColumn).toHaveBeenCalledWith(expect.objectContaining({}), 'my-column-id')
+      expect(router.currentRoute.query).toEqual({ 'sort': 'my-column-id' })
     })
   })
 
   describe('handleSortEvent on sorted column', () => {
     it('flips the sort order', () => {
-      const wrapper = shallowMount(TableView, { store, localVue, propsData: { entitiesToShow: [{ id: '1' }] } })
+      const wrapper = shallowMount(TableView, { store, localVue, router, propsData: { entitiesToShow: [{ id: '1' }] } })
       // @ts-ignore
       wrapper.vm.handleSortEvent(state.sort.sortColumnName)
-      expect(mutations.setIsSortOrderReversed).toHaveBeenCalledWith(expect.objectContaining({}), true)
+      expect(router.currentRoute.query).toEqual({ 'sort': '-sortedColumnName' })
     })
   })
 })
