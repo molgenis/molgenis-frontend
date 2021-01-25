@@ -98,13 +98,8 @@ export default {
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     left: 0;
-<<<<<<< HEAD
     background-color: var( --gray-light );
     border-right: 1px var( --border ) solid;
-=======
-    background-color: var(--light);
-    border-right: 1px var(--border) solid;
->>>>>>> master
   }
   /**
    * Fix borders in the first column
