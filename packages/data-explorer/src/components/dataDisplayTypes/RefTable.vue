@@ -25,7 +25,6 @@
 import client from '@/lib/client'
 import { toMetaData } from '@/repository/metaDataResponseMapper'
 import { getTableDataWithLabel } from '@/repository/dataRepository'
-import { buildExpandedAttributesQuery } from '@/repository/queryBuilder'
 import { getAttributesfromMeta } from '@/repository/metaDataService'
 
 export default {

@@ -15,6 +15,7 @@
         <tbody>
         <table-row v-for="(entity, index) in entitiesToShow"
                    :key="index"
+                   :rowIndex="index"
                    :id="getEntityId(entity)"
                    :tableName="tableName"
                    :rowData="entity"
