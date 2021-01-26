@@ -95,6 +95,10 @@ export default {
         state.sort.isSortOrderReversed = false
         state.sort.sortColumnName = routeQuery.sort
       }
+    } else {
+      // reset to defaults if routeQuery does not contain sort info
+      state.sort.isSortOrderReversed = false
+      state.sort.sortColumnName = null
     }
     if (routeQuery.filter !== undefined) {
       const routeFilters = getters.parseRouteFilter(state, getters)(routeQuery.filter)

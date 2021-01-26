@@ -163,13 +163,12 @@ export default Vue.extend({
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
+    this.setRouteQuery(to.query) // syncs the state with the query
     if (this.$route.params.entity !== to.params.entity) {
       // Reset pagination to defaults before loading another entity.
       this.setPagination()
       await this.fetchViewData({ tableName: to.params.entity })
     }
-    this.setRouteQuery(to.query)
-    console.log('beforeRouteUpdate')
     next()
   }
   // watch: {
