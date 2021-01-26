@@ -3,6 +3,8 @@ import mockState from '../mocks/mockState'
 import ApplicationState, { Toast } from '@/types/ApplicationState'
 import { Attribute, MetaData } from '@/types/MetaData'
 import getters from '@/store/getters'
+import { defaultPagination } from '@/store/state'
+import { RouteQuery } from '@/types/RouteQuery'
 
 jest.mock('@/store/getters', () => {
   return {
@@ -252,6 +254,51 @@ describe('mutations', () => {
       const toasts:Toast[] = [{ message: 'foo', type: 'success' }]
       mutations.setToasts(baseAppState, toasts)
       expect(baseAppState.toasts).toEqual(toasts)
+    })
+  })
+  describe('setPagination', () => {
+    it('if passed value pagination object is undefined, the default pagination should be placed on the state', () => {
+      mutations.setPagination(baseAppState, undefined)
+      expect(baseAppState.tablePagination).toEqual(defaultPagination)
+    })
+
+    it('if passed value pagination object is defined, it placed on the state', () => {
+      mutations.setPagination(baseAppState, { count: 99, loading: true, page: 23, size: 11 })
+      expect(baseAppState.tablePagination).toEqual({ count: 99, loading: true, page: 23, size: 11 })
+    })
+  })
+  describe('setSelectedItems', () => {
+    it('set the passed items on the state', () => {
+      mutations.setSelectedItems(baseAppState, ['a', 'list', 'of', 'items'])
+      expect(baseAppState.selectedItemIds).toEqual(['a', 'list', 'of', 'items'])
+    })
+  })
+  describe('setRouteQuery', () => {
+    it('takes the passed route object and updates the state', () => {
+      // when route query is empty
+      const minimalRoute:RouteQuery = {}
+      mutations.setRouteQuery(baseAppState, minimalRoute)
+      expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': false, 'sortColumnName': null })
+      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: {}, shown: [] })
+
+      // when sort is set
+      const sortRoute:RouteQuery = { sort: 'col-a' }
+      mutations.setRouteQuery(baseAppState, sortRoute)
+      expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': false, 'sortColumnName': 'col-a' })
+      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: {}, shown: [] })
+
+      // when sort is set
+      const reverseSortRoute:RouteQuery = { sort: '-col-a' }
+      mutations.setRouteQuery(baseAppState, reverseSortRoute)
+      expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': true, 'sortColumnName': 'col-a' })
+      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: {}, shown: [] })
+
+      // when filter is set
+      const filterRoute:RouteQuery = { sort: '-col-a', filter: 'my-filter-hash' }
+      mutations.setRouteQuery(baseAppState, filterRoute)
+      expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': true, 'sortColumnName': 'col-a' })
+      expect(baseAppState.searchText).toEqual('searchText')
+      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: ['c'], shown: ['a', 'b'] })
     })
   })
 })
