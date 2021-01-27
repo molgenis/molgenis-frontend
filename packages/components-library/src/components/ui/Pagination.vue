@@ -4,13 +4,13 @@
   <div v-if="localValue.count > localValue.size" class="btn-group mb-2 mr-3">
     <button :class="css" class="btn btn-outline-primary"
       :disabled="localValue.page <= 1"
-      @click="navigate(1)">
+      @click="updateValue({page: 1})">
       «
     </button>
 
     <button :class="css" class="t-page-prev btn btn-outline-primary"
       :disabled="localValue.page <= 1"
-      @click="navigate(localValue.page - 1)">
+      @click="updateValue({page: localValue.page - 1})">
       ‹
     </button>
 
@@ -18,21 +18,21 @@
       v-for="pageNumber in pageNumbers" :key="pageNumber"
       class="btn btn-outline-primary"
       :class="{'active': pageNumber === localValue.page, ...css}"
-      @click="navigate(pageNumber)">
+      @click="updateValue({page: pageNumber})">
       {{pageNumber}}
     </button>
 
     <button
       :class="css" class="t-page-next btn btn-outline-primary"
       :disabled="localValue.page >= pageCount"
-      @click="navigate(localValue.page + 1)">
+      @click="updateValue({page: localValue.page + 1})">
       ›
     </button>
 
     <button
       :class="css" class="btn btn-outline-primary"
       :disabled="localValue.page >= pageCount"
-      @click="navigate(pageCount)">
+      @click="updateValue({page: pageCount})">
       »
     </button>
   </div>
@@ -57,15 +57,6 @@
 export default {
   async created () {
     this.localValue = { ...this.localValue, ...this.value }
-
-    // Life-cycle hook for router-less pagination.
-    if (!this.useRouter) {
-      // Allow Vue instance listeners to initialize in tests.
-
-      // Pagination state is leading for the initial page,
-      // in case no router is being use.
-      this.fetchData(this.localValue.page)
-    }
   },
   computed: {
     navigationText () {
@@ -112,43 +103,18 @@ export default {
   },
   data: function () {
     return {
-      localValue: { size: 20, page: 1, loading: false, count: 0 }
+      localValue: {
+        size: 20,
+        page: 1,
+        loading: false,
+        count: 0
+      }
     }
   },
   methods: {
-    async fetchData (page) {
-      // Omit the Pagination method when you're using multiple
-      // Pagination components with the same data source.
-      if (!this.fetchItems) { return }
-
-      this.updateValue({ loading: true, page })
-      await this.fetchItems()
-      this.updateValue({ loading: false })
-    },
-    navigate (page) {
-      if (!this.useRouter) { return this.fetchData(page) }
-
-      if (this.$route.query.page) {
-        if (
-          parseInt(this.$route.query.page, 10) !== page ||
-          parseInt(this.$route.query.size, 10) !== this.value.size
-        ) {
-          // (!) Merge with existing query; e.g. bookmarks
-          this.$router.push({
-            path: this.$route.path,
-            query: { ...this.$route.query, page, size: this.value.size }
-          })
-        }
-      } else {
-        this.$router.replace({
-          path: this.$route.path,
-          query: { ...this.$route.query, page, size: this.value.size }
-        })
-      }
-    },
     updateValue (value) {
       this.localValue = { ...this.localValue, ...this.value, ...value }
-      this.$emit('input', { ...this.value, ...this.localValue, ...value })
+      this.$emit('input', { ...this.localValue })
     }
   },
   name: 'Pagination',
@@ -160,14 +126,6 @@ export default {
       type: Object,
       required: false,
       default: () => ({})
-    },
-    /**
-     * Async method to retrieve items with.
-     * @returns {Object} {count: Number}
-     */
-    fetchItems: {
-      type: Function,
-      required: false
     },
     /**
      * Translatable texts.
@@ -189,13 +147,6 @@ export default {
       default: () => [10, 20, 50]
     },
     /**
-     * Optional vue-router integration.
-     */
-    useRouter: {
-      type: Boolean,
-      default: () => true
-    },
-    /**
      * Reflects the pagination state.
      * @model
      */
@@ -215,20 +166,6 @@ export default {
     }
   },
   watch: {
-    '$route.query': {
-      handler: function (query) {
-        if (!this.fetchItems || !this.useRouter) { return }
-
-        if (query.page) {
-          this.fetchData(parseInt(query.page, 10))
-        } else {
-          // Defaults by setting the pagination to the first page.
-          this.navigate(1)
-        }
-      },
-      deep: true,
-      immediate: true
-    },
     /**
      * Sync the local state when the external state changes.
      */
@@ -242,20 +179,17 @@ export default {
      * the deep value watcher (See https://vuejs.org/v2/api/#vm-watch)
      */
     'value.size' (newSize, oldSize) {
-      // Only navigate when the paginator is not in passive mode.
-      if (this.fetchItems) {
-        let currentPosition = this.localValue.page * oldSize
-        // Keep in mind that with 201 items, the current page may be 3 when
-        // showing 100 items per page. When switching back to 50 items per
-        // page, there are only 5 pages left. Make sure the currentPosition
-        // never exceeds the actual count.
-        if (currentPosition > this.localValue.count) {
-          currentPosition = this.localValue.count
-        }
-
-        const currentNewPage = Math.ceil(currentPosition / newSize)
-        this.navigate(currentNewPage)
+      let currentPosition = this.localValue.page * oldSize
+      // Keep in mind that with 201 items, the current page may be 3 when
+      // showing 100 items per page. When switching back to 50 items per
+      // page, there are only 5 pages left. Make sure the currentPosition
+      // never exceeds the actual count.
+      if (currentPosition > this.localValue.count) {
+        currentPosition = this.localValue.count
       }
+
+      const currentNewPage = Math.ceil(currentPosition / newSize)
+      this.updateValue({ page: currentNewPage })
     }
   }
 }
@@ -302,22 +236,14 @@ export default {
 ```jsx
   // Always provide at least 'size' and 'page'; the other properties
   // are added from the pagination component itself.
-  let model = { size: 20, page: 1 }
+  let model = { size: 20, page: 1, count: 124 }
   const mockStore = (e) => { model = e }
-
-  const fetchItems = async function() {
-    // Retrieve items and feed the pagination component
-    // with the api results for paginated content.
-    return {count: 250 }
-  }
 
   <Pagination
     v-model="model"
-    v-bind:fetchItems="fetchItems"
     v-on:input="mockStore"
     v-bind:visiblePages="9"
     v-bind:pageSizes="[10, 20, 50, 100]"
-    v-bind:useRouter="false"
     v-bind:css="{'btn-sm': true}"/>
   Model: {{model}}
 ```
