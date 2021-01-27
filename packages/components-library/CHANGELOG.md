@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.4...@molgenis-ui/components-library@2.0.0) (2021-01-27)
+
+
+### Features
+
+* **components-library:** remove router from Pagination component ([#509](https://github.com/molgenis/molgenis-frontend/issues/509)) ([1cd4559](https://github.com/molgenis/molgenis-frontend/commit/1cd4559))
+
+
+### BREAKING CHANGES
+
+* **components-library:** Requires consumers to implement Vue-router navigation
+
+
+
+
+
 ## [1.6.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.3...@molgenis-ui/components-library@1.6.4) (2021-01-22)
 
 
