@@ -56,7 +56,8 @@ describe('MainView.vue', () => {
       setTableName: jest.fn(),
       setFilterSelection: jest.fn(),
       setSearchText: jest.fn(),
-      setPagination: jest.fn()
+      setPagination: jest.fn(),
+      setRouteQuery: jest.fn()
     }
 
     getters = {

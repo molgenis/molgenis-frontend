@@ -21,12 +21,8 @@ export default {
   addToast (state: ApplicationState, toast: Toast) {
     state.toasts.push(toast)
   },
-  setPagination (state: ApplicationState, pagination: Pagination|undefined) {
-    if (!pagination) {
-      state.tablePagination = defaultPagination
-    } else {
-      state.tablePagination = pagination
-    }
+  setPaginationCount (state: ApplicationState, count: number) {
+    state.tablePagination.count = count
   },
   setToasts (state: ApplicationState, toasts: Toast[]) {
     Vue.set(state, 'toasts', toasts)
@@ -85,8 +81,8 @@ export default {
     Vue.set(state.filters, 'selections', selections)
   },
   setRouteQuery (state: ApplicationState, routeQuery: RouteQuery) {
-    // state.tablePagination.page = routeQuery.page !== undefined ? routeQuery.page : defaultPagination.page
-    // state.tablePagination.size = routeQuery.size !== undefined ? routeQuery.size : defaultPagination.size
+    state.tablePagination.page = routeQuery.page !== undefined ? routeQuery.page : defaultPagination.page
+    state.tablePagination.size = routeQuery.size !== undefined ? routeQuery.size : defaultPagination.size
     if (routeQuery.sort !== undefined) {
       if (routeQuery.sort.charAt(0) === '-') {
         state.sort.isSortOrderReversed = true

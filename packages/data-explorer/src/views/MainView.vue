@@ -123,7 +123,6 @@ export default Vue.extend({
       'setHideFilters',
       'setTableName',
       'setToasts',
-      'setPagination',
       'setSearchText',
       'setFilterSelection',
       'setRouteQuery'
@@ -164,11 +163,7 @@ export default Vue.extend({
   },
   async beforeRouteUpdate (to, from, next) {
     this.setRouteQuery(to.query) // syncs the state with the query
-    if (this.$route.params.entity !== to.params.entity) {
-      // Reset pagination to defaults before loading another entity.
-      this.setPagination()
-      await this.fetchViewData({ tableName: to.params.entity })
-    }
+    await this.fetchViewData({ tableName: to.params.entity })
     next()
   }
   // watch: {

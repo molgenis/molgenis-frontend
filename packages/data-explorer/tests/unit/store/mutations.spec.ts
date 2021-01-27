@@ -256,15 +256,10 @@ describe('mutations', () => {
       expect(baseAppState.toasts).toEqual(toasts)
     })
   })
-  describe('setPagination', () => {
-    it('if passed value pagination object is undefined, the default pagination should be placed on the state', () => {
-      mutations.setPagination(baseAppState, undefined)
-      expect(baseAppState.tablePagination).toEqual(defaultPagination)
-    })
-
-    it('if passed value pagination object is defined, it placed on the state', () => {
-      mutations.setPagination(baseAppState, { count: 99, loading: true, page: 23, size: 11 })
-      expect(baseAppState.tablePagination).toEqual({ count: 99, loading: true, page: 23, size: 11 })
+  describe('setPaginationCount', () => {
+    it('set the pagination count on the state, as a prop of tablePagination' , () => {
+      mutations.setPaginationCount(baseAppState, 25)
+      expect(baseAppState.tablePagination.count).toEqual(25)
     })
   })
   describe('setSelectedItems', () => {

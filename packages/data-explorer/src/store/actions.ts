@@ -75,7 +75,7 @@ export default {
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
-      commit('setPagination', { ...state.tablePagination, ...{ count: tableData.page.totalElements } })
+      commit('setPaginationCount', tableData.page.totalElements)
     }
   },
   fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
@@ -104,7 +104,7 @@ export default {
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
-      commit('setPagination', { ...state.tablePagination, ...{ count: tableData.page.totalElements } })
+      commit('setPaginationCount', tableData.page.totalElements)
     }
   },
   // expanded default card
