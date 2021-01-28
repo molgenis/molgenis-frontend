@@ -6,6 +6,7 @@
   ],
   "version": "independent",
   "yes": true,
+  "useWorkspaces": true,
   "command": {
     "version": {
       "conventionalCommits": true
