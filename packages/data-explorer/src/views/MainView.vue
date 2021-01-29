@@ -165,6 +165,9 @@ export default Vue.extend({
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
+    if (to.params.entity !== from.params.entity) {
+      await this.fetchTableMeta({ tableName: to.params.entity })
+    }
     this.setRouteQuery(to.query) // syncs the state with the query
     await this.fetchViewData()
     next()
