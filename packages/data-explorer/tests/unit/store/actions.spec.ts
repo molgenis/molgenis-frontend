@@ -472,9 +472,14 @@ describe('actions', () => {
 
       await actions.fetchTableViewData({ commit, state, getters })
 
-      expect(commit).toHaveBeenCalledWith('setPagination', { count: 21, loading: false, page: 1, size: 10 })
+      expect(commit).toHaveBeenCalledWith('setPaginationCount', 21)
       expect(commit).toHaveBeenCalledWith('setTableData', { data: 'data', page: { totalElements: 21 } })
-      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('tableName', 'tableMeta', ['attr'], 'a==b', { 'count': 0, 'loading': false, 'page': 1, 'size': 10 })
+      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith(
+        'tableName',
+        'tableMeta',
+        ['attr'], 'a==b',
+        { 'count': 0, 'loading': false, 'page': 1, 'size': 10 },
+        { 'isSortOrderReversed': false, 'sortColumnName': null })
     })
 
     it('should show warning if the table name is not set', async (done) => {

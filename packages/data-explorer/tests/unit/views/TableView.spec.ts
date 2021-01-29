@@ -1,10 +1,13 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import TableView from '@/views/TableView.vue'
 import Vuex from 'vuex'
+import VueRouter from 'vue-router'
 
 describe('TableView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  localVue.use(VueRouter)
+  let router = new VueRouter()
   let store: any
   let state: any
   let mutations: any
@@ -16,6 +19,10 @@ describe('TableView.vue', () => {
       showSelected: false,
       tableSettings: {
         isShop: false
+      },
+      sort: {
+        sortColumnName: 'sortedColumnName',
+        isSortOrderReversed: false
       },
       tableMeta: {
         idAttribute: { name: 'id' },
@@ -42,7 +49,9 @@ describe('TableView.vue', () => {
       selectedItemIds: [1, 3]
     }
     mutations = {
-      toggleSelectedItems: jest.fn()
+      toggleSelectedItems: jest.fn(),
+      setSortColumn: jest.fn(),
+      setIsSortOrderReversed: jest.fn()
     }
     actions = {
       fetchTableViewData: jest.fn()
@@ -59,9 +68,28 @@ describe('TableView.vue', () => {
   it('exists', () => {
     const wrapper = shallowMount(TableView, { store,
       localVue,
+      router,
       propsData: {
         entitiesToShow: [{ id: '1' }]
       } })
     expect(wrapper.exists()).toBeTruthy()
+  })
+
+  describe('handleSortEvent on non sorted column', () => {
+    it('sets the column to sort', () => {
+      const wrapper = shallowMount(TableView, { store, localVue, router, propsData: { entitiesToShow: [{ id: '1' }] } })
+      // @ts-ignore
+      wrapper.vm.handleSortEvent('my-column-id')
+      expect(router.currentRoute.query).toEqual({ 'sort': 'my-column-id' })
+    })
+  })
+
+  describe('handleSortEvent on sorted column', () => {
+    it('flips the sort order', () => {
+      const wrapper = shallowMount(TableView, { store, localVue, router, propsData: { entitiesToShow: [{ id: '1' }] } })
+      // @ts-ignore
+      wrapper.vm.handleSortEvent(state.sort.sortColumnName)
+      expect(router.currentRoute.query).toEqual({ 'sort': '-sortedColumnName' })
+    })
   })
 })

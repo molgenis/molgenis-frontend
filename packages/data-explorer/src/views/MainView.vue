@@ -73,7 +73,13 @@ export default Vue.extend({
       get: function () {
         return this.$store.state.tablePagination
       },
-      set: function (value) { this.setPagination(value) }
+      set: function (value) {
+        this.$router.push({
+          name: this.$router.currentRoute.name,
+          path: this.$router.currentRoute.path,
+          query: { ...this.$route.query, page: value.page, size: value.size }
+        })
+      }
     },
     toasts: {
       get: function () {
@@ -98,7 +104,7 @@ export default Vue.extend({
     ]),
     ...mapGetters([
       'isUserAuthenticated',
-      'compressedBookmark'
+      'compressedRouteFilter'
     ]),
     activeFilterSelections () {
       return this.searchText ? { ...this.filters.selections, _search: this.searchText } : this.filters.selections
@@ -117,10 +123,9 @@ export default Vue.extend({
       'setHideFilters',
       'setTableName',
       'setToasts',
-      'setPagination',
       'setSearchText',
       'setFilterSelection',
-      'applyBookmark'
+      'setRouteQuery'
     ]),
     ...mapActions([
       'deleteRow',
@@ -137,7 +142,7 @@ export default Vue.extend({
       this.$router.push({
         name: this.$router.currentRoute.name,
         path: this.$router.currentRoute.path,
-        query: { bookmark: this.compressedBookmark }
+        query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     },
     async handeldeleteItem (itemId) {
@@ -152,22 +157,16 @@ export default Vue.extend({
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
+    this.setRouteQuery(this.$route.query)
+    this.fetchViewData({ tableName: this.$route.params.entity })
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
-    if (this.$route.params.entity !== to.params.entity) {
-      // Reset pagination to defaults before loading another entity.
-      this.setPagination()
-      await this.fetchViewData({ tableName: to.params.entity })
-    }
+    this.setRouteQuery(to.query) // syncs the state with the query
+    await this.fetchViewData({ tableName: to.params.entity })
     next()
-  },
-  watch: {
-    '$route.query': function (query) {
-      this.applyBookmark(query.bookmark || '')
-    }
   }
 })
 </script>

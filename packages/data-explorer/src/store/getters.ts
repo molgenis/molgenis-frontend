@@ -3,7 +3,7 @@ import { createRSQLQuery } from '@/mappers/rsqlMapper'
 import { ClipBoardItem } from '@/types/ClipBoardItem'
 // @ts-ignore
 import * as LZString from 'lz-string'
-import { toFilterValue } from '@/mappers/bookmarkMapper'
+import { toFilterValue } from '@/mappers/routeFilterMapper'
 import { TypeEnum } from '@/types/TypeEnum'
 
 export default {
@@ -49,8 +49,8 @@ export default {
         return clipBoardItem
       })
   },
-  bookmark: (state: ApplicationState, getters: any): object => {
-    const newBookmark = {
+  routeFilter: (state: ApplicationState, getters: any): object => {
+    const newRouteFilter = {
       shown: encodeURI(state.filters.shown.join(',')),
       searchText: state.searchText
     }
@@ -67,18 +67,18 @@ export default {
         const dataType = getters.getDataTypeForFilter(property)
 
         if (dataType.includes('date')) {
-          newBookmark[property] = encodeURI(value.map((date: Date) => date.toISOString()).join(','))
+          newRouteFilter[property] = encodeURI(value.map((date: Date) => date.toISOString()).join(','))
         } else {
-          newBookmark[property] = Array.isArray(value) ? encodeURI(value.join(',')) : encodeURI(value)
+          newRouteFilter[property] = Array.isArray(value) ? encodeURI(value.join(',')) : encodeURI(value)
         }
       }
     }
 
-    return newBookmark
+    return newRouteFilter
   },
-  compressedBookmark: (state: ApplicationState, getters: any): string => {
-    const bookmark = getters.bookmark
-    return LZString.compressToBase64(JSON.stringify(bookmark))
+  compressedRouteFilter: (state: ApplicationState, getters: any): string => {
+    const routeFilter = getters.routeFilter
+    return LZString.compressToBase64(JSON.stringify(routeFilter))
   },
   getDataTypeForFilter: (state: ApplicationState) => (filterIdentifier: string) => {
     const filterDefinitions = state.filters.definition
@@ -92,30 +92,30 @@ export default {
 
     return definitionForFilter.dataType
   },
-  parseBookmark: (state: ApplicationState, getters: any) => (encodedBookmark: string) => {
-    const decompressed = LZString.decompressFromBase64(decodeURIComponent(encodedBookmark))
-    const bookmark = JSON.parse(decompressed)
+  parseRouteFilter: (state: ApplicationState, getters: any) => (encodedFilter: string) => {
+    const decompressed = LZString.decompressFromBase64(decodeURIComponent(encodedFilter))
+    const filterTransferObject = JSON.parse(decompressed)
 
-    let bookmarkedFilters = {
+    let filter = {
       selections: {},
       shown: [],
       searchText: ''
     }
 
-    if (Object.keys(bookmark).length >= 1) {
-      for (let property in bookmark) {
-        const bookmarkValue = bookmark[property]
+    if (Object.keys(filterTransferObject).length >= 1) {
+      for (let property in filterTransferObject) {
+        const filterValue = filterTransferObject[property]
         if (property === 'shown') {
-          bookmarkedFilters.shown = bookmarkValue.split(',')
+          filter.shown = filterValue.split(',')
         } else if (property === 'searchText') {
-          bookmarkedFilters.searchText = bookmarkValue
+          filter.searchText = filterValue
         } else {
           const dataType = getters.getDataTypeForFilter(state)(property)
-          bookmarkedFilters.selections[property] = toFilterValue(bookmarkValue, dataType)
+          filter.selections[property] = toFilterValue(filterValue, dataType)
         }
       }
     }
-    return bookmarkedFilters
+    return filter
   }
 
 }

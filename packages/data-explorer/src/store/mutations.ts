@@ -6,6 +6,7 @@ import { MetaData } from '@/types/MetaData'
 import getters from '@/store/getters'
 import { defaultPagination } from '@/store/state'
 import { Pagination } from '@molgenis-ui/components-library'
+import { RouteQuery } from '@/types/RouteQuery'
 
 const defaultSettings = {
   settingsRowId: null,
@@ -20,12 +21,8 @@ export default {
   addToast (state: ApplicationState, toast: Toast) {
     state.toasts.push(toast)
   },
-  setPagination (state: ApplicationState, pagination: Pagination|undefined) {
-    if (!pagination) {
-      state.tablePagination = defaultPagination
-    } else {
-      state.tablePagination = pagination
-    }
+  setPaginationCount (state: ApplicationState, count: number) {
+    state.tablePagination.count = count
   },
   setToasts (state: ApplicationState, toasts: Toast[]) {
     Vue.set(state, 'toasts', toasts)
@@ -62,6 +59,12 @@ export default {
     state.tableSettings.customCardAttrs = isPropSet('template_attrs') ? tableSettings.template_attrs : defaultSettings.customCardAttrs
     state.tableSettings.defaultFilters = isPropSet('default_filters') ? tableSettings.default_filters.split(',').map(f => f.trim()) : defaultSettings.defaultFilters
   },
+  setSortColumn (state: ApplicationState, columnName: string) {
+    state.sort.sortColumnName = columnName
+  },
+  setIsSortOrderReversed (state: ApplicationState, isReversed: boolean) {
+    state.sort.isSortOrderReversed = isReversed
+  },
   setMetaData (state: ApplicationState, metaData: MetaData) {
     Vue.set(state, 'tableMeta', metaData)
   },
@@ -77,18 +80,29 @@ export default {
   setFilterSelection (state: ApplicationState, selections: StringMap) {
     Vue.set(state.filters, 'selections', selections)
   },
-  /**
-  * Commit the stored bookmark querystring to the store or
-  * use a default set of filters.
-  */
-  applyBookmark (state: ApplicationState, bookmark: string) {
-    if (bookmark === '') {
-      state.filters.shown = state.tableSettings.defaultFilters
+  setRouteQuery (state: ApplicationState, routeQuery: RouteQuery) {
+    state.tablePagination.page = routeQuery.page !== undefined ? routeQuery.page : defaultPagination.page
+    state.tablePagination.size = routeQuery.size !== undefined ? routeQuery.size : defaultPagination.size
+    if (routeQuery.sort !== undefined) {
+      if (routeQuery.sort.charAt(0) === '-') {
+        state.sort.isSortOrderReversed = true
+        state.sort.sortColumnName = routeQuery.sort.substring(1)
+      } else {
+        state.sort.isSortOrderReversed = false
+        state.sort.sortColumnName = routeQuery.sort
+      }
     } else {
-      const bookmarkedFilters = getters.parseBookmark(state, getters)(bookmark)
-      state.searchText = bookmarkedFilters.searchText
-      state.filters.shown = bookmarkedFilters.shown
-      state.filters.selections = bookmarkedFilters.selections
+      // reset to defaults if routeQuery does not contain sort info
+      state.sort.isSortOrderReversed = false
+      state.sort.sortColumnName = null
+    }
+    if (routeQuery.filter !== undefined) {
+      const routeFilters = getters.parseRouteFilter(state, getters)(routeQuery.filter)
+      state.searchText = routeFilters.searchText
+      state.filters.shown = routeFilters.shown
+      state.filters.selections = routeFilters.selections
+    } else {
+      state.filters.shown = state.tableSettings.defaultFilters
     }
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {

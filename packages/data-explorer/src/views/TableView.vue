@@ -1,6 +1,12 @@
 <template>
-  <table class="table table-bordered h-100">
-    <table-header :visibleColumns="visibleColumns" :isShop="tableSettings.isShop"></table-header>
+  <table class="table table-bordered h-100" v-if="entitiesToShow.length">
+    <table-header
+      :visibleColumns="visibleColumns"
+      :isShop="tableSettings.isShop"
+      :sortColumnName="sort.sortColumnName"
+      :isSortOrderReversed="sort.isSortOrderReversed"
+      @sort="handleSortEvent">
+    </table-header>
     <tbody>
 
     <table-row v-for="(entity, index) in entitiesToShow"
@@ -46,8 +52,8 @@ export default {
   },
   components: { TableRow, TableHeader },
   computed: {
-    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected']),
-    ...mapGetters(['filterRsql', 'hasEditRights']),
+    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort']),
+    ...mapGetters(['filterRsql', 'hasEditRights', 'compressedRouteFilter']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -58,13 +64,23 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleSelectedItems']),
+    ...mapMutations(['toggleSelectedItems', 'setSortColumn', 'setIsSortOrderReversed']),
     ...mapActions(['fetchTableViewData']),
     getEntityId (entity) {
       return entity[this.idAttribute.name].toString()
     },
     isSelected (entity) {
       return this.selectedItemIds.includes(this.getEntityId(entity))
+    },
+    handleSortEvent (sortOrderColumn) {
+      const isSortOrderReversed = sortOrderColumn === this.sort.sortColumnName ? !this.sort.isSortOrderReversed : false
+      const sortQueryParam = isSortOrderReversed ? '-' + sortOrderColumn : sortOrderColumn
+
+      this.$router.push({
+        name: this.$router.currentRoute.name,
+        path: this.$router.currentRoute.path,
+        query: { ...this.$route.query, sort: sortQueryParam }
+      })
     }
   }
 }

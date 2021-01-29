@@ -6,6 +6,7 @@ import { MetaData, Attribute } from '@/types/MetaData'
 import client from '@/lib/client'
 import { encodeRsqlValue } from '@molgenis/rsql'
 import { Pagination } from '@molgenis-ui/components-library'
+import { Sort } from '@/types/Sort'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaData) => {
@@ -103,12 +104,17 @@ const pageQuery = (pagination :Pagination|undefined) => {
     : ''
 }
 
+const buildSortQuery = (sort?: Sort):string => {
+  return sort && sort.sortColumnName !== null ? `&sort=${sort.isSortOrderReversed ? '-' : ''}${sort.sortColumnName}` : ''
+}
+
 const getTableDataDeepReference = async (
   tableId: string,
   metaData: MetaData,
   coloms: string[],
   rsqlQuery?: string,
-  pagination?: Pagination
+  pagination?: Pagination,
+  sort?: Sort
 ) => {
   if (!coloms.includes(metaData.idAttribute.name)) {
     coloms.push(metaData.idAttribute.name)
@@ -120,22 +126,31 @@ const getTableDataDeepReference = async (
 
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, coloms)
 
-  const request = addFilterIfSet(`/api/data/${tableId}?${pageQuery(pagination)}${expandReferencesQuery}`, rsqlQuery)
+  const sortQuery = buildSortQuery(sort)
+  const request = addFilterIfSet(`/api/data/${tableId}?${pageQuery(pagination)}${expandReferencesQuery}${sortQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
 
   const items = response.items.map((item: DataApiResponseItem) => levelNRowMapper(item))
   return { items, page: response.page }
 }
 
-const getTableDataWithLabel = async (tableId: string, metaData: MetaData, columns: string[], rsqlQuery?: string, pagination?: Pagination) => {
+const getTableDataWithLabel = async (
+  tableId: string,
+  metaData: MetaData,
+  columns: string[],
+  rsqlQuery?: string,
+  pagination?: Pagination,
+  sort?: Sort
+) => {
   const columnSet = new Set([...columns])
   columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
     columnSet.add(metaData.labelAttribute.name)
   }
 
+  const sortQuery = buildSortQuery(sort)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const request = addFilterIfSet(`/api/data/${tableId}?${pageQuery(pagination)}${expandReferencesQuery}`, rsqlQuery)
+  const request = addFilterIfSet(`/api/data/${tableId}?${pageQuery(pagination)}${expandReferencesQuery}${sortQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
   // @ts-ignore
   const items = await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
@@ -146,7 +161,7 @@ const getTableDataWithLabel = async (tableId: string, metaData: MetaData, column
 }
 
 // called on row expand
-const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, pagination?: Pagination) => {
+const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, pagination?: Pagination, sort?: Sort) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
   // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
   // Adding id and label makes sure we get these fields.
@@ -155,8 +170,9 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
   if (metaData.labelAttribute !== undefined) {
     columnSet.add(metaData.labelAttribute.name)
   }
+  const sortQuery = buildSortQuery(sort)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${pageQuery(pagination)}${expandReferencesQuery}`)
+  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${pageQuery(pagination)}${expandReferencesQuery}${sortQuery}`)
   return levelOneRowMapper(response.data, metaData)
 }
 
