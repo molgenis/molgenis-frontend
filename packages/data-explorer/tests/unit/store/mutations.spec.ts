@@ -257,7 +257,7 @@ describe('mutations', () => {
     })
   })
   describe('setPaginationCount', () => {
-    it('set the pagination count on the state, as a prop of tablePagination' , () => {
+    it('set the pagination count on the state, as a prop of tablePagination', () => {
       mutations.setPaginationCount(baseAppState, 25)
       expect(baseAppState.tablePagination.count).toEqual(25)
     })
