@@ -157,6 +157,8 @@ export default Vue.extend({
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
+    this.setRouteQuery(this.$route.query)
+    this.fetchViewData({ tableName: this.$route.params.entity })
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
