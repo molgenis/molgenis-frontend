@@ -54,5 +54,4 @@ describe('Pagination.vue', () => {
       expect(propsData.value.page).toEqual(1)
     })
   })
-
 })
