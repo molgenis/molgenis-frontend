@@ -40,7 +40,6 @@
         <pagination
           class="mt-2"
           v-model="tablePagination"
-          :fetchItems="() => fetchViewData({ tableName: $route.params.entity })"
         />
         </div>
     </div>
@@ -129,7 +128,8 @@ export default Vue.extend({
     ]),
     ...mapActions([
       'deleteRow',
-      'fetchViewData'
+      'fetchViewData',
+      'fetchTableMeta'
     ]),
     ...mapActions('header', [
       'fetchPackageTables'
@@ -153,19 +153,20 @@ export default Vue.extend({
       }
     }
   },
-  created () {
+  async created () {
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
+    await this.fetchTableMeta({ tableName: this.$route.params.entity })
     this.setRouteQuery(this.$route.query)
-    this.fetchViewData({ tableName: this.$route.params.entity })
+    this.fetchViewData()
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
     this.setRouteQuery(to.query) // syncs the state with the query
-    await this.fetchViewData({ tableName: to.params.entity })
+    await this.fetchViewData()
     next()
   }
 })

@@ -57,8 +57,7 @@ export default {
         if (val === '') {
           this.searchText = ''
         }
-      },
-      immediate: true
+      }
     },
     searchText: {
       // Add handler to support html5 clear search action
@@ -66,8 +65,7 @@ export default {
         if (val === '') {
           this.handleSearchAction()
         }
-      },
-      immediate: true
+      }
     }
   }
 }
