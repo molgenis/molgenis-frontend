@@ -166,11 +166,6 @@ export default Vue.extend({
     await this.fetchViewData({ tableName: to.params.entity })
     next()
   }
-  // watch: {
-  //   '$route.query': function () {
-  //     this.setRouteQuery(this.$route.query)
-  //   }
-  // }
 })
 </script>
 
