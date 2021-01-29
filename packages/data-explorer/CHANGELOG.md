@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.9...@molgenis-ui/data-explorer@2.2.0) (2021-01-29)
+
+
+### Features
+
+* **data-explorer:** Sort columns ([#481](https://github.com/molgenis/molgenis-frontend/issues/481)) ([9b38d84](https://github.com/molgenis/molgenis-frontend/commit/9b38d84))
+
+
+
+
+
 ## [2.1.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.8...@molgenis-ui/data-explorer@2.1.9) (2021-01-29)
 
 
