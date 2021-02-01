@@ -61,10 +61,7 @@ export default {
       return this.meta.attributes.filter(item => item.idAttribute === true)[0]
     },
     refLabels () {
-      if (this.value) {
-        return this.value.replace(/\s/g, '').split(',')
-      }
-      return ''
+      return this.value.replace(/\s/g, '').split(',')
     },
     visibleColumns () {
       if (this.loaded) {
@@ -93,7 +90,6 @@ export default {
       }
 
       const dataResponse = await getTableDataWithLabel(this.tableId, this.meta, [...columnSet], null, { count: 0, loading: false, page: 1, size: 20 })
-
       this.refData = dataResponse.items.filter(item => {
         return this.refLabels.includes(item.label)
       })
