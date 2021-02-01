@@ -3,6 +3,85 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.4...@molgenis-ui/data-explorer@2.2.5) (2021-02-01)
+
+
+### Bug Fixes
+
+* **data-explorer:** reserve space for sort icon ([#516](https://github.com/molgenis/molgenis-frontend/issues/516)) ([88fdd63](https://github.com/molgenis/molgenis-frontend/commit/88fdd63))
+
+
+
+
+
+## [2.2.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.3...@molgenis-ui/data-explorer@2.2.4) (2021-02-01)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [2.2.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.2...@molgenis-ui/data-explorer@2.2.3) (2021-02-01)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [2.2.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.1...@molgenis-ui/data-explorer@2.2.2) (2021-02-01)
+
+
+### Bug Fixes
+
+* **data-explorer:** Fix issue with lock file ([#513](https://github.com/molgenis/molgenis-frontend/issues/513)) ([030a316](https://github.com/molgenis/molgenis-frontend/commit/030a316))
+
+
+
+
+
+## [2.2.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.0...@molgenis-ui/data-explorer@2.2.1) (2021-02-01)
+
+
+### Bug Fixes
+
+* **components-library, data-explorer:** fix routing issues due to wrong fetch order ([a14c1fe](https://github.com/molgenis/molgenis-frontend/commit/a14c1fe))
+
+
+
+
+
+# [2.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.9...@molgenis-ui/data-explorer@2.2.0) (2021-01-29)
+
+
+### Features
+
+* **data-explorer:** Sort columns ([#481](https://github.com/molgenis/molgenis-frontend/issues/481)) ([9b38d84](https://github.com/molgenis/molgenis-frontend/commit/9b38d84))
+
+
+
+
+
+## [2.1.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.8...@molgenis-ui/data-explorer@2.1.9) (2021-01-29)
+
+
+### Bug Fixes
+
+* **data-explorer:** set correct components lib version ([#511](https://github.com/molgenis/molgenis-frontend/issues/511)) ([09bec27](https://github.com/molgenis/molgenis-frontend/commit/09bec27))
+
+
+
+
+
+## [2.1.8](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.7...@molgenis-ui/data-explorer@2.1.8) (2021-01-27)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
 ## [2.1.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.6...@molgenis-ui/data-explorer@2.1.7) (2021-01-22)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer

@@ -56,12 +56,13 @@ describe('MainView.vue', () => {
       setTableName: jest.fn(),
       setFilterSelection: jest.fn(),
       setSearchText: jest.fn(),
-      setPagination: jest.fn()
+      setPagination: jest.fn(),
+      setRouteQuery: jest.fn()
     }
 
     getters = {
       isUserAuthenticated: jest.fn(),
-      compressedBookmark: jest.fn()
+      compressedRouteFilter: jest.fn()
     }
 
     actions = {
@@ -157,10 +158,15 @@ describe('MainView.vue', () => {
 
   describe('before route update', () => {
     it('fetch data before calling next', async (done) => {
+      actions.fetchTableMeta.mockClear()
       // @ts-ignore
       actions.fetchTableViewData.mockResolvedValue()
       const next = jest.fn()
-      const from = {}
+      const from = {
+        params: {
+          entity: 'entity'
+        }
+      }
       const to = {
         params: {
           entity: 'entity'
@@ -168,6 +174,29 @@ describe('MainView.vue', () => {
       }
       // @ts-ignore use call to pass vm context
       await wrapper.vm.$options.beforeRouteUpdate.call(wrapper.vm, to, from, next)
+      expect(actions.fetchTableMeta).not.toHaveBeenCalled()
+      expect(next).toHaveBeenCalled()
+      done()
+    })
+
+    it('fetch metadata and data before calling next', async (done) => {
+      actions.fetchTableMeta.mockClear()
+      // @ts-ignore
+      actions.fetchTableViewData.mockResolvedValue()
+      const next = jest.fn()
+      const from = {
+        params: {
+          entity: 'entity'
+        }
+      }
+      const to = {
+        params: {
+          entity: 'other'
+        }
+      }
+      // @ts-ignore use call to pass vm context
+      await wrapper.vm.$options.beforeRouteUpdate.call(wrapper.vm, to, from, next)
+      expect(actions.fetchTableMeta).toHaveBeenCalled()
       expect(next).toHaveBeenCalled()
       done()
     })

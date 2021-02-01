@@ -43,12 +43,14 @@ import { faCaretRight,
   faTimes,
   faTrash,
   faUpload,
-  faShare
+  faSort,
+  faSortAlphaUp,
+  faSortAlphaDown
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faCaretRight, faChevronLeft, faChevronRight, faChevronUp, faCog, faEdit, faExclamationTriangle,
   faMinus, faPlay, faPlus, faPlusSquare, faShoppingBag, faSlidersH, faShoppingCart, faSpinner,
-  faSearch, faStore, faTh, faThList, faTimes, faTrash, faUpload, faShare
+  faSearch, faStore, faTh, faThList, faTimes, faTrash, faUpload, faSort, faSortAlphaUp, faSortAlphaDown
 )
 
 Vue.use(BootstrapVue)

@@ -1,7 +1,7 @@
-import { toFilterValue } from '@/mappers/bookmarkMapper'
+import { toFilterValue } from '@/mappers/routeFilterMapper'
 
 describe('toFilterValue', () => {
-  it('should map the bookmark value to the filterValue', () => {
+  it('should map the routeFilterValue value to the filterValue', () => {
     expect(toFilterValue(encodeURI('a string'), 'string')).toEqual('a string')
     expect(toFilterValue('some%0Atext', 'text')).toEqual(`some
 text`)

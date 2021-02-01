@@ -2,9 +2,21 @@
   <thead>
   <tr>
     <th class="top-left-corner" scope="col"></th>
-    <th scope="col"
-        v-for="(column, index) in visibleColumns" :key="index">
-      {{ column.name }}
+    <th class="header-column" scope="col" v-for="(column, index) in visibleColumns" :key="index">
+      <a class="header-label" @click="$emit('sort', column.name)">{{ column.name }}
+        <font-awesome-icon
+          v-if="column.name !== sortColumnName"
+          class="mr-1 sort-icon" icon="sort">
+        </font-awesome-icon>
+        <font-awesome-icon
+          v-if="column.name === sortColumnName && !isSortOrderReversed"
+          class="mr-1" icon="sort-alpha-down">
+        </font-awesome-icon>
+        <font-awesome-icon
+          v-if="column.name === sortColumnName && isSortOrderReversed"
+          class="mr-1" icon="sort-alpha-up">
+        </font-awesome-icon>
+      </a>
     </th>
   </tr>
   </thead>
@@ -63,17 +75,45 @@
     background-color: var(--light);
     border: 1px var(--border) solid;
   }
+
+  .sort-icon {
+    visibility: hidden;
+  }
+
+  .header-label:hover .sort-icon {
+    visibility: visible;
+  }
+
+  .header-label {
+    white-space: nowrap;
+  }
+
+  .header-label:hover {
+    cursor: pointer;
+  }
 </style>
 
 <script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 export default {
   name: 'TableHeader',
+  components: { FontAwesomeIcon },
   props: {
     visibleColumns: {
       type: Array,
       required: true
     },
     isShop: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+    sortColumnName: {
+      type: String,
+      required: false,
+      default: () => null
+    },
+    isSortOrderReversed: {
       type: Boolean,
       required: false,
       default: () => false

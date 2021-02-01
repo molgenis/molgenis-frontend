@@ -79,4 +79,9 @@ describe('FilterContainer.vue', () => {
     await wrapper.find('.btn.btn-block.btn-primary').trigger('click')
     expect(wrapper.find('.modal-dialog')).toBeDefined()
   })
+
+  it('reacts to filtersShown changes', async () => {
+    await wrapper.setProps({ filtersShown: ['color'] })
+    expect((wrapper.vm).listOfVisibleFilters[0].label).toBe('Color')
+  })
 })
