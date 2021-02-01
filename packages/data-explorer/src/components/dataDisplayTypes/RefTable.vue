@@ -1,9 +1,9 @@
 <template>
   <div>
-    <table class="table table-bordered h-100" v-if="data">
+    <table class="table table-bordered h-100" v-if="refData">
       <table-header :visibleColumns="visibleColumns"></table-header>
       <tbody>
-        <table-row v-for="(entity, index) in data"
+        <table-row v-for="(entity, index) in refData"
                    :key="index"
                    :rowIndex="index"
                    :id="getEntityId(entity)"
@@ -52,13 +52,19 @@ export default {
   data () {
     return {
       loaded: false,
-      data: [],
+      refData: [],
       meta: []
     }
   },
   computed: {
     idAttribute () {
       return this.meta.attributes.filter(item => item.idAttribute === true)[0]
+    },
+    refLabels () {
+      if (this.value) {
+        return this.value.replace(/\s/g, '').split(',')
+      }
+      return ''
     },
     visibleColumns () {
       if (this.loaded) {
@@ -78,14 +84,20 @@ export default {
       this.meta = toMetaData(metaResponse.data)
 
       const attributes = getAttributesfromMeta(this.meta)
+
       const columnSet = new Set([...attributes])
       columnSet.add(this.meta.idAttribute.name)
+
       if (this.meta.labelAttribute !== undefined) {
         columnSet.add(this.meta.labelAttribute.name)
       }
 
       const dataResponse = await getTableDataWithLabel(this.tableId, this.meta, [...columnSet], null, { count: 0, loading: false, page: 1, size: 20 })
-      this.data = dataResponse.items.filter(item => item.label === this.value)
+
+      this.refData = dataResponse.items.filter(item => {
+        return this.refLabels.includes(item.label)
+      })
+
       this.loaded = true
     }
   },
