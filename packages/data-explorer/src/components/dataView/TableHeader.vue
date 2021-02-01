@@ -77,11 +77,11 @@
   }
 
   .sort-icon {
-    display: none;
+    visibility: hidden;
   }
 
   .header-label:hover .sort-icon {
-    display: inline;
+    visibility: visible;
   }
 
   .header-label {
