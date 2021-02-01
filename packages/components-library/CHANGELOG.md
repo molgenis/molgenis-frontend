@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.0.1...@molgenis-ui/components-library@2.0.2) (2021-02-01)
+
+
+### Bug Fixes
+
+* **components-library:** emit updated model on size change ([#514](https://github.com/molgenis/molgenis-frontend/issues/514)) ([184527d](https://github.com/molgenis/molgenis-frontend/commit/184527d))
+
+
+
+
+
 ## [2.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.0.0...@molgenis-ui/components-library@2.0.1) (2021-02-01)
 
 
