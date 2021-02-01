@@ -99,10 +99,10 @@ export default {
     if (routeQuery.filter !== undefined) {
       const routeFilters = getters.parseRouteFilter(state, getters)(routeQuery.filter)
       state.searchText = routeFilters.searchText
-      state.filters.shown = routeFilters.shown
-      state.filters.selections = routeFilters.selections
+      Vue.set(state.filters, 'shown', routeFilters.shown)
+      Vue.set(state.filters, 'selections', routeFilters.selections)
     } else {
-      state.filters.shown = state.tableSettings.defaultFilters
+      Vue.set(state.filters, 'shown', state.tableSettings.defaultFilters)
     }
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {

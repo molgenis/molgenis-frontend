@@ -186,6 +186,11 @@ export default {
   destroyed () {
     window.removeEventListener('resize', this.handleResize)
   },
+  watch: {
+    filtersShown (newValue) {
+      this.filtersToShow = newValue
+    }
+  },
   methods: {
     handleResize () {
       this.width = window.innerWidth

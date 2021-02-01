@@ -77,10 +77,10 @@ describe('dataRepository', () => {
     it('should build query with deep ref', async (done) => {
       const tableId = 'tableId'
       const metaData = mockmeta as MetaData
-      const coloms = ['foo']
+      const columns = ['foo']
       const rsqlQuery = 'rsqlQuery'
       const pagination = defaultPagination
-      await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, pagination)
+      await dataRepository.getTableDataDeepReference(tableId, metaData, columns, rsqlQuery, pagination)
       expect(client.get).toBeCalledWith('/api/data/tableId?page=0&size=20&expanded-attributes-query&q=rsqlQuery')
       done()
     })

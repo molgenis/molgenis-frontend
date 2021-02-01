@@ -178,18 +178,8 @@ export default {
      * not feasible to detect size property changes from
      * the deep value watcher (See https://vuejs.org/v2/api/#vm-watch)
      */
-    'value.size' (newSize, oldSize) {
-      let currentPosition = this.localValue.page * oldSize
-      // Keep in mind that with 201 items, the current page may be 3 when
-      // showing 100 items per page. When switching back to 50 items per
-      // page, there are only 5 pages left. Make sure the currentPosition
-      // never exceeds the actual count.
-      if (currentPosition > this.localValue.count) {
-        currentPosition = this.localValue.count
-      }
-
-      const currentNewPage = Math.ceil(currentPosition / newSize)
-      this.updateValue({ page: currentNewPage })
+    'value.size' () {
+      this.updateValue({ page: 1 })
     }
   }
 }

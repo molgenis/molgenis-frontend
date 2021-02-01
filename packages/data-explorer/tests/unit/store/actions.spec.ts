@@ -308,16 +308,14 @@ describe('actions', () => {
       metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
       // @ts-ignore
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithOutSettings' })
+      await actions.fetchTableMeta({ commit, getters, dispatch, state }, { tableName: 'tableWithOutSettings' })
       expect(commit.mock.calls).toEqual([
         [ 'setTableSettings', {} ],
         [ 'setMetaData', null ],
-        [ 'setFilterDefinition', [] ],
-        [ 'setFiltersShown', [] ],
-        [ 'setFilterSelection', {} ],
+        ['setFilterDefinition', []],
+        ['setTableName', 'tableWithOutSettings'],
         [ 'setMetaData', 'meta' ],
-        [ 'setFilterDefinition', 'def' ],
-        [ 'setFiltersShown', [] ]
+        [ 'setFilterDefinition', 'def' ]
       ])
     })
 
@@ -327,20 +325,18 @@ describe('actions', () => {
       metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
       // @ts-ignore
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
+      await actions.fetchTableMeta({ commit, getters, dispatch, state }, { tableName: 'tableWithSettings' })
       expect(commit.mock.calls).toEqual([
         [ 'setTableSettings', {} ],
         [ 'setMetaData', null ],
-        [ 'setFilterDefinition', [] ],
-        [ 'setFiltersShown', [] ],
-        [ 'setFilterSelection', {} ],
+        ['setFilterDefinition', []],
+        ['setTableName', 'tableWithSettings'],
         [
           'setTableSettings',
           { id: 'ent-set', shop: true, collapse_limit: 5 }
         ],
         [ 'setMetaData', 'meta' ],
-        [ 'setFilterDefinition', 'def' ],
-        [ 'setFiltersShown', [] ]
+        [ 'setFilterDefinition', 'def' ]
       ])
     })
   })
@@ -350,47 +346,16 @@ describe('actions', () => {
       jest.clearAllMocks()
     })
 
-    it('if table name is changed, should fetch settings and metaData ', async (done) => {
-      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'new table name' })
-
-      expect(dispatch).toHaveBeenCalledWith('fetchTableMeta', { tableName: 'new table name' })
-      expect(dispatch).toHaveBeenCalledWith('header/fetchBreadcrumbs')
-      expect(commit).toHaveBeenCalledWith('setTableName', 'new table name')
-      expect(dispatch).toHaveBeenCalledWith('fetchCardViewData')
-      done()
-    })
-
-    it('if user is not authenticated should not try to fetch the breadcrumb data ', async (done) => {
-      getters.isUserAuthenticated = false
-      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'new table name' })
-
-      expect(dispatch).toHaveBeenCalledWith('fetchTableMeta', { tableName: 'new table name' })
-      expect(dispatch).not.toHaveBeenCalledWith('header/fetchBreadcrumbs')
-      expect(commit).toHaveBeenCalledWith('setTableName', 'new table name')
-      expect(dispatch).toHaveBeenCalledWith('fetchCardViewData')
-      done()
-    })
-
-    it('if table name is not changed, should not fetch settings and meta ', async (done) => {
-      state.tableName = 'tableName'
-      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'tableName' })
-
-      expect(dispatch).not.toHaveBeenCalledWith('fetchTableMeta', expect.anything())
-      expect(commit).not.toHaveBeenCalledWith('setTableName', expect.anything())
-      expect(dispatch).toHaveBeenCalledWith('fetchCardViewData')
-      done()
-    })
-
     it('if selected view is cardView, should fetch card data', async (done) => {
       state.dataDisplayLayout = 'CardView'
-      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'tableName' })
+      await actions.fetchViewData({ commit, dispatch, getters, state })
       expect(dispatch).toHaveBeenCalledWith('fetchCardViewData')
       done()
     })
 
     it('if selected view not cardView, should fetch table data', async (done) => {
       state.dataDisplayLayout = 'TableView'
-      await actions.fetchViewData({ commit, dispatch, getters, state }, { tableName: 'tableName' })
+      await actions.fetchViewData({ commit, dispatch, getters, state })
       expect(dispatch).toHaveBeenCalledWith('fetchTableViewData')
       done()
     })

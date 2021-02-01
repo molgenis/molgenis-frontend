@@ -7,12 +7,11 @@ import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 import router from '@/router'
 
 export default {
-  fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
+  fetchTableMeta: async ({ commit, getters, dispatch, state }, payload: { tableName: string }) => {
     commit('setTableSettings', {})
     commit('setMetaData', null)
     commit('setFilterDefinition', [])
-    commit('setFiltersShown', [])
-    commit('setFilterSelection', {})
+    commit('setTableName', payload.tableName)
 
     const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
     if (response.data.items.length === 1) {
@@ -23,18 +22,11 @@ export default {
     const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
     commit('setMetaData', metaData)
     commit('setFilterDefinition', definition)
-    commit('setFiltersShown', state.tableSettings.defaultFilters)
-  },
-  async fetchViewData (store, { tableName }) {
-    if (store.state.tableName !== tableName) {
-      await store.dispatch('fetchTableMeta', { tableName })
-      if (store.getters.isUserAuthenticated) {
-        await store.dispatch('header/fetchBreadcrumbs')
-      }
-
-      store.commit('setTableName', tableName)
+    if (getters.isUserAuthenticated) {
+      await dispatch('header/fetchBreadcrumbs')
     }
-
+  },
+  async fetchViewData (store) {
     if (store.state.dataDisplayLayout === 'CardView') {
       store.dispatch('fetchCardViewData')
     } else {
