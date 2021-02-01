@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.1...@molgenis-ui/data-explorer@2.2.2) (2021-02-01)
+
+
+### Bug Fixes
+
+* **data-explorer:** Fix issue with lock file ([#513](https://github.com/molgenis/molgenis-frontend/issues/513)) ([030a316](https://github.com/molgenis/molgenis-frontend/commit/030a316))
+
+
+
+
+
 ## [2.2.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.0...@molgenis-ui/data-explorer@2.2.1) (2021-02-01)
 
 
