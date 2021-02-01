@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.0...@molgenis-ui/data-explorer@2.2.1) (2021-02-01)
+
+
+### Bug Fixes
+
+* **components-library, data-explorer:** fix routing issues due to wrong fetch order ([a14c1fe](https://github.com/molgenis/molgenis-frontend/commit/a14c1fe))
+
+
+
+
+
 # [2.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.1.9...@molgenis-ui/data-explorer@2.2.0) (2021-01-29)
 
 
