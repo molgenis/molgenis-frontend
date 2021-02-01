@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.4...@molgenis-ui/data-explorer@2.2.5) (2021-02-01)
+
+
+### Bug Fixes
+
+* **data-explorer:** reserve space for sort icon ([#516](https://github.com/molgenis/molgenis-frontend/issues/516)) ([88fdd63](https://github.com/molgenis/molgenis-frontend/commit/88fdd63))
+
+
+
+
+
 ## [2.2.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.3...@molgenis-ui/data-explorer@2.2.4) (2021-02-01)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
