@@ -754,10 +754,10 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@molgenis-ui/components-library@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-2.0.1.tgz#b9b95082a1589fcf171ea7d84fe18fec6bf24868"
-  integrity sha512-wCsc8MI4+2fX81DiUvD+HuPVKdkKD586lsKJ+zGGd6CleWqc1+IKBFFYLa1sgFfzxDkvNgFSyQwsq/Ls1gMJ/g==
+"@molgenis-ui/components-library@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-2.0.2.tgz#1773411b0f2612c749e52f37d456f8cc98aefddd"
+  integrity sha512-VkgD2OorXv8pZoxMqU9NvUHikg8/3Nx528NH1lUK/BUkrmTcZktRqpUWWXNkgW8MpJXUCHPDkAUu7iM3uwGSvg==
 
 "@molgenis/molgenis-api-client@^3.1.0", "@molgenis/molgenis-api-client@^3.1.3":
   version "3.1.3"
