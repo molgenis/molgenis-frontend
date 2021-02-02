@@ -27,6 +27,10 @@
       <search-component v-model="searchText"/>
     </div>
 
+    <div class="btn-group" role="group" aria-label="sort selector">
+      <sort-select :sortOptions="sortOptions" :sort="sort" @sort="handleSortSelectChange"></sort-select>
+    </div>
+
     <div class="btn-group" role="group" aria-label="Table actions group">
       <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary"
         v-b-tooltip.hover.bottom="'Download'">
@@ -66,12 +70,13 @@ import { faStore, faTh, faThList, faSlidersH, faShoppingBag, faPlusSquare, faDow
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
 import TableSettingsButton from '../components/utils/TableSettingsButton'
+import SortSelect from '../components/SortSelect'
 
 library.add(faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare, faDownload, faCog)
 
 export default Vue.extend({
   name: 'ToolbarView',
-  components: { FontAwesomeIcon, SearchComponent, TableSettingsButton },
+  components: { FontAwesomeIcon, SearchComponent, TableSettingsButton, SortSelect },
   computed: {
     ...mapState([
       'filters',
@@ -80,7 +85,8 @@ export default Vue.extend({
       'tableSettings',
       'tableName',
       'showSelected',
-      'settingsTable'
+      'settingsTable',
+      'sort'
     ]),
     ...mapGetters([
       'hasEditRights',
@@ -99,6 +105,12 @@ export default Vue.extend({
           query: { ...this.$route.query, filter: this.compressedRouteFilter }
         })
       }
+    },
+    sortOptions () {
+      return !this.tableMeta ? [] : this.tableMeta.attributes
+        .filter(a => a.visible)
+        .filter(a => a.type !== 'compound')
+        .map(a => ({ id: a.id, name: a.name }))
     }
   },
   data: function () {
@@ -126,6 +138,13 @@ export default Vue.extend({
       const value =
         this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.setDataDisplayLayout(value)
+    },
+    handleSortSelectChange (sort) {
+      this.$router.push({
+        name: this.$router.currentRoute.name,
+        path: this.$router.currentRoute.path,
+        query: { ...this.$route.query, sort: `${sort.isSortOrderReversed ? '-' : ''}${sort.sortColumnName}` }
+      })
     }
   }
 })
