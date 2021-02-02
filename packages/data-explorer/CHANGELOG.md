@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.3.0...@molgenis-ui/data-explorer@2.3.1) (2021-02-02)
+
+
+### Bug Fixes
+
+* add view to router & parse page/size to int from router ([ebb1fd1](https://github.com/molgenis/molgenis-frontend/commit/ebb1fd1))
+* unit tests for toolbar view routing changes ([1ee3bde](https://github.com/molgenis/molgenis-frontend/commit/1ee3bde))
+
+
+
+
+
 # [2.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.5...@molgenis-ui/data-explorer@2.3.0) (2021-02-02)
 
 
