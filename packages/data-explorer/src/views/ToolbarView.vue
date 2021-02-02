@@ -135,9 +135,12 @@ export default Vue.extend({
       this.isDownloading = false
     },
     toggleDataDisplayLayout () {
-      const value =
-        this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
-      this.setDataDisplayLayout(value)
+      const value = this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
+      this.$router.push({
+        name: 'main-view',
+        params: { view: value },
+        query: { ...this.$route.query }
+      })
     },
     handleSortSelectChange (sort) {
       this.$router.push({

@@ -1,6 +1,5 @@
 <template>
 <nav class="c-pagination">
-
   <div v-if="localValue.count > localValue.size" class="btn-group mb-2 mr-3">
     <button :class="css" class="btn btn-outline-primary"
       :disabled="localValue.page <= 1"

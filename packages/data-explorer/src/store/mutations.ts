@@ -81,8 +81,10 @@ export default {
     Vue.set(state.filters, 'selections', selections)
   },
   setRouteQuery (state: ApplicationState, routeQuery: RouteQuery) {
-    state.tablePagination.page = routeQuery.page !== undefined ? routeQuery.page : defaultPagination.page
-    state.tablePagination.size = routeQuery.size !== undefined ? routeQuery.size : defaultPagination.size
+    // @ts-ignore
+    state.tablePagination.page = routeQuery.page !== undefined ? parseInt(routeQuery.page, 10) : defaultPagination.page
+    // @ts-ignore
+    state.tablePagination.size = routeQuery.size !== undefined ? parseInt(routeQuery.size, 10) : defaultPagination.size
     if (routeQuery.sort !== undefined) {
       if (routeQuery.sort.charAt(0) === '-') {
         state.sort.isSortOrderReversed = true

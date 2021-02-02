@@ -10,15 +10,22 @@ const router = new Router({
   base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
   routes: [
     {
-      path: '/:entity',
+      path: '/:entity/:view',
       component: MainView,
       name: 'main-view'
     },
-    { path: '*',
-      redirect: {
-        name: 'main-view',
-        params: { entity: 'sys_ts_DataExplorerEntitySettings' },
-        query: { page: '1', size: '20' }
+    { path: '/:entity?',
+      redirect: to => {
+        let entity = 'sys_ts_DataExplorerEntitySettings'
+        if (to.params.entity) {
+          entity = to.params.entity
+        }
+
+        return {
+          name: 'main-view',
+          params: { entity, view: 'CardView' },
+          query: { page: '1', size: '20' }
+        }
       }
     }
   ]
