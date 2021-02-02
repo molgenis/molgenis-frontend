@@ -79,8 +79,11 @@ describe('ToolbarView.vue', () => {
     })
     const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
     wrapper.find('button.table-layout').trigger('click')
-    // @ts-ignore
-    expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'TableView')
+    expect(mocks.$router.push).toHaveBeenCalledWith({
+      name: 'main-view',
+      params: { view: 'TableView' },
+      query: {}
+    })
   })
 
   it('can change to card layout', () => {
@@ -90,8 +93,11 @@ describe('ToolbarView.vue', () => {
     })
     const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
     wrapper.find('button.card-layout').trigger('click')
-    // @ts-ignore
-    expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'CardView')
+    expect(mocks.$router.push).toHaveBeenCalledWith({
+      name: 'main-view',
+      params: { view: 'CardView' },
+      query: {}
+    })
   })
 
   describe('add row button', () => {
