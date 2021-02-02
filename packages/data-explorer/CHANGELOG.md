@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.5...@molgenis-ui/data-explorer@2.3.0) (2021-02-02)
+
+
+### Features
+
+* **data-explorer:** Add sorting for CardView ([#517](https://github.com/molgenis/molgenis-frontend/issues/517)) ([d3adaf2](https://github.com/molgenis/molgenis-frontend/commit/d3adaf2))
+
+
+
+
+
 ## [2.2.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.2.4...@molgenis-ui/data-explorer@2.2.5) (2021-02-01)
 
 
