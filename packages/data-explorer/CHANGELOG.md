@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.3.1...@molgenis-ui/data-explorer@2.4.0) (2021-02-03)
+
+
+### Features
+
+* **data-explorer:** add data type previews ([4e34d90](https://github.com/molgenis/molgenis-frontend/commit/4e34d90))
+
+
+
+
+
 ## [2.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.3.0...@molgenis-ui/data-explorer@2.3.1) (2021-02-02)
 
 
