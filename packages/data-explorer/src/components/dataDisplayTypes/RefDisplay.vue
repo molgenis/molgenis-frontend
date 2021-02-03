@@ -16,6 +16,7 @@
 </template>
 
 <script>
+/* istanbul ignore file */
 import RefTable from './RefTable'
 
 export default {

@@ -3,6 +3,7 @@
 </template>
 
 <script>
+/* istanbul ignore file */
 export default {
   name: 'LinkDisplay',
   props: {

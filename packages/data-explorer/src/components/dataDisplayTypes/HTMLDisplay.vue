@@ -9,6 +9,7 @@
 </template>
 
 <script>
+/* istanbul ignore file */
 export default {
   name: 'HTMLDisplay',
   props: {
