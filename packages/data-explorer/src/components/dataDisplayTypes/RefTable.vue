@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overflow-auto">
     <table class="table table-bordered h-100" v-if="refData">
       <table-header :visibleColumns="visibleColumns"></table-header>
       <tbody>
