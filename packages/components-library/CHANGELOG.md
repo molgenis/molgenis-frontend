@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.0.2...@molgenis-ui/components-library@2.0.3) (2021-02-02)
+
+
+### Bug Fixes
+
+* add view to router & parse page/size to int from router ([ebb1fd1](https://github.com/molgenis/molgenis-frontend/commit/ebb1fd1))
+
+
+
+
+
+## [2.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.0.1...@molgenis-ui/components-library@2.0.2) (2021-02-01)
+
+
+### Bug Fixes
+
+* **components-library:** emit updated model on size change ([#514](https://github.com/molgenis/molgenis-frontend/issues/514)) ([184527d](https://github.com/molgenis/molgenis-frontend/commit/184527d))
+
+
+
+
+
+## [2.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.0.0...@molgenis-ui/components-library@2.0.1) (2021-02-01)
+
+
+### Bug Fixes
+
+* **components-library, data-explorer:** fix routing issues due to wrong fetch order ([a14c1fe](https://github.com/molgenis/molgenis-frontend/commit/a14c1fe))
+
+
+
+
+
+# [2.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.4...@molgenis-ui/components-library@2.0.0) (2021-01-27)
+
+
+### Features
+
+* **components-library:** remove router from Pagination component ([#509](https://github.com/molgenis/molgenis-frontend/issues/509)) ([1cd4559](https://github.com/molgenis/molgenis-frontend/commit/1cd4559))
+
+
+### BREAKING CHANGES
+
+* **components-library:** Requires consumers to implement Vue-router navigation
+
+
+
+
+
+## [1.6.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.3...@molgenis-ui/components-library@1.6.4) (2021-01-22)
+
+
+### Bug Fixes
+
+* **components-library:** Fix 507 hard color in component ([#508](https://github.com/molgenis/molgenis-frontend/issues/508)) ([c72f651](https://github.com/molgenis/molgenis-frontend/commit/c72f651)), closes [#507](https://github.com/molgenis/molgenis-frontend/issues/507)
+
+
+
+
+
 ## [1.6.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@1.6.2...@molgenis-ui/components-library@1.6.3) (2021-01-08)
 
 

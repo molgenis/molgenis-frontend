@@ -14,7 +14,7 @@
             <span id="mainView-headItemTooltipID">
               {{tableMeta.label}}
             </span>
-            <b-tooltip placement='bottom' target="mainView-headItemTooltipID" triggers="hover">
+            <b-tooltip v-if="tableMeta.description" placement='bottom' target="mainView-headItemTooltipID" triggers="hover">
               {{tableMeta.description}}
             </b-tooltip>
           </li>
@@ -34,20 +34,12 @@
         ></active-filters>
         <toolbar-view class="mb-2"></toolbar-view>
 
-        <pagination v-if="dataDisplayLayout === 'CardView'" class="mt-2 mb-1" v-model="tablePagination" />
         <div class="mg-data-view-container" >
           <data-view v-if="!tablePagination.loading"></data-view>
         </div>
-        <!--
-          (!) This pagination component is always rendered, because it is
-          responsible for the data fetching in the background. It is only
-          visible in the CardView when the amount of items justifies an
-          extra pagination ui at the bottom of the page.
-        -->
         <pagination
-          v-show="(dataDisplayLayout === 'TableView') || (!tablePagination.loading && (tableData && tableData.items > tablePagination.size))" class="mt-2"
+          class="mt-2"
           v-model="tablePagination"
-          :fetchItems="() => fetchViewData({ tableName: $route.params.entity })"
         />
         </div>
     </div>
@@ -80,7 +72,13 @@ export default Vue.extend({
       get: function () {
         return this.$store.state.tablePagination
       },
-      set: function (value) { this.setPagination(value) }
+      set: function (value) {
+        this.$router.push({
+          name: this.$router.currentRoute.name,
+          path: this.$router.currentRoute.path,
+          query: { ...this.$route.query, page: value.page, size: value.size }
+        })
+      }
     },
     toasts: {
       get: function () {
@@ -105,7 +103,7 @@ export default Vue.extend({
     ]),
     ...mapGetters([
       'isUserAuthenticated',
-      'compressedBookmark'
+      'compressedRouteFilter'
     ]),
     activeFilterSelections () {
       return this.searchText ? { ...this.filters.selections, _search: this.searchText } : this.filters.selections
@@ -124,14 +122,15 @@ export default Vue.extend({
       'setHideFilters',
       'setTableName',
       'setToasts',
-      'setPagination',
       'setSearchText',
       'setFilterSelection',
-      'applyBookmark'
+      'setDataDisplayLayout',
+      'setRouteQuery'
     ]),
     ...mapActions([
       'deleteRow',
-      'fetchViewData'
+      'fetchViewData',
+      'fetchTableMeta'
     ]),
     ...mapActions('header', [
       'fetchPackageTables'
@@ -144,7 +143,7 @@ export default Vue.extend({
       this.$router.push({
         name: this.$router.currentRoute.name,
         path: this.$router.currentRoute.path,
-        query: { bookmark: this.compressedBookmark }
+        query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     },
     async handeldeleteItem (itemId) {
@@ -155,34 +154,35 @@ export default Vue.extend({
       }
     }
   },
-  created () {
+  async created () {
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
+    await this.fetchTableMeta({ tableName: this.$route.params.entity })
+    this.setRouteQuery(this.$route.query)
+    this.setDataDisplayLayout(this.$route.params.view)
+    this.fetchViewData()
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
-    if (this.$route.params.entity !== to.params.entity) {
-      // Reset pagination to defaults before loading another entity.
-      this.setPagination()
-      await this.fetchViewData({ tableName: to.params.entity })
+    if (to.params.entity !== from.params.entity) {
+      // Reset page when navigating to a different entity.
+      if (to.query) {
+        to.query.page = 1
+      }
+      await this.fetchTableMeta({ tableName: to.params.entity })
     }
+    this.setRouteQuery(to.query) // syncs the state with the query
+    this.setDataDisplayLayout(to.params.view)
+    await this.fetchViewData()
     next()
-  },
-  watch: {
-    '$route.query': function (query) {
-      this.applyBookmark(query.bookmark || '')
-    }
   }
 })
 </script>
 
 <style scoped>
-  .breadcrumb {
-    margin: -16px -16px 16px -16px;
-  }
   .mg-content {
     white-space: normal;
   }

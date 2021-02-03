@@ -7,12 +7,11 @@ import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 import router from '@/router'
 
 export default {
-  fetchTableMeta: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
+  fetchTableMeta: async ({ commit, getters, dispatch, state }, payload: { tableName: string }) => {
     commit('setTableSettings', {})
     commit('setMetaData', null)
     commit('setFilterDefinition', [])
-    commit('setFiltersShown', [])
-    commit('setFilterSelection', {})
+    commit('setTableName', payload.tableName)
 
     const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
     if (response.data.items.length === 1) {
@@ -23,18 +22,11 @@ export default {
     const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
     commit('setMetaData', metaData)
     commit('setFilterDefinition', definition)
-    commit('setFiltersShown', state.tableSettings.defaultFilters)
-  },
-  async fetchViewData (store, { tableName }) {
-    if (store.state.tableName !== tableName) {
-      await store.dispatch('fetchTableMeta', { tableName })
-      if (store.getters.isUserAuthenticated) {
-        await store.dispatch('header/fetchBreadcrumbs')
-      }
-
-      store.commit('setTableName', tableName)
+    if (getters.isUserAuthenticated) {
+      await dispatch('header/fetchBreadcrumbs')
     }
-
+  },
+  async fetchViewData (store) {
     if (store.state.dataDisplayLayout === 'CardView') {
       store.dispatch('fetchCardViewData')
     } else {
@@ -64,18 +56,18 @@ export default {
         .map(a => a.trim())
 
       tableData = await dataRepository.getTableDataDeepReference(
-        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination
+        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination, state.sort
       )
     } else {
       columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
       tableData = await dataRepository.getTableDataWithLabel(
-        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination)
+        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination, state.sort)
     }
 
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
-      commit('setPagination', { ...state.tablePagination, ...{ count: tableData.page.totalElements } })
+      commit('setPaginationCount', tableData.page.totalElements)
     }
   },
   fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
@@ -97,13 +89,14 @@ export default {
       state.tableMeta,
       metaDataService.getAttributesfromMeta(state.tableMeta),
       rsqlQuery,
-      state.tablePagination
+      state.tablePagination,
+      state.sort
     )
 
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('setTableData', tableData)
-      commit('setPagination', { ...state.tablePagination, ...{ count: tableData.page.totalElements } })
+      commit('setPaginationCount', tableData.page.totalElements)
     }
   },
   // expanded default card
@@ -121,7 +114,7 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.tablePagination)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.tablePagination, state.sort)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })

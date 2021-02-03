@@ -3,6 +3,7 @@ import mockState from '../mocks/mockState'
 import ToolbarView from '@/views/ToolbarView.vue'
 import Vuex from 'vuex'
 import ApplicationState from '@/types/ApplicationState'
+import { Sort } from '@/types/Sort'
 
 describe('ToolbarView.vue', () => {
   const localVue = createLocalVue()
@@ -14,7 +15,7 @@ describe('ToolbarView.vue', () => {
   let getters: any
   let directives: any
   const mocks: any = {
-    $route: { params: {} },
+    $route: { params: {}, query: {} },
     $router: {
       currentRoute: {
         name: 'currentRouteName',
@@ -41,7 +42,7 @@ describe('ToolbarView.vue', () => {
     getters = {
       hasEditRights: jest.fn(),
       hasEditSettingsRights: jest.fn(),
-      compressedBookmark: jest.fn()
+      compressedRouteFilter: jest.fn()
     }
 
     store = new Vuex.Store({
@@ -78,8 +79,11 @@ describe('ToolbarView.vue', () => {
     })
     const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
     wrapper.find('button.table-layout').trigger('click')
-    // @ts-ignore
-    expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'TableView')
+    expect(mocks.$router.push).toHaveBeenCalledWith({
+      name: 'main-view',
+      params: { view: 'TableView' },
+      query: {}
+    })
   })
 
   it('can change to card layout', () => {
@@ -89,8 +93,11 @@ describe('ToolbarView.vue', () => {
     })
     const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
     wrapper.find('button.card-layout').trigger('click')
-    // @ts-ignore
-    expect(mutations.setDataDisplayLayout).toHaveBeenCalledWith(state, 'CardView')
+    expect(mocks.$router.push).toHaveBeenCalledWith({
+      name: 'main-view',
+      params: { view: 'CardView' },
+      query: {}
+    })
   })
 
   describe('add row button', () => {
@@ -128,11 +135,46 @@ describe('ToolbarView.vue', () => {
 
   describe('downloadData', () => {
     it('download action called', async () => {
-      store.state.tableMeta = { id: '123' }
+      store.state.tableMeta = { id: '123', attributes: [] }
       const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
       // @ts-ignore
       await wrapper.vm.downloadData()
       expect(actions.downloadResources).toHaveBeenCalledWith(expect.anything(), [{ id: '123', type: 'ENTITY_TYPE' }], undefined)
+    })
+  })
+
+  describe('sortOptions', () => {
+    it('should return an empty list while metaData is empty', () => {
+      const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
+      // @ts-ignore
+      expect(wrapper.vm.sortOptions).toEqual([])
+    })
+
+    it('should return a list of options ( id, name ) ignoring non visible items and compound types', () => {
+      store.state.tableMeta = {
+        id: '123',
+        attributes: [
+          { visible: true, id: '1', name: 'a', type: 'not a compound' },
+          { visible: false, id: '2', name: 'b', type: 'not a compound' },
+          { visible: true, id: '3', name: 'c', type: 'compound' }
+        ]
+      }
+      const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
+      // @ts-ignore
+      expect(wrapper.vm.sortOptions).toEqual([{ id: '1', name: 'a' }])
+    })
+  })
+
+  describe('handleSortSelectChange', () => {
+    it('should update the route query', async () => {
+      const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
+      const sort: Sort = {
+        sortColumnName: 'stars',
+        isSortOrderReversed: true
+      }
+      // @ts-ignore
+      await wrapper.vm.handleSortSelectChange(sort)
+      expect(mocks.$router.push).toHaveBeenCalledWith({ name: 'currentRouteName', path: 'currentRoutePath', query: { sort: '-stars' } })
     })
   })
 })

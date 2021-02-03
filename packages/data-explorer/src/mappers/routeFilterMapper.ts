@@ -1,6 +1,6 @@
 import { TypeEnum } from '@/types/TypeEnum'
 
-export const toFilterValue = (bookmarkValue: any, filterDataType: TypeEnum): any[] | string | boolean | undefined => {
+export const toFilterValue = (routeFilterValue: any, filterDataType: TypeEnum): any[] | string | boolean | undefined => {
   switch (filterDataType) {
     case 'string':
     case 'text':
@@ -8,9 +8,9 @@ export const toFilterValue = (bookmarkValue: any, filterDataType: TypeEnum): any
     case 'file':
     case 'hyperlink':
     case 'email':
-      return decodeURI(bookmarkValue.toString())
+      return decodeURI(routeFilterValue.toString())
     case 'bool':
-      return typeof bookmarkValue === 'boolean' ? [bookmarkValue] : [bookmarkValue === 'true']
+      return typeof routeFilterValue === 'boolean' ? [routeFilterValue] : [routeFilterValue === 'true']
     case 'categorical':
     case 'categorical_mref':
     case 'enum':
@@ -20,9 +20,9 @@ export const toFilterValue = (bookmarkValue: any, filterDataType: TypeEnum): any
     case 'decimal':
     case 'int':
     case 'long':
-      return bookmarkValue.split(',')
+      return routeFilterValue.split(',')
     case 'date':
     case 'datetime': // if its a date, we need to parse that.
-      return bookmarkValue.split(',').map((isoString: string) => new Date(isoString))
+      return routeFilterValue.split(',').map((isoString: string) => new Date(isoString))
   }
 }

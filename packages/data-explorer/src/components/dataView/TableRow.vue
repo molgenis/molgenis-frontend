@@ -98,8 +98,8 @@ export default {
     position: -webkit-sticky; /* for Safari */
     position: sticky;
     left: 0;
-    background-color: var( --gray-light );
-    border-right: 1px var( --border ) solid;
+    background-color: var(--light);
+    border-right: 1px var(--border) solid;
   }
   /**
    * Fix borders in the first column
@@ -113,18 +113,18 @@ export default {
   }
   th:before {
     left: -1px;
-    border-left: 1px solid var( --border );
+    border-left: 1px solid var(--border);
   }
   th:after {
     right: -1px;
-    border-right: 1px solid var( --border );
+    border-right: 1px solid var(--border);
   }
 
   /**
   * Style row actions
   */
   .mg-data-column {
-    max-width: 8rem;
+    max-width: 32rem;
     overflow: hidden;
   }
   [role="button"]{

@@ -3,10 +3,12 @@ import mockState from '../mocks/mockState'
 import ApplicationState, { Toast } from '@/types/ApplicationState'
 import { Attribute, MetaData } from '@/types/MetaData'
 import getters from '@/store/getters'
+import { defaultPagination } from '@/store/state'
+import { RouteQuery } from '@/types/RouteQuery'
 
 jest.mock('@/store/getters', () => {
   return {
-    parseBookmark: () => () => {
+    parseRouteFilter: () => () => {
       return {
         searchText: 'searchText',
         shown: ['a', 'b'],
@@ -177,6 +179,18 @@ describe('mutations', () => {
       })
     })
   })
+  describe('setSortColumn', () => {
+    it('should update the sortColumn', () => {
+      mutations.setSortColumn(baseAppState, 'column-to-sort-id')
+      expect(baseAppState.sort.sortColumnName).toEqual('column-to-sort-id')
+    })
+  })
+  describe('setIsSortOrderReversed', () => {
+    it('should update the isSortOrderReversed', () => {
+      mutations.setIsSortOrderReversed(baseAppState, true)
+      expect(baseAppState.sort.isSortOrderReversed).toEqual(true)
+    })
+  })
   describe('updateRowData', () => {
     it('throws error on empty table', () => {
       try {
@@ -242,18 +256,44 @@ describe('mutations', () => {
       expect(baseAppState.toasts).toEqual(toasts)
     })
   })
-
-  describe('applyBookmark', () => {
-    it('if the bookmark is empty the default from the state is used', () => {
-      mutations.applyBookmark(baseAppState, '')
-      expect(baseAppState.filters.shown).toEqual([])
+  describe('setPaginationCount', () => {
+    it('set the pagination count on the state, as a prop of tablePagination', () => {
+      mutations.setPaginationCount(baseAppState, 25)
+      expect(baseAppState.tablePagination.count).toEqual(25)
     })
+  })
+  describe('setSelectedItems', () => {
+    it('set the passed items on the state', () => {
+      mutations.setSelectedItems(baseAppState, ['a', 'list', 'of', 'items'])
+      expect(baseAppState.selectedItemIds).toEqual(['a', 'list', 'of', 'items'])
+    })
+  })
+  describe('setRouteQuery', () => {
+    it('takes the passed route object and updates the state', () => {
+      // when route query is empty
+      const minimalRoute:RouteQuery = {}
+      mutations.setRouteQuery(baseAppState, minimalRoute)
+      expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': false, 'sortColumnName': null })
+      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: {}, shown: [] })
 
-    it('if the bookmark is not empty it should be parsed and used to update the state', () => {
-      mutations.applyBookmark(baseAppState, 'mock-bookmark')
+      // when sort is set
+      const sortRoute:RouteQuery = { sort: 'col-a' }
+      mutations.setRouteQuery(baseAppState, sortRoute)
+      expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': false, 'sortColumnName': 'col-a' })
+      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: {}, shown: [] })
+
+      // when sort is set
+      const reverseSortRoute:RouteQuery = { sort: '-col-a' }
+      mutations.setRouteQuery(baseAppState, reverseSortRoute)
+      expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': true, 'sortColumnName': 'col-a' })
+      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: {}, shown: [] })
+
+      // when filter is set
+      const filterRoute:RouteQuery = { sort: '-col-a', filter: 'my-filter-hash' }
+      mutations.setRouteQuery(baseAppState, filterRoute)
+      expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': true, 'sortColumnName': 'col-a' })
       expect(baseAppState.searchText).toEqual('searchText')
-      expect(baseAppState.filters.shown).toEqual(['a', 'b'])
-      expect(baseAppState.filters.selections).toEqual(['c'])
+      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: ['c'], shown: ['a', 'b'] })
     })
   })
 })

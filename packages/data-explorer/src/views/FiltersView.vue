@@ -34,7 +34,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { FilterContainer } from '@molgenis-ui/components-library'
-import { createBookmark } from '../mappers/bookmarkMapper'
 
 library.add(faChevronLeft)
 
@@ -49,12 +48,10 @@ export default Vue.extend({
   computed: {
     ...mapState([
       'filters',
-      'tableMeta',
-      'bookmarkedShownFilters',
-      'bookmarkedSelections'
+      'tableMeta'
     ]),
     ...mapGetters([
-      'compressedBookmark'
+      'compressedRouteFilter'
     ]),
     isFilterDataLoaded () {
       return this.tableMeta !== null
@@ -81,7 +78,6 @@ export default Vue.extend({
   methods: {
     ...mapMutations([
       'setHideFilters',
-      'applyBookmark',
       'setFiltersShown',
       'setFilterSelection'
     ]),
@@ -93,7 +89,7 @@ export default Vue.extend({
       this.$router.push({
         name: this.$router.currentRoute.name,
         path: this.$router.currentRoute.path,
-        query: { bookmark: this.compressedBookmark }
+        query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     }
   }
