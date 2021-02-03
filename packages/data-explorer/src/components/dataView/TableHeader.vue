@@ -27,10 +27,7 @@
     left: 0;
     z-index: 1;
     box-sizing: border-box;
-  }
-
-  thead th.top-left-corner {
-    width: auto;
+    width: 2rem;
   }
 
   .top-left-corner:before {

@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <div v-if="data.expression">
+    <div class="text-nowrap text-truncate">
+      <span>{{value}}</span>
+    </div>
+  </div>
+  <div v-else>
     <div @click="$refs['refPreview'].show()" class="text-nowrap text-truncate mouse-ref">
       <span class="mr-1">{{value}}</span>
       <font-awesome-icon icon="share" size="xs"></font-awesome-icon>
