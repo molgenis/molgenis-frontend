@@ -49,9 +49,15 @@ const getMrefLabel = async (attributeMetadata: Attribute, rowDataItem:any) => {
   // The isMref already checks if the value.items is available
   // @ts-ignore
   const refMetadata = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
-  // @ts-ignore
-  const resolvedValue = rowDataItem.items.map((mrefValue) => mrefValue.data[refMetadata.labelAttribute.name]).join(', ')
-  return resolvedValue
+
+  const resolvedValue = rowDataItem.items.map((mrefValue) => {
+    if (refMetadata.labelAttribute) {
+      return mrefValue.data[refMetadata.labelAttribute.name]
+    } else {
+      return ''
+    }
+  })
+  return resolvedValue.join(', ')
 }
 
 const getRefLabel = async (attributeMetadata: Attribute, rowDataItem:any) => {

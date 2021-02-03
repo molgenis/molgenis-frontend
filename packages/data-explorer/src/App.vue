@@ -66,7 +66,8 @@ export default Vue.extend({
   .mg-page .mg-page-content{
     margin-top: 0;
   }
-  main.mg-page-content .table-bordered, main.mg-page-content .table-bordered td, main.mg-page-content .table-bordered th{
+  main.mg-page-content .table-bordered td, main.mg-page-content .table-bordered th,
+  div.modal-dialog .table-bordered td, div.modal-dialog .table-bordered th{
     border: 1px solid var(--border);
     padding: 0.5rem;
   }

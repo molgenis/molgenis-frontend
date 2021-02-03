@@ -28,11 +28,64 @@
         <font-awesome-icon icon="trash"></font-awesome-icon>
       </button>
     </th>
-    <td v-for="(column, index) in visibleColumns" :key="index" class="text-nowrap text-truncate mg-data-column">
-      {{rowData[column.name]}}
+    <td v-for="(column, index) in visibleColumns" :key="index" class="mg-data-column">
+      <DataDisplayCell v-if="typeof getColumnName(column.name) != 'undefined'" :value="getColumnName(column.name)" :type="column.type" :data="column" :rowIndex="rowIndex"></DataDisplayCell>
     </td>
   </tr>
 </template>
+
+<script>
+import DataDisplayCell from '@/components/dataDisplayTypes/DataDisplayCell'
+import ShoppingButton from '../utils/ShoppingButton'
+
+export default {
+  name: 'TableRow',
+  components: { ShoppingButton, DataDisplayCell },
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+    tableName: {
+      type: String,
+      required: true
+    },
+    rowData: {
+      type: Object,
+      required: true
+    },
+    visibleColumns: {
+      type: Array,
+      required: true
+    },
+    isSelected: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+    isEditable: {
+      type: Boolean,
+      default: () => false
+    },
+    showSelected: {
+      type: Boolean,
+      required: true
+    },
+    rowIndex: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    getColumnName (name) {
+      if (name in this.rowData && this.rowData[name]) {
+        return this.rowData[name].toString()
+      }
+    }
+  }
+}
+</script>
+
 <style scoped>
   .row-selected{
     background-color: var( --tertiary );
@@ -88,47 +141,3 @@
   }
 
 </style>
-
-<script>
-import ShoppingButton from '../utils/ShoppingButton'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-library.add(faEdit)
-export default {
-  name: 'TableRow',
-  components: { ShoppingButton, FontAwesomeIcon },
-  props: {
-    id: {
-      type: String,
-      required: true
-    },
-    tableName: {
-      type: String,
-      required: true
-    },
-    rowData: {
-      type: Object,
-      required: true
-    },
-    visibleColumns: {
-      type: Array,
-      required: true
-    },
-    isSelected: {
-      type: Boolean,
-      required: false,
-      default: () => false
-    },
-    isEditable: {
-      type: Boolean,
-      default: () => false
-    },
-    showSelected: {
-      type: Boolean,
-      required: true
-    }
-  }
-}
-</script>
