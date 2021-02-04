@@ -10,10 +10,6 @@ export default {
     value: {
       type: String,
       required: true
-    },
-    type: {
-      type: String,
-      required: true
     }
   }
 }

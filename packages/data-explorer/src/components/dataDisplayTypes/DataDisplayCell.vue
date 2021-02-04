@@ -1,5 +1,5 @@
 <template>
-  <component :is="getMapping()" :value="value" :type="type" :rowIndex="rowIndex" :data="data"></component>
+  <component :is="getMapping()" :value="value" :rowIndex="rowIndex" :metadata="metadata"></component>
 </template>
 
 <script>
@@ -18,15 +18,11 @@ export default {
       type: String,
       required: true
     },
-    type: {
-      type: String,
-      required: true
-    },
     rowIndex: {
       type: Number,
       required: true
     },
-    data: {
+    metadata: {
       type: Object,
       required: true
     }
@@ -54,7 +50,7 @@ export default {
         'file': 'LinkDisplay',
         'compound': 'StringDisplay'
       }
-      return fieldTypeToFilterType[this.type] || 'StringDisplay'
+      return fieldTypeToFilterType[this.metadata.type] || 'StringDisplay'
     }
   }
 }

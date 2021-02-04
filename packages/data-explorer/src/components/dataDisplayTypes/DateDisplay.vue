@@ -16,18 +16,6 @@ export default {
     value: {
       type: String,
       required: true
-    },
-    type: {
-      type: String,
-      required: true
-    },
-    rowIndex: {
-      type: Number,
-      required: true
-    },
-    data: {
-      type: Object,
-      required: true
     }
   },
   methods: {
