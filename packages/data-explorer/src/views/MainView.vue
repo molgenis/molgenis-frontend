@@ -174,7 +174,7 @@ export default Vue.extend({
       }
       await this.fetchTableMeta({ tableName: to.params.entity })
     }
-    this.setRouteQuery(to.query) // syncs the state with the query
+    this.setRouteQuery(to.query)
     this.setDataDisplayLayout(to.params.view)
     await this.fetchViewData()
     next()

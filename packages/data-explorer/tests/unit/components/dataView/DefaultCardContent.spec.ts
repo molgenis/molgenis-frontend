@@ -20,7 +20,7 @@ describe('DefaultCardContent.vue', () => {
   it('has a default collapseLimit of 5', () => {
     expect(wrapper.vm.$props.collapseLimit).toBe(5)
   })
-  it('doesnt render expand button when numberOfAttributes < collapseLimit', () => {
+  it('doesn\'t render expand button when numberOfAttributes < collapseLimit', () => {
     const propsData = {
       dataLabel: 'dataLabel',
       dataId: 'dataId',
@@ -58,6 +58,35 @@ describe('DefaultCardContent.vue', () => {
     wrapper.vm.$data.cardState = 'open'
     it('do something', () => {
       expect(wrapper.exists()).toBeTruthy()
+    })
+  })
+
+  describe('dataToShow', () => {
+    it('should reduce the cardData object to its visible properties', () => {
+      let localThis: any = {
+        dataContents: { key1: 'val1', key2: 'val2', key3: 'val3' },
+        cardState: 'open',
+        collapseLimit: 2,
+        hiddenColumns: []
+      }
+
+      // @ts-ignore
+      expect(DefaultCardContent.computed.dataToShow.call(localThis)).toEqual(
+        { key1: 'val1', key2: 'val2', key3: 'val3' }
+      )
+
+      localThis.cardState = 'closed'
+      // @ts-ignore
+      expect(DefaultCardContent.computed.dataToShow.call(localThis)).toEqual(
+        { key1: 'val1', key2: 'val2' }
+      )
+
+      localThis.cardState = 'open'
+      localThis.hiddenColumns = 'key1'
+      // @ts-ignore
+      expect(DefaultCardContent.computed.dataToShow.call(localThis)).toEqual(
+        { key2: 'val2', key3: 'val3' }
+      )
     })
   })
 })

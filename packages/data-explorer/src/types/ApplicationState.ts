@@ -70,4 +70,5 @@ export default interface ApplicationState {
   sort: Sort
   filters: FilterGroup
   searchText: string
+  hiddenColumns: string[]
 }

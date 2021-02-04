@@ -46,7 +46,8 @@ describe('TableView.vue', () => {
       },
       dataDisplayLayout: 'TableView',
       tableName: 'tableName',
-      selectedItemIds: [1, 3]
+      selectedItemIds: [1, 3],
+      hiddenColumns: []
     }
     mutations = {
       toggleSelectedItems: jest.fn(),
@@ -90,6 +91,27 @@ describe('TableView.vue', () => {
       // @ts-ignore
       wrapper.vm.handleSortEvent(state.sort.sortColumnName)
       expect(router.currentRoute.query).toEqual({ 'sort': '-sortedColumnName' })
+    })
+  })
+
+  describe('visibleColumns', () => {
+    it('should reduce the metaData to a list of column objects that drives the table', () => {
+      let localThis:any = {
+        tableMeta: state.tableMeta,
+        hiddenColumns: []
+      }
+
+      // @ts-ignore
+      expect(TableView.computed.visibleColumns.call(localThis)).toEqual([
+        { expression: undefined, id: '1', name: 'col1', refEntityType: undefined, type: undefined },
+        { expression: undefined, id: '3', name: 'col3', refEntityType: undefined, type: undefined }
+      ])
+
+      localThis.hiddenColumns = ['col3']
+      // @ts-ignore
+      expect(TableView.computed.visibleColumns.call(localThis)).toEqual([
+        { expression: undefined, id: '1', name: 'col1', refEntityType: undefined, type: undefined }
+      ])
     })
   })
 })

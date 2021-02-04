@@ -80,10 +80,9 @@ export default {
     Vue.set(state.filters, 'selections', selections)
   },
   setRouteQuery (state: ApplicationState, routeQuery: RouteQuery) {
-    // @ts-ignore
     state.tablePagination.page = routeQuery.page !== undefined ? parseInt(routeQuery.page, 10) : defaultPagination.page
-    // @ts-ignore
     state.tablePagination.size = routeQuery.size !== undefined ? parseInt(routeQuery.size, 10) : defaultPagination.size
+
     if (routeQuery.sort !== undefined) {
       if (routeQuery.sort.charAt(0) === '-') {
         state.sort.isSortOrderReversed = true
@@ -93,10 +92,10 @@ export default {
         state.sort.sortColumnName = routeQuery.sort
       }
     } else {
-      // reset to defaults if routeQuery does not contain sort info
       state.sort.isSortOrderReversed = false
       state.sort.sortColumnName = null
     }
+
     if (routeQuery.filter !== undefined) {
       const routeFilters = getters.parseRouteFilter(state, getters)(routeQuery.filter)
       state.searchText = routeFilters.searchText
@@ -105,6 +104,8 @@ export default {
     } else {
       Vue.set(state.filters, 'shown', state.tableSettings.defaultFilters)
     }
+
+    state.hiddenColumns = routeQuery.hide !== undefined ? routeQuery.hide.split(',') : []
   },
   updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: Record<string, string> }) {
     if (!state.tableData) {
