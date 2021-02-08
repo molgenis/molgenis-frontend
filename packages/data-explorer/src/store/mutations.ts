@@ -4,7 +4,6 @@ import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
 import getters from '@/store/getters'
 import { defaultPagination } from '@/store/state'
-import { Pagination } from '@molgenis-ui/components-library'
 import { RouteQuery } from '@/types/RouteQuery'
 
 const defaultSettings = {
