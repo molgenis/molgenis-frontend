@@ -197,7 +197,7 @@ pipeline {
     post {
         always {
             container('node') {
-                sh "daemon --name=sauceconnect --stop"
+                sh "daemon --name=sauceconnect --stop || true"
             }
         }
         success {
