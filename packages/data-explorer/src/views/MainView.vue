@@ -168,10 +168,6 @@ export default Vue.extend({
   },
   async beforeRouteUpdate (to, from, next) {
     if (to.params.entity !== from.params.entity) {
-      // Reset page when navigating to a different entity.
-      if (to.query) {
-        to.query.page = 1
-      }
       await this.fetchTableMeta({ tableName: to.params.entity })
     }
     this.setRouteQuery(to.query) // syncs the state with the query
