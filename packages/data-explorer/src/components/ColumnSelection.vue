@@ -6,7 +6,7 @@
         type="checkbox"
         :value="column"
         @change="modifyHiddenColumns($event)"
-        checked
+        :checked="!hiddenColumns.includes(column)"
       />
       <span class="ml-2" v-text="column"></span>
     </label>
