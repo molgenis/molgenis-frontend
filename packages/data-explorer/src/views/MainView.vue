@@ -74,8 +74,7 @@ export default Vue.extend({
       },
       set: function (value) {
         this.$router.push({
-          name: this.$router.currentRoute.name,
-          path: this.$router.currentRoute.path,
+          name: 'main-view',
           query: { ...this.$route.query, page: value.page, size: value.size }
         })
       }
@@ -141,8 +140,7 @@ export default Vue.extend({
       }
       this.setFilterSelection(newSelections)
       this.$router.push({
-        name: this.$router.currentRoute.name,
-        path: this.$router.currentRoute.path,
+        name: 'main-view',
         query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     },
