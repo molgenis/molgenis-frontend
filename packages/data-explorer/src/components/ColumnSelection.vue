@@ -19,10 +19,10 @@ export default {
     allColumns () {
       return this.$store.state.tableData
         ? [
-          ...new Set(
+          ...new Set( // creating a set, to deduplicate
             this.$store.state.tableData.items
-              .map((item) => Object.keys(item))
-              .reduce((prev, current) => prev.concat(current))
+              .map((item) => Object.keys(item)) // get all properties from tableData
+              .reduce((prev, current) => prev.concat(current)) // do simple flatmap
           )
         ]
         : []
