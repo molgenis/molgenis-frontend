@@ -4,10 +4,12 @@ import ToolbarView from '@/views/ToolbarView.vue'
 import Vuex from 'vuex'
 import ApplicationState from '@/types/ApplicationState'
 import { Sort } from '@/types/Sort'
+import bootstrapVue from 'bootstrap-vue'
 
 describe('ToolbarView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
+  localVue.use(bootstrapVue)
   let actions: any
   let store: any
   let state: ApplicationState

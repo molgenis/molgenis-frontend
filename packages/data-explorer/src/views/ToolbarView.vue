@@ -14,23 +14,21 @@
       v-b-tooltip.hover.bottom="'Add'">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
       </a>
-      <!--
-      <button v-if="hasEditRights && dataDisplayLayout === 'TableView'"
-        type="button" class="btn btn-outline-secondary"
-        v-b-tooltip.hover. bottom="'Delete'">
-        <font-awesome-icon icon="trash" />
-      </button>
-      -->
     </div>
 
-    <div class="btn-group" role="group" aria-label="Colum actions group">
+    <div class="btn-group" role="group" aria-label="Column actions group">
       <search-component v-model="searchText"/>
     </div>
 
     <div class="btn-group" role="group" aria-label="sort selector">
       <sort-select :sortOptions="sortOptions" :sort="sort" @sort="handleSortSelectChange"></sort-select>
     </div>
-
+    <div class="btn-group" arial-label="table settings">
+      <b-button variant="outline-secondary" v-b-modal.hide-show-columns>Hide/Show columns</b-button>
+      <b-modal ok-only scrollable id="hide-show-columns" title="Hide/Show columns">
+        <column-selection></column-selection>
+      </b-modal>
+    </div>
     <div class="btn-group" role="group" aria-label="Table actions group">
       <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary"
         v-b-tooltip.hover.bottom="'Download'">
@@ -71,12 +69,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
 import TableSettingsButton from '../components/utils/TableSettingsButton'
 import SortSelect from '../components/SortSelect'
+import ColumnSelection from '@/components/ColumnSelection.vue'
 
 library.add(faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare, faDownload, faCog)
 
 export default Vue.extend({
   name: 'ToolbarView',
-  components: { FontAwesomeIcon, SearchComponent, TableSettingsButton, SortSelect },
+  components: { FontAwesomeIcon, SearchComponent, TableSettingsButton, SortSelect, ColumnSelection },
   computed: {
     ...mapState([
       'filters',

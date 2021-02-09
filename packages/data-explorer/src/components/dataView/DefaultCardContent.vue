@@ -43,14 +43,13 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch, faChevronUp, faChevronRight, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faSearch, faChevronRight, faChevronUp, faEdit, faTrash)
 
-export default Vue.extend({
+export default {
   name: 'DefaultCardContent',
   data: () => {
     return {
@@ -85,6 +84,11 @@ export default Vue.extend({
     isEditable: {
       type: Boolean,
       default: () => false
+    },
+    // List of cardItem keys that need to be hidden
+    hiddenColumns: {
+      type: Array,
+      default: () => []
     }
   },
   components: { FontAwesomeIcon },
@@ -93,14 +97,18 @@ export default Vue.extend({
       return this.cardState === 'closed' ? 'Expand' : 'Collapse'
     },
     dataToShow () {
+      const visibleDataContents = Object.keys(this.dataContents)
+        .filter(columnName => !this.hiddenColumns.includes(columnName))
+        .reduce((accum, key) => { return { ...accum, [key]: this.dataContents[key] } }, {})
+
       if (this.cardState === 'closed') {
-        const elementsToShow = Object.keys(this.dataContents).slice(0, this.collapseLimit)
+        const elementsToShow = Object.keys(visibleDataContents).slice(0, this.collapseLimit)
         return elementsToShow.reduce((accumulator, key) => {
-          accumulator[key] = this.dataContents[key]
+          accumulator[key] = visibleDataContents[key]
           return accumulator
         }, {})
       } else {
-        return this.dataContents
+        return visibleDataContents
       }
     },
     detailLink () {
@@ -120,7 +128,7 @@ export default Vue.extend({
       }
     }
   }
-})
+}
 </script>
 
 <style scoped>

@@ -13,6 +13,7 @@
       :numberOfAttributes="numberOfAttributes"
       :customCode="tableSettings.customCardCode"
       :isEditable="hasEditRights"
+      :hiddenColumns="hiddenColumns"
       @expandCard="handleExpandCard(entity)">
     </explorer-card>
   </div>
@@ -32,7 +33,7 @@ export default {
   },
   components: { ExplorerCard },
   computed: {
-    ...mapState(['tableMeta', 'selectedItemIds', 'tableSettings', 'tableName']),
+    ...mapState(['tableMeta', 'selectedItemIds', 'tableSettings', 'tableName', 'hiddenColumns']),
     ...mapGetters(['filterRsql', 'hasEditRights']),
     idAttribute () {
       return this.tableMeta.idAttribute

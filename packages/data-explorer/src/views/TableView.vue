@@ -53,7 +53,7 @@ export default {
   },
   components: { 'table-row': TableRow, TableHeader },
   computed: {
-    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort']),
+    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort', 'hiddenColumns']),
     ...mapGetters(['filterRsql', 'hasEditRights', 'compressedRouteFilter']),
     idAttribute () {
       return this.tableMeta.idAttribute
@@ -61,7 +61,14 @@ export default {
     visibleColumns () {
       return this.tableMeta.attributes
         .filter(a => a.visible)
-        .map(a => ({ id: a.id, name: a.name, type: a.type, refEntityType: a.refEntityType, expression: a.expression }))
+        .filter(a => !this.hiddenColumns.includes(a.name))
+        .map(a => ({
+          id: a.id,
+          name: a.name,
+          type: a.type,
+          refEntityType: a.refEntityType,
+          expression: a.expression
+        }))
     }
   },
   methods: {

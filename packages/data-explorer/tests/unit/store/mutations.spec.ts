@@ -275,6 +275,7 @@ describe('mutations', () => {
       mutations.setRouteQuery(baseAppState, minimalRoute)
       expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': false, 'sortColumnName': null })
       expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: {}, shown: [] })
+      expect(baseAppState.hiddenColumns).toEqual([])
 
       // when sort is set
       const sortRoute:RouteQuery = { sort: 'col-a' }
@@ -294,6 +295,11 @@ describe('mutations', () => {
       expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': true, 'sortColumnName': 'col-a' })
       expect(baseAppState.searchText).toEqual('searchText')
       expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: ['c'], shown: ['a', 'b'] })
+
+      // when hide is set
+      const hideColumnsRoute: RouteQuery = { hide: 'a,b,c' }
+      mutations.setRouteQuery(baseAppState, hideColumnsRoute)
+      expect(baseAppState.hiddenColumns).toEqual(['a', 'b', 'c'])
     })
   })
 })

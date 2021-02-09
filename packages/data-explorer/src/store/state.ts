@@ -32,7 +32,8 @@ const state: ApplicationState = {
     shown: [],
     selections: {}
   },
-  searchText: ''
+  searchText: '',
+  hiddenColumns: []
 }
 
 export default state

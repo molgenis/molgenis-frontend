@@ -21,7 +21,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import '@molgenis-ui/components-library/dist/components-library.css'
 
-import { faCaretRight,
+import {
+  faCaretRight,
   faChevronRight,
   faChevronLeft,
   faChevronUp,
