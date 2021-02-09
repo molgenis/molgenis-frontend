@@ -5,7 +5,7 @@
       :fields="fields"
       :filter="filter"
       :empty-text="$t('table-no-results')"
-      class="text-left"
+      class="text-left table-bordered"
       show-empty>
       <template
         slot="HEAD_selected"
