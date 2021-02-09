@@ -149,7 +149,7 @@ var Table = React.createClass({
             onEditClick: this.props.onEditClick
         });
 
-        var className = 'table table-striped table-condensed table-bordered molgenis-table';
+        var className = 'table table-bordered molgenis-table';
 
         if (this.props.onRowClick !== null)
             className = className + " table-hover";
