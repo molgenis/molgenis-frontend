@@ -17,17 +17,8 @@
 export default {
   computed: {
     allColumns () {
-      if (!this.$store.state.tableData) {
-        return []
-      }
-
-      return [
-        ...new Set( // creating a set, to deduplicate
-          this.$store.state.tableData.items
-            .map((item) => Object.keys(item)) // get all properties from tableData
-            .reduce((prev, current) => prev.concat(current)) // do simple flatmap
-        )
-      ]
+      const { tableMeta } = this.$store.state
+      return tableMeta ? tableMeta.attributes.map((item) => item.name) : []
     },
     hiddenColumns () {
       return this.$store.state.hiddenColumns
@@ -52,8 +43,8 @@ export default {
         name: this.$router.currentRoute.name,
         query: {
           ...this.$route.query,
-          hide: newHiddenColumnList.filter((hc) => hc).join()
-        } // use filter, to remove empty remnants
+          hide: newHiddenColumnList.filter((hc) => hc).join() // use filter, to remove empty remnants
+        }
       })
     }
   }

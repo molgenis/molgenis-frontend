@@ -24,8 +24,30 @@ describe('ColumnSelection Component', () => {
 
     store = new Vuex.Store({
       state: {
-        tableData: {
-          items: [{ 'id': 'aaaac5244vsebbsyuwkbjdiaae', 'table': 'Authors', 'shop': true }, { 'id': 'aaaac52ktotexbsyuwkbjdiaai', 'table': 'Books', 'shop': true, 'randomProp': false }]
+        tableMeta: {
+          attributes: [
+            {
+              id: 'aaaac52ktuzcnbsyuwkbjdiadu',
+              name: 'id',
+              type: 'int'
+            },
+            {
+              id: 'aaaac52ktuzcnbsyuwkbjdiady',
+              name: 'bool',
+              type: 'bool'
+            },
+            {
+              id: 'aaaac52ktuzcnbsyuwkbjdiad4',
+              name: 'html',
+              type: 'string'
+            },
+            {
+              id: 'aaaac2322ktuzcnbsyuwkbjdiad4',
+              name: 'string',
+              type: 'string'
+            }
+
+          ]
         },
         hiddenColumns: []
       }
@@ -43,20 +65,20 @@ describe('ColumnSelection Component', () => {
   })
   it('renders inputs for all unique property names', () => {
     expect(wrapper.html()).toContain('value="id"')
-    expect(wrapper.html()).toContain('value="table"')
-    expect(wrapper.html()).toContain('value="shop"')
-    expect(wrapper.html()).toContain('value="randomProp"')
+    expect(wrapper.html()).toContain('value="bool"')
+    expect(wrapper.html()).toContain('value="html"')
+    expect(wrapper.html()).toContain('value="string"')
   })
 
   it('emits a router change with the value when input is de-selected', () => {
-    const inputToTest = wrapper.find('input[value="table"]')
+    const inputToTest = wrapper.find('input[value="id"]')
     inputToTest.trigger('click')
 
-    expect(mockRouterPush).toHaveBeenCalledWith({ 'name': null, 'query': { 'hide': 'table' } })
+    expect(mockRouterPush).toHaveBeenCalledWith({ 'name': null, 'query': { 'hide': 'id' } })
   })
 
   it('emits a router change without the value when input is re-selected', () => {
-    const inputToTest = wrapper.find('input[value="table"]')
+    const inputToTest = wrapper.find('input[value="id"]')
     inputToTest.trigger('click')
     inputToTest.trigger('click')
 

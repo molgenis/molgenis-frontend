@@ -25,7 +25,7 @@
     </div>
     <div class="btn-group" arial-label="table settings">
       <b-button variant="outline-secondary" v-b-modal.hide-show-columns>Hide/Show columns</b-button>
-      <b-modal ok-only id="hide-show-columns" title="Hide/Show columns">
+      <b-modal ok-only scrollable id="hide-show-columns" title="Hide/Show columns">
         <column-selection></column-selection>
       </b-modal>
     </div>
