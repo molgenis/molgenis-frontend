@@ -74,8 +74,7 @@ export default Vue.extend({
       },
       set: function (value) {
         this.$router.push({
-          name: this.$router.currentRoute.name,
-          path: this.$router.currentRoute.path,
+          name: 'main-view',
           query: { ...this.$route.query, page: value.page, size: value.size }
         })
       }
@@ -141,8 +140,7 @@ export default Vue.extend({
       }
       this.setFilterSelection(newSelections)
       this.$router.push({
-        name: this.$router.currentRoute.name,
-        path: this.$router.currentRoute.path,
+        name: 'main-view',
         query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     },
@@ -168,10 +166,6 @@ export default Vue.extend({
   },
   async beforeRouteUpdate (to, from, next) {
     if (to.params.entity !== from.params.entity) {
-      // Reset page when navigating to a different entity.
-      if (to.query) {
-        to.query.page = 1
-      }
       await this.fetchTableMeta({ tableName: to.params.entity })
     }
     this.setRouteQuery(to.query)

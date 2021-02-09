@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.4.2...@molgenis-ui/data-explorer@2.4.3) (2021-02-09)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [2.4.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.4.1...@molgenis-ui/data-explorer@2.4.2) (2021-02-08)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [2.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.4.0...@molgenis-ui/data-explorer@2.4.1) (2021-02-04)
+
+
+### Bug Fixes
+
+* improved readabiltiy and fixed nullcheck ([0dc3164](https://github.com/molgenis/molgenis-frontend/commit/0dc3164))
+
+
+
+
+
 # [2.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.3.1...@molgenis-ui/data-explorer@2.4.0) (2021-02-03)
 
 

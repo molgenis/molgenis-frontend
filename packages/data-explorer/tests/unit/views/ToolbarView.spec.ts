@@ -17,10 +17,6 @@ describe('ToolbarView.vue', () => {
   const mocks: any = {
     $route: { params: {}, query: {} },
     $router: {
-      currentRoute: {
-        name: 'currentRouteName',
-        path: 'currentRoutePath'
-      },
       push: jest.fn()
     }
   }
@@ -174,7 +170,7 @@ describe('ToolbarView.vue', () => {
       }
       // @ts-ignore
       await wrapper.vm.handleSortSelectChange(sort)
-      expect(mocks.$router.push).toHaveBeenCalledWith({ name: 'currentRouteName', path: 'currentRoutePath', query: { sort: '-stars' } })
+      expect(mocks.$router.push).toHaveBeenCalledWith({ name: 'main-view', query: { sort: '-stars' } })
     })
   })
 })

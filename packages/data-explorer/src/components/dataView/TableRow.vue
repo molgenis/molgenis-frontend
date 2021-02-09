@@ -29,7 +29,7 @@
       </button>
     </th>
     <td v-for="(column, index) in visibleColumns" :key="index" class="mg-data-column">
-      <DataDisplayCell v-if="typeof getColumnName(column.name) != 'undefined'" :value="getColumnName(column.name)" :type="column.type" :data="column" :rowIndex="rowIndex"></DataDisplayCell>
+      <DataDisplayCell v-if="typeof getColumnValue(column.name) != 'undefined'" :value="getColumnValue(column.name)" :metadata="column" :rowIndex="rowIndex"></DataDisplayCell>
     </td>
   </tr>
 </template>
@@ -77,8 +77,8 @@ export default {
     }
   },
   methods: {
-    getColumnName (name) {
-      if (name in this.rowData && this.rowData[name]) {
+    getColumnValue (name) {
+      if (name in this.rowData && this.rowData[name] !== undefined) {
         return this.rowData[name].toString()
       }
     }

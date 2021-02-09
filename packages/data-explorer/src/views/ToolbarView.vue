@@ -99,8 +99,7 @@ export default Vue.extend({
       set (value) {
         this.$store.commit('setSearchText', value)
         this.$router.push({
-          name: this.$router.currentRoute.name,
-          path: this.$router.currentRoute.path,
+          name: 'main-view',
           query: { ...this.$route.query, filter: this.compressedRouteFilter }
         })
       }
@@ -137,14 +136,13 @@ export default Vue.extend({
       const value = this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.$router.push({
         name: 'main-view',
-        params: { view: value },
+        params: { ...this.$route.params, view: value },
         query: { ...this.$route.query }
       })
     },
     handleSortSelectChange (sort) {
       this.$router.push({
-        name: this.$router.currentRoute.name,
-        path: this.$router.currentRoute.path,
+        name: 'main-view',
         query: { ...this.$route.query, sort: `${sort.isSortOrderReversed ? '-' : ''}${sort.sortColumnName}` }
       })
     }

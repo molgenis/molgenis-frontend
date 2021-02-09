@@ -7,7 +7,7 @@ describe('TableView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(VueRouter)
-  let router = new VueRouter()
+  let router = new VueRouter({ routes: [{ path: '/mock-path', name: 'main-view' }] })
   let store: any
   let state: any
   let mutations: any

@@ -9,7 +9,7 @@ const state: ApplicationState = {
   tableName: null,
   tableData: null,
   tableMeta: null,
-  tablePagination: defaultPagination,
+  tablePagination: { ...defaultPagination },
   dataDisplayLayout: 'CardView',
   defaultEntityData: null,
   showSelected: false,
