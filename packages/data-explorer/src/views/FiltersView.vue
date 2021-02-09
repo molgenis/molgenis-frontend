@@ -87,8 +87,7 @@ export default Vue.extend({
     },
     updateRoute () {
       this.$router.push({
-        name: this.$router.currentRoute.name,
-        path: this.$router.currentRoute.path,
+        name: 'main-view',
         query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     }
