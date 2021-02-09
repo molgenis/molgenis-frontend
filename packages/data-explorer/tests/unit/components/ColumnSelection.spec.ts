@@ -55,7 +55,7 @@ describe('ColumnSelection Component', () => {
     expect(mockRouterPush).toHaveBeenCalledWith({ 'name': null, 'query': { 'hide': 'table' } })
   })
 
-  it('emits a router change with the value when input is re-selected', () => {
+  it('emits a router change without the value when input is re-selected', () => {
     const inputToTest = wrapper.find('input[value="table"]')
     inputToTest.trigger('click')
     inputToTest.trigger('click')
