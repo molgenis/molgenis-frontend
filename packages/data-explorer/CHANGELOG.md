@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.4.3...@molgenis-ui/data-explorer@2.5.0) (2021-02-09)
+
+
+### Features
+
+* **data-explorer:** Allow user to hide columns ([#520](https://github.com/molgenis/molgenis-frontend/issues/520)) ([d27abc6](https://github.com/molgenis/molgenis-frontend/commit/d27abc6))
+
+
+
+
+
 ## [2.4.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.4.2...@molgenis-ui/data-explorer@2.4.3) (2021-02-09)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
