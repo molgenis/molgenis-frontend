@@ -13,7 +13,7 @@
         <template v-slot:removeButton><font-awesome-icon icon="times"></font-awesome-icon></template>
         <template v-slot:buttonText>
           <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
-          Show cart
+          {{ 'dataexplorer_show_cart_btn_label' | i18n}}
         </template>
       </cart-selection-toast>
     </template>

@@ -5,14 +5,16 @@
       <input v-if="isEditable" class="form-check-input" type="checkbox" :checked="isSelected" :value="id" @click="$emit('toggleSelectedItemsHandler', id)">
       <a
         v-if="isEditable"
-        v-b-tooltip.hover.bottom="'edit'"
+        v-b-tooltip.hover.bottom
+        :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
         class="btn btn-sm text-secondary pl-2"
         role="button"
         :href="'/plugin/data-row-edit/' + tableName + '/' + id">
         <font-awesome-icon icon="edit"></font-awesome-icon>
       </a>
       <a
-        v-b-tooltip.hover.bottom="'details'"
+        v-b-tooltip.hover.bottom
+        :title="$t('dataexplorer_row_action_details_btn_tooltip')"
         class="btn btn-sm text-secondary"
         role="button"
         :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
@@ -20,7 +22,8 @@
       </a>
       <button
         v-if="isEditable"
-        v-b-tooltip.hover.bottom="'delete'"
+        v-b-tooltip.hover.bottom
+        :title="$t('dataexplorer_row_action_delete_btn_tooltip')"
         class="btn btn-sm text-secondary"
         role="button"
         @click="$eventBus.$emit('delete-item', id)"

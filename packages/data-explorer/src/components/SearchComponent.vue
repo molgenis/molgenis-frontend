@@ -6,7 +6,7 @@
         type="search"
         v-model="searchText"
         class="form-control"
-        placeholder="Search"
+        :placeholder="$t('dataexplorer_search_btn_tooltip')"
         aria-label="Search data"
         aria-describedby="mg-data-explorer-search"
       />
@@ -15,7 +15,8 @@
           class="btn btn-outline-secondary"
           type="submit"
           id="mg-data-explorer-search"
-          v-b-tooltip.hover.bottom="'Search'"
+          v-b-tooltip.hover.bottom
+          :title="$t('dataexplorer_search_input_tooltip')"
         >
           <font-awesome-icon icon="search"></font-awesome-icon>
         </button>
