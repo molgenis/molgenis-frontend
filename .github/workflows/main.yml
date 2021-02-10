@@ -32,4 +32,6 @@ jobs:
       run: |
         yarn install
         yarn lerna bootstrap
+        yarn lerna run build --scope @molgenis-ui/components-library
+        yarn lerna run unit
 
