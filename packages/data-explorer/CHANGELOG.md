@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.5.0...@molgenis-ui/data-explorer@2.6.0) (2021-02-11)
+
+
+### Features
+
+* add select / deselect all to show/hide columms ([#529](https://github.com/molgenis/molgenis-frontend/issues/529)) ([48c0132](https://github.com/molgenis/molgenis-frontend/commit/48c0132))
+
+
+
+
+
 # [2.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.4.3...@molgenis-ui/data-explorer@2.5.0) (2021-02-09)
 
 
