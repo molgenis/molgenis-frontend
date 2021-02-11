@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.6.0...@molgenis-ui/data-explorer@3.0.0) (2021-02-11)
+
+
+### Features
+
+* **data-explorer:** i18n for data explorer 2 ([#528](https://github.com/molgenis/molgenis-frontend/issues/528)) ([21e61f3](https://github.com/molgenis/molgenis-frontend/commit/21e61f3))
+
+
+### BREAKING CHANGES
+
+* **data-explorer:** i18n labels require molgenis version > 8.6.2
+
+
+
+
+
 # [2.6.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.5.0...@molgenis-ui/data-explorer@2.6.0) (2021-02-11)
 
 
