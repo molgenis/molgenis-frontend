@@ -5,10 +5,10 @@
     </div>
     <div v-else>
       <button class="btn btn-primary cart-back mr-2" @click="closeShoppingCart" v-if="entitiesToShow.length > 5">
-        <font-awesome-icon icon="chevron-left"></font-awesome-icon> Back
+        <font-awesome-icon icon="chevron-left"></font-awesome-icon> {{ 'dataexplorer_shopping_cart_back_btn_label' | i18n}}
       </button>
       <button class="btn btn-success cart-order mr-2" v-if="entitiesToShow.length > 5">
-        <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
+        <font-awesome-icon icon="shopping-bag"></font-awesome-icon> {{ 'dataexplorer_shopping_cart_order_btn_label' | i18n}}
       </button>
       <table class="table table-bordered overflow-hidden">
         <table-header :visibleColumns="visibleColumns" :isShop="true"></table-header>
@@ -27,10 +27,10 @@
       </table>
     </div>
     <button class="btn btn-primary cart-back mr-2" @click="closeShoppingCart">
-      <font-awesome-icon icon="chevron-left"></font-awesome-icon> Back
+      <font-awesome-icon icon="chevron-left"></font-awesome-icon> {{ 'dataexplorer_shopping_cart_back_btn_label' | i18n}}
     </button>
     <button v-if="entitiesToShow.length > 0" class="btn btn-success cart-order mr-2">
-      <font-awesome-icon icon="shopping-bag"></font-awesome-icon> Order
+      <font-awesome-icon icon="shopping-bag"></font-awesome-icon> {{ 'dataexplorer_shopping_cart_back_btn_label' | i18n}}
     </button>
   </div>
 </template>

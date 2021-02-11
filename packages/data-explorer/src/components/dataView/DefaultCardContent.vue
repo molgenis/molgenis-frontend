@@ -34,7 +34,7 @@
             <font-awesome-icon icon="chevron-right" v-if="cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
           </button>
           <button class="btn btn-outline-info btn-sm mg-info-btn" @click="goToDetails">
-            <font-awesome-icon icon="search"></font-awesome-icon> Info
+            <font-awesome-icon icon="search"></font-awesome-icon> {{ 'dataexplorer_default_card_info_btn_label' | i18n }}
           </button>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default {
   components: { FontAwesomeIcon },
   computed: {
     expandBtnText () {
-      return this.cardState === 'closed' ? 'Expand' : 'Collapse'
+      return this.cardState === 'closed' ? this.$t('dataexplorer_default_card_expand_btn_label') : this.$t('dataexplorer_default_card_collapse_btn_label')
     },
     dataToShow () {
       const visibleDataContents = Object.keys(this.dataContents)

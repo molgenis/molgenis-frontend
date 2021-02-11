@@ -1,9 +1,9 @@
 <template>
   <a :href="href"
-    v-b-tooltip.hover.bottom="'Settings'"
+    v-b-tooltip.hover.bottom
+    :title="$t('dataexplorer_settings_btn_tooltip')"
     type="button" role="button"
-    class="btn btn-light btn-outline-secondary table-settings"
-    title="Table settings">
+    class="btn btn-light btn-outline-secondary table-settings">
     <font-awesome-icon icon="cog"></font-awesome-icon>
   </a>
 </template>

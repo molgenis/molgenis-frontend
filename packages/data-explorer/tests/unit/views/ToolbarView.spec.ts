@@ -7,9 +7,11 @@ import { Sort } from '@/types/Sort'
 import bootstrapVue from 'bootstrap-vue'
 
 describe('ToolbarView.vue', () => {
+  const $t = (msg: any) => msg
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(bootstrapVue)
+  localVue.filter('i18n', $t)
   let actions: any
   let store: any
   let state: ApplicationState
@@ -20,7 +22,8 @@ describe('ToolbarView.vue', () => {
     $route: { params: {}, query: {} },
     $router: {
       push: jest.fn()
-    }
+    },
+    $t
   }
 
   beforeEach(() => {

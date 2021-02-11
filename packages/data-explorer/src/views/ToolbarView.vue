@@ -3,15 +3,16 @@
 
     <div v-if="!showSelected" class="btn-group" role="group" aria-label="Row actions group">
       <button type="button" class="btn btn-outline-secondary show-filters-button"
-        v-b-tooltip.hover.bottom="'Show Filters'"
-        v-if="filters.hideSidebar"
+        v-b-tooltip.hover.bottom
+        :title="$t('dataexplorer_show_filters_btn_tooltip')"
         @click="setHideFilters(false)">
         <font-awesome-icon icon="chevron-right"></font-awesome-icon>
       </button>
 
       <a v-if="hasEditRights" type="button" role="button" class="btn btn-outline-secondary add-row"
       :href="'/plugin/data-row-edit/' + tableName"
-      v-b-tooltip.hover.bottom="'Add'">
+      v-b-tooltip.hover.bottom
+      :title="$t('dataexplorer_add_entity_btn_tooltip')">
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
       </a>
     </div>
@@ -24,14 +25,15 @@
       <sort-select :sortOptions="sortOptions" :sort="sort" @sort="handleSortSelectChange"></sort-select>
     </div>
     <div class="btn-group" arial-label="table settings">
-      <b-button variant="outline-secondary" v-b-modal.hide-show-columns>Hide/Show columns</b-button>
-      <b-modal ok-only scrollable id="hide-show-columns" title="Hide/Show columns">
+      <b-button variant="outline-secondary" v-b-modal.hide-show-columns>{{ 'dataexplorer_toggle_column_visibility_btn_tooltip' | i18n}}</b-button>
+      <b-modal ok-only scrollable id="hide-show-columns" :title="$t('dataexplorer_toggle_column_visibility_modal_header')">
         <column-selection></column-selection>
       </b-modal>
     </div>
     <div class="btn-group" role="group" aria-label="Table actions group">
       <button :disabled="isDownloading" @click="downloadData" class="btn btn-outline-secondary"
-        v-b-tooltip.hover.bottom="'Download'">
+        v-b-tooltip.hover.bottom
+        :title="$t('dataexplorer_download_btn_tooltip')">
         <font-awesome-icon icon="download" />
       </button>
 
@@ -39,7 +41,8 @@
         v-if="!showSelected && dataDisplayLayout === 'TableView'"
         @click="toggleDataDisplayLayout"
         class="btn btn-light btn-outline-secondary card-layout"
-        v-b-tooltip.hover.bottom="'Card view'">
+        v-b-tooltip.hover.bottom
+        :title="$t('dataexplorer_select_view_card_view_tooltip')">
         <font-awesome-icon icon="th"></font-awesome-icon>
       </button>
 
@@ -47,7 +50,8 @@
         v-else-if="!showSelected"
         @click="toggleDataDisplayLayout"
         class="btn btn-light btn-outline-secondary table-layout"
-        v-b-tooltip.hover.bottom="'Tabel view'">
+        v-b-tooltip.hover.bottom
+        :title="$t('dataexplorer_select_view_table_view_tooltip')">
         <font-awesome-icon icon="th-list"></font-awesome-icon>
       </button>
 
@@ -73,7 +77,7 @@ import ColumnSelection from '@/components/ColumnSelection.vue'
 
 library.add(faTh, faThList, faSlidersH, faStore, faShoppingBag, faPlusSquare, faDownload, faCog)
 
-export default Vue.extend({
+export default {
   name: 'ToolbarView',
   components: { FontAwesomeIcon, SearchComponent, TableSettingsButton, SortSelect, ColumnSelection },
   computed: {
@@ -147,7 +151,7 @@ export default Vue.extend({
       })
     }
   }
-})
+}
 </script>
 
 <style scoped>

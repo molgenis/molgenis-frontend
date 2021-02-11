@@ -2,11 +2,11 @@
   <div>
     <div>
       <div class="p-0 px-2 d-flex justify-content-between align-items-center">
-        <h2 class="m-0">Filters</h2>
+        <h2 class="m-0">{{ 'dataexplorer_filters_header' | i18n}}</h2>
         <button
           type="button"
           class="btn btn-light btn-outline-secondary hide-filters"
-          title="Hide Filters"
+          :title="$t('dataexplorer_filters_hide_btn_label')"
           @click="setHideFilters(true)"
         >
           <font-awesome-icon icon="chevron-left"></font-awesome-icon>

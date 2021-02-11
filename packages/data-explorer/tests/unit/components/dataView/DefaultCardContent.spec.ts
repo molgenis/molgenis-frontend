@@ -1,7 +1,11 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import DefaultCardContent from '@/components/dataView/DefaultCardContent.vue'
 
+const mocks = { $t: (msg: any) => msg }
+
 describe('DefaultCardContent.vue', () => {
+  const localVue = createLocalVue()
+  localVue.filter('i18n', mocks.$t)
   const propsData = {
     dataLabel: 'dataLabel',
     dataId: 'dataId',
@@ -13,7 +17,7 @@ describe('DefaultCardContent.vue', () => {
     numberOfAttributes: 10
   }
   window.location.assign = jest.fn()
-  const wrapper = shallowMount(DefaultCardContent, { propsData })
+  const wrapper = shallowMount(DefaultCardContent, { propsData, localVue, mocks })
   it('exists', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
@@ -32,7 +36,7 @@ describe('DefaultCardContent.vue', () => {
       collapseLimit: 5,
       numberOfAttributes: 3
     }
-    const wrapperWithLessAttrs = shallowMount(DefaultCardContent, { propsData })
+    const wrapperWithLessAttrs = shallowMount(DefaultCardContent, { propsData, localVue, mocks })
     const button = wrapperWithLessAttrs.find('button.mg-card-expand')
     expect(button.exists()).toBe(false)
   })
@@ -54,7 +58,7 @@ describe('DefaultCardContent.vue', () => {
   })
 
   describe('when the card is closed', () => {
-    const wrapper = shallowMount(DefaultCardContent, { propsData })
+    const wrapper = shallowMount(DefaultCardContent, { propsData, localVue, mocks })
     wrapper.vm.$data.cardState = 'open'
     it('do something', () => {
       expect(wrapper.exists()).toBeTruthy()
