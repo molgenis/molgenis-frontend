@@ -2,11 +2,13 @@ import { shallowMount } from '@vue/test-utils'
 import SearchComponent from '@/components/SearchComponent.vue'
 import router from '@/router'
 
+const mocks = { $t: (msg: any) => msg }
+
 describe('SearchComponent', () => {
   let wrapper: any
 
   beforeEach(() => {
-    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router, directives: { 'b-tooltip': () => {} } })
+    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router, directives: { 'b-tooltip': () => { } }, mocks })
   })
 
   it('should render the component', () => {

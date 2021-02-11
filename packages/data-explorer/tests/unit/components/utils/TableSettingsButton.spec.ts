@@ -1,12 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
 import TableSettingsButton from '@/components/utils/TableSettingsButton.vue'
 
+const mocks = { $t: (msg: any) => msg }
+
 describe('TableSettingsButton.vue', () => {
   describe('when no settings row has previously been created', () => {
     let wrapper:any
 
     beforeEach(() => {
       wrapper = shallowMount(TableSettingsButton, {
+        mocks,
         directives: {
           'b-tooltip': () => {}
         },
@@ -26,6 +29,7 @@ describe('TableSettingsButton.vue', () => {
 
     beforeEach(() => {
       wrapper = shallowMount(TableSettingsButton, {
+        mocks,
         directives: {
           'b-tooltip': () => {}
         },

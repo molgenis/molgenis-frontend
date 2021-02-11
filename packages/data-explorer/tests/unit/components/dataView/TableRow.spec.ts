@@ -15,7 +15,8 @@ const getWrapper = (propsData) => {
       tableName: 'tableName',
       showSelected: false
     },
-    stubs: ['font-awesome-icon']
+    stubs: ['font-awesome-icon'],
+    mocks: { $t: (msg: any) => msg }
   })
 
   return wrapper
