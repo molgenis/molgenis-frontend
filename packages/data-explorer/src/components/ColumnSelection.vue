@@ -1,7 +1,11 @@
 <template>
   <div class="d-flex flex-column">
     <div class="d-flex">
-      <b-link id="selection-toggle" class="toggle-select ml-auto" @click.prevent="toggleAllColumns">
+      <b-link
+        id="selection-toggle"
+        class="toggle-select ml-auto"
+        @click.prevent="toggleAllColumns"
+      >
         <i>{{ toggleSelectText }}</i>
       </b-link>
     </div>
@@ -19,6 +23,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   data: function () {
     return {
@@ -38,12 +43,15 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['persistToRoute']),
     toggleAllColumns () {
-      this.persistToRoute(this.selectAllState ? [] : this.allColumns)
+      const columnsToHide = this.selectAllState ? [] : this.allColumns
+      this.persistToRoute({ hide: columnsToHide.join() })
       this.selectAllState = !this.selectAllState
     },
     modifyHiddenColumns (event) {
       const { checked, value } = event.target
+
       // check if any columns are hidden, else start with an empty array
       let newHiddenColumnList = this.hiddenColumns.length
         ? this.hiddenColumns
@@ -55,15 +63,8 @@ export default {
       } else {
         newHiddenColumnList.push(value)
       }
-      this.persistToRoute(newHiddenColumnList)
-    },
-    persistToRoute (newHiddenColumnList) {
-      this.$router.push({
-        name: this.$router.currentRoute.name,
-        query: {
-          ...this.$route.query,
-          hide: newHiddenColumnList.filter((hc) => hc).join() // use filter, to remove empty remnants
-        }
+      this.persistToRoute({
+        hide: newHiddenColumnList.join()
       })
     }
   }
