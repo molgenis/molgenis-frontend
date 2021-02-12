@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.1.0...@molgenis-ui/questionnaires@3.1.1) (2021-02-12)
+
+
+### Bug Fixes
+
+* **data-row-edit, questionnaires, scripts, settings:** Bump [@molgenis](https://github.com/molgenis)/molgenis-ui-form to 5.2.2 ([#530](https://github.com/molgenis/molgenis-frontend/issues/530)) ([a35370c](https://github.com/molgenis/molgenis-frontend/commit/a35370c))
+
+
+
+
+
 # [3.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.0.1...@molgenis-ui/questionnaires@3.1.0) (2021-01-04)
 
 
