@@ -119,7 +119,7 @@ export default {
       }
     })
   },
-  removeRow (state: ApplicationState, { rowId }: {rowId: string}) {
+  removeRow (state: ApplicationState, { rowId }: { rowId: string }) {
     if (!state.tableData) {
       throw new Error('Cannot delete item from empty table')
     }
@@ -134,5 +134,28 @@ export default {
   },
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText
+  },
+  persistToRoute (_ : any, routeObject: { router: any, query: any }) {
+    // we have to pass this.$router, if we import it directly in mutations, jest breaks.
+    const { router, query } = routeObject
+
+    let mergedRouterObject = {
+      ...router.currentRoute.query,
+      ...query
+    }
+
+    let routerObjectToPersist = {}
+
+    // remove empty parameters
+    for (const key in mergedRouterObject) {
+      if (mergedRouterObject[key]) {
+        routerObjectToPersist[key] = mergedRouterObject[key]
+      }
+    }
+
+    router.push({
+      name: router.currentRoute.name,
+      query: routerObjectToPersist
+    }, () => { }) // fix for duplicate route.
   }
 }
