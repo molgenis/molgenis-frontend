@@ -1,10 +1,24 @@
 <template>
   <div>
     <b-input-group>
-      <b-form-input v-model="query" :name="name" :placeholder="placeholder" trim />
+      <b-form-input
+        v-model="query"
+        :name="name"
+        :placeholder="placeholder"
+        trim
+      />
       <b-input-group-append>
-        <b-button variant="outline-secondary" :disabled="isLoading" @click.prevent="query = ''">
-          <font-awesome-icon v-if="isLoading" icon="spinner" class="fa-spin" size="xs" />
+        <b-button
+          variant="outline-secondary"
+          :disabled="isLoading"
+          @click.prevent="query = ''"
+        >
+          <font-awesome-icon
+            v-if="isLoading"
+            icon="spinner"
+            class="fa-spin"
+            size="xs"
+          />
           <font-awesome-icon v-else icon="times" />
         </b-button>
       </b-input-group-append>
@@ -17,16 +31,25 @@
       :options="slicedOptions"
       stacked
     />
-
-    <b-link v-if="showCount < multifilterOptions.length" class="card-link" @click="showMore">
-      {{ showMoreText }}
-    </b-link>
-    <font-awesome-icon
-      v-if="foundOptionCount >= 100"
-      v-b-popover.hover="'There are 100 or more results found, only the first 100 are available. Please refine your search.'"
-      icon="exclamation-triangle"
-      class="warning text-danger"
-    />
+    <div class="d-flex">
+      <b-link
+        v-if="showCount < multifilterOptions.length"
+        class="card-link"
+        @click="showMore"
+      >
+        {{ showMoreText }}
+      </b-link>
+      <span
+        v-if="foundOptionCount >= 100"
+        v-b-popover.hover="
+          'There are 100 or more results found, only the first 100 are available. Please refine your search.'
+        "
+        class="badge badge-warning warning text-white ml-auto"
+        >100+
+        <font-awesome-icon
+          icon="exclamation-circle"
+      /></span>
+    </div>
   </div>
 </template>
 
@@ -127,7 +150,10 @@ export default {
       }
 
       if (this.returnTypeAsObject) {
-        newSelection = Object.assign(newValue, this.multifilterOptions.filter(mfo => newValue.includes(mfo.value)))
+        newSelection = Object.assign(
+          newValue,
+          this.multifilterOptions.filter((mfo) => newValue.includes(mfo.value))
+        )
       } else {
         newSelection = [...newValue]
       }
@@ -153,10 +179,14 @@ export default {
         this.showCount = this.maxVisibleOptions
         this.isLoading = true
 
-        this.options({ nameAttribute: 'label', query: this.query }).then(searchResults => {
-          const allOptions = searchResults ? searchResults.concat(this.inputOptions) : this.inputOptions
-          this.inputOptions = this.inputOptionsSort(allOptions)
-        })
+        this.options({ nameAttribute: 'label', query: this.query }).then(
+          (searchResults) => {
+            const allOptions = searchResults
+              ? searchResults.concat(this.inputOptions)
+              : this.inputOptions
+            this.inputOptions = this.inputOptionsSort(allOptions)
+          }
+        )
 
         this.isLoading = false
       }, 500)
@@ -171,18 +201,29 @@ export default {
   methods: {
     inputOptionsSort (optionsArray) {
       optionsArray.sort((a, b) => {
-        if (!this.selection.includes(a.value) && !this.selection.includes(b.value)) return 0
-        else if (this.selection.includes(a.value) && !this.selection.includes(b.value)) return -1
-        else return 1
+        if (
+          !this.selection.includes(a.value) &&
+          !this.selection.includes(b.value)
+        ) {
+          return 0
+        } else if (
+          this.selection.includes(a.value) &&
+          !this.selection.includes(b.value)
+        ) {
+          return -1
+        } else return 1
       })
 
-      return Array.from(new Set(optionsArray.map(cio => cio.value)))
-        .map(value => optionsArray.find(cio => cio.value === value)
-        )
+      return Array.from(
+        new Set(optionsArray.map((cio) => cio.value))
+      ).map((value) => optionsArray.find((cio) => cio.value === value))
     },
     setValue () {
       this.externalUpdate = true
-      this.selection = typeof this.value[0] === 'object' ? this.value.map(vo => vo.value) : this.value
+      this.selection =
+        typeof this.value[0] === 'object'
+          ? this.value.map((vo) => vo.value)
+          : this.value
     },
     showMore () {
       this.showCount += this.maxVisibleOptions
@@ -193,11 +234,20 @@ export default {
       if (this.value && this.value.length) {
         this.setValue()
         // Get the initial selected
-        selectedOptions = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.selection.join(',') })
+        selectedOptions = await this.options({
+          nameAttribute: 'label',
+          queryType: 'in',
+          query: this.selection.join(',')
+        })
       }
 
       // fetch the other options and concat
-      const completeInitialOptions = selectedOptions.concat(await this.options({ nameAttribute: 'label', count: this.initialDisplayItems }))
+      const completeInitialOptions = selectedOptions.concat(
+        await this.options({
+          nameAttribute: 'label',
+          count: this.initialDisplayItems
+        })
+      )
 
       // deduplicate by first mapping the id's then getting the first matching object back.
       this.initialOptions = this.inputOptionsSort(completeInitialOptions)

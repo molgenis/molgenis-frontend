@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faCaretRight,
-  faExclamationTriangle,
+  faExclamationCircle,
   faSpinner,
   faTimes
 } from '@fortawesome/free-solid-svg-icons'
@@ -25,7 +25,7 @@ import 'vue-slider-component/theme/default.css'
 export default function (BootstrapVue: any, Vue: any) {
   library.add(
     faCaretRight,
-    faExclamationTriangle,
+    faExclamationCircle,
     faSpinner,
     faTimes
   )
