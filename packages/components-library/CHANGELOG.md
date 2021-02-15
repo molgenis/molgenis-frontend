@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.0.3...@molgenis-ui/components-library@2.1.0) (2021-02-15)
+
+
+### Features
+
+* changed icon to be more informative ([d0d610f](https://github.com/molgenis/molgenis-frontend/commit/d0d610f))
+
+
+
+
+
 ## [2.0.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.0.2...@molgenis-ui/components-library@2.0.3) (2021-02-02)
 
 
