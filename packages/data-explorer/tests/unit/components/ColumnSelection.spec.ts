@@ -54,7 +54,10 @@ describe('ColumnSelection Component', () => {
     })
     options = {
       store,
-      localVue
+      localVue,
+      mocks: {
+        $router: 'mockRouter'
+      }
     }
     wrapper = mount(ColumnSelection, options)
   })
@@ -74,7 +77,7 @@ describe('ColumnSelection Component', () => {
     inputToTest.trigger('click')
 
     // argument #1 is expect.anything() because it's the injected state.
-    expect(mockPersistToState).toHaveBeenCalledWith(expect.anything(), { 'hide': 'id' })
+    expect(mockPersistToState).toHaveBeenCalledWith(expect.anything(), { router: 'mockRouter', query: { 'hide': 'id' } })
   })
 
   it('emits a router change without the value when input is re-selected', () => {
@@ -82,19 +85,19 @@ describe('ColumnSelection Component', () => {
     inputToTest.trigger('click')
     inputToTest.trigger('click')
 
-    expect(mockPersistToState).toHaveBeenLastCalledWith(expect.anything(), { 'hide': '' })
+    expect(mockPersistToState).toHaveBeenLastCalledWith(expect.anything(), { router: 'mockRouter', query: { 'hide': '' } })
   })
 
   it('emits a router change with all columns when deselect all is clicked', () => {
     const inputToTest = wrapper.find('#selection-toggle')
     inputToTest.trigger('click')
-    expect(mockPersistToState).toHaveBeenCalledWith(expect.anything(), { 'hide': 'id,bool,html,string' })
+    expect(mockPersistToState).toHaveBeenCalledWith(expect.anything(), { router: 'mockRouter', query: { 'hide': 'id,bool,html,string' } })
   })
 
   it('emits a router change with no columns when select all is clicked', async () => {
     const inputToTest = wrapper.find('#selection-toggle')
     await inputToTest.trigger('click') // deselect first
     await inputToTest.trigger('click')
-    expect(mockPersistToState).toHaveBeenLastCalledWith(expect.anything(), { 'hide': '' })
+    expect(mockPersistToState).toHaveBeenLastCalledWith(expect.anything(), { router: 'mockRouter', query: { 'hide': '' } })
   })
 })

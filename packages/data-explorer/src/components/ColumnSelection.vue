@@ -46,7 +46,10 @@ export default {
     ...mapMutations(['persistToRoute']),
     toggleAllColumns () {
       const columnsToHide = this.selectAllState ? [] : this.allColumns
-      this.persistToRoute({ hide: columnsToHide.join() })
+      this.persistToRoute({
+        router: this.$router,
+        query: { hide: columnsToHide.join() }
+      })
       this.selectAllState = !this.selectAllState
     },
     modifyHiddenColumns (event) {
@@ -63,8 +66,10 @@ export default {
       } else {
         newHiddenColumnList.push(value)
       }
+
       this.persistToRoute({
-        hide: newHiddenColumnList.join()
+        router: this.$router,
+        query: { hide: newHiddenColumnList.join() }
       })
     }
   }

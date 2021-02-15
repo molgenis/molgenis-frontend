@@ -73,10 +73,7 @@ export default Vue.extend({
         return this.$store.state.tablePagination
       },
       set: function (value) {
-        this.$router.push({
-          name: 'main-view',
-          query: { ...this.$route.query, page: value.page, size: value.size }
-        })
+        this.persistToRoute({ page: value.page, size: value.size })
       }
     },
     toasts: {
@@ -124,7 +121,8 @@ export default Vue.extend({
       'setSearchText',
       'setFilterSelection',
       'setDataDisplayLayout',
-      'setRouteQuery'
+      'setRouteQuery',
+      'persistToRoute'
     ]),
     ...mapActions([
       'deleteRow',

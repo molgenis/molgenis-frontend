@@ -5,7 +5,6 @@ import { MetaData } from '@/types/MetaData'
 import getters from '@/store/getters'
 import { defaultPagination } from '@/store/state'
 import { RouteQuery } from '@/types/RouteQuery'
-import router from '@/router'
 
 const defaultSettings = {
   settingsRowId: null,
@@ -136,10 +135,13 @@ export default {
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText
   },
-  persistToRoute (_, queryChange: any) {
+  persistToRoute (_ : any, routeObject: { router: any, query: any }) {
+    // we have to pass this.$router, if we import it directly in mutations, jest breaks.
+    const { router, query } = routeObject
+
     let mergedRouterObject = {
       ...router.currentRoute.query,
-      ...queryChange
+      ...query
     }
 
     let routerObjectToPersist = {}
@@ -150,7 +152,6 @@ export default {
         routerObjectToPersist[key] = mergedRouterObject[key]
       }
     }
-    console.log(routerObjectToPersist)
 
     router.push({
       name: router.currentRoute.name,
