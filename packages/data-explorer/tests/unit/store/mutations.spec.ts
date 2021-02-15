@@ -302,4 +302,17 @@ describe('mutations', () => {
       expect(baseAppState.hiddenColumns).toEqual(['a', 'b', 'c'])
     })
   })
+
+  describe('persistToState', () => {
+    const mockPush = jest.fn()
+    const mockRouter = {
+      push: mockPush,
+      currentRoute: {
+        name: 'main-view',
+        query: {}
+      }
+    }
+    mutations.persistToRoute(baseAppState, { router: mockRouter, query: { hide: 'id' } })
+    expect(mockPush).toHaveBeenCalledWith({ 'name': 'main-view', 'query': { 'hide': 'id' } }, expect.anything())
+  })
 })

@@ -121,8 +121,7 @@ export default Vue.extend({
       'setSearchText',
       'setFilterSelection',
       'setDataDisplayLayout',
-      'setRouteQuery',
-      'persistToRoute'
+      'setRouteQuery'
     ]),
     ...mapActions([
       'deleteRow',
