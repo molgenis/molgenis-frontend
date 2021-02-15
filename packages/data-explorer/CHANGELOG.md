@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.0.0...@molgenis-ui/data-explorer@3.1.0) (2021-02-15)
+
+
+### Features
+
+* **data-explorer:** routerstate can now be handled in one place ([#531](https://github.com/molgenis/molgenis-frontend/issues/531)) ([ec3b87c](https://github.com/molgenis/molgenis-frontend/commit/ec3b87c))
+
+
+
+
+
 # [3.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@2.6.0...@molgenis-ui/data-explorer@3.0.0) (2021-02-11)
 
 
