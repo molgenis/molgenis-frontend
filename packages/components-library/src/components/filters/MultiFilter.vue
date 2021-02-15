@@ -40,13 +40,13 @@
         {{ showMoreText }}
       </b-link>
       <span
-        class="badge badge-warning warning text-white ml-auto"
+        v-if="foundOptionCount >= 100"
         v-b-popover.hover="
           'There are 100 or more results found, only the first 100 are available. Please refine your search.'
         "
+        class="badge badge-warning warning text-white ml-auto"
         >100+
         <font-awesome-icon
-          v-if="foundOptionCount >= 100"
           icon="exclamation-circle"
       /></span>
     </div>
