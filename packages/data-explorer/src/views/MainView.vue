@@ -73,7 +73,10 @@ export default Vue.extend({
         return this.$store.state.tablePagination
       },
       set: function (value) {
-        this.persistToRoute({ page: value.page, size: value.size })
+        this.$router.push({
+          name: 'main-view',
+          query: { ...this.$route.query, page: value.page, size: value.size }
+        })
       }
     },
     toasts: {
