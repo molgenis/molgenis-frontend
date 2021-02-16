@@ -6,43 +6,37 @@
         :breadcrumbs="breadcrumbs"
         @fetchItems="fetchPackageTables"
         :headItemTooltip="tableMeta && tableMeta.description"
-        >
+      >
       </breadcrumb-bar>
       <nav v-else aria-label="breadcrumb">
         <ol v-if="tableMeta" class="breadcrumb">
           <li class="breadcrumb-item active" aria-current="page">
             <span id="mainView-headItemTooltipID">
-              {{tableMeta.label}}
+              {{ tableMeta.label }}
             </span>
-            <b-tooltip v-if="tableMeta.description" placement='bottom' target="mainView-headItemTooltipID" triggers="hover">
-              {{tableMeta.description}}
+            <b-tooltip v-if="tableMeta.description" placement="bottom" target="mainView-headItemTooltipID" triggers="hover">
+              {{ tableMeta.description }}
             </b-tooltip>
           </li>
         </ol>
       </nav>
-      <Toaster v-model="toasts"/>
+      <Toaster v-model="toasts" />
     </div>
-    <div class="mg-content d-flex h-100 overflow-control" :class="{'hidefilters': filters.hideSidebar}">
+    <div class="mg-content d-flex h-100 overflow-control" :class="{ hidefilters: filters.hideSidebar }">
       <div class="mg-filter mr-2">
         <filters-view></filters-view>
       </div>
       <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
-        <active-filters
-          @input="saveFilterState"
-          :value="activeFilterSelections"
-          :filters="filterDefinitions"
-        ></active-filters>
+        <active-filters @input="saveFilterState" :value="activeFilterSelections" :filters="filterDefinitions"></active-filters>
         <toolbar-view class="mb-2"></toolbar-view>
 
-        <div class="mg-data-view-container" >
+        <div class="mg-data-view-container">
           <data-view v-if="!tablePagination.loading"></data-view>
         </div>
-        <pagination
-          class="mt-2"
-          v-model="tablePagination"
-        />
-        </div>
+        <pagination class="mt-2" v-model="tablePagination" />
+      </div>
     </div>
+    <b-overlay :show="!tableData" no-wrap />
   </div>
 </template>
 
@@ -87,23 +81,9 @@ export default Vue.extend({
         this.setToasts(value)
       }
     },
-    ...mapState([
-      'filters',
-      'showSelected',
-      'dataDisplayLayout',
-      'tableData',
-      'tableName',
-      'tableMeta',
-      'tableSettings',
-      'searchText'
-    ]),
-    ...mapState('header', [
-      'breadcrumbs'
-    ]),
-    ...mapGetters([
-      'isUserAuthenticated',
-      'compressedRouteFilter'
-    ]),
+    ...mapState(['filters', 'showSelected', 'dataDisplayLayout', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'searchText']),
+    ...mapState('header', ['breadcrumbs']),
+    ...mapGetters(['isUserAuthenticated', 'compressedRouteFilter']),
     activeFilterSelections () {
       return this.searchText ? { ...this.filters.selections, _search: this.searchText } : this.filters.selections
     },
@@ -113,27 +93,13 @@ export default Vue.extend({
         label: 'search',
         name: '_search'
       }
-      return this.searchText ? [ ...this.filters.definition, searchDef ] : this.filters.definition
+      return this.searchText ? [...this.filters.definition, searchDef] : this.filters.definition
     }
   },
   methods: {
-    ...mapMutations([
-      'setHideFilters',
-      'setTableName',
-      'setToasts',
-      'setSearchText',
-      'setFilterSelection',
-      'setDataDisplayLayout',
-      'setRouteQuery'
-    ]),
-    ...mapActions([
-      'deleteRow',
-      'fetchViewData',
-      'fetchTableMeta'
-    ]),
-    ...mapActions('header', [
-      'fetchPackageTables'
-    ]),
+    ...mapMutations(['setHideFilters', 'setTableName', 'setToasts', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
+    ...mapActions(['deleteRow', 'fetchViewData', 'fetchTableMeta']),
+    ...mapActions('header', ['fetchPackageTables']),
     saveFilterState (newSelections) {
       if (newSelections['_search'] === undefined) {
         this.setSearchText('')
@@ -177,39 +143,40 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.mg-content {
+  white-space: normal;
+}
+.mg-filter {
+  z-index: 1; /* prioritizes stacking index of sidebar: needed for datepicker */
+  transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
+  min-width: 20rem;
+  max-width: 20rem;
+  transform: translateX(0);
+}
+
+.mg-data-view-container {
+  width: 100%;
+}
+.hidefilters .mg-filter {
+  transition: max-width 0.3s, min-width 0.3s, transform 0.6s;
+  transform: translateX(-20rem);
+  max-width: 0;
+  min-width: 0;
+  padding-right: 0;
+}
+.hidefilters .mg-data-view-container {
+  max-width: 100%;
+}
+
+@media only screen and (max-width: 576px) {
+  /* Bootstrap brakepoint sm */
   .mg-content {
-    white-space: normal;
+    display: block;
   }
-  .mg-filter {
-    z-index: 1; /* prioritizes stacking index of sidebar: needed for datepicker */
-    transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
-    min-width: 20rem;
-    max-width: 20rem;
-    transform: translateX( 0 );
-  }
-
-  .mg-data-view-container {
-    width: 100%;
-  }
-  .hidefilters .mg-filter {
-    transition: max-width 0.3s, min-width 0.3s, transform 0.6s;
-    transform: translateX( -20rem );
-    max-width: 0;
+  .mg-content .mg-filter {
     min-width: 0;
-    padding-right: 0;
+    max-width: none;
+    padding: 0;
   }
-  .hidefilters .mg-data-view-container{
-    max-width: 100%;
-  }
-
-  @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
-    .mg-content {
-      display: block;
-    }
-    .mg-content .mg-filter {
-      min-width: 0;
-      max-width: none;
-      padding: 0;
-    }
-  }
+}
 </style>
