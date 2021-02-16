@@ -14,7 +14,8 @@ const router = new Router({
       component: MainView,
       name: 'main-view'
     },
-    { path: '/:entity?',
+    {
+      path: '/:entity?',
       redirect: to => {
         let entity = 'sys_ts_DataExplorerEntitySettings'
         if (to.params.entity) {
@@ -24,7 +25,7 @@ const router = new Router({
         return {
           name: 'main-view',
           params: { entity, view: 'CardView' },
-          query: { page: '1', size: '20' }
+          query: { page: '1', size: '20', filterbar: '1' }
         }
       }
     }
