@@ -30,7 +30,8 @@ describe('MainView.vue', () => {
     $eventBus: bus,
     $bvModal: {
       msgBoxConfirm: jest.fn()
-    }
+    },
+    $t: (msg: any) => msg
   }
 
   beforeEach(() => {

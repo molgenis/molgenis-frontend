@@ -6,16 +6,6 @@
       role="group"
       aria-label="Row actions group"
     >
-      <button
-        type="button"
-        class="btn btn-outline-secondary show-filters-button"
-        v-b-tooltip.hover.bottom
-        :title="$t('dataexplorer_show_filters_btn_tooltip')"
-        @click="setHideFilters(false)"
-      >
-        <font-awesome-icon icon="chevron-right"></font-awesome-icon>
-      </button>
-
       <a
         v-if="hasEditRights"
         role="button"

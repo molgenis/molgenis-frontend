@@ -22,10 +22,17 @@
       </nav>
       <Toaster v-model="toasts" />
     </div>
-    <div class="mg-content d-flex h-100 overflow-control" :class="{ hidefilters: filters.hideSidebar }">
-      <div class="mg-filter mr-2">
-        <filters-view></filters-view>
-      </div>
+    <div class="mg-content d-flex h-100 overflow-control">
+      <button
+        @click="setHideFilters(!filters.hideSidebar)"
+        class="btn btn-outline-secondary mg-filter-tab"
+        :class="{'active': filters.hideSidebar}"
+        :title="$t('dataexplorer_filters_show_btn_label')"
+      >
+          <font-awesome-icon icon="chevron-right"/>
+      </button>
+      <filters-view class="mg-filter mr-2" :class="{'active': filters.hideSidebar}"/>
+
       <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
         <active-filters @input="saveFilterState" :value="activeFilterSelections" :filters="filterDefinitions"></active-filters>
         <toolbar-view class="mb-2"></toolbar-view>
@@ -143,40 +150,65 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.mg-content {
-  white-space: normal;
-}
-.mg-filter {
-  z-index: 1; /* prioritizes stacking index of sidebar: needed for datepicker */
-  transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
-  min-width: 20rem;
-  max-width: 20rem;
-  transform: translateX(0);
-}
-
-.mg-data-view-container {
-  width: 100%;
-}
-.hidefilters .mg-filter {
-  transition: max-width 0.3s, min-width 0.3s, transform 0.6s;
-  transform: translateX(-20rem);
-  max-width: 0;
-  min-width: 0;
-  padding-right: 0;
-}
-.hidefilters .mg-data-view-container {
-  max-width: 100%;
-}
-
-@media only screen and (max-width: 576px) {
-  /* Bootstrap brakepoint sm */
   .mg-content {
-    display: block;
+    white-space: normal;
   }
-  .mg-content .mg-filter {
+
+  .mg-data-view-container {
+    width: 100%;
+  }
+
+  .mg-filter {
+    z-index: 1; /* prioritizes stacking index of sidebar: needed for datepicker */
+    transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
+    min-width: 20rem;
+    max-width: 20rem;
+    transform: translateX(0);
+  }
+
+  .mg-filter.active {
+    transition: max-width 0.3s, min-width 0.3s, transform 0.6s;
+    transform: translateX(-20rem);
+    max-width: 0;
     min-width: 0;
-    max-width: none;
-    padding: 0;
+    padding-right: 0;
   }
-}
+
+  .mg-filter.active + div > .mg-data-view-container{
+    max-width: 100%;
+  }
+
+  .mg-filter-tab {
+    align-items: center;
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    left: 0;
+    padding: 0;
+    position: absolute;
+    transform: translateX(-20px);
+    transition: transform 0.3s;
+    vertical-align: middle;
+    width: 12px;
+    z-index: 900;
+  }
+
+  .mg-filter-tab.active {
+    transform: translateX(0);
+  }
+
+  .mg-filter-tab:hover {
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
+    .mg-content {
+      display: block;
+    }
+    .mg-content .mg-filter {
+      min-width: 0;
+      max-width: none;
+      padding: 0;
+    }
+  }
 </style>
