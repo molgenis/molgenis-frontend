@@ -90,10 +90,10 @@ export default Vue.extend({
       })
     },
     toggleFilterbar () {
-      const filterbar = !this.$store.state.filters.hideSidebar ? '0' : '1'
+      let filterbarState = this.$route.query.filterbar ? parseInt(this.$route.query.filterbar, 10) : 1
       this.$router.push({
         name: 'main-view',
-        query: { ...this.$route.query, filter: this.compressedRouteFilter, filterbar }
+        query: { ...this.$route.query, filter: this.compressedRouteFilter, filterbar: String(1 - filterbarState) }
       })
     }
   }
