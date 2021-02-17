@@ -8,6 +8,7 @@ describe('SearchComponent', () => {
   let wrapper: any
 
   beforeEach(() => {
+    // @ts-ignore
     wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router, directives: { 'b-tooltip': () => { } }, mocks })
   })
 
