@@ -74,12 +74,6 @@ describe('FilterContainer.vue', () => {
     expect(wrapper.find('.dropdown-menu')).toBeDefined()
   })
 
-  it('uses a modal to select active filters if dialogStyle is set to modal', async () => {
-    await wrapper.setProps({ canEdit: true, dialogStyle: 'modal' })
-    await wrapper.find('.btn.btn-block.btn-primary').trigger('click')
-    expect(wrapper.find('.modal-dialog')).toBeDefined()
-  })
-
   it('reacts to filtersShown changes', async () => {
     await wrapper.setProps({ filtersShown: ['color'] })
     expect((wrapper.vm).listOfVisibleFilters[0].label).toBe('Color')

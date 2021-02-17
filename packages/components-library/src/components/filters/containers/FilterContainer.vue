@@ -3,6 +3,47 @@
     class="filter-container"
     @mouseup="drag=false"
   >
+
+    <div v-if="canEdit && filters.length > 0" class="change-filters">
+      <b-dropdown
+        v-if="dialogStyle == 'dropdown'"
+        ref="addFilter"
+        variant="outline-primary"
+        boundary="window"
+        menu-class="shadow ml-2"
+        dropright
+        no-caret
+        block
+      >
+        <template v-slot:button-content>
+          <font-awesome-icon icon="filter" class="mr-1" /> Change filters
+        </template>
+        <b-dropdown-text>
+          Change filters
+          <span class="float-right btn-close-filter-dialog" @click.stop="$refs.addFilter.hide(true)">
+            <font-awesome-icon icon="times" />
+          </span>
+        </b-dropdown-text>
+        <b-dropdown-form>
+          <change-filters
+            v-model="filtersToShow"
+            :filters="filters"
+            @input="selectionUpdate">
+          </change-filters>
+        </b-dropdown-form>
+      </b-dropdown>
+      <button v-else class="btn btn-block btn-primary text-nowrap" v-b-modal.change-filters-modal>
+        Change Filter<font-awesome-icon icon="caret-right" class="ml-1"/>
+      </button>
+      <b-modal id="change-filters-modal" title="Change filters" hide-footer hide-header scrollable>
+        <change-filters
+          v-model="filtersToShow"
+          :filters="filters"
+          @input="selectionUpdate">
+        </change-filters>
+      </b-modal>
+    </div>
+
     <b-collapse
       id="mobile-button-toggle"
       :visible="doCollapse"
@@ -46,45 +87,6 @@
           </filter-card>
         </transition-group>
       </draggable>
-      <div v-if="canEdit && filters.length > 0" class="change-filters">
-        <b-dropdown
-          v-if="dialogStyle == 'dropdown'"
-          ref="addFilter"
-          variant="primary"
-          boundary="window"
-          menu-class="shadow ml-2"
-          dropright
-          no-caret
-          block
-        >
-          <template v-slot:button-content>
-            Change filters <font-awesome-icon icon="caret-right" class="ml-1" />
-          </template>
-          <b-dropdown-text>
-            Change filters
-            <span class="float-right remove-button" @click.stop="$refs.addFilter.hide(true)">
-              <font-awesome-icon icon="times" />
-            </span>
-          </b-dropdown-text>
-          <b-dropdown-form>
-            <change-filters
-              v-model="filtersToShow"
-              :filters="filters"
-              @input="selectionUpdate">
-            </change-filters>
-          </b-dropdown-form>
-        </b-dropdown>
-        <button v-else class="btn btn-block btn-primary text-nowrap" v-b-modal.change-filters-modal>
-          Change Filter<font-awesome-icon icon="caret-right" class="ml-1"/>
-        </button>
-        <b-modal id="change-filters-modal" title="Change filters" hide-footer hide-header scrollable>
-          <change-filters
-            v-model="filtersToShow"
-            :filters="filters"
-            @input="selectionUpdate">
-          </change-filters>
-        </b-modal>
-      </div>
     </b-collapse>
   </div>
 </template>
@@ -245,7 +247,7 @@ export default {
     cursor: grabbing;
   }
 
-  .remove-button {
+  .btn-close-filter-dialog {
     transition: color 0.2s;
     height: inherit;
     width: 1.5em;
@@ -256,7 +258,7 @@ export default {
     cursor: pointer;
   }
 
-  .remove-button:hover {
+  .btn-close-filter-dialog:hover {
     color: var(--danger);
   }
 </style>

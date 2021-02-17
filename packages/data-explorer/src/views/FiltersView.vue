@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="p-0 px-2 d-flex justify-content-between align-items-center">
+      <div class="p-0 mb-2 d-flex justify-content-between align-items-center">
         <h2 class="m-0">{{ 'dataexplorer_filters_header' | i18n}}</h2>
         <button
           type="button"
@@ -12,17 +12,16 @@
           <font-awesome-icon icon="chevron-left"></font-awesome-icon>
         </button>
       </div>
-      <div class="p-2">
-        <filter-container
-          v-if="isFilterDataLoaded"
-          v-model="filterSelections"
-          :filters="filters.definition"
-          :filters-shown="filterShown"
-          @update="updateState"
-          :can-edit="true"
-          dialogStyle="modal"
-        ></filter-container>
-      </div>
+
+      <filter-container
+        v-if="isFilterDataLoaded"
+        v-model="filterSelections"
+        :filters="filters.definition"
+        :filters-shown="filterShown"
+        @update="updateState"
+        :can-edit="true"
+        dialogStyle="dropdown"
+      ></filter-container>
     </div>
   </div>
 </template>
