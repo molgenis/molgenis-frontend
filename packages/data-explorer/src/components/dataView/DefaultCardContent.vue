@@ -116,7 +116,7 @@ export default {
       return `/menu/main/dataexplorer/details/${this.dataTable}/${this.dataId}`
     }
   },
-  watch:{
+  watch: {
     dataContents () {
       this.cardLoading = false
     }
