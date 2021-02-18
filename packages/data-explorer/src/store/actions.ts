@@ -26,21 +26,24 @@ export default {
       await dispatch('header/fetchBreadcrumbs')
     }
   },
-  async fetchViewData (store) {
-    if (store.state.dataDisplayLayout === 'CardView') {
-      store.dispatch('fetchCardViewData')
+  async fetchViewData ({ dispatch, state }: any) {
+    if (state.dataDisplayLayout === 'CardView') {
+      dispatch('fetchCardViewData')
     } else {
-      store.dispatch('fetchTableViewData')
+      dispatch('fetchTableViewData')
     }
   },
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
+    commit('setLoading', true)
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot load card data without table name', type: 'danger' })
+      commit('setLoading', false)
       return
     }
 
     if (state.tableMeta === null) {
       commit('addToast', { message: 'cannot load card data without meta data', type: 'danger' })
+      commit('setLoading', false)
       return
     }
 
@@ -69,15 +72,19 @@ export default {
       commit('setTableData', tableData)
       commit('setPaginationCount', tableData.page.totalElements)
     }
+    commit('setLoading', false)
   },
   fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
+    commit('setLoading', true)
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
+      commit('setLoading', false)
       return
     }
 
     if (state.tableMeta === null) {
       commit('addToast', { message: 'cannot fetch table view data without meta data', type: 'danger' })
+      commit('setLoading', false)
       return
     }
 
@@ -98,6 +105,7 @@ export default {
       commit('setTableData', tableData)
       commit('setPaginationCount', tableData.page.totalElements)
     }
+    commit('setLoading', false)
   },
   // expanded default card
   fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {

@@ -71,4 +71,5 @@ export default interface ApplicationState {
   filters: FilterGroup
   searchText: string
   hiddenColumns: string[]
+  loading: boolean
 }
