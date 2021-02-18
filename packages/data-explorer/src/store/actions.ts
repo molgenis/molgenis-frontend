@@ -4,7 +4,7 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
-import router from '@/router'
+import { Store } from 'vuex'
 
 export default {
   fetchTableMeta: async ({ commit, getters, dispatch, state }, payload: { tableName: string }) => {
@@ -26,45 +26,52 @@ export default {
       await dispatch('header/fetchBreadcrumbs')
     }
   },
-  async fetchViewData ({ dispatch, state }: any) {
+  async fetchViewData ({ state, dispatch, commit }) {
+    if (state.tableName === null) {
+      commit('addToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
+      return
+    }
+
+    if (state.tableMeta === null) {
+      commit('addToast', { message: 'cannot fetch table view data without meta data', type: 'danger' })
+      return
+    }
+    commit('setLoading', true)
+
     if (state.dataDisplayLayout === 'CardView') {
       dispatch('fetchCardViewData')
     } else {
       dispatch('fetchTableViewData')
     }
   },
-  fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
-    commit('setLoading', true)
-    if (state.tableName === null) {
-      commit('addToast', { message: 'cannot load card data without table name', type: 'danger' })
-      commit('setLoading', false)
-      return
-    }
+  /**
+   * Don't call this function directly (except for tests), use fetchViewData instead
+   */
+  fetchCardViewData: async ({ commit, state, getters }) => {
+    const { tableName, tableMeta, tablePagination, sort, tableSettings, dataDisplayLayout } = state
 
-    if (state.tableMeta === null) {
-      commit('addToast', { message: 'cannot load card data without meta data', type: 'danger' })
-      commit('setLoading', false)
-      return
-    }
+    // failsafe measures.
+    if (!tableName) return
+    if (!tableMeta) return
 
     let columns: string[]
-    let tableData:any = []
-    const isCustomCard = state.dataDisplayLayout === 'CardView' && state.tableSettings.customCardCode
+    let tableData: any = []
+    const isCustomCard = dataDisplayLayout === 'CardView' && tableSettings.customCardCode
     const rsqlQuery = getters.filterRsql
 
     if (isCustomCard) {
-      columns = state.tableSettings.customCardAttrs
+      columns = tableSettings.customCardAttrs
         .split(',')
         .filter(f => f !== '')
         .map(a => a.trim())
 
       tableData = await dataRepository.getTableDataDeepReference(
-        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination, state.sort
+        tableName, tableMeta, columns, rsqlQuery, tablePagination, sort
       )
     } else {
-      columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)
+      columns = metaDataService.getAttributesfromMeta(tableMeta).splice(0, tableSettings.collapseLimit)
       tableData = await dataRepository.getTableDataWithLabel(
-        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination, state.sort)
+        tableName, tableMeta, columns, rsqlQuery, tablePagination, sort)
     }
 
     if (getters.filterRsql === rsqlQuery) {
@@ -74,30 +81,26 @@ export default {
     }
     commit('setLoading', false)
   },
-  fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
-    commit('setLoading', true)
-    if (state.tableName === null) {
-      commit('addToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
-      commit('setLoading', false)
-      return
-    }
+  /**
+   * Don't call this function directly (except for tests), use fetchViewData instead
+   */
+  fetchTableViewData: async ({ commit, state, getters }) => {
+    const { tableName, tableMeta, tablePagination, sort } = state
 
-    if (state.tableMeta === null) {
-      commit('addToast', { message: 'cannot fetch table view data without meta data', type: 'danger' })
-      commit('setLoading', false)
-      return
-    }
+    // failsafe measures.
+    if (!tableName) return
+    if (!tableMeta) return
 
     const rsqlQuery = getters.filterRsql
-    let tableData:any = []
+    let tableData: any = []
 
     tableData = await dataRepository.getTableDataWithLabel(
-      state.tableName,
-      state.tableMeta,
-      metaDataService.getAttributesfromMeta(state.tableMeta),
+      tableName,
+      tableMeta,
+      metaDataService.getAttributesfromMeta(tableMeta),
       rsqlQuery,
-      state.tablePagination,
-      state.sort
+      tablePagination,
+      sort
     )
 
     if (getters.filterRsql === rsqlQuery) {
@@ -108,7 +111,7 @@ export default {
     commit('setLoading', false)
   },
   // expanded default card
-  fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {
+  fetchRowDataLabels: async ({ commit, state, getters }, payload: { rowId: string }) => {
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot fetch row data without table name', type: 'danger' })
       return
@@ -128,7 +131,7 @@ export default {
       commit('updateRowData', { rowId: payload.rowId, rowData })
     }
   },
-  deleteRow: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string }) => {
+  deleteRow: async ({ commit, state }, payload: { rowId: string }) => {
     if (typeof state.tableName !== 'string') {
       commit('addToast', { message: 'cannot delete row from unknown table', type: 'danger' })
       return

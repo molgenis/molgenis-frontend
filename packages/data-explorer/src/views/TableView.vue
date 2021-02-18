@@ -73,7 +73,6 @@ export default {
   },
   methods: {
     ...mapMutations(['toggleSelectedItems', 'setSortColumn', 'setIsSortOrderReversed']),
-    ...mapActions(['fetchTableViewData']),
     getEntityId (entity) {
       return entity[this.idAttribute.name].toString()
     },

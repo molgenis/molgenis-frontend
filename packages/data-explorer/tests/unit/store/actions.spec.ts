@@ -348,14 +348,14 @@ describe('actions', () => {
 
     it('if selected view is cardView, should fetch card data', async (done) => {
       state.dataDisplayLayout = 'CardView'
-      await actions.fetchViewData({ commit, dispatch, getters, state })
+      await actions.fetchViewData({ commit, dispatch, state })
       expect(dispatch).toHaveBeenCalledWith('fetchCardViewData')
       done()
     })
 
     it('if selected view not cardView, should fetch table data', async (done) => {
       state.dataDisplayLayout = 'TableView'
-      await actions.fetchViewData({ commit, dispatch, getters, state })
+      await actions.fetchViewData({ commit, dispatch, state })
       expect(dispatch).toHaveBeenCalledWith('fetchTableViewData')
       done()
     })

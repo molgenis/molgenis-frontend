@@ -61,7 +61,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchTableViewData']),
     ...mapMutations(['setShowSelected', 'setHideFilters']),
     getEntityId (entity) {
       return entity[this.tableIdAttributeName].toString()
