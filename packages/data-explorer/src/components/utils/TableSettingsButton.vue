@@ -2,7 +2,7 @@
   <a :href="href"
     v-b-tooltip.hover.bottom
     :title="$t('dataexplorer_settings_btn_tooltip')"
-    type="button" role="button"
+    role="button"
     class="btn btn-light btn-outline-secondary table-settings">
     <font-awesome-icon icon="cog"></font-awesome-icon>
   </a>
