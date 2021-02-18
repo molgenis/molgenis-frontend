@@ -36,7 +36,7 @@
         <pagination class="mt-2" v-model="tablePagination" />
       </div>
     </div>
-    <b-overlay :show="!tableData" no-wrap />
+    <b-overlay :show="loading" no-wrap />
   </div>
 </template>
 
@@ -81,7 +81,7 @@ export default Vue.extend({
         this.setToasts(value)
       }
     },
-    ...mapState(['filters', 'showSelected', 'dataDisplayLayout', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'searchText']),
+    ...mapState(['filters', 'showSelected', 'dataDisplayLayout', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'searchText', 'loading']),
     ...mapState('header', ['breadcrumbs']),
     ...mapGetters(['isUserAuthenticated', 'compressedRouteFilter']),
     activeFilterSelections () {
