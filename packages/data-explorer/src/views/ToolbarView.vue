@@ -219,34 +219,21 @@ export default {
 </script>
 
 <style scoped>
-
-.btn-toolbar {
-  flex-wrap: wrap;
-  margin-top: -0.5rem;
-}
-
-.btn-group{
-  margin: 0.5rem 0.5rem 0 0;
-}
-/*
-@media screen and (max-width: 1160px) {
   .btn-toolbar {
     flex-wrap: wrap;
-    justify-content: start !important;
+    margin-top: -0.5rem;
   }
   .btn-group{
-    margin: 1rem 1rem 0 0;
+    margin: 0.5rem 0.5rem 0 0;
   }
-}
-*/
-.btn-toolbar .btn.btn-outline-secondary:focus {
-  outline: none;
-  box-shadow: none;
-}
-.btn-toolbar .btn.btn-outline-secondary:not(:hover):focus,
-.btn-toolbar .btn.btn-outline-secondary:not(:hover):active {
-  background-color: inherit;
-  color: var(--secondary);
-  border-color: var(--secondary);
-}
+  .btn-toolbar .btn.btn-outline-secondary:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  .btn-toolbar .btn.btn-outline-secondary:not(:hover):focus,
+  .btn-toolbar .btn.btn-outline-secondary:not(:hover):active {
+    background-color: inherit;
+    color: var(--secondary);
+    border-color: var(--secondary);
+  }
 </style>
