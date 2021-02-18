@@ -18,7 +18,6 @@
 
       <a
         v-if="hasEditRights"
-        type="button"
         role="button"
         class="btn btn-outline-secondary add-row"
         :href="'/plugin/data-row-edit/' + tableName"
@@ -220,12 +219,16 @@ export default {
 </script>
 
 <style scoped>
-/* safari scrollbar fix */
+
 .btn-toolbar {
-  min-height: 2.2rem;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  margin-top: -0.5rem;
 }
 
+.btn-group{
+  margin: 0.5rem 0.5rem 0 0;
+}
+/*
 @media screen and (max-width: 1160px) {
   .btn-toolbar {
     flex-wrap: wrap;
@@ -235,7 +238,7 @@ export default {
     margin: 1rem 1rem 0 0;
   }
 }
-
+*/
 .btn-toolbar .btn.btn-outline-secondary:focus {
   outline: none;
   box-shadow: none;
