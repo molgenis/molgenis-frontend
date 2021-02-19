@@ -33,7 +33,8 @@ const state: ApplicationState = {
     selections: {}
   },
   searchText: '',
-  hiddenColumns: []
+  hiddenColumns: [],
+  loading: false
 }
 
 export default state

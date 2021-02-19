@@ -125,6 +125,7 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn install"
+                    sh "yarn lerna exec -- yarn install"  // missing yarn.lock workaround, see https://github.com/lerna/lerna/issues/1171
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run build --scope @molgenis-ui/components-library"
                     sh "yarn lerna run unit"

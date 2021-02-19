@@ -37,6 +37,9 @@ export default {
   setShowSelected (state: ApplicationState, cart: boolean) {
     state.showSelected = cart
   },
+  setLoading (state: ApplicationState, isLoading: boolean) {
+    state.loading = isLoading
+  },
   toggleSelectedItems (state: ApplicationState, id: string) {
     const index = state.selectedItemIds.indexOf(id)
     if (index !== -1) {

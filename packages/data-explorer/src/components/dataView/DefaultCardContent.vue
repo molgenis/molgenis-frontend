@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-overlay :show="cardLoading">
     <h5 class="card-title mg-default-card-title">{{dataLabel}}
       <a
         v-if="isEditable"
@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </b-overlay>
 </template>
 
 <script>
@@ -61,7 +61,8 @@ export default {
   name: 'DefaultCardContent',
   data: () => {
     return {
-      cardState: 'closed'
+      cardState: 'closed',
+      cardLoading: false
     }
   },
   props: {
@@ -123,6 +124,11 @@ export default {
       return `/menu/main/dataexplorer/details/${this.dataTable}/${this.dataId}`
     }
   },
+  watch: {
+    dataContents () {
+      this.cardLoading = false
+    }
+  },
   methods: {
     goToDetails () {
       window.location.assign(this.detailLink)
@@ -131,6 +137,7 @@ export default {
       if (this.cardState === 'closed') {
         this.cardState = 'open'
         this.$emit('expandDefaultCard')
+        this.cardLoading = true
       } else {
         this.cardState = 'closed'
       }
