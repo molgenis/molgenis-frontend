@@ -1,14 +1,41 @@
-export function isDataApiResponseItem (reponseValue: DataApiResponseItem | string | boolean | number): reponseValue is DataApiResponseItem {
-  return (reponseValue as DataApiResponseItem).links !== undefined
+export function isSingleRefValueObject (value: DataObjectValue): value is SingleRefValueObject {
+  return (value as SingleRefValueObject).data !== undefined
 }
 
-export type DataApiResponseItem = {
+export function isMRefValueObject (value: DataObjectValue): value is MRefValueObject {
+  return (value as MRefValueObject).items !== undefined
+}
+
+export function isRefValue (value: DataObjectValue): value is RefValue {
+  return isSingleRefValueObject(value) || isMRefValueObject(value)
+}
+
+export function isLinkable (value: any): value is Linkable {
+  return (value as Linkable).links !== undefined && typeof (value as Linkable).links.self === 'string'
+}
+
+interface Linkable {
   links: { self: string },
-  items?: DataApiResponseItem[],
-  data?: DataObject
 }
 
-export type DataObject = {[key: string]: DataApiResponseItem | string | boolean | number}
+interface BaseValueObject { }
+
+export interface MRefValueObject extends BaseValueObject, Linkable {
+  items: DataApiResponseItem[]
+}
+export interface SingleRefValueObject extends BaseValueObject, Linkable {
+  data: DataObject
+}
+
+export type RefValue = SingleRefValueObject | MRefValueObject;
+
+export type DataApiResponseItem = Linkable & {
+  data: DataObject
+}
+
+export type DataObjectValue = RefValue | string | boolean | number
+
+export type DataObject = { [key: string]: DataObjectValue }
 
 type DataApiResponsePage = {
   size: number,

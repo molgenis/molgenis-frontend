@@ -24,7 +24,15 @@
           {{head}}
         </div>
         <div class="col-6">
-          {{value}}
+          <template v-if="Array.isArray(value)">
+            {{value.map(v => v.label).join(', ')}}
+          </template>
+          <template v-else-if="typeof value === 'object' && value !== null">
+            {{value.label}}
+          </template>
+          <template v-else>
+            {{value}}
+          </template>
         </div>
       </div>
       <div class="row">

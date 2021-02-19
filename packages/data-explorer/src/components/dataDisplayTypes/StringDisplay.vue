@@ -15,7 +15,7 @@ export default {
   name: 'StringDisplay',
   props: {
     value: {
-      type: String,
+      type: [String, Number, Boolean],
       required: true
     },
     rowIndex: {
@@ -30,6 +30,11 @@ export default {
   methods: {
     getRef () {
       return this.$refs.stringPreview
+    }
+  },
+  computend: {
+    valueAsString () {
+      return this.value !== undefined || this.value !== null ? this.value.toString() : ''
     }
   }
 }
