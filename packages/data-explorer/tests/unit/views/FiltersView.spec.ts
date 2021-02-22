@@ -2,8 +2,8 @@ import { createLocalVue, shallowMount } from '@vue/test-utils'
 import FiltersView from '@/views/FiltersView.vue'
 import Vuex from 'vuex'
 import getters from '@/store/getters'
-import routes from '@/router'
 import Router from 'vue-router'
+import routes from '@/routes'
 
 const mocks = {
   $t: (msg: any) => msg

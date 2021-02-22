@@ -1,6 +1,7 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import SearchComponent from '@/components/SearchComponent.vue'
-import router from '@/router'
+import Router from 'vue-router'
+import routes from '@/routes'
 
 const mocks = { $t: (msg: any) => msg }
 
@@ -9,7 +10,10 @@ describe('SearchComponent', () => {
 
   beforeEach(() => {
     // @ts-ignore
-    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router, directives: { 'b-tooltip': () => { } }, mocks })
+    const localVue = createLocalVue()
+    localVue.use(Router)
+    const router = new Router({ routes })
+    wrapper = shallowMount(SearchComponent, { localVue, propsData: { value: 'demo' }, router, directives: { 'b-tooltip': () => { } }, mocks })
   })
 
   it('should render the component', () => {

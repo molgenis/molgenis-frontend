@@ -4,7 +4,6 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
-import router from '@/router'
 
 export default {
   fetchTableMeta: async ({ commit, getters, dispatch, state }, payload: { tableName: string }) => {
