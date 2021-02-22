@@ -1,4 +1,5 @@
 module.exports = {
+  preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel',
   moduleFileExtensions: [
     'js',
     'jsx',
@@ -7,12 +8,6 @@ module.exports = {
     'ts',
     'tsx'
   ],
-  transform: {
-    '^.+\\.vue$': 'vue-jest',
-    '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
-    '^.+\\.tsx?$': 'ts-jest',
-    '^.+\\.es.js$': 'babel-jest'
-  },
   transformIgnorePatterns: [
     '/node_modules/(?!(@molgenis/*))'
   ],
@@ -36,5 +31,6 @@ module.exports = {
       babelConfig: true
     }
   },
-  collectCoverage: true
+  collectCoverage: true,
+  setupFiles: ['<rootDir>/tests/unit/setup.js']
 }

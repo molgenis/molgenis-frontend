@@ -17,15 +17,15 @@ describe('ShoppingButton.vue', () => {
     })
   })
 
-  it('toggles state', () => {
+  it('toggles state', async () => {
     const wrapper = shallowMount(ShoppingButton, { store, localVue, propsData: { id: 'test', isSelected: true } })
     expect(wrapper.classes()).toContain('btn-primary')
-    wrapper.setProps({ isSelected: false })
+    await wrapper.setProps({ isSelected: false })
     expect(wrapper.classes()).toContain('btn-outline-secondary')
   })
-  it('add items to shoppingcart', () => {
+  it('add items to shoppingcart', async () => {
     const wrapper = shallowMount(ShoppingButton, { store, localVue, propsData: { id: 'test', isSelected: false } })
-    wrapper.find('.shopping-button').trigger('click')
+    await wrapper.find('.shopping-button').trigger('click')
     expect(mutations.toggleSelectedItems).toBeCalledTimes(1)
   })
 })

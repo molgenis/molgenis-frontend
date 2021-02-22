@@ -74,10 +74,13 @@ Vue.config.productionTip = false
 // This way the mainView can coordinate the events
 Vue.prototype.$eventBus = new Vue()
 
+// @ts-ignore
+const { lng, fallbackLng } = window.__INITIAL_STATE__
+
 Vue.use(i18n, {
-  lng: 'en',
-  fallbackLng: 'en',
-  namespace: ['dataexplorer'],
+  lng,
+  fallbackLng,
+  namespace: ['dataexplorer', 'data-row-edit', 'ui-form'],
   callback () {
     new Vue({
       store,

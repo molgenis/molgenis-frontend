@@ -16,7 +16,7 @@ describe('DefaultCardContent.vue', () => {
     },
     numberOfAttributes: 10
   }
-  window.location.assign = jest.fn()
+
   const wrapper = shallowMount(DefaultCardContent, { propsData, localVue, mocks })
   it('exists', () => {
     expect(wrapper.exists()).toBeTruthy()
@@ -51,11 +51,6 @@ describe('DefaultCardContent.vue', () => {
     button.trigger('click')
     expect(wrapper.vm.$data.cardState).toBe('closed')
   })
-  it('redirects to detail URL when info button is clicked', () => {
-    const button = wrapper.find('button.mg-info-btn')
-    button.trigger('click')
-    expect(window.location.assign).toBeCalledWith('/menu/main/dataexplorer/details/myTable/dataId')
-  })
 
   describe('when the card is closed', () => {
     const wrapper = shallowMount(DefaultCardContent, { propsData, localVue, mocks })
@@ -67,7 +62,7 @@ describe('DefaultCardContent.vue', () => {
 
   describe('dataToShow', () => {
     it('should reduce the cardData object to its visible properties', () => {
-      let localThis: any = {
+      const localThis: any = {
         dataContents: { key1: 'val1', key2: 'val2', key3: 'val3' },
         cardState: 'open',
         collapseLimit: 2,

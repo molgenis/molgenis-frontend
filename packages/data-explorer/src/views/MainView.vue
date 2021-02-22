@@ -75,7 +75,7 @@ export default Vue.extend({
       },
       set: function (value) {
         this.$router.push({
-          name: 'main-view',
+          name: 'de-view',
           query: { ...this.$route.query, page: value.page, size: value.size }
         })
       }
@@ -113,7 +113,7 @@ export default Vue.extend({
       }
       this.setFilterSelection(newSelections)
       this.$router.push({
-        name: 'main-view',
+        name: 'de-view',
         query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     },
@@ -126,7 +126,7 @@ export default Vue.extend({
     },
     showSidebar () {
       this.$router.push({
-        name: 'main-view',
+        name: 'de-view',
         query: { ...this.$route.query, filter: this.compressedRouteFilter, hideSidebar: String(false) }
       })
     }

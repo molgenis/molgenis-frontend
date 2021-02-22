@@ -6,16 +6,16 @@
       role="group"
       aria-label="Row actions group"
     >
-      <a
+
+      <router-link
         v-if="hasAddRights"
-        role="button"
         class="btn btn-outline-secondary add-row"
-        :href="'/plugin/data-row-edit/' + tableName"
         v-b-tooltip.hover.bottom
         :title="$t('dataexplorer_add_entity_btn_tooltip')"
+        :to="{ name: 'de-create', params: { entity: tableName }, query: {}}"
       >
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
-      </a>
+      </router-link>
     </div>
 
     <div class="btn-group" role="group" aria-label="Column actions group">
@@ -87,7 +87,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -149,7 +148,7 @@ export default {
       set (value) {
         this.$store.commit('setSearchText', value)
         this.$router.push({
-          name: 'main-view',
+          name: 'de-view',
           query: { ...this.$route.query, filter: this.compressedRouteFilter }
         })
       }
@@ -190,14 +189,14 @@ export default {
       const value =
         this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.$router.push({
-        name: 'main-view',
+        name: 'de-view',
         params: { ...this.$route.params, view: value },
         query: { ...this.$route.query }
       })
     },
     handleSortSelectChange (sort) {
       this.$router.push({
-        name: 'main-view',
+        name: 'de-view',
         query: {
           ...this.$route.query,
           sort: `${sort.isSortOrderReversed ? '-' : ''}${sort.sortColumnName}`

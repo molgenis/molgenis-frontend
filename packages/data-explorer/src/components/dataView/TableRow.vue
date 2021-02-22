@@ -3,15 +3,15 @@
     <th v-if="showSelected" scope="col"><shopping-button :isSelected="isSelected" :id="id"></shopping-button></th>
     <th v-else class="text-nowrap" :id="'table-row-'+id" scope="col">
       <input v-if="isEditable" class="form-check-input" type="checkbox" :checked="isSelected" :value="id" @click="$emit('toggleSelectedItemsHandler', id)">
-      <a
+      <router-link
         v-if="isEditable"
         v-b-tooltip.hover.bottom
         :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
         class="btn btn-sm text-secondary pl-2"
         role="button"
-        :href="'/plugin/data-row-edit/' + tableName + '/' + id">
+        :to="{ name: 'de-edit', params: { entity: tableName, dataRowId: id}, query: {}}">
         <font-awesome-icon icon="edit"></font-awesome-icon>
-      </a>
+      </router-link>
       <a
         v-b-tooltip.hover.bottom
         :title="$t('dataexplorer_row_action_details_btn_tooltip')"
