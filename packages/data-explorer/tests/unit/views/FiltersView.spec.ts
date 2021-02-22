@@ -44,8 +44,8 @@ describe('FiltersView.vue', () => {
 
   it('show/hides the filters', async () => {
     const wrapper = shallowMount(FiltersView, { store, localVue, router, mocks })
-    expect(wrapper.vm.$router.currentRoute.query.filterbar).toBe('1')
+    expect(wrapper.vm.$router.currentRoute.query.hideSidebar).toBe('false')
     await wrapper.find('.hide-filters').trigger('click')
-    expect(wrapper.vm.$router.currentRoute.query.filterbar).toBe('0')
+    expect(wrapper.vm.$router.currentRoute.query.hideSidebar).toBe('true')
   })
 })

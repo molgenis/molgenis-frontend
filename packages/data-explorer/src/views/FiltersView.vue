@@ -7,7 +7,7 @@
           type="button"
           class="btn btn-light btn-outline-secondary hide-filters"
           :title="$t('dataexplorer_filters_hide_btn_label')"
-          @click="toggleFilterbar"
+          @click="toggleHideSidebar"
         >
           <font-awesome-icon icon="chevron-left"></font-awesome-icon>
         </button>
@@ -89,11 +89,11 @@ export default Vue.extend({
         query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     },
-    toggleFilterbar () {
-      let filterbarState = this.$route.query.filterbar ? parseInt(this.$route.query.filterbar, 10) : 1
+    toggleHideSidebar () {
+      let hideSidebar = this.$route.query.hideSidebar ? this.$route.query.hideSidebar === 'true' : true
       this.$router.push({
         name: 'main-view',
-        query: { ...this.$route.query, filter: this.compressedRouteFilter, filterbar: String(1 - filterbarState) }
+        query: { ...this.$route.query, filter: this.compressedRouteFilter, hideSidebar: String(!hideSidebar) }
       })
     }
   }

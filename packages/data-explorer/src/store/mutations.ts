@@ -82,7 +82,7 @@ export default {
     Vue.set(state.filters, 'selections', selections)
   },
   setRouteQuery (state: ApplicationState, routeQuery: RouteQuery) {
-    state.filters.hideSidebar = routeQuery.filterbar !== undefined ? !(parseInt(routeQuery.filterbar, 10)) : false
+    state.filters.hideSidebar = routeQuery.hideSidebar ? routeQuery.hideSidebar === 'true' : false
     state.tablePagination.page = routeQuery.page !== undefined ? parseInt(routeQuery.page, 10) : defaultPagination.page
     state.tablePagination.size = routeQuery.size !== undefined ? parseInt(routeQuery.size, 10) : defaultPagination.size
 

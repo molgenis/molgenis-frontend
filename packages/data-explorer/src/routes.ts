@@ -17,7 +17,7 @@ const routes = [
       return {
         name: 'main-view',
         params: { entity, view: 'CardView' },
-        query: { page: '1', size: '20', filterbar: '1' }
+        query: { page: '1', size: '20', hideSidebar: 'false' }
       }
     }
   }
