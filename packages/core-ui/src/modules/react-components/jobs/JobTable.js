@@ -27,7 +27,7 @@ var JobTable = React.createClass({
         return <div className="panel panel-primary">
             <div className="panel-heading">Finished Jobs</div>
             <div className="panel-body" style={{overflowX: 'auto'}}>
-                <table className="table table-striped">
+                <table className="table table-striped table-bordered">
                     <thead>
                     <th></th>
                     <th>Status</th>
