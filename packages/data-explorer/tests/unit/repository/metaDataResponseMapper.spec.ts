@@ -15,6 +15,7 @@ describe('metaDataResponseMapper', () => {
 
     describe('when no label is set', () => {
       beforeAll(() => {
+        // @ts-ignore
         delete apiResponse.data.label
         metaData = toMetaData(<ResponseEntityType> apiResponse)
       })
@@ -30,6 +31,7 @@ describe('metaDataResponseMapper', () => {
 
     describe('when not part of a package', () => {
       beforeAll(() => {
+        // @ts-ignore
         delete apiResponse.data.package
         metaData = toMetaData(<ResponseEntityType> apiResponse)
       })
@@ -38,6 +40,7 @@ describe('metaDataResponseMapper', () => {
 
     describe('when extending not a parent', () => {
       beforeAll(() => {
+        // @ts-ignore
         delete apiResponse.data.extends
         metaData = toMetaData(<ResponseEntityType> apiResponse)
       })

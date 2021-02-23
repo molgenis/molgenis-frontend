@@ -8,6 +8,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faCaretRight,
   faExclamationCircle,
+  faFilter,
   faSpinner,
   faTimes
 } from '@fortawesome/free-solid-svg-icons'
@@ -26,6 +27,7 @@ export default function (BootstrapVue: any, Vue: any) {
   library.add(
     faCaretRight,
     faExclamationCircle,
+    faFilter,
     faSpinner,
     faTimes
   )

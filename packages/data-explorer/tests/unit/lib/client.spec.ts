@@ -2,6 +2,7 @@ import client, { errorReponse } from '@/lib/client'
 import store from '@/store/store'
 
 // Hack to be able to change window.location.href in jest
+// @ts-ignore
 delete window.location
 // @ts-ignore
 window.location = {}

@@ -28,6 +28,7 @@ import {
   faChevronUp,
   faCog,
   faEdit,
+  faFilter,
   faExclamationTriangle,
   faMinus,
   faPlay,
@@ -50,7 +51,7 @@ import {
   faSortAlphaDown
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCaretRight, faChevronLeft, faChevronRight, faChevronUp, faCog, faEdit, faExclamationTriangle,
+library.add(faCaretRight, faChevronLeft, faChevronRight, faChevronUp, faCog, faEdit, faFilter, faExclamationTriangle,
   faMinus, faPlay, faPlus, faPlusSquare, faShoppingBag, faSlidersH, faShoppingCart, faSpinner,
   faSearch, faStore, faTh, faThList, faTimes, faTrash, faUpload, faSort, faSortAlphaUp, faSortAlphaDown, faShare
 )
