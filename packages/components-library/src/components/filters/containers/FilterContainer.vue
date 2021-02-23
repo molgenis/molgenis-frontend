@@ -7,6 +7,7 @@
     <div v-if="canEdit && filters.length > 0" class="change-filters">
       <b-dropdown
         v-if="dialogStyle == 'dropdown'"
+        class="mb-2"
         ref="addFilter"
         variant="outline-primary"
         boundary="window"
@@ -260,6 +261,11 @@ export default {
 
   .btn-close-filter-dialog:hover {
     color: var(--danger);
+  }
+
+  .change-filters form {
+      max-height: 400px;
+      overflow: auto;
   }
 </style>
 
