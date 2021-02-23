@@ -24,7 +24,7 @@
     </div>
     <div class="mg-content d-flex h-100 overflow-control">
       <button
-        @click="setHideFilters(!filters.hideSidebar)"
+        @click="showSidebar"
         class="btn btn-outline-secondary mg-filter-tab"
         :class="{'active': filters.hideSidebar}"
         :title="$t('dataexplorer_filters_show_btn_label')"
@@ -104,7 +104,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapMutations(['setHideFilters', 'setTableName', 'setToasts', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
+    ...mapMutations(['setTableName', 'setToasts', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
     ...mapActions(['deleteRow', 'fetchViewData', 'fetchTableMeta']),
     ...mapActions('header', ['fetchPackageTables']),
     saveFilterState (newSelections) {
@@ -123,6 +123,12 @@ export default Vue.extend({
       if (isDeleteConfirmed) {
         this.deleteRow({ rowId: itemId })
       }
+    },
+    showSidebar () {
+      this.$router.push({
+        name: 'main-view',
+        query: { ...this.$route.query, filter: this.compressedRouteFilter, hideSidebar: String(false) }
+      })
     }
   },
   async created () {
