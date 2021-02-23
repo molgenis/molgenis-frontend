@@ -48,7 +48,7 @@ var AggregateTable = React.createClass({
             return div(null, span(null, "No results found"));
         }
 
-        var className = 'table table-striped';
+        var className = 'table table-striped table-bordered';
         var AggregateTableHeader = AggregateTableHeaderFactory({
             labels: this.state.data.aggs.yLabels,
             attr: this.state.data.yAttr
