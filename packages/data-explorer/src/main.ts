@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import 'bootstrap'
 import App from './App.vue'
-import router from './router'
+
+import Router from 'vue-router'
+import routes from './routes'
+
 import store from './store/store'
 import { BootstrapVue } from 'bootstrap-vue'
 
@@ -51,11 +54,14 @@ import {
   faSortAlphaDown
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCaretRight, faChevronLeft, faChevronRight, faChevronUp, faCog, faEdit, faFilter, faExclamationTriangle,
+const packageJson = require('../package.json')
+
+library.add(faCaretRight, faChevronLeft, faChevronRight, faChevronUp, faCog, faEdit, faExclamationTriangle, faFilter, 
   faMinus, faPlay, faPlus, faPlusSquare, faShoppingBag, faSlidersH, faShoppingCart, faSpinner,
   faSearch, faStore, faTh, faThList, faTimes, faTrash, faUpload, faSort, faSortAlphaUp, faSortAlphaDown, faShare
 )
 
+Vue.use(Router)
 Vue.use(BootstrapVue)
 Vue.component('draggable', draggable)
 Vue.component('DateRangePicker', DateRangePicker)
@@ -75,7 +81,10 @@ Vue.use(i18n, {
   callback () {
     new Vue({
       store,
-      router,
+      router: new Router({
+        base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
+        routes
+      }),
       render: h => h(App)
     }).$mount('#app')
   }
