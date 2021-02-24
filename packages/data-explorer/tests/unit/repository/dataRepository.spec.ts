@@ -34,9 +34,10 @@ describe('dataRepository', () => {
       client.get.mockResolvedValue({ data: mockRowResponse })
       const resp = await dataRepository.getRowDataWithReferenceLabels(tableId, rowId, mockmeta as MetaData)
       expect(resp).toEqual({
-        country: 'label',
+        country: { id: 'id', label: 'label' },
         id: 1,
-        label: 'my label row data'
+        label: 'my label row data',
+        age_groups: [{ id: 'id1', label: 'label1' }]
       })
     })
   })

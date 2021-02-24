@@ -14,7 +14,7 @@ export default {
   name: 'DataDisplay',
   props: {
     value: {
-      type: String,
+      type: [String, Object],
       required: true
     }
   },

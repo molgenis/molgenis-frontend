@@ -1,8 +1,8 @@
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta } from './metaDataService'
 import * as metaDataRepository from './metaDataRepository'
-import { DataApiResponse, DataApiResponseItem, DataObject } from '@/types/ApiResponse'
-import { MetaData, Attribute } from '@/types/MetaData'
+import { DataApiResponse, DataApiResponseItem, DataObject, isSingleRefValueObject, isMRefValueObject, MRefValueObject, SingleRefValueObject } from '@/types/ApiResponse'
+import { MetaData, Attribute, RefAttribute, isRefAttribute } from '@/types/MetaData'
 import client from '@/lib/client'
 import { encodeRsqlValue } from '@molgenis/rsql'
 import { Pagination } from '@molgenis-ui/components-library'
@@ -10,34 +10,28 @@ import { Sort } from '@/types/Sort'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaData) => {
-  if (!rowData.data) {
-    throw new Error('invalid input: row data must have data property')
-  }
-
-  const metadataAttributeMap: {[s: string]: Attribute} = metaData.attributes.reduce((accum:any, attr) => {
+  const metadataAttributeMap: { [s: string]: Attribute } = metaData.attributes.reduce((accum: any, attr) => {
     accum[attr.name] = attr
     return accum
   }, {})
 
   const row: DataObject = rowData.data
-  let result:any = {}
+  let result: any = {}
   let keys = Object.keys(row)
 
   for (let i = 0; i < keys.length; i++) {
     const columnKey = keys[i]
-    const value = row[columnKey]
+    const dataObjectValue = row[columnKey]
     const attributeMetadata = metadataAttributeMap[columnKey]
-    const isReference = attributeMetadata.isReference
     let resolvedValue
-    if (isReference && attributeMetadata.refEntityType) {
-      // @ts-ignore
-      if (value.items) {
-        resolvedValue = await getMrefLabel(attributeMetadata, value)
+    if (isRefAttribute(attributeMetadata) && (isSingleRefValueObject(dataObjectValue) || isMRefValueObject(dataObjectValue))) {
+      if (isMRefValueObject(dataObjectValue)) {
+        resolvedValue = await getMRefData(attributeMetadata, dataObjectValue)
       } else {
-        resolvedValue = await getRefLabel(attributeMetadata, value)
+        resolvedValue = await getRefLabel(attributeMetadata, dataObjectValue)
       }
     } else {
-      resolvedValue = value
+      resolvedValue = dataObjectValue
     }
     result[columnKey] = resolvedValue
   }
@@ -45,49 +39,43 @@ const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaDat
   return result
 }
 
-const getMrefLabel = async (attributeMetadata: Attribute, rowDataItem:any) => {
-  // The isMref already checks if the value.items is available
-  // @ts-ignore
-  const refMetadata = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
+const getMRefData = async (attributeMetadata: RefAttribute, value: MRefValueObject) => {
+  const metaData = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
 
-  const resolvedValue = rowDataItem.items.map((mrefValue) => {
-    if (refMetadata.labelAttribute) {
-      return mrefValue.data[refMetadata.labelAttribute.name]
-    } else {
-      return ''
-    }
+  return value.items.map((refValue) => {
+    return toRefValueObject(refValue, metaData)
   })
-  return resolvedValue.join(', ')
 }
 
-const getRefLabel = async (attributeMetadata: Attribute, rowDataItem:any) => {
-  // This is checked by isReference
-  // @ts-ignore
-  const refMetadata = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
-  // @ts-ignore
-  const resolvedValue = rowDataItem.data[refMetadata.labelAttribute.name]
-  return resolvedValue
+const getRefLabel = async (attributeMetadata: RefAttribute, value: SingleRefValueObject) => {
+  const metaData = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
+  return toRefValueObject(value, metaData)
 }
+
+const toRefValueObject = (value: DataApiResponseItem, metaData: MetaData) => {
+  const id = value.data[metaData.idAttribute.name]
+  const label = metaData.labelAttribute ? value.data[metaData.labelAttribute.name] : id
+  return { id, label }
+}
+
 const apiResponseMapper = (rowData: DataApiResponseItem) => {
-  if (rowData.data) {
-    const row: any = rowData.data
-    return Object.keys(row).reduce((accum: { [s: string]: string | object }, key) => {
-      // check if ref
-      if (typeof row[key] === 'object') {
-        // This is checked by the line above
-        // @ts-ignore
-        accum[key] = levelNRowMapper(row[key])
-      } else {
-        accum[key] = row[key]
-      }
-      return accum
-    }, {})
-  }
+  return Object.keys(rowData.data).reduce((accum: { [s: string]: string | object }, key) => {
+    // check if ref
+    if (typeof rowData.data[key] === 'object') {
+      // This is checked by the line above
+      // @ts-ignore
+      accum[key] = levelNRowMapper(rowData.data[key])
+    } else {
+      const row: any = rowData.data
+      accum[key] = row[key]
+    }
+    return accum
+  }, {})
 }
 
 const levelNRowMapper = (rowData: DataApiResponseItem) => {
   // check if mref
-  if (rowData.items) {
+  if (isMRefValueObject(rowData)) {
     const rows: DataApiResponseItem[] = rowData.items
     return rows.map((rowData) => {
       return apiResponseMapper(rowData)
@@ -101,7 +89,7 @@ const addFilterIfSet = (request: string, rsqlFilter?: string): string => {
   return rsqlFilter ? `${request}&q=${encodeRsqlValue(rsqlFilter)}` : request
 }
 
-const buildPageQuery = (pagination :Pagination|undefined) => {
+const buildPageQuery = (pagination: Pagination | undefined) => {
   // (!) Adapt page to 0-based data-api page property.
   return pagination ? Object
     .entries({ page: pagination.page - 1, size: pagination.size })
@@ -110,7 +98,7 @@ const buildPageQuery = (pagination :Pagination|undefined) => {
     : ''
 }
 
-const buildSortQuery = (sort?: Sort):string => {
+const buildSortQuery = (sort?: Sort): string => {
   return sort && sort.sortColumnName !== null ? `&sort=${sort.isSortOrderReversed ? '-' : ''}${sort.sortColumnName}` : ''
 }
 
@@ -160,7 +148,6 @@ const getTableDataWithLabel = async (
   const pageQuery = buildPageQuery(pagination)
   const request = addFilterIfSet(`/api/data/${tableId}?${pageQuery}${expandReferencesQuery}${sortQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
-  // @ts-ignore
   const items = await Promise.all(response.items.map(async (item: DataApiResponseItem) => {
     return levelOneRowMapper(item, metaData)
   }))
@@ -181,7 +168,7 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
   const sortQuery = buildSortQuery(sort)
   const pageQuery = buildPageQuery(pagination)
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${pageQuery}${expandReferencesQuery}${sortQuery}`)
+  const response = await client.get<DataApiResponseItem>(`/api/data/${tableId}/${rowId}?${pageQuery}${expandReferencesQuery}${sortQuery}`)
   return levelOneRowMapper(response.data, metaData)
 }
 

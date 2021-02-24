@@ -82,7 +82,7 @@ export default {
   methods: {
     getColumnValue (name) {
       if (name in this.rowData && this.rowData[name] !== undefined) {
-        return this.rowData[name].toString()
+        return this.rowData[name]
       }
     }
   }

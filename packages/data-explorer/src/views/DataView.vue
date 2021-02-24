@@ -15,7 +15,22 @@
           <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
           {{ 'dataexplorer_show_cart_btn_label' | i18n}}
         </template>
+
       </cart-selection-toast>
+
+      <b-modal
+        id="reference-table-modal"
+        :title="refTableMetaData.label || refTableMetaData.id"
+        @hidden="resetRefState"
+        hide-footer
+        body-class="ref-modal-body"
+        dialog-class="ref-modal-dialog">
+        <RefTable
+          :isDataLoaded="isReferenceModalDataLoaded"
+          :entitiesToShow="refTableData"
+          :metaData="refTableMetaData"
+        ></RefTable>
+      </b-modal>
     </template>
   </div>
 </template>
@@ -24,7 +39,8 @@
 import Vue from 'vue'
 import SelectLayoutView from './SelectLayoutView'
 import ClipboardView from './ClipboardView'
-import { mapState, mapMutations, mapGetters } from 'vuex'
+import RefTable from '@/components/dataDisplayTypes/RefTable'
+import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 import { CartSelectionToast } from '@molgenis-ui/components-library'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -34,7 +50,14 @@ library.add(faTimes, faShoppingCart)
 
 export default Vue.extend({
   name: 'DataView',
-  components: { SelectLayoutView, ClipboardView, CartSelectionToast, FontAwesomeIcon },
+  components: { SelectLayoutView, ClipboardView, CartSelectionToast, FontAwesomeIcon, RefTable },
+  data () {
+    return {
+      isReferenceModalDataLoaded: false,
+      refTableData: [],
+      refTableMetaData: {}
+    }
+  },
   computed: {
     ...mapState([
       'showSelected',
@@ -75,10 +98,39 @@ export default Vue.extend({
       'setHideFilters',
       'setSelectedItems'
     ]),
+    ...mapActions('reference', ['fetchRefData']),
     openSelectionList () {
       this.setShowSelected(true)
       this.setHideFilters(true)
+    },
+    // Value is either refObject {id {string}, label{string}} or list of refObjects (mref)
+    async requestShowRefTable ({ refEntityType, value }) {
+      this.$bvModal.show('reference-table-modal')
+      const { metaData, data } = await this.fetchRefData({ refEntityType, value })
+      this.refTableMetaData = metaData
+      this.refTableData = data
+      this.isReferenceModalDataLoaded = true
+    },
+    resetRefState () {
+      this.isReferenceModalDataLoaded = false
+      this.refTableData = []
+      this.refTableMetaData = {}
     }
+  },
+  created () {
+    this.$eventBus.$on('show-reference-table', this.requestShowRefTable)
+  },
+  destroyed () {
+    this.$eventBus.$off('show-reference-table')
   }
 })
 </script>
+
+<style>
+  .ref-modal-body{
+    padding: 0;
+  }
+  .ref-modal-dialog{
+    max-width: 90%;
+  }
+</style>

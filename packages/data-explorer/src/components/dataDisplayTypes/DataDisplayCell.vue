@@ -15,7 +15,7 @@ export default {
   components: { StringDisplay, LinkDisplay, DateDisplay, EmailDisplay, HTMLDisplay, RefDisplay },
   props: {
     value: {
-      type: String,
+      type: [ String, Object, Array, Number, Boolean ],
       required: true
     },
     rowIndex: {
