@@ -67,7 +67,7 @@ describe('QuestionnaireChapter component', () => {
 
   it('should dispatch the [GET_QUESTIONNAIRE] when created', () => {
     shallow(QuestionnaireChapter, {propsData, store, mocks, stubs, localVue})
-    td.verify(actions.GET_QUESTIONNAIRE(td.matchers.anything(), 'test_quest', undefined))
+    td.verify(actions.GET_QUESTIONNAIRE(td.matchers.anything(), 'test_quest'))
   })
 
   it('should commit the [SET_MAPPER_OPTIONS] mutation when no boolean labels are present in the state', () => {

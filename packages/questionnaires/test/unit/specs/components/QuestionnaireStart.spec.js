@@ -63,7 +63,7 @@ describe('QuestionnaireStart component', () => {
 
   it('should dispatch the [GET_QUESTIONNAIRE_LIST] action on created is list is empty', () => {
     shallow(QuestionnaireStart, {propsData, store, stubs, localVue, mocks})
-    td.verify(actions.GET_QUESTIONNAIRE_LIST(td.matchers.anything(), undefined, undefined))
+    td.verify(actions.GET_QUESTIONNAIRE_LIST(td.matchers.anything(), undefined))
   })
 
   it('should dispatch a mutation to set mapperOptions', () => {
@@ -109,6 +109,6 @@ describe('QuestionnaireStart component', () => {
 
     const wrapper = shallow(QuestionnaireStart, {propsData, store, stubs, router, localVue, mocks})
     wrapper.vm.startQuestionnaire()
-    td.verify(actions.START_QUESTIONNAIRE(td.matchers.anything(), 'test_quest', undefined))
+    td.verify(actions.START_QUESTIONNAIRE(td.matchers.anything(), 'test_quest'))
   })
 })
