@@ -37,7 +37,7 @@ pipeline {
                 container('node') {
                     sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                     sh "yarn install"
-                    sh "yarn lerna bootstrap --since origin/master"
+                    sh "yarn lerna bootstrap"
                     sh "yarn lerna bootstrap --scope @molgenis-ui/components-library"
                     sh "yarn lerna run build --scope @molgenis-ui/components-library"
                     sh "yarn lerna run unit --since origin/master"
@@ -125,7 +125,6 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn install"
-                    sh "yarn lerna exec -- yarn install"  // missing yarn.lock workaround, see https://github.com/lerna/lerna/issues/1171
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run build --scope @molgenis-ui/components-library"
                     sh "yarn lerna run unit"
