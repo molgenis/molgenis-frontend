@@ -124,6 +124,7 @@ pipeline {
             }
             steps {
                 container('node') {
+                    sh "yarn cache clean --all"
                     sh "yarn install"
                     sh "yarn lerna exec -- yarn install"  // missing yarn.lock workaround, see https://github.com/lerna/lerna/issues/1171
                     sh "yarn lerna bootstrap"
