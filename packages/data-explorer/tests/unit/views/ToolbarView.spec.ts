@@ -140,7 +140,7 @@ describe('ToolbarView.vue', () => {
       const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
       // @ts-ignore
       await wrapper.vm.downloadData()
-      expect(actions.downloadResources).toHaveBeenCalledWith(expect.anything(), [{ id: '123', type: 'ENTITY_TYPE' }], undefined)
+      expect(actions.downloadResources).toHaveBeenCalledWith(expect.anything(), [{ id: '123', type: 'ENTITY_TYPE' }])
     })
   })
 
