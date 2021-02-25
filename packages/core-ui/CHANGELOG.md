@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/core-ui@0.3.2...@molgenis-ui/core-ui@0.3.3) (2021-02-25)
+
+
+### Bug Fixes
+
+* **core-ui, navigator:** make navigator table bordered by default ([#526](https://github.com/molgenis/molgenis-frontend/issues/526)) ([f4adb59](https://github.com/molgenis/molgenis-frontend/commit/f4adb5914c17727479f047f96a670abbb4bd332e))
+* **data-explorer, components-library, navigator:** fix master build ([b8c2e19](https://github.com/molgenis/molgenis-frontend/commit/b8c2e19ff04b1b859a4e41de28d7e852770ec883))
+
+
+
+
+
 ## [0.3.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/core-ui@0.3.1...@molgenis-ui/core-ui@0.3.2) (2020-08-10)
 
 **Note:** Version bump only for package @molgenis-ui/core-ui

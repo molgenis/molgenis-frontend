@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.1.0...@molgenis-ui/components-library@2.1.1) (2021-02-25)
+
+
+### Bug Fixes
+
+* **data-explorer:** use dropdown to change filters; updated styling ([#539](https://github.com/molgenis/molgenis-frontend/issues/539)) ([6fdd30a](https://github.com/molgenis/molgenis-frontend/commit/6fdd30afbb08e8fe3bcb846ac069c5c02e53c927))
+* **data-explorer, components-library, navigator:** fix master build ([b8c2e19](https://github.com/molgenis/molgenis-frontend/commit/b8c2e19ff04b1b859a4e41de28d7e852770ec883))
+
+
+
+
+
 # [2.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.0.3...@molgenis-ui/components-library@2.1.0) (2021-02-15)
 
 

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.1.1...@molgenis-ui/data-explorer@3.2.0) (2021-02-25)
+
+
+### Bug Fixes
+
+* **data-explorer:** safari compatibility fixes ([0a7bbde](https://github.com/molgenis/molgenis-frontend/commit/0a7bbde4949e5698658d926ec18744761c687106))
+* **data-explorer:** stacking context left sidebar ([#544](https://github.com/molgenis/molgenis-frontend/issues/544)) ([1d6b7ad](https://github.com/molgenis/molgenis-frontend/commit/1d6b7ad37479c1401bec37013004dae18f1849e6))
+* **data-explorer:** use dropdown to change filters; updated styling ([#539](https://github.com/molgenis/molgenis-frontend/issues/539)) ([6fdd30a](https://github.com/molgenis/molgenis-frontend/commit/6fdd30afbb08e8fe3bcb846ac069c5c02e53c927))
+* **data-explorer, components-library, navigator:** fix master build ([b8c2e19](https://github.com/molgenis/molgenis-frontend/commit/b8c2e19ff04b1b859a4e41de28d7e852770ec883))
+
+
+### Features
+
+* **data-explorer:** [#7888](https://github.com/molgenis/molgenis-frontend/issues/7888) add filter tab to toggle FiltersView ([#535](https://github.com/molgenis/molgenis-frontend/issues/535)) ([0d17216](https://github.com/molgenis/molgenis-frontend/commit/0d17216ddd588f558bb81639436cc6b55e1b0463))
+* **data-explorer:** add spinner to all the things ([ee4aeb7](https://github.com/molgenis/molgenis-frontend/commit/ee4aeb7362d68ecd6e3589c86f76384d4daee318))
+* **data-explorer:** control filter sidebar visibility from querystring ([#537](https://github.com/molgenis/molgenis-frontend/issues/537)) ([a8bf0f6](https://github.com/molgenis/molgenis-frontend/commit/a8bf0f69336e7374152a6fede394a0aa7ae61ffe))
+
+
+
+
+
 ## [3.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.1.0...@molgenis-ui/data-explorer@3.1.1) (2021-02-15)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer

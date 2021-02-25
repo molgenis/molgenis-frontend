@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.1.1...@molgenis-ui/questionnaires@3.1.2) (2021-02-25)
+
+
+### Bug Fixes
+
+* **data-explorer, components-library, navigator:** fix master build ([b8c2e19](https://github.com/molgenis/molgenis-frontend/commit/b8c2e19ff04b1b859a4e41de28d7e852770ec883))
+
+
+
+
+
 ## [3.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.1.0...@molgenis-ui/questionnaires@3.1.1) (2021-02-12)
 
 

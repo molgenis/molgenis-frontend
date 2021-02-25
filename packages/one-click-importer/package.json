@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/one-click-importer",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "LGPL-3.0",
   "description": "Client code for one click importer UI",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
