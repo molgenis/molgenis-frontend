@@ -6,7 +6,7 @@ describe('ChangeFilters.vue', () => {
   let wrapper: any
   const options = {
     localVue: localVue(),
-    propsData: { 
+    propsData: {
       filters: [{
         name: 'search',
         label: 'Search',
