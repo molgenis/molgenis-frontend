@@ -12,19 +12,29 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/login': {
-        target: 'http://localhost:8080'
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true,
+        secure: false
       },
       '/api': {
-        target: 'http://localhost:8080'
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true,
+        secure: false
       },
       '/menu': {
-        target: 'http://localhost:8080'
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true,
+        secure: false
       },
       '/plugin': {
-        target: 'http://localhost:8080'
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true,
+        secure: false
       },
       '/files': {
-        target: 'http://localhost:8080'
+        target: 'https://master.dev.molgenis.org',
+        changeOrigin: true,
+        secure: false
       }
     },
 

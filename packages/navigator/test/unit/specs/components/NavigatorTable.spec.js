@@ -1,4 +1,4 @@
-import { shallow, createLocalVue } from 'vue-test-utils'
+import { shallow, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import NavigatorTable from '@/components/NavigatorTable'
 
@@ -28,7 +28,7 @@ describe('NavigatorTable.vue', () => {
           $t: () => {}
         }
       })
-      const actual = wrapper.find('b-table').exists()
+      const actual = wrapper.findComponent({name: 'b-table'}).exists()
       expect(actual).to.be.true
     })
   })

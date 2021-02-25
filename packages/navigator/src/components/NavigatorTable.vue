@@ -7,9 +7,8 @@
       :empty-text="$t('table-no-results')"
       class="text-left table-bordered"
       show-empty>
-      <template
-        slot="HEAD_selected"
-        slot-scope="data">
+      <!-- A custom formatted header cell for field 'name' -->
+      <template #head(selected)="data">
         <b-form-checkbox
           :class="tableResources.length == 0 ? 'invisible' : ''"
           :checked="isAllSelected()"
@@ -19,9 +18,7 @@
           <span class="text-hide">placeholder</span>
         </b-form-checkbox>
       </template>
-      <template
-        slot="selected"
-        slot-scope="row">
+      <template #cell(selected)="row">
         <b-form-checkbox
           :checked="isSelected(row.item)"
           @click.native.stop
@@ -30,9 +27,7 @@
           <span class="text-hide">placeholder</span>
         </b-form-checkbox>
       </template>
-      <template
-        slot="label"
-        slot-scope="label">
+      <template #cell(label)="label">
         <span v-if="label.item.type === 'ENTITY_TYPE' && dataExplorerUrl">
           <a :href="dataExplorerUrl + '?entity=' + label.item.id + '&hideselect=true'">
             <font-awesome-icon
@@ -77,24 +72,28 @@ export default {
   name: 'NavigatorTable',
   data () {
     return {
-      fields: {
-        selected: {
+      fields: [
+        {
+          key: 'selected',
           'class': 'compact align-middle',
           tdClass: this.cellClass
         },
-        label: {
+        {
+          key: 'label',
           label: this.$t('table-col-header-name'),
           sortable: true,
           'class': 'text-nowrap',
           tdClass: this.cellClass
         },
-        description: {
+        {
+          key: 'description',
           label: this.$t('table-col-header-description'),
           sortable: false,
           'class': 'd-none d-md-table-cell',
           tdClass: this.cellClass
         }
-      },
+      ],
+      sortBy: 'label',
       filter: null,
       allSelected: false,
       dataExplorerUrl: window.__INITIAL_STATE__.pluginUrls['dataexplorer']
