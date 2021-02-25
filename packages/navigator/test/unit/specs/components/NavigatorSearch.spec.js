@@ -1,4 +1,4 @@
-import { shallow, createLocalVue } from 'vue-test-utils'
+import { shallow, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import NavigatorSearch from '@/components/NavigatorSearch'
 
@@ -27,7 +27,7 @@ describe('NavigatorSearch.vue', () => {
           $t: () => {}
         }
       })
-      expect(wrapper.find('b-form-input').exists()).to.be.true
+      expect(wrapper.findComponent({name: 'b-form-input'}).exists()).to.be.true
     })
   })
 })

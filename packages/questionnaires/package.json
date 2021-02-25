@@ -18,7 +18,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "yarn unit && yarn e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "version": "yarn"
   },
   "dependencies": {
     "@molgenis/molgenis-api-client": "^2.1.2",

@@ -14,7 +14,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "version": "yarn"
   },
   "dependencies": {
     "@molgenis/molgenis-api-client": "^3.1.3",

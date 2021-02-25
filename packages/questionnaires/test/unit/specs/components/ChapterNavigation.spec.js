@@ -161,7 +161,7 @@ describe('ChapterNavigation component', () => {
 
       const wrapper = shallow(ChapterNavigation, {propsData, localVue, mocks, router, store, stubs})
       wrapper.vm.validateBeforeSubmit()
-      td.verify(actions.SUBMIT_QUESTIONNAIRE(td.matchers.anything(), td.matchers.isA(String), undefined))
+      td.verify(actions.SUBMIT_QUESTIONNAIRE(td.matchers.anything(), td.matchers.isA(String)))
     })
   })
 })

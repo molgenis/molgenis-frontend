@@ -94,7 +94,7 @@ describe('QuestionnaireOverview component', () => {
 
   it('should dispatch the [GET_QUESTIONNAIRE_OVERVIEW] action on create', () => {
     shallow(QuestionnaireOverview, {propsData, store, stubs, localVue, mocks})
-    td.verify(actions.GET_QUESTIONNAIRE_OVERVIEW(td.matchers.anything(), 'test_quest', undefined))
+    td.verify(actions.GET_QUESTIONNAIRE_OVERVIEW(td.matchers.anything(), 'test_quest'))
   })
 
   describe('printOverView', () => {

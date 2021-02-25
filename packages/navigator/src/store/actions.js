@@ -1,5 +1,3 @@
-// @flow
-import type { Folder, Resource, Job, State } from '../flow.types'
 import {
   fetchJob,
   getResourcesByFolderId,
@@ -36,8 +34,8 @@ export const COPY_CLIPBOARD_RESOURCES = '__COPY_CLIPBOARD_RESOURCES__'
 export const POLL_JOB = '__POLL_JOB__'
 export const DOWNLOAD_SELECTED_RESOURCES = '__DOWNLOAD_SELECTED_RESOURCES__'
 
-function finishJob (commit: Function, dispatch: Function, state: State,
-  job: Job) {
+function finishJob (commit, dispatch, state,
+  job) {
   switch (job.type) {
     case 'COPY':
     case 'DELETE':
@@ -52,8 +50,8 @@ function finishJob (commit: Function, dispatch: Function, state: State,
   }
 }
 
-function pollJob (commit: Function, dispatch: Function, state: State,
-  job: Job) {
+function pollJob (commit, dispatch, state,
+  job) {
   fetchJob(job).then(updatedJob => {
     commit(UPDATE_JOB, updatedJob)
     switch (updatedJob.status) {
@@ -71,21 +69,21 @@ function pollJob (commit: Function, dispatch: Function, state: State,
 }
 
 export default {
-  [FETCH_RESOURCES] ({state, dispatch}: { state: State, dispatch: Function }) {
+  [FETCH_RESOURCES] ({state, dispatch}) {
     if (state.query) {
       dispatch(FETCH_RESOURCES_BY_QUERY, state.query)
     } else {
       dispatch(FETCH_RESOURCES_BY_FOLDER, state.route.params.folderId)
     }
   },
-  [FETCH_RESOURCES_BY_QUERY] ({commit}: { commit: Function }, query: string) {
+  [FETCH_RESOURCES_BY_QUERY] ({commit}, query) {
     getResourcesByQuery(query).then(data => {
       commit(SET_RESOURCES, data.resources)
     }).catch(error => {
       commit(ADD_ALERTS, error.alerts)
     })
   },
-  [FETCH_RESOURCES_BY_FOLDER] ({commit, dispatch}: { commit: Function, dispatch: Function }, folderId: ?string) {
+  [FETCH_RESOURCES_BY_FOLDER] ({commit}, folderId) {
     getResourcesByFolderId(folderId).then(data => {
       // if folder changed, then remove selection
       // if folder same, then update selection
@@ -96,19 +94,19 @@ export default {
       commit(ADD_ALERTS, error.alerts)
     })
   },
-  [SELECT_ALL_RESOURCES] ({commit, state}: { commit: Function, state: State }) {
+  [SELECT_ALL_RESOURCES] ({commit, state}) {
     commit(SET_SELECTED_RESOURCES, state.resources.slice())
   },
-  [DESELECT_ALL_RESOURCES] ({commit}: { commit: Function }) {
+  [DESELECT_ALL_RESOURCES] ({commit}) {
     commit(SET_SELECTED_RESOURCES, [])
   },
-  [SELECT_RESOURCE] ({commit, state}: { commit: Function, state: State }, resource: Resource) {
+  [SELECT_RESOURCE] ({commit, state}, resource) {
     commit(SET_SELECTED_RESOURCES, state.selectedResources.concat(resource))
   },
-  [DESELECT_RESOURCE] ({commit, state}: { commit: Function, state: State }, resource: Resource) {
+  [DESELECT_RESOURCE] ({commit, state}, resource) {
     commit(SET_SELECTED_RESOURCES, state.selectedResources.filter(selectedResource => !(selectedResource.type === resource.type && selectedResource.id === resource.id)))
   },
-  [DELETE_SELECTED_RESOURCES] ({commit, state, dispatch}: { commit: Function, state: State, dispatch: Function }) {
+  [DELETE_SELECTED_RESOURCES] ({commit, state, dispatch}) {
     if (state.selectedResources.length > 0) {
       deleteResources(state.selectedResources).then(job => {
         commit(SET_SELECTED_RESOURCES, [])
@@ -119,16 +117,16 @@ export default {
       })
     }
   },
-  [CREATE_RESOURCE] ({commit, state, dispatch}: { commit: Function, state: State, dispatch: Function },
-    resource: Resource) {
+  [CREATE_RESOURCE] ({commit, state, dispatch},
+    resource) {
     createResource(resource, state.folder).then(() => {
       dispatch(FETCH_RESOURCES)
     }).catch(error => {
       commit(ADD_ALERTS, error.alerts)
     })
   },
-  [UPDATE_RESOURCE] ({commit, state, dispatch}: { commit: Function, state: State, dispatch: Function },
-    updatedResource: Resource) {
+  [UPDATE_RESOURCE] ({commit, state, dispatch},
+    updatedResource) {
     const resource = state.resources.find(
       resource => resource.type === updatedResource.type && resource.id === updatedResource.id)
     if (resource !== undefined) {
@@ -142,8 +140,8 @@ export default {
         'UPDATE_RESOURCE requires updated resource to refer to existing resource')
     }
   },
-  [MOVE_CLIPBOARD_RESOURCES] ({commit, state, dispatch}: { commit: Function, state: State, dispatch: Function },
-    folder: ?Folder) {
+  [MOVE_CLIPBOARD_RESOURCES] ({commit, state, dispatch},
+    folder) {
     if (state.clipboard && state.clipboard.resources.length > 0) {
       moveResources(state.clipboard.resources, folder).then(() => {
         commit(RESET_CLIPBOARD)
@@ -153,8 +151,8 @@ export default {
       })
     }
   },
-  [COPY_CLIPBOARD_RESOURCES] ({commit, state, dispatch}: { commit: Function, state: State, dispatch: Function },
-    folder: ?Folder) {
+  [COPY_CLIPBOARD_RESOURCES] ({commit, state, dispatch},
+    folder) {
     if (state.clipboard && state.clipboard.resources.length > 0) {
       copyResources(state.clipboard.resources, folder).then(job => {
         commit(RESET_CLIPBOARD)
@@ -165,11 +163,11 @@ export default {
       })
     }
   },
-  [POLL_JOB] ({commit, state, dispatch}: { commit: Function, state: State, dispatch: Function },
-    job: Job) {
+  [POLL_JOB] ({commit, state, dispatch},
+    job) {
     pollJob(commit, dispatch, state, job)
   },
-  [DOWNLOAD_SELECTED_RESOURCES] ({commit, state, dispatch}: { commit: Function, state: State, dispatch: Function }) {
+  [DOWNLOAD_SELECTED_RESOURCES] ({commit, state, dispatch}) {
     if (state.selectedResources.length > 0) {
       downloadResources(state.selectedResources).then(job => {
         commit(SET_SELECTED_RESOURCES, [])
