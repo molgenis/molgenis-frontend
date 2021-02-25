@@ -39,16 +39,19 @@
       >
         {{ showMoreText }}
       </b-link>
-      <span
-        v-if="foundOptionCount >= 100"
+      <div
+        v-if="foundOptionCount >= optionsWarningCount"
         v-b-popover.hover="
-          'There are 100 or more results found, only the first 100 are available. Please refine your search.'
+          `There are ${optionsWarningCount} or more results found, only the first ${optionsWarningCount} are available. Please refine your search.`
         "
-        class="badge badge-warning warning text-white ml-auto"
-        >100+
+        class="badge badge-warning warning text-white ml-auto d-flex align-items-center"
+        >
+        <span class="mr-1">
+          {{optionsWarningCount}}+
+          </span>
         <font-awesome-icon
           icon="exclamation-circle"
-      /></span>
+      /></div>
     </div>
   </div>
 </template>
@@ -94,6 +97,15 @@ export default {
       type: Number,
       required: false,
       default: () => 1
+    },
+    /**
+     * The amount of options available at one time
+     * per search request
+     */
+    optionsWarningCount: {
+      type: Number,
+      required: false,
+      default: 100
     },
     /**
      * @model
@@ -287,6 +299,7 @@ const model = []
   v-bind:collapses="false"
   v-bind:initialDisplayItems="5"
   v-bind:maxVisibleOptions="5"
+  v-bind:optionsWarningCount="10"
   v-model="model"
   name="multi-filter">
 </MultiFilter>
