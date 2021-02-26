@@ -9,13 +9,13 @@
 
     <b-modal :id="value.id" title="File details" hide-footer>
       <dl class="row">
-        <dt class="col-sm-3">Filename</dt>
+        <dt class="col-sm-3">{{ 'dataexplorer_file_modal_name_label' | i18n}}</dt>
         <dd class="col-sm-9">{{value.filename}}</dd>
-        <dt class="col-sm-3">ContentType</dt>
+        <dt class="col-sm-3">{{ 'dataexplorer_file_modal_content_type_label' | i18n}}</dt>
         <dd class="col-sm-9">{{value.contentType}}</dd>
-        <dt class="col-sm-3">Size</dt>
+        <dt class="col-sm-3">{{ 'dataexplorer_file_modal_size_label' | i18n}}</dt>
         <dd class="col-sm-9">{{value.size}}</dd>
-        <dt class="col-sm-3">Url</dt>
+        <dt class="col-sm-3">{{ 'dataexplorer_file_modal_url_label' | i18n}}</dt>
         <dd class="col-sm-9"><a :href=value.url>{{value.url}}</a></dd>
       </dl>
     </b-modal>
