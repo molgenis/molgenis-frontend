@@ -37,7 +37,15 @@ describe('dataRepository', () => {
         country: { id: 'id', label: 'label' },
         id: 1,
         label: 'my label row data',
-        age_groups: [{ id: 'id1', label: 'label1' }]
+        age_groups: [{ id: 'id1', label: 'label1' }],
+        file: {
+         contentType: 'text/plain',
+         filename: 'hello.txt',
+         id: 'file-id',
+         label: 'hello.txt',
+         size: 16,
+         url: 'https://master.dev.molgenis.org/files/aaaac56zuuoganrgemw7epqaae',
+        }
       })
     })
   })

@@ -1,7 +1,7 @@
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta } from './metaDataService'
 import * as metaDataRepository from './metaDataRepository'
-import { DataApiResponse, DataApiResponseItem, DataObject, isSingleRefValueObject, isMRefValueObject, MRefValueObject, SingleRefValueObject } from '@/types/ApiResponse'
+import { DataApiResponse, DataApiResponseItem, DataObject, isSingleRefValueObject, MRefValueObject, SingleRefValueObject, FileValueObject, isMRefValueObject, isFileValueObject } from '@/types/ApiResponse'
 import { MetaData, Attribute, RefAttribute, isRefAttribute } from '@/types/MetaData'
 import client from '@/lib/client'
 import { encodeRsqlValue } from '@molgenis/rsql'
@@ -27,8 +27,10 @@ const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaDat
     if (isRefAttribute(attributeMetadata) && (isSingleRefValueObject(dataObjectValue) || isMRefValueObject(dataObjectValue))) {
       if (isMRefValueObject(dataObjectValue)) {
         resolvedValue = await getMRefData(attributeMetadata, dataObjectValue)
+      } else if (isFileValueObject(dataObjectValue)) {
+        resolvedValue = getFileData(dataObjectValue)
       } else {
-        resolvedValue = await getRefLabel(attributeMetadata, dataObjectValue)
+        resolvedValue = await getRefData(attributeMetadata, dataObjectValue)
       }
     } else {
       resolvedValue = dataObjectValue
@@ -47,9 +49,20 @@ const getMRefData = async (attributeMetadata: RefAttribute, value: MRefValueObje
   })
 }
 
-const getRefLabel = async (attributeMetadata: RefAttribute, value: SingleRefValueObject) => {
+const getRefData = async (attributeMetadata: RefAttribute, value: SingleRefValueObject) => {
   const metaData = await metaDataRepository.fetchMetaDataByURL(attributeMetadata.refEntityType)
   return toRefValueObject(value, metaData)
+}
+
+const getFileData = (value: FileValueObject) => {
+  return {
+    id: value.data.id,
+    label: value.data.filename, // flip filename to label so each dataObject has label
+    filename: value.data.filename,
+    contentType: value.data.contentType,
+    size: value.data.size,
+    url: value.data.url
+  }
 }
 
 const toRefValueObject = (value: DataApiResponseItem, metaData: MetaData) => {

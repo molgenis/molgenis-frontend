@@ -9,10 +9,11 @@ import DateDisplay from './DateDisplay'
 import EmailDisplay from './EmailDisplay'
 import HTMLDisplay from './HTMLDisplay'
 import RefDisplay from './RefDisplay'
+import FileDisplay from './FileDisplay'
 
 export default {
   name: 'DataDisplayCell',
-  components: { StringDisplay, LinkDisplay, DateDisplay, EmailDisplay, HTMLDisplay, RefDisplay },
+  components: { StringDisplay, LinkDisplay, DateDisplay, EmailDisplay, HTMLDisplay, RefDisplay, FileDisplay },
   props: {
     value: {
       type: [ String, Object, Array, Number, Boolean ],
@@ -47,7 +48,7 @@ export default {
         'xref': 'RefDisplay',
         'onetomany': 'RefDisplay',
         'enum': 'StringDisplay',
-        'file': 'LinkDisplay',
+        'file': 'FileDisplay',
         'compound': 'StringDisplay'
       }
       return fieldTypeToFilterType[this.metadata.type] || 'StringDisplay'

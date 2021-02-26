@@ -6,6 +6,15 @@ export function isMRefValueObject (value: DataObjectValue): value is MRefValueOb
   return (value as MRefValueObject).items !== undefined
 }
 
+export function isFileValueObject (value: DataObjectValue): value is FileValueObject {
+  return (value as FileValueObject).data !== undefined &&
+  (value as FileValueObject).data.id !== undefined &&
+  (value as FileValueObject).data.contentType !== undefined &&
+  (value as FileValueObject).data.filename !== undefined &&
+  (value as FileValueObject).data.size !== undefined &&
+  (value as FileValueObject).data.url !== undefined
+}
+
 export function isRefValue (value: DataObjectValue): value is RefValue {
   return isSingleRefValueObject(value) || isMRefValueObject(value)
 }
@@ -27,6 +36,10 @@ export interface SingleRefValueObject extends BaseValueObject, Linkable {
   data: DataObject
 }
 
+export interface FileValueObject extends BaseValueObject, Linkable {
+  data: FileObject
+}
+
 export type RefValue = SingleRefValueObject | MRefValueObject;
 
 export type DataApiResponseItem = Linkable & {
@@ -36,6 +49,14 @@ export type DataApiResponseItem = Linkable & {
 export type DataObjectValue = RefValue | string | boolean | number
 
 export type DataObject = { [key: string]: DataObjectValue }
+
+export type FileObject = {
+  contentType: string
+  filename: string
+  id: string
+  size: number
+  url: string
+}
 
 type DataApiResponsePage = {
   size: number,

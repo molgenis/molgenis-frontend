@@ -145,6 +145,22 @@ export default {
       isReference: false,
       visible: true,
       aggregatable: false
+    },
+    {
+      id: '/api/metadata/file',
+      type: 'file',
+      name: 'file',
+      label: 'file',
+      auto: false,
+      cascadeDelete: false,
+      idAttribute: false,
+      labelAttribute: false,
+      nullable: true,
+      readOnly: false,
+      refEntityType: {self: 'http://localhost:443/api/metadata/sys_FileMeta'},
+      unique: false,
+      visible: true,
+      aggregatable: false,
     }
   ]
 }
