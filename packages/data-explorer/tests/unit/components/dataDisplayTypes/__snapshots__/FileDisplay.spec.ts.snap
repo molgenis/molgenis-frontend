@@ -13,7 +13,7 @@ exports[`FileDisplay.vue should display the file and download link 1`] = `
       <dt class="col-sm-3">dataexplorer_file_modal_content_type_label</dt>
       <dd class="col-sm-9">content-type</dd>
       <dt class="col-sm-3">dataexplorer_file_modal_size_label</dt>
-      <dd class="col-sm-9">1024</dd>
+      <dd class="col-sm-9">1024 byte</dd>
       <dt class="col-sm-3">dataexplorer_file_modal_url_label</dt>
       <dd class="col-sm-9"><a href="http://some/files/file-id">http://some/files/file-id</a></dd>
     </dl>

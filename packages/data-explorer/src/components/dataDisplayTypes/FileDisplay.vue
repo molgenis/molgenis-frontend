@@ -14,7 +14,7 @@
         <dt class="col-sm-3">{{ 'dataexplorer_file_modal_content_type_label' | i18n}}</dt>
         <dd class="col-sm-9">{{value.contentType}}</dd>
         <dt class="col-sm-3">{{ 'dataexplorer_file_modal_size_label' | i18n}}</dt>
-        <dd class="col-sm-9">{{value.size}}</dd>
+        <dd class="col-sm-9">{{value.size}} byte</dd>
         <dt class="col-sm-3">{{ 'dataexplorer_file_modal_url_label' | i18n}}</dt>
         <dd class="col-sm-9"><a :href=value.url>{{value.url}}</a></dd>
       </dl>
