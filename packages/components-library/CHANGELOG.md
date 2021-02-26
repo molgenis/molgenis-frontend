@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.1.1...@molgenis-ui/components-library@2.2.0) (2021-02-25)
+
+
+### Features
+
+* **components-library:** Add multifilter cutoff as a variable, so you can easily test warning and removing magic number ([#549](https://github.com/molgenis/molgenis-frontend/issues/549)) ([86872ac](https://github.com/molgenis/molgenis-frontend/commit/86872acea10367274c8d794e715d2bf2feeac9db))
+
+
+
+
+
 ## [2.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.1.0...@molgenis-ui/components-library@2.1.1) (2021-02-25)
 
 
