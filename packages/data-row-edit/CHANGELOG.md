@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.1.3...@molgenis-ui/data-row-edit@5.2.0) (2021-02-26)
+
+
+### Features
+
+* **data-row-edit, questionnaires, scripts, settings:** Bump molgenis-ui-form dep to 5.3.0 ([#548](https://github.com/molgenis/molgenis-frontend/issues/548)) ([2562a93](https://github.com/molgenis/molgenis-frontend/commit/2562a93d91cf30a1e1e8f8ee9f885db859a7190a))
+
+
+
+
+
 ## [5.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.1.2...@molgenis-ui/data-row-edit@5.1.3) (2021-02-25)
 
 
