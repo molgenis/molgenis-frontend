@@ -67,6 +67,9 @@
     "typescript": "^3.6.3",
     "vue-template-compiler": "^2.6.10"
   },
+  "resolutions": {
+    "handlebars" : "4.5.0"
+  },
   "eslintConfig": {
     "root": true,
     "env": {
