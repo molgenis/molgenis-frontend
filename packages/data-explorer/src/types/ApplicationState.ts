@@ -62,6 +62,7 @@ export default interface ApplicationState {
   tableName: string | null
   tableData: DataApiResponse | null
   tableMeta: MetaData | null
+  tablePermissions: string []
   tablePagination: Pagination
   defaultEntityData: DataApiResponseItem[] | null
   selectedItemIds: string[]

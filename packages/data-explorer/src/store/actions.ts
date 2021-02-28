@@ -1,5 +1,6 @@
 import client from '@/lib/client'
 import ApplicationState from '@/types/ApplicationState'
+import { V2Response } from '@/types/EntityTypeV2'
 import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
@@ -161,5 +162,10 @@ export default {
         clearInterval(interval)
       }
     }, 1000)
+  },
+
+  fetchTablePermissions: async ({ commit }: { commit: any }, payload: { tableName: string }) => {
+    const res = await client.get<V2Response>(`/api/v2/${payload.tableName}?start=0&num=0`)
+    commit('setTablePermissions', res.data.meta.permissions)
   }
 }

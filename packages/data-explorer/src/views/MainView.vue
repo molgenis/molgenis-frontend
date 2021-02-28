@@ -105,7 +105,7 @@ export default Vue.extend({
   },
   methods: {
     ...mapMutations(['setTableName', 'setToasts', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
-    ...mapActions(['deleteRow', 'fetchViewData', 'fetchTableMeta']),
+    ...mapActions(['deleteRow', 'fetchViewData', 'fetchTableMeta', 'fetchTablePermissions']),
     ...mapActions('header', ['fetchPackageTables']),
     saveFilterState (newSelections) {
       if (newSelections['_search'] === undefined) {
@@ -135,7 +135,9 @@ export default Vue.extend({
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
-    await this.fetchTableMeta({ tableName: this.$route.params.entity })
+    const tableName = this.$route.params.entity
+    this.fetchTablePermissions({ tableName })
+    await this.fetchTableMeta({ tableName })
     this.setRouteQuery(this.$route.query)
     this.setDataDisplayLayout(this.$route.params.view)
     this.fetchViewData()
@@ -145,7 +147,9 @@ export default Vue.extend({
   },
   async beforeRouteUpdate (to, from, next) {
     if (to.params.entity !== from.params.entity) {
-      await this.fetchTableMeta({ tableName: to.params.entity })
+      const tableName = to.params.entity
+      this.fetchTablePermissions({ tableName })
+      await this.fetchTableMeta({ tableName })
     }
     this.setRouteQuery(to.query)
     this.setDataDisplayLayout(to.params.view)

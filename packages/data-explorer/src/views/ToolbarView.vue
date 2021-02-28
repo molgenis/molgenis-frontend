@@ -7,7 +7,7 @@
       aria-label="Row actions group"
     >
       <a
-        v-if="hasEditRights"
+        v-if="hasAddRights"
         role="button"
         class="btn btn-outline-secondary add-row"
         :href="'/plugin/data-row-edit/' + tableName"
@@ -138,7 +138,7 @@ export default {
       'sort'
     ]),
     ...mapGetters([
-      'hasEditRights',
+      'hasAddRights',
       'hasEditSettingsRights',
       'compressedRouteFilter'
     ]),

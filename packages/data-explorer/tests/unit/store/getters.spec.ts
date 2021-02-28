@@ -64,26 +64,30 @@ describe('getters', () => {
   })
 
   describe('hasEditRights', () => {
-    let state: any
+    let state: any = {}
+    state.tablePermissions = []
 
-    it('should return false if not authenticated', () => {
-      let localGetters = {
-        isUserAuthenticated: false,
-        userRoles: []
-      }
-      expect(getters.hasEditRights(state, localGetters)).toEqual(false)
+    it('should return false user does not have update rights', () => {
+      expect(getters.hasEditRights(state)).toEqual(false)
     })
 
-    it('should return true if authenticated and has edit role', () => {
-      let localGetters = {
-        isUserAuthenticated: true,
-        userRoles: ['ROLE_EDITOR']
-      }
-      expect(getters.hasEditRights(state, localGetters)).toEqual(true)
-      localGetters.userRoles = ['ROLE_MANAGER']
-      expect(getters.hasEditRights(state, localGetters)).toEqual(true)
-      localGetters.userRoles = ['ROLE_SU']
-      expect(getters.hasEditRights(state, localGetters)).toEqual(true)
+    it('should return true if authenticated and has edit rights', () => {
+      state.tablePermissions = ['UPDATE_DATA']
+      expect(getters.hasEditRights(state)).toEqual(true)
+    })
+  })
+
+  describe('hasAddRights', () => {
+    let state: any = {}
+    state.tablePermissions = []
+
+    it('should return false user does not have add rights', () => {
+      expect(getters.hasAddRights(state)).toEqual(false)
+    })
+
+    it('should return true if authenticated and has add rights', () => {
+      state.tablePermissions = ['ADD_DATA']
+      expect(getters.hasAddRights(state)).toEqual(true)
     })
   })
 

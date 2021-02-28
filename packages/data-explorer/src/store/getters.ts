@@ -15,10 +15,11 @@ export default {
   isUserAuthenticated: (state: ApplicationState, getters: any, rootState:any): boolean => {
     return rootState.account.context ? rootState.account.context.authenticated : false
   },
-  hasEditRights: (state: ApplicationState, getters: any): boolean => {
-    return getters.isUserAuthenticated && getters.userRoles.some((role: string) => {
-      return ['ROLE_EDITOR', 'ROLE_MANAGER', 'ROLE_SU'].includes(role)
-    })
+  hasEditRights: (state: ApplicationState): boolean => {
+    return state.tablePermissions.includes('UPDATE_DATA')
+  },
+  hasAddRights: (state: ApplicationState): boolean => {
+    return state.tablePermissions.includes('ADD_DATA')
   },
   hasEditSettingsRights: (state: ApplicationState, getters: any): boolean => {
     return getters.isUserAuthenticated && getters.userRoles.includes('ROLE_SU')
