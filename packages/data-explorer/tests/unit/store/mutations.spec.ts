@@ -315,4 +315,11 @@ describe('mutations', () => {
     mutations.persistToRoute(baseAppState, { router: mockRouter, query: { hide: 'id' } })
     expect(mockPush).toHaveBeenCalledWith({ 'name': 'main-view', 'query': { 'hide': 'id' } }, expect.anything())
   })
+
+  describe('setTablePermissions', () => {
+    it('sets permissions on the store', () => {
+      mutations.setTablePermissions(baseAppState, ['PERM_A', 'PERM_B'])
+      expect(baseAppState.tablePermissions).toEqual(['PERM_A', 'PERM_B'])
+    })
+  })
 })

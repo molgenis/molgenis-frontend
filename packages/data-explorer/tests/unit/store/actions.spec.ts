@@ -221,7 +221,14 @@ const mockResponses: {[key:string]: Object} = {
   '/api/v2/entity?num=0': metaResponse,
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
-  '/api/data/sys_ts_DataExplorerEntitySettings': {}
+  '/api/data/sys_ts_DataExplorerEntitySettings': {},
+  '/api/v2/my-table?start=0&num=0': {
+    data: {
+      meta: {
+        permissions: ['PERM_A']
+      }
+    }
+  }
 }
 
 const mockPostResponses = {
@@ -240,7 +247,7 @@ jest.mock('@/lib/client', () => {
     get: (url: string) => {
       const mockResp = mockResponses[url]
       if (!mockResp) {
-        console.warn(`mock url (${url}) called but not found in ${mockResponses}`)
+        console.warn(`mock url (${url}) called but not found in ${JSON.stringify(mockResponses, null, 4)}`)
       }
       return Promise.resolve(mockResp)
     },
@@ -546,6 +553,13 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledTimes(2)
       expect(commit).nthCalledWith(1, 'addToast', { message: 'failed', type: 'info' })
       expect(commit).nthCalledWith(2, 'addToast', { message: 'failed', type: 'danger', timeout: 0 })
+    })
+  })
+
+  describe('fetchTablePermissions', () => {
+    it('fetch the permissions for the given table', async () => {
+      await actions.fetchTablePermissions({ commit }, {tableName: 'my-table'})
+      expect(commit).toHaveBeenCalledWith('setTablePermissions', ['PERM_A'])
     })
   })
 })

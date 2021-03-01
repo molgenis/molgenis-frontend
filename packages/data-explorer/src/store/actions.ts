@@ -166,6 +166,8 @@ export default {
 
   fetchTablePermissions: async ({ commit }: { commit: any }, payload: { tableName: string }) => {
     const res = await client.get<V2Response>(`/api/v2/${payload.tableName}?start=0&num=0`)
-    commit('setTablePermissions', res.data.meta.permissions)
+    const tablePermissions = res.data.meta.permissions
+    commit('setTablePermissions', tablePermissions)
+    return tablePermissions
   }
 }
