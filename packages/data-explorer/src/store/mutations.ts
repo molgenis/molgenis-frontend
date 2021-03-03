@@ -161,5 +161,8 @@ export default {
       name: router.currentRoute.name,
       query: routerObjectToPersist
     }, () => { }) // fix for duplicate route.
+  },
+  setTablePermissions (state: ApplicationState, permissions: string []) {
+    Vue.set(state, 'tablePermissions', permissions)
   }
 }

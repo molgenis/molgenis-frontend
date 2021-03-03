@@ -42,6 +42,7 @@ describe('ToolbarView.vue', () => {
 
     getters = {
       hasEditRights: jest.fn(),
+      hasAddRights: jest.fn(),
       hasEditSettingsRights: jest.fn(),
       compressedRouteFilter: jest.fn()
     }
@@ -102,7 +103,7 @@ describe('ToolbarView.vue', () => {
   })
 
   describe('add row button', () => {
-    beforeEach(() => getters.hasEditRights.mockReturnValueOnce(true))
+    beforeEach(() => getters.hasAddRights.mockReturnValueOnce(true))
 
     it('should render the add button as a link to the data-row-edit', () => {
       const wrapper = shallowMount(ToolbarView, { store, localVue, directives, mocks })
