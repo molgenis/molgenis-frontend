@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.2.0...@molgenis-ui/components-library@2.3.0) (2021-03-03)
+
+
+### Features
+
+* **components-library:** Dynamic filter container labels ([#553](https://github.com/molgenis/molgenis-frontend/issues/553)) ([6cd4933](https://github.com/molgenis/molgenis-frontend/commit/6cd4933af69abe3dd7ff4bca5d5d45ede1fc2d78))
+
+
+
+
+
 # [2.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.1.1...@molgenis-ui/components-library@2.2.0) (2021-02-25)
 
 
