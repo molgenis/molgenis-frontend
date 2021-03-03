@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.2.3...@molgenis-ui/data-explorer@3.3.0) (2021-03-03)
+
+
+### Features
+
+* **data-explorer:** Fine grained table permissions ([#552](https://github.com/molgenis/molgenis-frontend/issues/552)) ([732fc65](https://github.com/molgenis/molgenis-frontend/commit/732fc65e3dad927aacb2f7acfed3db6c078ff77b))
+
+
+
+
+
 ## [3.2.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.2.2...@molgenis-ui/data-explorer@3.2.3) (2021-02-26)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
