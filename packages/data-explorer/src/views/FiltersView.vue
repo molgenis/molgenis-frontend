@@ -18,6 +18,8 @@
         v-model="filterSelections"
         :filters="filters.definition"
         :filters-shown="filterShown"
+        :filterActionLabel="$t('dataexplorer_filter_action_Label')"
+        :filterListLabel="$t('dataexplorer_filter_list_Label')"
         @update="updateState"
         :can-edit="true"
         dialogStyle="dropdown"
