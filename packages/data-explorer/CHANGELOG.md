@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.3.1...@molgenis-ui/data-explorer@3.4.0) (2021-03-04)
+
+
+### Features
+
+* **data-explorer:** Make filter container labels dynamic ([#554](https://github.com/molgenis/molgenis-frontend/issues/554)) ([920c17e](https://github.com/molgenis/molgenis-frontend/commit/920c17e3397375feabea8a4addf8da48685c0639))
+
+
+
+
+
 ## [3.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.3.0...@molgenis-ui/data-explorer@3.3.1) (2021-03-03)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
