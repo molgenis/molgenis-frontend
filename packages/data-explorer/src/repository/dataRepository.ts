@@ -204,6 +204,19 @@ const getTableRowOptions = async (tableId: string, metaData: MetaData) => {
   })) }
 }
 
+const getRowDataDeepReference = async (
+  tableId: string,
+  rowId: string,
+  metaData: MetaData,
+  attrs: string[],
+  rsqlQuery?: string
+) => {
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, attrs)
+  const request = addFilterIfSet(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`, rsqlQuery)
+  const response = (await client.get<DataApiResponseItem>(request)).data
+  return levelNRowMapper(response)
+}
+
 export {
   getTableDataDeepReference,
   getTableDataWithLabel,
