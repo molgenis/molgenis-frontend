@@ -6,6 +6,7 @@ import client from '@/lib/client'
 import { encodeRsqlValue } from '@molgenis/rsql'
 import { Pagination } from '@molgenis-ui/components-library'
 import { Sort } from '@/types/Sort'
+import { getAttributesfromMeta } from './metaDataService'
 
 // maps api response to object with as key the name of the column and as value the label of the value or a list of labels for mrefs
 const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaData) => {
@@ -186,7 +187,7 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
 
 const getRowData = async (tableId: string, rowId: string, metaData: MetaData, dataDisplayLimit?: Number) => {
   const query = buildRowQuery(metaData, dataDisplayLimit)
-  const response = await client.get<DataApiResponse>(`/api/data/${tableId}/${rowId}?${query}`)
+  const response = await client.get<DataApiResponseItem>(`/api/data/${tableId}/${rowId}?${query}`)
   return levelNRowMapper(response.data)
 }
 

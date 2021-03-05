@@ -54,7 +54,7 @@ export default {
 
     if (isCustomCard) {
       tableData = await dataRepository.getTableDataDeepReference(
-        state.tableName, state.tableMeta, columns, rsqlQuery, state.tablePagination, state.sort
+        state.tableName, state.tableMeta, getters.customCardAttrs, rsqlQuery, state.tablePagination, state.sort
       )
     } else {
       columns = metaDataService.getAttributesfromMeta(state.tableMeta).splice(0, state.tableSettings.collapseLimit)

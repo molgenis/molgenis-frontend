@@ -1,6 +1,12 @@
 import MainView from './views/MainView.vue'
+import TemplateEditor from './views/TemplateEditor.vue'
 
 const routes = [
+  {
+    path: '/:entity/editor',
+    name: 'template-editor',
+    component: TemplateEditor
+  },
   {
     path: '/:entity/:view',
     component: MainView,
