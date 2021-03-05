@@ -1,9 +1,8 @@
 import { getFieldOptions } from './utils'
-import { StringMap } from '@/types/GeneralTypes'
 import { MetaData, Attribute } from '../types/MetaData'
 import { FilterDefinition } from '@/types/ApplicationState'
 
-const fieldTypeToFilterType:StringMap = {
+const fieldTypeToFilterType:Record<string, string> = {
   'string': 'string-filter',
   'text': 'string-filter',
   'html': 'string-filter',
@@ -67,6 +66,9 @@ const mapMetaToFilters = async (metaData: MetaData) => {
     }
     if (attribute.type.includes('datetime')) {
       filterDefinition.time = true
+    }
+    if (attribute.type.includes('date') || attribute.type.includes('datetime')) {
+      filterDefinition.appendToBody = true
     }
 
     // Range (number)

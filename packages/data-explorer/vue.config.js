@@ -3,6 +3,7 @@ const BannerPlugin = require('webpack').BannerPlugin
 const packageJson = require('./package.json')
 const pkgVersion = packageJson.version
 const pkgName = packageJson.name
+const path = require('path')
 
 const now = new Date()
 const buildDate = now.toUTCString()
@@ -27,6 +28,10 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
     ? pkgName + '/dist/'
     : '/',
+  chainWebpack: (config) => {
+    // stop lerna from sym linking to empty components-library folder
+    config.resolve.symlinks(false)
+  },
   configureWebpack: config => {
     config.plugins.push(
       new BannerPlugin({
@@ -46,6 +51,14 @@ module.exports = {
     // Used to proxy a external API server to have someone to talk to during development
     proxy: process.env.NODE_ENV !== 'development' ? undefined : {
       '^/api': apiDevServerProxyConf,
+      '^/theme': {
+        target: PROXY_TARGET,
+        keepOrigin: true
+      },
+      '^/files': {
+        target: PROXY_TARGET,
+        keepOrigin: true
+      },
       '^/fonts': {
         target: PROXY_TARGET,
         keepOrigin: true
@@ -85,6 +98,9 @@ module.exports = {
     },
     // Used as mock in e2e tests
     before: process.env.NODE_ENV !== 'test' ? undefined : function (app) {
+      app.get('/theme/style.css', function (req, res) {
+        res.redirect('https://unpkg.com/@molgenis-ui/molgenis-theme/dist/themes/mg-molgenis-blue-4.css')
+      })
       app.get('/app-ui-context', function (req, res) {
         res.json(require('./tests/e2e/resources/uiContext.js'))
       })

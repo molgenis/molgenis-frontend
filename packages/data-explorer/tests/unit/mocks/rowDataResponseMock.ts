@@ -5,6 +5,24 @@ export default {
   data: {
     id: 1,
     label: 'my label row data',
-    country: { data: { name: 'name', label: 'label', id: 'id' } }
+    country: {
+      data: {
+        name: 'name',
+        label: 'label',
+        id: 'id'
+      }
+    },
+    age_groups: {
+      items: [{ data: { name: 'age1', label: 'label1', id: 'id1' } }]
+    },
+    file: {
+      data: {
+        contentType: 'text/plain',
+        filename: 'hello.txt',
+        id: 'file-id',
+        size: 16,
+        url: 'https://master.dev.molgenis.org/files/aaaac56zuuoganrgemw7epqaae',
+      }
+    }
   }
 }

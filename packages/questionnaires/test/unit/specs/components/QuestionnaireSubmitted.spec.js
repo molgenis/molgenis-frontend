@@ -37,7 +37,7 @@ describe('QuestionnaireSubmitted component', () => {
 
   it('should dispatch an action to get the submissionText on created', () => {
     shallow(QuestionnaireSubmitted, {propsData, store, localVue, stubs})
-    td.verify(actions.GET_SUBMISSION_TEXT(td.matchers.anything(), 'test_quest', undefined))
+    td.verify(actions.GET_SUBMISSION_TEXT(td.matchers.anything(), 'test_quest'))
   })
 
   it('should render the submissionText from the state correctly', () => {

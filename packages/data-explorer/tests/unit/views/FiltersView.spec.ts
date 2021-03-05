@@ -1,16 +1,23 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import FiltersView from '@/views/FiltersView.vue'
 import Vuex from 'vuex'
-import VueRouter from 'vue-router'
+import getters from '@/store/getters'
+import Router from 'vue-router'
+import routes from '@/routes'
+
+const mocks = {
+  $t: (msg: any) => msg
+}
 
 describe('FiltersView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
-  localVue.use(VueRouter)
+  localVue.use(Router)
+  localVue.filter('i18n', mocks.$t)
   let store: any
   let state: any
   let mutations: any
-  let router = new VueRouter()
+  let router = new Router({ routes })
 
   beforeEach(() => {
     state = {
@@ -26,18 +33,19 @@ describe('FiltersView.vue', () => {
       setFiltersShown: jest.fn()
     }
     store = new Vuex.Store({
-      state, mutations
+      getters, state, mutations
     })
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(FiltersView, { store, localVue, router })
+    const wrapper = shallowMount(FiltersView, { store, localVue, router, mocks })
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  it('show/hides the filters', () => {
-    const wrapper = shallowMount(FiltersView, { store, localVue, router })
-    wrapper.find('.hide-filters').trigger('click')
-    expect(mutations.setHideFilters.mock.calls.length > 0).toBeTruthy()
+  it('show/hides the filters', async () => {
+    const wrapper = shallowMount(FiltersView, { store, localVue, router, mocks })
+    expect(wrapper.vm.$router.currentRoute.query.hideSidebar).toBe('false')
+    await wrapper.find('.hide-filters').trigger('click')
+    expect(wrapper.vm.$router.currentRoute.query.hideSidebar).toBe('true')
   })
 })

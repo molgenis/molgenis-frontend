@@ -22,6 +22,7 @@ module.exports = {
     proxy: process.env.NODE_ENV === 'production' ? undefined : {
       '/login': { target },
       '/api': { target },
+      '/theme': { target },
       '/plugin/settings': { target }
     }
   },

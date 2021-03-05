@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "noImplicitAny": false, // work around vue slider ts issue
     "baseUrl": ".",
     "types": [
       "webpack-env",

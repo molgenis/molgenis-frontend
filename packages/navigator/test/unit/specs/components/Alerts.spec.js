@@ -1,4 +1,4 @@
-import { shallow, createLocalVue } from 'vue-test-utils'
+import { shallow, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import td from 'testdouble'
 import Alerts from '@/components/Alerts'
@@ -24,7 +24,7 @@ describe('Alerts.vue', () => {
       })
 
       const wrapper = shallow(Alerts, {store, localVue})
-      wrapper.find('b-alert').trigger('dismissed')
+      wrapper.vm.removeAlert(0)
       td.verify(removeAlert(state, 0))
     })
   })

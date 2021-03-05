@@ -1,9 +1,10 @@
 import ApplicationState, { Toast, FilterDefinition } from '@/types/ApplicationState'
 import { DataApiResponse } from '@/types/ApiResponse'
-import { StringMap } from '@/types/GeneralTypes'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
-import { applyFilters } from '@/mappers/bookmarkMapper'
+import getters from '@/store/getters'
+import { defaultPagination } from '@/store/state'
+import { RouteQuery } from '@/types/RouteQuery'
 
 const defaultSettings = {
   settingsRowId: null,
@@ -15,11 +16,14 @@ const defaultSettings = {
 }
 
 export default {
-  setToast (state: ApplicationState, toast: Toast) {
-    state.toast = toast
+  addToast (state: ApplicationState, toast: Toast) {
+    state.toasts.push(toast)
   },
-  clearToast (state: ApplicationState) {
-    state.toast = null
+  setPaginationCount (state: ApplicationState, count: number) {
+    state.tablePagination.count = count
+  },
+  setToasts (state: ApplicationState, toasts: Toast[]) {
+    Vue.set(state, 'toasts', toasts)
   },
   setDataDisplayLayout (state: ApplicationState, layout: ApplicationState['dataDisplayLayout']) {
     state.dataDisplayLayout = layout
@@ -33,6 +37,9 @@ export default {
   setShowSelected (state: ApplicationState, cart: boolean) {
     state.showSelected = cart
   },
+  setLoading (state: ApplicationState, isLoading: boolean) {
+    state.loading = isLoading
+  },
   toggleSelectedItems (state: ApplicationState, id: string) {
     const index = state.selectedItemIds.indexOf(id)
     if (index !== -1) {
@@ -44,7 +51,7 @@ export default {
   setSelectedItems (state: ApplicationState, items: Array<string>) {
     state.selectedItemIds = items
   },
-  setTableSettings (state: ApplicationState, tableSettings: StringMap) {
+  setTableSettings (state: ApplicationState, tableSettings: Record<string, string>) {
     const isPropSet = (prop: string) => typeof tableSettings[prop] !== 'undefined'
     state.tableSettings.isShop = isPropSet('shop') ? Boolean(tableSettings.shop) : defaultSettings.isShop
     state.tableSettings.collapseLimit = isPropSet('collapse_limit') ? parseInt(tableSettings.collapse_limit) : defaultSettings.collapseLimit
@@ -52,6 +59,12 @@ export default {
     state.tableSettings.customCardCode = isPropSet('card_template') ? tableSettings.card_template : defaultSettings.customCardCode
     state.tableSettings.customCardAttrs = isPropSet('template_attrs') ? tableSettings.template_attrs : defaultSettings.customCardAttrs
     state.tableSettings.defaultFilters = isPropSet('default_filters') ? tableSettings.default_filters.split(',').map(f => f.trim()) : defaultSettings.defaultFilters
+  },
+  setSortColumn (state: ApplicationState, columnName: string) {
+    state.sort.sortColumnName = columnName
+  },
+  setIsSortOrderReversed (state: ApplicationState, isReversed: boolean) {
+    state.sort.isSortOrderReversed = isReversed
   },
   setMetaData (state: ApplicationState, metaData: MetaData) {
     Vue.set(state, 'tableMeta', metaData)
@@ -65,16 +78,39 @@ export default {
   setFiltersShown (state: ApplicationState, shown: string[]) {
     Vue.set(state.filters, 'shown', shown)
   },
-  setFilterSelection (state: ApplicationState, selections: StringMap) {
+  setFilterSelection (state: ApplicationState, selections: Record<string, string>) {
     Vue.set(state.filters, 'selections', selections)
   },
-  setBookmark (state: ApplicationState, bookmark: string) {
-    Vue.set(state, 'bookmark', bookmark)
+  setRouteQuery (state: ApplicationState, routeQuery: RouteQuery) {
+    state.filters.hideSidebar = routeQuery.hideSidebar ? routeQuery.hideSidebar === 'true' : false
+    state.tablePagination.page = routeQuery.page !== undefined ? parseInt(routeQuery.page, 10) : defaultPagination.page
+    state.tablePagination.size = routeQuery.size !== undefined ? parseInt(routeQuery.size, 10) : defaultPagination.size
+
+    if (routeQuery.sort !== undefined) {
+      if (routeQuery.sort.charAt(0) === '-') {
+        state.sort.isSortOrderReversed = true
+        state.sort.sortColumnName = routeQuery.sort.substring(1)
+      } else {
+        state.sort.isSortOrderReversed = false
+        state.sort.sortColumnName = routeQuery.sort
+      }
+    } else {
+      state.sort.isSortOrderReversed = false
+      state.sort.sortColumnName = null
+    }
+
+    if (routeQuery.filter !== undefined) {
+      const routeFilters = getters.parseRouteFilter(state, getters)(routeQuery.filter)
+      state.searchText = routeFilters.searchText
+      Vue.set(state.filters, 'shown', routeFilters.shown)
+      Vue.set(state.filters, 'selections', routeFilters.selections)
+    } else {
+      Vue.set(state.filters, 'shown', state.tableSettings.defaultFilters)
+    }
+
+    state.hiddenColumns = routeQuery.hide !== undefined ? routeQuery.hide.split(',') : []
   },
-  applyBookmark (state: ApplicationState, bookmark?: string) {
-    applyFilters(bookmark || state.bookmark, state.tableSettings.defaultFilters)
-  },
-  updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: StringMap }) {
+  updateRowData (state: ApplicationState, { rowId, rowData }: { rowId: string, rowData: Record<string, string> }) {
     if (!state.tableData) {
       throw new Error('cannot update empty table data')
     }
@@ -87,7 +123,7 @@ export default {
       }
     })
   },
-  removeRow (state: ApplicationState, { rowId }: {rowId: string}) {
+  removeRow (state: ApplicationState, { rowId }: { rowId: string }) {
     if (!state.tableData) {
       throw new Error('Cannot delete item from empty table')
     }
@@ -103,7 +139,30 @@ export default {
   setSearchText (state: ApplicationState, searchText: string) {
     state.searchText = searchText
   },
-  setComponentRoute (state: ApplicationState, componentRoute: boolean) {
-    state.componentRoute = componentRoute
+  persistToRoute (_ : any, routeObject: { router: any, query: any }) {
+    // we have to pass this.$router, if we import it directly in mutations, jest breaks.
+    const { router, query } = routeObject
+
+    let mergedRouterObject = {
+      ...router.currentRoute.query,
+      ...query
+    }
+
+    let routerObjectToPersist = {}
+
+    // remove empty parameters
+    for (const key in mergedRouterObject) {
+      if (mergedRouterObject[key]) {
+        routerObjectToPersist[key] = mergedRouterObject[key]
+      }
+    }
+
+    router.push({
+      name: router.currentRoute.name,
+      query: routerObjectToPersist
+    }, () => { }) // fix for duplicate route.
+  },
+  setTablePermissions (state: ApplicationState, permissions: string []) {
+    Vue.set(state, 'tablePermissions', permissions)
   }
 }

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.8...@molgenis-ui/metadata-manager@0.1.9) (2021-02-25)
+
+
+### Bug Fixes
+
+* **data-explorer, components-library, navigator:** fix master build ([b8c2e19](https://github.com/molgenis/molgenis-frontend/commit/b8c2e19ff04b1b859a4e41de28d7e852770ec883))
+
+
+
+
+
 ## [0.1.8](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.7...@molgenis-ui/metadata-manager@0.1.8) (2019-12-05)
 
 

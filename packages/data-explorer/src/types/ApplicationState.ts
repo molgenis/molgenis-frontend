@@ -1,9 +1,12 @@
 import { DataApiResponse, DataApiResponseItem } from '@/types/ApiResponse'
 import { MetaData } from './MetaData'
+import { Pagination } from '@molgenis-ui/components-library'
+import { Sort } from './Sort'
 
 export type Toast = {
   type: 'danger' | 'success'
-  message: string
+  message: string,
+  timeout?: number | null
 }
 
 export type FilterOptionsPromise = Promise<FilterOption[]>
@@ -43,6 +46,7 @@ export type FilterDefinition = {
   useSlider?: boolean
   step?: number
   time?: boolean
+  appendToBody?: boolean
 }
 
 export type FilterGroup = {
@@ -52,19 +56,21 @@ export type FilterGroup = {
   selections: FilterSelections
 }
 export default interface ApplicationState {
-  toast: Toast | null
+  toasts: Toast[]
   settingsTable: string
   dataDisplayLayout: 'CardView' | 'TableView'
-  dataDisplayLimit: Number
   tableName: string | null
   tableData: DataApiResponse | null
   tableMeta: MetaData | null
+  tablePermissions: string []
+  tablePagination: Pagination
   defaultEntityData: DataApiResponseItem[] | null
   selectedItemIds: string[]
   showSelected: boolean
   tableSettings: TableSetting
+  sort: Sort
   filters: FilterGroup
   searchText: string
-  bookmark: string
-  componentRoute: boolean
+  hiddenColumns: string[]
+  loading: boolean
 }

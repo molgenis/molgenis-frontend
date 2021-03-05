@@ -28,6 +28,14 @@ export default {
   name: 'CheckboxFilter',
   props: {
     /**
+     * Toggle to switch between returning an array with values or an array with the full option
+     */
+    returnTypeAsObject: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+    /**
      * A Promise-function that resolves with an array of options.
      * {text: 'foo', value: 'bar'}
      */
@@ -37,6 +45,7 @@ export default {
     },
     /**
      * This is the v-model value; an array of selected options.
+     * Can also be a { text, value } object array
      */
     value: {
       type: Array,
@@ -60,7 +69,8 @@ export default {
   },
   data () {
     return {
-      selection: this.value,
+      externalUpdate: false,
+      selection: [],
       resolvedOptions: [],
       sliceOptions: this.maxVisibleOptions && this.resolvedOptions && this.maxVisibleOptions < this.resolvedOptions.length
     }
@@ -80,22 +90,35 @@ export default {
     }
   },
   watch: {
+    value () {
+      this.setValue()
+    },
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
     },
     selection (newValue) {
-      const newSelection = [...newValue]
-      this.$emit('input', newSelection)
+      if (!this.externalUpdate) {
+        let newSelection = []
+
+        if (this.returnTypeAsObject) {
+          newSelection = Object.assign(newSelection, this.resolvedOptions.filter(of => newValue.includes(of.value)))
+        } else {
+          newSelection = [...newValue]
+        }
+        this.$emit('input', newSelection)
+      }
+      this.externalUpdate = false
     }
   },
   created () {
     this.options().then(response => {
       this.resolvedOptions = response
     })
+    this.setValue()
   },
   methods: {
     toggleSelect () {
-      if (this.selection && this.selection.length) {
+      if (this.selection && this.selection.length > 0) {
         this.selection = []
       } else {
         this.selection = this.resolvedOptions.map(option => option.value)
@@ -103,6 +126,14 @@ export default {
     },
     toggleSlice () {
       this.sliceOptions = !this.sliceOptions
+    },
+    setValue () {
+      this.externalUpdate = true
+      if (this.value && this.value.length > 0 && typeof this.value[0] === 'object') {
+        this.selection = this.value.map(vo => vo.value)
+      } else {
+        this.selection = this.value
+      }
     }
   }
 }

@@ -67,6 +67,11 @@
                   class="alert text-danger">
                 {{ 'data-row-edit-invalid-fields-msg' | i18n }}
             </span>
+            <span v-else-if="alert && alert.type === 'danger' && alert.message"
+                  class="alert text-danger">
+                {{ alert.message }}
+            </span>
+
           </div>
         </div>
 
@@ -197,26 +202,37 @@ export default {
         this.parent.setRef(false) // show parent
         this.parent.$refs.refContainer.removeChild(this.$el) // destroy child
       },
-      handleError (message) {
-        this.alert = {
-          message: typeof message !== 'string' ? this.$t('data-row-edit-default-error-message')
-            : message,
-          type: 'danger'
-        }
+      handleError (error) {
+        const alertMsg = this.errorToMessage(error)
         this.showForm = true
         this.isSaving = false
+        this.alert = {message: alertMsg, type: 'danger'}
+      },
+      errorToMessage (error) {
+        if(typeof error === 'string') {
+          return error
+        } else if (error && Array.isArray(error.errors) && error.errors.length) {
+          return `${error.errors[0].message} (${error.errors[0].code})`
+        } else {
+          return this.$t('data-row-edit-default-error-message')
+        }
       },
       /**
-       * Takes molgenis api-v2 metaData object and build map from fieldName to referenceEntity name
+       * Takes molgenis api-v2 metaData object and builds a map from fieldName to referenceEntity name
        * Only field that have a reference entity are included in the map
        */
       buildReferenceMap (metaData) {
-        this.referenceMap = metaData.attributes
+        // recursily walk compound
+        const flattenAttr = (attr) => attr.attributes && attr.attributes.length ? attr.attributes.flatMap(flattenAttr) : [attr] 
+        
+        return metaData.attributes
+          .flatMap(flattenAttr)
           .filter(attr => Object.prototype.hasOwnProperty.call(attr, 'refEntity'))
           .reduce((accum, attr) => {
-            accum[attr.name] = attr.refEntity.name
+          accum[attr.name] = attr.refEntity.name
             return accum
           }, {})
+
       },
       async fetchTableData (dataTableId, dataRowId) {
         const mapperOptions = {
@@ -232,7 +248,7 @@ export default {
           const resp = await repository.fetch(dataTableId, dataRowId)
           this.idAttribute = resp.meta.idAttribute
           this.labelAttribute = resp.meta.labelAttribute
-          this.buildReferenceMap(resp.meta)
+          this.referenceMap = this.buildReferenceMap(resp.meta)
           this.dataTableLabel = resp.meta.label
           const mappedData = EntityToFormMapper.generateForm(resp.meta, resp.rowData, mapperOptions)
           this.formFields = mappedData.formFields

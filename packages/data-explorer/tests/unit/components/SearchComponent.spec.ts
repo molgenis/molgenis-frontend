@@ -1,12 +1,19 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import SearchComponent from '@/components/SearchComponent.vue'
-import router from '@/router'
+import Router from 'vue-router'
+import routes from '@/routes'
+
+const mocks = { $t: (msg: any) => msg }
 
 describe('SearchComponent', () => {
   let wrapper: any
 
   beforeEach(() => {
-    wrapper = shallowMount(SearchComponent, { propsData: { value: 'demo' }, router })
+    // @ts-ignore
+    const localVue = createLocalVue()
+    localVue.use(Router)
+    const router = new Router({ routes })
+    wrapper = shallowMount(SearchComponent, { localVue, propsData: { value: 'demo' }, router, directives: { 'b-tooltip': () => { } }, mocks })
   })
 
   it('should render the component', () => {
@@ -43,15 +50,12 @@ describe('SearchComponent', () => {
   })
 
   describe('when the searchString value is changed to empty string (by html5 search clear action)', () => {
-    beforeEach(() => {
-      wrapper.setProps({ searchText: '' })
+    beforeEach(async () => {
+      await wrapper.setProps({ value: '' })
     })
-
-    it('should emit a event from the search component', () => {
-      wrapper.vm.$nextTick().then(() => {
-        expect(wrapper.emitted('input')).toBeTruthy()
-        expect(wrapper.emitted('input')[0]).toEqual([''])
-      })
+    it('should emit an event from the search component', async () => {
+      expect(wrapper.emitted('input')).toBeTruthy()
+      expect(wrapper.emitted('input')[0]).toEqual([''])
     })
   })
 })

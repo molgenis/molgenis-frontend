@@ -1,10 +1,10 @@
 <template>
   <a :href="href"
-    type="button"
-    class="btn btn-sm m-2 text-nowrap btn-light"
-    title="Table settings">
+    v-b-tooltip.hover.bottom
+    :title="$t('dataexplorer_settings_btn_tooltip')"
+    role="button"
+    class="btn btn-light btn-outline-secondary table-settings">
     <font-awesome-icon icon="cog"></font-awesome-icon>
-    Table settings
   </a>
 </template>
 

@@ -46,7 +46,6 @@ describe('ChapterForm component', () => {
       {
         formData: {field1: 'new value'},
         formState: {}
-      },
-      undefined))
+      }))
   })
 })

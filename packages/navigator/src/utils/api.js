@@ -1,35 +1,26 @@
-// @flow
-// $FlowFixMe
 import api from '@molgenis/molgenis-api-client'
-import type {
-  Alert,
-  Folder,
-  FolderState,
-  Resource,
-  Job, JobStatus, JobType
-} from '../flow.types'
 import { AlertError } from './AlertError'
 
 const NAVIGATOR_URI = '/plugin/navigator'
 const REST_API_V2 = '/api/v2'
 
-export function fetchJob (job: Job): Promise<Job> {
+export function fetchJob (job) {
   const uri = REST_API_V2 + '/' + toApiJobEntityType(job) + '/' + job.id
   return api.get(uri).catch(throwAlertError).then(toJob)
 }
 
-export function getResourcesByFolderId (folderId: ?string): Promise<FolderState> {
+export function getResourcesByFolderId (folderId) {
   const uri = folderId ? NAVIGATOR_URI + '/get?folderId=' + encodeURIComponent(
     folderId) : NAVIGATOR_URI + '/get'
   return api.get(uri).catch(throwAlertError).then(toFolderState)
 }
 
-export function getResourcesByQuery (query: string): Promise<FolderState> {
+export function getResourcesByQuery (query) {
   const uri = NAVIGATOR_URI + '/search?query=' + encodeURIComponent(query)
   return api.get(uri).catch(throwAlertError).then(toFolderState)
 }
 
-export function createResource (resource: Resource, folder: ?Folder) {
+export function createResource (resource, folder) {
   let promise
   if (resource.type === 'PACKAGE') {
     const packageEntity = toApiPackage(resource)
@@ -46,7 +37,7 @@ export function createResource (resource: Resource, folder: ?Folder) {
   return promise
 }
 
-export function updateResource (resource: Resource, updatedResource: Resource) {
+export function updateResource (resource, updatedResource) {
   return api.put(NAVIGATOR_URI + '/update', {
     body: JSON.stringify({
       resource: toApiResource(updatedResource)
@@ -54,7 +45,7 @@ export function updateResource (resource: Resource, updatedResource: Resource) {
   }).catch(throwAlertError)
 }
 
-export function downloadResources (resources: Array<Resource>): Promise<Job> {
+export function downloadResources (resources) {
   return api.post(NAVIGATOR_URI + '/download', {
     body: JSON.stringify({
       resources: resources.map(resource => toApiResourceIdentifier(resource))
@@ -62,7 +53,7 @@ export function downloadResources (resources: Array<Resource>): Promise<Job> {
   }).catch(throwAlertError).then(toJob)
 }
 
-export function deleteResources (resources: Array<Resource>): Promise<Job> {
+export function deleteResources (resources) {
   return api.delete_(NAVIGATOR_URI + '/delete', {
     body: JSON.stringify({
       resources: resources.map(resource => toApiResourceIdentifier(resource))
@@ -70,7 +61,7 @@ export function deleteResources (resources: Array<Resource>): Promise<Job> {
   }).catch(throwAlertError).then(toJob)
 }
 
-export function copyResources (resources: Array<Resource>, folder: ?Folder): Promise<Job> {
+export function copyResources (resources, folder) {
   return api.post(NAVIGATOR_URI + '/copy', {
     body: JSON.stringify({
       resources: resources.map(resource => toApiResourceIdentifier(resource)),
@@ -79,8 +70,8 @@ export function copyResources (resources: Array<Resource>, folder: ?Folder): Pro
   }).catch(throwAlertError).then(toJob)
 }
 
-export function moveResources (resources: Array<Resource>,
-  folder: ?Folder): Promise<string> {
+export function moveResources (resources,
+  folder) {
   return api.post(NAVIGATOR_URI + '/move', {
     body: JSON.stringify({
       resources: resources.map(resource => toApiResourceIdentifier(resource)),
@@ -90,11 +81,11 @@ export function moveResources (resources: Array<Resource>,
 }
 
 // map API types to navigator types
-function toFolderState (response: Object): FolderState {
+function toFolderState (response) {
   return response
 }
 
-function toJob (response: Object): Job {
+function toJob (response) {
   return {
     type: toJobType(response),
     id: response.identifier,
@@ -106,7 +97,7 @@ function toJob (response: Object): Job {
   }
 }
 
-function toJobType (response: Object): JobType {
+function toJobType (response) {
   let type
   switch (response.type) {
     case 'ResourceCopyJob':
@@ -124,7 +115,7 @@ function toJobType (response: Object): JobType {
   return type
 }
 
-function toJobStatus (response: Object): JobStatus {
+function toJobStatus (response) {
   let jobStatus
   switch (response.status) {
     case 'PENDING':
@@ -144,25 +135,25 @@ function toJobStatus (response: Object): JobStatus {
   return jobStatus
 }
 
-function throwAlertError (response: Object): Alert {
+function throwAlertError (response) {
   const alerts = response.errors.map(
     error => ({type: 'ERROR', message: error.message, code: error.code}))
   throw new AlertError(alerts)
 }
 
 // map navigator types to API types
-function toApiResource (resource: Resource): Object {
+function toApiResource (resource) {
   return resource
 }
 
-function toApiResourceIdentifier (resource: Resource): Object {
+function toApiResourceIdentifier (resource) {
   return {
     id: resource.id,
     type: resource.type
   }
 }
 
-function toApiPackage (resource: Resource): Object {
+function toApiPackage (resource) {
   return {
     id: resource.id,
     label: resource.label,
@@ -171,7 +162,7 @@ function toApiPackage (resource: Resource): Object {
   }
 }
 
-function toApiJobEntityType (job: Job): string {
+function toApiJobEntityType (job) {
   let apiType
   switch (job.type) {
     case 'COPY':

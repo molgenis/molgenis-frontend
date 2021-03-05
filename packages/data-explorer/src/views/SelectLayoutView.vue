@@ -1,14 +1,12 @@
 <template>
-  <div class="entity-table" v-if="tableMeta && tableData">
-    <div v-if="tableData && tableData.items && tableData.items.length === 0" class="alert alert-warning">
+  <div class="entity-table">
+    <div v-if="!tableMeta || !tableData || !tableData.items || tableData.length === 0" class="alert alert-warning">
       {{ 'dataexplorer_empty_table' | i18n}}
     </div>
-    <component
+    <component v-else
       :is="dataDisplayLayout"
-      :entitiesToShow="(tableData && tableData.items) ? tableData.items : []"
+      :entitiesToShow="tableData.items"
     />
-
-    <end-of-results v-if="tableData && tableData.items && tableData.items.length >= dataDisplayLimit" :dataDisplayLimit="dataDisplayLimit" class="mt-4"></end-of-results>
   </div>
 </template>
 
@@ -18,14 +16,13 @@ import TableView from './TableView'
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import EndOfResults from '../components/dataView/EndOfResults'
 import { mapState } from 'vuex'
 
 export default {
   name: 'SelectLayoutView',
-  components: { ExplorerCard, TableRow, TableHeader, CardView, TableView, EndOfResults },
+  components: { ExplorerCard, TableRow, TableHeader, CardView, TableView },
   computed: {
-    ...mapState(['dataDisplayLayout', 'dataDisplayLimit', 'tableMeta', 'tableData'])
+    ...mapState(['dataDisplayLayout', 'tableMeta', 'tableData'])
   }
 }
 </script>

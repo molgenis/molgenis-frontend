@@ -26,5 +26,8 @@ module.exports = {
       components: 'src/components/ui/*.vue'
     }
   ],
-  exampleMode: 'expand'
+  exampleMode: 'expand',
+  compilerConfig: {
+    transforms: { asyncAwait: false }
+  }
 }

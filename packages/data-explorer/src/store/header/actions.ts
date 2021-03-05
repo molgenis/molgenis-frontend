@@ -1,5 +1,5 @@
 import client from '@/lib/client'
-import { DataApiResponse, isDataApiResponseItem } from '@/types/ApiResponse'
+import { DataApiResponse, isLinkable } from '@/types/ApiResponse'
 import { Breadcrumb } from '@/types/Breadcrumb'
 
 const getPackageId = (url: string):string => {
@@ -26,10 +26,10 @@ const getBreadcrumbPath = async (parentUrl: string, addBreadcrumb: Function, bui
     link: buildLink(data.id)
   })
 
-  if (data.parent && isDataApiResponseItem(data.parent)) {
+  if (data.parent && isLinkable(data.parent)) {
     return getBreadcrumbPath(data.parent.links.self, addBreadcrumb, buildLink)
   } else {
-    Promise.resolve() // no more parents signal we are done
+    Promise.resolve() // no more parents signals we are done
   }
 }
 

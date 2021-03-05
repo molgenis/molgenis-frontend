@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/app-manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "LGPL-3.0",
   "description": "UI code for the app-manager plugin",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
@@ -14,7 +14,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "version": "yarn"
   },
   "dependencies": {
     "@molgenis/molgenis-api-client": "^3.1.3",

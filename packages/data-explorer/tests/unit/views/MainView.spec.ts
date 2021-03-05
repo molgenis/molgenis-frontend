@@ -20,38 +20,59 @@ describe('MainView.vue', () => {
   let modules: any
   const mocks: any = {
     $route: { params: {} },
+    $router: {
+      currentRoute: {
+        name: 'currentRouteName',
+        path: 'currentRoutePath'
+      },
+      push: jest.fn()
+    },
     $eventBus: bus,
     $bvModal: {
       msgBoxConfirm: jest.fn()
-    }
+    },
+    $t: (msg: any) => msg
   }
 
   beforeEach(() => {
     state = {
+      toasts: [],
       dataDisplayLayout: 'CardView',
       tableName: 'tableName',
       activeEntity: 'it_emx_datatypes_TypeTest',
       filters: {
-        hideSidebar: false
-      }
+        hideSidebar: false,
+        definition: [],
+        shown: [],
+        selections: {}
+      },
+      tablePagination: { count: 0, loading: false, page: 1, size: 20 }
     }
 
     mutations = {
       clearToast: jest.fn(),
+      setToasts: jest.fn(),
       setHideFilters: jest.fn(),
       setActiveEntity: jest.fn(),
-      setTableName: jest.fn()
+      setTableName: jest.fn(),
+      setFilterSelection: jest.fn(),
+      setSearchText: jest.fn(),
+      setPagination: jest.fn(),
+      setRouteQuery: jest.fn(),
+      setDataDisplayLayout: jest.fn()
     }
 
     getters = {
-      isUserAuthenticated: jest.fn()
+      isUserAuthenticated: jest.fn(),
+      compressedRouteFilter: jest.fn()
     }
 
     actions = {
       deleteRow: jest.fn(),
       fetchTableMeta: jest.fn(),
       fetchCardViewData: jest.fn(),
-      fetchTableViewData: jest.fn()
+      fetchTableViewData: jest.fn(),
+      fetchViewData: jest.fn()
     }
 
     modules = {
@@ -82,6 +103,29 @@ describe('MainView.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
 
+  describe('saveFilterState method', () => {
+    let wrapper: any
+    beforeEach(() => {
+      wrapper = shallowMount(MainView, { store, localVue, mocks })
+    })
+
+    it('should clear the search text if search is not part of the filter', () => {
+      const newSelections = {}
+      // @ts-ignore
+      wrapper.vm.saveFilterState(newSelections)
+      expect(mutations.setSearchText).toHaveBeenCalled()
+      expect(mocks.$router.push).toHaveBeenCalled()
+    })
+
+    it('should not clear the search text if search is part of the filter', () => {
+      const newSelections = { _search: 'mock selection' }
+      // @ts-ignore
+      wrapper.vm.saveFilterState(newSelections)
+      expect(mutations.setSearchText).not.toHaveBeenCalled()
+      expect(mocks.$router.push).toHaveBeenCalled()
+    })
+  })
+
   describe('handle delete events', () => {
     describe('when user confirms delete', () => {
       it('should call the deleteRow action passing the key', async (done) => {
@@ -90,7 +134,7 @@ describe('MainView.vue', () => {
         wrapper.vm.$eventBus.$emit('delete-item', 'my-key')
         await wrapper.vm.$nextTick()
         await wrapper.vm.$nextTick()
-        expect(actions.deleteRow).toHaveBeenCalledWith(expect.anything(), { rowId: 'my-key' }, undefined)
+        expect(actions.deleteRow).toHaveBeenCalledWith(expect.anything(), { rowId: 'my-key' })
         done()
       })
     })
@@ -114,39 +158,17 @@ describe('MainView.vue', () => {
     })
   })
 
-  describe('fetchViewData', () => {
-    it('if table name is changed, should fetch settings and metaData ', async (done) => {
-      // @ts-ignore
-      await wrapper.vm.fetchViewData('new table name')
-      expect(actions.fetchTableMeta).toHaveBeenCalled()
-      expect(mutations.setTableName).toHaveBeenCalled()
-      done()
-    })
-
-    it('if table name is not changed, should not fetch settings and meta ', async (done) => {
-      actions.fetchTableMeta.mockReset()
-      mutations.setTableName.mockReset()
-      // @ts-ignore
-      await wrapper.vm.fetchViewData('tableName')
-      expect(actions.fetchTableMeta).not.toHaveBeenCalled()
-      expect(mutations.setTableName).not.toHaveBeenCalled()
-      done()
-    })
-
-    it('if selected view is cardView, should fetch card data', async (done) => {
-      // @ts-ignore
-      await wrapper.vm.fetchViewData('tableName')
-      expect(actions.fetchCardViewData).toHaveBeenCalled()
-      done()
-    })
-  })
-
   describe('before route update', () => {
     it('fetch data before calling next', async (done) => {
+      actions.fetchTableMeta.mockClear()
       // @ts-ignore
       actions.fetchTableViewData.mockResolvedValue()
       const next = jest.fn()
-      const from = {}
+      const from = {
+        params: {
+          entity: 'entity'
+        }
+      }
       const to = {
         params: {
           entity: 'entity'
@@ -154,6 +176,29 @@ describe('MainView.vue', () => {
       }
       // @ts-ignore use call to pass vm context
       await wrapper.vm.$options.beforeRouteUpdate.call(wrapper.vm, to, from, next)
+      expect(actions.fetchTableMeta).not.toHaveBeenCalled()
+      expect(next).toHaveBeenCalled()
+      done()
+    })
+
+    it('fetch metadata and data before calling next', async (done) => {
+      actions.fetchTableMeta.mockClear()
+      // @ts-ignore
+      actions.fetchTableViewData.mockResolvedValue()
+      const next = jest.fn()
+      const from = {
+        params: {
+          entity: 'entity'
+        }
+      }
+      const to = {
+        params: {
+          entity: 'other'
+        }
+      }
+      // @ts-ignore use call to pass vm context
+      await wrapper.vm.$options.beforeRouteUpdate.call(wrapper.vm, to, from, next)
+      expect(actions.fetchTableMeta).toHaveBeenCalled()
       expect(next).toHaveBeenCalled()
       done()
     })
@@ -168,7 +213,18 @@ describe('MainView.vue', () => {
     })
     it('should add the Breadcrumb bar', () => {
       expect(wrapper.find('breadcrumb-bar-stub').exists()).toBeTruthy()
-      expect(modules.header.actions.fetchBreadcrumbs).toHaveBeenCalled()
+    })
+  })
+
+  describe('toasts getter and setter called', () => {
+    beforeEach(async (done) => {
+      wrapper = shallowMount(MainView, { store, localVue, mocks })
+      done()
+    })
+    it('should trigger getter and setter for toasts', async () => {
+      expect(mutations.setToasts).toHaveBeenCalledTimes(0)
+      wrapper.vm.toasts = [{ message: 'bar', type: 'success' }]
+      expect(mutations.setToasts).toHaveBeenCalledTimes(1)
     })
   })
 })

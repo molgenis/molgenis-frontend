@@ -64,26 +64,30 @@ describe('getters', () => {
   })
 
   describe('hasEditRights', () => {
-    let state: any
+    let state: any = {}
+    state.tablePermissions = []
 
-    it('should return false if not authenticated', () => {
-      let localGetters = {
-        isUserAuthenticated: false,
-        userRoles: []
-      }
-      expect(getters.hasEditRights(state, localGetters)).toEqual(false)
+    it('should return false user does not have update rights', () => {
+      expect(getters.hasEditRights(state)).toEqual(false)
     })
 
-    it('should return true if authenticated and has edit role', () => {
-      let localGetters = {
-        isUserAuthenticated: true,
-        userRoles: ['ROLE_EDITOR']
-      }
-      expect(getters.hasEditRights(state, localGetters)).toEqual(true)
-      localGetters.userRoles = ['ROLE_MANAGER']
-      expect(getters.hasEditRights(state, localGetters)).toEqual(true)
-      localGetters.userRoles = ['ROLE_SU']
-      expect(getters.hasEditRights(state, localGetters)).toEqual(true)
+    it('should return true if authenticated and has edit rights', () => {
+      state.tablePermissions = ['UPDATE_DATA']
+      expect(getters.hasEditRights(state)).toEqual(true)
+    })
+  })
+
+  describe('hasAddRights', () => {
+    let state: any = {}
+    state.tablePermissions = []
+
+    it('should return false user does not have add rights', () => {
+      expect(getters.hasAddRights(state)).toEqual(false)
+    })
+
+    it('should return true if authenticated and has add rights', () => {
+      state.tablePermissions = ['ADD_DATA']
+      expect(getters.hasAddRights(state)).toEqual(true)
     })
   })
 
@@ -96,6 +100,149 @@ describe('getters', () => {
         userRoles: ['ROLE_SU']
       }
       expect(getters.hasEditSettingsRights(state, localGetters)).toEqual(true)
+    })
+  })
+
+  describe('tableIdAttributeName', () => {
+    let state: any = {}
+
+    it('should return undefined if not set', () => {
+      expect(getters.tableIdAttributeName(state)).toEqual(undefined)
+    })
+
+    it('should return name of the id field if set', () => {
+      state = {
+        tableMeta: {
+          idAttribute: {
+            name: 'some-name'
+          }
+        }
+      }
+      expect(getters.tableIdAttributeName(state)).toEqual('some-name')
+    })
+  })
+
+  describe('tableLabelAttributeName', () => {
+    let state: any = {}
+
+    it('should return undefined if not set', () => {
+      expect(getters.tableLabelAttributeName(state)).toEqual(undefined)
+    })
+
+    it('should return name of the label field if set', () => {
+      state = {
+        tableMeta: {
+          labelAttribute: {
+            name: 'some-label'
+          }
+        }
+      }
+      expect(getters.tableLabelAttributeName(state)).toEqual('some-label')
+    })
+  })
+
+  describe('clipBoardItems', () => {
+    let state: any = {}
+
+    it('should return an empty list if table has no items', () => {
+      expect(getters.clipBoardItems(state, {})).toEqual([])
+    })
+
+    it('should return a list of selected items if set', () => {
+      state.tableData = {
+        items: [
+          { colA: 'my-id', colB: 'my-label' }
+        ]
+      }
+      state.selectedItemIds = ['my-id']
+      let localGetters = {
+        tableIdAttributeName: 'colA',
+        tableLabelAttributeName: 'colB'
+      }
+      expect(getters.clipBoardItems(state, localGetters)).toEqual([
+        { id: 'my-id', name: 'my-label' }
+      ])
+    })
+  })
+
+  describe('routeFilter', () => {
+    let state: any = {
+      filters: {
+        shown: ['a', 'b'],
+        selections: {
+          'f1': 'val1',
+          'f2': ['val2', 'val3'],
+          'f3': [new Date('2021-01-01T11:00:00.000Z')],
+          'non-in-result': []
+        }
+      }
+    }
+    const mockGetter = {
+      getDataTypeForFilter: jest.fn()
+    }
+    mockGetter.getDataTypeForFilter
+      .mockReturnValueOnce('string')
+      .mockReturnValueOnce('xref')
+      .mockReturnValueOnce('date')
+      .mockReturnValueOnce('mref')
+
+    it('should build the bookmark object based on the state of the store', () => {
+      expect(getters.routeFilter(state, mockGetter)).toEqual({
+        f1: 'val1',
+        f2: 'val2,val3',
+        f3: '2021-01-01T11:00:00.000Z',
+        searchText: undefined,
+        shown: 'a,b'
+      })
+    })
+  })
+
+  describe('compressedRouteFilter', () => {
+    let state: any = {}
+    const mockGetter = {
+      routeFilter: { book: 'mark' }
+    }
+    it('should return the compressed and encoded the filter object', () => {
+      expect(getters.compressedRouteFilter(state, mockGetter)).toEqual('N4IgRg9hDWIFwgLYEMBOsC+Q')
+    })
+  })
+
+  describe('getDataTypeForFilter', () => {
+    let state: any = {
+      filters: {
+        definition: [
+          { name: 'filer1', dataType: 'my-filter-type' },
+          { label: 'filer2', dataType: 'my-filter-type' }
+        ]
+      }
+    }
+
+    it('should lookup the filter type using the filter name or label', () => {
+      expect(getters.getDataTypeForFilter(state)('filer1')).toEqual('my-filter-type')
+      expect(getters.getDataTypeForFilter(state)('filer2')).toEqual('my-filter-type')
+    })
+
+    it('should throw an error if the type is not found', () => {
+      try {
+        getters.getDataTypeForFilter(state)('missing')
+      } catch (e) {
+        expect(e.toString()).toEqual('Error: Missing filter definition for identifier: missing')
+      }
+    })
+  })
+
+  describe('parseRouteFilter', () => {
+    let state: any = {}
+    const mockGetter = {
+      getDataTypeForFilter: () => () => 'my-filter-type'
+    }
+    it('should take a encoded bookmark and use the state to decode it in a filter object', () => {
+      const encodedBookmark = 'N4IgzgFg9g7gdiAXOaAHANAFwIYCMA2ApiOuIdgE4DGEAKoQB6ZIiaFjOmRSosBm2fGGIBfIA==='
+      expect(getters.parseRouteFilter(state, mockGetter)(encodedBookmark)).toEqual({
+        searchText: 'test',
+        selections: { 'shop': undefined },
+        shown: ['shop', 'table']
+      })
     })
   })
 })

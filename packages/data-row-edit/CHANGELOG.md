@@ -3,6 +3,83 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.1.3...@molgenis-ui/data-row-edit@5.2.0) (2021-02-26)
+
+
+### Features
+
+* **data-row-edit, questionnaires, scripts, settings:** Bump molgenis-ui-form dep to 5.3.0 ([#548](https://github.com/molgenis/molgenis-frontend/issues/548)) ([2562a93](https://github.com/molgenis/molgenis-frontend/commit/2562a93d91cf30a1e1e8f8ee9f885db859a7190a))
+
+
+
+
+
+## [5.1.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.1.2...@molgenis-ui/data-row-edit@5.1.3) (2021-02-25)
+
+
+### Bug Fixes
+
+* **data-explorer, components-library, navigator:** fix master build ([b8c2e19](https://github.com/molgenis/molgenis-frontend/commit/b8c2e19ff04b1b859a4e41de28d7e852770ec883))
+
+
+
+
+
+## [5.1.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.1.1...@molgenis-ui/data-row-edit@5.1.2) (2021-02-12)
+
+
+### Bug Fixes
+
+* **data-row-edit, questionnaires, scripts, settings:** Bump [@molgenis](https://github.com/molgenis)/molgenis-ui-form to 5.2.2 ([#530](https://github.com/molgenis/molgenis-frontend/issues/530)) ([a35370c](https://github.com/molgenis/molgenis-frontend/commit/a35370c))
+
+
+
+
+
+## [5.1.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.1.0...@molgenis-ui/data-row-edit@5.1.1) (2021-01-12)
+
+
+### Bug Fixes
+
+* **data-row-edit:** update forms to 5.2.1 ([febda23](https://github.com/molgenis/molgenis-frontend/commit/febda23))
+
+
+
+
+
+# [5.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.0.3...@molgenis-ui/data-row-edit@5.1.0) (2021-01-04)
+
+
+### Features
+
+* **data-row-edit, settings, questionnaires, scripts:** version bump  ([#471](https://github.com/molgenis/molgenis-frontend/issues/471)) ([d32482c](https://github.com/molgenis/molgenis-frontend/commit/d32482c))
+
+
+
+
+
+## [5.0.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.0.2...@molgenis-ui/data-row-edit@5.0.3) (2020-12-09)
+
+
+### Bug Fixes
+
+* **data-row-edit:** recursily build reference map ([3e03c53](https://github.com/molgenis/molgenis-frontend/commit/3e03c53))
+
+
+
+
+
+## [5.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.0.1...@molgenis-ui/data-row-edit@5.0.2) (2020-11-30)
+
+
+### Bug Fixes
+
+* **data-row-edit:** Fix showing server side error ([#442](https://github.com/molgenis/molgenis-frontend/issues/442)) ([799a2fc](https://github.com/molgenis/molgenis-frontend/commit/799a2fc)), closes [#209](https://github.com/molgenis/molgenis-frontend/issues/209)
+
+
+
+
+
 ## [5.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.0.0...@molgenis-ui/data-row-edit@5.0.1) (2020-10-09)
 
 

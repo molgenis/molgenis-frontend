@@ -19,6 +19,7 @@
                               :collapseLimit="collapseLimit"
                               :numberOfAttributes="numberOfAttributes"
                               :isEditable="isEditable"
+                              :hiddenColumns="hiddenColumns"
                               @expandDefaultCard="handleDefaultCardExpand"
         >
           <template v-slot:shopping-button>
@@ -81,6 +82,11 @@ export default Vue.extend({
       type: Boolean,
       required: false,
       default: () => false
+    },
+    // List of cardItem keys {string} that user wants to hide
+    hiddenColumns: {
+      type: Array,
+      default: () => []
     }
   },
   components: { ShoppingButton, DefaultCardContent, CustomCardContent },

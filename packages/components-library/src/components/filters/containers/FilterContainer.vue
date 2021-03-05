@@ -3,6 +3,48 @@
     class="filter-container"
     @mouseup="drag=false"
   >
+
+    <div v-if="canEdit && filters.length > 0" class="change-filters">
+      <b-dropdown
+        v-if="dialogStyle == 'dropdown'"
+        class="mb-2"
+        ref="addFilter"
+        variant="outline-primary"
+        boundary="window"
+        menu-class="shadow ml-2"
+        dropright
+        no-caret
+        block
+      >
+        <template v-slot:button-content>
+          <font-awesome-icon icon="filter" class="mr-1" /> {{filterActionLabel}}
+        </template>
+        <b-dropdown-text>
+          {{filterListLabel}}
+          <span class="float-right btn-close-filter-dialog" @click.stop="$refs.addFilter.hide(true)">
+            <font-awesome-icon icon="times" />
+          </span>
+        </b-dropdown-text>
+        <b-dropdown-form>
+          <change-filters
+            v-model="filtersToShow"
+            :filters="filters"
+            @input="selectionUpdate">
+          </change-filters>
+        </b-dropdown-form>
+      </b-dropdown>
+      <button v-else class="btn btn-block btn-primary text-nowrap" v-b-modal.change-filters-modal>
+        {{filterListLabel}}<font-awesome-icon icon="caret-right" class="ml-1"/>
+      </button>
+      <b-modal id="change-filters-modal" title="Change filters" hide-footer hide-header scrollable>
+        <change-filters
+          v-model="filtersToShow"
+          :filters="filters"
+          @input="selectionUpdate">
+        </change-filters>
+      </b-modal>
+    </div>
+
     <b-collapse
       id="mobile-button-toggle"
       :visible="doCollapse"
@@ -46,12 +88,6 @@
           </filter-card>
         </transition-group>
       </draggable>
-      <change-filters
-        v-if="canEdit && filters.length > 0"
-        v-model="filtersToShow"
-        :filters="filters"
-        @input="selectionUpdate"
-      />
     </b-collapse>
   </div>
 </template>
@@ -112,6 +148,31 @@ export default {
       type: Boolean,
       required: false,
       default: () => false
+    },
+    /**
+    * Set active filters selection dialogue style, choose between 'dropdown' or 'modal'.
+    * Defaults to using 'dropdown'
+    */
+    dialogStyle: {
+      type: String,
+      required: false,
+      default: () => 'dropdown'
+    },
+    /**
+    * Change action label
+    */
+    filterActionLabel: {
+      type: String,
+      required: false,
+      default: () => 'Add filter'
+    },
+    /**
+    * Filter list label
+    */
+    filterListLabel: {
+      type: String,
+      required: false,
+      default: () => 'Filters'
     }
   },
   data () {
@@ -144,6 +205,11 @@ export default {
   destroyed () {
     window.removeEventListener('resize', this.handleResize)
   },
+  watch: {
+    filtersShown (newValue) {
+      this.filtersToShow = newValue
+    }
+  },
   methods: {
     handleResize () {
       this.width = window.innerWidth
@@ -167,7 +233,20 @@ export default {
        * @property {Object} - Filter name/value
        * @event input
        */
-      this.$emit('input', { ...this.value, [name]: value })
+
+      // clear an empty checkbox and range filter
+      if (Array.isArray(value)) {
+        if (value.length === 0) {
+          value = undefined
+        } else if (value.every(item => item === null)) {
+          value = undefined
+        }
+      }
+
+      const newSelection = { ...this.value, [name]: value }
+      // remove all undefined properties
+      Object.keys(newSelection).forEach(key => newSelection[key] === undefined && delete newSelection[key])
+      this.$emit('input', newSelection)
     },
     selectionUpdate () {
       this.$emit('update', this.filtersToShow)
@@ -176,13 +255,33 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .dragdrop .drag-handle {
     cursor: grab;
   }
 
   .dragdrop.dragging .drag-handle {
     cursor: grabbing;
+  }
+
+  .btn-close-filter-dialog {
+    transition: color 0.2s;
+    height: inherit;
+    width: 1.5em;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  .btn-close-filter-dialog:hover {
+    color: var(--danger);
+  }
+
+  .change-filters form {
+      max-height: 400px;
+      overflow: auto;
   }
 </style>
 
@@ -205,6 +304,8 @@ const filtersShown = ['datetime']
         :filters="filtersMocks"
         :filters-shown="filtersShown"
         :can-edit="true"
+        filterActionLabel="Add filter"
+        filterListLabel="Filters"
         @update="(newState) => filtersShown = newState"
     />
   </div>

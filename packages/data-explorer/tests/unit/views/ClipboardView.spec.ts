@@ -10,9 +10,11 @@ describe('ClipboardView.vue', () => {
   let state: any
   let mutations: any
   let actions: any
+  let getters: any
 
   beforeEach(() => {
     state = {
+      showSelected: false,
       tableMeta: {
         idAttribute: { name: 'tableID' },
         attributes: [
@@ -55,7 +57,12 @@ describe('ClipboardView.vue', () => {
     actions = {
       fetchTableViewData: jest.fn()
     }
-    store = new Vuex.Store({ state, mutations, actions })
+
+    getters = {
+      tableIdAttributeName: jest.fn()
+    }
+    getters.tableIdAttributeName.mockReturnValue('tableID')
+    store = new Vuex.Store({ state, mutations, actions, getters })
   })
 
   it('exists', () => {

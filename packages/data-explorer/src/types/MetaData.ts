@@ -42,6 +42,14 @@ export type Attribute = {
   range?: { min?: number, max?:number }
 }
 
+export interface RefAttribute extends Attribute {
+  refEntityType: string, // url to ref entity
+}
+
+export function isRefAttribute (attr: Attribute): attr is RefAttribute {
+  return (attr as RefAttribute).refEntityType !== undefined
+}
+
 type CategoricalOption = {
   id?: string,
   label?: string

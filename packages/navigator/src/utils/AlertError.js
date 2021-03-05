@@ -1,10 +1,5 @@
-// @flow
-import type { Alert } from '../flow.types'
-
 export class AlertError extends Error {
-  alerts: Array<Alert>
-
-  constructor (alerts: Array<Alert>) {
+  constructor (alerts) {
     super()
     this.alerts = alerts
   }

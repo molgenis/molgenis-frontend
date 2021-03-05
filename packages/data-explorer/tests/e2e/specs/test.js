@@ -23,13 +23,13 @@ module.exports = {
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('.shopping-button', timeOutDelay)
       .click('.shopping-button')
-      .click('.toast-body button.btn.btn-secondary')
+      .waitForElementPresent('.toast-body .btn-secondary', timeOutDelay)
+      .click('.toast-body .btn-secondary')
       .waitForElementPresent('.cart-order', timeOutDelay)
       .assert.elementNotPresent('.alert.alert-warning')
       .waitForElementPresent('.shopping-button', timeOutDelay)
       .click('.shopping-button')
-      .pause(animationDelay)
-      .waitForElementPresent('.alert.alert-warning', timeOutDelay)
+      .waitForElementPresent('.alert.alert-warning', (timeOutDelay * 2))
       .end()
   },
   'should display custom card': browser => {
@@ -63,27 +63,13 @@ module.exports = {
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('.btn.hide-filters', timeOutDelay)
       .assert.elementNotPresent('show-filters-button')
-      .assert.cssClassNotPresent('.flex-mainview', 'hidefilters')
+      .assert.cssClassNotPresent('.mg-content', 'hidefilters')
       .click('.btn.hide-filters')
-      .assert.cssClassPresent('.flex-mainview', 'hidefilters')
+      .assert.cssClassPresent('.mg-content', 'hidefilters')
       .waitForElementPresent('.btn.show-filters-button', timeOutDelay)
       .click('.btn.show-filters-button')
+      .waitForElementPresent('.btn.hide-filters', timeOutDelay)
       .assert.elementNotPresent('show-filters-button')
-      .assert.cssClassNotPresent('.flex-mainview', 'hidefilters')
-      .end()
-  },
-  'Add and remove filters': browser => {
-    browser
-      .url(patientsLocation)
-      .waitForElementPresent('#app', timeOutDelay)
-      .waitForElementPresent('.filter-container .dropdown-toggle.dropdown-toggle-no-caret', timeOutDelay)
-      .click('.filter-container .dropdown-toggle.dropdown-toggle-no-caret')
-      .waitForElementPresent('.filter-container .dropdown-menu', timeOutDelay)
-      .assert.elementCount('.filter-container .filter-card', 0)
-      .click('.custom-control.custom-checkbox:nth-child(1) label')
-      .assert.elementCount('.filter-container .filter-card', 1)
-      .click('.custom-control.custom-checkbox:nth-child(1) label')
-      .assert.elementCount('.filter-container .filter-card', 0)
       .end()
   }
 }

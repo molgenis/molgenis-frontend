@@ -18,6 +18,7 @@
       :always-show-calendars="true"
       :min-date="min"
       :max-date="max"
+      :append-to-body="appendToBody"
       @update="updateValues"
     >
       <template slot="input">
@@ -87,6 +88,14 @@ export default {
     value: {
       type: Array,
       default: () => [null, null]
+    },
+    /**
+     * Append the dialog to the body tag, useful if filter is used within a container that uses overflow:scroll
+     * @model
+     */
+    appendToBody: {
+      type: Boolean,
+      default: () => false
     }
   },
   data: function () {

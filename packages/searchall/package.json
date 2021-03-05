@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/searchall",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "LGPL-3.0",
   "description": "MOLGENIS searchall",
   "author": "Bart Charbon",
@@ -17,7 +17,8 @@
     "watch": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --watch",
     "debug": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js -i --watch",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
-    "lint:fix": "eslint --fix --ext .js,.vue src test/unit/specs"
+    "lint:fix": "eslint --fix --ext .js,.vue src test/unit/specs",
+    "version": "yarn"
   },
   "dependencies": {
     "@molgenis/molgenis-api-client": "^2.1.3",

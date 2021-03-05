@@ -13,6 +13,10 @@ describe('service/parameterService', () => {
       expect(findParameters('bla bla bla $("myValue") bla bla', 'JavaScript (Magma)')).toEqual(['myValue'])
     })
 
+    it('should find parameters with underscore in the name', () => {
+      expect(findParameters('bla bla bla $("a_b") bla bla', 'JavaScript (Magma)')).toEqual(['a_b'])
+    })
+
     it('should find params with single quotes in when type is JavaScript (Magma)', () => {
       expect(findParameters("$('blah-di-blah')", 'JavaScript (Magma)')).toEqual(['blah-di-blah'])
     })

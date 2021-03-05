@@ -30,16 +30,6 @@
     word-wrap: break-word;
 }
 
-/* define borders on the left and right expanded without specifying border colors */
-.molgenis-table {
-    border-style: none;
-}
-
-.molgenis-table thead > tr > th:not(.expanded-left):not(.expanded-right), .molgenis-table tbody > tr > td:not(.expanded-left):not(.expanded-right) {
-    border-left-style: none;
-    border-right-style: none;
-}
-
 .molgenis-table tbody > tr:last-child > td {
     border-bottom-style: none;
 }

@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/core-ui",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "LGPL-3.0",
   "description": "Dependencies for the MOLGENIS UI",
   "publishConfig": {
@@ -22,7 +22,8 @@
     "sass:build": "npm-run-all build-task:*",
     "sass:watch": "chokidar 'src/scss/**/*.scss' -c 'npm run sass:build'",
     "dev:theme": "npm-run-all sass:*",
-    "copy": "yarn run copyfiles lib/* dist/js -u1"
+    "copy": "yarn run copyfiles lib/* dist/js -u1",
+    "version": "yarn"
   },
   "repository": {
     "type": "git",

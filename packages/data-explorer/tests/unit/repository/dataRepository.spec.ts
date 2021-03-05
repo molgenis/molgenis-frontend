@@ -4,7 +4,7 @@ import { buildExpandedAttributesQuery } from '@/repository/queryBuilder'
 
 import mockmeta from '../mocks/metaDataResponseMock'
 import mockRowResponse from '../mocks/rowDataResponseMock'
-
+import { defaultPagination } from '@/store/state'
 import client from '@/lib/client'
 
 jest.mock('@/lib/client', () => ({
@@ -34,9 +34,18 @@ describe('dataRepository', () => {
       client.get.mockResolvedValue({ data: mockRowResponse })
       const resp = await dataRepository.getRowDataWithReferenceLabels(tableId, rowId, mockmeta as MetaData)
       expect(resp).toEqual({
-        country: 'label',
+        country: { id: 'id', label: 'label' },
         id: 1,
-        label: 'my label row data'
+        label: 'my label row data',
+        age_groups: [{ id: 'id1', label: 'label1' }],
+        file: {
+         contentType: 'text/plain',
+         filename: 'hello.txt',
+         id: 'file-id',
+         label: 'hello.txt',
+         size: 16,
+         url: 'https://master.dev.molgenis.org/files/aaaac56zuuoganrgemw7epqaae',
+        }
       })
     })
   })
@@ -77,11 +86,11 @@ describe('dataRepository', () => {
     it('should build query with deep ref', async (done) => {
       const tableId = 'tableId'
       const metaData = mockmeta as MetaData
-      const coloms = ['foo']
+      const columns = ['foo']
       const rsqlQuery = 'rsqlQuery'
-      const dataDisplayLimit = 10
-      await dataRepository.getTableDataDeepReference(tableId, metaData, coloms, rsqlQuery, dataDisplayLimit)
-      expect(client.get).toBeCalledWith('/api/data/tableId?size=10&expanded-attributes-query&q=rsqlQuery')
+      const pagination = defaultPagination
+      await dataRepository.getTableDataDeepReference(tableId, metaData, columns, rsqlQuery, pagination)
+      expect(client.get).toBeCalledWith('/api/data/tableId?page=0&size=20&expanded-attributes-query&q=rsqlQuery')
       done()
     })
   })

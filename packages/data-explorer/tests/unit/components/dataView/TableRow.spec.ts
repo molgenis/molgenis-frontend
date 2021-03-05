@@ -1,39 +1,52 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import TableRow from '@/components/dataView/TableRow.vue'
+
+const getWrapper = (propsData) => {
+  const localVue = createLocalVue()
+  const wrapper = shallowMount(TableRow, {
+    directives: {
+      'b-tooltip': () => {}
+    },
+    localVue,
+    propsData: {
+      ...propsData,
+      id: 'id',
+      rowIndex: 0,
+      tableName: 'tableName',
+      showSelected: false
+    },
+    stubs: ['font-awesome-icon'],
+    mocks: { $t: (msg: any) => msg }
+  })
+
+  return wrapper
+}
 
 describe('EntityTableRow.vue', () => {
   it('exists', () => {
-    const wrapper = shallowMount(TableRow, {
-      propsData: {
-        id: 'id',
-        tableName: 'tableName',
-        rowData: {},
-        visibleColumns: []
-      }
+    const wrapper = getWrapper({
+      rowData: {},
+      visibleColumns: []
     })
 
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('renders table rows', () => {
-    const wrapper = shallowMount(TableRow, {
-      propsData: {
-        id: 'id',
-        tableName: 'tableName',
-        rowData: { name: 'name', title: 'title', content: 'content' },
-        visibleColumns: [{ name: 'name' }, { name: 'title' }, { content: 'content' }]
-      }
+    const wrapper = getWrapper({
+      rowData: { name: 'name', title: 'title', content: 'content' },
+      visibleColumns: [{ name: 'name', type: 'string' }, { name: 'title', type: 'sring' }, { content: 'content', type: 'string' }]
     })
-    expect(wrapper.findAll('td').length).toEqual(4) // length + 1 for edit btn
+    expect(wrapper.findAll('td').length).toEqual(3)
+    expect(wrapper.findAll('th').length).toEqual(1) // edit btn
   })
 
   it('only renders visible columns', () => {
-    const wrapper = shallowMount(TableRow, { propsData: {
-      id: 'id',
-      tableName: 'tableName',
+    const wrapper = getWrapper({
       rowData: { name: 'name', title: 'title', content: 'content' },
-      visibleColumns: [{ name: 'name' }, { content: 'content' }]
-    } })
-    expect(wrapper.findAll('td').length).toEqual(3) // length + 1 for edit btn
+      visibleColumns: [{ name: 'name', type: 'string' }, { content: 'content', type: 'string' }]
+    })
+    expect(wrapper.findAll('td').length).toEqual(2)
+    expect(wrapper.findAll('th').length).toEqual(1) // edit btn
   })
 })

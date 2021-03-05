@@ -3,9 +3,10 @@
     no-body
     class="filter-card mb-2"
   >
+
     <b-card-header
       class="drag-handle"
-      :class="collapsable ? 'collapsable' : ''"
+      :class="cssClasses"
       @click="toggleState"
     >
       <div
@@ -45,6 +46,13 @@
 export default {
   name: 'FilterCard',
   props: {
+    /**
+     * Extra class to style b-card-header
+     */
+    headerClass: {
+      type: String,
+      default: () => ''
+    },
     /**
      * Unique filter identifier
      */
@@ -99,6 +107,13 @@ export default {
     }
   },
   computed: {
+    cssClasses: function () {
+      const classes = this.headerClass.split(' ').filter(i => i)
+      if (this.collapsable) {
+        classes.push('collapsable')
+      }
+      return classes.join(' ')
+    },
     iconStyle () {
       return {
         transform: `rotate(${this.isOpen ? 90 : 0}deg)`,
@@ -183,6 +198,7 @@ const model = []
 <FilterCard
   name="fruit-card"
   label="Fruit"
+  headerClass="bg-info text-white"
   description="Example with checkbox filter"
   v-bind:collapsed="false"
   v-bind:collapsable="true"

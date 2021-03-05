@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-overlay :show="cardLoading">
     <h5 class="card-title mg-default-card-title">{{dataLabel}}
       <a
         v-if="isEditable"
@@ -24,7 +24,15 @@
           {{head}}
         </div>
         <div class="col-6">
-          {{value}}
+          <template v-if="Array.isArray(value)">
+            {{value.map(v => v.label).join(', ')}}
+          </template>
+          <template v-else-if="typeof value === 'object' && value !== null">
+            {{value.label}}
+          </template>
+          <template v-else>
+            {{value}}
+          </template>
         </div>
       </div>
       <div class="row">
@@ -34,27 +42,27 @@
             <font-awesome-icon icon="chevron-right" v-if="cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
           </button>
           <button class="btn btn-outline-info btn-sm mg-info-btn" @click="goToDetails">
-            <font-awesome-icon icon="search"></font-awesome-icon> Info
+            <font-awesome-icon icon="search"></font-awesome-icon> {{ 'dataexplorer_default_card_info_btn_label' | i18n }}
           </button>
         </div>
       </div>
     </div>
-  </div>
+  </b-overlay>
 </template>
 
 <script>
-import Vue from 'vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch, faChevronUp, faChevronRight, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faSearch, faChevronRight, faChevronUp, faEdit, faTrash)
 
-export default Vue.extend({
+export default {
   name: 'DefaultCardContent',
   data: () => {
     return {
-      cardState: 'closed'
+      cardState: 'closed',
+      cardLoading: false
     }
   },
   props: {
@@ -85,26 +93,40 @@ export default Vue.extend({
     isEditable: {
       type: Boolean,
       default: () => false
+    },
+    // List of cardItem keys that need to be hidden
+    hiddenColumns: {
+      type: Array,
+      default: () => []
     }
   },
   components: { FontAwesomeIcon },
   computed: {
     expandBtnText () {
-      return this.cardState === 'closed' ? 'Expand' : 'Collapse'
+      return this.cardState === 'closed' ? this.$t('dataexplorer_default_card_expand_btn_label') : this.$t('dataexplorer_default_card_collapse_btn_label')
     },
     dataToShow () {
+      const visibleDataContents = Object.keys(this.dataContents)
+        .filter(columnName => !this.hiddenColumns.includes(columnName))
+        .reduce((accum, key) => { return { ...accum, [key]: this.dataContents[key] } }, {})
+
       if (this.cardState === 'closed') {
-        const elementsToShow = Object.keys(this.dataContents).slice(0, this.collapseLimit)
+        const elementsToShow = Object.keys(visibleDataContents).slice(0, this.collapseLimit)
         return elementsToShow.reduce((accumulator, key) => {
-          accumulator[key] = this.dataContents[key]
+          accumulator[key] = visibleDataContents[key]
           return accumulator
         }, {})
       } else {
-        return this.dataContents
+        return visibleDataContents
       }
     },
     detailLink () {
       return `/menu/main/dataexplorer/details/${this.dataTable}/${this.dataId}`
+    }
+  },
+  watch: {
+    dataContents () {
+      this.cardLoading = false
     }
   },
   methods: {
@@ -115,12 +137,13 @@ export default Vue.extend({
       if (this.cardState === 'closed') {
         this.cardState = 'open'
         this.$emit('expandDefaultCard')
+        this.cardLoading = true
       } else {
         this.cardState = 'closed'
       }
     }
   }
-})
+}
 </script>
 
 <style scoped>

@@ -1,12 +1,12 @@
 <template>
   <div class="input-group">
-    <form class="form-group w-100" @submit.prevent="handleSearchAction">
+    <form class="w-100" @submit.prevent="handleSearchAction">
       <div class="input-group">
       <input
         type="search"
         v-model="searchText"
         class="form-control"
-        placeholder="Search"
+        :placeholder="$t('dataexplorer_search_btn_tooltip')"
         aria-label="Search data"
         aria-describedby="mg-data-explorer-search"
       />
@@ -15,6 +15,8 @@
           class="btn btn-outline-secondary"
           type="submit"
           id="mg-data-explorer-search"
+          v-b-tooltip.hover.bottom
+          :title="$t('dataexplorer_search_input_tooltip')"
         >
           <font-awesome-icon icon="search"></font-awesome-icon>
         </button>
@@ -28,7 +30,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { createBookmark } from '../mappers/bookmarkMapper'
 
 library.add(faSearch)
 
@@ -49,7 +50,6 @@ export default {
   methods: {
     handleSearchAction () {
       this.$emit('input', this.searchText)
-      createBookmark(this.$router)
     }
   },
   watch: {
@@ -58,8 +58,7 @@ export default {
         if (val === '') {
           this.searchText = ''
         }
-      },
-      immediate: true
+      }
     },
     searchText: {
       // Add handler to support html5 clear search action
@@ -67,8 +66,7 @@ export default {
         if (val === '') {
           this.handleSearchAction()
         }
-      },
-      immediate: true
+      }
     }
   }
 }

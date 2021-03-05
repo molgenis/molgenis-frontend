@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/metadata-manager",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "license": "LGPL-3.0",
   "description": "MOLGENIS Metadata manager",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
@@ -17,7 +17,8 @@
     "unit:watch": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --watch",
     "unit:debug": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js -i --watch",
     "lint": "eslint --ext .js,.vue src test/unit/specs",
-    "lint:fix": "eslint --ext .js,.vue src test/unit/specs"
+    "lint:fix": "eslint --ext .js,.vue src test/unit/specs",
+    "version": "yarn"
   },
   "dependencies": {
     "@molgenis/molgenis-api-client": "^2.1.3",

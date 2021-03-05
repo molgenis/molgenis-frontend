@@ -1,54 +1,61 @@
 <template>
-  <div class="container-fluid">
-    <breadcrumb-bar
-      v-if="isUserAuthenticated"
-      :breadcrumbs="breadcrumbs"
-      @fetchItems="fetchPackageTables"
+  <div class="mg-mainview d-flex flex-column h-100 overflow-control">
+    <div class="container-fluid">
+      <breadcrumb-bar
+        v-if="isUserAuthenticated"
+        :breadcrumbs="breadcrumbs"
+        @fetchItems="fetchPackageTables"
+        :headItemTooltip="tableMeta && tableMeta.description"
       >
-    </breadcrumb-bar>
-    <toast-component
-      class="toast-component mt-2"
-      v-if="toast"
-      :type="toast.type"
-      :message="toast.message"
-      @toastCloseBtnClicked="clearToast">
-    </toast-component>
-    <page-header-view v-if="!loading"></page-header-view>
-    <div class="flex-mainview d-flex" :class="{'hidefilters': filters.hideSidebar}">
-      <div class="flex-filter">
-        <filters-view v-if="!loading"></filters-view>
-      </div>
-      <div class="flex-data ml-4" >
-        <button
-          type="button"
-          class="btn btn-light m-0 btn-outline-secondary show-filters-button py-1"
-          title="Show Filters"
-          v-if="filters.hideSidebar && !showSelected"
-          @click="setHideFilters(false)">
-          <font-awesome-icon icon="chevron-up"></font-awesome-icon>
-          <span class="ml-2">Filters</span>
-        </button>
+      </breadcrumb-bar>
+      <nav v-else aria-label="breadcrumb">
+        <ol v-if="tableMeta" class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            <span id="mainView-headItemTooltipID">
+              {{ tableMeta.label }}
+            </span>
+            <b-tooltip v-if="tableMeta.description" placement="bottom" target="mainView-headItemTooltipID" triggers="hover">
+              {{ tableMeta.description }}
+            </b-tooltip>
+          </li>
+        </ol>
+      </nav>
+      <Toaster v-model="toasts" />
+    </div>
+    <div class="mg-content d-flex h-100 overflow-control">
+      <button
+        @click="showSidebar"
+        class="btn btn-outline-secondary mg-filter-tab"
+        :class="{'active': filters.hideSidebar}"
+        :title="$t('dataexplorer_filters_show_btn_label')"
+      >
+          <font-awesome-icon icon="chevron-right"/>
+      </button>
+      <filters-view class="mg-filter mr-2" :class="{'active': filters.hideSidebar}"/>
 
-        <data-view v-if="!loading"></data-view>
+      <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
+        <active-filters @input="saveFilterState" :value="activeFilterSelections" :filters="filterDefinitions"></active-filters>
+        <toolbar-view class="mb-2"></toolbar-view>
+
+        <div class="mg-data-view-container">
+          <data-view v-if="!tablePagination.loading"></data-view>
+        </div>
+        <pagination class="mt-2" v-model="tablePagination" />
       </div>
     </div>
-
+    <b-overlay :show="loading" no-wrap />
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import FiltersView from './FiltersView'
-import ToastComponent from '../components/utils/ToastComponent'
 import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
+import { ActiveFilters, Pagination, Toaster } from '@molgenis-ui/components-library'
+
 import DataView from './DataView'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import PageHeaderView from './PageHeaderView'
-
-library.add(faChevronUp)
+import ToolbarView from './ToolbarView'
 
 const deleteConfirmOptions = {
   okVariant: 'danger',
@@ -60,44 +67,56 @@ const deleteConfirmOptions = {
 
 export default Vue.extend({
   name: 'MainView',
-  components: { FiltersView, DataView, ToastComponent, FontAwesomeIcon, PageHeaderView, BreadcrumbBar },
+  components: { FiltersView, DataView, BreadcrumbBar, Pagination, Toaster, ToolbarView, ActiveFilters },
   computed: {
-    ...mapState([
-      'filters',
-      'toast',
-      'showSelected',
-      'dataDisplayLayout',
-      'tableName'
-    ]),
-    ...mapState('header', [
-      'breadcrumbs'
-    ]),
-    ...mapGetters([
-      'isUserAuthenticated'
-    ])
-  },
-  data () {
-    return {
-      loading: false
+    tablePagination: {
+      get: function () {
+        return this.$store.state.tablePagination
+      },
+      set: function (value) {
+        this.$router.push({
+          name: 'main-view',
+          query: { ...this.$route.query, page: value.page, size: value.size }
+        })
+      }
+    },
+    toasts: {
+      get: function () {
+        return this.$store.state.toasts
+      },
+      set: function (value) {
+        this.setToasts(value)
+      }
+    },
+    ...mapState(['filters', 'showSelected', 'dataDisplayLayout', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'searchText', 'loading']),
+    ...mapState('header', ['breadcrumbs']),
+    ...mapGetters(['isUserAuthenticated', 'compressedRouteFilter']),
+    activeFilterSelections () {
+      return this.searchText ? { ...this.filters.selections, _search: this.searchText } : this.filters.selections
+    },
+    filterDefinitions () {
+      const searchDef = {
+        type: 'string',
+        label: 'search',
+        name: '_search'
+      }
+      return this.searchText ? [...this.filters.definition, searchDef] : this.filters.definition
     }
   },
   methods: {
-    ...mapMutations([
-      'clearToast',
-      'setHideFilters',
-      'setTableName'
-    ]),
-    ...mapActions([
-      'deleteRow',
-      'fetchTableMeta',
-      'fetchCardViewData',
-      'fetchTableViewData',
-      'fetchTableMeta'
-    ]),
-    ...mapActions('header', [
-      'fetchBreadcrumbs',
-      'fetchPackageTables'
-    ]),
+    ...mapMutations(['setTableName', 'setToasts', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
+    ...mapActions(['deleteRow', 'fetchViewData', 'fetchTableMeta', 'fetchTablePermissions']),
+    ...mapActions('header', ['fetchPackageTables']),
+    saveFilterState (newSelections) {
+      if (newSelections['_search'] === undefined) {
+        this.setSearchText('')
+      }
+      this.setFilterSelection(newSelections)
+      this.$router.push({
+        name: 'main-view',
+        query: { ...this.$route.query, filter: this.compressedRouteFilter }
+      })
+    },
     async handeldeleteItem (itemId) {
       const msg = 'Are you sure you want to delete this item ?'
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, deleteConfirmOptions)
@@ -105,88 +124,99 @@ export default Vue.extend({
         this.deleteRow({ rowId: itemId })
       }
     },
-    async fetchViewData (tableName) {
-      if (this.tableName !== tableName) {
-        this.loading = true
-        await this.fetchTableMeta({ tableName })
-        if (this.isUserAuthenticated) {
-          this.fetchBreadcrumbs()
-        }
-        this.setTableName(tableName)
-      }
-      if (this.dataDisplayLayout === 'CardView') {
-        this.fetchCardViewData()
-      } else {
-        this.fetchTableViewData()
-      }
-      this.loading = false
+    showSidebar () {
+      this.$router.push({
+        name: 'main-view',
+        query: { ...this.$route.query, filter: this.compressedRouteFilter, hideSidebar: String(false) }
+      })
     }
   },
-  created () {
+  async created () {
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
-    this.fetchViewData(this.$route.params.entity)
+    const tableName = this.$route.params.entity
+    this.fetchTablePermissions({ tableName })
+    await this.fetchTableMeta({ tableName })
+    this.setRouteQuery(this.$route.query)
+    this.setDataDisplayLayout(this.$route.params.view)
+    this.fetchViewData()
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
-    await this.fetchViewData(to.params.entity)
+    if (to.params.entity !== from.params.entity) {
+      const tableName = to.params.entity
+      this.fetchTablePermissions({ tableName })
+      await this.fetchTableMeta({ tableName })
+    }
+    this.setRouteQuery(to.query)
+    this.setDataDisplayLayout(to.params.view)
+    await this.fetchViewData()
     next()
   }
 })
 </script>
 
 <style scoped>
-  .show-filters-button {
-    display: inline-block;
-    white-space: nowrap;
-    position: absolute;
-    left: -1px;
-    transform: rotate(90deg);
-    transform-origin: 0 100%;
-  }
-  .flex-mainview {
+  .mg-content {
     white-space: normal;
   }
-  .flex-filter {
-    z-index: 1; /* prioritizes stacking index of sidebar: needed for datepicker */
+
+  .mg-data-view-container {
+    width: 100%;
+  }
+
+  .mg-filter {
     transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
     min-width: 20rem;
     max-width: 20rem;
-    padding-right: 1rem;
-    transform: translateX( 0 );
   }
 
-  .flex-data {
-    max-width: calc(100% - 22rem);
-    width: 100%;
-  }
-  .hidefilters .flex-filter {
+  .mg-filter.active {
     transition: max-width 0.3s, min-width 0.3s, transform 0.6s;
-    transform: translateX( -20rem );
+    transform: translateX(-20rem);
     max-width: 0;
     min-width: 0;
     padding-right: 0;
   }
-  .hidefilters .flex-data {
+
+  .mg-filter.active + div > .mg-data-view-container{
     max-width: 100%;
   }
 
+  .mg-filter-tab {
+    align-items: center;
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    left: 0;
+    padding: 0;
+    position: absolute;
+    transform: translateX(-20px);
+    transition: transform 0.3s;
+    vertical-align: middle;
+    width: 12px;
+    z-index: 900;
+  }
+
+  .mg-filter-tab.active {
+    transform: translateX(0);
+  }
+
+  .mg-filter-tab:hover {
+    cursor: pointer;
+  }
+
   @media only screen and (max-width: 576px) { /* Bootstrap brakepoint sm */
-    .flex-mainview {
+    .mg-content {
       display: block;
     }
-    .flex-mainview .flex-filter {
+    .mg-content .mg-filter {
       min-width: 0;
       max-width: none;
       padding: 0;
     }
-  }
-
-  .container-fluid >>> .breadcrumb {
-    margin-left: -1rem;
-    margin-right: -1rem;
   }
 </style>

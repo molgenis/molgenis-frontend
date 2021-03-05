@@ -5,6 +5,7 @@ import * as metaDataRepository from '@/repository/metaDataRepository'
 import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
+import Vue from 'vue'
 
 const metaResponse = {
   meta: {
@@ -203,22 +204,60 @@ const dataResponse = {
 
 const mockResponses: {[key:string]: Object} = {
   '/api/data/entity': { 'loaded': true },
+  '/api/v2/sys_job_ResourceDownloadJobExecution/failure': {
+    data: {
+      progressMessage: 'failed',
+      status: 'FAILED'
+    }
+  },
+  '/api/v2/sys_job_ResourceDownloadJobExecution/success': {
+    data: {
+      progressMessage: 'progress',
+      resultUrl: '/foo/bar',
+      status: 'SUCCESS'
+    }
+  },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
-  '/api/data/sys_ts_DataExplorerEntitySettings': {}
+  '/api/data/sys_ts_DataExplorerEntitySettings': {},
+  '/api/v2/my-table?start=0&num=0': {
+    data: {
+      meta: {
+        permissions: ['PERM_A']
+      }
+    }
+  }
 }
+
+const mockPostResponses = {
+  '/plugin/navigator/download': {
+    '{"resources":[{"id":"success","type":"ENTITY_TYPE"}]}': {
+      data: { identifier: 'success' }
+    },
+    '{"resources":[{"id":"failure","type":"ENTITY_TYPE"}]}': {
+      data: { identifier: 'failure' }
+    }
+  }
+}
+
 jest.mock('@/lib/client', () => {
   return {
     get: (url: string) => {
       const mockResp = mockResponses[url]
       if (!mockResp) {
-        console.warn(`mock url (${url}) called but not found in ${mockResponses}`)
+        console.warn(`mock url (${url}) called but not found in ${JSON.stringify(mockResponses, null, 4)}`)
       }
       return Promise.resolve(mockResp)
     },
-    post: jest.fn()
+    post: (url: string, postData) => {
+      const mockRespons = mockPostResponses[url][JSON.stringify(postData)]
+      if (!mockRespons) {
+        console.warn(`mock url (${url}) called but not found inz ${JSON.stringify(mockPostResponses, null, 4)}`)
+      }
+      return Promise.resolve(mockPostResponses[url][JSON.stringify(postData)])
+    }
   }
 })
 
@@ -251,14 +290,22 @@ jest.mock('@/mappers/metaFilterMapper', () => {
 
 let state: ApplicationState
 let getters: any
+let pagination
+let commit, dispatch: any
 
 describe('actions', () => {
   beforeEach(() => {
     state = mockState()
     state.tableName = 'it_emx_datatypes_TypeTest'
+    state.tablePagination = { count: 0, loading: false, page: 1, size: 10 }
+
     getters = {
-      filterRsql: null
+      filterRsql: null,
+      isUserAuthenticated: jest.fn()
     }
+
+    commit = jest.fn()
+    dispatch = jest.fn()
   })
 
   describe('fetchTableMeta', () => {
@@ -268,17 +315,14 @@ describe('actions', () => {
       metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
       // @ts-ignore
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithOutSettings' })
+      await actions.fetchTableMeta({ commit, getters, dispatch, state }, { tableName: 'tableWithOutSettings' })
       expect(commit.mock.calls).toEqual([
         [ 'setTableSettings', {} ],
         [ 'setMetaData', null ],
-        [ 'setFilterDefinition', [] ],
-        [ 'setFiltersShown', [] ],
-        [ 'setFilterSelection', {} ],
-        [ 'setSearchText', '' ],
+        ['setFilterDefinition', []],
+        ['setTableName', 'tableWithOutSettings'],
         [ 'setMetaData', 'meta' ],
-        [ 'setFilterDefinition', 'def' ],
-        [ 'setFiltersShown', [] ]
+        [ 'setFilterDefinition', 'def' ]
       ])
     })
 
@@ -288,44 +332,39 @@ describe('actions', () => {
       metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
       // @ts-ignore
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
+      await actions.fetchTableMeta({ commit, getters, dispatch, state }, { tableName: 'tableWithSettings' })
       expect(commit.mock.calls).toEqual([
         [ 'setTableSettings', {} ],
         [ 'setMetaData', null ],
-        [ 'setFilterDefinition', [] ],
-        [ 'setFiltersShown', [] ],
-        [ 'setFilterSelection', {} ],
-        [ 'setSearchText', '' ],
+        ['setFilterDefinition', []],
+        ['setTableName', 'tableWithSettings'],
         [
           'setTableSettings',
           { id: 'ent-set', shop: true, collapse_limit: 5 }
         ],
         [ 'setMetaData', 'meta' ],
-        [ 'setFilterDefinition', 'def' ],
-        [ 'setFiltersShown', [] ]
+        [ 'setFilterDefinition', 'def' ]
       ])
     })
+  })
 
-    it('should only commit bookmark if set', async () => {
-      const commit = jest.fn()
-      // @ts-ignore ts does not know its a mock
-      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
-      // @ts-ignore
-      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
-      expect(commit.mock.calls).not.toContain([ [ 'applyBookmark' ] ])
+  describe('fetchViewData', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
     })
 
-    it('should commit bookmark if set', async () => {
-      state = mockState()
-      state.bookmark = 'bookmark'
-      const commit = jest.fn()
-      // @ts-ignore ts does not know its a mock
-      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
-      // @ts-ignore
-      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, state }, { tableName: 'tableWithSettings' })
-      expect(commit.mock.calls.pop()[0]).toEqual('applyBookmark')
+    it('if selected view is cardView, should fetch card data', async (done) => {
+      state.dataDisplayLayout = 'CardView'
+      await actions.fetchViewData({ commit, dispatch, getters, state })
+      expect(dispatch).toHaveBeenCalledWith('fetchCardViewData')
+      done()
+    })
+
+    it('if selected view not cardView, should fetch table data', async (done) => {
+      state.dataDisplayLayout = 'TableView'
+      await actions.fetchViewData({ commit, dispatch, getters, state })
+      expect(dispatch).toHaveBeenCalledWith('fetchTableViewData')
+      done()
     })
   })
 
@@ -343,12 +382,11 @@ describe('actions', () => {
         }
       }
       // @ts-ignore ts does not know its a mock
-      dataRepository.getTableDataDeepReference.mockResolvedValue(['data'])
-
+      dataRepository.getTableDataDeepReference.mockResolvedValue({ data: 'data', page: { totalElements: 21 } })
       await actions.fetchCardViewData({ commit, state, getters })
 
       expect(dataRepository.getTableDataDeepReference).toHaveBeenCalled()
-      expect(commit).toHaveBeenCalledWith('setTableData', ['data'])
+      expect(commit).toHaveBeenCalledWith('setTableData', { data: 'data', page: { totalElements: 21 } })
     })
 
     it('should fetch collapseLimit cols in case of default card', async () => {
@@ -365,31 +403,72 @@ describe('actions', () => {
       // @ts-ignore ts does not know its a mock
       metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
       // @ts-ignore ts does not know its a mock
-      dataRepository.getTableDataWithLabel.mockResolvedValue(['data'])
+      dataRepository.getTableDataWithLabel.mockResolvedValue({ data: 'data', page: { totalElements: 21 } })
 
       await actions.fetchCardViewData({ commit, state, getters })
 
       expect(dataRepository.getTableDataDeepReference).toHaveBeenCalled()
-      expect(commit).toHaveBeenCalledWith('setTableData', ['data'])
+      expect(commit).toHaveBeenCalledWith('setTableData', { data: 'data', page: { totalElements: 21 } })
     })
 
-    it('should throw a error if the state table name', async () => {
+    it('should show warning if the table name is not set', async (done) => {
       const commit = jest.fn()
       state.tableName = null
-      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchCardViewData({ commit, state, getters }))
-        .rejects
-        .toThrow(new Error('cannot load card data without table name'))
+      await actions.fetchCardViewData({ commit, state, getters })
+      expect(commit).toHaveBeenCalledWith('addToast', { message: 'cannot load card data without table name', type: 'danger' })
+      done()
     })
 
-    it('should throw a error if the state does not meta data', async () => {
+    it('should show warning if the table meta is not set', async (done) => {
       const commit = jest.fn()
       state.tableName = 'tableName'
       state.tableMeta = null
-      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchCardViewData({ commit, state, getters }))
-        .rejects
-        .toThrow(new Error('cannot load table data without meta data'))
+      await actions.fetchCardViewData({ commit, state, getters })
+      expect(commit).toHaveBeenCalledWith('addToast', { message: 'cannot load card data without meta data', type: 'danger' })
+      done()
+    })
+  })
+
+  describe('fetchTableViewData', () => {
+    it('should add the filter if it is set', async () => {
+      const commit = jest.fn()
+      state.tableName = 'tableName'
+      const mockMeta:any = 'tableMeta'
+      state.tableMeta = mockMeta
+      getters.filterRsql = 'a==b'
+
+      // @ts-ignore ts does not know its a mock
+      dataRepository.getTableDataWithLabel.mockResolvedValue({ data: 'data', page: { totalElements: 21 } })
+      // @ts-ignore ts does not know its a mock
+      metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
+
+      await actions.fetchTableViewData({ commit, state, getters })
+
+      expect(commit).toHaveBeenCalledWith('setPaginationCount', 21)
+      expect(commit).toHaveBeenCalledWith('setTableData', { data: 'data', page: { totalElements: 21 } })
+      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith(
+        'tableName',
+        'tableMeta',
+        ['attr'], 'a==b',
+        { 'count': 0, 'loading': false, 'page': 1, 'size': 10 },
+        { 'isSortOrderReversed': false, 'sortColumnName': null })
+    })
+
+    it('should show warning if the table name is not set', async (done) => {
+      const commit = jest.fn()
+      state.tableName = null
+      await actions.fetchTableViewData({ commit, state, getters })
+      expect(commit).toHaveBeenCalledWith('addToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
+      done()
+    })
+
+    it('should show warning if the table meta is not set', async (done) => {
+      const commit = jest.fn()
+      state.tableName = 'tableName'
+      state.tableMeta = null
+      await actions.fetchTableViewData({ commit, state, getters })
+      expect(commit).toHaveBeenCalledWith('addToast', { message: 'cannot fetch table view data without meta data', type: 'danger' })
+      done()
     })
   })
 
@@ -408,63 +487,21 @@ describe('actions', () => {
       expect(commit).toBeCalledWith('updateRowData', { rowData: 'rowData', rowId: 'rowId' })
     })
 
-    it('should throw a error if the state table name', async () => {
+    it('should show warning if the table name is not set', async (done) => {
       const commit = jest.fn()
       state.tableName = null
-      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' }))
-        .rejects
-        .toThrow(new Error('cannot fetch row data without table name'))
+      await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
+      expect(commit).toHaveBeenCalledWith('addToast', { message: 'cannot fetch row data without table name', type: 'danger' })
+      done()
     })
 
-    it('should throw a error if the state does not meta data', async () => {
+    it('should show warning if the table meta is not set', async (done) => {
       const commit = jest.fn()
       state.tableName = 'tableName'
       state.tableMeta = null
-      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' }))
-        .rejects
-        .toThrow(new Error('cannot fetch row data without meta data'))
-    })
-  })
-
-  describe('fetch fetchTableViewData', () => {
-    it('should add the filter if it is set', async () => {
-      const commit = jest.fn()
-      state.tableName = 'tableName'
-      const mockMeta:any = 'tableMeta'
-      state.tableMeta = mockMeta
-      getters.filterRsql = 'a==b'
-
-      // @ts-ignore ts does not know its a mock
-      dataRepository.getTableDataWithLabel.mockResolvedValue({ mock: 'data' })
-      // @ts-ignore ts does not know its a mock
-      metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
-
-      await actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' })
-
-      expect(commit).toHaveBeenCalledWith('setTableData', [])
-      expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith('tableName', 'tableMeta', ['attr'], 'a==b', 100)
-      expect(commit).toHaveBeenCalledWith('setTableData', { mock: 'data' })
-    })
-
-    it('should throw a error if the state table name', async () => {
-      const commit = jest.fn()
-      state.tableName = null
-      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' }))
-        .rejects
-        .toThrow(new Error('cannot fetch table view data without table name'))
-    })
-
-    it('should throw a error if the state does not meta data', async () => {
-      const commit = jest.fn()
-      state.tableName = 'tableName'
-      state.tableMeta = null
-      // workaround for jest issue: https://github.com/facebook/jest/issues/1700
-      expect(actions.fetchTableViewData({ commit, state, getters }, { tableName: 'entity' }))
-        .rejects
-        .toThrow(new Error('cannot fetch table view data without meta data'))
+      await actions.fetchRowDataLabels({ commit, state, getters }, { rowId: 'rowId' })
+      expect(commit).toHaveBeenCalledWith('addToast', { message: 'cannot fetch row data without meta data', type: 'danger' })
+      done()
     })
   })
 
@@ -485,8 +522,44 @@ describe('actions', () => {
     it('should throw an error when the table name is not set', async (done) => {
       state.tableName = null
       await actions.deleteRow({ state, commit }, { rowId: 'my-row' })
-      expect(commit).toHaveBeenCalledWith('setToast', { message: 'cannot delete row from unknown table', type: 'danger' })
+      expect(commit).toHaveBeenCalledWith('addToast', { message: 'cannot delete row from unknown table', type: 'danger' })
+
       done()
+    })
+  })
+
+  describe('downloadResources', () => {
+    it('downloads the data', async () => {
+      jest.useFakeTimers()
+      const commit = jest.fn()
+      const resources = [{ id: 'success', type: 'ENTITY_TYPE' }]
+
+      await actions.downloadResources({ state, commit }, resources)
+      jest.advanceTimersByTime(1000)
+      await Vue.nextTick()
+      expect(setInterval).toHaveBeenCalledTimes(1)
+      expect(commit).toHaveBeenCalledTimes(2)
+      expect(commit).nthCalledWith(1, 'addToast', { message: 'progress', type: 'info' })
+      expect(commit).nthCalledWith(2, 'addToast', { message: 'Download data from <a href="/foo/bar">/foo/bar</a>', type: 'success', timeout: 0 })
+    })
+
+    it('fails to download data', async () => {
+      jest.useFakeTimers()
+      const commit = jest.fn()
+      await actions.downloadResources({ state, commit }, [{ id: 'failure', type: 'ENTITY_TYPE' }])
+      jest.advanceTimersByTime(1000)
+      await Vue.nextTick()
+      expect(setInterval).toHaveBeenCalledTimes(1)
+      expect(commit).toHaveBeenCalledTimes(2)
+      expect(commit).nthCalledWith(1, 'addToast', { message: 'failed', type: 'info' })
+      expect(commit).nthCalledWith(2, 'addToast', { message: 'failed', type: 'danger', timeout: 0 })
+    })
+  })
+
+  describe('fetchTablePermissions', () => {
+    it('fetch the permissions for the given table', async () => {
+      await actions.fetchTablePermissions({ commit }, {tableName: 'my-table'})
+      expect(commit).toHaveBeenCalledWith('setTablePermissions', ['PERM_A'])
     })
   })
 })

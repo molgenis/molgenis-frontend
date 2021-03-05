@@ -127,6 +127,10 @@ describe('DataRowEdit.vue', () => {
     repository.save.mockRejectedValue('my error')
     await wrapper.vm.onSubmit()
     expect(wrapper.find('#message-span').text()).toEqual('my error')
+    // @ts-ignore
+    repository.save.mockRejectedValue({errors: [{message: 'my error', code: 'my code'}]})
+    await wrapper.vm.onSubmit()
+    expect(wrapper.find('#message-span').text()).toEqual("my error (my code)")
     done()
   })
 

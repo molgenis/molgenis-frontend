@@ -11,7 +11,7 @@
         <b-button
           variant="outline-secondary"
           :disabled="isLoading"
-          @click.prevent="query= ''"
+          @click.prevent="query = ''"
         >
           <font-awesome-icon
             v-if="isLoading"
@@ -19,10 +19,7 @@
             class="fa-spin"
             size="xs"
           />
-          <font-awesome-icon
-            v-else
-            icon="times"
-          />
+          <font-awesome-icon v-else icon="times" />
         </b-button>
       </b-input-group-append>
     </b-input-group>
@@ -34,20 +31,28 @@
       :options="slicedOptions"
       stacked
     />
-
-    <b-link
-      v-if="showCount < multifilterOptions.length"
-      class="card-link"
-      @click="showMore"
-    >
-      {{ showMoreText }}
-    </b-link>
-    <font-awesome-icon
-      v-if="foundOptionCount >= 100"
-      v-b-popover.hover="'There are 100 or more results found, only the first 100 are available. Please refine your search.'"
-      icon="exclamation-triangle"
-      class="warning text-danger"
-    />
+    <div class="d-flex">
+      <b-link
+        v-if="showCount < multifilterOptions.length"
+        class="card-link"
+        @click="showMore"
+      >
+        {{ showMoreText }}
+      </b-link>
+      <div
+        v-if="foundOptionCount >= optionsWarningCount"
+        v-b-popover.hover="
+          `There are ${optionsWarningCount} or more results found, only the first ${optionsWarningCount} are available. Please refine your search.`
+        "
+        class="badge badge-warning warning text-white ml-auto d-flex align-items-center"
+        >
+        <span class="mr-1">
+          {{optionsWarningCount}}+
+          </span>
+        <font-awesome-icon
+          icon="exclamation-circle"
+      /></div>
+    </div>
   </div>
 </template>
 
@@ -55,6 +60,14 @@
 export default {
   name: 'MultiFilter',
   props: {
+    /**
+     * Toggle to switch between returning an array with values or an array with the full option
+     */
+    returnTypeAsObject: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
     /**
      * The HTML input element name.
      */
@@ -86,6 +99,15 @@ export default {
       default: () => 1
     },
     /**
+     * The amount of options available at one time
+     * per search request
+     */
+    optionsWarningCount: {
+      type: Number,
+      required: false,
+      default: 100
+    },
+    /**
      * @model
      */
     value: {
@@ -102,27 +124,19 @@ export default {
   },
   data () {
     return {
+      externalUpdate: false,
       showCount: 0,
       isLoading: false,
       triggerQuery: Number,
       inputOptions: [],
       initialOptions: [],
+      selection: [],
       query: ''
     }
   },
   computed: {
-    selection: {
-      get () {
-        return this.value
-      },
-      set (value) {
-        this.$emit('input', value.length === 0 ? undefined : value)
-      }
-    },
     multifilterOptions () {
-      return this.inputOptions.length > 0 || this.query.length
-        ? this.inputOptions
-        : this.initialOptions
+      return this.inputOptions
     },
     slicedOptions () {
       return this.multifilterOptions.slice(0, this.showCount)
@@ -140,34 +154,52 @@ export default {
     }
   },
   watch: {
-    query: function () {
-      const previousSelection = this.multifilterOptions.filter(
-        option => this.selection.indexOf(option.value) >= 0
-      )
-      this.inputOptions = previousSelection
+    selection (newValue) {
+      let newSelection
+      if (this.externalUpdate) {
+        this.externalUpdate = false
+        return
+      }
 
+      if (this.returnTypeAsObject) {
+        newSelection = Object.assign(
+          newValue,
+          this.multifilterOptions.filter((mfo) => newValue.includes(mfo.value))
+        )
+      } else {
+        newSelection = [...newValue]
+      }
+
+      this.$emit('input', newSelection)
+    },
+    value () {
+      this.setValue()
+    },
+    query (queryValue) {
       if (this.triggerQuery) {
         clearTimeout(this.triggerQuery)
       }
-      this.triggerQuery = setTimeout(async () => {
+
+      if (!queryValue.length) {
+        const newInititalOptions = [].concat(this.multifilterOptions)
+        this.inputOptions = this.inputOptionsSort(newInititalOptions)
+        return
+      }
+
+      this.triggerQuery = setTimeout(() => {
         clearTimeout(this.triggerQuery)
         this.showCount = this.maxVisibleOptions
         this.isLoading = true
 
-        const fetched = this.query.length
-          ? await this.options({ nameAttribute: 'label', query: this.query })
-          : this.initialOptions
+        this.options({ nameAttribute: 'label', query: this.query }).then(
+          (searchResults) => {
+            const allOptions = searchResults
+              ? searchResults.concat(this.inputOptions)
+              : this.inputOptions
+            this.inputOptions = this.inputOptionsSort(allOptions)
+          }
+        )
 
-        const valuesPresent = previousSelection.map(prev => prev.value)
-
-        if (valuesPresent.length) {
-          const difference = fetched.filter(
-            prev => !valuesPresent.includes(prev.value)
-          )
-          this.inputOptions = previousSelection.concat(difference)
-        } else {
-          this.inputOptions = fetched
-        }
         this.isLoading = false
       }, 500)
     }
@@ -179,17 +211,59 @@ export default {
     this.initializeFilter()
   },
   methods: {
+    inputOptionsSort (optionsArray) {
+      optionsArray.sort((a, b) => {
+        if (
+          !this.selection.includes(a.value) &&
+          !this.selection.includes(b.value)
+        ) {
+          return 0
+        } else if (
+          this.selection.includes(a.value) &&
+          !this.selection.includes(b.value)
+        ) {
+          return -1
+        } else return 1
+      })
+
+      return Array.from(
+        new Set(optionsArray.map((cio) => cio.value))
+      ).map((value) => optionsArray.find((cio) => cio.value === value))
+    },
+    setValue () {
+      this.externalUpdate = true
+      this.selection =
+        typeof this.value[0] === 'object'
+          ? this.value.map((vo) => vo.value)
+          : this.value
+    },
     showMore () {
       this.showCount += this.maxVisibleOptions
     },
     async initializeFilter () {
-      let fetched = []
-      if (this.value && this.value.length > 0) {
-        fetched = await this.options({ nameAttribute: 'label', queryType: 'in', query: this.value.join(',') })
-      } else {
-        fetched = await this.options({ nameAttribute: 'label', count: this.initialDisplayItems })
+      let selectedOptions = []
+
+      if (this.value && this.value.length) {
+        this.setValue()
+        // Get the initial selected
+        selectedOptions = await this.options({
+          nameAttribute: 'label',
+          queryType: 'in',
+          query: this.selection.join(',')
+        })
       }
-      this.initialOptions = fetched
+
+      // fetch the other options and concat
+      const completeInitialOptions = selectedOptions.concat(
+        await this.options({
+          nameAttribute: 'label',
+          count: this.initialDisplayItems
+        })
+      )
+
+      // deduplicate by first mapping the id's then getting the first matching object back.
+      this.initialOptions = this.inputOptionsSort(completeInitialOptions)
+      this.inputOptions = this.initialOptions
     }
   }
 }
@@ -220,10 +294,12 @@ Item-based Filter. Search box is used to find items in the table.
 
 const model = []
 <MultiFilter
+  v-bind:returnTypeAsObject="false"
   v-bind:options="multiFilterOptions"
   v-bind:collapses="false"
   v-bind:initialDisplayItems="5"
   v-bind:maxVisibleOptions="5"
+  v-bind:optionsWarningCount="10"
   v-model="model"
   name="multi-filter">
 </MultiFilter>

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/app-manager@1.0.0...@molgenis-ui/app-manager@1.0.1) (2021-02-25)
+
+
+### Bug Fixes
+
+* **data-explorer, components-library, navigator:** fix master build ([b8c2e19](https://github.com/molgenis/molgenis-frontend/commit/b8c2e19ff04b1b859a4e41de28d7e852770ec883))
+
+
+
+
+
 # [1.0.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/app-manager@0.1.5...@molgenis-ui/app-manager@1.0.0) (2020-08-10)
 
 

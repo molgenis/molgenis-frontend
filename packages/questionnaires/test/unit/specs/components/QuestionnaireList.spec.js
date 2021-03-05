@@ -36,7 +36,7 @@ describe('QuestionnaireList component', function () {
 
   it('should dispatch action [GET_QUESTIONNAIRE_LIST] to get a list of questionnaires at creation time', () => {
     shallow(QuestionnaireList, {store, localVue, stubs, mocks})
-    td.verify(actions.GET_QUESTIONNAIRE_LIST(td.matchers.anything(), undefined, undefined))
+    td.verify(actions.GET_QUESTIONNAIRE_LIST(td.matchers.anything(), undefined))
   })
 
   it('should return error from the store', () => {
