@@ -113,7 +113,6 @@ export default {
   },
   data () {
     return {
-      dataExplorerBaseUrl: window.__INITIAL_STATE__.dataExplorerBaseUrl,
       dataTableLabel: '',
       formFields: [],
       formData: {},

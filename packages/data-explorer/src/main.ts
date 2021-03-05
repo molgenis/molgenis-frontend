@@ -74,9 +74,6 @@ Vue.config.productionTip = false
 // This way the mainView can coordinate the events
 Vue.prototype.$eventBus = new Vue()
 
-// @ts-ignore
-const { lng, fallbackLng } = window.__INITIAL_STATE__
-
 const router = new Router({
   base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
   routes
@@ -96,8 +93,8 @@ router.beforeEach((to, from, next) => {
 })
 
 Vue.use(i18n, {
-  lng,
-  fallbackLng,
+  lng: 'en',
+  fallbackLng: 'en',
   namespace: ['dataexplorer', 'data-row-edit', 'ui-form'],
   callback () {
     new Vue({ store, router, render: h => h(App) }).$mount('#app')

@@ -26,12 +26,6 @@ jest.mock('@molgenis/molgenis-ui-form', () => {
 const localVue = createLocalVue()
 localVue.filter('i18n', jest.fn())
 
-Object.defineProperty(window, '__INITIAL_STATE__', {
-  value: {
-    dataExplorerBaseUrl: 'dataExplorerBaseUrl'
-  }
-})
-
 describe('DataRowEdit.vue', () => {
   let wrapper: any
 
