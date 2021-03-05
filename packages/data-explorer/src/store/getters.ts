@@ -59,7 +59,7 @@ export default {
     const selections = state.filters.selections
 
     if (Object.keys(selections).length > 0) {
-      for (let property in selections) {
+      for (const property in selections) {
         const value = selections[property]
         // can't do if(!value) because that would also trigger if value === 0
         if (value === '' || value === null || value === undefined || value.length === 0) {
@@ -97,14 +97,14 @@ export default {
     const decompressed = LZString.decompressFromBase64(decodeURIComponent(encodedFilter))
     const filterTransferObject = JSON.parse(decompressed)
 
-    let filter = {
+    const filter = {
       selections: {},
       shown: [],
       searchText: ''
     }
 
     if (Object.keys(filterTransferObject).length >= 1) {
-      for (let property in filterTransferObject) {
+      for (const property in filterTransferObject) {
         const filterValue = filterTransferObject[property]
         if (property === 'shown') {
           filter.shown = filterValue.split(',')
