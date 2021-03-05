@@ -190,8 +190,8 @@ export default {
         this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.$router.push({
         name: 'de-view',
-        params: { ...this.$route.params, view: value },
-        query: { ...this.$route.query }
+        params: { ...this.$route.params },
+        query: { ...this.$route.query, view: value }
       })
     },
     handleSortSelectChange (sort) {

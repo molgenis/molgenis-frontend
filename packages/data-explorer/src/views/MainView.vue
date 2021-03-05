@@ -38,9 +38,9 @@
         <toolbar-view class="mb-2"></toolbar-view>
 
         <div class="mg-data-view-container">
-          <data-view v-if="!tablePagination.loading"></data-view>
+          <data-view v-if="!tablePagination.loading" />
         </div>
-        <pagination class="mt-2" v-model="tablePagination" />
+        <pagination v-show="!loading" class="mt-2" v-model="tablePagination" />
       </div>
     </div>
     <b-overlay :show="loading" no-wrap />
@@ -104,7 +104,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapMutations(['setTableName', 'setToasts', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
+    ...mapMutations(['setToasts', 'setLoading', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
     ...mapActions(['deleteRow', 'fetchViewData', 'fetchTableMeta', 'fetchTablePermissions']),
     ...mapActions('header', ['fetchPackageTables']),
     saveFilterState (newSelections) {
@@ -139,21 +139,23 @@ export default Vue.extend({
     this.fetchTablePermissions({ tableName })
     await this.fetchTableMeta({ tableName })
     this.setRouteQuery(this.$route.query)
-    this.setDataDisplayLayout(this.$route.params.view)
+    this.setDataDisplayLayout(this.$route.query.view)
     this.fetchViewData()
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
   },
   async beforeRouteUpdate (to, from, next) {
+    this.setLoading(true)
     if (to.params.entity !== from.params.entity) {
       const tableName = to.params.entity
       this.fetchTablePermissions({ tableName })
       await this.fetchTableMeta({ tableName })
     }
     this.setRouteQuery(to.query)
-    this.setDataDisplayLayout(to.params.view)
+    this.setDataDisplayLayout(to.query.view)
     await this.fetchViewData()
+    this.setLoading(false)
     next()
   }
 })

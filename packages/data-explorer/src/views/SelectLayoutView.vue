@@ -1,9 +1,9 @@
 <template>
   <div class="entity-table">
-    <div v-if="!tableMeta || !tableData || !tableData.items || tableData.length === 0" class="alert alert-warning">
+    <div v-if="!loading && (!tableMeta || !tableData || !tableData.items.length)" class="alert alert-warning">
       {{ 'dataexplorer_empty_table' | i18n}}
     </div>
-    <component v-else
+    <component v-else-if="!loading"
       :is="dataDisplayLayout"
       :entitiesToShow="tableData.items"
     />
@@ -22,7 +22,7 @@ export default {
   name: 'SelectLayoutView',
   components: { ExplorerCard, TableRow, TableHeader, CardView, TableView },
   computed: {
-    ...mapState(['dataDisplayLayout', 'tableMeta', 'tableData'])
+    ...mapState(['dataDisplayLayout', 'loading', 'tableMeta', 'tableData'])
   }
 }
 </script>

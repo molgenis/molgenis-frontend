@@ -2,7 +2,7 @@
   <b-overlay :show="cardLoading">
     <h5 class="card-title mg-default-card-title">{{dataLabel}}
       <router-link
-        v-if="isEditable"
+        v-if="isEditable && dataId"
         class="btn btn-sm btn-link ml-1"
         role="button"
         :to="{ name: 'de-edit', params: { entity: dataTable, dataRowId: dataId}, query: {}}">

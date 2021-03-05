@@ -3,7 +3,7 @@ import 'bootstrap'
 import App from './App.vue'
 
 import Router from 'vue-router'
-import routes from './routes'
+import { defaultRouteQuery, routes } from './routes'
 
 import store from './store/store'
 import { BootstrapVue } from 'bootstrap-vue'
@@ -77,18 +77,29 @@ Vue.prototype.$eventBus = new Vue()
 // @ts-ignore
 const { lng, fallbackLng } = window.__INITIAL_STATE__
 
+const router = new Router({
+  base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
+  routes
+})
+
+// Navigation guard that makes sure that all explorer
+// query params are present.
+router.beforeEach((to, from, next) => {
+  globalThis.defaultRouteQuery = defaultRouteQuery
+  globalThis.to = to.query
+  if (to.name === 'de-view') {
+    const missingQueryParams = Object.keys(defaultRouteQuery).filter((i) => !Object.keys(to.query).includes(i))
+    if (missingQueryParams.length) {
+      next({ path: `/explorer/${to.params.entity}`, query: defaultRouteQuery })
+    } else { next() }
+  } else { next() }
+})
+
 Vue.use(i18n, {
   lng,
   fallbackLng,
   namespace: ['dataexplorer', 'data-row-edit', 'ui-form'],
   callback () {
-    new Vue({
-      store,
-      router: new Router({
-        base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
-        routes
-      }),
-      render: h => h(App)
-    }).$mount('#app')
+    new Vue({ store, router, render: h => h(App) }).$mount('#app')
   }
 })
