@@ -1,7 +1,7 @@
 import { buildExpandedAttributesQuery } from './queryBuilder'
 import { getAttributesfromMeta } from './metaDataService'
 import * as metaDataRepository from './metaDataRepository'
-import { DataApiResponse, DataApiResponseItem, DataObject, isSingleRefValueObject, MRefValueObject, SingleRefValueObject, FileValueObject, isMRefValueObject, isFileValueObject } from '@/types/ApiResponse'
+import { DataApiResponse, DataApiResponseItem, DataObject, isSingleRefValueObject, MRefValueObject, SingleRefValueObject, FileValueObject, isMRefValueObject, isFileValueObject, isRefValue } from '@/types/ApiResponse'
 import { MetaData, Attribute, RefAttribute, isRefAttribute } from '@/types/MetaData'
 import client from '@/lib/client'
 import { encodeRsqlValue } from '@molgenis/rsql'
@@ -72,15 +72,19 @@ const toRefValueObject = (value: DataApiResponseItem, metaData: MetaData) => {
 }
 
 const apiResponseMapper = (rowData: DataApiResponseItem) => {
-  return Object.keys(rowData.data).reduce((accum: { [s: string]: string | object }, key) => {
-    // check if ref
-    if (typeof rowData.data[key] === 'object') {
-      // This is checked by the line above
-      // @ts-ignore
-      accum[key] = levelNRowMapper(rowData.data[key])
+  return Object.keys(rowData.data).reduce((accum: { [s: string]: string | object | number | boolean }, key) => {
+    const dataItem = rowData.data[key]
+    if (isRefValue(dataItem)) {
+      if (isMRefValueObject(dataItem)) {
+        accum[key] = dataItem.items.map((item) => apiResponseMapper(item))
+      } else if (isSingleRefValueObject(dataItem)) {
+        accum[key] = apiResponseMapper(dataItem)
+      }
+      // Else it's a empty link ref, it has no data to map
+      // example : {links: {self: "https://[server]/api/data/[tableId]/[rowId]/[columnName]"}}
+      // Note: The empty link ref is added by the api to break infinite circular references
     } else {
-      const row: any = rowData.data
-      accum[key] = row[key]
+      accum[key] = dataItem
     }
     return accum
   }, {})
