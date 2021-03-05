@@ -1,9 +1,14 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import DropdownList from '@/components/DropdownList.vue'
+import VueRouter from 'vue-router'
 
 describe('DropdownList', () => {
+  const localVue = createLocalVue()
+  localVue.use(VueRouter)
+  const router = new VueRouter()
+
   let wrapper: any
-  let stubs = ['router-link', 'router-view']
+  const stubs = ['router-link', 'router-view']
   let propsData = {
     listId: 'list-1',
     isShown: false,
@@ -15,7 +20,7 @@ describe('DropdownList', () => {
   }
 
   beforeEach(() => {
-    wrapper = shallowMount(DropdownList, { propsData, stubs })
+    wrapper = shallowMount(DropdownList, { localVue, propsData, router, stubs })
   })
 
   it('should render the item list', () => {

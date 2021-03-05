@@ -84,22 +84,14 @@ describe('ToolbarView.vue', () => {
     state.dataDisplayLayout = 'CardView'
 
     wrapper.find('button.table-layout').trigger('click')
-    expect(mocks.$router.push).toHaveBeenCalledWith({
-      name: 'de-view',
-      params: { view: 'TableView' },
-      query: {}
-    })
+    expect(mocks.$router.push).toHaveBeenCalledWith({ name: 'de-view', params: {}, query: { view: 'TableView' } })
   })
 
   it('can change to card layout', async () => {
     store.state.dataDisplayLayout = 'TableView'
     await wrapper.vm.$nextTick()
     wrapper.find('button.card-layout').trigger('click')
-    expect(mocks.$router.push).toHaveBeenCalledWith({
-      name: 'de-view',
-      params: { view: 'CardView' },
-      query: {}
-    })
+    expect(mocks.$router.push).toHaveBeenCalledWith({ name: 'de-view', params: {}, query: { view: 'CardView' } })
   })
 
   describe('add row button', () => {

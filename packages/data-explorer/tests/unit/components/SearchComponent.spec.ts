@@ -1,7 +1,7 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import SearchComponent from '@/components/SearchComponent.vue'
 import Router from 'vue-router'
-import routes from '@/routes'
+import { routes } from '@/routes'
 
 const mocks = { $t: (msg: any) => msg }
 
