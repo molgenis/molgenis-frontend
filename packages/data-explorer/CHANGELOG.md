@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.4.0...@molgenis-ui/data-explorer@3.4.1) (2021-03-05)
+
+
+### Bug Fixes
+
+* **data-explorer:** Fix Dataexplorer v2 fails when trying to parse selfReference ([#557](https://github.com/molgenis/molgenis-frontend/issues/557)) ([0b0c187](https://github.com/molgenis/molgenis-frontend/commit/0b0c187b25acb667dc0ae4acd8b00173625f9b71)), closes [#556](https://github.com/molgenis/molgenis-frontend/issues/556)
+
+
+
+
+
 # [3.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.3.1...@molgenis-ui/data-explorer@3.4.0) (2021-03-04)
 
 

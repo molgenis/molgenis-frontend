@@ -6,6 +6,12 @@ export function isMRefValueObject (value: DataObjectValue): value is MRefValueOb
   return (value as MRefValueObject).items !== undefined
 }
 
+export function isSelfRefValueObject (value: DataObjectValue): value is SelfRefValueObject {
+  return (value as MRefValueObject).items === undefined &&
+  (value as SingleRefValueObject).data === undefined &&
+  (value as SelfRefValueObject).links !== undefined
+}
+
 export function isFileValueObject (value: DataObjectValue): value is FileValueObject {
   return (value as FileValueObject).data !== undefined &&
   (value as FileValueObject).data.id !== undefined &&
@@ -16,7 +22,7 @@ export function isFileValueObject (value: DataObjectValue): value is FileValueOb
 }
 
 export function isRefValue (value: DataObjectValue): value is RefValue {
-  return isSingleRefValueObject(value) || isMRefValueObject(value)
+  return isSingleRefValueObject(value) || isMRefValueObject(value) || isSelfRefValueObject(value)
 }
 
 export function isLinkable (value: any): value is Linkable {
@@ -34,13 +40,15 @@ export interface MRefValueObject extends BaseValueObject, Linkable {
 }
 export interface SingleRefValueObject extends BaseValueObject, Linkable {
   data: DataObject
+
 }
+export interface SelfRefValueObject extends BaseValueObject, Linkable {}
 
 export interface FileValueObject extends BaseValueObject, Linkable {
   data: FileObject
 }
 
-export type RefValue = SingleRefValueObject | MRefValueObject;
+export type RefValue = SingleRefValueObject | MRefValueObject | SelfRefValueObject;
 
 export type DataApiResponseItem = Linkable & {
   data: DataObject
