@@ -168,5 +168,35 @@ export default {
     const tablePermissions = res.data.meta.permissions
     commit('setTablePermissions', tablePermissions)
     return tablePermissions
+  },
+  fetchTemplateData: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string, attrs: string[] }) => {
+    if (state.tableMeta === null) {
+      commit('setToast', { message: 'cannot fetch template data without meta data', type: 'danger' })
+      return
+    }
+    return dataRepository.getRowDataDeepReference(state.tableMeta.id, payload.rowId, state.tableMeta, payload.attrs)
+  },
+  fetchPreviewOptions: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
+    if (state.tableMeta === null) {
+      commit('setToast', { message: 'cannot fetch row data without meta data', type: 'danger' })
+      return
+    }
+    return dataRepository.getTableRowOptions(state.tableMeta.id, state.tableMeta)
+  },
+  fetchRowData: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { rowId: string }) => {
+    if (state.tableMeta === null) {
+      commit('setToast', { message: 'cannot fetch row data without meta data', type: 'danger' })
+      return
+    }
+    return dataRepository.getRowData(state.tableMeta.id, payload.rowId, state.tableMeta)
+  },
+  saveTemplate: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
+    if (state.tableMeta === null) {
+      commit('setToast', { message: 'cannot save template without meta data', type: 'danger' })
+      return
+    }
+    const data = { card_template: state.tableSettings.customCardCode }
+    const result = await client.patch(`/api/data/${state.settingsTable}/${state.tableSettings.settingsRowId}`, data)
+    return result
   }
 }

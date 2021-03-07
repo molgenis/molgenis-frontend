@@ -119,9 +119,7 @@ export default {
   },
   computed: {
     ...mapState(['toast', 'tableMeta', 'tableSettings']),
-    customCardAttrs () {
-      return this.tableSettings.customCardAttrs ? this.tableSettings.customCardAttrs.split(',') : []
-    }
+    ...mapGetters(['customCardAttrs'])
   },
   methods: {
     ...mapMutations([
