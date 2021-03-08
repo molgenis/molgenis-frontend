@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.5.0...@molgenis-ui/data-explorer@3.6.0) (2021-03-08)
+
+
+### Features
+
+* **data-explorer:** remove redundant jquery, bootstrap, ui-filter, added build-report ([#559](https://github.com/molgenis/molgenis-frontend/issues/559)) ([452aea8](https://github.com/molgenis/molgenis-frontend/commit/452aea8dbd3322b609e271331fc17f4e2df65662))
+
+
+
+
+
 # [3.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.4.1...@molgenis-ui/data-explorer@3.5.0) (2021-03-08)
 
 
