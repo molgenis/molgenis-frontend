@@ -1,5 +1,5 @@
 <template>
-  <page-component id="app" @contextLoaded="setContext"  :class="{ 'app-like': dataDisplayLayout=='TableView' }">
+  <page-component id="app" @contextLoaded="setContext" :class="{ 'app-like': dataDisplayLayout === 'TableView' && $router.currentRoute.name === 'de-view' }">
     <router-view />
   </page-component>
 </template>

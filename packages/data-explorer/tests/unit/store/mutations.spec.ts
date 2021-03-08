@@ -211,7 +211,7 @@ describe('mutations', () => {
     })
 
     it('should remove the item, corresponding to the passed row id, from the dataTable', () => {
-      let mockState = {
+      const mockState = {
         tableMeta: { idAttribute: { name: 'idField' } },
         tableData: { items: [{ idField: 'a' }, { idField: 'b' }] }
       }
@@ -308,12 +308,12 @@ describe('mutations', () => {
     const mockRouter = {
       push: mockPush,
       currentRoute: {
-        name: 'main-view',
+        name: 'de-view',
         query: {}
       }
     }
     mutations.persistToRoute(baseAppState, { router: mockRouter, query: { hide: 'id' } })
-    expect(mockPush).toHaveBeenCalledWith({ 'name': 'main-view', 'query': { 'hide': 'id' } }, expect.anything())
+    expect(mockPush).toHaveBeenCalledWith({ 'name': 'de-view', 'query': { 'hide': 'id' } }, expect.anything())
   })
 
   describe('setTablePermissions', () => {

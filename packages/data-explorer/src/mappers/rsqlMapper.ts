@@ -75,7 +75,7 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
           operands.push(createGreaterEqualQuery(name, selection[0]))
         } else if (selection[0] !== null && selection[1] !== null) {
           // [value, value] -> filter a range of values
-          let correctedSelection = [Math.min(selection[0], selection[1]), Math.max(selection[0], selection[1])]
+          const correctedSelection = [Math.min(selection[0], selection[1]), Math.max(selection[0], selection[1])]
           operands.push(createRangeQuery(name, correctedSelection))
         }
         break

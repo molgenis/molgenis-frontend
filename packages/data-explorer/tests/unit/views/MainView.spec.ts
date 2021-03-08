@@ -2,29 +2,26 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import MainView from '@/views/MainView.vue'
 import Vuex from 'vuex'
 import Vue from 'vue'
-import FiltersView from '@/views/FiltersView.vue'
 
-jest.mock('@/views/FiltersView.vue')
+let mocks: any
+let state: any
+let mutations: any
+let getters: any
+let actions: any
+let wrapper: any
+let offSpy: any
 
-describe('MainView.vue', () => {
+function getWrapper (options:any = {}) {
   const localVue = createLocalVue()
-  const bus = new Vue()
-  const offSpy = jest.spyOn(bus, '$off')
   localVue.use(Vuex)
-  let store: any
-  let state: any
-  let mutations: any
-  let getters: any
-  let actions: any
-  let wrapper: any
-  let modules: any
-  const mocks: any = {
-    $route: { params: {} },
+
+  const bus = new Vue()
+  offSpy = jest.spyOn(bus, '$off')
+
+  mocks = {
+    $route: { params: {}, query: { view: 'CardView' } },
     $router: {
-      currentRoute: {
-        name: 'currentRouteName',
-        path: 'currentRoutePath'
-      },
+      currentRoute: { name: 'currentRouteName', path: 'currentRoutePath' },
       push: jest.fn()
     },
     $eventBus: bus,
@@ -34,69 +31,75 @@ describe('MainView.vue', () => {
     $t: (msg: any) => msg
   }
 
-  beforeEach(() => {
-    state = {
-      toasts: [],
-      dataDisplayLayout: 'CardView',
-      tableName: 'tableName',
-      activeEntity: 'it_emx_datatypes_TypeTest',
-      filters: {
-        hideSidebar: false,
-        definition: [],
-        shown: [],
-        selections: {}
-      },
-      tablePagination: { count: 0, loading: false, page: 1, size: 20 }
-    }
+  mutations = {
+    clearToast: jest.fn(),
+    setToasts: jest.fn(),
+    setHideFilters: jest.fn(),
+    setActiveEntity: jest.fn(),
+    setTableName: jest.fn(),
+    setFilterSelection: jest.fn(),
+    setSearchText: jest.fn(),
+    setPagination: jest.fn(),
+    setRouteQuery: jest.fn(),
+    setDataDisplayLayout: jest.fn(),
+    setLoading: jest.fn()
+  }
 
-    mutations = {
-      clearToast: jest.fn(),
-      setToasts: jest.fn(),
-      setHideFilters: jest.fn(),
-      setActiveEntity: jest.fn(),
-      setTableName: jest.fn(),
-      setFilterSelection: jest.fn(),
-      setSearchText: jest.fn(),
-      setPagination: jest.fn(),
-      setRouteQuery: jest.fn(),
-      setDataDisplayLayout: jest.fn()
-    }
-
+  if (!options.getters) {
     getters = {
       isUserAuthenticated: jest.fn(),
       compressedRouteFilter: jest.fn()
     }
+  }
 
-    actions = {
-      deleteRow: jest.fn(),
-      fetchTableMeta: jest.fn(),
-      fetchCardViewData: jest.fn(),
-      fetchTableViewData: jest.fn(),
-      fetchViewData: jest.fn()
-    }
+  actions = {
+    deleteRow: jest.fn(),
+    fetchTableMeta: jest.fn(),
+    fetchTablePermissions: jest.fn(),
+    fetchCardViewData: jest.fn(),
+    fetchTableViewData: jest.fn(),
+    fetchViewData: jest.fn()
+  }
 
-    modules = {
-      account: {
-        namespaced: true,
-        actions: {
-          fetchContext: jest.fn()
-        }
-      },
-      header: {
-        namespaced: true,
-        actions: {
-          fetchBreadcrumbs: jest.fn()
-        },
-        state: {
-          breadcrumbs: []
-        }
+  state = {
+    toasts: [],
+    dataDisplayLayout: 'CardView',
+    tableName: 'tableName',
+    activeEntity: 'it_emx_datatypes_TypeTest',
+    filters: {
+      hideSidebar: false,
+      definition: [],
+      shown: [],
+      selections: {}
+    },
+    tablePagination: { count: 0, loading: false, page: 1, size: 20 }
+  }
+
+  const modules = {
+    account: {
+      namespaced: true,
+      actions: {
+        fetchContext: jest.fn()
       }
+    },
+    header: {
+      namespaced: true,
+      actions: {
+        fetchBreadcrumbs: jest.fn()
+      },
+      state: { breadcrumbs: [] }
     }
+  }
 
-    store = new Vuex.Store({
-      state, mutations, actions, getters, modules
-    })
-    wrapper = shallowMount(MainView, { store, localVue, mocks })
+  const store = new Vuex.Store({ state, mutations, actions, getters, modules })
+  return shallowMount(MainView, { store, localVue, mocks, stubs: ['b-overlay', 'font-awesome-icon'] })
+}
+
+jest.mock('@/views/FiltersView.vue')
+
+describe('MainView.vue', () => {
+  beforeEach(() => {
+    wrapper = getWrapper()
   })
 
   it('exists', () => {
@@ -104,11 +107,6 @@ describe('MainView.vue', () => {
   })
 
   describe('saveFilterState method', () => {
-    let wrapper: any
-    beforeEach(() => {
-      wrapper = shallowMount(MainView, { store, localVue, mocks })
-    })
-
     it('should clear the search text if search is not part of the filter', () => {
       const newSelections = {}
       // @ts-ignore
@@ -167,12 +165,14 @@ describe('MainView.vue', () => {
       const from = {
         params: {
           entity: 'entity'
-        }
+        },
+        query: { view: 'CardView' }
       }
       const to = {
         params: {
           entity: 'entity'
-        }
+        },
+        query: { view: 'CardView' }
       }
       // @ts-ignore use call to pass vm context
       await wrapper.vm.$options.beforeRouteUpdate.call(wrapper.vm, to, from, next)
@@ -189,12 +189,14 @@ describe('MainView.vue', () => {
       const from = {
         params: {
           entity: 'entity'
-        }
+        },
+        query: { view: 'CardView' }
       }
       const to = {
         params: {
           entity: 'other'
-        }
+        },
+        query: { view: 'CardView' }
       }
       // @ts-ignore use call to pass vm context
       await wrapper.vm.$options.beforeRouteUpdate.call(wrapper.vm, to, from, next)
@@ -205,22 +207,14 @@ describe('MainView.vue', () => {
   })
 
   describe('when user is authenticated', () => {
-    beforeEach(async (done) => {
-      getters.isUserAuthenticated.mockReturnValueOnce(true)
-      store.getters = getters
-      wrapper = shallowMount(MainView, { store, localVue, mocks })
-      done()
-    })
-    it('should add the Breadcrumb bar', () => {
+    it('should add the Breadcrumb bar', async () => {
+      getters.isUserAuthenticated.mockReturnValue(true)
+      wrapper = getWrapper({ getters })
       expect(wrapper.find('breadcrumb-bar-stub').exists()).toBeTruthy()
     })
   })
 
   describe('toasts getter and setter called', () => {
-    beforeEach(async (done) => {
-      wrapper = shallowMount(MainView, { store, localVue, mocks })
-      done()
-    })
     it('should trigger getter and setter for toasts', async () => {
       expect(mutations.setToasts).toHaveBeenCalledTimes(0)
       wrapper.vm.toasts = [{ message: 'bar', type: 'success' }]

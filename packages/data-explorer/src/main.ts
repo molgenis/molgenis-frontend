@@ -3,7 +3,7 @@ import 'bootstrap'
 import App from './App.vue'
 
 import Router from 'vue-router'
-import routes from './routes'
+import { defaultRouteQuery, routes } from './routes'
 
 import store from './store/store'
 import { BootstrapVue } from 'bootstrap-vue'
@@ -23,6 +23,7 @@ import draggable from 'vuedraggable'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import '@molgenis-ui/components-library/dist/components-library.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 import {
   faCaretRight,
@@ -74,18 +75,29 @@ Vue.config.productionTip = false
 // This way the mainView can coordinate the events
 Vue.prototype.$eventBus = new Vue()
 
+const router = new Router({
+  base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
+  routes
+})
+
+// Navigation guard that makes sure that all explorer
+// query params are present.
+router.beforeEach((to, from, next) => {
+  globalThis.defaultRouteQuery = defaultRouteQuery
+  globalThis.to = to.query
+  if (to.name === 'de-view') {
+    const missingQueryParams = Object.keys(defaultRouteQuery).filter((i) => !Object.keys(to.query).includes(i))
+    if (missingQueryParams.length) {
+      next({ path: `/explorer/${to.params.entity}`, query: defaultRouteQuery })
+    } else { next() }
+  } else { next() }
+})
+
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',
-  namespace: ['dataexplorer'],
+  namespace: ['dataexplorer', 'data-row-edit', 'ui-form'],
   callback () {
-    new Vue({
-      store,
-      router: new Router({
-        base: process.env.NODE_ENV === 'production' ? packageJson.name : process.env.BASE_URL,
-        routes
-      }),
-      render: h => h(App)
-    }).$mount('#app')
+    new Vue({ store, router, render: h => h(App) }).$mount('#app')
   }
 })

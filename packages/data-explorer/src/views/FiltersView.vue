@@ -87,13 +87,13 @@ export default Vue.extend({
     },
     updateRoute () {
       this.$router.push({
-        name: 'main-view',
+        name: 'de-view',
         query: { ...this.$route.query, filter: this.compressedRouteFilter }
       })
     },
     hideSidebar () {
       this.$router.push({
-        name: 'main-view',
+        name: 'de-view',
         query: { ...this.$route.query, filter: this.compressedRouteFilter, hideSidebar: String(true) }
       })
     }

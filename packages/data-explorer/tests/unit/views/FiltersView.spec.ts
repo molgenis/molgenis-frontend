@@ -3,7 +3,7 @@ import FiltersView from '@/views/FiltersView.vue'
 import Vuex from 'vuex'
 import getters from '@/store/getters'
 import Router from 'vue-router'
-import routes from '@/routes'
+import { routes } from '@/routes'
 
 const mocks = {
   $t: (msg: any) => msg
@@ -17,7 +17,7 @@ describe('FiltersView.vue', () => {
   let store: any
   let state: any
   let mutations: any
-  let router = new Router({ routes })
+  const router = new Router({ routes })
 
   beforeEach(() => {
     state = {

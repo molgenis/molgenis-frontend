@@ -16,8 +16,8 @@ const levelOneRowMapper = async (rowData: DataApiResponseItem, metaData: MetaDat
   }, {})
 
   const row: DataObject = rowData.data
-  let result: any = {}
-  let keys = Object.keys(row)
+  const result: any = {}
+  const keys = Object.keys(row)
 
   for (let i = 0; i < keys.length; i++) {
     const columnKey = keys[i]

@@ -143,12 +143,12 @@ export default {
     // we have to pass this.$router, if we import it directly in mutations, jest breaks.
     const { router, query } = routeObject
 
-    let mergedRouterObject = {
+    const mergedRouterObject = {
       ...router.currentRoute.query,
       ...query
     }
 
-    let routerObjectToPersist = {}
+    const routerObjectToPersist = {}
 
     // remove empty parameters
     for (const key in mergedRouterObject) {

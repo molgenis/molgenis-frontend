@@ -1,13 +1,13 @@
 <template>
   <b-overlay :show="cardLoading">
     <h5 class="card-title mg-default-card-title">{{dataLabel}}
-      <a
-        v-if="isEditable"
+      <router-link
+        v-if="isEditable && dataId"
         class="btn btn-sm btn-link ml-1"
         role="button"
-        :href="'/plugin/data-row-edit/' + dataTable + '/' + dataId">
+        :to="{ name: 'de-edit', params: { entity: dataTable, dataRowId: dataId}, query: {}}">
         <font-awesome-icon icon="edit"></font-awesome-icon>
-      </a>
+      </router-link>
       <button
         v-if="isEditable"
         class="btn btn-sm btn-link"
@@ -41,9 +41,9 @@
             <font-awesome-icon icon="chevron-up" v-if="cardState==='open'"></font-awesome-icon>
             <font-awesome-icon icon="chevron-right" v-if="cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
           </button>
-          <button class="btn btn-outline-info btn-sm mg-info-btn" @click="goToDetails">
+          <a :href="detailLink" class="btn btn-outline-info btn-sm mg-info-btn">
             <font-awesome-icon icon="search"></font-awesome-icon> {{ 'dataexplorer_default_card_info_btn_label' | i18n }}
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -130,9 +130,6 @@ export default {
     }
   },
   methods: {
-    goToDetails () {
-      window.location.assign(this.detailLink)
-    },
     handleExpandBtnClicked () {
       if (this.cardState === 'closed') {
         this.cardState = 'open'

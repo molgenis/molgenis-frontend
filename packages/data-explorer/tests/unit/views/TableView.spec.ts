@@ -7,7 +7,7 @@ describe('TableView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(VueRouter)
-  let router = new VueRouter({ routes: [{ path: '/mock-path', name: 'main-view' }] })
+  const router = new VueRouter({ routes: [{ path: '/mock-path', name: 'de-view' }] })
   let store: any
   let state: any
   let mutations: any
@@ -96,7 +96,7 @@ describe('TableView.vue', () => {
 
   describe('visibleColumns', () => {
     it('should reduce the metaData to a list of column objects that drives the table', () => {
-      let localThis:any = {
+      const localThis:any = {
         tableMeta: state.tableMeta,
         hiddenColumns: []
       }

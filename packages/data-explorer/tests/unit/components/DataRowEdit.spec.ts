@@ -16,38 +16,31 @@ jest.mock('@/repository/dataRowRepository', () => {
 
 jest.mock('@molgenis/molgenis-ui-form', () => {
   return {
-      FormComponent: {},
-      EntityToFormMapper: {
-        generateForm: jest.fn()
-      }
+    FormComponent: {},
+    EntityToFormMapper: {
+      generateForm: jest.fn()
     }
+  }
 })
 
 const localVue = createLocalVue()
 localVue.filter('i18n', jest.fn())
 
-Object.defineProperty(window, '__INITIAL_STATE__', {
-  value: {
-    dataExplorerBaseUrl: 'dataExplorerBaseUrl',
-  }
-})
-
 describe('DataRowEdit.vue', () => {
-
   let wrapper: any
 
   const mappedCreateData = {
     formFields: [
-      {id: 'a', type: 'text'},
-      {id: 'c', type: 'field-group', children: [{id: 'f', type: 'text'}]}
+      { id: 'a', type: 'text' },
+      { id: 'c', type: 'field-group', children: [{ id: 'f', type: 'text' }] }
     ],
-    formData: {a: 'b', c: 'd', f: 'g'},
+    formData: { a: 'b', c: 'd', f: 'g' },
     formLabel: 'form label'
   }
 
   let formState: any
 
-  beforeEach(async(done) => {
+  beforeEach(async (done) => {
     // @ts-ignore
     repository.save.mockReset()
     // @ts-ignore ts does not know its a mock
@@ -74,17 +67,17 @@ describe('DataRowEdit.vue', () => {
     formState = {
       $valid: true,
       a: {
-        $touched: false,
+        $touched: false
       },
       f: {
-        $touched: false,
+        $touched: false
       }
     }
 
     wrapper = await shallowMount(DataRowEdit, {
       localVue,
       propsData: {
-        dataTableId: 'dataTableId'
+        entity: 'entity'
       },
       mocks: {
         $t: () => 'default-msg'
@@ -103,7 +96,7 @@ describe('DataRowEdit.vue', () => {
   })
 
   it('onValueChanged should update the formData', () => {
-    const formUpdate = {"foo": "bar"}
+    const formUpdate = { 'foo': 'bar' }
     wrapper.vm.onValueChanged(formUpdate)
     expect(wrapper.vm.formData).toEqual(formUpdate)
   })
@@ -121,26 +114,26 @@ describe('DataRowEdit.vue', () => {
     expect(repository.save).not.toHaveBeenCalled()
   })
 
-  it('onSumbit when a error is thrown during save, a alert should be shown', async(done) => {
+  it('onSumbit when a error is thrown during save, a alert should be shown', async (done) => {
     wrapper.setData({ formState })
     // @ts-ignore
     repository.save.mockRejectedValue('my error')
     await wrapper.vm.onSubmit()
     expect(wrapper.find('#message-span').text()).toEqual('my error')
     // @ts-ignore
-    repository.save.mockRejectedValue({errors: [{message: 'my error', code: 'my code'}]})
+    repository.save.mockRejectedValue({ errors: [{ message: 'my error', code: 'my code' }] })
     await wrapper.vm.onSubmit()
-    expect(wrapper.find('#message-span').text()).toEqual("my error (my code)")
+    expect(wrapper.find('#message-span').text()).toEqual('my error (my code)')
     done()
   })
 
   it('onCancelClick when no parent is set should call goBackToPluginCaller', () => {
-    const goSpy = jest.spyOn(window.history, 'go');
+    const goSpy = jest.spyOn(window.history, 'go')
     wrapper.vm.onCancelClick()
     expect(goSpy).toBeCalled()
   })
 
-  it('dismissing the alert removes it', async(done) => {
+  it('dismissing the alert removes it', async (done) => {
     wrapper.setData({ formState })
     // @ts-ignore
     repository.save.mockRejectedValue('my error')
@@ -153,19 +146,18 @@ describe('DataRowEdit.vue', () => {
   })
 
   it('set de default msg in case of non string error prop', () => {
-    wrapper.vm.handleError({foo: 'bar'})
-    expect(wrapper.vm.alert).toEqual({"message": 'default-msg', "type": "danger"})
+    wrapper.vm.handleError({ foo: 'bar' })
+    expect(wrapper.vm.alert).toEqual({ 'message': 'default-msg', 'type': 'danger' })
   })
 
   describe('when passing a rowId', () => {
-
-    beforeEach(async(done) => {
+    beforeEach(async (done) => {
       // @ts-ignore
       EntityToFormMapper.generateForm.mockReset()
       wrapper = await shallowMount(DataRowEdit, {
         localVue,
         propsData: {
-          dataTableId: 'dataTableId',
+          entity: 'entity',
           dataRowId: 'dataRowId'
         },
         mocks: {
@@ -174,7 +166,6 @@ describe('DataRowEdit.vue', () => {
       })
       done()
     })
-
 
     it('the mapper should run in update mode', () => {
       expect(EntityToFormMapper.generateForm).toHaveBeenCalledWith(
@@ -191,15 +182,13 @@ describe('DataRowEdit.vue', () => {
           }]
         },
         'mock-rowData',
-        expect.objectContaining({mapperMode: 'UPDATE'})
+        expect.objectContaining({ mapperMode: 'UPDATE' })
       )
     })
-
   })
 
   describe('when adding a reference option', () => {
-    it('should add a child data row edit', async(done) => {
-
+    it('should add a child data row edit', async (done) => {
       const optionCreatedCallback = jest.fn()
       const sourceField = {
         id: 'my-attr'
@@ -211,11 +200,10 @@ describe('DataRowEdit.vue', () => {
   })
 
   describe('when saving a child option', () => {
-
     const callBack = jest.fn()
     const mockRemoveChild = jest.fn()
 
-    beforeEach(async(done) => {
+    beforeEach(async (done) => {
       // @ts-ignore
       repository.save.mockResolvedValue({
         headers: {
@@ -234,7 +222,7 @@ describe('DataRowEdit.vue', () => {
       const mockParent = await shallowMount(DataRowEdit, {
         localVue,
         propsData: {
-          dataTableId: 'dataTableId',
+          entity: 'entity'
         },
         mocks: {
           $t: () => 'default-msg'
@@ -244,8 +232,8 @@ describe('DataRowEdit.vue', () => {
       // @ts-ignore
       mockParent.optionCreatedCallback = callBack
       // @ts-ignore
-      mockParent.setRef = () => null;
-      //@ts-ignore
+      mockParent.setRef = () => null
+      // @ts-ignore
       mockParent.$refs = {
         refContainer: {
           removeChild: mockRemoveChild
@@ -255,7 +243,7 @@ describe('DataRowEdit.vue', () => {
       wrapper = await shallowMount(DataRowEdit, {
         localVue,
         propsData: {
-          dataTableId: 'refTableId',
+          entity: 'refTableId',
           parent: mockParent
         },
         mocks: {
@@ -265,11 +253,11 @@ describe('DataRowEdit.vue', () => {
       done()
     })
 
-    it('save the new option and call the createOption callback with the new option', async(done) => {
+    it('save the new option and call the createOption callback with the new option', async (done) => {
       wrapper.setData({ formState })
       await wrapper.vm.onSubmit()
       expect(repository.save).toHaveBeenCalled()
-      expect(callBack).toBeCalledWith({id: 'option-id', value: 'option-id', label: 'option-label'})
+      expect(callBack).toBeCalledWith({ id: 'option-id', value: 'option-id', label: 'option-label' })
       done()
     })
 
