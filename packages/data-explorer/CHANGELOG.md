@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.6.0...@molgenis-ui/data-explorer@3.6.1) (2021-03-08)
+
+
+### Bug Fixes
+
+* **data-explorer:** revert bootstrap dependency removal(breaks menu) ([223b39f](https://github.com/molgenis/molgenis-frontend/commit/223b39fa510a1868651a5bfd145d0aef3d1564f7))
+
+
+
+
+
 # [3.6.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.5.0...@molgenis-ui/data-explorer@3.6.0) (2021-03-08)
 
 
