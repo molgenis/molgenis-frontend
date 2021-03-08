@@ -3,7 +3,6 @@ const BannerPlugin = require('webpack').BannerPlugin
 const packageJson = require('./package.json')
 const pkgVersion = packageJson.version
 const pkgName = packageJson.name
-const path = require('path')
 
 const now = new Date()
 const buildDate = now.toUTCString()
@@ -38,9 +37,6 @@ module.exports = {
         banner: bannerText
       }),
       new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery',
         Popper: ['popper.js', 'default']
       })
     )
