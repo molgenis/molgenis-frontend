@@ -6,7 +6,7 @@ exports[`FileDisplay.vue should display the file and download link 1`] = `
   </a> <a href="http://some/files/file-id" class="ml-1">
     <font-awesome-icon-stub icon="download"></font-awesome-icon-stub>
   </a>
-  <b-modal id="id" title="File details" hide-footer="">
+  <b-modal-stub id="id" title="File details" hide-footer="">
     <dl class="row">
       <dt class="col-sm-3">dataexplorer_file_modal_name_label</dt>
       <dd class="col-sm-9">file-name</dd>
@@ -17,6 +17,6 @@ exports[`FileDisplay.vue should display the file and download link 1`] = `
       <dt class="col-sm-3">dataexplorer_file_modal_url_label</dt>
       <dd class="col-sm-9"><a href="http://some/files/file-id">http://some/files/file-id</a></dd>
     </dl>
-  </b-modal>
+  </b-modal-stub>
 </div>
 `;

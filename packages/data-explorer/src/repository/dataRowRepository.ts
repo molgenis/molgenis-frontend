@@ -64,7 +64,7 @@ const doPost = (uri: string, formData: any, formFields: any) => {
  */
 const parseEditResponse = (response: { [x: string]: any; _meta: any }) => {
   const { _meta, ...rowData } = response
-  return Promise.resolve({meta: _meta, rowData: rowData})
+  return Promise.resolve({ meta: _meta, rowData: rowData })
 }
 
 const fetchForCreate = (tableId: string) => api.get('/api/v2/' + tableId + '?num=0')

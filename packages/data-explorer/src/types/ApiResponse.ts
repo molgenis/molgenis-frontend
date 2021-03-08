@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 export function isSingleRefValueObject (value: DataObjectValue): value is SingleRefValueObject {
   return (value as SingleRefValueObject).data !== undefined
 }

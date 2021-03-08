@@ -38,7 +38,7 @@ const mapMetaToFilters = async (metaData: MetaData) => {
   const constructedFilters = await Promise.all(filterDefinitions.map(async (attribute: Attribute) => {
     const options = await getFieldOptions(attribute)
     // Base filter template
-    let filterDefinition: FilterDefinition = {
+    const filterDefinition: FilterDefinition = {
       name: attribute.name,
       label: attribute.label,
       type: fieldTypeToFilterType[attribute.type],

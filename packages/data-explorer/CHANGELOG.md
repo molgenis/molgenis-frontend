@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.4.1...@molgenis-ui/data-explorer@3.5.0) (2021-03-08)
+
+
+### Features
+
+* **data-explorer, navigator:** [#7889](https://github.com/molgenis/molgenis-frontend/issues/7889) merged data-row-edit in de2 ([#547](https://github.com/molgenis/molgenis-frontend/issues/547)) ([b395814](https://github.com/molgenis/molgenis-frontend/commit/b3958147a0fbe2c6705fc8dacaaa758f3393a6e6))
+
+
+
+
+
 ## [3.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.4.0...@molgenis-ui/data-explorer@3.4.1) (2021-03-05)
 
 

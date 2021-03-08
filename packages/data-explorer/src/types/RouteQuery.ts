@@ -5,4 +5,5 @@ export type RouteQuery = {
     filter?: string // hashed filter object
     hideSidebar?: 'false' | 'true'
     hide?: string // comma separated list of column names
+    view?: 'CardView' | 'TableView'
 }

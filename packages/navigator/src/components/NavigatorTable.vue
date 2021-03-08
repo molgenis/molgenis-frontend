@@ -36,7 +36,7 @@
           </a>
         </span>
         <span v-else-if="label.item.type === 'ENTITY_TYPE' && !dataExplorerUrl">
-          <a :href="`/@molgenis-ui/data-explorer/dist/index.html#${label.item.id}`">
+          <a :href="`/@molgenis-ui/data-explorer/dist/index.html#/explorer/${label.item.id}`">
             <font-awesome-icon
               icon="list"
               fixed-width/> {{ label.item.label }}

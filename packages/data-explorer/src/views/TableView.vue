@@ -85,7 +85,7 @@ export default {
       const sortQueryParam = isSortOrderReversed ? '-' + sortOrderColumn : sortOrderColumn
 
       this.$router.push({
-        name: 'main-view',
+        name: 'de-view',
         query: { ...this.$route.query, sort: sortQueryParam }
       })
     }

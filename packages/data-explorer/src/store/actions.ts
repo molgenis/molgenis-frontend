@@ -26,7 +26,7 @@ export default {
       await dispatch('header/fetchBreadcrumbs')
     }
   },
-  async fetchViewData ({ dispatch, state }: any) {
+  async fetchViewData ({ commit, dispatch, state }: any) {
     if (state.dataDisplayLayout === 'CardView') {
       dispatch('fetchCardViewData')
     } else {
@@ -34,7 +34,6 @@ export default {
     }
   },
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
-    commit('setLoading', true)
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot load card data without table name', type: 'danger' })
       commit('setLoading', false)
@@ -67,10 +66,8 @@ export default {
       commit('setTableData', tableData)
       commit('setPaginationCount', tableData.page.totalElements)
     }
-    commit('setLoading', false)
   },
   fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
-    commit('setLoading', true)
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
       commit('setLoading', false)
@@ -104,7 +101,6 @@ export default {
       commit('setTableData', tableData)
       commit('setPaginationCount', tableData.page.totalElements)
     }
-    commit('setLoading', false)
   },
   // expanded default card
   fetchRowDataLabels: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }, payload: { rowId: string }) => {

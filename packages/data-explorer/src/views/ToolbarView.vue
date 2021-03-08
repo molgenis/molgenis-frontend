@@ -6,16 +6,16 @@
       role="group"
       aria-label="Row actions group"
     >
-      <a
+
+      <router-link
         v-if="hasAddRights"
-        role="button"
         class="btn btn-outline-secondary add-row"
-        :href="'/plugin/data-row-edit/' + tableName"
         v-b-tooltip.hover.bottom
         :title="$t('dataexplorer_add_entity_btn_tooltip')"
+        :to="{ name: 'de-create', params: { entity: tableName }, query: {}}"
       >
         <font-awesome-icon icon="plus-square"></font-awesome-icon>
-      </a>
+      </router-link>
     </div>
 
     <div class="btn-group" role="group" aria-label="Column actions group">
@@ -77,17 +77,14 @@
         <font-awesome-icon icon="th-list"></font-awesome-icon>
       </button>
 
-      <table-settings-button
-        v-if="hasEditSettingsRights"
-        :settingsRowId="tableSettings.settingsRowId"
-        :settingsTableId="settingsTable"
-      ></table-settings-button>
+      <router-link class="btn btn-light btn-outline-secondary table-settings" :to="{name: 'de-edit', params: {entity: settingsTable, dataRowId: tableSettings.settingsRowId }}">
+        <font-awesome-icon icon="cog"/>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -102,7 +99,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
-import TableSettingsButton from '../components/utils/TableSettingsButton'
 import SortSelect from '../components/SortSelect'
 import ColumnSelection from '@/components/ColumnSelection.vue'
 
@@ -122,7 +118,6 @@ export default {
   components: {
     FontAwesomeIcon,
     SearchComponent,
-    TableSettingsButton,
     SortSelect,
     ColumnSelection
   },
@@ -149,7 +144,7 @@ export default {
       set (value) {
         this.$store.commit('setSearchText', value)
         this.$router.push({
-          name: 'main-view',
+          name: 'de-view',
           query: { ...this.$route.query, filter: this.compressedRouteFilter }
         })
       }
@@ -190,14 +185,14 @@ export default {
       const value =
         this.dataDisplayLayout === 'TableView' ? 'CardView' : 'TableView'
       this.$router.push({
-        name: 'main-view',
-        params: { ...this.$route.params, view: value },
-        query: { ...this.$route.query }
+        name: 'de-view',
+        params: { ...this.$route.params },
+        query: { ...this.$route.query, view: value }
       })
     },
     handleSortSelectChange (sort) {
       this.$router.push({
-        name: 'main-view',
+        name: 'de-view',
         query: {
           ...this.$route.query,
           sort: `${sort.isSortOrderReversed ? '-' : ''}${sort.sortColumnName}`
