@@ -23,6 +23,7 @@ import draggable from 'vuedraggable'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import '@molgenis-ui/components-library/dist/components-library.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 import {
   faCaretRight,
