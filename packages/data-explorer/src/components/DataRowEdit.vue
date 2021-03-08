@@ -41,7 +41,7 @@
               id="cancel-btn"
               @click.prevent="onCancelClick"
               class="btn btn-secondary mr-1">
-              {{ 'data-row-edit-cancel-button-label' | i18n }}
+              {{ $t('data-row-edit-cancel-button-label') }}
             </button>
 
             <button
@@ -50,7 +50,7 @@
               class="btn btn-primary"
               type="submit"
               @click.prevent="onSubmit">
-              {{ 'data-row-edit-save-button-label' | i18n }}
+              {{ $t('data-row-edit-save-button-label') }}
             </button>
 
             <button
@@ -59,13 +59,13 @@
               class="btn btn-primary"
               type="button"
               disabled="disabled">
-              {{ 'data-row-edit-save-busy-state-label' | i18n }} <i
+              {{ $t('data-row-edit-save-busy-state-label') }} <i
               class="fa fa-spinner fa-spin " aria-hidden="true"></i>
             </button>
 
             <span v-if="!isSaving && formState.$invalid && formState.$touched && saveFailed"
                   class="alert text-danger">
-                {{ 'data-row-edit-invalid-fields-msg' | i18n }}
+                {{ $t('data-row-edit-invalid-fields-msg') }}
             </span>
             <span v-else-if="alert && alert.type === 'danger' && alert.message"
                   class="alert text-danger">
