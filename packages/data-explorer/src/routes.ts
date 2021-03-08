@@ -16,7 +16,7 @@ export const routes = [
     component: DataRowEdit
   },
   {
-    path: '/explorer/:entity/:dataRowId/edit',
+    path: '/explorer/:entity/:dataRowId?/edit',
     props: true,
     name: 'de-edit',
     component: DataRowEdit

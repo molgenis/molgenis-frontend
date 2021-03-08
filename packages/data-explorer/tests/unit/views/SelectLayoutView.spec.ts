@@ -30,7 +30,7 @@ describe('SelectLayoutView.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  it.only('can switch layout', async () => {
+  it('can switch layout', async () => {
     const wrapper = shallowMount(SelectLayoutView, { store,
       localVue
     })

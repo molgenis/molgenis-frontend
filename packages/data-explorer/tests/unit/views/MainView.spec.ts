@@ -207,7 +207,7 @@ describe('MainView.vue', () => {
   })
 
   describe('when user is authenticated', () => {
-    it.only('should add the Breadcrumb bar', async () => {
+    it('should add the Breadcrumb bar', async () => {
       getters.isUserAuthenticated.mockReturnValue(true)
       wrapper = getWrapper({ getters })
       expect(wrapper.find('breadcrumb-bar-stub').exists()).toBeTruthy()

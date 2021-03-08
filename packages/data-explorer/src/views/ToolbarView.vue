@@ -77,11 +77,9 @@
         <font-awesome-icon icon="th-list"></font-awesome-icon>
       </button>
 
-      <table-settings-button
-        v-if="hasEditSettingsRights"
-        :settingsRowId="tableSettings.settingsRowId"
-        :settingsTableId="settingsTable"
-      ></table-settings-button>
+      <router-link class="btn btn-light btn-outline-secondary table-settings" :to="{name: 'de-edit', params: {entity: settingsTable, dataRowId: 'foobar' }}">
+        <font-awesome-icon icon="cog"/>
+      </router-link>
     </div>
   </div>
 </template>
@@ -101,7 +99,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
-import TableSettingsButton from '../components/utils/TableSettingsButton'
 import SortSelect from '../components/SortSelect'
 import ColumnSelection from '@/components/ColumnSelection.vue'
 
@@ -121,7 +118,6 @@ export default {
   components: {
     FontAwesomeIcon,
     SearchComponent,
-    TableSettingsButton,
     SortSelect,
     ColumnSelection
   },
