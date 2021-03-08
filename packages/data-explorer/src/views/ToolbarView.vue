@@ -77,7 +77,7 @@
         <font-awesome-icon icon="th-list"></font-awesome-icon>
       </button>
 
-      <router-link class="btn btn-light btn-outline-secondary table-settings" :to="{name: 'de-edit', params: {entity: settingsTable, dataRowId: 'foobar' }}">
+      <router-link class="btn btn-light btn-outline-secondary table-settings" :to="{name: 'de-edit', params: {entity: settingsTable, dataRowId: tableSettings.settingsRowId }}">
         <font-awesome-icon icon="cog"/>
       </router-link>
     </div>

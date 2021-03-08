@@ -41,7 +41,7 @@
               id="cancel-btn"
               @click.prevent="onCancelClick"
               class="btn btn-secondary mr-1">
-              {{ $t('data-row-edit-cancel-button-label') }}
+              {{ $t('data-row-edit:data-row-edit-cancel-button-label') }}
             </button>
 
             <button
@@ -50,7 +50,7 @@
               class="btn btn-primary"
               type="submit"
               @click.prevent="onSubmit">
-              {{ $t('data-row-edit-save-button-label') }}
+              {{ $t('data-row-edit:data-row-edit-save-button-label') }}
             </button>
 
             <button
@@ -59,13 +59,13 @@
               class="btn btn-primary"
               type="button"
               disabled="disabled">
-              {{ $t('data-row-edit-save-busy-state-label') }} <i
+              {{ $t('data-row-edit:data-row-edit-save-busy-state-label') }} <i
               class="fa fa-spinner fa-spin " aria-hidden="true"></i>
             </button>
 
             <span v-if="!isSaving && formState.$invalid && formState.$touched && saveFailed"
                   class="alert text-danger">
-                {{ $t('data-row-edit-invalid-fields-msg') }}
+                {{ $t('data-row-edit:data-row-edit-invalid-fields-msg') }}
             </span>
             <span v-else-if="alert && alert.type === 'danger' && alert.message"
                   class="alert text-danger">
@@ -212,7 +212,7 @@ export default {
       } else if (error && Array.isArray(error.errors) && error.errors.length) {
         return `${error.errors[0].message} (${error.errors[0].code})`
       } else {
-        return this.$t('data-row-edit-default-error-message')
+        return this.$t('data-row-edit:data-row-edit-default-error-message')
       }
     },
     /**
@@ -236,9 +236,9 @@ export default {
         showNonVisibleAttributes: true,
         mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
         booleanLabels: {
-          trueLabel: this.$t('data-row-edit-boolean-true'),
-          falseLabel: this.$t('data-row-edit-boolean-false'),
-          nillLabel: this.$t('data-row-edit-boolean-null')
+          trueLabel: this.$t('data-row-edit:data-row-edit-boolean-true'),
+          falseLabel: this.$t('data-row-edit:data-row-edit-boolean-false'),
+          nillLabel: this.$t('data-row-edit:data-row-edit-boolean-null')
         }
       }
       try {
