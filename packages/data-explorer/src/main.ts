@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-
+import 'bootstrap'
 import Router from 'vue-router'
 import { defaultRouteQuery, routes } from './routes'
 
