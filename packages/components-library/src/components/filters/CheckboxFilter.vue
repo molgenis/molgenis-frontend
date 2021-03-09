@@ -44,6 +44,15 @@ export default {
       required: true
     },
     /**
+     * An array that contains values of options
+     * which is used to only show the checkboxes that match
+     * these values
+     */
+    optionsFilter: {
+      type: Array,
+      required: false
+    },
+    /**
      * This is the v-model value; an array of selected options.
      * Can also be a { text, value } object array
      */
@@ -72,21 +81,28 @@ export default {
       externalUpdate: false,
       selection: [],
       resolvedOptions: [],
-      sliceOptions: this.maxVisibleOptions && this.resolvedOptions && this.maxVisibleOptions < this.resolvedOptions.length
+      sliceOptions: this.maxVisibleOptions && this.optionsToRender && this.maxVisibleOptions < this.optionsToRender.length
     }
   },
   computed: {
     visibleOptions () {
-      return this.sliceOptions ? this.resolvedOptions.slice(0, this.maxVisibleOptions) : (typeof this.resolvedOptions === 'function' ? [] : this.resolvedOptions)
+      return this.sliceOptions ? this.optionsToRender.slice(0, this.maxVisibleOptions) : (typeof this.optionsToRender === 'function' ? [] : this.optionsToRender)
     },
     showToggleSlice () {
-      return this.maxVisibleOptions && this.maxVisibleOptions < this.resolvedOptions.length
+      return this.maxVisibleOptions && this.maxVisibleOptions < this.optionsToRender.length
     },
     toggleSelectText () {
       return this.value.length ? 'Deselect all' : 'Select all'
     },
     toggleSliceText () {
-      return this.sliceOptions ? `Show ${this.resolvedOptions.length - this.maxVisibleOptions} more` : 'Show less'
+      return this.sliceOptions ? `Show ${this.optionsToRender.length - this.maxVisibleOptions} more` : 'Show less'
+    },
+    optionsToRender () {
+      if (this.optionsFilter && this.optionsFilter.length) {
+        return this.resolvedOptions.filter(option => this.optionsFilter.includes(option.value))
+      } else {
+        return this.resolvedOptions
+      }
     }
   },
   watch: {
@@ -153,6 +169,7 @@ const model = []
   v-bind:maxVisibleOptions="5"
   v-bind:bulkOperation="true"
   v-bind:options="fruitOptionsFunction"
+  v-bind:optionsFilter="[]"
   v-model="model">
 </CheckboxFilter>
 <div>model: {{model}}</div>
