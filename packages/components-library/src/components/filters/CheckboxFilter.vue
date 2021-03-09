@@ -117,7 +117,7 @@ export default {
         let newSelection = []
 
         if (this.returnTypeAsObject) {
-          newSelection = Object.assign(newSelection, this.resolvedOptions.filter(of => newValue.includes(of.value)))
+          newSelection = Object.assign(newSelection, this.optionsToRender.filter(of => newValue.includes(of.value)))
         } else {
           newSelection = [...newValue]
         }
@@ -137,7 +137,7 @@ export default {
       if (this.selection && this.selection.length > 0) {
         this.selection = []
       } else {
-        this.selection = this.resolvedOptions.map(option => option.value)
+        this.selection = this.optionsToRender.map(option => option.value)
       }
     },
     toggleSlice () {
