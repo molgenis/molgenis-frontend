@@ -36,7 +36,7 @@ describe('client', () => {
       expect(e).toBe(data)
     }
     expect(store.commit).toBeCalledWith('setLoading', false)
-    expect(store.commit).toBeCalledWith('addToast', { message: 'world not found', type: 'danger', timeout: 0 })
+    expect(store.commit).toBeCalledWith('explorer/addToast', { message: 'world not found', type: 'danger', timeout: 0 })
   })
 
   it('should create a axios instance', async () => {

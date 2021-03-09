@@ -1,14 +1,14 @@
 <template>
   <div class="entity-table" v-if="tableData && tableData.items && tableData.items.length > 0 && tableMeta">
     <div v-if="entitiesToShow.length === 0" class="alert alert-warning">
-      {{ 'dataexplorer_empty_shopping_cart' | i18n}}
+      {{ $t('dataexplorer_empty_shopping_cart') }}
     </div>
     <div v-else>
       <button class="btn btn-primary cart-back mr-2" @click="closeShoppingCart" v-if="entitiesToShow.length > 5">
-        <font-awesome-icon icon="chevron-left"></font-awesome-icon> {{ 'dataexplorer_shopping_cart_back_btn_label' | i18n}}
+        <font-awesome-icon icon="chevron-left"></font-awesome-icon> {{ $t('dataexplorer_shopping_cart_back_btn_label') }}
       </button>
       <button class="btn btn-success cart-order mr-2" v-if="entitiesToShow.length > 5">
-        <font-awesome-icon icon="shopping-bag"></font-awesome-icon> {{ 'dataexplorer_shopping_cart_order_btn_label' | i18n}}
+        <font-awesome-icon icon="shopping-bag"></font-awesome-icon> {{ $t('dataexplorer_shopping_cart_order_btn_label') }}
       </button>
       <table class="table table-bordered overflow-hidden">
         <table-header :visibleColumns="visibleColumns" :isShop="true"></table-header>
@@ -27,10 +27,10 @@
       </table>
     </div>
     <button class="btn btn-primary cart-back mr-2" @click="closeShoppingCart">
-      <font-awesome-icon icon="chevron-left"></font-awesome-icon> {{ 'dataexplorer_shopping_cart_back_btn_label' | i18n}}
+      <font-awesome-icon icon="chevron-left"></font-awesome-icon> {{ $t('dataexplorer_shopping_cart_back_btn_label') }}
     </button>
     <button v-if="entitiesToShow.length > 0" class="btn btn-success cart-order mr-2">
-      <font-awesome-icon icon="shopping-bag"></font-awesome-icon> {{ 'dataexplorer_shopping_cart_back_btn_label' | i18n}}
+      <font-awesome-icon icon="shopping-bag"></font-awesome-icon> {{ $t('dataexplorer_shopping_cart_back_btn_label') }}
     </button>
   </div>
 </template>
@@ -39,17 +39,13 @@
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faShoppingBag, faChevronLeft)
 
 export default {
   name: 'ClipboardView',
-  components: { TableRow, TableHeader, FontAwesomeIcon },
+  components: { TableRow, TableHeader },
   computed: {
-    ...mapState(['tableMeta', 'selectedItemIds', 'tableData', 'tableName', 'showSelected']),
-    ...mapGetters(['tableIdAttributeName']),
+    ...mapState('explorer', ['tableMeta', 'selectedItemIds', 'tableData', 'tableName', 'showSelected']),
+    ...mapGetters('explorer', ['tableIdAttributeName']),
     entitiesToShow () {
       return this.tableData.items.filter((entity) => this.selectedItemIds.includes(this.getEntityId(entity)))
     },
@@ -61,8 +57,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchTableViewData']),
-    ...mapMutations(['setShowSelected', 'setHideFilters']),
+    ...mapActions('explorer', ['fetchTableViewData']),
+    ...mapMutations('explorer', ['setShowSelected', 'setHideFilters']),
     getEntityId (entity) {
       return entity[this.tableIdAttributeName].toString()
     },

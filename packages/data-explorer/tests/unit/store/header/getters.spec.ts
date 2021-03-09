@@ -5,8 +5,8 @@ jest.mock('@/service/menuService', () => ({ findPath: jest.fn() }))
 
 describe('header getters', () => {
   describe('navigatorLocation', () => {
-    let state: any = {}
-    let rootState: any = { account: { context: { menu: { my: 'menu' } } } }
+    const state: any = {}
+    const rootState: any = { account: { context: { menu: { my: 'menu' } } } }
 
     describe('when menu contains navigator', () => {
       // @ts-ignore

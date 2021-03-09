@@ -4,12 +4,12 @@ import client from '@/lib/client'
 jest.mock('@/lib/client', () => ({ get: jest.fn() }))
 
 describe('header actions', () => {
-  let commit: any = jest.fn()
+  const commit: any = jest.fn()
 
   describe('fetchBreadcrumbs', () => {
     describe('when no nagivator location or metaData has been set', () => {
       it('should not try to fetch the breadCrumbs', async () => {
-        const rootState = {}
+        const rootState = { explorer: {} }
         const getters = {}
         await actions.fetchBreadcrumbs({ commit, getters, rootState })
         expect(client.get).not.toHaveBeenCalled()
@@ -20,10 +20,12 @@ describe('header actions', () => {
         navigatorLocation: 'some-location'
       }
       const rootState = {
-        tableMeta: {
-          id: 'my-table',
-          label: 'my-table-label',
-          package: 'my-package'
+        explorer: {
+          tableMeta: {
+            id: 'my-table',
+            label: 'my-table-label',
+            package: 'my-package'
+          }
         }
       }
 
@@ -87,13 +89,15 @@ describe('header actions', () => {
           ]
         }
       })
-      let payload = {
+      const payload = {
         id: 'my-id',
         callback: jest.fn()
       }
-      let rootState = {
-        tableMeta: {
-          id: 'self-id'
+      const rootState = {
+        explorer: {
+          tableMeta: {
+            id: 'self-id'
+          }
         }
       }
       await actions.fetchPackageTables({ rootState }, payload)

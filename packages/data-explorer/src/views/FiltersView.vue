@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="p-0 mb-2 d-flex justify-content-between align-items-center">
-        <h2 class="m-0">{{ 'dataexplorer_filters_header' | i18n}}</h2>
+        <h2 class="m-0">{{ $t('dataexplorer_filters_header') }}</h2>
         <button
           type="button"
           class="btn btn-light btn-outline-secondary hide-filters"
@@ -31,27 +31,22 @@
 <script>
 import Vue from 'vue'
 import { mapState, mapMutations, mapGetters } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { FilterContainer } from '@molgenis-ui/components-library'
-
-library.add(faChevronLeft)
 
 export default Vue.extend({
   name: 'FiltersView',
-  components: { FilterContainer, FontAwesomeIcon },
+  components: { FilterContainer },
   data: () => {
     return {
       renderCount: 0
     }
   },
   computed: {
-    ...mapState([
+    ...mapState('explorer', [
       'filters',
       'tableMeta'
     ]),
-    ...mapGetters([
+    ...mapGetters('explorer', [
       'compressedRouteFilter'
     ]),
     isFilterDataLoaded () {
@@ -77,7 +72,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapMutations([
+    ...mapMutations('explorer', [
       'setFiltersShown',
       'setFilterSelection'
     ]),

@@ -1,4 +1,4 @@
-import state from '../../../src/store/state'
+import state from '../../../src/store/explorer/state'
 
 const mockState = () => JSON.parse(JSON.stringify(state))
 

@@ -42,7 +42,7 @@
             <font-awesome-icon icon="chevron-right" v-if="cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
           </button>
           <a :href="detailLink" class="btn btn-outline-info btn-sm mg-info-btn">
-            <font-awesome-icon icon="search"></font-awesome-icon> {{ 'dataexplorer_default_card_info_btn_label' | i18n }}
+            <font-awesome-icon icon="search"></font-awesome-icon> {{ $t('dataexplorer_default_card_info_btn_label') }}
           </a>
         </div>
       </div>
@@ -51,11 +51,6 @@
 </template>
 
 <script>
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch, faChevronUp, faChevronRight, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-library.add(faSearch, faChevronRight, faChevronUp, faEdit, faTrash)
 
 export default {
   name: 'DefaultCardContent',
@@ -100,7 +95,6 @@ export default {
       default: () => []
     }
   },
-  components: { FontAwesomeIcon },
   computed: {
     expandBtnText () {
       return this.cardState === 'closed' ? this.$t('dataexplorer_default_card_expand_btn_label') : this.$t('dataexplorer_default_card_collapse_btn_label')

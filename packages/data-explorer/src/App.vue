@@ -13,7 +13,7 @@ import { mapMutations, mapState } from 'vuex'
 export default Vue.extend({
   name: 'app',
   components: { PageComponent },
-  computed: { ...mapState(['dataDisplayLayout']) },
+  computed: { ...mapState('explorer', ['dataDisplayLayout']) },
   methods: { ...mapMutations('account', ['setContext']) }
 })
 </script>

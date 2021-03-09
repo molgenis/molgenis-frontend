@@ -4,6 +4,7 @@ import 'bootstrap'
 import Router from 'vue-router'
 import { defaultRouteQuery, routes } from './routes'
 
+import { sync } from 'vuex-router-sync'
 import store from './store/store'
 import { BootstrapVue } from 'bootstrap-vue'
 
@@ -23,42 +24,23 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import '@molgenis-ui/components-library/dist/components-library.css'
 import 'font-awesome/css/font-awesome.min.css'
+import { SET_SHOW_HIDDEN_RESOURCES } from './store/navigator/mutations'
 
+import { faCheckCircle, faFolderOpen, faHourglass, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import {
-  faCaretRight,
-  faChevronRight,
-  faChevronLeft,
-  faChevronUp,
-  faCog,
-  faEdit,
-  faFilter,
-  faExclamationTriangle,
-  faMinus,
-  faPlay,
-  faPlus,
-  faPlusSquare,
-  faShoppingBag,
-  faShoppingCart,
-  faSlidersH,
-  faSpinner,
-  faSearch,
-  faStore,
-  faTh,
-  faThList,
-  faTimes,
-  faTrash,
-  faUpload,
-  faShare,
-  faSort,
-  faSortAlphaUp,
-  faSortAlphaDown
-} from '@fortawesome/free-solid-svg-icons'
+  faCaretRight, faChevronRight, faChevronLeft, faChevronUp, faClone, faCog,
+  faCut, faDownload, faEdit, faExclamationTriangle, faFilter, faHome,
+  faList, faMinus, faPaste, faPlay, faPlus, faPlusSquare, faShoppingBag, faShoppingCart,
+  faSlidersH, faSpinner, faSearch, faStore, faTh, faThList, faTimes,
+  faTrash, faUpload, faShare, faSort, faSortAlphaUp, faSortAlphaDown } from '@fortawesome/free-solid-svg-icons'
 
 const packageJson = require('../package.json')
 
-library.add(faCaretRight, faChevronLeft, faChevronRight, faChevronUp, faCog, faEdit, faExclamationTriangle, faFilter,
-  faMinus, faPlay, faPlus, faPlusSquare, faShoppingBag, faSlidersH, faShoppingCart, faSpinner,
-  faSearch, faStore, faTh, faThList, faTimes, faTrash, faUpload, faSort, faSortAlphaUp, faSortAlphaDown, faShare
+library.add(
+  faCaretRight, faCheckCircle, faCut, faClone, faChevronLeft, faDownload, faChevronRight, faChevronUp,
+  faCog, faEdit, faExclamationTriangle, faFilter, faFolderOpen, faList, faHome, faHourglass, faMinus,
+  faPlay, faPlus, faPlusSquare, faShoppingBag, faSlidersH, faPaste, faShoppingCart, faSpinner, faSearch, faStore,
+  faTh, faThList, faTimes, faTimesCircle, faTrash, faUpload, faSort, faSortAlphaUp, faSortAlphaDown, faShare
 )
 
 Vue.use(Router)
@@ -79,6 +61,11 @@ const router = new Router({
   routes
 })
 
+sync(store, router)
+
+// TODO: Get from context API.
+const isSuperUser = true
+
 // Navigation guard that makes sure that all explorer
 // query params are present.
 router.beforeEach((to, from, next) => {
@@ -95,8 +82,9 @@ router.beforeEach((to, from, next) => {
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',
-  namespace: ['dataexplorer', 'data-row-edit', 'ui-form'],
+  namespace: ['dataexplorer', 'navigator', 'data-row-edit', 'ui-form'],
   callback () {
     new Vue({ store, router, render: h => h(App) }).$mount('#app')
+    store.commit(`navigator/${SET_SHOW_HIDDEN_RESOURCES}`, true)
   }
 })

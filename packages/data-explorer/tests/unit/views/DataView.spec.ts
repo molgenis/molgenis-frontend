@@ -58,6 +58,7 @@ describe('DataView.vue', () => {
     }
 
     modules = {
+      explorer: { actions, getters, mutations, namespaced: true, state },
       reference: {
         namespaced: true,
         actions: {
@@ -76,9 +77,7 @@ describe('DataView.vue', () => {
     }]
     modules.reference.actions.fetchRefData.mockResolvedValue({ metaData, data })
 
-    store = new Vuex.Store({
-      state, getters, actions, mutations, modules
-    })
+    store = new Vuex.Store({ modules })
   })
 
   it('exists', () => {
@@ -113,7 +112,7 @@ describe('DataView.vue', () => {
   describe('when the search text is non empty', () => {
     let wrapper: any
     beforeEach(() => {
-      store.state.searchText = 'my search'
+      store.state.explorer.searchText = 'my search'
       wrapper = shallowMount(DataView, { store, localVue, mocks, stubs })
     })
 

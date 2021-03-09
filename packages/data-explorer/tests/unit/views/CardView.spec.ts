@@ -34,7 +34,9 @@ describe('CardView.vue', () => {
         ] })
     }
     store = new Vuex.Store({
-      state, mutations, getters, actions
+      modules: {
+        explorer: { actions, getters, mutations, namespaced: true, state }
+      }
     })
   })
 
@@ -84,7 +86,9 @@ describe('CardView.vue', () => {
       selectedItemIds: [1, 3]
     }
     store = new Vuex.Store({
-      state, mutations, getters, actions
+      modules: {
+        explorer: { getters, mutations, namespaced: true, state }
+      }
     })
     const wrapper = shallowMount(CardView, {
       store,

@@ -61,9 +61,7 @@ describe('TableView.vue', () => {
       filterRsql: jest.fn().mockReturnValue(null),
       hasEditRights: jest.fn().mockReturnValue(true)
     }
-    store = new Vuex.Store({
-      state, mutations, actions, getters
-    })
+    store = new Vuex.Store({ modules: { explorer: { actions, getters, mutations, namespaced: true, state } } })
   })
 
   it('exists', () => {

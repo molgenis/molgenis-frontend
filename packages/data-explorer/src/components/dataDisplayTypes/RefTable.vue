@@ -17,7 +17,7 @@
         ></table-row>
       </tbody>
     </table>
-    <div v-else><b-spinner label="Spinning" class="m-3 align-middle"></b-spinner> {{ 'dataexplorer_ref_table_loading_msg' | i18n }} </div>
+    <div v-else><b-spinner label="Spinning" class="m-3 align-middle"></b-spinner> {{ $t('dataexplorer_ref_table_loading_msg') }} </div>
   </div>
 </template>
 
