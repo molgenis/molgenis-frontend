@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.3.0...@molgenis-ui/components-library@2.4.0) (2021-03-09)
+
+
+### Bug Fixes
+
+* select / deselect all now works ([f446788](https://github.com/molgenis/molgenis-frontend/commit/f446788facab67fc531a28a2fdb0cf2fde3245d1))
+
+
+### Features
+
+* now you can add an array of values to the checkbox filter and it will only show those options ([5e7bf06](https://github.com/molgenis/molgenis-frontend/commit/5e7bf06346f7410ce8da6f8de95d9a8359fd1b71))
+
+
+
+
+
 # [2.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.2.0...@molgenis-ui/components-library@2.3.0) (2021-03-03)
 
 
