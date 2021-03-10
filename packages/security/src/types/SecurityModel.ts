@@ -14,7 +14,7 @@ export type SecurityModel = {
   groupRoles: { string: Array<GroupRole> } | {};
   groupPermissions: { string: Array<string> } | {};
   users: Array<User>;
-  voGroups: Array<VOGroup>;
+  voGroups: Array<VOGroup> | null;
   toast: Toast | null;
   groupRights: { user: null | GroupRollSubSelection; anonymous: null | GroupRollSubSelection; roles: [] };
 }

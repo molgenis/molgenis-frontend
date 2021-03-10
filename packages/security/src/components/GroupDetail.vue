@@ -3,7 +3,7 @@
 
     <toast></toast>
 
-    <div class="row mb-3  ">
+    <div class="row mb-3">
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="row mb-3  ">
+    <div class="row mb-3">
       <div class="col">
         <h1>{{ 'security-ui-members-page-title' | i18n }} {{name}}</h1>
         <b-button id="delete-group-btn" variant="danger" v-if="hasSuperUserRights"
@@ -27,30 +27,51 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
+    <div class="row mt-2">
+      <div class="col-md-6" v-if="voGroups && voGroups.length">
+        <span class="float-right">
+          <button id="add-vo-group-member-btn" v-if="canAddMember" @click="addVOGroupMember" type="button"
+                  class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> {{'security-ui-add-vo-group' | i18n}}
+          </button>
+        </span>
+        <h3 class="mt-2">{{'security-ui-vo-groups-header' | i18n}}</h3>
+        <p>{{'security-ui-vo-group-explanation' | i18n}}</p>
+
+        <div class="groups-listing mt-1">
+          <router-link
+            v-for="voGroup in myVOGroupMembers"
+            :key="voGroup.groupName"
+            :to="{ name: 'memberDetail', params: { groupName: name, type: 'vo-group', memberName: voGroup.groupName } }"
+            class="list-group-item list-group-item-action">
+            <div>
+              <span class="font-weight-bold">{{voGroup.groupName}}
+                <small class="font-weight-light text-uppercase"> ({{voGroup.roleLabel}})</small>
+              </span>
+            </div>
+          </router-link>
+        </div>
+      </div>
+      <div class="col-md-6">
         <span class="float-right">
           <button id="add-member-btn" v-if="canAddMember" @click="addMember" type="button"
                   class="btn btn-primary"><i class="fa fa-plus"></i> {{'security-ui-add-member' | i18n}}
           </button>
         </span>
         <h3 class="mt-2">{{'security-ui-members-header' | i18n}}</h3>
-      </div>
-    </div>
-
-    <div class="row groups-listing mt-1">
-      <div class="col">
-        <router-link
-          v-for="member in sortedMembers"
-          :key="member.username"
-          :to="{ name: 'memberDetail', params: { groupName: name, memberName: member.username } }"
-          class="list-group-item list-group-item-action">
-          <div>
-            <span class="text-capitalize font-weight-bold">{{member.username}}
-              <small class="font-weight-light text-uppercase"> ({{member.roleLabel}})</small>
-            </span>
-          </div>
-        </router-link>
+        <p>{{'security-ui-member-explanation' | i18n}}</p>
+        <div class="groups-listing mt-1">
+          <router-link
+            v-for="member in sortedMembers"
+            :key="member.username"
+            :to="{ name: 'memberDetail', params: { groupName: name, type: 'member', memberName: member.username } }"
+            class="list-group-item list-group-item-action">
+            <div>
+              <span class="text-capitalize font-weight-bold">{{member.username}}
+                <small class="font-weight-light text-uppercase"> ({{member.roleLabel}})</small>
+              </span>
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
     <div v-if="hasSuperUserRights">
@@ -121,7 +142,7 @@
 
 <script>
 import Toast from './Toast'
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'GroupDetail',
@@ -139,6 +160,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['voGroupMembers', 'voGroups']),
     ...mapGetters([
       'groupMembers',
       'groupPermissions',
@@ -150,6 +172,9 @@ export default {
       const members = this.groupMembers[this.name] || []
       return [...members].sort((a, b) => a.username.localeCompare(b.username))
     },
+    myVOGroupMembers () {
+      return this.voGroupMembers[this.name] || []
+    },
     canAddMember () {
       const groupPermissions = this.groupPermissions[this.name] || []
       return groupPermissions.includes('ADD_MEMBERSHIP')
@@ -160,7 +185,9 @@ export default {
       'clearToast'
     ]),
     ...mapActions([
+      'tempFetchVOGroups',
       'fetchGroupMembers',
+      'fetchVOGroupMembers',
       'fetchGroupPermissions',
       'fetchGroupRights',
       'setGroupRight',
@@ -179,6 +206,10 @@ export default {
       this.clearToast()
       this.$router.push({ name: 'addMember', params: { groupName: this.name } })
     },
+    addVOGroupMember () {
+      this.clearToast()
+      this.$router.push({ name: 'addVOGroupMember', params: { groupName: this.name } })
+    },
     deleteGroupHandler () {
       this.deleteGroup({ groupName: this.name }).then(() => {
         this.$router.push({ name: 'groupOverView' })
@@ -193,8 +224,10 @@ export default {
     }
   },
   created () {
+    this.tempFetchVOGroups()
     this.fetchGroupMembers(this.name)
     this.fetchGroupPermissions(this.name)
+    this.fetchVOGroupMembers(this.name)
     if (this.hasSuperUserRights) {
       this.loadGroupRights()
     } else {

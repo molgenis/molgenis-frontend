@@ -5,8 +5,11 @@ import { GroupMember } from '@/types/GroupMember'
 import { CreateGroupCommand } from '@/types/CreateGroupCommand'
 import { UpdateMemberCommand } from '@/types/UpdateMemberCommand'
 import { AddMemberCommand } from '@/types/AddMemberCommand'
-import { SecurityModel } from '@/types/SecurityModel'
 import { VOGroupMember } from '@/types/VOGroupMember'
+import { AddVOGroupMemberCommand } from '@/types/AddVOGroupMemberCommand'
+import { getVOGroupID } from './helpers'
+import { VOGroup } from '@/types/VOGroup'
+import { SecurityModel } from '@/types/SecurityModel'
 
 const SECURITY_API_ROUTE = '/api/identities'
 const SECURITY_API_VERSION = ''
@@ -76,9 +79,12 @@ const actions = {
     })
   },
 
-  'tempFetchVOGroups' ({ commit }: { commit: Function }) {
+  'tempFetchVOGroups' ({ commit, state }: { commit: Function; state: { voGroups: VOGroup[] | null }}) {
+    if (state.voGroups != null) {
+      return
+    }
     return api.get(TEMP_VO_GROUP_ENDPOINT).then((response: any) => {
-      commit('setUsers', response)
+      commit('setVOGroups', response)
     }, (response: { errors: any[] }) => {
       commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
     })
@@ -132,9 +138,22 @@ const actions = {
     })
   },
 
-  'addMember' ({ commit }: { commit: Function }, { groupName, addMemberCommand }: {groupName: string; addMemberCommand: AddMemberCommand}) {
-    const url = GROUP_ENDPOINT + '/' + encodeURIComponent(groupName) + '/member'
-    const payload = { body: JSON.stringify(addMemberCommand) }
+  'addMember' ({ commit, state }: { commit: Function; state: { voGroups: VOGroup[] | null} }, { groupName, type, name, roleName }: {groupName: string; type: 'member'|'vo-group'; name: string; roleName: string}) {
+    let payload: {body: string}
+    if (type === 'member') {
+      const command: AddMemberCommand = {
+        roleName,
+        username: name
+      }
+      payload = { body: JSON.stringify(command) }
+    } else if (type === 'vo-group') {
+      const command: AddVOGroupMemberCommand = {
+        roleName,
+        VOGroupID: getVOGroupID(state.voGroups, name)
+      }
+      payload = { body: JSON.stringify(command) }
+    }
+    const url = `${GROUP_ENDPOINT}/${encodeURIComponent(groupName)}/${type}`
 
     return new Promise((resolve, reject) => {
       api.post(url, payload).then(() => {
@@ -147,8 +166,10 @@ const actions = {
     })
   },
 
-  'removeMember' ({ commit }: { commit: Function }, { groupName, memberName }: {groupName: string; memberName: string}) {
-    const url = GROUP_ENDPOINT + '/' + encodeURIComponent(groupName) + '/member/' + encodeURIComponent(memberName)
+  'removeMember' ({ commit, state }: { commit: Function; state: { voGroups: VOGroup[] | null } },
+    { groupName, memberName, type }: {groupName: string; memberName: string; type: 'member' | 'vo-group'}) {
+    const member = type === 'member' ? memberName : getVOGroupID(state.voGroups, memberName)
+    const url = `${GROUP_ENDPOINT}/${encodeURIComponent(groupName)}/${type}/${encodeURIComponent(member)}`
 
     return new Promise((resolve, reject) => {
       api.delete_(url).then(() => {
@@ -161,10 +182,12 @@ const actions = {
     })
   },
 
-  'updateMember' ({ commit }: { commit: Function },
-    { groupName, memberName, updateMemberCommand }: { groupName: string; memberName: string; updateMemberCommand: UpdateMemberCommand }
+  'updateMember' ({ commit, state }: { commit: Function; state: { voGroups: VOGroup[] | null} },
+    { groupName, memberName, updateMemberCommand, type }:
+      { groupName: string; memberName: string; updateMemberCommand: UpdateMemberCommand; type: 'member' | 'VOGroup' }
   ) {
-    const url = GROUP_ENDPOINT + '/' + encodeURIComponent(groupName) + '/member/' + encodeURIComponent(memberName)
+    const member = type === 'member' ? memberName : getVOGroupID(state.voGroups, memberName)
+    const url = `${GROUP_ENDPOINT}/${encodeURIComponent(groupName)}/${type}/${encodeURIComponent(member)}`
     const payload = { body: JSON.stringify(updateMemberCommand) }
 
     return new Promise((resolve, reject) => {

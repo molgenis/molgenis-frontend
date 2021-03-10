@@ -31,11 +31,17 @@ const routes: Array<RouteConfig> = [
   {
     path: '/group/:groupName/addMember',
     name: 'addMember',
-    props: true,
+    props: route => ({ ...route.params, type: 'member' }),
     component: MemberAdd
   },
   {
-    path: '/group/:groupName/member/:memberName',
+    path: '/group/:groupName/addVOGroupMember',
+    name: 'addVOGroupMember',
+    props: route => ({ ...route.params, type: 'vo-group' }),
+    component: MemberAdd
+  },
+  {
+    path: '/group/:groupName/:type/:memberName',
     name: 'memberDetail',
     props: true,
     component: MemberDetail

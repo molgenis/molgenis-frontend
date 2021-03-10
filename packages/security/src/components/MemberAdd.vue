@@ -29,12 +29,12 @@
         <form>
 
           <div class="form-group">
-            <label for="userSelect">{{ 'security-ui-membership-attribute-user' | i18n }}</label>
-            <select id="userSelect" v-model="username" class="form-control" :disabled="nonMemberUsers.length === 0">
-              <option v-if="nonMemberUsers.length > 0" value="">- {{ 'security-ui-please-select-a-user' | i18n }} -
+            <label for="memberSelect">{{ 'security-ui-membership-attribute-user' | i18n }}</label>
+            <select id="memberSelect" v-model="name" class="form-control" :disabled="candidates.length === 0">
+              <option v-if="candidates.length > 0" value="">- {{ emptyCandidateLabel }} -
               </option>
-              <option v-else value="">{{ 'security-ui-no-available-users' | i18n }}</option>
-              <option v-for="user in nonMemberUsers" :value="user.username" :key="user.username">{{user.username}}</option>
+              <option v-else value="">{{ noCandidatesLabel }}</option>
+              <option v-for="candidate in candidates" :value="candidate.name" :key="candidate.name">{{candidate.name}}</option>
             </select>
           </div>
 
@@ -60,7 +60,7 @@
             class="btn btn-success"
             type="submit"
             @click.prevent="onSubmit"
-            :disabled="!username || !roleName">
+            :disabled="!name || !roleName">
             {{ 'security-ui-btn-add-member' | i18n }}
           </button>
 
@@ -82,7 +82,7 @@
 
 <script>
 import Toast from '@/components/Toast.vue'
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'MemberAdd',
@@ -90,37 +90,62 @@ export default {
     groupName: {
       type: String,
       required: false
+    },
+    type: {
+      type: String,
+      required: true,
+      validator: (val) => ['member', 'vo-group'].includes(val)
     }
   },
   data () {
     return {
-      username: '',
+      name: '',
       roleName: '',
       isAdding: false
     }
   },
   computed: {
+    ...mapState(['voGroupMembers', 'voGroups']),
     ...mapGetters([
       'groupRoles',
       'users',
       'groupMembers'
     ]),
+    noCandidatesLabel () {
+      return this.type === 'member'
+        ? this.$t('security-ui-no-available-users')
+        : this.$t('security-ui-no-available-vo-groups')
+    },
+    emptyCandidateLabel () {
+      return this.type === 'member'
+        ? this.$t('security-ui-please-select-a-user')
+        : this.$t('security-ui-please-select-a-vo-group')
+    },
     sortedRoles () {
       const roles = this.groupRoles[this.groupName] || []
       return [...roles].sort((a, b) => a.roleLabel.localeCompare(b.roleLabel))
+    },
+    candidates () {
+      return this.type === 'member'
+        ? this.nonMemberUsers.map(user => ({ name: user.username }))
+        : this.nonMemberVOGroups
     },
     nonMemberUsers () {
       const currentMembers = this.groupMembers[this.groupName] || []
       const currentMemberNames = currentMembers.map((cm) => cm.username)
       const nonMemberUsers = this.users.filter((u) => !currentMemberNames.includes(u.username))
       return [...nonMemberUsers].sort((a, b) => a.username.localeCompare(b.username))
+    },
+    nonMemberVOGroups () {
+      const currentMembers = this.voGroupMembers[this.groupName] || []
+      const currentMemberNames = currentMembers.map((cm) => cm.groupName)
+      return (this.voGroups || []).filter((vog) => !currentMemberNames.includes(vog.name))
     }
   },
   methods: {
     onSubmit () {
       this.isAdding = !this.isAdding
-      const addMemberCommand = { username: this.username, roleName: this.roleName }
-      this.$store.dispatch('addMember', { groupName: this.groupName, addMemberCommand })
+      this.$store.dispatch('addMember', { groupName: this.groupName, roleName: this.roleName, name: this.name, type: this.type })
         .then(() => {
           this.$router.push({ name: 'groupDetail', params: { name: this.groupName } })
         }, () => {
@@ -130,6 +155,7 @@ export default {
   },
   created () {
     this.$store.dispatch('tempFetchUsers')
+    this.$store.dispatch('tempFetchVOGroups')
     this.$store.dispatch('fetchGroupRoles', this.groupName)
   },
   components: {
@@ -137,3 +163,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  select {
+    max-width: 100%;
+  }
+</style>
