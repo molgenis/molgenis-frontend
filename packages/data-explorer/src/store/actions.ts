@@ -36,13 +36,11 @@ export default {
   fetchCardViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot load card data without table name', type: 'danger' })
-      commit('setLoading', false)
       return
     }
 
     if (state.tableMeta === null) {
       commit('addToast', { message: 'cannot load card data without meta data', type: 'danger' })
-      commit('setLoading', false)
       return
     }
 
@@ -75,13 +73,11 @@ export default {
   fetchTableViewData: async ({ commit, state, getters }: { commit: any, state: ApplicationState, getters: any }) => {
     if (state.tableName === null) {
       commit('addToast', { message: 'cannot fetch table view data without table name', type: 'danger' })
-      commit('setLoading', false)
       return
     }
 
     if (state.tableMeta === null) {
       commit('addToast', { message: 'cannot fetch table view data without meta data', type: 'danger' })
-      commit('setLoading', false)
       return
     }
 
