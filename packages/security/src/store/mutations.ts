@@ -6,6 +6,8 @@ import { Toast } from '@/types/Toast'
 import { GroupMember } from '@/types/GroupMember'
 import { GroupRole } from '@/types/GroupRole'
 import { GroupRollSubSelection } from '@/types/GroupRollSubSelection'
+import { VOGroup } from '@/types/VOGroup'
+import { VOGroupMember } from '@/types/VOGroupMember'
 
 const mutations = {
   setGroups (state: SecurityModel, groups: Array<Group>) {
@@ -14,8 +16,14 @@ const mutations = {
   setUsers (state: SecurityModel, users: Array<User>) {
     state.users = users
   },
+  setVOGroups (state: SecurityModel, voGroups: Array<VOGroup>) {
+    state.voGroups = voGroups
+  },
   setGroupMembers (state: SecurityModel, { groupName, groupMembers }: {groupName: string; groupMembers: GroupMember[]}) {
     Vue.set(state.groupMembers, groupName, groupMembers)
+  },
+  setVOGroupMembers (state: SecurityModel, { groupName, voGroupMembers }: {groupName: string; voGroupMembers: VOGroupMember[]}) {
+    Vue.set(state.voGroupMembers, groupName, voGroupMembers)
   },
   setGroupRoles (state: SecurityModel, { groupName, groupRoles }: {groupName: string; groupRoles: GroupRole[]}) {
     Vue.set(state.groupRoles, groupName, groupRoles)

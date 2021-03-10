@@ -6,16 +6,27 @@ import { CreateGroupCommand } from '@/types/CreateGroupCommand'
 import { UpdateMemberCommand } from '@/types/UpdateMemberCommand'
 import { AddMemberCommand } from '@/types/AddMemberCommand'
 import { SecurityModel } from '@/types/SecurityModel'
+import { VOGroupMember } from '@/types/VOGroupMember'
 
 const SECURITY_API_ROUTE = '/api/identities'
 const SECURITY_API_VERSION = ''
 const GROUP_ENDPOINT = SECURITY_API_ROUTE + SECURITY_API_VERSION + '/group'
 const TEMP_USER_ENDPOINT = SECURITY_API_ROUTE + SECURITY_API_VERSION + '/user'
+const TEMP_VO_GROUP_ENDPOINT = SECURITY_API_ROUTE + SECURITY_API_VERSION + '/vo-group'
 
 const toGroupMember = (response: { user: { id: string; username: string }; role: { roleName: string; roleLabel: string } }): GroupMember => {
   return {
     userId: response.user.id,
     username: response.user.username,
+    roleName: response.role.roleName,
+    roleLabel: response.role.roleLabel
+  }
+}
+
+const toVOGroupMember = (response: { VOGroup: { id: string; name: string }; role: { roleName: string; roleLabel: string } }): VOGroupMember => {
+  return {
+    groupId: response.VOGroup.id,
+    groupName: response.VOGroup.name,
     roleName: response.role.roleName,
     roleLabel: response.role.roleLabel
   }
@@ -65,11 +76,29 @@ const actions = {
     })
   },
 
+  'tempFetchVOGroups' ({ commit }: { commit: Function }) {
+    return api.get(TEMP_VO_GROUP_ENDPOINT).then((response: any) => {
+      commit('setUsers', response)
+    }, (response: { errors: any[] }) => {
+      commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+    })
+  },
+
   'fetchGroupMembers' ({ commit }: { commit: Function }, groupName: string) {
     const url = GROUP_ENDPOINT + '/' + encodeURIComponent(groupName) + '/member'
     return api.get(url).then((response: { user: { id: string; username: string }; role: { roleName: string; roleLabel: string } }[]) => {
       const groupMembers = response.map(toGroupMember)
       commit('setGroupMembers', { groupName, groupMembers })
+    }, (response: { errors: any[] }) => {
+      commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
+    })
+  },
+
+  'fetchVOGroupMembers' ({ commit }: { commit: Function }, groupName: string) {
+    const url = GROUP_ENDPOINT + '/' + encodeURIComponent(groupName) + '/vo-group'
+    return api.get(url).then((response: { VOGroup: { id: string; name: string }; role: { roleName: string; roleLabel: string } }[]) => {
+      const voGroupMembers = response.map(toVOGroupMember).sort((a, b) => a.groupName.localeCompare(b.groupName))
+      commit('setVOGroupMembers', { groupName, voGroupMembers })
     }, (response: { errors: any[] }) => {
       commit('setToast', { type: 'danger', message: buildErrorMessage(response) })
     })
