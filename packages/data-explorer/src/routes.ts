@@ -3,6 +3,7 @@ import EntityDetail from '@/views/EntityDetail.vue'
 import EditDetailTemplate from '@/views/EditDetailTemplate.vue'
 import MainView from './views/MainView.vue'
 import Navigator from '@/components/navigator/Navigator.vue'
+import ThemeManager from '@/components/ThemeManager.vue'
 
 export const defaultRouteQuery:any = { page: 1, size: 20, hideSidebar: 'false', view: 'CardView' }
 
@@ -45,6 +46,11 @@ export const routes = [
     path: '/navigator/:folderId',
     name: 'nav-view-folder',
     component: Navigator
+  },
+  {
+    path: '/themes',
+    component: ThemeManager,
+    name: 'themes'
   },
   {
     path: '*',
