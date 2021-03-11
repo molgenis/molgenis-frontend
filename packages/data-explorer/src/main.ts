@@ -62,9 +62,6 @@ const router = new Router({
 
 sync(store, router)
 
-// TODO: Get from context API.
-const isSuperUser = true
-
 // Navigation guard that makes sure that all explorer
 // query params are present.
 router.beforeEach((to, from, next) => {
@@ -84,6 +81,7 @@ Vue.use(i18n, {
   namespace: ['dataexplorer', 'navigator', 'data-row-edit', 'ui-form'],
   callback () {
     new Vue({ store, router, render: h => h(App) }).$mount('#app')
-    store.commit(`navigator/${SET_SHOW_HIDDEN_RESOURCES}`, true)
+    // @ts-ignore
+    store.commit(`navigator/${SET_SHOW_HIDDEN_RESOURCES}`, window.__INITIAL_STATE__.isSuperUser)
   }
 })
