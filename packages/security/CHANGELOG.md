@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.4.4...@molgenis-ui/security@0.4.5) (2021-03-11)
+
+
+### Bug Fixes
+
+* **security:** Always show groups header ([b27f879](https://github.com/molgenis/molgenis-frontend/commit/b27f879a3a89e8cf323780b417d984b79776fcf3)), closes [#493](https://github.com/molgenis/molgenis-frontend/issues/493)
+
+
+
+
+
 ## [0.4.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.4.3...@molgenis-ui/security@0.4.4) (2021-02-25)
 
 
