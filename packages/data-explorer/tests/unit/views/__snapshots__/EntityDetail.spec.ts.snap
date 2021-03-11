@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntityDetail.vue exists 1`] = `
+<div id="entity-detail-container" class="mg-mainview">
+  <div class="container-fluid">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li aria-current="page" class="breadcrumb-item">
+          <router-link-stub id="headItemTooltipID" to="[object Object]">
+            <b-tooltip-stub placement="bottom" target="headItemTooltipID" triggers="hover">
+              my-entity-desc
+            </b-tooltip-stub>
+            my-entity-label
+          </router-link-stub>
+        </li>
+        <li aria-current="page" class="breadcrumb-item"><span>
+              abc-123
+           </span></li>
+      </ol>
+    </nav>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <h5>id</h5>
+      <p>abc-123</p>
+    </li>
+    <li class="list-group-item">
+      <h5>key1</h5>
+      <p>val1</p>
+    </li>
+    <li class="list-group-item">
+      <h5>key2</h5>
+      ,
+    </li>
+    <li class="list-group-item">
+      <h5>key3</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <h5>key4</h5>
+          <p>val</p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+`;

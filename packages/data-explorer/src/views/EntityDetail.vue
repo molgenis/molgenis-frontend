@@ -53,14 +53,6 @@
       </li>
     </ul>
 
-    <!-- <div>
-      {{JSON.stringify(metaData, null, 2)}}
-    </div>
-
-    <div>
-      {{JSON.stringify(record, null, 2)}}
-    </div> -->
-
   </div>
 
 </template>
