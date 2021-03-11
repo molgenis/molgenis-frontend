@@ -29,11 +29,10 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import { mapState, mapMutations, mapGetters } from 'vuex'
 import { FilterContainer } from '@molgenis-ui/components-library'
 
-export default Vue.extend({
+export default {
   name: 'FiltersView',
   components: { FilterContainer },
   data: () => {
@@ -93,5 +92,5 @@ export default Vue.extend({
       })
     }
   }
-})
+}
 </script>

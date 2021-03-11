@@ -5,17 +5,16 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import PageComponent from '../node_modules/@molgenis/molgenis-ui-context/src/components/PageComponent.vue'
 import '../node_modules/@molgenis/molgenis-ui-context/public/sticky-footer.css'
 import { mapMutations, mapState } from 'vuex'
 
-export default Vue.extend({
+export default {
   name: 'app',
   components: { PageComponent },
   computed: { ...mapState('explorer', ['dataDisplayLayout']) },
   methods: { ...mapMutations('account', ['setContext']) }
-})
+}
 </script>
 
 <style>

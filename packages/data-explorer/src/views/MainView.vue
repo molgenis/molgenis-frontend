@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import FiltersView from './FiltersView'
 import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
 import { ActiveFilters, Pagination, Toaster } from '@molgenis-ui/components-library'
@@ -65,7 +64,7 @@ const deleteConfirmOptions = {
   centered: true
 }
 
-export default Vue.extend({
+export default {
   name: 'MainView',
   components: { FiltersView, DataView, BreadcrumbBar, Pagination, Toaster, ToolbarView, ActiveFilters },
   computed: {
@@ -160,7 +159,7 @@ export default Vue.extend({
     this.setLoading(false)
     next()
   }
-})
+}
 </script>
 
 <style scoped>
