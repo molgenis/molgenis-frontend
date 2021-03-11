@@ -903,7 +903,7 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fortawesome/fontawesome-common-types@^0.2.34", "@fortawesome/fontawesome-common-types@^0.2.5":
+"@fortawesome/fontawesome-common-types@^0.2.34":
   version "0.2.34"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.34.tgz#0a8c348bb23b7b760030f5b1d912e582be4ec915"
   integrity sha512-XcIn3iYbTEzGIxD0/dY5+4f019jIcEIWBiHc3KrmK/ROahwxmZ/s+tdj97p/5K0klz4zZUiMfUlYP0ajhSJjmA==
@@ -914,13 +914,6 @@
   integrity sha512-0KNN0nc5eIzaJxlv43QcDmTkDY1CqeN6J7OCGSs+fwGPdtv0yOQqRjieopBCmw+yd7uD3N2HeNL3Zm5isDleLg==
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.34"
-
-"@fortawesome/free-regular-svg-icons@5.4.0":
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-5.4.0.tgz#eaba4423cbc06d695a4e2da874b136782e0c1fc7"
-  integrity sha512-Cf9TUQPF6wlUAA28ZGKkmfi2DCDPSMdAEjcT9u0F09GSfMi8n7cwTcizkjzFKRhqawxmbJnUYEDN68zQziXlkg==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.5"
 
 "@fortawesome/free-solid-svg-icons@^5.9.0":
   version "5.15.2"
@@ -1178,10 +1171,10 @@
   dependencies:
     extend "3.0.2"
 
-"@molgenis-ui/components-library@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-2.3.0.tgz#bbcdbe1764cb4bf56695bed75ad0da5063c9fb09"
-  integrity sha512-zNrtZb+FNbX1e9Mo6LuWRtAWOcVevzW9hla4bnBq29STv6f4RyKxAIiA5z5m5Gvrf+lYZ+jPV4/AAhYLOri8GQ==
+"@molgenis-ui/components-library@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-2.4.0.tgz#c72a89ed0264446caaa06076ca6d746315676338"
+  integrity sha512-sZ85Vu6tphv+zxGvMIt1fFflA/1bviKlompeoNyz10Pl5/dW0DyeOk5WOOMPaCi9rCjYNswOKDRScr4aUF/big==
 
 "@molgenis/molgenis-api-client@^2.1.2":
   version "2.3.0"

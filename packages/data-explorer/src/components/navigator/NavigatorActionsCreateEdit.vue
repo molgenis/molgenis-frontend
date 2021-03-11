@@ -15,7 +15,7 @@
             size="lg"/>
         </template>
         <b-dd-item v-b-modal.packageCreateModal>
-          <font-awesome-icon :icon="['far', 'folder-open']"/> {{ $t('navigator:action-create-package') }}
+          <font-awesome-icon :icon="['fa', 'folder-open']"/> {{ $t('navigator:action-create-package') }}
         </b-dd-item>
         <b-dd-item
           v-if="metadataManagerUrl"

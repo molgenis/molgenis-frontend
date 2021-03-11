@@ -44,7 +44,7 @@
         <span v-else>
           <router-link :to="{name: 'nav-view-folder', params: {folderId: label.item.id}}">
             <font-awesome-icon
-              :icon="['far', 'folder-open']"
+              :icon="['fa', 'folder-open']"
               fixed-width/> {{ label.item.label }}
           </router-link>
         </span>

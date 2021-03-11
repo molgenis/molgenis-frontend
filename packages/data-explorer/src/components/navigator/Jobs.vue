@@ -14,7 +14,7 @@
             @dismissed="removeJob(job)">
             <div class="row">
               <div class="col-1">
-                <font-awesome-icon :icon="['far', getIcon(job)]"/>
+                <font-awesome-icon :icon="['fa', getIcon(job)]"/>
               </div>
               <div class="col-11">
                 <span v-if="job.progressMessage">{{ job.progressMessage }}</span>

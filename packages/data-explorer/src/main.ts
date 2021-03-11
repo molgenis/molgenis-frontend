@@ -26,12 +26,11 @@ import '@molgenis-ui/components-library/dist/components-library.css'
 import 'font-awesome/css/font-awesome.min.css'
 import { SET_SHOW_HIDDEN_RESOURCES } from './store/navigator/mutations'
 
-import { faCheckCircle, faFolderOpen, faHourglass, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import {
-  faCaretRight, faChevronRight, faChevronLeft, faChevronUp, faClone, faCog,
-  faCut, faDownload, faEdit, faExclamationTriangle, faFilter, faHome,
+  faCaretRight, faChevronRight, faChevronLeft, faChevronUp, faCheckCircle, faClone, faCog,
+  faCut, faDownload, faEdit, faHourglass, faExclamationTriangle, faFilter, faFolderOpen, faHome,
   faList, faMinus, faPaste, faPlay, faPlus, faPlusSquare, faShoppingBag, faShoppingCart,
-  faSlidersH, faSpinner, faSearch, faStore, faTh, faThList, faTimes,
+  faSlidersH, faSpinner, faSearch, faStore, faTh, faTimesCircle, faThList, faTimes,
   faTrash, faUpload, faShare, faSort, faSortAlphaUp, faSortAlphaDown } from '@fortawesome/free-solid-svg-icons'
 
 const packageJson = require('../package.json')

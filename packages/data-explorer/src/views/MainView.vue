@@ -141,7 +141,7 @@ export default Vue.extend({
     await this.fetchTableMeta({ tableName })
     this.setRouteQuery(this.$route.query)
     this.setDataDisplayLayout(this.$route.query.view)
-    this.fetchViewData()
+    await this.fetchViewData()
     this.setLoading(false)
   },
   destroyed () {
