@@ -10,7 +10,7 @@ const bannerText = `package-name: ${pkgName}
 package-version: ${pkgVersion}
 build-date: ${buildDate}`
 
-const PROXY_TARGET = 'https://master.dev.molgenis.org'
+const PROXY_TARGET = 'http://127.0.0.1:8080'
 
 let apiDevServerProxyConf = {
   target: PROXY_TARGET,
