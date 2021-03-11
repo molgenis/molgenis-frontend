@@ -1,9 +1,25 @@
 <template>
 
-  <div v-if="!loading" id="entity-detail-container" class="container">
-
-    <h1>{{metaData.label}}: {{record[metaData.idAttribute.name]}}</h1>
-    <p v-if="metaData.description">{{metaData.description}}</p>
+  <div v-if="!loading" id="entity-detail-container" class="mg-mainview">
+    <div class="container-fluid">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" aria-current="page">
+            <router-link id="headItemTooltipID" :to="{ name: 'de-view', params: { entity: entityType} }">
+            <b-tooltip v-if="metaData.description" placement="bottom" target="headItemTooltipID" triggers="hover">
+              {{ metaData.description }}
+            </b-tooltip>
+            {{ metaData.label }}
+            </router-link>
+          </li>
+          <li class="breadcrumb-item" aria-current="page">
+            <span>
+               {{record[metaData.idAttribute.name]}}
+            </span>
+          </li>
+        </ol>
+      </nav>
+    </div>
 
     <!-- <div id="entity-actions">
       <router-link v-if="isEditable && dataId" class="btn btn-link" role="button"
@@ -71,6 +87,9 @@ export default {
 </script>
 
 <style scoped>
+  .mg-mainview {
+    padding: 16px;
+  }
   .list-group .list-group-item {
     color: #495057;
   }
