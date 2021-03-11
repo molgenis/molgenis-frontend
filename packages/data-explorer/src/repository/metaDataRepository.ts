@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-spacing */
 import client from '@/lib/client'
 import { AxiosResponse } from 'axios'
 import * as mapper from './metaDataResponseMapper'

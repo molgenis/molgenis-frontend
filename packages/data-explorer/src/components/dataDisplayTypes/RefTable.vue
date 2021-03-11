@@ -7,7 +7,7 @@
                    :key="index"
                    :rowIndex="index"
                    :id="entity[metaData.idAttribute.name].toString()"
-                   :tableName="metaData.idAttribute.name"
+                   :tableName="metaData.id"
                    :rowData="entity"
                    :visibleColumns="visibleColumns"
                    :isSelected="false"

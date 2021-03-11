@@ -12,14 +12,13 @@
         :to="{ name: 'de-edit', params: { entity: tableName, dataRowId: id}, query: {}}">
         <font-awesome-icon icon="edit"></font-awesome-icon>
       </router-link>
-      <a
+      <router-link 
+        class="btn btn-sm text-secondary" role="button" 
+        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}}"
         v-b-tooltip.hover.bottom
-        :title="$t('dataexplorer_row_action_details_btn_tooltip')"
-        class="btn btn-sm text-secondary"
-        role="button"
-        :href="`/menu/main/dataexplorer/details/${tableName}/${id}`">
+      >
         <font-awesome-icon icon="search"></font-awesome-icon>
-      </a>
+      </router-link>
       <button
         v-if="isEditable"
         v-b-tooltip.hover.bottom

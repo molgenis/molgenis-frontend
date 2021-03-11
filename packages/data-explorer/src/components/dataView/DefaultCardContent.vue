@@ -41,9 +41,9 @@
             <font-awesome-icon icon="chevron-up" v-if="cardState==='open'"></font-awesome-icon>
             <font-awesome-icon icon="chevron-right" v-if="cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
           </button>
-          <a :href="detailLink" class="btn btn-outline-info btn-sm mg-info-btn">
+          <router-link class="btn btn-outline-info btn-sm mg-info-btn" role="button" :to="{ name: 'entity-detail', params: { entityType: dataTable, entity: dataId}}">
             <font-awesome-icon icon="search"></font-awesome-icon> {{ 'dataexplorer_default_card_info_btn_label' | i18n }}
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -119,9 +119,6 @@ export default {
       } else {
         return visibleDataContents
       }
-    },
-    detailLink () {
-      return `/menu/main/dataexplorer/details/${this.dataTable}/${this.dataId}`
     }
   },
   watch: {
