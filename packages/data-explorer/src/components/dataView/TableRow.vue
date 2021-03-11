@@ -12,8 +12,8 @@
         :to="{ name: 'de-edit', params: { entity: tableName, dataRowId: id}, query: {}}">
         <font-awesome-icon icon="edit"></font-awesome-icon>
       </router-link>
-      <router-link 
-        class="btn btn-sm text-secondary" role="button" 
+      <router-link
+        class="btn btn-sm text-secondary" role="button"
         :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}}"
         v-b-tooltip.hover.bottom
       >
