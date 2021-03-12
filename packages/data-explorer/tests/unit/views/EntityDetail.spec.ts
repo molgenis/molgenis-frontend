@@ -23,6 +23,7 @@ const mocks = {
 const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
 const directives = { 'b-tooltip': () => {} }
 let actions: any
+let getters: any
 
 describe('EntityDetail.vue', () => {
 
@@ -53,7 +54,13 @@ describe('EntityDetail.vue', () => {
       deleteRow: jest.fn()
     }
 
-    const store = new Vuex.Store({ actions })
+    getters = {
+      hasAddRights: () => true,
+      hasEditRights: () => true,
+      hasDeleteRights: () => true
+    }
+
+    const store = new Vuex.Store({ actions, getters })
     wrapper = await shallowMount(EntityDetail, { store, localVue, stubs, mocks, directives })
     await wrapper.vm.$nextTick // wait for fetch mocks to resolve
   })

@@ -21,6 +21,9 @@ export default {
   hasAddRights: (state: ApplicationState): boolean => {
     return state.tablePermissions.includes('ADD_DATA')
   },
+  hasDeleteRights: (state: ApplicationState): boolean => {
+    return state.tablePermissions.includes('DELETE_DATA')
+  },
   hasEditSettingsRights: (state: ApplicationState, getters: any): boolean => {
     return getters.isUserAuthenticated && getters.userRoles.includes('ROLE_SU')
   },

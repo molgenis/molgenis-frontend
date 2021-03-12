@@ -25,6 +25,7 @@
     <div class="btn-group float-right pr-3 mr-3" role="group" aria-label="row actions group">
 
       <router-link
+        v-if="hasAddRights"
         class="btn btn-outline-secondary"
         v-b-tooltip.hover.bottom
         :title="$t('dataexplorer_add_entity_btn_tooltip')"
@@ -34,6 +35,7 @@
       </router-link>
 
       <router-link
+        v-if="hasEditRights"
         class="btn btn-outline-secondary"
         v-b-tooltip.hover.bottom
         :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
@@ -43,6 +45,7 @@
       </router-link>
 
       <button
+      v-if="hasDeleteRights"
       class="btn btn-outline-secondary delete-btn"
       role="button"
       v-b-tooltip.hover.bottom
@@ -80,7 +83,7 @@
 <script>
 import { fetchMetaDataById } from '@/repository/metaDataRepository'
 import { getRowDataWithReferenceLabels } from '@/repository/dataRepository'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'EntityDetail',
   props: ['entityType', 'entity'],
@@ -91,8 +94,15 @@ export default {
       record: null
     }
   },
+  computed: {
+    ...mapGetters([
+      'hasAddRights',
+      'hasEditRights',
+      'hasDeleteRights'
+    ])
+  },
   methods: {
-    ...mapActions(['deleteRow']),
+    ...mapActions(['fetchTablePermissions', 'deleteRow']),
     async deleteEntity () {
       const msg = 'Are you sure you want to delete this item ?'
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, {
@@ -109,6 +119,7 @@ export default {
     }
   },
   async mounted () {
+    this.fetchTablePermissions({ tableName: this.entityType })
     this.metaData = await fetchMetaDataById(this.entityType)
     this.record = await getRowDataWithReferenceLabels(this.entityType, this.entity, this.metaData)
     this.loading = false
