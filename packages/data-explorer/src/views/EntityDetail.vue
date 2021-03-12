@@ -104,11 +104,11 @@ export default {
   methods: {
     ...mapActions(['fetchTablePermissions', 'deleteRow']),
     async deleteEntity () {
-      const msg = 'Are you sure you want to delete this item ?'
+      const msg = this.$t('dataexplorer_delete_confirm_msg')
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, {
         okVariant: 'danger',
-        okTitle: 'Delete',
-        cancelTitle: 'Cancel',
+        okTitle: this.$t('dataexplorer_delete_confirm_approve'),
+        cancelTitle: this.$t('dataexplorer_delete_confirm_cancel'),
         hideHeaderClose: false,
         centered: true
       })

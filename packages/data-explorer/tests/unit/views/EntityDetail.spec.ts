@@ -51,7 +51,8 @@ describe('EntityDetail.vue', () => {
     })
 
     actions = {
-      deleteRow: jest.fn()
+      deleteRow: jest.fn(),
+      fetchTablePermissions: jest.fn()
     }
 
     getters = {
