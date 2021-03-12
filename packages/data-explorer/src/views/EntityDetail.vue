@@ -2,6 +2,7 @@
 
   <div v-if="!loading" id="entity-detail-container" class="mg-mainview">
     <div class="container-fluid">
+
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item" aria-current="page">
@@ -21,17 +22,36 @@
       </nav>
     </div>
 
-    <!-- <div id="entity-actions">
-      <router-link v-if="isEditable && dataId" class="btn btn-link" role="button"
-        :to="{ name: 'de-edit', params: { entity: dataTable, dataRowId: dataId}, query: {}}">
+    <div class="btn-group float-right pr-3 mr-3" role="group" aria-label="row actions group">
+
+      <router-link
+        class="btn btn-outline-secondary"
+        v-b-tooltip.hover.bottom
+        :title="$t('dataexplorer_add_entity_btn_tooltip')"
+        :to="{ name: 'de-create', params: { entity: entityType }}"
+      >
+        <font-awesome-icon icon="plus-square"></font-awesome-icon>
+      </router-link>
+
+      <router-link
+        class="btn btn-outline-secondary"
+        v-b-tooltip.hover.bottom
+        :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
+        :to="{ name: 'de-edit', params: { entity: entityType, dataRowId: entity}}"
+      >
         <font-awesome-icon icon="edit"></font-awesome-icon>
       </router-link>
-      <button v-if="isEditable" class="btn btn-link" role="button" @click="$eventBus.$emit('delete-item', dataId)">
-          <font-awesome-icon icon="trash"></font-awesome-icon>
+
+      <button
+      class="btn btn-outline-secondary delete-btn"
+      role="button"
+      v-b-tooltip.hover.bottom
+      :title="$t('dataexplorer_row_action_delete_btn_tooltip')"
+      @click="deleteEntity">
+        <font-awesome-icon icon="trash"></font-awesome-icon>
       </button>
-        <slot name="shopping-button"></slot>
+
     </div>
- -->
 
     <ul class="list-group list-group-flush">
       <li class="list-group-item" v-for="(value, propertyName, index) in record" :key="index">
@@ -60,6 +80,7 @@
 <script>
 import { fetchMetaDataById } from '@/repository/metaDataRepository'
 import { getRowDataWithReferenceLabels } from '@/repository/dataRepository'
+import { mapActions } from 'vuex'
 export default {
   name: 'EntityDetail',
   props: ['entityType', 'entity'],
@@ -68,6 +89,23 @@ export default {
       loading: true,
       metaData: null,
       record: null
+    }
+  },
+  methods: {
+    ...mapActions(['deleteRow']),
+    async deleteEntity () {
+      const msg = 'Are you sure you want to delete this item ?'
+      const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, {
+        okVariant: 'danger',
+        okTitle: 'Delete',
+        cancelTitle: 'Cancel',
+        hideHeaderClose: false,
+        centered: true
+      })
+      if (isDeleteConfirmed) {
+        await this.deleteRow({ rowId: this.entity })
+        this.router.replace({ name: 'de-view', params: { entity: this.entityType } })
+      }
     }
   },
   async mounted () {

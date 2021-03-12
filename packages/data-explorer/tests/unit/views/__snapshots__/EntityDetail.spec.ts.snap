@@ -14,10 +14,20 @@ exports[`EntityDetail.vue exists 1`] = `
           </router-link-stub>
         </li>
         <li aria-current="page" class="breadcrumb-item"><span>
-              abc-123
-           </span></li>
+             abc-123
+          </span></li>
       </ol>
     </nav>
+  </div>
+  <div role="group" aria-label="row actions group" class="btn-group float-right pr-3 mr-3">
+    <router-link-stub title="dataexplorer_add_entity_btn_tooltip" to="[object Object]" class="btn btn-outline-secondary">
+      <font-awesome-icon-stub icon="plus-square"></font-awesome-icon-stub>
+    </router-link-stub>
+    <router-link-stub title="dataexplorer_row_action_edit_btn_tooltip" to="[object Object]" class="btn btn-outline-secondary">
+      <font-awesome-icon-stub icon="edit"></font-awesome-icon-stub>
+    </router-link-stub> <button role="button" title="dataexplorer_row_action_delete_btn_tooltip" class="btn btn-outline-secondary delete-btn">
+      <font-awesome-icon-stub icon="trash"></font-awesome-icon-stub>
+    </button>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">

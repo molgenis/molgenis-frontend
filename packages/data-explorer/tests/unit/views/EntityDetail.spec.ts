@@ -1,7 +1,8 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import EntityDetail from '@/views/EntityDetail.vue'
 import { fetchMetaDataById } from '@/repository/metaDataRepository'
 import { getRowDataWithReferenceLabels } from '@/repository/dataRepository'
+import Vuex from 'vuex'
 
 jest.mock('@/repository/metaDataRepository', () => {
   return {
@@ -15,10 +16,20 @@ jest.mock('@/repository/dataRepository', () => {
   }
 })
 
+const mocks = { 
+  $bvModal: { msgBoxConfirm: jest.fn() },
+  router: { replace: jest.fn() }
+}
+const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
+const directives = { 'b-tooltip': () => {} }
+let actions: any
+
 describe('EntityDetail.vue', () => {
 
   let wrapper
   beforeEach(async () => {
+    const localVue = createLocalVue()
+    localVue.use(Vuex)
  
     // @ts-ignore
     fetchMetaDataById.mockResolvedValue({
@@ -37,12 +48,34 @@ describe('EntityDetail.vue', () => {
         key4: 'val'
       }
     })
-    wrapper = await shallowMount(EntityDetail, { stubs: ['font-awesome-icon', 'router-link', 'b-tooltip'] })
+
+    actions = {
+      deleteRow: jest.fn()
+    }
+
+    const store = new Vuex.Store({ actions })
+    wrapper = await shallowMount(EntityDetail, { store, localVue, stubs, mocks, directives })
+    await wrapper.vm.$nextTick // wait for fetch mocks to resolve
   })
   
   it('exists', async () => {
       expect(wrapper.exists()).toBeTruthy()
-      await wrapper.vm.$nextTick
       expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  describe('delete', () => {
+    it('should  call the delete actions when the request is confirmed', async () => {
+      actions.deleteRow.mockResolvedValueOnce(true)
+      mocks.$bvModal.msgBoxConfirm.mockResolvedValueOnce(true)
+      await wrapper.find('.delete-btn').trigger('click')
+      await wrapper.vm.$nextTick()
+      expect(actions.deleteRow).toHaveBeenCalled()
+    })
+    it('should not call the delete actions when the request is canceled', async () => {
+      mocks.$bvModal.msgBoxConfirm.mockResolvedValueOnce(false)
+      await wrapper.find('.delete-btn').trigger('click')
+      await wrapper.vm.$nextTick()
+      expect(actions.deleteRow).not.toHaveBeenCalled()
+    })
   })
 })
