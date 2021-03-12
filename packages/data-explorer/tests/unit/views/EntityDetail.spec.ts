@@ -65,11 +65,6 @@ describe('EntityDetail.vue', () => {
     wrapper = await shallowMount(EntityDetail, { store, localVue, stubs, mocks, directives })
     await wrapper.vm.$nextTick // wait for fetch mocks to resolve
   })
-  
-  it('exists', async () => {
-      expect(wrapper.exists()).toBeTruthy()
-      expect(wrapper.html()).toMatchSnapshot()
-  })
 
   describe('delete', () => {
     it('should  call the delete actions when the request is confirmed', async () => {

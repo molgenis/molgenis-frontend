@@ -56,25 +56,7 @@
 
     </div>
 
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item" v-for="(value, propertyName, index) in record" :key="index">
-        <h5>{{propertyName}}</h5>
-        <template v-if="typeof value !== 'object'">
-           <p>{{value}}</p>
-        </template>
-        <template v-else-if="Array.isArray(value)">
-          {{value.map(v => v.label).join(', ')}}
-        </template>
-        <template v-else>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" v-for="(value, propertyName, refIndex) in value" :key="refIndex">
-              <h5>{{propertyName}}</h5>
-              <p>{{value}}</p>
-            </li>
-          </ul>
-        </template>
-      </li>
-    </ul>
+    <default-entity-detail :record="record" :metaData="metaData"></default-entity-detail>
 
   </div>
 
@@ -84,9 +66,12 @@
 import { fetchMetaDataById } from '@/repository/metaDataRepository'
 import { getRowDataWithReferenceLabels } from '@/repository/dataRepository'
 import { mapActions, mapGetters } from 'vuex'
+import DefaultEntityDetail from '@/components/dataView/DefaultEntityDetail.vue'
+
 export default {
   name: 'EntityDetail',
   props: ['entityType', 'entity'],
+  components: { DefaultEntityDetail },
   data () {
     return {
       loading: true,
