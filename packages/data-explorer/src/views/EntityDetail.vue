@@ -131,7 +131,4 @@ export default {
   .mg-mainview {
     padding: 16px;
   }
-  .list-group .list-group-item {
-    color: #495057;
-  }
 </style>
