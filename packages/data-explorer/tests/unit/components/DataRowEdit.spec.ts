@@ -24,7 +24,6 @@ jest.mock('@molgenis/molgenis-ui-form', () => {
 })
 
 const localVue = createLocalVue()
-localVue.filter('i18n', jest.fn())
 
 describe('DataRowEdit.vue', () => {
   let wrapper: any

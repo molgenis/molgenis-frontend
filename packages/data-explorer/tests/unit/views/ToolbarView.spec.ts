@@ -24,7 +24,6 @@ function getWrapper () {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(bootstrapVue)
-  localVue.filter('i18n', $t)
 
   state = mockState()
   state.tableName = 'root_hospital_patients'

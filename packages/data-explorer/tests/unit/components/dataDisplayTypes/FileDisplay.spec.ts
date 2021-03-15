@@ -3,7 +3,7 @@ import FileDisplay from '@/components/dataDisplayTypes/FileDisplay.vue'
 
 describe('FileDisplay.vue', () => {
   const localVue = createLocalVue()
-  localVue.filter('i18n', (msg: any) => msg)
+
   const stubs = ['b-modal', 'font-awesome-icon']
   const value = {
     id: 'id',

@@ -15,7 +15,7 @@ describe('FiltersView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(Router)
-  localVue.filter('i18n', mocks.$t)
+
   let store: any
   let state: any
   let mutations: any

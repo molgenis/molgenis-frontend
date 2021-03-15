@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 describe('ClipboardView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
-  localVue.filter('i18n', jest.fn())
+
   let store: any
   let state: any
   let mutations: any

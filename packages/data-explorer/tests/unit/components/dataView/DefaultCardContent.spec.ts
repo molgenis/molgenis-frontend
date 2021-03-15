@@ -6,7 +6,7 @@ const mocks = { $t: (msg: any) => msg }
 describe('DefaultCardContent.vue', () => {
   const localVue = createLocalVue()
   const stubs = ['b-overlay', 'font-awesome-icon']
-  localVue.filter('i18n', mocks.$t)
+
   const propsData = {
     dataLabel: 'dataLabel',
     dataId: 'dataId',
