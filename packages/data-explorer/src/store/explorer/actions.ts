@@ -23,6 +23,7 @@ export default {
     commit('setMetaData', metaData)
     commit('setFilterDefinition', definition)
     if (getters.isUserAuthenticated) {
+      // Dispatch action in the header module requires executing from the root scope:
       await dispatch('header/fetchBreadcrumbs', null, { root: true })
     }
   },
