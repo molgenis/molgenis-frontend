@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.6.3...@molgenis-ui/data-explorer@3.7.0) (2021-03-15)
+
+
+### Features
+
+* **data-explorer:** merge navigator into data-explorer 2 ([9c49ab7](https://github.com/molgenis/molgenis-frontend/commit/9c49ab783d23ba94998f7690e879c30a40016e01))
+
+
+
+
+
 ## [3.6.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.6.2...@molgenis-ui/data-explorer@3.6.3) (2021-03-10)
 
 
