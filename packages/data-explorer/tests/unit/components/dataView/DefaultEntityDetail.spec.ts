@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import DefaultEntityDetail from '@/components/dataview/DefaultEntityDetail.vue'
+import DefaultEntityDetail from '@/components/dataView/DefaultEntityDetail.vue'
 
 const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
 const directives = { 'b-tooltip': () => {} }
