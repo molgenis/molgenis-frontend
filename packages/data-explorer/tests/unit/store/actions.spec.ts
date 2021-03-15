@@ -317,31 +317,9 @@ describe('actions', () => {
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
       await actions.fetchTableMeta({ commit, getters, dispatch, state }, { tableName: 'tableWithOutSettings' })
       expect(commit.mock.calls).toEqual([
-        [ 'setTableSettings', {} ],
         [ 'setMetaData', null ],
         ['setFilterDefinition', []],
         ['setTableName', 'tableWithOutSettings'],
-        [ 'setMetaData', 'meta' ],
-        [ 'setFilterDefinition', 'def' ]
-      ])
-    })
-
-    it('should commit table settings from server only if present', async () => {
-      const commit = jest.fn()
-      // @ts-ignore ts does not know its a mock
-      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
-      // @ts-ignore
-      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, getters, dispatch, state }, { tableName: 'tableWithSettings' })
-      expect(commit.mock.calls).toEqual([
-        [ 'setTableSettings', {} ],
-        [ 'setMetaData', null ],
-        ['setFilterDefinition', []],
-        ['setTableName', 'tableWithSettings'],
-        [
-          'setTableSettings',
-          { id: 'ent-set', shop: true, collapse_limit: 5 }
-        ],
         [ 'setMetaData', 'meta' ],
         [ 'setFilterDefinition', 'def' ]
       ])
@@ -558,8 +536,22 @@ describe('actions', () => {
 
   describe('fetchTablePermissions', () => {
     it('fetch the permissions for the given table', async () => {
-      await actions.fetchTablePermissions({ commit }, {tableName: 'my-table'})
+      await actions.fetchTablePermissions({ commit }, { tableName: 'my-table' })
       expect(commit).toHaveBeenCalledWith('setTablePermissions', ['PERM_A'])
+    })
+  })
+
+  describe('fetchTableSetttings', () => {
+    it('should clear the current settings, fetch the settings for passed tableName and commit them to the store', async () => {
+      await actions.fetchTableSettings({ commit, state }, { tableName: 'tableWithSettings' })
+      expect(commit).nthCalledWith(1, 'setTableSettings', {})
+      expect(commit).nthCalledWith(2, 'setTableSettings', { id: 'ent-set', shop: true, collapse_limit: 5 })
+    })
+
+    it('should not commit settings to the if not set for given table', async () => {
+      await actions.fetchTableSettings({ commit, state }, { tableName: 'tableWithOutSettings' })
+      expect(commit).toHaveBeenCalledWith('setTableSettings', {})
+      expect(commit).not.toHaveBeenCalledWith('setTableSettings', { id: 'ent-set', shop: true, collapse_limit: 5 })
     })
   })
 })

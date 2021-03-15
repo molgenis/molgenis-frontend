@@ -12,11 +12,11 @@ jest.mock('@/repository/metaDataRepository', () => {
 
 jest.mock('@/repository/dataRepository', () => {
   return {
-    getRowDataWithReferenceLabels: jest.fn(),
+    getRowDataWithReferenceLabels: jest.fn()
   }
 })
 
-const mocks = { 
+const mocks = {
   $bvModal: { msgBoxConfirm: jest.fn() },
   router: { replace: jest.fn() }
 }
@@ -24,14 +24,14 @@ const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
 const directives = { 'b-tooltip': () => {} }
 let actions: any
 let getters: any
+let state: any
 
 describe('EntityDetail.vue', () => {
-
   let wrapper
   beforeEach(async () => {
     const localVue = createLocalVue()
     localVue.use(Vuex)
- 
+
     // @ts-ignore
     fetchMetaDataById.mockResolvedValue({
       label: 'my-entity-label',
@@ -52,7 +52,8 @@ describe('EntityDetail.vue', () => {
 
     actions = {
       deleteRow: jest.fn(),
-      fetchTablePermissions: jest.fn()
+      fetchTablePermissions: jest.fn(),
+      fetchTableSettings: jest.fn()
     }
 
     getters = {
@@ -61,9 +62,18 @@ describe('EntityDetail.vue', () => {
       hasDeleteRights: () => true
     }
 
-    const store = new Vuex.Store({ actions, getters })
-    wrapper = await shallowMount(EntityDetail, { store, localVue, stubs, mocks, directives })
-    await wrapper.vm.$nextTick // wait for fetch mocks to resolve
+    state = {
+      tableSettings: {
+        customDetailCode: '<h1>I m not a template</h1>'
+      }
+    }
+
+    const store = new Vuex.Store({ state, actions, getters })
+    wrapper = shallowMount(EntityDetail, { store, localVue, stubs, mocks, directives })
+    // wait for meta, data and settings fetch mocks to resolve as mounted can not be awaited
+    await wrapper.vm.$nextTick // meta
+    await wrapper.vm.$nextTick // settings
+    await wrapper.vm.$nextTick // data
   })
 
   describe('delete', () => {

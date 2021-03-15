@@ -56,7 +56,12 @@
 
     </div>
 
-    <default-entity-detail :record="record" :metaData="metaData"></default-entity-detail>
+    <template v-if="customDetailCode">
+      <custom-entity-detail :record="record" :metaData="metaData" :template="customDetailCode" ></custom-entity-detail>
+    </template>
+    <template v-else >
+      <default-entity-detail :record="record" :metaData="metaData"></default-entity-detail>
+    </template>
 
   </div>
 
@@ -65,13 +70,14 @@
 <script>
 import { fetchMetaDataById } from '@/repository/metaDataRepository'
 import { getRowDataWithReferenceLabels } from '@/repository/dataRepository'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import DefaultEntityDetail from '@/components/dataView/DefaultEntityDetail.vue'
+import CustomEntityDetail from '@/components/dataView/CustomEntityDetail.vue'
 
 export default {
   name: 'EntityDetail',
   props: ['entityType', 'entity'],
-  components: { DefaultEntityDetail },
+  components: { DefaultEntityDetail, CustomEntityDetail },
   data () {
     return {
       loading: true,
@@ -80,6 +86,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      customDetailCode: state => state.tableSettings.customDetailCode
+    }),
     ...mapGetters([
       'hasAddRights',
       'hasEditRights',
@@ -87,7 +96,7 @@ export default {
     ])
   },
   methods: {
-    ...mapActions(['fetchTablePermissions', 'deleteRow']),
+    ...mapActions(['fetchTablePermissions', 'fetchTableSettings', 'deleteRow']),
     async deleteEntity () {
       const msg = this.$t('dataexplorer_delete_confirm_msg')
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, {
@@ -106,7 +115,11 @@ export default {
   async mounted () {
     this.fetchTablePermissions({ tableName: this.entityType })
     this.metaData = await fetchMetaDataById(this.entityType)
-    this.record = await getRowDataWithReferenceLabels(this.entityType, this.entity, this.metaData)
+    const [, data] = await Promise.all([
+      this.fetchTableSettings({ tableName: this.entityType }),
+      getRowDataWithReferenceLabels(this.entityType, this.entity, this.metaData)
+    ])
+    this.record = data
     this.loading = false
   }
 }

@@ -8,15 +8,11 @@ import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 export default {
   fetchTableMeta: async ({ commit, getters, dispatch, state }, payload: { tableName: string }) => {
-    commit('setTableSettings', {})
     commit('setMetaData', null)
     commit('setFilterDefinition', [])
     commit('setTableName', payload.tableName)
 
-    const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
-    if (response.data.items.length === 1) {
-      commit('setTableSettings', response.data.items[0].data)
-    }
+    await dispatch('fetchTableSettings', payload)
 
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
     const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
@@ -165,5 +161,13 @@ export default {
     const tablePermissions = res.data.meta.permissions
     commit('setTablePermissions', tablePermissions)
     return tablePermissions
+  },
+
+  fetchTableSettings: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
+    commit('setTableSettings', {})
+    const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+    if (response.data.items.length === 1) {
+      commit('setTableSettings', response.data.items[0].data)
+    }
   }
 }
