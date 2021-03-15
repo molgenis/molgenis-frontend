@@ -20,36 +20,40 @@ describe('ColumnSelection Component', () => {
     mockPersistToState = jest.fn()
 
     store = new Vuex.Store({
-      state: {
-        tableMeta: {
-          attributes: [
-            {
-              id: 'aaaac52ktuzcnbsyuwkbjdiadu',
-              name: 'id',
-              type: 'int'
+      modules: {
+        explorer: {
+          state: {
+            tableMeta: {
+              attributes: [
+                {
+                  id: 'aaaac52ktuzcnbsyuwkbjdiadu',
+                  name: 'id',
+                  type: 'int'
+                },
+                {
+                  id: 'aaaac52ktuzcnbsyuwkbjdiady',
+                  name: 'bool',
+                  type: 'bool'
+                },
+                {
+                  id: 'aaaac52ktuzcnbsyuwkbjdiad4',
+                  name: 'html',
+                  type: 'string'
+                },
+                {
+                  id: 'aaaac2322ktuzcnbsyuwkbjdiad4',
+                  name: 'string',
+                  type: 'string'
+                }
+              ]
             },
-            {
-              id: 'aaaac52ktuzcnbsyuwkbjdiady',
-              name: 'bool',
-              type: 'bool'
-            },
-            {
-              id: 'aaaac52ktuzcnbsyuwkbjdiad4',
-              name: 'html',
-              type: 'string'
-            },
-            {
-              id: 'aaaac2322ktuzcnbsyuwkbjdiad4',
-              name: 'string',
-              type: 'string'
-            }
-
-          ]
-        },
-        hiddenColumns: []
-      },
-      mutations: {
-        persistToRoute: mockPersistToState
+            hiddenColumns: []
+          },
+          mutations: {
+            persistToRoute: mockPersistToState
+          },
+          namespaced: true
+        }
       }
     })
     options = {

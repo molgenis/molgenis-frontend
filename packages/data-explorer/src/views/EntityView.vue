@@ -57,15 +57,10 @@ import ExplorerCard from '../components/dataView/ExplorerCard'
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-library.add(faShoppingBag)
 
 export default {
   name: 'EntityView',
-  components: { ExplorerCard, TableRow, TableHeader, FontAwesomeIcon },
+  components: { ExplorerCard, TableRow, TableHeader },
   props: {
     isShop: {
       type: Boolean,
@@ -74,7 +69,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['dataDisplayLayout', 'tableMeta', 'selectedItemIds', 'defaultEntityData', 'tableData', 'CartSelectionToast']),
+    ...mapState('explorer', ['dataDisplayLayout', 'tableMeta', 'selectedItemIds', 'defaultEntityData', 'tableData', 'CartSelectionToast']),
     idAttribute () {
       return this.tableMeta.idAttribute.name
     },
@@ -93,7 +88,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['loadDefaultEntityData']),
+    ...mapActions('explorer', ['loadDefaultEntityData']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
     },

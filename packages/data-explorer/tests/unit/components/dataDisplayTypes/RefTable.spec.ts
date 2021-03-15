@@ -5,9 +5,9 @@ describe('RefTable.vue', () => {
   const stubs = ['b-spinner']
   const localVue = createLocalVue()
   const mocks = { $t: (msg: any) => msg }
-  localVue.filter('i18n', mocks.$t)
+
   let isDataLoaded = false
-  let entitiesToShow = []
+  const entitiesToShow = []
   let metaData = {}
 
   it('exists', () => {

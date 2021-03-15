@@ -5,7 +5,8 @@ const mocks = { $t: (msg: any) => msg }
 
 describe('DefaultCardContent.vue', () => {
   const localVue = createLocalVue()
-  localVue.filter('i18n', mocks.$t)
+  const stubs = ['b-overlay', 'font-awesome-icon']
+
   const propsData = {
     dataLabel: 'dataLabel',
     dataId: 'dataId',
@@ -17,7 +18,7 @@ describe('DefaultCardContent.vue', () => {
     numberOfAttributes: 10
   }
 
-  const wrapper = shallowMount(DefaultCardContent, { propsData, localVue, mocks, stubs: ['b-overlay'] })
+  const wrapper = shallowMount(DefaultCardContent, { propsData, localVue, mocks, stubs })
   it('exists', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
@@ -36,7 +37,7 @@ describe('DefaultCardContent.vue', () => {
       collapseLimit: 5,
       numberOfAttributes: 3
     }
-    const wrapperWithLessAttrs = shallowMount(DefaultCardContent, { propsData, localVue, mocks, stubs: ['b-overlay'] })
+    const wrapperWithLessAttrs = shallowMount(DefaultCardContent, { propsData, localVue, mocks, stubs })
     const button = wrapperWithLessAttrs.find('button.mg-card-expand')
     expect(button.exists()).toBe(false)
   })
@@ -53,7 +54,7 @@ describe('DefaultCardContent.vue', () => {
   })
 
   describe('when the card is closed', () => {
-    const wrapper = shallowMount(DefaultCardContent, { propsData, localVue, mocks, stubs: ['b-overlay'] })
+    const wrapper = shallowMount(DefaultCardContent, { propsData, localVue, mocks, stubs })
     wrapper.vm.$data.cardState = 'open'
     it('do something', () => {
       expect(wrapper.exists()).toBeTruthy()

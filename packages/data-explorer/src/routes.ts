@@ -1,5 +1,6 @@
-import MainView from './views/MainView.vue'
 import DataRowEdit from '@/components/DataRowEdit.vue'
+import MainView from './views/MainView.vue'
+import Navigator from '@/components/navigator/Navigator.vue'
 
 export const defaultRouteQuery:any = { page: 1, size: 20, hideSidebar: 'false', view: 'CardView' }
 
@@ -20,6 +21,16 @@ export const routes = [
     props: true,
     name: 'de-edit',
     component: DataRowEdit
+  },
+  {
+    path: '/navigator',
+    name: 'nav-view',
+    component: Navigator
+  },
+  {
+    path: '/navigator/:folderId',
+    name: 'nav-view-folder',
+    component: Navigator
   },
   {
     path: '*',

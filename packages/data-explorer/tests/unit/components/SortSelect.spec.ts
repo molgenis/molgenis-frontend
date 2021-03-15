@@ -3,10 +3,14 @@ import SortSelect from '@/components/SortSelect.vue'
 
 describe('SortSelect', () => {
   let wrapper: any
+
   const directives = {
     'b-tooltip': () => { }
   }
-  let propsData = {
+
+  const stubs = ['font-awesome-icon']
+
+  const propsData = {
     sort: {
       sortColumnName: null,
       isSortOrderReversed: false
@@ -19,7 +23,7 @@ describe('SortSelect', () => {
   }
 
   beforeEach(() => {
-    wrapper = shallowMount(SortSelect, { propsData, directives })
+    wrapper = shallowMount(SortSelect, { propsData, directives, stubs })
   })
 
   it('should render the sort select and button ', () => {
@@ -41,7 +45,7 @@ describe('SortSelect', () => {
   })
 
   it('should emit a sort event with a flipped order when the button is clicked', async () => {
-    wrapper = shallowMount(SortSelect, { propsData: { ...propsData, sortColumnName: 'some-col' }, directives })
+    wrapper = shallowMount(SortSelect, { propsData: { ...propsData, sortColumnName: 'some-col' }, directives, stubs })
     await wrapper.find('button.btn').trigger('click')
     expect(wrapper.emitted().sort[0][0]).toEqual({
       sortColumnName: 'option1',

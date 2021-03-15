@@ -13,7 +13,7 @@
         <template v-slot:removeButton><font-awesome-icon icon="times"></font-awesome-icon></template>
         <template v-slot:buttonText>
           <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
-          {{ 'dataexplorer_show_cart_btn_label' | i18n}}
+          {{ $t('dataexplorer_show_cart_btn_label') }}
         </template>
 
       </cart-selection-toast>
@@ -36,21 +36,15 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import SelectLayoutView from './SelectLayoutView'
 import ClipboardView from './ClipboardView'
 import RefTable from '@/components/dataDisplayTypes/RefTable'
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
 import { CartSelectionToast } from '@molgenis-ui/components-library'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTimes, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faTimes, faShoppingCart)
-
-export default Vue.extend({
+export default {
   name: 'DataView',
-  components: { SelectLayoutView, ClipboardView, CartSelectionToast, FontAwesomeIcon, RefTable },
+  components: { SelectLayoutView, ClipboardView, CartSelectionToast, RefTable },
   data () {
     return {
       isReferenceModalDataLoaded: false,
@@ -59,7 +53,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState([
+    ...mapState('explorer', [
       'showSelected',
       'tableName',
       'tableMeta',
@@ -70,7 +64,7 @@ export default Vue.extend({
       'tableData',
       'tableMeta'
     ]),
-    ...mapGetters(['tableLabelAttributeName', 'clipBoardItems']),
+    ...mapGetters('explorer', ['tableLabelAttributeName', 'clipBoardItems']),
     handleSelectionItems: {
       get () {
         return this.clipBoardItems
@@ -92,7 +86,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapMutations([
+    ...mapMutations('explorer', [
       'setFilterSelection',
       'setShowSelected',
       'setHideFilters',
@@ -123,7 +117,7 @@ export default Vue.extend({
   destroyed () {
     this.$eventBus.$off('show-reference-table')
   }
-})
+}
 </script>
 
 <style>

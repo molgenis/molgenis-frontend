@@ -19,7 +19,7 @@
     </div>
 
     <div class="btn-group" role="group" aria-label="Column actions group">
-      <search-component v-model="searchText" />
+      <search-component v-model="_searchText" />
     </div>
 
     <div class="btn-group" role="group" aria-label="sort selector">
@@ -31,7 +31,7 @@
     </div>
     <div class="btn-group" arial-label="table settings">
       <b-button variant="outline-secondary" v-b-modal.hide-show-columns>{{
-        "dataexplorer_toggle_column_visibility_btn_tooltip" | i18n
+        $t('dataexplorer_toggle_column_visibility_btn_tooltip')
       }}</b-button>
       <b-modal
         ok-only
@@ -86,63 +86,40 @@
 
 <script>
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-  faStore,
-  faTh,
-  faThList,
-  faSlidersH,
-  faShoppingBag,
-  faPlusSquare,
-  faDownload,
-  faCog
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import SearchComponent from '../components/SearchComponent'
 import SortSelect from '../components/SortSelect'
 import ColumnSelection from '@/components/ColumnSelection.vue'
 
-library.add(
-  faTh,
-  faThList,
-  faSlidersH,
-  faStore,
-  faShoppingBag,
-  faPlusSquare,
-  faDownload,
-  faCog
-)
-
 export default {
   name: 'ToolbarView',
   components: {
-    FontAwesomeIcon,
     SearchComponent,
     SortSelect,
     ColumnSelection
   },
   computed: {
-    ...mapState([
+    ...mapState('explorer', [
       'filters',
       'dataDisplayLayout',
       'tableMeta',
       'tableSettings',
       'tableName',
+      'searchText',
       'showSelected',
       'settingsTable',
       'sort'
     ]),
-    ...mapGetters([
+    ...mapGetters('explorer', [
       'hasAddRights',
       'hasEditSettingsRights',
       'compressedRouteFilter'
     ]),
-    searchText: {
+    _searchText: {
       get () {
-        return this.$store.state.searchText
+        return this.searchText
       },
       set (value) {
-        this.$store.commit('setSearchText', value)
+        this.$store.commit('explorer/setSearchText', value)
         this.$router.push({
           name: 'de-view',
           query: { ...this.$route.query, filter: this.compressedRouteFilter }
@@ -164,8 +141,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['downloadResources']),
-    ...mapMutations([
+    ...mapActions('explorer', ['downloadResources']),
+    ...mapMutations('explorer', [
       'setHideFilters',
       'setDataDisplayLayout',
       'setFilterSelection',

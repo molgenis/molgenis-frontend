@@ -14,7 +14,7 @@ export const errorReponse = (error: any) => {
   }
   store.commit('setLoading', false)
   // Set timeout to '0' to keep visible until user dismisses the error notification
-  store.commit('addToast', { message, type: 'danger', timeout: 0 })
+  store.commit('explorer/addToast', { message, type: 'danger', timeout: 0 })
   return Promise.reject(error)
 }
 

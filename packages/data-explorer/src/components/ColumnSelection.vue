@@ -32,18 +32,18 @@ export default {
   },
   computed: {
     allColumns () {
-      const { tableMeta } = this.$store.state
+      const { tableMeta } = this.$store.state.explorer
       return tableMeta ? tableMeta.attributes.map((item) => item.name) : []
     },
     hiddenColumns () {
-      return this.$store.state.hiddenColumns
+      return this.$store.state.explorer.hiddenColumns
     },
     toggleSelectText () {
       return this.selectAllState ? 'select all' : 'deselect all'
     }
   },
   methods: {
-    ...mapMutations(['persistToRoute']),
+    ...mapMutations('explorer', ['persistToRoute']),
     toggleAllColumns () {
       const columnsToHide = this.selectAllState ? [] : this.allColumns
       this.persistToRoute({

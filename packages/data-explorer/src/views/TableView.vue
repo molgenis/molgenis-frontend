@@ -38,10 +38,6 @@
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
-
-library.add(faShoppingBag)
 
 export default {
   name: 'TableView',
@@ -53,8 +49,8 @@ export default {
   },
   components: { 'table-row': TableRow, TableHeader },
   computed: {
-    ...mapState(['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort', 'hiddenColumns']),
-    ...mapGetters(['filterRsql', 'hasEditRights', 'compressedRouteFilter']),
+    ...mapState('explorer', ['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort', 'hiddenColumns']),
+    ...mapGetters('explorer', ['filterRsql', 'hasEditRights', 'compressedRouteFilter']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -72,8 +68,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleSelectedItems', 'setSortColumn', 'setIsSortOrderReversed']),
-    ...mapActions(['fetchTableViewData']),
+    ...mapMutations('explorer', ['toggleSelectedItems', 'setSortColumn', 'setIsSortOrderReversed']),
+    ...mapActions('explorer', ['fetchTableViewData']),
     getEntityId (entity) {
       return entity[this.idAttribute.name].toString()
     },

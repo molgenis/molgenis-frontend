@@ -8,7 +8,7 @@ describe('DropdownList', () => {
   const router = new VueRouter()
 
   let wrapper: any
-  const stubs = ['router-link', 'router-view']
+  const stubs = ['font-awesome-icon', 'router-link', 'router-view']
   let propsData = {
     listId: 'list-1',
     isShown: false,
@@ -46,7 +46,7 @@ describe('DropdownList', () => {
         isShown: false,
         items: []
       }
-      wrapper = shallowMount(DropdownList, { propsData })
+      wrapper = shallowMount(DropdownList, { propsData, stubs })
     })
     it('should fire fetchItems event', async (done) => {
       await wrapper.setProps({ isShown: true })

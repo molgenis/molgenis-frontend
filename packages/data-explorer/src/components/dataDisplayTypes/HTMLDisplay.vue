@@ -2,7 +2,7 @@
   <div>
     <div ref="htmlPreview" class="text-nowrap text-truncate" :class="{'mouse-help':value.length > 10}">{{value}}</div>
     <b-popover :target="getRef" triggers="hover" placement="top">
-      <template #title>{{ 'dataexplorer_html_display_title' | i18n }}</template>
+      <template #title>{{ $t('dataexplorer_html_display_title') }}</template>
       <div v-html="value"></div>
     </b-popover>
   </div>
