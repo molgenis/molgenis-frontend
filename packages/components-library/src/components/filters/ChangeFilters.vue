@@ -1,28 +1,28 @@
 <template>
-<div>
-  <b-form-checkbox
-    v-for="option in filters"
-    :key="option.name"
-    :checked="selected.includes(option.name)"
-    :class="{'ml-4':option.compound}"
-    @change="checkboxHandler(option, $event)"
-  >
-    <span v-if="option.label">
-      <span class="text-nowrap">{{ option.label }}</span>
-      <span class="text-secondary">
-        <small>
-          <span class="text-nowrap">( {{ option.name }} )</span>
-        </small>
+  <div>
+    <b-form-checkbox
+      v-for="option in filters"
+      :key="option.name"
+      :checked="selected.includes(option.name)"
+      :class="{'ml-4':option.compound}"
+      @change="checkboxHandler(option, $event)"
+    >
+      <span v-if="option.label">
+        <span class="text-nowrap">{{ option.label }}</span>
+        <span class="text-secondary">
+          <small>
+            <span class="text-nowrap">( {{ option.name }} )</span>
+          </small>
+        </span>
       </span>
-    </span>
-    <span v-else>
-      <span class="text-nowrap">{{ option.name }}</span>
-    </span>
-    <span class="text-secondary">
-      <small v-if="option.description">- {{ option.description }}</small>
-    </span>
-  </b-form-checkbox>
-</div>
+      <span v-else>
+        <span class="text-nowrap">{{ option.name }}</span>
+      </span>
+      <span class="text-secondary">
+        <small v-if="option.description">- {{ option.description }}</small>
+      </span>
+    </b-form-checkbox>
+  </div>
 </template>
 
 <script>

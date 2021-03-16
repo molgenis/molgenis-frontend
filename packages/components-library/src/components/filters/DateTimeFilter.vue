@@ -162,8 +162,8 @@ export default {
 
 <style lang="css">
 .form-control.reportrange-text {
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 </style>

@@ -1,10 +1,11 @@
 <template>
   <div class="c-toaster" :class="{[position]: true}">
-    <div v-for="(toast, index) in toasts" :key="index"
+    <div
+      v-for="(toast, index) in toasts" :key="index"
       class="mg-toast alert alert-success alert-dismissible fade show"
       :class="{[`alert-${toast.type}`]: true}"
     >
-      <div class="mg-toast-message" v-html="toast.message"></div>
+      <div class="mg-toast-message" v-html="toast.message" />
 
       <button type="button" class="close" @click="clearToast(toast)">
         <span aria-hidden="true">&times;</span>
@@ -16,23 +17,7 @@
 const defaultTimeout = 3000
 
 export default {
-  data: function () {
-    return {
-      toasts: [...this.value]
-    }
-  },
   name: 'Toaster',
-  methods: {
-    clearToast (toast) {
-      this.toasts.splice(this.toasts.indexOf(toast), 1)
-      /**
-      * v-model return value
-      * @event input
-      * @property {Object[]} Toasts array with toast removed
-      */
-      this.$emit('input', [...this.toasts])
-    }
-  },
   props: {
     /**
      * List of toasts to show (see types/Toast.ts)
@@ -50,6 +35,11 @@ export default {
     position: {
       type: String,
       default: () => 'bottom-right'
+    }
+  },
+  data: function () {
+    return {
+      toasts: [...this.value]
     }
   },
   watch: {
@@ -80,6 +70,17 @@ export default {
       },
       immediate: true
     }
+  },
+  methods: {
+    clearToast (toast) {
+      this.toasts.splice(this.toasts.indexOf(toast), 1)
+      /**
+      * v-model return value
+      * @event input
+      * @property {Object[]} Toasts array with toast removed
+      */
+      this.$emit('input', [...this.toasts])
+    }
   }
 }
 </script>
@@ -88,48 +89,48 @@ export default {
 $spacer: 1rem;
 
 .c-toaster {
-    &.top-left,
-    &.top-right {
-      position: fixed;
-      top: $spacer;
+  &.top-left,
+  &.top-right {
+    position: fixed;
+    top: $spacer;
+  }
+
+  &.bottom-left,
+  &.bottom-right {
+    bottom: $spacer;
+    position: fixed;
+  }
+
+  &.bottom-left,
+  &.top-left {
+    left: $spacer;
+  }
+
+  &.bottom-right,
+  &.top-right {
+    right: $spacer;
+  }
+
+  &:not(.inline) {
+    width: 20rem;
+    z-index: 1060;  // Bootstrap popover z-index
+
+    @media (max-width: 576px) {
+      padding: 0 $spacer;
+      width: 100%;
+
+      &.bottom-left,
+      &.top-left {
+        left: 0;
+      }
+
+      &.bottom-right,
+      &.top-right {
+        right: 0;
+      }
+
     }
-
-    &.bottom-left,
-    &.bottom-right {
-      position: fixed;
-      bottom: $spacer;
-    }
-
-    &.bottom-left,
-    &.top-left {
-      left: $spacer;
-    }
-
-    &.bottom-right,
-    &.top-right {
-      right: $spacer;
-    }
-
-    &:not(.inline) {
-        width: 20rem;
-        z-index: 1060;  // Bootstrap popover z-index
-
-        @media (max-width: 576px) {
-          width: 100%;
-          padding: 0 $spacer;
-
-          &.bottom-left,
-          &.top-left {
-            left: 0;
-          }
-
-          &.bottom-right,
-          &.top-right {
-            right: 0;
-          }
-
-        }
-    }
+  }
 }
 </style>
 

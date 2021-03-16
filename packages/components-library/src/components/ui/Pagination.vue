@@ -1,55 +1,67 @@
 <template>
-<nav class="c-pagination">
-  <div v-if="localValue.count > localValue.size" class="btn-group mb-2 mr-3">
-    <button :class="css" class="btn btn-outline-primary"
-      :disabled="localValue.page <= 1"
-      @click="updateValue({page: 1})">
-      «
-    </button>
+  <nav class="c-pagination">
+    <div v-if="localValue.count > localValue.size" class="btn-group mb-2 mr-3">
+      <button
+        :class="css" class="btn btn-outline-primary"
+        :disabled="localValue.page <= 1"
+        @click="updateValue({page: 1})"
+      >
+        «
+      </button>
 
-    <button :class="css" class="t-page-prev btn btn-outline-primary"
-      :disabled="localValue.page <= 1"
-      @click="updateValue({page: localValue.page - 1})">
-      ‹
-    </button>
+      <button
+        :class="css" class="t-page-prev btn btn-outline-primary"
+        :disabled="localValue.page <= 1"
+        @click="updateValue({page: localValue.page - 1})"
+      >
+        ‹
+      </button>
 
-    <button
-      v-for="pageNumber in pageNumbers" :key="pageNumber"
-      class="btn btn-outline-primary"
-      :class="{'active': pageNumber === localValue.page, ...css}"
-      @click="updateValue({page: pageNumber})">
-      {{pageNumber}}
-    </button>
+      <button
+        v-for="pageNumber in pageNumbers" :key="pageNumber"
+        class="btn btn-outline-primary"
+        :class="{'active': pageNumber === localValue.page, ...css}"
+        @click="updateValue({page: pageNumber})"
+      >
+        {{ pageNumber }}
+      </button>
 
-    <button
-      :class="css" class="t-page-next btn btn-outline-primary"
-      :disabled="localValue.page >= pageCount"
-      @click="updateValue({page: localValue.page + 1})">
-      ›
-    </button>
+      <button
+        :class="css" class="t-page-next btn btn-outline-primary"
+        :disabled="localValue.page >= pageCount"
+        @click="updateValue({page: localValue.page + 1})"
+      >
+        ›
+      </button>
 
-    <button
-      :class="css" class="btn btn-outline-primary"
-      :disabled="localValue.page >= pageCount"
-      @click="updateValue({page: pageCount})">
-      »
-    </button>
-  </div>
-
-  <div class="controls mb-2">
-    <div class="item-count form-inline mr-2">
-      <span>{{navigationText}}</span>
+      <button
+        :class="css" class="btn btn-outline-primary"
+        :disabled="localValue.page >= pageCount"
+        @click="updateValue({page: pageCount})"
+      >
+        »
+      </button>
     </div>
 
-    <div class="form-check form-check-inline">
-      <label class="form-check-label mr-2" for="page-size">{{i18n['per page']}}</label>
-      <select class="form-control" id="page-size" v-model="localValue.size" @change="handleSizeChange">
-        <option v-for="pageSize of pageSizes" :value="pageSize" :key="pageSize">{{pageSize}}</option>
-      </select>
-    </div>
-  </div>
+    <div class="controls mb-2">
+      <div class="item-count form-inline mr-2">
+        <span>{{ navigationText }}</span>
+      </div>
 
-</nav>
+      <div class="form-check form-check-inline">
+        <label class="form-check-label mr-2" for="page-size">{{ i18n['per page'] }}</label>
+        <select
+          id="page-size" v-model="localValue.size"
+          class="form-control"
+          @change="handleSizeChange"
+        >
+          <option v-for="pageSize of pageSizes" :key="pageSize" :value="pageSize">
+            {{ pageSize }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -155,15 +167,6 @@ export default {
       return { left, right }
     }
   },
-  methods: {
-    updateValue (value) {
-      this.localValue = { ...this.localValue, ...this.value, ...value }
-      this.$emit('input', { ...this.localValue })
-    },
-    handleSizeChange () {
-      this.updateValue({ page: 1, size: this.localValue.size })
-    }
-  },
   watch: {
     /**
      * Sync the local state when the external state changes.
@@ -177,15 +180,24 @@ export default {
   },
   async created () {
     this.localValue = { ...this.localValue, ...this.value }
+  },
+  methods: {
+    updateValue (value) {
+      this.localValue = { ...this.localValue, ...this.value, ...value }
+      this.$emit('input', { ...this.localValue })
+    },
+    handleSizeChange () {
+      this.updateValue({ page: 1, size: this.localValue.size })
+    }
   }
 }
 </script>
 
 <style lang="scss">
 .c-pagination {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 
   .btn-group {
     display: flex;
@@ -200,9 +212,9 @@ export default {
   // beneath the navigation buttons when there is no more room.
   .controls {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
     flex: 1;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     white-space: nowrap;
 
     select {
