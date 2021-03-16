@@ -27,7 +27,7 @@ export default {
       await dispatch('header/fetchBreadcrumbs', null, { root: true })
     }
   },
-  async fetchViewData ({ commit, dispatch, state }: any) {
+  async fetchViewData ({ dispatch, state }: any) {
     if (state.dataDisplayLayout === 'CardView') {
       dispatch('fetchCardViewData')
     } else {

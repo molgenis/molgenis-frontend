@@ -1,10 +1,12 @@
 <template>
-  <ul class="dropdown-menu" v-if="!(isInitialized && listItems.length === 0)">
+  <ul v-if="!(isInitialized && listItems.length === 0)" class="dropdown-menu">
     <li v-if="!isInitialized" class="is-lazy-loading">
-      <font-awesome-icon icon="spinner" spin></font-awesome-icon>
+      <font-awesome-icon icon="spinner" spin />
     </li>
     <li v-for="item in listItems" :key="listId +'-'+ item.id" class="dropdown-item">
-     <router-link :to="{ name: 'de-view', params: { entity: item.id }, query: $route.query}">{{item.label}}</router-link>
+      <router-link :to="{ name: 'de-view', params: { entity: item.id }, query: $route.query}">
+        {{ item.label }}
+      </router-link>
     </li>
   </ul>
 </template>
@@ -12,12 +14,6 @@
 <script>
 export default {
   name: 'DropdownList',
-  data: function () {
-    return {
-      listItems: this.items,
-      isInitialized: this.items.length > 0
-    }
-  },
   props: {
     listId: {
       type: String,
@@ -32,6 +28,12 @@ export default {
       type: Array,
       required: false,
       default: () => []
+    }
+  },
+  data: function () {
+    return {
+      listItems: this.items,
+      isInitialized: this.items.length > 0
     }
   },
   watch: {
@@ -55,14 +57,14 @@ export default {
 
 ul.dropdown-menu {
   /*
+  * Handle show / hide via vue instead of bootstrap jquery
+  */
+  display: block;
+  /*
   * Needed to remove gap between mouse-over target and list.
   * Else dropdown list is hidden when the mouse pointer passes over the gap.
   */
   margin-top: 0;
-  /*
-  * Handle show / hide via vue instead of bootstrap jquery
-  */
-  display: block;
 }
 
 li.is-lazy-loading {

@@ -3,19 +3,19 @@
     <explorer-card
       v-for="(entity, index) in entitiesToShow"
       :key="index"
-      :dataId="getEntityId(entity)"
-      :dataTable="tableName"
-      :isSelected="isSelected(entity)"
-      :isShop="tableSettings.isShop"
-      :collapseLimit="tableSettings.collapseLimit"
-      :dataLabel="getEntityLabel(entity)"
-      :dataContents="entity"
-      :numberOfAttributes="numberOfAttributes"
-      :customCode="tableSettings.customCardCode"
-      :isEditable="hasEditRights"
-      :hiddenColumns="hiddenColumns"
-      @expandCard="handleExpandCard(entity)">
-    </explorer-card>
+      :data-id="getEntityId(entity)"
+      :data-table="tableName"
+      :is-selected="isSelected(entity)"
+      :is-shop="tableSettings.isShop"
+      :collapse-limit="tableSettings.collapseLimit"
+      :data-label="getEntityLabel(entity)"
+      :data-contents="entity"
+      :number-of-attributes="numberOfAttributes"
+      :custom-code="tableSettings.customCardCode"
+      :is-editable="hasEditRights"
+      :hidden-columns="hiddenColumns"
+      @expandCard="handleExpandCard(entity)"
+    />
   </div>
 </template>
 
@@ -25,13 +25,13 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'CardView',
+  components: { ExplorerCard },
   props: {
     entitiesToShow: {
       type: Array,
       required: true
     }
   },
-  components: { ExplorerCard },
   computed: {
     ...mapState('explorer', ['tableMeta', 'selectedItemIds', 'tableSettings', 'tableName', 'hiddenColumns']),
     ...mapGetters('explorer', ['filterRsql', 'hasEditRights']),

@@ -8,7 +8,7 @@ describe('DataView.vue', () => {
   localVue.directive('b-modal', {})
   const stubs = ['b-modal']
   const eventBus = new Vue()
-  const offSpy = jest.spyOn(eventBus, '$off')
+
   localVue.use(Vuex)
   let store: any
   let state: any

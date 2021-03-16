@@ -9,7 +9,7 @@ jest.mock('@/mappers/utils', () => ({
 describe('metaFilterMapper', () => {
   describe('mapMetaToFilters', () => {
     it('create an filter definition from metadata', async () => {
-      let meta = mockMetaData
+      const meta = mockMetaData
       meta.attributes.push({
         id: '/api/metadata/date',
         type: 'date',

@@ -1,13 +1,13 @@
 <template>
   <div v-if="metadata.expression">
     <div class="text-nowrap text-truncate">
-        <span>{{displayValue}}</span>
+      <span>{{ displayValue }}</span>
     </div>
   </div>
   <div v-else>
-    <div v-if="hasLinkValue" @click="handleRefClicked" class="text-nowrap text-truncate mouse-ref">
-      <span class="mr-1">{{displayValue}}</span>
-      <font-awesome-icon icon="share" size="xs"></font-awesome-icon>
+    <div v-if="hasLinkValue" class="text-nowrap text-truncate mouse-ref" @click="handleRefClicked">
+      <span class="mr-1">{{ displayValue }}</span>
+      <font-awesome-icon icon="share" size="xs" />
     </div>
   </div>
 </template>

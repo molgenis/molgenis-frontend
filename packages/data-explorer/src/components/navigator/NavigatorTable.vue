@@ -6,7 +6,8 @@
       :filter="filter"
       :empty-text="$t('navigator:table-no-results')"
       class="text-left table-bordered"
-      show-empty>
+      show-empty
+    >
       <!-- A custom formatted header cell for field 'name' -->
       <!-- eslint-disable-next-line vue/no-unused-vars -->
       <template #head(selected)="data">
@@ -14,7 +15,8 @@
           :class="tableResources.length == 0 ? 'invisible' : ''"
           :checked="isAllSelected()"
           @click.native.stop
-          @change="toggleAllSelected">
+          @change="toggleAllSelected"
+        >
           <!-- workaround for https://github.com/twbs/bootstrap/issues/26221 -->
           <span class="text-hide">placeholder</span>
         </b-form-checkbox>
@@ -23,7 +25,8 @@
         <b-form-checkbox
           :checked="isSelected(row.item)"
           @click.native.stop
-          @change="toggleSelected(row.item, $event)">
+          @change="toggleSelected(row.item, $event)"
+        >
           <!-- workaround for https://github.com/twbs/bootstrap/issues/26221 -->
           <span class="text-hide">placeholder</span>
         </b-form-checkbox>
@@ -33,19 +36,22 @@
           <router-link :to="{name: 'de-view', params: {entity: label.item.id}}">
             <font-awesome-icon
               icon="list"
-              fixed-width/> {{ label.item.label }}
+              fixed-width
+            /> {{ label.item.label }}
           </router-link>
         </span>
         <span v-else-if="label.item.type === 'ENTITY_TYPE_ABSTRACT'">
           <font-awesome-icon
             icon="list"
-            fixed-width/> {{ label.item.label }}
+            fixed-width
+          /> {{ label.item.label }}
         </span>
         <span v-else>
           <router-link :to="{name: 'nav-view-folder', params: {folderId: label.item.id}}">
             <font-awesome-icon
               :icon="['fa', 'folder-open']"
-              fixed-width/> {{ label.item.label }}
+              fixed-width
+            /> {{ label.item.label }}
           </router-link>
         </span>
       </template>
@@ -154,9 +160,9 @@ export default {
 
 <style>
   .table-container {
-    width: 100%;
     height: 70vh; /* no page scrollbar when using default header and footer */
     overflow-y: auto;
+    width: 100%;
   }
 
   .invisible {
@@ -164,7 +170,7 @@ export default {
   }
 
   .compact {
-    width: 1px;
     white-space: nowrap;
+    width: 1px;
   }
 </style>

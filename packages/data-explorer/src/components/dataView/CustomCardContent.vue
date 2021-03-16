@@ -1,7 +1,7 @@
 <template>
   <div class="custom-card">
-    <slot name="shopping-button"></slot>
-    <v-runtime-template :template="template"></v-runtime-template>
+    <slot name="shopping-button" />
+    <v-runtime-template :template="template" />
   </div>
 </template>
 

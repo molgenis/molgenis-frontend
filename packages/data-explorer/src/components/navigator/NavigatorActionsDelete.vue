@@ -2,15 +2,18 @@
   <div
     v-b-tooltip.d500
     :title="$t('navigator:action-delete')"
-    class="btn-tooltip-wrapper">
+    class="btn-tooltip-wrapper"
+  >
     <b-btn
       v-b-modal.resourceDeleteModal
       :disabled="!canDelete"
-      variant="danger">
+      variant="danger"
+    >
       <font-awesome-icon
         :class="{'fa-disabled': !canDelete}"
         icon="trash"
-        size="lg"/>
+        size="lg"
+      />
     </b-btn>
   </div>
 </template>

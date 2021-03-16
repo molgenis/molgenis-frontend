@@ -4,7 +4,6 @@ import RefTable from '@/components/dataDisplayTypes/RefTable.vue'
 describe('RefTable.vue', () => {
   const stubs = ['b-spinner']
   const localVue = createLocalVue()
-  const mocks = { $t: (msg: any) => msg }
 
   let isDataLoaded = false
   const entitiesToShow = []

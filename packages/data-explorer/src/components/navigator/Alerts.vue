@@ -1,16 +1,19 @@
 <template>
   <div
     v-if="alerts.length > 0"
-    class="row">
+    class="row"
+  >
     <div class="col">
       <div
         v-for="(alert, index) in alerts"
-        :key="index">
+        :key="index"
+      >
         <b-alert
           :variant="getVariant(alert)"
           show
           dismissible
-          @dismissed.prevent="removeAlert(index)">
+          @dismissed.prevent="removeAlert(index)"
+        >
           <span>{{ alert.message }}</span>
           <span v-if="alert.code"> ({{ alert.code }})</span>
         </b-alert>

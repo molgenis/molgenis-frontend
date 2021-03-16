@@ -1,12 +1,11 @@
 import { shallowMount } from '@vue/test-utils'
 import DataDisplayCell from '@/components/dataDisplayTypes/DataDisplayCell.vue'
-import Vue from 'vue'
 
 describe('DataDisplayCell.vue', () => {
   // String, Object, Array, Number, Boolean
   const value = 'value'
   const rowIndex = 1
-  let metadata:any = {
+  const metadata:any = {
     type: 'string'
   }
   const propsData = { value, metadata, rowIndex }

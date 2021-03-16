@@ -1,38 +1,30 @@
 <template>
-  <table class="table table-bordered h-100" v-if="entitiesToShow.length">
+  <table v-if="entitiesToShow.length" class="table table-bordered h-100">
     <table-header
-      :visibleColumns="visibleColumns"
-      :isShop="tableSettings.isShop"
-      :sortColumnName="sort.sortColumnName"
-      :isSortOrderReversed="sort.isSortOrderReversed"
-      @sort="handleSortEvent">
-    </table-header>
+      :visible-columns="visibleColumns"
+      :is-shop="tableSettings.isShop"
+      :sort-column-name="sort.sortColumnName"
+      :is-sort-order-reversed="sort.isSortOrderReversed"
+      @sort="handleSortEvent"
+    />
     <tbody>
-
-    <table-row v-for="(entity, index) in entitiesToShow"
-               :key="index"
-               :rowIndex="index"
-               :id="getEntityId(entity)"
-               :tableName="tableName"
-               :rowData="entity"
-               :visibleColumns="visibleColumns"
-               :isSelected="isSelected(entity)"
-               :isShop="tableSettings.isShop"
-               :isEditable="hasEditRights"
-               :showSelected="showSelected"
-               @toggleSelectedItemsHandler="toggleSelectedItems"
-               ></table-row>
+      <table-row
+        v-for="(entity, index) in entitiesToShow"
+        :id="getEntityId(entity)"
+        :key="index"
+        :row-index="index"
+        :table-name="tableName"
+        :row-data="entity"
+        :visible-columns="visibleColumns"
+        :is-selected="isSelected(entity)"
+        :is-shop="tableSettings.isShop"
+        :is-editable="hasEditRights"
+        :show-selected="showSelected"
+        @toggleSelectedItemsHandler="toggleSelectedItems"
+      />
     </tbody>
   </table>
 </template>
-
-<style scoped>
-  tbody th {
-    position: -webkit-sticky; /* for Safari */
-    position: sticky;
-    left: 0;
-  }
-</style>
 
 <script>
 import TableRow from '../components/dataView/TableRow'
@@ -41,13 +33,13 @@ import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'TableView',
+  components: { 'table-row': TableRow, TableHeader },
   props: {
     entitiesToShow: {
       type: Array,
       required: true
     }
   },
-  components: { 'table-row': TableRow, TableHeader },
   computed: {
     ...mapState('explorer', ['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort', 'hiddenColumns']),
     ...mapGetters('explorer', ['filterRsql', 'hasEditRights', 'compressedRouteFilter']),
@@ -88,3 +80,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  tbody th {
+    left: 0;
+    position: sticky; /* for Safari */
+    position: sticky;
+  }
+</style>

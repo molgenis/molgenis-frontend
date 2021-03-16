@@ -2,14 +2,16 @@
   <div>
     <div>
       <div class="p-0 mb-2 d-flex justify-content-between align-items-center">
-        <h2 class="m-0">{{ $t('dataexplorer_filters_header') }}</h2>
+        <h2 class="m-0">
+          {{ $t('dataexplorer_filters_header') }}
+        </h2>
         <button
           type="button"
           class="btn btn-light btn-outline-secondary hide-filters"
           :title="$t('dataexplorer_filters_hide_btn_label')"
           @click="hideSidebar"
         >
-          <font-awesome-icon icon="chevron-left"></font-awesome-icon>
+          <font-awesome-icon icon="chevron-left" />
         </button>
       </div>
 
@@ -18,12 +20,12 @@
         v-model="filterSelections"
         :filters="filters.definition"
         :filters-shown="filterShown"
-        :filterActionLabel="$t('dataexplorer_filter_action_Label')"
-        :filterListLabel="$t('dataexplorer_filter_list_Label')"
-        @update="updateState"
+        :filter-action-label="$t('dataexplorer_filter_action_Label')"
+        :filter-list-label="$t('dataexplorer_filter_list_Label')"
         :can-edit="true"
-        dialogStyle="dropdown"
-      ></filter-container>
+        dialog-style="dropdown"
+        @update="updateState"
+      />
     </div>
   </div>
 </template>

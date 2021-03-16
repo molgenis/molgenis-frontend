@@ -3,7 +3,7 @@ import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
 
 describe('BreadcrumbBar', () => {
   let wrapper: any
-  let propsData = {
+  const propsData = {
     breadcrumbs: [
       { id: 'c1', label: 'crumb1', link: '/location/c1' },
       { id: 'c2', label: 'crumb2', link: '/location/c2' },
@@ -25,7 +25,7 @@ describe('BreadcrumbBar', () => {
 
   describe('show dropdown handlers', () => {
     it('should add showDropdown prop to the crumb', () => {
-      let crumb = { id: 'c1', label: 'crumb1', link: '/location/c1' }
+      const crumb = { id: 'c1', label: 'crumb1', link: '/location/c1' }
       wrapper.vm.showDropdown({}, crumb)
       // @ts-ignore
       expect(crumb.showDropdown).toBeTruthy()
@@ -34,7 +34,7 @@ describe('BreadcrumbBar', () => {
 
   describe('hide dropdown handlers', () => {
     it('should add showDropDown prop to the crumb', () => {
-      let crumb = { id: 'c1', label: 'crumb1', link: '/location/c1' }
+      const crumb = { id: 'c1', label: 'crumb1', link: '/location/c1' }
       wrapper.vm.hideDropdown({}, crumb)
       // @ts-ignore
       expect(crumb.showDropdown).toBeFalsy()

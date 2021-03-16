@@ -3,29 +3,35 @@
     <div
       v-b-tooltip.d500
       :title="$t('navigator:action-upload')"
-      class="mr-1 btn-tooltip-wrapper">
+      class="mr-1 btn-tooltip-wrapper"
+    >
       <b-btn
         :disabled="!canUpload"
         :href="importWizardUrl + (folder ? '?selectedPackage=' + folder.id : '')"
-        variant="secondary">
+        variant="secondary"
+      >
         <font-awesome-icon
           :class="{'fa-disabled' : !canUpload}"
           icon="upload"
-          size="lg"/>
+          size="lg"
+        />
       </b-btn>
     </div>
     <div
       v-b-tooltip.d500
       :title="$t('navigator:action-download')"
-      class="btn-tooltip-wrapper">
+      class="btn-tooltip-wrapper"
+    >
       <b-btn
         :disabled="!canDownload"
         variant="secondary"
-        @click="downloadSelectedResources">
+        @click="downloadSelectedResources"
+      >
         <font-awesome-icon
           :class="{'fa-disabled' : !canDownload}"
           icon="download"
-          size="lg"/>
+          size="lg"
+        />
       </b-btn>
     </div>
   </span>
