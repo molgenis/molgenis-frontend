@@ -6,7 +6,8 @@ const stubs = ['b-overlay', 'router-link']
 
 describe('DefaultCardContent.vue', () => {
   const localVue = createLocalVue()
-  localVue.filter('i18n', mocks.$t)
+  const stubs = ['b-overlay', 'font-awesome-icon']
+
   const propsData = {
     dataLabel: 'dataLabel',
     dataId: 'dataId',

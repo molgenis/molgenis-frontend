@@ -5,12 +5,13 @@ import Vuex from 'vuex'
 describe('ClipboardView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
-  localVue.filter('i18n', jest.fn())
+
   let store: any
   let state: any
   let mutations: any
   let actions: any
   let getters: any
+  const stubs = ['font-awesome-icon']
 
   beforeEach(() => {
     state = {
@@ -62,16 +63,20 @@ describe('ClipboardView.vue', () => {
       tableIdAttributeName: jest.fn()
     }
     getters.tableIdAttributeName.mockReturnValue('tableID')
-    store = new Vuex.Store({ state, mutations, actions, getters })
+    store = new Vuex.Store({
+      modules: {
+        explorer: { actions, getters, mutations, namespaced: true, state }
+      }
+    })
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(ClipboardView, { store, localVue })
+    const wrapper = shallowMount(ClipboardView, { store, localVue, stubs })
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('closes shoppingcart', () => {
-    const wrapper = shallowMount(ClipboardView, { store, localVue })
+    const wrapper = shallowMount(ClipboardView, { store, localVue, stubs })
     const button = wrapper.find('button.cart-back')
     button.trigger('click')
     expect(mutations.setShowSelected).toHaveBeenCalledWith(state, false)
@@ -79,14 +84,14 @@ describe('ClipboardView.vue', () => {
   })
 
   it('returns true for selected shopping item', () => {
-    const wrapper = shallowMount(ClipboardView, { store, localVue })
+    const wrapper = shallowMount(ClipboardView, { store, localVue, stubs })
     const entity = { tableID: '1', label: 'blaat1' }
     // @ts-ignore
     expect(wrapper.vm.isSelected(entity)).toBe(true)
   })
 
   it('returns false for item that is not selected', () => {
-    const wrapper = shallowMount(ClipboardView, { store, localVue })
+    const wrapper = shallowMount(ClipboardView, { store, localVue, stubs })
     const entity = { tableID: '2', label: 'blaat2' }
     // @ts-ignore
     expect(wrapper.vm.isSelected(entity)).toBe(false)

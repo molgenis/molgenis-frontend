@@ -91,10 +91,8 @@
 </style>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 export default {
   name: 'TableHeader',
-  components: { FontAwesomeIcon },
   props: {
     visibleColumns: {
       type: Array,

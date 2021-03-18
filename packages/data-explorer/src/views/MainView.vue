@@ -20,7 +20,7 @@
           </li>
         </ol>
       </nav>
-      <Toaster v-model="toasts" />
+      <Toaster v-model="_toasts" />
     </div>
     <div class="mg-content d-flex h-100 overflow-control">
       <button
@@ -38,9 +38,9 @@
         <toolbar-view class="mb-2"></toolbar-view>
 
         <div class="mg-data-view-container">
-          <data-view v-if="!tablePagination.loading" />
+          <data-view v-if="!_tablePagination.loading" />
         </div>
-        <pagination v-show="!loading" class="mt-2" v-model="tablePagination" />
+        <pagination v-show="!loading" class="mt-2" v-model="_tablePagination" />
       </div>
     </div>
     <b-overlay :show="loading" no-wrap />
@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import FiltersView from './FiltersView'
 import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
 import { ActiveFilters, Pagination, Toaster } from '@molgenis-ui/components-library'
@@ -65,13 +64,13 @@ const deleteConfirmOptions = {
   centered: true
 }
 
-export default Vue.extend({
+export default {
   name: 'MainView',
   components: { FiltersView, DataView, BreadcrumbBar, Pagination, Toaster, ToolbarView, ActiveFilters },
   computed: {
-    tablePagination: {
+    _tablePagination: {
       get: function () {
-        return this.$store.state.tablePagination
+        return this.tablePagination
       },
       set: function (value) {
         this.$router.push({
@@ -80,17 +79,17 @@ export default Vue.extend({
         })
       }
     },
-    toasts: {
+    _toasts: {
       get: function () {
-        return this.$store.state.toasts
+        return this.toasts
       },
       set: function (value) {
         this.setToasts(value)
       }
     },
-    ...mapState(['filters', 'showSelected', 'dataDisplayLayout', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'searchText', 'loading']),
+    ...mapState('explorer', ['filters', 'showSelected', 'dataDisplayLayout', 'tablePagination', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'toasts', 'searchText', 'loading']),
     ...mapState('header', ['breadcrumbs']),
-    ...mapGetters(['isUserAuthenticated', 'compressedRouteFilter']),
+    ...mapGetters('explorer', ['isUserAuthenticated', 'compressedRouteFilter']),
     activeFilterSelections () {
       return this.searchText ? { ...this.filters.selections, _search: this.searchText } : this.filters.selections
     },
@@ -104,8 +103,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapMutations(['setToasts', 'setLoading', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
-    ...mapActions(['deleteRow', 'fetchViewData', 'fetchTableMeta', 'fetchTablePermissions']),
+    ...mapMutations('explorer', ['setToasts', 'setLoading', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
+    ...mapActions('explorer', ['deleteRow', 'fetchViewData', 'fetchTableMeta', 'fetchTablePermissions']),
     ...mapActions('header', ['fetchPackageTables']),
     saveFilterState (newSelections) {
       if (newSelections['_search'] === undefined) {
@@ -132,6 +131,7 @@ export default Vue.extend({
     }
   },
   async created () {
+    this.setLoading(true)
     this.$eventBus.$on('delete-item', (data) => {
       this.handeldeleteItem(data)
     })
@@ -140,7 +140,8 @@ export default Vue.extend({
     await this.fetchTableMeta({ tableName })
     this.setRouteQuery(this.$route.query)
     this.setDataDisplayLayout(this.$route.query.view)
-    this.fetchViewData()
+    await this.fetchViewData()
+    this.setLoading(false)
   },
   destroyed () {
     this.$eventBus.$off('delete-item')
@@ -158,7 +159,7 @@ export default Vue.extend({
     this.setLoading(false)
     next()
   }
-})
+}
 </script>
 
 <style scoped>

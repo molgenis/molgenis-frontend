@@ -82,6 +82,7 @@ function getWrapper (options:any = {}) {
         fetchContext: jest.fn()
       }
     },
+    explorer: { actions, getters, mutations, namespaced: true, state },
     header: {
       namespaced: true,
       actions: {
@@ -91,7 +92,7 @@ function getWrapper (options:any = {}) {
     }
   }
 
-  const store = new Vuex.Store({ state, mutations, actions, getters, modules })
+  const store = new Vuex.Store({ modules })
   return shallowMount(MainView, { store, localVue, mocks, stubs: ['b-overlay', 'font-awesome-icon'] })
 }
 
@@ -217,7 +218,7 @@ describe('MainView.vue', () => {
   describe('toasts getter and setter called', () => {
     it('should trigger getter and setter for toasts', async () => {
       expect(mutations.setToasts).toHaveBeenCalledTimes(0)
-      wrapper.vm.toasts = [{ message: 'bar', type: 'success' }]
+      wrapper.vm._toasts = [{ message: 'bar', type: 'success' }]
       expect(mutations.setToasts).toHaveBeenCalledTimes(1)
     })
   })

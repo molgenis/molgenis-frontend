@@ -7,6 +7,15 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>data-explorer</title>
     <script>
+
+      window.__INITIAL_STATE__ = {
+        isSuperUser: true,
+        pluginUrls: {
+          'metadata-manager': '/menu/dataintegration/metadata-manager',
+          'importwizard': '/menu/importdata/importwizard'
+        }
+      }
+
     // Detect IE 10 and IE 11
     document.addEventListener('DOMContentLoaded', function () {
       if (/Trident\/|MSIE/.test(window.navigator.userAgent)) {

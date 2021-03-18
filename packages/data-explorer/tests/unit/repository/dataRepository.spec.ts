@@ -5,7 +5,7 @@ import { buildExpandedAttributesQuery } from '@/repository/queryBuilder'
 import mockmeta from '../mocks/metaDataResponseMock'
 import selfRefMock from '../mocks/rowDataSelfRef'
 import mockRowResponse from '../mocks/rowDataResponseMock'
-import { defaultPagination } from '@/store/state'
+import { defaultPagination } from '@/store/explorer/state'
 import client from '@/lib/client'
 
 jest.mock('@/lib/client', () => ({
@@ -99,7 +99,7 @@ describe('dataRepository', () => {
         client.get.mockResolvedValue({ data: { items: [selfRefMock] } })
         const resp = await dataRepository.getTableDataDeepReference(tableId, metaData, columns, rsqlQuery, pagination)
         expect(resp).toEqual({
-          items: [[ {  id: 'A.Jigger',  label: 'Arsenius Jigger' } ]],
+          items: [[ { id: 'A.Jigger', label: 'Arsenius Jigger' } ]],
           page: undefined
         }
         )

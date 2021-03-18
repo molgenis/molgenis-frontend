@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import mutations from '@/store/mutations'
+import mutations from '@/store/explorer/mutations'
 import SelectLayoutView from '@/views/SelectLayoutView.vue'
 import Vuex from 'vuex'
 
@@ -20,9 +20,7 @@ describe('SelectLayoutView.vue', () => {
           { data: { id: '3' } }
         ] }
     }
-    store = new Vuex.Store({
-      mutations, state
-    })
+    store = new Vuex.Store({ modules: { explorer: { mutations, namespaced: true, state } } })
   })
 
   it('exists', () => {
@@ -31,11 +29,9 @@ describe('SelectLayoutView.vue', () => {
   })
 
   it('can switch layout', async () => {
-    const wrapper = shallowMount(SelectLayoutView, { store,
-      localVue
-    })
+    const wrapper = shallowMount(SelectLayoutView, { store, localVue })
     expect(wrapper.findAll('cardview-stub').length).toEqual(1)
-    state.dataDisplayLayout = 'TableView'
+    store.state.explorer.dataDisplayLayout = 'TableView'
     await wrapper.vm.$nextTick()
     expect(wrapper.findAll('tableview-stub').length).toEqual(1)
   })

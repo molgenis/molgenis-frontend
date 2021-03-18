@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.7.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.6.3...@molgenis-ui/data-explorer@3.7.0) (2021-03-15)
+
+
+### Features
+
+* **data-explorer:** merge navigator into data-explorer 2 ([9c49ab7](https://github.com/molgenis/molgenis-frontend/commit/9c49ab783d23ba94998f7690e879c30a40016e01))
+
+
+
+
+
+## [3.6.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.6.2...@molgenis-ui/data-explorer@3.6.3) (2021-03-10)
+
+
+### Bug Fixes
+
+* **data-explorer:** Remove spinner on error ([#563](https://github.com/molgenis/molgenis-frontend/issues/563)) ([aa95b1b](https://github.com/molgenis/molgenis-frontend/commit/aa95b1b76012403469f22c0008fd20eae633ced9)), closes [#555](https://github.com/molgenis/molgenis-frontend/issues/555)
+
+
+
+
+
 ## [3.6.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.6.1...@molgenis-ui/data-explorer@3.6.2) (2021-03-09)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer

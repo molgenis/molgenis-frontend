@@ -12,9 +12,7 @@ describe('App.vue', () => {
     state = {
       dataDisplayLayout: 'ClipboardView'
     }
-    store = new Vuex.Store({
-      state
-    })
+    store = new Vuex.Store({ modules: { explorer: { namespaced: true, state } } })
   })
 
   it('exists', () => {

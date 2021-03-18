@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable vue/no-mutating-props -->
   <div class="input-group">
     <select
         id="toolbar-sort-order-select"
@@ -22,12 +23,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-export default Vue.extend({
+export default {
   name: 'SortSelect',
-  components: { FontAwesomeIcon },
   props: {
     /**
      * Array of sort option { id {string}, name {string} } objects
@@ -49,5 +46,5 @@ export default Vue.extend({
       this.$emit('sort', { sortColumnName, isSortOrderReversed })
     }
   }
-})
+}
 </script>

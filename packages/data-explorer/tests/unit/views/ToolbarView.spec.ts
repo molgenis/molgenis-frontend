@@ -24,7 +24,6 @@ function getWrapper () {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(bootstrapVue)
-  localVue.filter('i18n', $t)
 
   state = mockState()
   state.tableName = 'root_hospital_patients'
@@ -47,7 +46,7 @@ function getWrapper () {
   }
 
   getters.hasAddRights.mockReturnValue(true)
-  store = new Vuex.Store({ actions, state, mutations, getters })
+  store = new Vuex.Store({ modules: { explorer: { actions, getters, mutations, namespaced: true, state } } })
 
   return shallowMount(ToolbarView, {
     store,
@@ -56,7 +55,7 @@ function getWrapper () {
       'b-tooltip': () => {}
     },
     mocks,
-    stubs: ['router-link']
+    stubs: ['font-awesome-icon', 'router-link']
   })
 }
 
@@ -67,7 +66,7 @@ describe('ToolbarView.vue', () => {
 
   describe('when the search text model updates', () => {
     beforeEach(() => {
-      wrapper.setData({ searchText: 'test' })
+      wrapper.setData({ _searchText: 'test' })
     })
 
     it('should mutate the value to the store', () => {
@@ -88,7 +87,7 @@ describe('ToolbarView.vue', () => {
   })
 
   it('can change to card layout', async () => {
-    store.state.dataDisplayLayout = 'TableView'
+    store.state.explorer.dataDisplayLayout = 'TableView'
     await wrapper.vm.$nextTick()
     wrapper.find('button.card-layout').trigger('click')
     expect(mocks.$router.push).toHaveBeenCalledWith({ name: 'de-view', params: {}, query: { view: 'CardView' } })
@@ -104,12 +103,12 @@ describe('ToolbarView.vue', () => {
     })
 
     it('should not be shown in shoppingcart mode', () => {
-      store.state.showSelected = true
+      store.state.explorer.showSelected = true
       expect(wrapper.find('.btn-toolbar > a').exists()).toBe(false)
     })
 
     it('should not show the button without edit rights', () => {
-      store.state.showSelected = true
+      store.state.explorer.showSelected = true
       getters.hasEditRights.mockReturnValueOnce(false)
       expect(wrapper.find('.btn-toolbar > a').exists()).toBe(false)
     })
@@ -119,15 +118,15 @@ describe('ToolbarView.vue', () => {
 
   describe('searchString value is set', () => {
     it('should persist the value in the store', () => {
-      store.state.showSelected = true
-      wrapper.setData({ searchText: 'demo' })
+      store.state.explorer.showSelected = true
+      wrapper.setData({ _searchText: 'demo' })
       expect(mutations.setSearchText).toHaveBeenCalled()
     })
   })
 
   describe('downloadData', () => {
     it('download action called', async () => {
-      store.state.tableMeta = { id: '123', attributes: [] }
+      store.state.explorer.tableMeta = { id: '123', attributes: [] }
       // @ts-ignore
       await wrapper.vm.downloadData()
       expect(actions.downloadResources).toHaveBeenCalledWith(expect.anything(), [{ id: '123', type: 'ENTITY_TYPE' }])
@@ -141,7 +140,7 @@ describe('ToolbarView.vue', () => {
     })
 
     it('should return a list of options ( id, name ) ignoring non visible items and compound types', () => {
-      store.state.tableMeta = {
+      store.state.explorer.tableMeta = {
         id: '123',
         attributes: [
           { visible: true, id: '1', name: 'a', type: 'not a compound' },

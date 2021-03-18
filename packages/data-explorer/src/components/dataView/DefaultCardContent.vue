@@ -1,4 +1,4 @@
-<template>
+g<template>
   <b-overlay :show="cardLoading">
     <h5 class="card-title mg-default-card-title">{{dataLabel}}
       <router-link
@@ -51,11 +51,6 @@
 </template>
 
 <script>
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch, faChevronUp, faChevronRight, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
-library.add(faSearch, faChevronRight, faChevronUp, faEdit, faTrash)
 
 export default {
   name: 'DefaultCardContent',
@@ -100,7 +95,6 @@ export default {
       default: () => []
     }
   },
-  components: { FontAwesomeIcon },
   computed: {
     expandBtnText () {
       return this.cardState === 'closed' ? this.$t('dataexplorer_default_card_expand_btn_label') : this.$t('dataexplorer_default_card_collapse_btn_label')

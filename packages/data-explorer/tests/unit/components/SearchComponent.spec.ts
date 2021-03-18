@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import { routes } from '@/routes'
 
 const mocks = { $t: (msg: any) => msg }
+const stubs = ['font-awesome-icon']
 
 describe('SearchComponent', () => {
   let wrapper: any
@@ -13,7 +14,7 @@ describe('SearchComponent', () => {
     const localVue = createLocalVue()
     localVue.use(Router)
     const router = new Router({ routes })
-    wrapper = shallowMount(SearchComponent, { localVue, propsData: { value: 'demo' }, router, directives: { 'b-tooltip': () => { } }, mocks })
+    wrapper = shallowMount(SearchComponent, { localVue, propsData: { value: 'demo' }, router, directives: { 'b-tooltip': () => { } }, mocks, stubs })
   })
 
   it('should render the component', () => {

@@ -28,14 +28,15 @@ describe('client', () => {
     expect(window.location.href).toBe('/login')
   })
 
-  it('should do error handling via store addToast', async () => {
+  it('should do error handling via store addToast and remove the spinner', async () => {
     const data = { response: { status: 404, data: { detail: 'world not found' } } }
     try {
       await errorReponse(data)
     } catch (e) {
       expect(e).toBe(data)
     }
-    expect(store.commit).toBeCalledWith('addToast', { message: 'world not found', type: 'danger', timeout: 0 })
+    expect(store.commit).toBeCalledWith('setLoading', false)
+    expect(store.commit).toBeCalledWith('explorer/addToast', { message: 'world not found', type: 'danger', timeout: 0 })
   })
 
   it('should create a axios instance', async () => {
