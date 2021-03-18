@@ -6,15 +6,14 @@
       role="group"
       aria-label="Row actions group"
     >
-
       <router-link
         v-if="hasAddRights"
-        class="btn btn-outline-secondary add-row"
         v-b-tooltip.hover.bottom
+        class="btn btn-outline-secondary add-row"
         :title="$t('dataexplorer_add_entity_btn_tooltip')"
         :to="{ name: 'de-create', params: { entity: tableName }, query: {}}"
       >
-        <font-awesome-icon icon="plus-square"></font-awesome-icon>
+        <font-awesome-icon icon="plus-square" />
       </router-link>
     </div>
 
@@ -24,61 +23,63 @@
 
     <div class="btn-group" role="group" aria-label="sort selector">
       <sort-select
-        :sortOptions="sortOptions"
+        :sort-options="sortOptions"
         :sort="sort"
         @sort="handleSortSelectChange"
-      ></sort-select>
+      />
     </div>
     <div class="btn-group" arial-label="table settings">
-      <b-button variant="outline-secondary" v-b-modal.hide-show-columns>{{
-        $t('dataexplorer_toggle_column_visibility_btn_tooltip')
-      }}</b-button>
+      <b-button v-b-modal.hide-show-columns variant="outline-secondary">
+        {{
+          $t('dataexplorer_toggle_column_visibility_btn_tooltip')
+        }}
+      </b-button>
       <b-modal
+        id="hide-show-columns"
         ok-only
         scrollable
-        id="hide-show-columns"
         :title="$t('dataexplorer_toggle_column_visibility_modal_header')"
       >
-        <column-selection></column-selection>
+        <column-selection />
       </b-modal>
     </div>
     <div class="btn-group" role="group" aria-label="Table actions group">
       <button
-        :disabled="isDownloading"
-        @click="downloadData"
-        class="btn btn-outline-secondary"
         v-b-tooltip.hover.bottom
+        :disabled="isDownloading"
+        class="btn btn-outline-secondary"
         :title="$t('dataexplorer_download_btn_tooltip')"
+        @click="downloadData"
       >
         <font-awesome-icon icon="download" />
       </button>
 
       <button
+        v-if="!showSelected && dataDisplayLayout === 'TableView'"
+        v-b-tooltip.hover.bottom
         type="button"
         role="button"
-        v-if="!showSelected && dataDisplayLayout === 'TableView'"
-        @click="toggleDataDisplayLayout"
         class="btn btn-light btn-outline-secondary card-layout"
-        v-b-tooltip.hover.bottom
         :title="$t('dataexplorer_select_view_card_view_tooltip')"
+        @click="toggleDataDisplayLayout"
       >
-        <font-awesome-icon icon="th"></font-awesome-icon>
+        <font-awesome-icon icon="th" />
       </button>
 
       <button
+        v-else-if="!showSelected"
+        v-b-tooltip.hover.bottom
         type="button"
         role="button"
-        v-else-if="!showSelected"
-        @click="toggleDataDisplayLayout"
         class="btn btn-light btn-outline-secondary table-layout"
-        v-b-tooltip.hover.bottom
         :title="$t('dataexplorer_select_view_table_view_tooltip')"
+        @click="toggleDataDisplayLayout"
       >
-        <font-awesome-icon icon="th-list"></font-awesome-icon>
+        <font-awesome-icon icon="th-list" />
       </button>
 
       <router-link class="btn btn-light btn-outline-secondary table-settings" :to="{name: 'de-edit', params: {entity: settingsTable, dataRowId: tableSettings.settingsRowId }}">
-        <font-awesome-icon icon="cog"/>
+        <font-awesome-icon icon="cog" />
       </router-link>
     </div>
   </div>
@@ -96,6 +97,11 @@ export default {
     SearchComponent,
     SortSelect,
     ColumnSelection
+  },
+  data: function () {
+    return {
+      isDownloading: false
+    }
   },
   computed: {
     ...mapState('explorer', [
@@ -133,11 +139,6 @@ export default {
           .filter((a) => a.visible)
           .filter((a) => a.type !== 'compound')
           .map((a) => ({ id: a.id, name: a.name }))
-    }
-  },
-  data: function () {
-    return {
-      isDownloading: false
     }
   },
   methods: {
@@ -185,17 +186,20 @@ export default {
     flex-wrap: wrap;
     margin-top: -0.5rem;
   }
-  .btn-group{
+
+  .btn-group {
     margin: 0.5rem 0.5rem 0 0;
   }
+
   .btn-toolbar .btn.btn-outline-secondary:focus {
-    outline: none;
     box-shadow: none;
+    outline: none;
   }
+
   .btn-toolbar .btn.btn-outline-secondary:not(:hover):focus,
   .btn-toolbar .btn.btn-outline-secondary:not(:hover):active {
     background-color: inherit;
-    color: var(--secondary);
     border-color: var(--secondary);
+    color: var(--secondary);
   }
 </style>

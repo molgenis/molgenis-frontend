@@ -1,5 +1,5 @@
 <template>
-  <a :href="value" target="_blank" class="text-nowrap text-truncate d-block">{{value}}</a>
+  <a :href="value" target="_blank" class="text-nowrap text-truncate d-block">{{ value }}</a>
 </template>
 
 <script>

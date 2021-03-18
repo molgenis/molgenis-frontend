@@ -51,7 +51,7 @@ describe('rsqlMapper', () => {
   })
 
   describe('createRSQLQuery', () => {
-    let filterState: FilterGroup = {
+    const filterState: FilterGroup = {
       hideSidebar: false,
       definition: [],
       shown: [],

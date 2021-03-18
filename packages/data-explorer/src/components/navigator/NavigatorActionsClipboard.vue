@@ -3,43 +3,52 @@
     <div
       v-b-tooltip.d500
       :title="$t('navigator:action-cut')"
-      class="mr-1 btn-tooltip-wrapper">
+      class="mr-1 btn-tooltip-wrapper"
+    >
       <b-btn
         :disabled="!canCut"
         variant="secondary"
-        @click="selectClipboardResources('CUT')">
+        @click="selectClipboardResources('CUT')"
+      >
         <font-awesome-icon
           :class="{'fa-disabled' : !canCut}"
           icon="cut"
-          size="lg"/>
+          size="lg"
+        />
       </b-btn>
     </div>
     <div
       v-b-tooltip.d500
       :title="$t('navigator:action-copy')"
-      class="mr-1 btn-tooltip-wrapper">
+      class="mr-1 btn-tooltip-wrapper"
+    >
       <b-btn
         :disabled="!canCopy"
         variant="secondary"
-        @click="selectClipboardResources('COPY')">
+        @click="selectClipboardResources('COPY')"
+      >
         <font-awesome-icon
           :class="{'fa-disabled' : !canCopy}"
           icon="clone"
-          size="lg"/>
+          size="lg"
+        />
       </b-btn>
     </div>
     <div
       v-b-tooltip.d500
       :title="$t('navigator:action-paste')"
-      class="btn-tooltip-wrapper">
+      class="btn-tooltip-wrapper"
+    >
       <b-btn
         :disabled="!canPaste"
         variant="secondary"
-        @click="pasteClipboardResources">
+        @click="pasteClipboardResources"
+      >
         <font-awesome-icon
           :class="{'fa-disabled' : !canPaste}"
           icon="paste"
-          size="lg"/>
+          size="lg"
+        />
       </b-btn>
     </div>
   </span>

@@ -2,28 +2,30 @@
   <div class="card mg-explorer-card m-2 position-relative overflow-hidden">
     <div class="card-body">
       <slot>
-        <custom-card-content v-if="customCode"
-                             :id="dataId"
-                             :customCode="customCode"
-                             :record="dataContents"
+        <custom-card-content
+          v-if="customCode"
+          :id="dataId"
+          :custom-code="customCode"
+          :record="dataContents"
         >
-          <template v-slot:shopping-button>
-            <shopping-button :id="dataId" v-if="isShop" :isSelected="isSelected"></shopping-button>
+          <template #shopping-button>
+            <shopping-button v-if="isShop" :id="dataId" :is-selected="isSelected" />
           </template>
         </custom-card-content>
-        <default-card-content v-else
-                              :dataId="dataId"
-                              :dataTable="dataTable"
-                              :dataLabel="dataLabel"
-                              :dataContents="dataContents"
-                              :collapseLimit="collapseLimit"
-                              :numberOfAttributes="numberOfAttributes"
-                              :isEditable="isEditable"
-                              :hiddenColumns="hiddenColumns"
-                              @expandDefaultCard="handleDefaultCardExpand"
+        <default-card-content
+          v-else
+          :data-id="dataId"
+          :data-table="dataTable"
+          :data-label="dataLabel"
+          :data-contents="dataContents"
+          :collapse-limit="collapseLimit"
+          :number-of-attributes="numberOfAttributes"
+          :is-editable="isEditable"
+          :hidden-columns="hiddenColumns"
+          @expandDefaultCard="handleDefaultCardExpand"
         >
-          <template v-slot:shopping-button>
-            <shopping-button :id="dataId" v-if="isShop" :isSelected="isSelected"></shopping-button>
+          <template #shopping-button>
+            <shopping-button v-if="isShop" :id="dataId" :is-selected="isSelected" />
           </template>
         </default-card-content>
       </slot>
@@ -38,6 +40,7 @@ import CustomCardContent from './CustomCardContent'
 
 export default {
   name: 'ExplorerCard',
+  components: { ShoppingButton, DefaultCardContent, CustomCardContent },
   props: {
     dataId: {
       type: String,
@@ -88,7 +91,6 @@ export default {
       default: () => []
     }
   },
-  components: { ShoppingButton, DefaultCardContent, CustomCardContent },
   methods: {
     handleDefaultCardExpand () {
       this.$emit('expandCard', { id: this.dataId })

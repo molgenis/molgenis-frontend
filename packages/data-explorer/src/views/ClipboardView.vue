@@ -1,36 +1,38 @@
 <template>
-  <div class="entity-table" v-if="tableData && tableData.items && tableData.items.length > 0 && tableMeta">
+  <div v-if="tableData && tableData.items && tableData.items.length > 0 && tableMeta" class="entity-table">
     <div v-if="entitiesToShow.length === 0" class="alert alert-warning">
       {{ $t('dataexplorer_empty_shopping_cart') }}
     </div>
     <div v-else>
-      <button class="btn btn-primary cart-back mr-2" @click="closeShoppingCart" v-if="entitiesToShow.length > 5">
-        <font-awesome-icon icon="chevron-left"></font-awesome-icon> {{ $t('dataexplorer_shopping_cart_back_btn_label') }}
+      <button v-if="entitiesToShow.length > 5" class="btn btn-primary cart-back mr-2" @click="closeShoppingCart">
+        <font-awesome-icon icon="chevron-left" /> {{ $t('dataexplorer_shopping_cart_back_btn_label') }}
       </button>
-      <button class="btn btn-success cart-order mr-2" v-if="entitiesToShow.length > 5">
-        <font-awesome-icon icon="shopping-bag"></font-awesome-icon> {{ $t('dataexplorer_shopping_cart_order_btn_label') }}
+      <button v-if="entitiesToShow.length > 5" class="btn btn-success cart-order mr-2">
+        <font-awesome-icon icon="shopping-bag" /> {{ $t('dataexplorer_shopping_cart_order_btn_label') }}
       </button>
       <table class="table table-bordered overflow-hidden">
-        <table-header :visibleColumns="visibleColumns" :isShop="true"></table-header>
+        <table-header :visible-columns="visibleColumns" :is-shop="true" />
         <tbody>
-        <table-row v-for="(entity, index) in entitiesToShow"
-                   :key="index"
-                   :rowIndex="index"
-                   :id="getEntityId(entity)"
-                   :tableName="tableName"
-                   :rowData="entity"
-                   :visibleColumns="visibleColumns"
-                   :isSelected="isSelected(entity)"
-                   :isShop="true"
-                   :showSelected="showSelected"></table-row>
+          <table-row
+            v-for="(entity, index) in entitiesToShow"
+            :id="getEntityId(entity)"
+            :key="index"
+            :row-index="index"
+            :table-name="tableName"
+            :row-data="entity"
+            :visible-columns="visibleColumns"
+            :is-selected="isSelected(entity)"
+            :is-shop="true"
+            :show-selected="showSelected"
+          />
         </tbody>
       </table>
     </div>
     <button class="btn btn-primary cart-back mr-2" @click="closeShoppingCart">
-      <font-awesome-icon icon="chevron-left"></font-awesome-icon> {{ $t('dataexplorer_shopping_cart_back_btn_label') }}
+      <font-awesome-icon icon="chevron-left" /> {{ $t('dataexplorer_shopping_cart_back_btn_label') }}
     </button>
     <button v-if="entitiesToShow.length > 0" class="btn btn-success cart-order mr-2">
-      <font-awesome-icon icon="shopping-bag"></font-awesome-icon> {{ $t('dataexplorer_shopping_cart_back_btn_label') }}
+      <font-awesome-icon icon="shopping-bag" /> {{ $t('dataexplorer_shopping_cart_back_btn_label') }}
     </button>
   </div>
 </template>

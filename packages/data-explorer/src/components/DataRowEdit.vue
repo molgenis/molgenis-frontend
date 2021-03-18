@@ -1,46 +1,52 @@
 <template>
   <div class="container mt-4">
-
     <div v-show="!showRef">
-
       <!-- Alert container -->
       <div class="row">
         <div class="col-md-12">
-          <div id="alert-message" v-if="alert" :class="'alert alert-' + alert.type" role="alert">
-            <button @click="clearAlert()" type="button" class="close">
+          <div
+            v-if="alert" id="alert-message"
+            :class="'alert alert-' + alert.type"
+            role="alert"
+          >
+            <button type="button" class="close" @click="clearAlert()">
               <span aria-hidden="true">&times;</span>
             </button>
-            <span id="message-span">{{alert.message}}</span>
+            <span id="message-span">{{ alert.message }}</span>
           </div>
         </div>
       </div>
 
       <div v-if="showForm">
-
-        <nav  v-if="parent" aria-label="breadcrumb">
+        <nav v-if="parent" aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#" v-on:click.prevent="showParent()">{{parent.dataTableLabel}} </a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{dataTableLabel}}</li>
+            <li class="breadcrumb-item">
+              <a href="#" @click.prevent="showParent()">{{ parent.dataTableLabel }} </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              {{ dataTableLabel }}
+            </li>
           </ol>
         </nav>
-        <h1>{{dataTableLabel}}</h1>
+        <h1>{{ dataTableLabel }}</h1>
 
         <form-component
           id="data-row-edit-form"
-          :formFields="formFields"
-          :initialFormData="formData"
-          :formState="formState"
+          :form-fields="formFields"
+          :initial-form-data="formData"
+          :form-state="formState"
           :options="formComponentOptions"
           @valueChange="onValueChanged"
-          @addOptionRequest="onAddOptionRequest">
-        </form-component>
+          @addOptionRequest="onAddOptionRequest"
+        />
 
         <div class="row">
           <div class="col-md-12">
             <button
               id="cancel-btn"
+              class="btn btn-secondary mr-1"
               @click.prevent="onCancelClick"
-              class="btn btn-secondary mr-1">
+            >
               {{ $t('data-row-edit:data-row-edit-cancel-button-label') }}
             </button>
 
@@ -49,7 +55,8 @@
               id="save-btn"
               class="btn btn-primary"
               type="submit"
-              @click.prevent="onSubmit">
+              @click.prevent="onSubmit"
+            >
               {{ $t('data-row-edit:data-row-edit-save-button-label') }}
             </button>
 
@@ -58,32 +65,35 @@
               id="save-btn-saving"
               class="btn btn-primary"
               type="button"
-              disabled="disabled">
+              disabled="disabled"
+            >
               {{ $t('data-row-edit:data-row-edit-save-busy-state-label') }} <i
-              class="fa fa-spinner fa-spin " aria-hidden="true"></i>
+                class="fa fa-spinner fa-spin " aria-hidden="true"
+              />
             </button>
 
-            <span v-if="!isSaving && formState.$invalid && formState.$touched && saveFailed"
-                  class="alert text-danger">
-                {{ $t('data-row-edit:data-row-edit-invalid-fields-msg') }}
+            <span
+              v-if="!isSaving && formState.$invalid && formState.$touched && saveFailed"
+              class="alert text-danger"
+            >
+              {{ $t('data-row-edit:data-row-edit-invalid-fields-msg') }}
             </span>
-            <span v-else-if="alert && alert.type === 'danger' && alert.message"
-                  class="alert text-danger">
-                {{ alert.message }}
+            <span
+              v-else-if="alert && alert.type === 'danger' && alert.message"
+              class="alert text-danger"
+            >
+              {{ alert.message }}
             </span>
-
           </div>
         </div>
-
       </div>
-      <div v-else class=""><i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i></div>
-
+      <div v-else class="">
+        <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true" />
+      </div>
     </div>
 
-    <div ref="refContainer"></div>
-
+    <div ref="refContainer" />
   </div>
-
 </template>
 
 <script>
@@ -95,6 +105,9 @@ import Vue from 'vue'
 
 export default {
   name: 'DataRowEdit',
+  components: {
+    FormComponent
+  },
   props: {
     entity: {
       type: String,
@@ -131,6 +144,9 @@ export default {
       labelAttribute: null,
       referenceMap: {} // Map from field id to entityName for all reference entities
     }
+  },
+  created: async function () {
+    this.fetchTableData(this.entity, this.dataRowId)
   },
   methods: {
     onValueChanged (updatedFormData) {
@@ -255,12 +271,6 @@ export default {
         this.handleError(e)
       }
     }
-  },
-  created: async function () {
-    this.fetchTableData(this.entity, this.dataRowId)
-  },
-  components: {
-    FormComponent
   }
 }
 </script>

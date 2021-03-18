@@ -1,50 +1,52 @@
 <template>
-  <div class="entity-table container-fluid"
-       v-if="tableData && tableData.items.length > 0">
-    <div class="row" v-if="isShop && entitiesToShow.length === 0">
-      <div class="alert alert-warning col">
-      </div>
+  <div
+    v-if="tableData && tableData.items.length > 0"
+    class="entity-table container-fluid"
+  >
+    <div v-if="isShop && entitiesToShow.length === 0" class="row">
+      <div class="alert alert-warning col" />
     </div>
 
-    <div class="row" v-else-if="dataDisplayLayout==='cards'">
+    <div v-else-if="dataDisplayLayout==='cards'" class="row">
       <div class="col">
         <div class="card-columns">
           <explorer-card
-            class="card"
             v-for="(entity, index) in entitiesToShow"
-            :key="index"
             :id="getEntityId(entity)"
-            :isSelected="isSelected(entity)"
-            :isShop="isShop"
-            :dataLabel="getEntityLabel(entity)"
-            :dataContents="entity">
-          </explorer-card>
+            :key="index"
+            class="card"
+            :is-selected="isSelected(entity)"
+            :is-shop="isShop"
+            :data-label="getEntityLabel(entity)"
+            :data-contents="entity"
+          />
         </div>
-
       </div>
     </div>
 
-    <div class="row" v-else>
+    <div v-else class="row">
       <div class="col">
         <table class="table">
-          <table-header :header="tableHeaderToShow" :isShop="isShop"></table-header>
+          <table-header :header="tableHeaderToShow" :is-shop="isShop" />
           <tbody>
-          <table-row v-for="(entity, index) in entitiesToShow"
-                     :key="index"
-                     :rowIndex="index"
-                     :id="getEntityId(entity)"
-                     :rowData="entity"
-                     :isSelected="isSelected(entity)"
-                     :isShop="isShop"></table-row>
+            <table-row
+              v-for="(entity, index) in entitiesToShow"
+              :id="getEntityId(entity)"
+              :key="index"
+              :row-index="index"
+              :row-data="entity"
+              :is-selected="isSelected(entity)"
+              :is-shop="isShop"
+            />
           </tbody>
         </table>
       </div>
     </div>
 
-    <div class="row" v-if="shoppingFilter && isShop">
+    <div v-if="shoppingFilter && isShop" class="row">
       <div class="col">
         <button class="btn btn-success m-1">
-          <font-awesome-icon icon="shopping-bag"></font-awesome-icon>
+          <font-awesome-icon icon="shopping-bag" />
           Order
         </button>
       </div>

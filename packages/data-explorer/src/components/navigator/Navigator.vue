@@ -1,12 +1,12 @@
 // @flow
 <template>
   <div class="container">
-    <Alerts/>
-    <Jobs/>
-    <NavigatorSearch class="navigator-search"/>
+    <Alerts />
+    <Jobs />
+    <NavigatorSearch class="navigator-search" />
     <NavigatorBreadcrumb />
-    <NavigatorActions class="navigator-actions"/>
-    <NavigatorTable/>
+    <NavigatorActions class="navigator-actions" />
+    <NavigatorTable />
   </div>
 </template>
 
@@ -66,9 +66,9 @@ export default {
   }
 
   .job-alerts {
+    bottom: 60px; /* default footer height */
     left: 1rem;
     right: 1rem;
-    bottom: 60px; /* default footer height */
   }
 
   @media (min-width: 1200px) {
@@ -91,7 +91,7 @@ export default {
 
   .btn-tooltip-wrapper {
     display: inline;
-    padding: 0.375rem 0rem;
+    padding: 0.375rem 0;
   }
 
   .fa-disabled {

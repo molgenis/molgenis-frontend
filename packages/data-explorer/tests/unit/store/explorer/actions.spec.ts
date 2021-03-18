@@ -275,7 +275,6 @@ jest.mock('@/mappers/metaFilterMapper', () => {
 
 let state: ApplicationState
 let getters: any
-let pagination
 let commit, dispatch: any
 
 describe('actions', () => {

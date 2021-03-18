@@ -1,35 +1,37 @@
 <template>
   <div class="d-flex h-100">
-    <clipboard-view v-if="showSelected"></clipboard-view>
+    <clipboard-view v-if="showSelected" />
     <template v-else>
-      <select-layout-view></select-layout-view>
+      <select-layout-view />
       <cart-selection-toast
         v-if="tableSettings.isShop && selectedItemIds.length > 0"
-        :cartSelectionText="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"
-        :clickHandler="openSelectionList"
-        title="Selection"
         v-model="handleSelectionItems"
+        :cart-selection-text="`${selectedItemIds.length} item${selectedItemIds.length==1?'':'s'} selected`"
+        :click-handler="openSelectionList"
+        title="Selection"
       >
-        <template v-slot:removeButton><font-awesome-icon icon="times"></font-awesome-icon></template>
-        <template v-slot:buttonText>
-          <font-awesome-icon icon="shopping-cart"></font-awesome-icon>
+        <template #removeButton>
+          <font-awesome-icon icon="times" />
+        </template>
+        <template #buttonText>
+          <font-awesome-icon icon="shopping-cart" />
           {{ $t('dataexplorer_show_cart_btn_label') }}
         </template>
-
       </cart-selection-toast>
 
       <b-modal
         id="reference-table-modal"
         :title="refTableMetaData.label || refTableMetaData.id"
-        @hidden="resetRefState"
         hide-footer
         body-class="ref-modal-body"
-        dialog-class="ref-modal-dialog">
+        dialog-class="ref-modal-dialog"
+        @hidden="resetRefState"
+      >
         <RefTable
-          :isDataLoaded="isReferenceModalDataLoaded"
-          :entitiesToShow="refTableData"
-          :metaData="refTableMetaData"
-        ></RefTable>
+          :is-data-loaded="isReferenceModalDataLoaded"
+          :entities-to-show="refTableData"
+          :meta-data="refTableMetaData"
+        />
       </b-modal>
     </template>
   </div>
@@ -85,6 +87,12 @@ export default {
       return vm.searchText ? [ ...vm.filters.definition, searchDef ] : vm.filters.definition
     }
   },
+  created () {
+    this.$eventBus.$on('show-reference-table', this.requestShowRefTable)
+  },
+  destroyed () {
+    this.$eventBus.$off('show-reference-table')
+  },
   methods: {
     ...mapMutations('explorer', [
       'setFilterSelection',
@@ -110,21 +118,16 @@ export default {
       this.refTableData = []
       this.refTableMetaData = {}
     }
-  },
-  created () {
-    this.$eventBus.$on('show-reference-table', this.requestShowRefTable)
-  },
-  destroyed () {
-    this.$eventBus.$off('show-reference-table')
   }
 }
 </script>
 
 <style>
-  .ref-modal-body{
+  .ref-modal-body {
     padding: 0;
   }
-  .ref-modal-dialog{
+
+  .ref-modal-dialog {
     max-width: 90%;
   }
 </style>
