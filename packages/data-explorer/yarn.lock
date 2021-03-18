@@ -1149,10 +1149,10 @@
   dependencies:
     extend "3.0.2"
 
-"@molgenis-ui/components-library@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-2.4.0.tgz#c72a89ed0264446caaa06076ca6d746315676338"
-  integrity sha512-sZ85Vu6tphv+zxGvMIt1fFflA/1bviKlompeoNyz10Pl5/dW0DyeOk5WOOMPaCi9rCjYNswOKDRScr4aUF/big==
+"@molgenis-ui/components-library@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@molgenis-ui/components-library/-/components-library-2.4.1.tgz#86eea22fa931098c0e86200b02924ead0f97d140"
+  integrity sha512-cOn60gCL1ZDw+HYm2pjNF109vCUfG/JXvZIEnWI5EV5eCU8Sa6+AOh5KoyeIURu2Q7EQ90YpSO7ua7it4Q1wew==
 
 "@molgenis/molgenis-api-client@^2.1.2":
   version "2.3.0"
