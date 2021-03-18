@@ -54,6 +54,16 @@
         <font-awesome-icon icon="trash"></font-awesome-icon>
       </button>
 
+      <router-link
+        v-if="hasEditSettingsRights"
+        class="btn btn-outline-secondary"
+        v-b-tooltip.hover.bottom
+        title="Edit template"
+        :to="{ name: 'edit-detail-template', params: { entityType, entity}}"
+      >
+        <font-awesome-icon icon="cog"></font-awesome-icon>
+      </router-link>
+
     </div>
 
     <template v-if="customDetailCode">
@@ -92,7 +102,8 @@ export default {
     ...mapGetters([
       'hasAddRights',
       'hasEditRights',
-      'hasDeleteRights'
+      'hasDeleteRights',
+      'hasEditSettingsRights'
     ])
   },
   methods: {

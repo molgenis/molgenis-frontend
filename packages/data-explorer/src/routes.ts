@@ -1,6 +1,7 @@
 import MainView from './views/MainView.vue'
 import DataRowEdit from '@/components/DataRowEdit.vue'
 import EntityDetail from '@/views/EntityDetail.vue'
+import EditDetailTemplate from '@/views/EditDetailTemplate.vue'
 
 export const defaultRouteQuery:any = { page: 1, size: 20, hideSidebar: 'false', view: 'CardView' }
 
@@ -27,6 +28,12 @@ export const routes = [
     props: true,
     name: 'entity-detail',
     component: EntityDetail
+  },
+  {
+    path: '/:entityType/:entity/editor',
+    props: true,
+    name: 'edit-detail-template',
+    component: EditDetailTemplate
   },
   {
     path: '*',

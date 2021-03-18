@@ -59,7 +59,8 @@ describe('EntityDetail.vue', () => {
     getters = {
       hasAddRights: () => true,
       hasEditRights: () => true,
-      hasDeleteRights: () => true
+      hasDeleteRights: () => true,
+      hasEditSettingsRights: () => true
     }
 
     state = {
