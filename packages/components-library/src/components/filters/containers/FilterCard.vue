@@ -3,7 +3,6 @@
     no-body
     class="filter-card mb-2"
   >
-
     <b-card-header
       class="drag-handle"
       :class="cssClasses"
@@ -142,39 +141,40 @@ export default {
   }
 
   .form-group {
-    margin-bottom:0;
+    margin-bottom: 0;
   }
 
   .title {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .remove-button {
-    transition: opacity 0.2s, color 0.2s;
-    opacity: 0;
-    height: inherit;
-    width: 1.5em;
-    text-align: center;
+    cursor: pointer;
     display: inline-block;
+    height: inherit;
+    opacity: 0;
     position: absolute;
     right: 10px;
-    cursor: pointer;
+    text-align: center;
+    transition: opacity 0.2s, color 0.2s;
+    width: 1.5em;
   }
 
   .remove-button:hover {
     color: var(--danger);
   }
 
-  .filter-card:hover .remove-button{
+  .filter-card:hover .remove-button {
     opacity: 1;
   }
 
-  .sortable-ghost{
+  .sortable-ghost {
     border-style: dashed;
   }
-  .sortable-ghost > div{
+
+  .sortable-ghost > div {
     opacity: 0.2;
   }
 </style>

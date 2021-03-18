@@ -19,7 +19,7 @@ describe('clientFactory', () => {
     })
 
     it('should be able to change default behaviour', async () => {
-      const validateStatus = (status: number) => true
+      const validateStatus = () => true
       const responseInterceptor = (response: AxiosResponse<any>) => response
       const responseErrorInterceptor = (error: any) => Promise.reject(error)
       const data = { baseURL: 'foo', timeout: 42, validateStatus, responseInterceptor, responseErrorInterceptor }

@@ -1,48 +1,50 @@
 <template>
   <b-overlay :show="cardLoading">
-    <h5 class="card-title mg-default-card-title">{{dataLabel}}
+    <h5 class="card-title mg-default-card-title">
+      {{ dataLabel }}
       <router-link
         v-if="isEditable && dataId"
         class="btn btn-sm btn-link ml-1"
         role="button"
-        :to="{ name: 'de-edit', params: { entity: dataTable, dataRowId: dataId}, query: {}}">
-        <font-awesome-icon icon="edit"></font-awesome-icon>
+        :to="{ name: 'de-edit', params: { entity: dataTable, dataRowId: dataId}, query: {}}"
+      >
+        <font-awesome-icon icon="edit" />
       </router-link>
       <button
         v-if="isEditable"
         class="btn btn-sm btn-link"
         role="button"
         @click="$eventBus.$emit('delete-item', dataId)"
-        >
-        <font-awesome-icon icon="trash"></font-awesome-icon>
+      >
+        <font-awesome-icon icon="trash" />
       </button>
-      <slot name="shopping-button"></slot>
+      <slot name="shopping-button" />
     </h5>
     <div class="card-text">
-      <div class="row mb-1" v-for="(value, head) in dataToShow" :key="head">
+      <div v-for="(value, head) in dataToShow" :key="head" class="row mb-1">
         <div class="col-6">
-          {{head}}
+          {{ head }}
         </div>
         <div class="col-6">
           <template v-if="Array.isArray(value)">
-            {{value.map(v => v.label).join(', ')}}
+            {{ value.map(v => v.label).join(', ') }}
           </template>
           <template v-else-if="typeof value === 'object' && value !== null">
-            {{value.label}}
+            {{ value.label }}
           </template>
           <template v-else>
-            {{value}}
+            {{ value }}
           </template>
         </div>
       </div>
       <div class="row">
         <div class="col mt-2">
           <button v-if="numberOfAttributes > collapseLimit" class="btn btn-outline-info btn-sm mr-1 mg-card-expand" @click="handleExpandBtnClicked">
-            <font-awesome-icon icon="chevron-up" v-if="cardState==='open'"></font-awesome-icon>
-            <font-awesome-icon icon="chevron-right" v-if="cardState==='closed'"></font-awesome-icon> {{ expandBtnText }}
+            <font-awesome-icon v-if="cardState==='open'" icon="chevron-up" />
+            <font-awesome-icon v-if="cardState==='closed'" icon="chevron-right" /> {{ expandBtnText }}
           </button>
           <a :href="detailLink" class="btn btn-outline-info btn-sm mg-info-btn">
-            <font-awesome-icon icon="search"></font-awesome-icon> {{ $t('dataexplorer_default_card_info_btn_label') }}
+            <font-awesome-icon icon="search" /> {{ $t('dataexplorer_default_card_info_btn_label') }}
           </a>
         </div>
       </div>
@@ -54,12 +56,6 @@
 
 export default {
   name: 'DefaultCardContent',
-  data: () => {
-    return {
-      cardState: 'closed',
-      cardLoading: false
-    }
-  },
   props: {
     dataLabel: {
       type: String,
@@ -93,6 +89,12 @@ export default {
     hiddenColumns: {
       type: Array,
       default: () => []
+    }
+  },
+  data: () => {
+    return {
+      cardState: 'closed',
+      cardLoading: false
     }
   },
   computed: {

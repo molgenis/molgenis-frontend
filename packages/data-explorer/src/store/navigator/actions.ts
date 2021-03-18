@@ -69,7 +69,7 @@ function pollJob (commit, dispatch, state,
 }
 
 export default {
-  [FETCH_RESOURCES] ({ state, dispatch, rootState }) {
+  [FETCH_RESOURCES] ({ dispatch, rootState }) {
     if (rootState.query) {
       dispatch(FETCH_RESOURCES_BY_QUERY, rootState.query)
     } else {

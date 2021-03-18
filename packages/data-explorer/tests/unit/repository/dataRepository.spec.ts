@@ -89,7 +89,7 @@ describe('dataRepository', () => {
     })
 
     it('should build query with deep ref', async () => {
-      const resp = await dataRepository.getTableDataDeepReference(tableId, metaData, columns, rsqlQuery, pagination)
+      await dataRepository.getTableDataDeepReference(tableId, metaData, columns, rsqlQuery, pagination)
       expect(client.get).toBeCalledWith('/api/data/tableId?page=0&size=20&expanded-attributes-query&q=rsqlQuery')
     })
 

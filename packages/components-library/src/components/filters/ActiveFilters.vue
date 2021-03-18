@@ -157,6 +157,7 @@ export default {
 button svg path {
   transition: fill 0.3s;
 }
+
 button:hover svg path {
   fill: var(--danger);
 }

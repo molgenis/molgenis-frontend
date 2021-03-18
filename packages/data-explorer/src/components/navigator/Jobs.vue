@@ -2,19 +2,22 @@
   <div class="fixed-bottom job-alerts">
     <div
       v-if="jobs.length > 0"
-      class="row">
+      class="row"
+    >
       <div class="col">
         <div
           v-for="job in jobs"
-          :key="job.id">
+          :key="job.id"
+        >
           <b-alert
             :variant="getVariant(job)"
             :dismissible="job.status !== 'RUNNING'"
             show
-            @dismissed="removeJob(job)">
+            @dismissed="removeJob(job)"
+          >
             <div class="row">
               <div class="col-1">
-                <font-awesome-icon :icon="['fa', getIcon(job)]"/>
+                <font-awesome-icon :icon="['fa', getIcon(job)]" />
               </div>
               <div class="col-11">
                 <span v-if="job.progressMessage">{{ job.progressMessage }}</span>

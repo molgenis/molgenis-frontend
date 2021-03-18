@@ -5,20 +5,20 @@
     no-auto-hide
     :toaster="location"
     :variant="backgroundVariant"
-    :toastClass="toastClass"
-    :bodyClass="bodyClass"
-    :headerClass="headerClass"
+    :toast-class="toastClass"
+    :body-class="bodyClass"
+    :header-class="headerClass"
   >
     <div class="container">
       <div v-if="previewToggle && value.length > 0" class="mb-4">
-        <div class="row" v-for="(item, index) in value" :key="index">
+        <div v-for="(item, index) in value" :key="index" class="row">
           <div class="col">
             {{ previewLabel(item) }}
           </div>
           <div class="col-auto mb-2">
             <span role="button" @click="removeItem(item)">
               <!-- @slot pass an icon for the remove button -->
-              <slot name="removeButton"><span class="fa fa-times"></span></slot>
+              <slot name="removeButton"><span class="fa fa-times" /></slot>
             </span>
           </div>
         </div>
@@ -29,13 +29,15 @@
             {{ cartSelectionText }}
           </div>
           <div v-if="value.length > 0">
-            <span role="button" @click="previewToggle = !previewToggle">{{selectionText}} selection</span>
+            <span role="button" @click="previewToggle = !previewToggle">{{ selectionText }} selection</span>
           </div>
         </div>
         <div class="col-auto">
-          <b-button @click="clickHandler" :variant="buttonVariant">
+          <b-button :variant="buttonVariant" @click="clickHandler">
             <!-- @slot display tekst of button -->
-            <slot name="buttonText">Request items</slot>
+            <slot name="buttonText">
+              Request items
+            </slot>
           </b-button>
         </div>
       </div>

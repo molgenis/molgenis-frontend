@@ -1,23 +1,26 @@
 <template>
   <div class="overflow-auto">
-    <table class="table table-bordered h-100" v-if="isDataLoaded">
-      <table-header :visibleColumns="visibleColumns"></table-header>
+    <table v-if="isDataLoaded" class="table table-bordered h-100">
+      <table-header :visible-columns="visibleColumns" />
       <tbody>
-        <table-row v-for="(entity, index) in entitiesToShow"
-                   :key="index"
-                   :rowIndex="index"
-                   :id="entity[metaData.idAttribute.name].toString()"
-                   :tableName="metaData.idAttribute.name"
-                   :rowData="entity"
-                   :visibleColumns="visibleColumns"
-                   :isSelected="false"
-                   :isShop="false"
-                   :isEditable="false"
-                   :showSelected="false"
-        ></table-row>
+        <table-row
+          v-for="(entity, index) in entitiesToShow"
+          :id="entity[metaData.idAttribute.name].toString()"
+          :key="index"
+          :row-index="index"
+          :table-name="metaData.idAttribute.name"
+          :row-data="entity"
+          :visible-columns="visibleColumns"
+          :is-selected="false"
+          :is-shop="false"
+          :is-editable="false"
+          :show-selected="false"
+        />
       </tbody>
     </table>
-    <div v-else><b-spinner label="Spinning" class="m-3 align-middle"></b-spinner> {{ $t('dataexplorer_ref_table_loading_msg') }} </div>
+    <div v-else>
+      <b-spinner label="Spinning" class="m-3 align-middle" /> {{ $t('dataexplorer_ref_table_loading_msg') }}
+    </div>
   </div>
 </template>
 

@@ -2,25 +2,25 @@
   <div class="input-group">
     <form class="w-100" @submit.prevent="handleSearchAction">
       <div class="input-group">
-      <input
-        type="search"
-        v-model="searchText"
-        class="form-control"
-        :placeholder="$t('dataexplorer_search_btn_tooltip')"
-        aria-label="Search data"
-        aria-describedby="mg-data-explorer-search"
-      />
-      <div class="input-group-append">
-        <button
-          class="btn btn-outline-secondary"
-          type="submit"
-          id="mg-data-explorer-search"
-          v-b-tooltip.hover.bottom
-          :title="$t('dataexplorer_search_input_tooltip')"
+        <input
+          v-model="searchText"
+          type="search"
+          class="form-control"
+          :placeholder="$t('dataexplorer_search_btn_tooltip')"
+          aria-label="Search data"
+          aria-describedby="mg-data-explorer-search"
         >
-          <font-awesome-icon icon="search"></font-awesome-icon>
-        </button>
-      </div>
+        <div class="input-group-append">
+          <button
+            id="mg-data-explorer-search"
+            v-b-tooltip.hover.bottom
+            class="btn btn-outline-secondary"
+            type="submit"
+            :title="$t('dataexplorer_search_input_tooltip')"
+          >
+            <font-awesome-icon icon="search" />
+          </button>
+        </div>
       </div>
     </form>
   </div>
@@ -40,11 +40,6 @@ export default {
       searchText: this.value
     }
   },
-  methods: {
-    handleSearchAction () {
-      this.$emit('input', this.searchText)
-    }
-  },
   watch: {
     value: {
       handler: function (val, oldVal) {
@@ -60,6 +55,11 @@ export default {
           this.handleSearchAction()
         }
       }
+    }
+  },
+  methods: {
+    handleSearchAction () {
+      this.$emit('input', this.searchText)
     }
   }
 }

@@ -34,6 +34,7 @@ interface Linkable {
   links: { self: string },
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface BaseValueObject { }
 
 export interface MRefValueObject extends BaseValueObject, Linkable {

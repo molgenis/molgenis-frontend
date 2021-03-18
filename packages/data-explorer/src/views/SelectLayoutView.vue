@@ -3,9 +3,10 @@
     <div v-if="!loading && (!tableMeta || !tableData || !tableData.items.length)" class="alert alert-warning">
       {{ $t('dataexplorer_empty_table') }}
     </div>
-    <component v-else-if="!loading"
+    <component
       :is="dataDisplayLayout"
-      :entitiesToShow="tableData.items"
+      v-else-if="!loading"
+      :entities-to-show="tableData.items"
     />
   </div>
 </template>
