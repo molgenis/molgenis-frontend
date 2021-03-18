@@ -88,7 +88,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['tableSettings', 'tableMeta']),
+    ...mapState('explorer', ['tableSettings', 'tableMeta']),
     template: {
       get () {
         return this.tableSettings.customDetailCode ? this.tableSettings.customDetailCode : ''
@@ -99,7 +99,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchTablePermissions', 'fetchTableMeta', 'fetchTableSettings', 'saveEntityDetailTemplate']),
+    ...mapActions('explorer', [
+      'fetchTablePermissions',
+      'fetchTableMeta',
+      'fetchTableSettings',
+      'saveEntityDetailTemplate'
+    ]),
     saveTemplate: async function () {
       this.isSavingTemplate = true
       await this.saveEntityDetailTemplate({ template: this.template })

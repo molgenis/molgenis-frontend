@@ -62,7 +62,8 @@ describe('EditDetailTemplate.vue', () => {
       }
     }
 
-    const store = new Vuex.Store({ state, actions, getters })
+    const explorer = { state, actions, getters, namespaced: true }
+    const store = new Vuex.Store({modules: { explorer } })
 
     // needed to trigger form submit 
     const div = document.createElement('div')

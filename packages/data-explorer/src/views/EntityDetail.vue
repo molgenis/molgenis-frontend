@@ -96,10 +96,10 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('explorer', {
       customDetailCode: state => state.tableSettings.customDetailCode
     }),
-    ...mapGetters([
+    ...mapGetters('explorer', [
       'hasAddRights',
       'hasEditRights',
       'hasDeleteRights',
@@ -107,7 +107,11 @@ export default {
     ])
   },
   methods: {
-    ...mapActions(['fetchTablePermissions', 'fetchTableSettings', 'deleteRow']),
+    ...mapActions('explorer', [
+      'fetchTablePermissions',
+      'fetchTableSettings',
+      'deleteRow'
+    ]),
     async deleteEntity () {
       const msg = this.$t('dataexplorer_delete_confirm_msg')
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, {
