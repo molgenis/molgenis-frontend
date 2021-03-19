@@ -306,6 +306,7 @@ describe('api', () => {
 
       try {
         res = await api.deleteResources(resources)
+      // eslint-disable-next-line no-empty
       } catch (err) {} finally {
         expect(res).toEqual(response)
       }

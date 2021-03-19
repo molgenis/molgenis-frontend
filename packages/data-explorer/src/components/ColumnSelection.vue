@@ -9,15 +9,16 @@
         <i>{{ toggleSelectText }}</i>
       </b-link>
     </div>
-    <label v-for="column in allColumns" :key="column"
-      ><input
-        class="ml-2"
-        type="checkbox"
-        :value="column"
-        @change="modifyHiddenColumns($event)"
-        :checked="!hiddenColumns.includes(column)"
-      />
-      <span class="ml-2" v-text="column"></span>
+    <label
+      v-for="column in allColumns" :key="column"
+    ><input
+       class="ml-2"
+       type="checkbox"
+       :value="column"
+       :checked="!hiddenColumns.includes(column)"
+       @change="modifyHiddenColumns($event)"
+     >
+      <span class="ml-2" v-text="column" />
     </label>
   </div>
 </template>

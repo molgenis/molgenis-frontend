@@ -3,12 +3,11 @@
     class="filter-container"
     @mouseup="drag=false"
   >
-
     <div v-if="canEdit && filters.length > 0" class="change-filters">
       <b-dropdown
         v-if="dialogStyle == 'dropdown'"
-        class="mb-2"
         ref="addFilter"
+        class="mb-2"
         variant="outline-primary"
         boundary="window"
         menu-class="shadow ml-2"
@@ -16,11 +15,11 @@
         no-caret
         block
       >
-        <template v-slot:button-content>
-          <font-awesome-icon icon="filter" class="mr-1" /> {{filterActionLabel}}
+        <template #button-content>
+          <font-awesome-icon icon="filter" class="mr-1" /> {{ filterActionLabel }}
         </template>
         <b-dropdown-text>
-          {{filterListLabel}}
+          {{ filterListLabel }}
           <span class="float-right btn-close-filter-dialog" @click.stop="$refs.addFilter.hide(true)">
             <font-awesome-icon icon="times" />
           </span>
@@ -29,19 +28,23 @@
           <change-filters
             v-model="filtersToShow"
             :filters="filters"
-            @input="selectionUpdate">
-          </change-filters>
+            @input="selectionUpdate"
+          />
         </b-dropdown-form>
       </b-dropdown>
-      <button v-else class="btn btn-block btn-primary text-nowrap" v-b-modal.change-filters-modal>
-        {{filterListLabel}}<font-awesome-icon icon="caret-right" class="ml-1"/>
+      <button v-else v-b-modal.change-filters-modal class="btn btn-block btn-primary text-nowrap">
+        {{ filterListLabel }}<font-awesome-icon icon="caret-right" class="ml-1" />
       </button>
-      <b-modal id="change-filters-modal" title="Change filters" hide-footer hide-header scrollable>
+      <b-modal
+        id="change-filters-modal" title="Change filters"
+        hide-footer
+        hide-header scrollable
+      >
         <change-filters
           v-model="filtersToShow"
           :filters="filters"
-          @input="selectionUpdate">
-        </change-filters>
+          @input="selectionUpdate"
+        />
       </b-modal>
     </div>
 
@@ -198,17 +201,17 @@ export default {
         .filter(item => item.type !== 'compound-title')
     }
   },
+  watch: {
+    filtersShown (newValue) {
+      this.filtersToShow = newValue
+    }
+  },
   created () {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
   },
   destroyed () {
     window.removeEventListener('resize', this.handleResize)
-  },
-  watch: {
-    filtersShown (newValue) {
-      this.filtersToShow = newValue
-    }
   },
   methods: {
     handleResize () {
@@ -265,14 +268,14 @@ export default {
   }
 
   .btn-close-filter-dialog {
-    transition: color 0.2s;
-    height: inherit;
-    width: 1.5em;
-    text-align: center;
+    cursor: pointer;
     display: inline-block;
+    height: inherit;
     position: absolute;
     right: 10px;
-    cursor: pointer;
+    text-align: center;
+    transition: color 0.2s;
+    width: 1.5em;
   }
 
   .btn-close-filter-dialog:hover {
@@ -280,8 +283,8 @@ export default {
   }
 
   .change-filters form {
-      max-height: 400px;
-      overflow: auto;
+    max-height: 400px;
+    overflow: auto;
   }
 </style>
 

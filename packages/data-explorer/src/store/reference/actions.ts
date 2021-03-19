@@ -3,7 +3,7 @@ import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 
 export default {
-  fetchRefData: async ({ state }, { refEntityType, value }: { refEntityType: string, value: { id: string }[] | { id: string }}) => {
+  fetchRefData: async (_ , { refEntityType, value }: { refEntityType: string, value: { id: string }[] | { id: string }}) => {
     const metaData = await metaDataRepository.fetchMetaDataByURL(refEntityType)
     const attributes = metaDataService.getAttributesfromMeta(metaData)
     const idColumn = metaData.idAttribute.name

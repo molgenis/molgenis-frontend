@@ -1,5 +1,9 @@
 <template>
-  <component :is="getMapping()" :value="value" :rowIndex="rowIndex" :metadata="metadata"></component>
+  <component
+    :is="getMapping()" :value="value"
+    :row-index="rowIndex"
+    :metadata="metadata"
+  />
 </template>
 
 <script>
@@ -58,10 +62,11 @@ export default {
 </script>
 
 <style scoped>
-  >>> .mouse-help{
+  >>> .mouse-help {
     cursor: help;
   }
-  >>> .mouse-ref{
+
+  >>> .mouse-ref {
     cursor: pointer;
   }
 </style>

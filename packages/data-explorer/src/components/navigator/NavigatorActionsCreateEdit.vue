@@ -4,23 +4,27 @@
     <div
       v-b-tooltip.d500
       :title="$t('navigator:action-create')"
-      class="mr-1 btn-tooltip-wrapper">
+      class="mr-1 btn-tooltip-wrapper"
+    >
       <b-dd
         :disabled="!canCreate"
-        variant="primary">
+        variant="primary"
+      >
         <template slot="button-content">
           <font-awesome-icon
             :class="{'fa-disabled' : !canCreate}"
             icon="plus"
-            size="lg"/>
+            size="lg"
+          />
         </template>
         <b-dd-item v-b-modal.packageCreateModal>
-          <font-awesome-icon :icon="['fa', 'folder-open']"/> {{ $t('navigator:action-create-package') }}
+          <font-awesome-icon :icon="['fa', 'folder-open']" /> {{ $t('navigator:action-create-package') }}
         </b-dd-item>
         <b-dd-item
           v-if="metadataManagerUrl"
-          :href="metadataManagerUrl">
-          <font-awesome-icon icon="list"/> {{ $t('navigator:action-create-entity-type') }}
+          :href="metadataManagerUrl"
+        >
+          <font-awesome-icon icon="list" /> {{ $t('navigator:action-create-entity-type') }}
         </b-dd-item>
       </b-dd>
     </div>
@@ -28,38 +32,45 @@
     <div
       v-b-tooltip.d500
       :title="$t('navigator:action-edit')"
-      class="btn-tooltip-wrapper">
+      class="btn-tooltip-wrapper"
+    >
       <b-btn
-        v-b-modal.packageUpdateModal
         v-if="nrSelectedResources === 1 && getSelectedResourceType === 'PACKAGE'"
+        v-b-modal.packageUpdateModal
         :disabled="!canEdit"
         variant="secondary"
-        class="button-last">
+        class="button-last"
+      >
         <font-awesome-icon
           :class="{'fa-disabled' : !canEdit}"
           icon="edit"
-          size="lg"/>
+          size="lg"
+        />
       </b-btn>
       <b-btn
         v-else-if="metadataManagerUrl && nrSelectedResources === 1 && (getSelectedResourceType === 'ENTITY_TYPE' || getSelectedResourceType === 'ENTITY_TYPE_ABSTRACT')"
         :href="metadataManagerUrl + '/' + selectedResources[0].id"
         :disabled="!canEdit"
         variant="secondary"
-        class="button-last">
+        class="button-last"
+      >
         <font-awesome-icon
           :class="{'fa-disabled' : !canEdit}"
           icon="edit"
-          size="lg"/>
+          size="lg"
+        />
       </b-btn>
       <b-btn
         v-else
         :disabled="true"
         variant="secondary"
-        class="button-last">
+        class="button-last"
+      >
         <font-awesome-icon
           :class="{'fa-disabled' : !canEdit}"
           icon="edit"
-          size="lg"/>
+          size="lg"
+        />
       </b-btn>
     </div>
 

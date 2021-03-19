@@ -1,5 +1,5 @@
 <template>
-  <a :href="`mailto:${value}`" target="_blank" class="text-nowrap text-truncate d-block">{{value}}</a>
+  <a :href="`mailto:${value}`" target="_blank" class="text-nowrap text-truncate d-block">{{ value }}</a>
 </template>
 
 <script>

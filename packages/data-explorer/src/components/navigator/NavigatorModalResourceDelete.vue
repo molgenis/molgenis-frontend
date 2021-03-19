@@ -6,7 +6,8 @@
     :cancel-title="$t('navigator:delete-confirmation-cancel-text')"
     ok-variant="danger"
     cancel-variant="secondary"
-    @ok="deleteSelectedResources">
+    @ok="deleteSelectedResources"
+  >
     {{ $t('navigator:delete-confirmation-text') }}
   </b-modal>
 </template>

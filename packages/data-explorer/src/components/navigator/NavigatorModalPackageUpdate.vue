@@ -6,30 +6,36 @@
     :ok-title="$t('navigator:update-package-ok-text')"
     :cancel-title="$t('navigator:update-package-cancel-text')"
     @ok="handleOk"
-    @shown="resetForm">
+    @shown="resetForm"
+  >
     <b-form
       :validated="validated"
-      @submit.stop.prevent="handleSubmit">
+      @submit.stop.prevent="handleSubmit"
+    >
       <b-form-group
         id="packageLabelInputGroup"
         :label="$t('navigator:package-input-label') + ' *'"
         :invalid-feedback="$t('navigator:package-input-label-invalid')"
-        label-for="packageNameInput">
+        label-for="packageNameInput"
+      >
         <b-form-input
           id="packageLabelInput"
           ref="updatePackageLabelInput"
           v-model="form.label"
           type="text"
-          required/>
+          required
+        />
       </b-form-group>
       <b-form-group
         id="packageDescriptionInputGroup"
         :label="$t('navigator:package-input-description')"
-        label-for="packageDescriptionInput">
+        label-for="packageDescriptionInput"
+      >
         <b-form-input
           id="packageDescriptionInput"
           v-model="form.description"
-          type="text"/>
+          type="text"
+        />
       </b-form-group>
     </b-form>
   </b-modal>

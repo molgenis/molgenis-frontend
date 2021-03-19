@@ -4,17 +4,20 @@
       <breadcrumb-bar
         v-if="isUserAuthenticated"
         :breadcrumbs="breadcrumbs"
+        :head-item-tooltip="tableMeta && tableMeta.description"
         @fetchItems="fetchPackageTables"
-        :headItemTooltip="tableMeta && tableMeta.description"
-      >
-      </breadcrumb-bar>
+      />
       <nav v-else aria-label="breadcrumb">
         <ol v-if="tableMeta" class="breadcrumb">
           <li class="breadcrumb-item active" aria-current="page">
             <span id="mainView-headItemTooltipID">
               {{ tableMeta.label }}
             </span>
-            <b-tooltip v-if="tableMeta.description" placement="bottom" target="mainView-headItemTooltipID" triggers="hover">
+            <b-tooltip
+              v-if="tableMeta.description" placement="bottom"
+              target="mainView-headItemTooltipID"
+              triggers="hover"
+            >
               {{ tableMeta.description }}
             </b-tooltip>
           </li>
@@ -24,23 +27,23 @@
     </div>
     <div class="mg-content d-flex h-100 overflow-control">
       <button
-        @click="showSidebar"
         class="btn btn-outline-secondary mg-filter-tab"
         :class="{'active': filters.hideSidebar}"
         :title="$t('dataexplorer_filters_show_btn_label')"
+        @click="showSidebar"
       >
-          <font-awesome-icon icon="chevron-right"/>
+        <font-awesome-icon icon="chevron-right" />
       </button>
-      <filters-view class="mg-filter mr-2" :class="{'active': filters.hideSidebar}"/>
+      <filters-view class="mg-filter mr-2" :class="{'active': filters.hideSidebar}" />
 
       <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
-        <active-filters @input="saveFilterState" :value="activeFilterSelections" :filters="filterDefinitions"></active-filters>
-        <toolbar-view class="mb-2"></toolbar-view>
+        <active-filters :value="activeFilterSelections" :filters="filterDefinitions" @input="saveFilterState" />
+        <toolbar-view class="mb-2" />
 
         <div class="mg-data-view-container">
           <data-view v-if="!_tablePagination.loading" />
         </div>
-        <pagination v-show="!loading" class="mt-2" v-model="_tablePagination" />
+        <pagination v-show="!loading" v-model="_tablePagination" class="mt-2" />
       </div>
     </div>
     <b-overlay :show="loading" no-wrap />
@@ -67,6 +70,19 @@ const deleteConfirmOptions = {
 export default {
   name: 'MainView',
   components: { FiltersView, DataView, BreadcrumbBar, Pagination, Toaster, ToolbarView, ActiveFilters },
+  async beforeRouteUpdate (to, from, next) {
+    this.setLoading(true)
+    if (to.params.entity !== from.params.entity) {
+      const tableName = to.params.entity
+      this.fetchTablePermissions({ tableName })
+      await this.fetchTableMeta({ tableName })
+    }
+    this.setRouteQuery(to.query)
+    this.setDataDisplayLayout(to.query.view)
+    await this.fetchViewData()
+    this.setLoading(false)
+    next()
+  },
   computed: {
     _tablePagination: {
       get: function () {
@@ -102,6 +118,22 @@ export default {
       return this.searchText ? [...this.filters.definition, searchDef] : this.filters.definition
     }
   },
+  async created () {
+    this.setLoading(true)
+    this.$eventBus.$on('delete-item', (data) => {
+      this.handeldeleteItem(data)
+    })
+    const tableName = this.$route.params.entity
+    this.fetchTablePermissions({ tableName })
+    await this.fetchTableMeta({ tableName })
+    this.setRouteQuery(this.$route.query)
+    this.setDataDisplayLayout(this.$route.query.view)
+    await this.fetchViewData()
+    this.setLoading(false)
+  },
+  destroyed () {
+    this.$eventBus.$off('delete-item')
+  },
   methods: {
     ...mapMutations('explorer', ['setToasts', 'setLoading', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
     ...mapActions('explorer', ['deleteRow', 'fetchViewData', 'fetchTableMeta', 'fetchTablePermissions']),
@@ -129,35 +161,6 @@ export default {
         query: { ...this.$route.query, filter: this.compressedRouteFilter, hideSidebar: String(false) }
       })
     }
-  },
-  async created () {
-    this.setLoading(true)
-    this.$eventBus.$on('delete-item', (data) => {
-      this.handeldeleteItem(data)
-    })
-    const tableName = this.$route.params.entity
-    this.fetchTablePermissions({ tableName })
-    await this.fetchTableMeta({ tableName })
-    this.setRouteQuery(this.$route.query)
-    this.setDataDisplayLayout(this.$route.query.view)
-    await this.fetchViewData()
-    this.setLoading(false)
-  },
-  destroyed () {
-    this.$eventBus.$off('delete-item')
-  },
-  async beforeRouteUpdate (to, from, next) {
-    this.setLoading(true)
-    if (to.params.entity !== from.params.entity) {
-      const tableName = to.params.entity
-      this.fetchTablePermissions({ tableName })
-      await this.fetchTableMeta({ tableName })
-    }
-    this.setRouteQuery(to.query)
-    this.setDataDisplayLayout(to.query.view)
-    await this.fetchViewData()
-    this.setLoading(false)
-    next()
   }
 }
 </script>
@@ -172,20 +175,20 @@ export default {
   }
 
   .mg-filter {
-    transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
-    min-width: 20rem;
     max-width: 20rem;
+    min-width: 20rem;
+    transition: max-width 0.3s, min-width 0.3s, transform 0.3s;
   }
 
   .mg-filter.active {
-    transition: max-width 0.3s, min-width 0.3s, transform 0.6s;
-    transform: translateX(-20rem);
     max-width: 0;
     min-width: 0;
     padding-right: 0;
+    transform: translateX(-20rem);
+    transition: max-width 0.3s, min-width 0.3s, transform 0.6s;
   }
 
-  .mg-filter.active + div > .mg-data-view-container{
+  .mg-filter.active + div > .mg-data-view-container {
     max-width: 100%;
   }
 
@@ -216,9 +219,10 @@ export default {
     .mg-content {
       display: block;
     }
+
     .mg-content .mg-filter {
-      min-width: 0;
       max-width: none;
+      min-width: 0;
       padding: 0;
     }
   }

@@ -45,13 +45,14 @@
           `There are ${optionsWarningCount} or more results found, only the first ${optionsWarningCount} are available. Please refine your search.`
         "
         class="badge badge-warning warning text-white ml-auto d-flex align-items-center"
-        >
+      >
         <span class="mr-1">
-          {{optionsWarningCount}}+
-          </span>
+          {{ optionsWarningCount }}+
+        </span>
         <font-awesome-icon
           icon="exclamation-circle"
-      /></div>
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -275,14 +276,14 @@ export default {
 }
 
 .checkbox-list {
+  margin: 0.75rem 0;
   max-height: 16rem;
   overflow-y: auto;
-  margin: 0.75rem 0;
 }
 
 .card-link {
-  font-style: italic;
   font-size: small;
+  font-style: italic;
 }
 </style>
 

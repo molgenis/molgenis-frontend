@@ -1,16 +1,16 @@
 <template>
   <div class="row">
     <div class="col">
-      <NavigatorActionsCreateEdit class="button-last"/>
-      <NavigatorActionsClipboard class="button-last"/>
-      <NavigatorActionsTransfer class="button-last"/>
+      <NavigatorActionsCreateEdit class="button-last" />
+      <NavigatorActionsClipboard class="button-last" />
+      <NavigatorActionsTransfer class="button-last" />
       <div class="float-right">
-        <NavigatorActionsDelete/>
+        <NavigatorActionsDelete />
       </div>
     </div>
-    <NavigatorModalPackageCreate/>
-    <NavigatorModalPackageUpdate/>
-    <NavigatorModalResourceDelete/>
+    <NavigatorModalPackageCreate />
+    <NavigatorModalPackageUpdate />
+    <NavigatorModalResourceDelete />
   </div>
 </template>
 

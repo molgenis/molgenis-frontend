@@ -156,7 +156,8 @@ export default {
 </script>
 
 <style>
-.card-link { font-style: italic; font-size: small; }
+.card-link { font-size: small;
+  font-style: italic; }
 </style>
 
 <docs>
