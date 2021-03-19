@@ -18,7 +18,7 @@ module.exports = {
     "ignorePatterns": [],
     "overrides": [
         {
-            "files": ["packages/**/*.ts"],
+            "files": ["**/*.ts"],
             "parser": "@typescript-eslint/parser",
             "extends": [
                 "eslint:recommended",
@@ -37,7 +37,7 @@ module.exports = {
         },
         {
             "parser": "vue-eslint-parser",
-            "files": ["packages/**/*.vue"],
+            "files": ["**/*.vue"],
             "extends": [
                 "plugin:vue/recommended"
             ],
