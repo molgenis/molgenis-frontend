@@ -52,7 +52,7 @@
     "vuex-router-sync": "5.0.0"
   },
   "devDependencies": {
-        "@types/jest": "^26.0.14",
+    "@types/jest": "^26.0.14",
     "@vue/cli-plugin-babel": "~4.5.7",
     "@vue/cli-plugin-e2e-nightwatch": "^3.9.0",
     "@vue/cli-plugin-router": "~4.5.7",
