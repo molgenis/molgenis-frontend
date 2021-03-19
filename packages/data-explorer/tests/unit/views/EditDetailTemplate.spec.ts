@@ -64,13 +64,14 @@ describe('EditDetailTemplate.vue', () => {
 
     const explorer = { state, actions, getters, namespaced: true }
     const store = new Vuex.Store({modules: { explorer } })
+    const propsData = {entityType: 'entityType', entity: 'entity'}
 
     // needed to trigger form submit 
     const div = document.createElement('div')
     div.id = 'root'
     document.body.appendChild(div)
 
-    wrapper = shallowMount(EditDetailTemplate, { attachTo: '#root', store, localVue, stubs, mocks, directives})
+    wrapper = shallowMount(EditDetailTemplate, { propsData, attachTo: '#root', store, localVue, stubs, mocks, directives})
     await wrapper.vm.$nextTick // meta
     await wrapper.vm.$nextTick // settings
     await wrapper.vm.$nextTick // data

@@ -14,7 +14,7 @@ exports[`EditDetailTemplate.vue should render the editor 1`] = `
           </router-link-stub>
         </li>
         <li aria-current="page" class="breadcrumb-item"><span>
-             abc-123
+            abc-123
           </span></li>
       </ol>
     </nav>
@@ -38,13 +38,17 @@ exports[`EditDetailTemplate.vue should render the editor 1`] = `
     <div class="row">
       <div class="col-6">
         <div class="card p-2">
-          <h5 class="card-title">record</h5>
+          <h5 class="card-title">
+            record
+          </h5>
           <prop-render-stub object="[object Object]" class="template-values"></prop-render-stub>
         </div>
       </div>
       <div class="col-6">
         <div class="card p-2">
-          <h5 class="card-title">metaData</h5>
+          <h5 class="card-title">
+            metaData
+          </h5>
           <prop-render-stub object="[object Object]" class="template-values"></prop-render-stub>
         </div>
       </div>

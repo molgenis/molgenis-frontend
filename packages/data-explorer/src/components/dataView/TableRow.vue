@@ -25,11 +25,11 @@
         <font-awesome-icon icon="edit" />
       </router-link>
       <router-link
-        class="btn btn-sm text-secondary" role="button"
+        v-b-tooltip.hover.bottom class="btn btn-sm text-secondary"
+        role="button"
         :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}}"
-        v-b-tooltip.hover.bottom
       >
-        <font-awesome-icon icon="search"></font-awesome-icon>
+        <font-awesome-icon icon="search" />
       </router-link>
       <button
         v-if="isEditable"

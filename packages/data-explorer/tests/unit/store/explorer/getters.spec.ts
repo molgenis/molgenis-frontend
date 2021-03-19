@@ -92,7 +92,7 @@ describe('getters', () => {
   })
 
   describe('hasDeleteRights', () => {
-    let state: any = {}
+    const state: any = {}
     state.tablePermissions = []
 
     it('should return false user does not have delete rights', () => {
