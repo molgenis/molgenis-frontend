@@ -27,5 +27,3 @@ export {
   StringFilter,
   Toaster
 }
-
-// end of file
