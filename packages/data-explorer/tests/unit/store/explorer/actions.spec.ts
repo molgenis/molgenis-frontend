@@ -6,6 +6,7 @@ import * as dataRepository from '@/repository/dataRepository'
 import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 import Vue from 'vue'
+import client from '@/lib/client'
 
 const metaResponse = {
   meta: {
@@ -231,17 +232,6 @@ const mockResponses: {[key:string]: Object} = {
   }
 }
 
-const mockPostResponses = {
-  '/plugin/navigator/download': {
-    '{"resources":[{"id":"success","type":"ENTITY_TYPE"}]}': {
-      data: { identifier: 'success' }
-    },
-    '{"resources":[{"id":"failure","type":"ENTITY_TYPE"}]}': {
-      data: { identifier: 'failure' }
-    }
-  }
-}
-
 jest.mock('@/lib/client', () => {
   return {
     get: (url: string) => {
@@ -251,13 +241,8 @@ jest.mock('@/lib/client', () => {
       }
       return Promise.resolve(mockResp)
     },
-    post: (url: string, postData) => {
-      const mockRespons = mockPostResponses[url][JSON.stringify(postData)]
-      if (!mockRespons) {
-        console.warn(`mock url (${url}) called but not found inz ${JSON.stringify(mockPostResponses, null, 4)}`)
-      }
-      return Promise.resolve(mockPostResponses[url][JSON.stringify(postData)])
-    }
+    post: jest.fn(),
+    patch: jest.fn()
   }
 })
 
@@ -305,6 +290,9 @@ describe('actions', () => {
 
     commit = jest.fn()
     dispatch = jest.fn()
+
+    // @ts-ignore
+    client.post.mockReset()
   })
 
   describe('fetchTableMeta', () => {
@@ -314,33 +302,11 @@ describe('actions', () => {
       metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
       // @ts-ignore
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, getters, dispatch, state }, { tableName: 'tableWithOutSettings' })
+      await actions.fetchTableMeta({ commit, getters, dispatch }, { tableName: 'tableWithOutSettings' })
       expect(commit.mock.calls).toEqual([
-        [ 'setTableSettings', {} ],
         [ 'setMetaData', null ],
         ['setFilterDefinition', []],
         ['setTableName', 'tableWithOutSettings'],
-        [ 'setMetaData', 'meta' ],
-        [ 'setFilterDefinition', 'def' ]
-      ])
-    })
-
-    it('should commit table settings from server only if present', async () => {
-      const commit = jest.fn()
-      // @ts-ignore ts does not know its a mock
-      metaFilterMapper.mapMetaToFilters.mockResolvedValue({ definition: 'def' })
-      // @ts-ignore
-      metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
-      await actions.fetchTableMeta({ commit, getters, dispatch, state }, { tableName: 'tableWithSettings' })
-      expect(commit.mock.calls).toEqual([
-        [ 'setTableSettings', {} ],
-        [ 'setMetaData', null ],
-        ['setFilterDefinition', []],
-        ['setTableName', 'tableWithSettings'],
-        [
-          'setTableSettings',
-          { id: 'ent-set', shop: true, collapse_limit: 5 }
-        ],
         [ 'setMetaData', 'meta' ],
         [ 'setFilterDefinition', 'def' ]
       ])
@@ -528,10 +494,13 @@ describe('actions', () => {
   })
 
   describe('downloadResources', () => {
+    
     it('downloads the data', async () => {
       jest.useFakeTimers()
       const commit = jest.fn()
       const resources = [{ id: 'success', type: 'ENTITY_TYPE' }]
+      // @ts-ignore
+      client.post.mockResolvedValueOnce({data: { identifier: 'success' }})
 
       await actions.downloadResources({ state, commit }, resources)
       jest.advanceTimersByTime(1000)
@@ -545,6 +514,8 @@ describe('actions', () => {
     it('fails to download data', async () => {
       jest.useFakeTimers()
       const commit = jest.fn()
+      // @ts-ignore
+      client.post.mockResolvedValueOnce({data: { identifier: 'failure'} })
       await actions.downloadResources({ state, commit }, [{ id: 'failure', type: 'ENTITY_TYPE' }])
       jest.advanceTimersByTime(1000)
       await Vue.nextTick()
@@ -559,6 +530,68 @@ describe('actions', () => {
     it('fetch the permissions for the given table', async () => {
       await actions.fetchTablePermissions({ commit }, { tableName: 'my-table' })
       expect(commit).toHaveBeenCalledWith('setTablePermissions', ['PERM_A'])
+    })
+  })
+
+  describe('fetchTableSetttings', () => {
+    it('should clear the current settings, fetch the settings for passed tableName and commit them to the store', async () => {
+      await actions.fetchTableSettings({ commit, state }, { tableName: 'tableWithSettings' })
+      expect(commit).nthCalledWith(1, 'setTableSettings', {})
+      expect(commit).nthCalledWith(2, 'setTableSettings', { id: 'ent-set', shop: true, collapse_limit: 5 })
+    })
+
+    it('should not commit settings to the if not set for given table', async () => {
+      await actions.fetchTableSettings({ commit, state }, { tableName: 'tableWithOutSettings' })
+      expect(commit).toHaveBeenCalledWith('setTableSettings', {})
+      expect(commit).not.toHaveBeenCalledWith('setTableSettings', { id: 'ent-set', shop: true, collapse_limit: 5 })
+    })
+  })
+
+  describe('saveEntityDetailTemplate', () => {
+    it('should show warning if the table meta is not set', async () => {
+      const commit = jest.fn()
+      state.tableMeta = null
+      await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
+      expect(commit).toHaveBeenCalledWith('addToast', { message: 'cannot save template without meta data', type: 'danger' })
+    })
+
+    it('should create new settings row if there is none', async () => {
+      const commit = jest.fn()
+      const state:any = { 
+        tableSettings: {
+          settingsRowId: null
+        },
+        tableMeta: {
+          id:'tableWithOutSettings'
+        },
+        settingsTable: 'sys_ts_DataExplorerEntitySettings'
+      }
+      // @ts-ignore
+      client.post.mockResolvedValueOnce({data: 'success'})
+      await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
+      expect(client.post).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings', {
+        detail_template: 'template',
+        table: 'tableWithOutSettings'
+      })
+    })
+
+    it('should update the template if there is a settings row', async () => {
+      const commit = jest.fn()
+      const state:any = { 
+        tableSettings: {
+          settingsRowId: '101'
+        },
+        tableMeta: {
+          id: 'tableWithSettings'
+        },
+        settingsTable: 'sys_ts_DataExplorerEntitySettings'
+      }
+      // @ts-ignore
+      client.post.mockResolvedValueOnce({data: 'success'})
+      await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
+      expect(client.patch).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings/101', {
+        detail_template: 'template',
+      })
     })
   })
 })

@@ -172,8 +172,7 @@ const getTableDataWithLabel = async (
   return { items, page: response.page }
 }
 
-// called on row expand
-const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData, pagination?: Pagination, sort?: Sort) => {
+const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, metaData: MetaData) => {
   const attributes: string[] = getAttributesfromMeta(metaData)
   // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
   // Adding id and label makes sure we get these fields.
@@ -182,10 +181,9 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
   if (metaData.labelAttribute !== undefined) {
     columnSet.add(metaData.labelAttribute.name)
   }
-  const sortQuery = buildSortQuery(sort)
-  const pageQuery = buildPageQuery(pagination)
+
   const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
-  const response = await client.get<DataApiResponseItem>(`/api/data/${tableId}/${rowId}?${pageQuery}${expandReferencesQuery}${sortQuery}`)
+  const response = await client.get<DataApiResponseItem>(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
   return levelOneRowMapper(response.data, metaData)
 }
 

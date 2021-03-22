@@ -24,15 +24,13 @@
       >
         <font-awesome-icon icon="edit" />
       </router-link>
-      <a
-        v-b-tooltip.hover.bottom
-        :title="$t('dataexplorer_row_action_details_btn_tooltip')"
-        class="btn btn-sm text-secondary"
+      <router-link
+        v-b-tooltip.hover.bottom class="btn btn-sm text-secondary"
         role="button"
-        :href="`/menu/main/dataexplorer/details/${tableName}/${id}`"
+        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}}"
       >
         <font-awesome-icon icon="search" />
-      </a>
+      </router-link>
       <button
         v-if="isEditable"
         v-b-tooltip.hover.bottom

@@ -1,4 +1,6 @@
 import DataRowEdit from '@/components/DataRowEdit.vue'
+import EntityDetail from '@/views/EntityDetail.vue'
+import EditDetailTemplate from '@/views/EditDetailTemplate.vue'
 import MainView from './views/MainView.vue'
 import Navigator from '@/components/navigator/Navigator.vue'
 
@@ -21,6 +23,18 @@ export const routes = [
     props: true,
     name: 'de-edit',
     component: DataRowEdit
+  },
+  {
+    path: '/:entityType/:entity/detail',
+    props: true,
+    name: 'entity-detail',
+    component: EntityDetail
+  },
+  {
+    path: '/:entityType/:entity/editor',
+    props: true,
+    name: 'edit-detail-template',
+    component: EditDetailTemplate
   },
   {
     path: '/navigator',

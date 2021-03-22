@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditDetailTemplate.vue should render the editor 1`] = `
+<div id="entity-detail-container" class="mg-mainview">
+  <div class="container-fluid">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li aria-current="page" class="breadcrumb-item">
+          <router-link-stub id="headItemTooltipId" to="[object Object]">
+            <b-tooltip-stub placement="bottom" target="headItemTooltipId" triggers="hover">
+              my description
+            </b-tooltip-stub>
+            my label
+          </router-link-stub>
+        </li>
+        <li aria-current="page" class="breadcrumb-item"><span>
+            abc-123
+          </span></li>
+      </ol>
+    </nav>
+    <h1>Template editor</h1>
+    <div class="row">
+      <div class="col-12">
+        <div><label>Preview</label>
+          <div class="template-preview">
+            <custom-entity-detail-stub record="[object Object]" metadata="[object Object]" template="<h1>I m not a template</h1>"></custom-entity-detail-stub>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row mb-3">
+      <div class="col-12">
+        <form class="template-editor"><label for="template-txt-area" class="form-label">Template</label> <textarea id="template-txt-area" rows="6" placeholder="edit me" class="form-control"></textarea> <button type="submit" class="btn btn-primary mt-1">
+            Save template
+            <!---->
+          </button></form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="card p-2">
+          <h5 class="card-title">
+            record
+          </h5>
+          <prop-render-stub object="[object Object]" class="template-values"></prop-render-stub>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card p-2">
+          <h5 class="card-title">
+            metaData
+          </h5>
+          <prop-render-stub object="[object Object]" class="template-values"></prop-render-stub>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

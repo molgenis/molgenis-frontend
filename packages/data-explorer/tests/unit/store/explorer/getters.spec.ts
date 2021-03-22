@@ -91,6 +91,20 @@ describe('getters', () => {
     })
   })
 
+  describe('hasDeleteRights', () => {
+    const state: any = {}
+    state.tablePermissions = []
+
+    it('should return false user does not have delete rights', () => {
+      expect(getters.hasDeleteRights(state)).toEqual(false)
+    })
+
+    it('should return true if authenticated and has delete rights', () => {
+      state.tablePermissions = ['DELETE_DATA']
+      expect(getters.hasDeleteRights(state)).toEqual(true)
+    })
+  })
+
   describe('hasEditSettingsRights', () => {
     let state: any
 

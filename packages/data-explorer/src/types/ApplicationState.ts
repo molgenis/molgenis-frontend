@@ -18,6 +18,7 @@ export type FilterOption = {
 
 export type TableSetting = {
   customCardCode: string | null
+  customDetailCode: string | null
   customCardAttrs: string
   settingsRowId: string | null
   collapseLimit: number

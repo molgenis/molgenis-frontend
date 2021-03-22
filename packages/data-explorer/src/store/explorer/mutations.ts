@@ -10,6 +10,7 @@ const defaultSettings = {
   settingsRowId: null,
   collapseLimit: 5,
   customCardCode: null,
+  customDetailCode: null,
   customCardAttrs: '',
   isShop: false,
   defaultFilters: []
@@ -57,6 +58,7 @@ export default {
     state.tableSettings.collapseLimit = isPropSet('collapse_limit') ? parseInt(tableSettings.collapse_limit) : defaultSettings.collapseLimit
     state.tableSettings.settingsRowId = isPropSet('id') ? tableSettings.id : defaultSettings.settingsRowId
     state.tableSettings.customCardCode = isPropSet('card_template') ? tableSettings.card_template : defaultSettings.customCardCode
+    state.tableSettings.customDetailCode = isPropSet('detail_template') ? tableSettings.detail_template : defaultSettings.customDetailCode
     state.tableSettings.customCardAttrs = isPropSet('template_attrs') ? tableSettings.template_attrs : defaultSettings.customCardAttrs
     state.tableSettings.defaultFilters = isPropSet('default_filters') ? tableSettings.default_filters.split(',').map(f => f.trim()) : defaultSettings.defaultFilters
   },

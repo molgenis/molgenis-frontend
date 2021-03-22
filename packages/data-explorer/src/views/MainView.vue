@@ -10,12 +10,12 @@
       <nav v-else aria-label="breadcrumb">
         <ol v-if="tableMeta" class="breadcrumb">
           <li class="breadcrumb-item active" aria-current="page">
-            <span id="mainView-headItemTooltipID">
+            <span id="mainView-headItemTooltipId">
               {{ tableMeta.label }}
             </span>
             <b-tooltip
               v-if="tableMeta.description" placement="bottom"
-              target="mainView-headItemTooltipID"
+              target="mainView-headItemTooltipId"
               triggers="hover"
             >
               {{ tableMeta.description }}

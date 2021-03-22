@@ -7,16 +7,12 @@ import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 
 export default {
-  fetchTableMeta: async ({ commit, getters, dispatch, state }, payload: { tableName: string }) => {
-    commit('setTableSettings', {})
+  fetchTableMeta: async ({ commit, getters, dispatch }, payload: { tableName: string }) => {
     commit('setMetaData', null)
     commit('setFilterDefinition', [])
     commit('setTableName', payload.tableName)
 
-    const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
-    if (response.data.items.length === 1) {
-      commit('setTableSettings', response.data.items[0].data)
-    }
+    await dispatch('fetchTableSettings', payload)
 
     const metaData = await metaDataRepository.fetchMetaDataById(payload.tableName)
     const { definition } = await metaFilterMapper.mapMetaToFilters(metaData)
@@ -115,7 +111,7 @@ export default {
     const rsqlQuery = getters.filterRsql
 
     commit('updateRowData', [])
-    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta, state.tablePagination, state.sort)
+    const rowData = await dataRepository.getRowDataWithReferenceLabels(state.tableName, payload.rowId, state.tableMeta)
     if (getters.filterRsql === rsqlQuery) {
       // retrieved results are still relevant
       commit('updateRowData', { rowId: payload.rowId, rowData })
@@ -162,5 +158,30 @@ export default {
     const tablePermissions = res.data.meta.permissions
     commit('setTablePermissions', tablePermissions)
     return tablePermissions
+  },
+
+  fetchTableSettings: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { tableName: string }) => {
+    commit('setTableSettings', {})
+    const response = await client.get(`/api/data/${state.settingsTable}?q=table=="${payload.tableName}"`)
+    if (response.data.items.length === 1) {
+      commit('setTableSettings', response.data.items[0].data)
+    }
+  },
+
+  saveEntityDetailTemplate: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { template: string }) => {
+    if (state.tableMeta === null) {
+      commit('addToast', { message: 'cannot save template without meta data', type: 'danger' })
+      return
+    }
+
+    const data = { detail_template: payload.template }
+    if (state.tableSettings.settingsRowId === null) {
+      // create new row
+      const postData = { ...data, table: state.tableMeta.id }
+      return client.post(`/api/data/${state.settingsTable}`, postData)
+    } else {
+      // update existing row
+      return client.patch(`/api/data/${state.settingsTable}/${state.tableSettings.settingsRowId}`, data)
+    }
   }
 }

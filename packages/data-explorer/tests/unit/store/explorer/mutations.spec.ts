@@ -171,6 +171,7 @@ describe('mutations', () => {
         settingsRowId: null,
         collapseLimit: 5,
         customCardCode: null,
+        customDetailCode: null,
         customCardAttrs: '',
         isShop: false,
         defaultFilters: []

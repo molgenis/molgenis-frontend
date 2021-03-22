@@ -19,6 +19,7 @@ const state: ApplicationState = {
     settingsRowId: null,
     collapseLimit: 5,
     customCardCode: null,
+    customDetailCode: null,
     customCardAttrs: '',
     isShop: false,
     defaultFilters: []
