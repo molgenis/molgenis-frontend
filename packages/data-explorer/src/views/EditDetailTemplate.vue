@@ -122,6 +122,7 @@ export default {
   async mounted () {
     this.fetchTablePermissions({ tableName: this.entityType })
     await this.fetchTableMeta({ tableName: this.entityType })
+    // Wait for both items to be present, but only the second item is needed.
     const [, data] = await Promise.all([
       this.fetchTableSettings({ tableName: this.entityType }),
       getRowDataWithReferenceLabels(this.entityType, this.entity, this.tableMeta)
