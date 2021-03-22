@@ -4,7 +4,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item" aria-current="page">
-            <router-link id="headItemTooltipId" :to="{ name: 'de-view', params: { entity: entityType} }">
+            <router-link id="headItemTooltipId" :to="{ name: 'de-view', params: { entity: entityType}, query: $route.query }">
               <b-tooltip
                 v-if="tableMeta.description" placement="bottom"
                 target="headItemTooltipId"

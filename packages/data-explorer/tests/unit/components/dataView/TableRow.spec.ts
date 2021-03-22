@@ -16,7 +16,7 @@ const getWrapper = (propsData) => {
       showSelected: false
     },
     stubs: ['font-awesome-icon', 'router-link'],
-    mocks: { $t: (msg: any) => msg }
+    mocks: { $t: (msg: any) => msg, $route: {query: {foo: 'bar'}} }
   })
 
   return wrapper

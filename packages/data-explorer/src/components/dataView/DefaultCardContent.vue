@@ -43,7 +43,7 @@
             <font-awesome-icon v-if="cardState==='open'" icon="chevron-up" />
             <font-awesome-icon v-if="cardState==='closed'" icon="chevron-right" /> {{ expandBtnText }}
           </button>
-          <router-link class="btn btn-outline-info btn-sm mg-info-btn" role="button" :to="{ name: 'entity-detail', params: { entityType: dataTable, entity: dataId}}">
+          <router-link class="btn btn-outline-info btn-sm mg-info-btn" role="button" :to="{ name: 'entity-detail', params: { entityType: dataTable, entity: dataId}, query: $route.query}">
             <font-awesome-icon icon="search" /> {{ $t('dataexplorer_default_card_info_btn_label') }}
           </router-link>
         </div>
