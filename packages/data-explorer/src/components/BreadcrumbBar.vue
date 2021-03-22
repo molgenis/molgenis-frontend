@@ -19,12 +19,12 @@
         />
       </li>
       <li v-if="head" class="breadcrumb-item active" aria-current="page">
-        <span id="headItemTooltipID">
+        <span id="headItemTooltipId">
           {{ head.label }}
         </span>
         <b-tooltip
           v-if="headItemTooltip" placement="bottom"
-          target="headItemTooltipID"
+          target="headItemTooltipId"
           triggers="hover"
         >
           {{ headItemTooltip }}

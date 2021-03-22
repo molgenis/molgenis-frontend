@@ -4,10 +4,10 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item" aria-current="page">
-            <router-link id="headItemTooltipID" :to="{ name: 'de-view', params: { entity: entityType} }">
+            <router-link id="headItemTooltipId" :to="{ name: 'de-view', params: { entity: entityType} }">
               <b-tooltip
                 v-if="tableMeta.description" placement="bottom"
-                target="headItemTooltipID"
+                target="headItemTooltipId"
                 triggers="hover"
               >
                 {{ tableMeta.description }}

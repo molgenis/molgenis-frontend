@@ -6,8 +6,8 @@ exports[`EditDetailTemplate.vue should render the editor 1`] = `
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li aria-current="page" class="breadcrumb-item">
-          <router-link-stub id="headItemTooltipID" to="[object Object]">
-            <b-tooltip-stub placement="bottom" target="headItemTooltipID" triggers="hover">
+          <router-link-stub id="headItemTooltipId" to="[object Object]">
+            <b-tooltip-stub placement="bottom" target="headItemTooltipId" triggers="hover">
               my description
             </b-tooltip-stub>
             my label
