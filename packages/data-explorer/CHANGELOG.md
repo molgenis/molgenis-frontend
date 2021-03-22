@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.7.2...@molgenis-ui/data-explorer@3.7.3) (2021-03-22)
+
+
+### Bug Fixes
+
+* **data-explorer:** Fix refactor issue ([#571](https://github.com/molgenis/molgenis-frontend/issues/571)) ([0e86bfd](https://github.com/molgenis/molgenis-frontend/commit/0e86bfdef0e1580a5023d11f2c3f862a850e59a4))
+
+
+
+
+
 ## [3.7.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.7.1...@molgenis-ui/data-explorer@3.7.2) (2021-03-19)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
