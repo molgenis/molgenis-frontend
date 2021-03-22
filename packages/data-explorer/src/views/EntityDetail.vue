@@ -147,9 +147,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .mg-mainview {
-    padding: 16px;
-  }
-</style>

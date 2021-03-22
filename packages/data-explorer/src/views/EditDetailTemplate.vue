@@ -147,10 +147,6 @@ export default {
 </script>
 
 <style scoped>
-  .mg-mainview {
-    padding: 16px;
-  }
-
   .template-preview {
     border: dashed 1px var(--primary);
     min-height: 100px;
