@@ -29,11 +29,12 @@
         <div class="col-12">
           <div>
             <label>Preview</label>
-            <custom-entity-detail
-              v-if="template" class="template-preview"
-              :record="record"
-              :meta-data="tableMeta" :template="template"
-            />
+            <div v-if="template" class="template-preview">
+              <custom-entity-detail
+                :record="record"
+                :meta-data="tableMeta" :template="template"
+              />
+            </div>
             <div v-else class="template-preview p-2 font-italic text-muted">
               No template set for current entity
             </div>

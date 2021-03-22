@@ -22,7 +22,9 @@ exports[`EditDetailTemplate.vue should render the editor 1`] = `
     <div class="row">
       <div class="col-12">
         <div><label>Preview</label>
-          <custom-entity-detail-stub record="[object Object]" metadata="[object Object]" template="<h1>I m not a template</h1>" class="template-preview"></custom-entity-detail-stub>
+          <div class="template-preview">
+            <custom-entity-detail-stub record="[object Object]" metadata="[object Object]" template="<h1>I m not a template</h1>"></custom-entity-detail-stub>
+          </div>
         </div>
       </div>
     </div>
