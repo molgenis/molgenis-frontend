@@ -78,8 +78,12 @@
         <font-awesome-icon icon="th-list" />
       </button>
 
-      <router-link class="btn btn-light btn-outline-secondary table-settings" :to="{name: 'de-edit', params: {entity: settingsTable, dataRowId: tableSettings.settingsRowId }}">
-        <font-awesome-icon icon="cog" />
+      <router-link
+        v-if="hasEditSettingsRights"
+        class="btn btn-light btn-outline-secondary table-settings"
+        :to="{name: 'de-edit', params: {entity: settingsTable, dataRowId: tableSettings.settingsRowId }}"
+      >
+        <font-awesome-icon icon="cog"/>
       </router-link>
     </div>
   </div>

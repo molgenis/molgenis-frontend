@@ -9,7 +9,7 @@
     :body-class="bodyClass"
     :header-class="headerClass"
   >
-    <div class="container">
+    <div class="container-fluid">
       <div v-if="previewToggle && value.length > 0" class="mb-4">
         <div v-for="(item, index) in value" :key="index" class="row">
           <div class="col">
