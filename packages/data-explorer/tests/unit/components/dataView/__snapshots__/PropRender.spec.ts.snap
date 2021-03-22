@@ -6,7 +6,7 @@ exports[`PropRender.vue exists 1`] = `
     col1: Column 1
   </div>
   <div>
-    col2 : ,
+    col2: ,
   </div>
   <div>
     col3:

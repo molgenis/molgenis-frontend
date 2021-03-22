@@ -83,7 +83,7 @@
         class="btn btn-light btn-outline-secondary table-settings"
         :to="{name: 'de-edit', params: {entity: settingsTable, dataRowId: tableSettings.settingsRowId }}"
       >
-        <font-awesome-icon icon="cog"/>
+        <font-awesome-icon icon="cog" />
       </router-link>
     </div>
   </div>

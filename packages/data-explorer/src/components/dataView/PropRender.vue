@@ -5,7 +5,7 @@
         {{ propertyName }}: {{ value }}
       </template>
       <template v-else-if="Array.isArray(value)">
-        {{ propertyName }} : {{ value.map(v => v.label).join(', ') }}
+        {{ propertyName }}: {{ value.map(v => v.label).join(', ') }}
       </template>
       <template v-else>
         {{ propertyName }}:
