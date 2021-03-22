@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.4.2...@molgenis-ui/components-library@2.4.3) (2021-03-22)
+
+
+### Bug Fixes
+
+* **components-library:** added container-fluid instead of container class to toast, to prevent the button going off-screen ([685fbde](https://github.com/molgenis/molgenis-frontend/commit/685fbde3f98c9d399a7b73e8328e69ec72b98cd1))
+
+
+
+
+
 ## [2.4.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.4.1...@molgenis-ui/components-library@2.4.2) (2021-03-19)
 
 **Note:** Version bump only for package @molgenis-ui/components-library
