@@ -1,4 +1,4 @@
-g<template>
+<template>
   <b-overlay :show="cardLoading">
     <h5 class="card-title mg-default-card-title">
       {{ dataLabel }}
