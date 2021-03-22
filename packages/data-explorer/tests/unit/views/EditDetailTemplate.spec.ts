@@ -18,12 +18,12 @@ const directives = { 'b-tooltip': () => {} }
 let actions: any
 let getters: any
 let state: any
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe('EditDetailTemplate.vue', () => {
   let wrapper
   beforeEach(async () => {
-    const localVue = createLocalVue()
-    localVue.use(Vuex)
 
     // @ts-ignore
     getRowDataWithReferenceLabels.mockResolvedValue({
@@ -106,5 +106,30 @@ afterAll(() => {
       expect(actions.saveEntityDetailTemplate).toHaveBeenCalledWith(expect.anything(), {template: "<p>edit</p>"} )
     })
 })
+
+  describe('when no template is set', () => {
+    beforeEach(async() => {
+      state = {
+        tableMeta: {
+            label: 'my label',
+            description: 'my description',
+            idAttribute: {
+                name: 'id'
+            }
+        } ,
+        tableSettings: {
+          customDetailCode: null
+        }
+      }
+      const explorer = { state, actions, getters, namespaced: true }
+      const store = new Vuex.Store({modules: { explorer } })
+      const propsData = {entityType: 'entityType', entity: 'entity'}
+      wrapper = shallowMount(EditDetailTemplate, { propsData, attachTo: '#root', store, localVue, stubs, mocks, directives})
+    })
+
+    it('should not try to render it (empty string)', () => {
+      expect(wrapper.vm.template).toEqual('')
+    })
+  })
 
 })
