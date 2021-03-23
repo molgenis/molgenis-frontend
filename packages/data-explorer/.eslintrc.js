@@ -13,7 +13,7 @@ module.exports = {
   ignorePatterns: [],
   overrides: [
     {
-      files: [ '**/*.ts' ],
+      files: ['**/*.ts'],
       parser: '@typescript-eslint/parser',
       extends: [
         'plugin:@typescript-eslint/eslint-recommended',
@@ -30,20 +30,20 @@ module.exports = {
     },
     {
       parser: 'vue-eslint-parser',
-      files: [ '**/*.vue' ],
+      files: ['**/*.vue'],
       extends: [
         'plugin:vue/recommended'
       ],
       rules: {
         'vue/no-v-html': 'off',
         'vue/require-default-prop': 'off',
-        'vue/max-attributes-per-line': [ 'error', {
+        'vue/max-attributes-per-line': ['error', {
           singleline: 3,
           multiline: {
             max: 2,
             allowFirstLine: false
           }
-        } ]
+        }]
       }
     }
   ],
@@ -56,12 +56,12 @@ module.exports = {
   },
   root: true,
   rules: {
-    'array-bracket-spacing': [ 2, 'never' ],
-    'eol-last': [ 2, 'always' ],
-    indent: [ 'error', 2 ],
-    'object-curly-spacing': [ 2, 'always' ],
-    'no-console': [ 2 ],
-    'no-multiple-empty-lines': [ 2, { max: 2, maxBOF: 0, maxEOF: 1 } ]
+    'array-bracket-spacing': [2, 'never'],
+    'eol-last': [2, 'always'],
+    indent: ['error', 2],
+    'object-curly-spacing': [2, 'always'],
+    'no-console': [2],
+    'no-multiple-empty-lines': [2, { max: 2, maxBOF: 0, maxEOF: 1 }]
   },
 
 }
