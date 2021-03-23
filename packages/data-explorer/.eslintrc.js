@@ -56,7 +56,7 @@ module.exports = {
   },
   root: true,
   rules: {
-    'array-bracket-spacing': [ 2, 'always' ],
+    'array-bracket-spacing': [ 2, 'never' ],
     'eol-last': [ 2, 'always' ],
     indent: [ 'error', 2 ],
     'object-curly-spacing': [ 2, 'always' ],
