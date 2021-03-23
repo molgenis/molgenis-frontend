@@ -56,6 +56,7 @@ describe('clientFactory', () => {
       } catch (e) {
         expect(e).toEqual(problem)
       }
+      // eslint-disable-next-line no-console
       expect(console.error).toBeCalledTimes(2)
     })
   })

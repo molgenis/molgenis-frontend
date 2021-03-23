@@ -237,6 +237,7 @@ jest.mock('@/lib/client', () => {
     get: (url: string) => {
       const mockResp = mockResponses[url]
       if (!mockResp) {
+        // eslint-disable-next-line no-console
         console.warn(`mock url (${url}) called but not found in ${JSON.stringify(mockResponses, null, 4)}`)
       }
       return Promise.resolve(mockResp)
@@ -304,11 +305,11 @@ describe('actions', () => {
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
       await actions.fetchTableMeta({ commit, getters, dispatch }, { tableName: 'tableWithOutSettings' })
       expect(commit.mock.calls).toEqual([
-        [ 'setMetaData', null ],
+        ['setMetaData', null],
         ['setFilterDefinition', []],
         ['setTableName', 'tableWithOutSettings'],
-        [ 'setMetaData', 'meta' ],
-        [ 'setFilterDefinition', 'def' ]
+        ['setMetaData', 'meta'],
+        ['setFilterDefinition', 'def']
       ])
     })
   })
@@ -494,13 +495,13 @@ describe('actions', () => {
   })
 
   describe('downloadResources', () => {
-    
+
     it('downloads the data', async () => {
       jest.useFakeTimers()
       const commit = jest.fn()
       const resources = [{ id: 'success', type: 'ENTITY_TYPE' }]
       // @ts-ignore
-      client.post.mockResolvedValueOnce({data: { identifier: 'success' }})
+      client.post.mockResolvedValueOnce({ data: { identifier: 'success' } })
 
       await actions.downloadResources({ state, commit }, resources)
       jest.advanceTimersByTime(1000)
@@ -515,7 +516,7 @@ describe('actions', () => {
       jest.useFakeTimers()
       const commit = jest.fn()
       // @ts-ignore
-      client.post.mockResolvedValueOnce({data: { identifier: 'failure'} })
+      client.post.mockResolvedValueOnce({ data: { identifier: 'failure' } })
       await actions.downloadResources({ state, commit }, [{ id: 'failure', type: 'ENTITY_TYPE' }])
       jest.advanceTimersByTime(1000)
       await Vue.nextTick()
@@ -557,7 +558,7 @@ describe('actions', () => {
 
     it('should create new settings row if there is none', async () => {
       const commit = jest.fn()
-      const state:any = { 
+      const state:any = {
         tableSettings: {
           settingsRowId: null
         },
@@ -567,7 +568,7 @@ describe('actions', () => {
         settingsTable: 'sys_ts_DataExplorerEntitySettings'
       }
       // @ts-ignore
-      client.post.mockResolvedValueOnce({data: 'success'})
+      client.post.mockResolvedValueOnce({ data: 'success' })
       await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
       expect(client.post).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings', {
         detail_template: 'template',
@@ -577,7 +578,7 @@ describe('actions', () => {
 
     it('should update the template if there is a settings row', async () => {
       const commit = jest.fn()
-      const state:any = { 
+      const state:any = {
         tableSettings: {
           settingsRowId: '101'
         },
@@ -587,7 +588,7 @@ describe('actions', () => {
         settingsTable: 'sys_ts_DataExplorerEntitySettings'
       }
       // @ts-ignore
-      client.post.mockResolvedValueOnce({data: 'success'})
+      client.post.mockResolvedValueOnce({ data: 'success' })
       await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
       expect(client.patch).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings/101', {
         detail_template: 'template',

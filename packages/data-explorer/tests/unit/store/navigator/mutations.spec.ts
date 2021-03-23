@@ -152,8 +152,8 @@ describe('mutations', () => {
         clipboard: {
           mode: 'CUT',
           resources: [
-            {type: 'PACKAGE', 'id': '1', 'label': 'label1'},
-            {type: 'ENTITY_TYPE', 'id': '2', 'label': 'label2'}
+            { type: 'PACKAGE', 'id': '1', 'label': 'label1' },
+            { type: 'ENTITY_TYPE', 'id': '2', 'label': 'label2' }
           ]
         }
       }

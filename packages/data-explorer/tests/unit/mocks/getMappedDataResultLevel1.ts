@@ -1,5 +1,5 @@
 export default
-{ items: [ { function_description: 'IT employee',
+{ items: [{ function_description: 'IT employee',
   department: 'IT',
   id: 'e000000',
   firstName: 'Harold',
@@ -93,5 +93,5 @@ export default
   firstName: 'Remy',
   lastName: 'Hadley',
   birthdate: '1984-02-02',
-  user: 'r.hadley' } ]
+  user: 'r.hadley' }]
 }

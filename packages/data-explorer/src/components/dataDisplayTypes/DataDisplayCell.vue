@@ -20,7 +20,7 @@ export default {
   components: { StringDisplay, LinkDisplay, DateDisplay, EmailDisplay, HTMLDisplay, RefDisplay, FileDisplay },
   props: {
     value: {
-      type: [ String, Object, Array, Number, Boolean ],
+      type: [String, Object, Array, Number, Boolean],
       required: true
     },
     rowIndex: {

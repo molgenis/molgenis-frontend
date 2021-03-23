@@ -84,7 +84,7 @@ export default {
         label: 'search',
         name: '_search'
       }
-      return vm.searchText ? [ ...vm.filters.definition, searchDef ] : vm.filters.definition
+      return vm.searchText ? [...vm.filters.definition, searchDef] : vm.filters.definition
     }
   },
   created () {

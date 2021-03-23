@@ -1,4 +1,4 @@
-export default { function_description: [ { id: 'it', label: 'IT employee' } ],
+export default { function_description: [{ id: 'it', label: 'IT employee' }],
   department: { id: 'it', label: 'IT' },
   id: 'e000000',
   firstName: 'Harold',

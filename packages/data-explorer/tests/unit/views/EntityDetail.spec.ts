@@ -70,8 +70,8 @@ describe('EntityDetail.vue', () => {
     }
 
     const explorer = { state, actions, getters, namespaced: true }
-    const store = new Vuex.Store({modules: { explorer } })
-    const propsData = {entityType: 'entityType', entity: 'entity'}
+    const store = new Vuex.Store({ modules: { explorer } })
+    const propsData = { entityType: 'entityType', entity: 'entity' }
     wrapper = shallowMount(EntityDetail, { propsData, store, localVue, stubs, mocks, directives })
     // wait for meta, data and settings fetch mocks to resolve as mounted can not be awaited
     await wrapper.vm.$nextTick // meta

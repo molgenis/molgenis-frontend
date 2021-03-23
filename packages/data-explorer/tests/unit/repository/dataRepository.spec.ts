@@ -83,7 +83,7 @@ describe('dataRepository', () => {
 
     beforeEach(() => {
       // @ts-ignore
-      client.get.mockResolvedValue({ data: { items: [ mockRowResponse] } })
+      client.get.mockResolvedValue({ data: { items: [mockRowResponse] } })
       // @ts-ignore
       buildExpandedAttributesQuery.mockReturnValue('expanded-attributes-query')
     })
@@ -99,7 +99,7 @@ describe('dataRepository', () => {
         client.get.mockResolvedValue({ data: { items: [selfRefMock] } })
         const resp = await dataRepository.getTableDataDeepReference(tableId, metaData, columns, rsqlQuery, pagination)
         expect(resp).toEqual({
-          items: [[ { id: 'A.Jigger', label: 'Arsenius Jigger' } ]],
+          items: [[{ id: 'A.Jigger', label: 'Arsenius Jigger' }]],
           page: undefined
         }
         )

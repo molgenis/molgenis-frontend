@@ -42,7 +42,7 @@ export default {
   },
   watch: {
     value: {
-      handler: function (val, oldVal) {
+      handler: function (val) {
         if (val === '') {
           this.searchText = ''
         }
@@ -50,7 +50,7 @@ export default {
     },
     searchText: {
       // Add handler to support html5 clear search action
-      handler: function (val, oldVal) {
+      handler: function (val) {
         if (val === '') {
           this.handleSearchAction()
         }

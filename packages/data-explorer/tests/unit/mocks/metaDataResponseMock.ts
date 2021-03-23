@@ -157,7 +157,7 @@ export default {
       labelAttribute: false,
       nullable: true,
       readOnly: false,
-      refEntityType: {self: 'http://localhost:443/api/metadata/sys_FileMeta'},
+      refEntityType: { self: 'http://localhost:443/api/metadata/sys_FileMeta' },
       unique: false,
       visible: true,
       aggregatable: false,

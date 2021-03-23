@@ -127,7 +127,7 @@ describe('DataView.vue', () => {
         type: 'string',
         label: 'search',
         name: '_search'
-      } ])
+      }])
     })
   })
 

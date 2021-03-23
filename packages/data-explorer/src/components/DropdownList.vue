@@ -37,7 +37,7 @@ export default {
     }
   },
   watch: {
-    isShown: function (val) {
+    isShown: function () {
       // Pass callBack to handle fetch result
       if (!this.isInitialized) {
         this.$emit('fetchItems', { id: this.listId, callback: this.onItemsFetched })

@@ -7,7 +7,7 @@ describe('PropRender.vue', () => {
       'col1': 'Column 1',
       'col2': ['Column 2', 'Column 2b'],
       'col3': {
-          'col4': 'Col 4'
+        'col4': 'Col 4'
       }
     }
   }

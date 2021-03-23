@@ -120,7 +120,7 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    '$route' () {
       this.allSelected = false
     }
   },
@@ -144,7 +144,7 @@ export default {
         this.$store.dispatch(`navigator/${DESELECT_ALL_RESOURCES}`)
       }
     },
-    isAllSelected: function (resource) {
+    isAllSelected: function () {
       return this.nrResources > 0 && this.nrResources === this.nrSelectedResources
     },
     isClipboardResource: function (resource) {
