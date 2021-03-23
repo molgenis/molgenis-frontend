@@ -33,8 +33,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('explorer', ['tableMeta', 'selectedItemIds', 'tableSettings', 'tableName', 'hiddenColumns']),
-    ...mapGetters('explorer', ['filterRsql', 'hasEditRights']),
+    ...mapState('explorer', [ 'tableMeta', 'selectedItemIds', 'tableSettings', 'tableName', 'hiddenColumns' ]),
+    ...mapGetters('explorer', [ 'filterRsql', 'hasEditRights' ]),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -46,7 +46,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('explorer', ['fetchRowDataLabels']),
+    ...mapActions('explorer', [ 'fetchRowDataLabels' ]),
     getEntityId (entity) {
       return entity[this.idAttribute.name] ? entity[this.idAttribute.name].toString() : ''
     },

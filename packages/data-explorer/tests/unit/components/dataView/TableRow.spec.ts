@@ -15,7 +15,7 @@ const getWrapper = (propsData) => {
       tableName: 'tableName',
       showSelected: false
     },
-    stubs: ['font-awesome-icon', 'router-link'],
+    stubs: [ 'font-awesome-icon', 'router-link' ],
     mocks: { $t: (msg: any) => msg }
   })
 
@@ -35,7 +35,7 @@ describe('EntityTableRow.vue', () => {
   it('renders table rows', () => {
     const wrapper = getWrapper({
       rowData: { name: 'name', title: 'title', content: 'content' },
-      visibleColumns: [{ name: 'name', type: 'string' }, { name: 'title', type: 'sring' }, { content: 'content', type: 'string' }]
+      visibleColumns: [ { name: 'name', type: 'string' }, { name: 'title', type: 'sring' }, { content: 'content', type: 'string' } ]
     })
     expect(wrapper.findAll('td').length).toEqual(3)
     expect(wrapper.findAll('th').length).toEqual(1) // edit btn
@@ -44,7 +44,7 @@ describe('EntityTableRow.vue', () => {
   it('only renders visible columns', () => {
     const wrapper = getWrapper({
       rowData: { name: 'name', title: 'title', content: 'content' },
-      visibleColumns: [{ name: 'name', type: 'string' }, { content: 'content', type: 'string' }]
+      visibleColumns: [ { name: 'name', type: 'string' }, { content: 'content', type: 'string' } ]
     })
     expect(wrapper.findAll('td').length).toEqual(2)
     expect(wrapper.findAll('th').length).toEqual(1) // edit btn

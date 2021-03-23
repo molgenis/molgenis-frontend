@@ -26,11 +26,11 @@ describe('reference actions', () => {
     }
   }
   // @ts-ignore
-  metaDataService.getAttributesfromMeta.mockReturnValue(['a1', 'a2'])
+  metaDataService.getAttributesfromMeta.mockReturnValue([ 'a1', 'a2' ])
   // @ts-ignore
   metaDataRepository.fetchMetaDataByURL.mockResolvedValue(metaData)
   // @ts-ignore
-  dataRepository.getTableDataWithLabel.mockResolvedValue(['data'])
+  dataRepository.getTableDataWithLabel.mockResolvedValue([ 'data' ])
   describe('fetchRefData', () => {
     it('should fetch the single reference data if passed a object', async () => {
       const state = {}
@@ -42,7 +42,7 @@ describe('reference actions', () => {
       expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith(
         'refEntityId',
         metaData,
-        ['a1', 'a2', 'idAttributeName', 'labelAttributeName'],
+        [ 'a1', 'a2', 'idAttributeName', 'labelAttributeName' ],
         'idAttributeName==(x-refId)'
       )
     })
@@ -51,14 +51,14 @@ describe('reference actions', () => {
       const state = {}
       const payload = {
         refEntityType: 'http://thisisa/entity',
-        value: [{ id: 'm-refId1' }, { id: 'm-refId2' }]
+        value: [ { id: 'm-refId1' }, { id: 'm-refId2' } ]
       }
       metaData.labelAttribute = undefined
       await actions.fetchRefData({ state }, payload)
       expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith(
         'refEntityId',
         metaData,
-        ['a1', 'a2', 'idAttributeName'],
+        [ 'a1', 'a2', 'idAttributeName' ],
         'idAttributeName=in=(m-refId1,m-refId2)'
       )
     })

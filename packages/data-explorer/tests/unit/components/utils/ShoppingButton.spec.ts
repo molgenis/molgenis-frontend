@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 
 describe('ShoppingButton.vue', () => {
   const localVue = createLocalVue()
-  const stubs = ['font-awesome-icon']
+  const stubs = [ 'font-awesome-icon' ]
   localVue.use(Vuex)
   let store: any
   let mutations: any

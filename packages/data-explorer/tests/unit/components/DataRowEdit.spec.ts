@@ -31,7 +31,7 @@ describe('DataRowEdit.vue', () => {
   const mappedCreateData = {
     formFields: [
       { id: 'a', type: 'text' },
-      { id: 'c', type: 'field-group', children: [{ id: 'f', type: 'text' }] }
+      { id: 'c', type: 'field-group', children: [ { id: 'f', type: 'text' } ] }
     ],
     formData: { a: 'b', c: 'd', f: 'g' },
     formLabel: 'form label'
@@ -49,12 +49,12 @@ describe('DataRowEdit.vue', () => {
         label: 'lbl',
         idAttribute: 'id',
         labelAttribute: 'label',
-        attributes: [{
+        attributes: [ {
           name: 'my-attr',
           refEntity: {
             name: 'myref'
           }
-        }]
+        } ]
       },
       rowData: 'mock-rowData'
     })
@@ -120,7 +120,7 @@ describe('DataRowEdit.vue', () => {
     await wrapper.vm.onSubmit()
     expect(wrapper.find('#message-span').text()).toEqual('my error')
     // @ts-ignore
-    repository.save.mockRejectedValue({ errors: [{ message: 'my error', code: 'my code' }] })
+    repository.save.mockRejectedValue({ errors: [ { message: 'my error', code: 'my code' } ] })
     await wrapper.vm.onSubmit()
     expect(wrapper.find('#message-span').text()).toEqual('my error (my code)')
     done()
@@ -173,12 +173,12 @@ describe('DataRowEdit.vue', () => {
           label: 'lbl',
           idAttribute: 'id',
           labelAttribute: 'label',
-          attributes: [{
+          attributes: [ {
             name: 'my-attr',
             refEntity: {
               name: 'myref'
             }
-          }]
+          } ]
         },
         'mock-rowData',
         expect.objectContaining({ mapperMode: 'UPDATE' })

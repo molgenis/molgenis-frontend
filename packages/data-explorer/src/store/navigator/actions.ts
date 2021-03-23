@@ -37,16 +37,16 @@ export const DOWNLOAD_SELECTED_RESOURCES = '__DOWNLOAD_SELECTED_RESOURCES__'
 function finishJob (commit, dispatch, state,
   job) {
   switch (job.type) {
-    case 'COPY':
-    case 'DELETE':
-      if (job.status === 'SUCCESS') {
-        dispatch(FETCH_RESOURCES)
-      }
-      break
-    case 'DOWNLOAD':
-      break
-    default:
-      throw new Error('unexpected job type \'' + job.type + '\'')
+  case 'COPY':
+  case 'DELETE':
+    if (job.status === 'SUCCESS') {
+      dispatch(FETCH_RESOURCES)
+    }
+    break
+  case 'DOWNLOAD':
+    break
+  default:
+    throw new Error('unexpected job type \'' + job.type + '\'')
   }
 }
 
@@ -55,13 +55,13 @@ function pollJob (commit, dispatch, state,
   fetchJob(job).then(updatedJob => {
     commit(UPDATE_JOB, updatedJob)
     switch (updatedJob.status) {
-      case 'RUNNING':
-        setTimeout(() => pollJob(commit, dispatch, state, updatedJob), 500)
-        break
-      case 'SUCCESS':
-      case 'FAILED':
-        finishJob(commit, dispatch, state, updatedJob)
-        break
+    case 'RUNNING':
+      setTimeout(() => pollJob(commit, dispatch, state, updatedJob), 500)
+      break
+    case 'SUCCESS':
+    case 'FAILED':
+      finishJob(commit, dispatch, state, updatedJob)
+      break
     }
   }).catch(error => {
     commit(ADD_ALERTS, error.alerts)

@@ -12,8 +12,8 @@ import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'App',
   components: { PageComponent },
-  computed: { ...mapState('explorer', ['dataDisplayLayout']) },
-  methods: { ...mapMutations('account', ['setContext']) }
+  computed: { ...mapState('explorer', [ 'dataDisplayLayout' ]) },
+  methods: { ...mapMutations('account', [ 'setContext' ]) }
 }
 </script>
 

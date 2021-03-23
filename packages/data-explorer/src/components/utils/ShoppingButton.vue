@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('explorer', ['toggleSelectedItems'])
+    ...mapMutations('explorer', [ 'toggleSelectedItems' ])
   }
 }
 </script>

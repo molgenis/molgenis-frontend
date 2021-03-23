@@ -117,7 +117,7 @@ export default {
   async mounted () {
     this.fetchTablePermissions({ tableName: this.entityType })
     this.metaData = await fetchMetaDataById(this.entityType)
-    const [, data] = await Promise.all([
+    const [ , data ] = await Promise.all([
       this.fetchTableSettings({ tableName: this.entityType }),
       getRowDataWithReferenceLabels(this.entityType, this.entity, this.metaData)
     ])

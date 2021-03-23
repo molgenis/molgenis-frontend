@@ -103,9 +103,9 @@ export default {
         this.setToasts(value)
       }
     },
-    ...mapState('explorer', ['filters', 'showSelected', 'dataDisplayLayout', 'tablePagination', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'toasts', 'searchText', 'loading']),
-    ...mapState('header', ['breadcrumbs']),
-    ...mapGetters('explorer', ['isUserAuthenticated', 'compressedRouteFilter']),
+    ...mapState('explorer', [ 'filters', 'showSelected', 'dataDisplayLayout', 'tablePagination', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'toasts', 'searchText', 'loading' ]),
+    ...mapState('header', [ 'breadcrumbs' ]),
+    ...mapGetters('explorer', [ 'isUserAuthenticated', 'compressedRouteFilter' ]),
     activeFilterSelections () {
       return this.searchText ? { ...this.filters.selections, _search: this.searchText } : this.filters.selections
     },
@@ -115,7 +115,7 @@ export default {
         label: 'search',
         name: '_search'
       }
-      return this.searchText ? [...this.filters.definition, searchDef] : this.filters.definition
+      return this.searchText ? [ ...this.filters.definition, searchDef ] : this.filters.definition
     }
   },
   async created () {
@@ -135,9 +135,9 @@ export default {
     this.$eventBus.$off('delete-item')
   },
   methods: {
-    ...mapMutations('explorer', ['setToasts', 'setLoading', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery']),
-    ...mapActions('explorer', ['deleteRow', 'fetchViewData', 'fetchTableMeta', 'fetchTablePermissions']),
-    ...mapActions('header', ['fetchPackageTables']),
+    ...mapMutations('explorer', [ 'setToasts', 'setLoading', 'setSearchText', 'setFilterSelection', 'setDataDisplayLayout', 'setRouteQuery' ]),
+    ...mapActions('explorer', [ 'deleteRow', 'fetchViewData', 'fetchTableMeta', 'fetchTablePermissions' ]),
+    ...mapActions('header', [ 'fetchPackageTables' ]),
     saveFilterState (newSelections) {
       if (newSelections['_search'] === undefined) {
         this.setSearchText('')

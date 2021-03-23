@@ -146,7 +146,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('explorer', ['downloadResources']),
+    ...mapActions('explorer', [ 'downloadResources' ]),
     ...mapMutations('explorer', [
       'setHideFilters',
       'setDataDisplayLayout',

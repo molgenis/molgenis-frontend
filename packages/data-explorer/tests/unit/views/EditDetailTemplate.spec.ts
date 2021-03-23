@@ -13,7 +13,7 @@ const mocks = {
   $bvModal: { msgBoxConfirm: jest.fn() },
   $router: { push: jest.fn() }
 }
-const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
+const stubs = [ 'font-awesome-icon', 'router-link', 'b-tooltip' ]
 const directives = { 'b-tooltip': () => {} }
 let actions: any
 let getters: any
@@ -29,7 +29,7 @@ describe('EditDetailTemplate.vue', () => {
     getRowDataWithReferenceLabels.mockResolvedValue({
       id: 'abc-123',
       key1: 'val1',
-      key2: ['val2', 'val3'],
+      key2: [ 'val2', 'val3' ],
       key3: {
         key4: 'val'
       }
@@ -51,11 +51,11 @@ describe('EditDetailTemplate.vue', () => {
 
     state = {
       tableMeta: {
-          label: 'my label',
-          description: 'my description',
-          idAttribute: {
-              name: 'id'
-          }
+        label: 'my label',
+        description: 'my description',
+        idAttribute: {
+          name: 'id'
+        }
       } ,
       tableSettings: {
         customDetailCode: '<h1>I m not a template</h1>'
@@ -63,68 +63,68 @@ describe('EditDetailTemplate.vue', () => {
     }
 
     const explorer = { state, actions, getters, namespaced: true }
-    const store = new Vuex.Store({modules: { explorer } })
-    const propsData = {entityType: 'entityType', entity: 'entity'}
+    const store = new Vuex.Store({ modules: { explorer } })
+    const propsData = { entityType: 'entityType', entity: 'entity' }
 
     // needed to trigger form submit 
     const div = document.createElement('div')
     div.id = 'root'
     document.body.appendChild(div)
 
-    wrapper = shallowMount(EditDetailTemplate, { propsData, attachTo: '#root', store, localVue, stubs, mocks, directives})
+    wrapper = shallowMount(EditDetailTemplate, { propsData, attachTo: '#root', store, localVue, stubs, mocks, directives })
     await wrapper.vm.$nextTick // meta
     await wrapper.vm.$nextTick // settings
     await wrapper.vm.$nextTick // data
-})
+  })
 
-afterAll(() => {
+  afterAll(() => {
     wrapper.destroy()
-})
+  })
 
   it('should render the editor', () => {
-      expect(wrapper.exists()).toBeTruthy()
-      expect(wrapper.html()).toMatchSnapshot()
+    expect(wrapper.exists()).toBeTruthy()
+    expect(wrapper.html()).toMatchSnapshot()
   })
 
   describe('when the template is edited', () => {
-      beforeEach(async() => {
-          await wrapper.find('#template-txt-area').setValue('<p>edit</p>')
-      })
+    beforeEach(async() => {
+      await wrapper.find('#template-txt-area').setValue('<p>edit</p>')
+    })
 
-      it('should update the template', () => {
-        expect(wrapper.vm.template).toEqual('<p>edit</p>')
-      })
+    it('should update the template', () => {
+      expect(wrapper.vm.template).toEqual('<p>edit</p>')
+    })
   })
 
   describe('when the template is saved', () => {
     beforeEach(async() => {
-        await wrapper.find('#template-txt-area').setValue('<p>edit</p>')
-        await wrapper.find('button[type=submit]').trigger('click')
+      await wrapper.find('#template-txt-area').setValue('<p>edit</p>')
+      await wrapper.find('button[type=submit]').trigger('click')
     })
 
     it('should update the template', async () => {
-      expect(actions.saveEntityDetailTemplate).toHaveBeenCalledWith(expect.anything(), {template: "<p>edit</p>"} )
+      expect(actions.saveEntityDetailTemplate).toHaveBeenCalledWith(expect.anything(), { template: "<p>edit</p>" } )
     })
-})
+  })
 
   describe('when no template is set', () => {
     beforeEach(async() => {
       state = {
         tableMeta: {
-            label: 'my label',
-            description: 'my description',
-            idAttribute: {
-                name: 'id'
-            }
+          label: 'my label',
+          description: 'my description',
+          idAttribute: {
+            name: 'id'
+          }
         } ,
         tableSettings: {
           customDetailCode: null
         }
       }
       const explorer = { state, actions, getters, namespaced: true }
-      const store = new Vuex.Store({modules: { explorer } })
-      const propsData = {entityType: 'entityType', entity: 'entity'}
-      wrapper = shallowMount(EditDetailTemplate, { propsData, attachTo: '#root', store, localVue, stubs, mocks, directives})
+      const store = new Vuex.Store({ modules: { explorer } })
+      const propsData = { entityType: 'entityType', entity: 'entity' }
+      wrapper = shallowMount(EditDetailTemplate, { propsData, attachTo: '#root', store, localVue, stubs, mocks, directives })
     })
 
     it('should not try to render it (empty string)', () => {

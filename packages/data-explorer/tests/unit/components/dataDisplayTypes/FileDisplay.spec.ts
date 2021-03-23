@@ -4,7 +4,7 @@ import FileDisplay from '@/components/dataDisplayTypes/FileDisplay.vue'
 describe('FileDisplay.vue', () => {
   const localVue = createLocalVue()
 
-  const stubs = ['b-modal', 'font-awesome-icon']
+  const stubs = [ 'b-modal', 'font-awesome-icon' ]
   const value = {
     id: 'id',
     filename: 'file-name',

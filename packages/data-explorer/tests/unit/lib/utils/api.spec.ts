@@ -10,12 +10,12 @@ describe('api', () => {
   let folder
 
   beforeEach(() => {
-    resources = [{
+    resources = [ {
       type: 'PACKAGE',
       id: 'package0',
       label: 'package #0',
       readonly: false
-    }]
+    } ]
     folderId = 'folderId'
     folder = { id: folderId, label: 'label', readonly: false }
   })
@@ -108,7 +108,7 @@ describe('api', () => {
     it('should call the get endpoint with folderId parameter and return folder state', async () => {
       const response = {
         folder: { id: 'id', label: 'label', readonly: 'false' },
-        resources: [{ type: 'PACKAGE', id: 'p0', label: 'package #0', readonly: 'false' }]
+        resources: [ { type: 'PACKAGE', id: 'p0', label: 'package #0', readonly: 'false' } ]
       }
       const get = td.function('molgenisApiClient.get')
       td.when(get('/plugin/navigator/get?folderId=f0')).thenResolve(response)
@@ -241,7 +241,7 @@ describe('api', () => {
     beforeEach(() => {
       body = {
         body: JSON.stringify({
-          resources: [{ id: 'package0', type: 'PACKAGE' }]
+          resources: [ { id: 'package0', type: 'PACKAGE' } ]
         })
       }
     })

@@ -16,7 +16,7 @@ describe('App.vue', () => {
   })
 
   it('exists', () => {
-    const wrapper = shallowMount(App, { store, localVue, stubs: ['router-view'] })
+    const wrapper = shallowMount(App, { store, localVue, stubs: [ 'router-view' ] })
     expect(wrapper.exists()).toBeTruthy()
   })
 })

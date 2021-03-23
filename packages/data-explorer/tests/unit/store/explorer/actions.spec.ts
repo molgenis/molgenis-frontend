@@ -151,7 +151,7 @@ const metaResponse = {
         'visible': true,
         'lookupAttribute': false,
         'isAggregatable': false
-      }]
+      } ]
   }
 }
 
@@ -221,12 +221,12 @@ const mockResponses: {[key:string]: Object} = {
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
-  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
+  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [ { data: { id: 'ent-set', shop: true, collapse_limit: 5 } } ] } },
   '/api/data/sys_ts_DataExplorerEntitySettings': {},
   '/api/v2/my-table?start=0&num=0': {
     data: {
       meta: {
-        permissions: ['PERM_A']
+        permissions: [ 'PERM_A' ]
       }
     }
   }
@@ -237,6 +237,7 @@ jest.mock('@/lib/client', () => {
     get: (url: string) => {
       const mockResp = mockResponses[url]
       if (!mockResp) {
+        // eslint-disable-next-line no-console
         console.warn(`mock url (${url}) called but not found in ${JSON.stringify(mockResponses, null, 4)}`)
       }
       return Promise.resolve(mockResp)
@@ -305,8 +306,8 @@ describe('actions', () => {
       await actions.fetchTableMeta({ commit, getters, dispatch }, { tableName: 'tableWithOutSettings' })
       expect(commit.mock.calls).toEqual([
         [ 'setMetaData', null ],
-        ['setFilterDefinition', []],
-        ['setTableName', 'tableWithOutSettings'],
+        [ 'setFilterDefinition', [] ],
+        [ 'setTableName', 'tableWithOutSettings' ],
         [ 'setMetaData', 'meta' ],
         [ 'setFilterDefinition', 'def' ]
       ])
@@ -366,7 +367,7 @@ describe('actions', () => {
         }
       }
       // @ts-ignore ts does not know its a mock
-      metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
+      metaDataService.getAttributesfromMeta.mockReturnValue([ 'attr' ])
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ data: 'data', page: { totalElements: 21 } })
 
@@ -405,7 +406,7 @@ describe('actions', () => {
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ data: 'data', page: { totalElements: 21 } })
       // @ts-ignore ts does not know its a mock
-      metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
+      metaDataService.getAttributesfromMeta.mockReturnValue([ 'attr' ])
 
       await actions.fetchTableViewData({ commit, state, getters })
 
@@ -414,7 +415,7 @@ describe('actions', () => {
       expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith(
         'tableName',
         'tableMeta',
-        ['attr'], 'a==b',
+        [ 'attr' ], 'a==b',
         { 'count': 0, 'loading': false, 'page': 1, 'size': 10 },
         { 'isSortOrderReversed': false, 'sortColumnName': null })
     })
@@ -494,13 +495,13 @@ describe('actions', () => {
   })
 
   describe('downloadResources', () => {
-    
+
     it('downloads the data', async () => {
       jest.useFakeTimers()
       const commit = jest.fn()
-      const resources = [{ id: 'success', type: 'ENTITY_TYPE' }]
+      const resources = [ { id: 'success', type: 'ENTITY_TYPE' } ]
       // @ts-ignore
-      client.post.mockResolvedValueOnce({data: { identifier: 'success' }})
+      client.post.mockResolvedValueOnce({ data: { identifier: 'success' } })
 
       await actions.downloadResources({ state, commit }, resources)
       jest.advanceTimersByTime(1000)
@@ -515,8 +516,8 @@ describe('actions', () => {
       jest.useFakeTimers()
       const commit = jest.fn()
       // @ts-ignore
-      client.post.mockResolvedValueOnce({data: { identifier: 'failure'} })
-      await actions.downloadResources({ state, commit }, [{ id: 'failure', type: 'ENTITY_TYPE' }])
+      client.post.mockResolvedValueOnce({ data: { identifier: 'failure' } })
+      await actions.downloadResources({ state, commit }, [ { id: 'failure', type: 'ENTITY_TYPE' } ])
       jest.advanceTimersByTime(1000)
       await Vue.nextTick()
       expect(setInterval).toHaveBeenCalledTimes(1)
@@ -529,7 +530,7 @@ describe('actions', () => {
   describe('fetchTablePermissions', () => {
     it('fetch the permissions for the given table', async () => {
       await actions.fetchTablePermissions({ commit }, { tableName: 'my-table' })
-      expect(commit).toHaveBeenCalledWith('setTablePermissions', ['PERM_A'])
+      expect(commit).toHaveBeenCalledWith('setTablePermissions', [ 'PERM_A' ])
     })
   })
 
@@ -557,7 +558,7 @@ describe('actions', () => {
 
     it('should create new settings row if there is none', async () => {
       const commit = jest.fn()
-      const state:any = { 
+      const state:any = {
         tableSettings: {
           settingsRowId: null
         },
@@ -567,7 +568,7 @@ describe('actions', () => {
         settingsTable: 'sys_ts_DataExplorerEntitySettings'
       }
       // @ts-ignore
-      client.post.mockResolvedValueOnce({data: 'success'})
+      client.post.mockResolvedValueOnce({ data: 'success' })
       await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
       expect(client.post).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings', {
         detail_template: 'template',
@@ -577,7 +578,7 @@ describe('actions', () => {
 
     it('should update the template if there is a settings row', async () => {
       const commit = jest.fn()
-      const state:any = { 
+      const state:any = {
         tableSettings: {
           settingsRowId: '101'
         },
@@ -587,7 +588,7 @@ describe('actions', () => {
         settingsTable: 'sys_ts_DataExplorerEntitySettings'
       }
       // @ts-ignore
-      client.post.mockResolvedValueOnce({data: 'success'})
+      client.post.mockResolvedValueOnce({ data: 'success' })
       await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
       expect(client.patch).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings/101', {
         detail_template: 'template',

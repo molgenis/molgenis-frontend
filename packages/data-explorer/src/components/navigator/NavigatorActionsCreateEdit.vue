@@ -89,8 +89,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('navigator', ['nrSelectedResources', 'query']),
-    ...mapState('navigator', ['folder', 'selectedResources']),
+    ...mapGetters('navigator', [ 'nrSelectedResources', 'query' ]),
+    ...mapState('navigator', [ 'folder', 'selectedResources' ]),
     getSelectedResourceType () {
       return this.selectedResources[0].type
     },
@@ -101,12 +101,12 @@ export default {
       let canEdit = this.nrSelectedResources === 1 && !(this.query || this.selectedResources[0].readonly)
       if (canEdit) {
         switch (this.getSelectedResourceType) {
-          case 'PACKAGE':
-            break
-          case 'ENTITY_TYPE':
-          case 'ENTITY_TYPE_ABSTRACT':
-            canEdit &= this.metadataManagerUrl !== undefined
-            break
+        case 'PACKAGE':
+          break
+        case 'ENTITY_TYPE':
+        case 'ENTITY_TYPE_ABSTRACT':
+          canEdit &= this.metadataManagerUrl !== undefined
+          break
         }
       }
       return canEdit

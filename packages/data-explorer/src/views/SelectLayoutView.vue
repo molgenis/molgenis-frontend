@@ -23,7 +23,7 @@ export default {
   name: 'SelectLayoutView',
   components: { ExplorerCard, TableRow, TableHeader, CardView, TableView },
   computed: {
-    ...mapState('explorer', ['dataDisplayLayout', 'loading', 'tableMeta', 'tableData'])
+    ...mapState('explorer', [ 'dataDisplayLayout', 'loading', 'tableMeta', 'tableData' ])
   }
 }
 </script>

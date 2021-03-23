@@ -128,7 +128,7 @@ export default {
       isReference: false,
       visible: true,
       aggregatable: false,
-      enumOptions: [{ text: 'option A', value: 'a' }, { text: 'option B', value: 'b' }, { text: 'option C', value: 'c' }]
+      enumOptions: [ { text: 'option A', value: 'a' }, { text: 'option B', value: 'b' }, { text: 'option C', value: 'c' } ]
     },
     {
       id: '/api/metadata/bool',
@@ -157,7 +157,7 @@ export default {
       labelAttribute: false,
       nullable: true,
       readOnly: false,
-      refEntityType: {self: 'http://localhost:443/api/metadata/sys_FileMeta'},
+      refEntityType: { self: 'http://localhost:443/api/metadata/sys_FileMeta' },
       unique: false,
       visible: true,
       aggregatable: false,

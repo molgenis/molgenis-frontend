@@ -99,7 +99,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('navigator', ['resources', 'selectedResources', 'showHiddenResources', 'clipboard']),
+    ...mapState('navigator', [ 'resources', 'selectedResources', 'showHiddenResources', 'clipboard' ]),
     tableResources () {
       return this.resources.filter(resource => this.showHiddenResources || !resource.hidden).map(
         resource => Object.assign({}, resource)).sort((a, b) => {
@@ -120,7 +120,7 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    '$route' () {
       this.allSelected = false
     }
   },
@@ -144,7 +144,7 @@ export default {
         this.$store.dispatch(`navigator/${DESELECT_ALL_RESOURCES}`)
       }
     },
-    isAllSelected: function (resource) {
+    isAllSelected: function () {
       return this.nrResources > 0 && this.nrResources === this.nrSelectedResources
     },
     isClipboardResource: function (resource) {

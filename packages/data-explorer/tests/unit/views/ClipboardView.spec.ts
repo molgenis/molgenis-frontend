@@ -11,7 +11,7 @@ describe('ClipboardView.vue', () => {
   let mutations: any
   let actions: any
   let getters: any
-  const stubs = ['font-awesome-icon']
+  const stubs = [ 'font-awesome-icon' ]
 
   beforeEach(() => {
     state = {
@@ -40,7 +40,7 @@ describe('ClipboardView.vue', () => {
             lookupAttributeIndex: 0
           }
         ] },
-      selectedItemIds: ['1', '3'],
+      selectedItemIds: [ '1', '3' ],
       tableData: {
         items: [
           { tableID: '1' },

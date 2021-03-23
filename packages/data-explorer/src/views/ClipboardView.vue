@@ -46,8 +46,8 @@ export default {
   name: 'ClipboardView',
   components: { TableRow, TableHeader },
   computed: {
-    ...mapState('explorer', ['tableMeta', 'selectedItemIds', 'tableData', 'tableName', 'showSelected']),
-    ...mapGetters('explorer', ['tableIdAttributeName']),
+    ...mapState('explorer', [ 'tableMeta', 'selectedItemIds', 'tableData', 'tableName', 'showSelected' ]),
+    ...mapGetters('explorer', [ 'tableIdAttributeName' ]),
     entitiesToShow () {
       return this.tableData.items.filter((entity) => this.selectedItemIds.includes(this.getEntityId(entity)))
     },
@@ -59,8 +59,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('explorer', ['fetchTableViewData']),
-    ...mapMutations('explorer', ['setShowSelected', 'setHideFilters']),
+    ...mapActions('explorer', [ 'fetchTableViewData' ]),
+    ...mapMutations('explorer', [ 'setShowSelected', 'setHideFilters' ]),
     getEntityId (entity) {
       return entity[this.tableIdAttributeName].toString()
     },

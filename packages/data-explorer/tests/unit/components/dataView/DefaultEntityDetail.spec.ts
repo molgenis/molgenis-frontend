@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import DefaultEntityDetail from '@/components/dataView/DefaultEntityDetail.vue'
 
-const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
+const stubs = [ 'font-awesome-icon', 'router-link', 'b-tooltip' ]
 const directives = { 'b-tooltip': () => {} }
 
 describe('DefaultEntityDetail.vue', () => {
@@ -18,7 +18,7 @@ describe('DefaultEntityDetail.vue', () => {
   const record = {
     id: 'abc-123',
     key1: 'val1',
-    key2: ['val2', 'val3'],
+    key2: [ 'val2', 'val3' ],
     key3: {
       key4: 'val'
     }

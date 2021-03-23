@@ -11,7 +11,7 @@ describe('TableView.vue', () => {
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(VueRouter)
-  const router = new VueRouter({ routes: [{ path: '/mock-path', name: 'de-view' }] })
+  const router = new VueRouter({ routes: [ { path: '/mock-path', name: 'de-view' } ] })
   let store: any
   let state: any
   let mutations: any
@@ -50,7 +50,7 @@ describe('TableView.vue', () => {
       },
       dataDisplayLayout: 'TableView',
       tableName: 'tableName',
-      selectedItemIds: [1, 3],
+      selectedItemIds: [ 1, 3 ],
       hiddenColumns: []
     }
     mutations = {
@@ -73,14 +73,14 @@ describe('TableView.vue', () => {
       localVue,
       router,
       propsData: {
-        entitiesToShow: [{ id: '1' }]
+        entitiesToShow: [ { id: '1' } ]
       } })
     expect(wrapper.exists()).toBeTruthy()
   })
 
   describe('handleSortEvent on non sorted column', () => {
     it('sets the column to sort', () => {
-      const wrapper = shallowMount(TableView, { store, mocks, localVue, router, propsData: { entitiesToShow: [{ id: '1' }] } })
+      const wrapper = shallowMount(TableView, { store, mocks, localVue, router, propsData: { entitiesToShow: [ { id: '1' } ] } })
       // @ts-ignore
       wrapper.vm.handleSortEvent('my-column-id')
       expect(router.currentRoute.query).toEqual({ 'sort': 'my-column-id' })
@@ -89,7 +89,7 @@ describe('TableView.vue', () => {
 
   describe('handleSortEvent on sorted column', () => {
     it('flips the sort order', () => {
-      const wrapper = shallowMount(TableView, { store, mocks, localVue, router, propsData: { entitiesToShow: [{ id: '1' }] } })
+      const wrapper = shallowMount(TableView, { store, mocks, localVue, router, propsData: { entitiesToShow: [ { id: '1' } ] } })
       // @ts-ignore
       wrapper.vm.handleSortEvent(state.sort.sortColumnName)
       expect(router.currentRoute.query).toEqual({ 'sort': '-sortedColumnName' })
@@ -109,7 +109,7 @@ describe('TableView.vue', () => {
         { expression: undefined, id: '3', name: 'col3', refEntityType: undefined, type: undefined }
       ])
 
-      localThis.hiddenColumns = ['col3']
+      localThis.hiddenColumns = [ 'col3' ]
       // @ts-ignore
       expect(TableView.computed.visibleColumns.call(localThis)).toEqual([
         { expression: undefined, id: '1', name: 'col1', refEntityType: undefined, type: undefined }

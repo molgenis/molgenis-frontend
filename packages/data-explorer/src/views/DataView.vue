@@ -66,7 +66,7 @@ export default {
       'tableData',
       'tableMeta'
     ]),
-    ...mapGetters('explorer', ['tableLabelAttributeName', 'clipBoardItems']),
+    ...mapGetters('explorer', [ 'tableLabelAttributeName', 'clipBoardItems' ]),
     handleSelectionItems: {
       get () {
         return this.clipBoardItems
@@ -100,7 +100,7 @@ export default {
       'setHideFilters',
       'setSelectedItems'
     ]),
-    ...mapActions('reference', ['fetchRefData']),
+    ...mapActions('reference', [ 'fetchRefData' ]),
     openSelectionList () {
       this.setShowSelected(true)
       this.setHideFilters(true)

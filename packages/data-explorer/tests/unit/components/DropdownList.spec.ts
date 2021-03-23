@@ -8,7 +8,7 @@ describe('DropdownList', () => {
   const router = new VueRouter()
 
   let wrapper: any
-  const stubs = ['font-awesome-icon', 'router-link', 'router-view']
+  const stubs = [ 'font-awesome-icon', 'router-link', 'router-view' ]
   let propsData = {
     listId: 'list-1',
     isShown: false,
@@ -58,8 +58,8 @@ describe('DropdownList', () => {
 
   describe('onItemsFetched', () => {
     it('should set the list to the passed items', () => {
-      wrapper.vm.onItemsFetched([{ id: 'ix', label: 'item x' }])
-      expect(wrapper.vm.listItems).toEqual([{ id: 'ix', label: 'item x' }])
+      wrapper.vm.onItemsFetched([ { id: 'ix', label: 'item x' } ])
+      expect(wrapper.vm.listItems).toEqual([ { id: 'ix', label: 'item x' } ])
     })
   })
 })

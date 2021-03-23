@@ -45,31 +45,32 @@ export const getFieldOptions = async (attribute: Attribute) => {
   }
 
   switch (attribute.type) {
-    case 'categorical':
-    case 'categorical_mref':
-    case 'onetomany':
-    case 'xref':
-    case 'mref':
-      return attribute.refEntityType ? getOptions(attribute.refEntityType) : null
-    case 'enum':
-      if (attribute.enumOptions) {
-        const enumOptions = attribute.enumOptions.map(option => {
-          return {
-            value: option,
-            text: option
-          }
-        })
-        return (): FilterOptionsPromise => Promise.resolve(enumOptions)
-      } else {
-        return null
-      }
-    case 'bool':
-      const boolOptions: FilterOption[] = [
-        { value: true, text: 'Yes' },
-        { value: false, text: 'No' }
-      ]
-      return (): FilterOptionsPromise => Promise.resolve(boolOptions)
-    default:
+  case 'categorical':
+  case 'categorical_mref':
+  case 'onetomany':
+  case 'xref':
+  case 'mref':
+    return attribute.refEntityType ? getOptions(attribute.refEntityType) : null
+  case 'enum':
+    if (attribute.enumOptions) {
+      const enumOptions = attribute.enumOptions.map(option => {
+        return {
+          value: option,
+          text: option
+        }
+      })
+      return (): FilterOptionsPromise => Promise.resolve(enumOptions)
+    } else {
       return null
+    }
+  case 'bool':
+    // eslint-disable-next-line no-case-declarations
+    const boolOptions: FilterOption[] = [
+      { value: true, text: 'Yes' },
+      { value: false, text: 'No' }
+    ]
+    return (): FilterOptionsPromise => Promise.resolve(boolOptions)
+  default:
+    return null
   }
 }

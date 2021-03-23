@@ -13,9 +13,9 @@ describe('CardView.vue', () => {
 
   beforeEach(() => {
     state = {
-      tableMeta: { idAttribute: { name: 'tableID' }, labelAttribute: { name: 'label' }, attributes: [{ type: 'compound' }, { type: 'string' }, { type: 'string' }] },
+      tableMeta: { idAttribute: { name: 'tableID' }, labelAttribute: { name: 'label' }, attributes: [ { type: 'compound' }, { type: 'string' }, { type: 'string' } ] },
       dataDisplayLayout: 'ClipboardView',
-      selectedItemIds: ['1', '3']
+      selectedItemIds: [ '1', '3' ]
     }
     mutations = {
       toggleSelectedItems: jest.fn()
@@ -83,7 +83,7 @@ describe('CardView.vue', () => {
     state = {
       tableMeta: { idAttribute: { name: 'tableID' } },
       dataDisplayLayout: 'ClipboardView',
-      selectedItemIds: [1, 3]
+      selectedItemIds: [ 1, 3 ]
     }
     store = new Vuex.Store({
       modules: {

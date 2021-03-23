@@ -9,7 +9,7 @@ const mocks = {
   $t: (msg: any) => msg
 }
 
-const stubs = ['font-awesome-icon']
+const stubs = [ 'font-awesome-icon' ]
 
 describe('FiltersView.vue', () => {
   const localVue = createLocalVue()

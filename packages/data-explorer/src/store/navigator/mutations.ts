@@ -20,7 +20,7 @@ export default {
     state.alerts = alerts
   },
   [ADD_JOB] (state, job) {
-    state.jobs = state.jobs.concat([job])
+    state.jobs = state.jobs.concat([ job ])
   },
   [UPDATE_JOB] (state, job) {
     state.jobs = state.jobs.map(

@@ -13,7 +13,7 @@ export default {
       }
     },
     age_groups: {
-      items: [{ data: { name: 'age1', label: 'label1', id: 'id1' } }]
+      items: [ { data: { name: 'age1', label: 'label1', id: 'id1' } } ]
     },
     file: {
       data: {

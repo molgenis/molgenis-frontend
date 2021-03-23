@@ -23,7 +23,7 @@ describe('menuService', () => {
     describe('when item is in top level menu', () => {
       const menu = {
         id: 'root',
-        items: [{ id: 'not-foo' }, { id: 'foo' }]
+        items: [ { id: 'not-foo' }, { id: 'foo' } ]
       }
       it('should return the path', () => {
         expect(findPath('', menu, 'foo')).toEqual('/root/foo')
@@ -35,7 +35,7 @@ describe('menuService', () => {
         id: 'root',
         items: [
           { id: 'not-foo' },
-          { id: 'sub1', items: [{ id: 'not-foo' }, { id: 'foo' }] },
+          { id: 'sub1', items: [ { id: 'not-foo' }, { id: 'foo' } ] },
           { id: 'not-foo' }
         ]
       }
@@ -49,7 +49,7 @@ describe('menuService', () => {
         id: 'root',
         items: [
           { id: 'not-foo' },
-          { id: 'sub1', items: [{ id: 'not-foo' }, { id: 'sub2', items: [{ id: 'foo' }] }] },
+          { id: 'sub1', items: [ { id: 'not-foo' }, { id: 'sub2', items: [ { id: 'foo' } ] } ] },
           { id: 'not-foo' }
         ]
       }
@@ -63,7 +63,7 @@ describe('menuService', () => {
         id: 'root',
         items: [
           { id: 'not-foo' },
-          { id: 'sub1', items: [{ id: 'not-foo' }, { id: 'not-foo' }] },
+          { id: 'sub1', items: [ { id: 'not-foo' }, { id: 'not-foo' } ] },
           { id: 'not-foo' }
         ]
       }
