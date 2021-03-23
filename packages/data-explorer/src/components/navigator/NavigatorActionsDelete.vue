@@ -25,8 +25,8 @@ import { mapGetters, mapState } from 'vuex'
 export default {
   name: 'NavigatorActionsTransfer',
   computed: {
-    ...mapGetters('navigator', [ 'nrSelectedResources' ]),
-    ...mapState('navigator', [ 'folder' ]),
+    ...mapGetters('navigator', ['nrSelectedResources']),
+    ...mapState('navigator', ['folder']),
     getSelectedResourceType () {
       return this.selectedResources[0].type
     },

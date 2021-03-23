@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('explorer', [ 'persistToRoute' ]),
+    ...mapMutations('explorer', ['persistToRoute']),
     toggleAllColumns () {
       const columnsToHide = this.selectAllState ? [] : this.allColumns
       this.persistToRoute({

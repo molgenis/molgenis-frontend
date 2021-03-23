@@ -110,7 +110,7 @@ const buildPageQuery = (pagination: Pagination | undefined) => {
   // (!) Adapt page to 0-based data-api page property.
   return pagination ? Object
     .entries({ page: pagination.page - 1, size: pagination.size })
-    .map(([ k, v ]) => `${k}=${v}`)
+    .map(([k, v]) => `${k}=${v}`)
     .join('&') + '&'
     : ''
 }
@@ -154,14 +154,14 @@ const getTableDataWithLabel = async (
   pagination?: Pagination,
   sort?: Sort
 ) => {
-  const columnSet = new Set([ ...columns ])
+  const columnSet = new Set([...columns])
   columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
     columnSet.add(metaData.labelAttribute.name)
   }
 
   const sortQuery = buildSortQuery(sort)
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [ ...columnSet ])
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
   const pageQuery = buildPageQuery(pagination)
   const request = addFilterIfSet(`/api/data/${tableId}?${pageQuery}${expandReferencesQuery}${sortQuery}`, rsqlQuery)
   const response = (await client.get<DataApiResponse>(request)).data
@@ -176,13 +176,13 @@ const getRowDataWithReferenceLabels = async (tableId: string, rowId: string, met
   const attributes: string[] = getAttributesfromMeta(metaData)
   // Todo: remove work around, needed as compounds are not passed by getAttributesfromMeta.
   // Adding id and label makes sure we get these fields.
-  const columnSet = new Set([ ...attributes ])
+  const columnSet = new Set([...attributes])
   columnSet.add(metaData.idAttribute.name)
   if (metaData.labelAttribute !== undefined) {
     columnSet.add(metaData.labelAttribute.name)
   }
 
-  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [ ...columnSet ])
+  const expandReferencesQuery = buildExpandedAttributesQuery(metaData, [...columnSet])
   const response = await client.get<DataApiResponseItem>(`/api/data/${tableId}/${rowId}?${expandReferencesQuery}`)
   return levelOneRowMapper(response.data, metaData)
 }

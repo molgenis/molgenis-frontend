@@ -54,8 +54,8 @@ describe('DataRowRepository', () => {
 
     describe('width file data', () => {
       it('should post the new row', () => {
-        formFields = [ { id: 'x', type: 'file' } ]
-        formData = [ 'x', 'x' ]
+        formFields = [{ id: 'x', type: 'file' }]
+        formData = ['x', 'x']
         repository.save(formData, formFields, tableId, null)
         const containsFileData = true
         const uri = '/api/v1/my-table?_method=PUT'
@@ -67,7 +67,7 @@ describe('DataRowRepository', () => {
 
     describe('width file within fieldgroup', () => {
       it('should post the new row', () => {
-        const blob: any = new Blob([ '' ], { type: 'text/html' })
+        const blob: any = new Blob([''], { type: 'text/html' })
         blob['lastModifiedDate'] = ''
         blob['name'] = 'my file'
         formData = {

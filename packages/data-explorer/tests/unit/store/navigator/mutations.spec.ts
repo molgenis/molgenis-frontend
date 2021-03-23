@@ -4,11 +4,11 @@ describe('mutations', () => {
   describe('ADD_ALERTS', () => {
     it('should set add the alerts to existing alerts in the state', () => {
       const state = {
-        alerts: [ { type: 'error', message: 'error message', code: 'error code' } ]
+        alerts: [{ type: 'error', message: 'error message', code: 'error code' }]
       }
 
       const alerts = [
-        [ { type: 'info', message: 'info message' } ]
+        [{ type: 'info', message: 'info message' }]
       ]
 
       mutations.__ADD_ALERTS__(state, alerts)
@@ -37,11 +37,11 @@ describe('mutations', () => {
       const job1 = { type: 'COPY', id: '1', status: 'finished' }
 
       const state = {
-        jobs: [ job0 ]
+        jobs: [job0]
       }
 
       mutations.__ADD_JOB__(state, job1)
-      expect(state.jobs).toEqual([ job0, job1 ])
+      expect(state.jobs).toEqual([job0, job1])
     })
   })
   describe('UPDATE_JOB', () => {
@@ -50,12 +50,12 @@ describe('mutations', () => {
       const job1 = { type: 'COPY', id: '0', status: 'RUNNING' }
 
       const state = {
-        jobs: [ job0, job1 ]
+        jobs: [job0, job1]
       }
 
       const updatedJob1 = { type: 'COPY', id: '0', status: 'SUCCESS' }
       mutations.__UPDATE_JOB__(state, updatedJob1)
-      expect(state.jobs).toEqual([ job0, updatedJob1 ])
+      expect(state.jobs).toEqual([job0, updatedJob1])
     })
   })
   describe('REMOVE_JOB', () => {
@@ -64,11 +64,11 @@ describe('mutations', () => {
       const job1 = { type: 'COPY', id: '0', status: 'RUNNING' }
 
       const state = {
-        jobs: [ job0, job1 ]
+        jobs: [job0, job1]
       }
 
       mutations.__REMOVE_JOB__(state, job1)
-      expect(state.jobs).toEqual([ job0 ])
+      expect(state.jobs).toEqual([job0])
     })
   })
   describe('SET_FOLDER', () => {
@@ -88,8 +88,8 @@ describe('mutations', () => {
   describe('SET_RESOURCES', () => {
     it('should set the resources in the state and clear the selected resources', () => {
       const state = {
-        resources: [ { type: 'PACKAGE', 'id': '0', 'label': 'label0' } ],
-        selectedResources: [ { type: 'PACKAGE', 'id': '0', 'label': 'label0' } ]
+        resources: [{ type: 'PACKAGE', 'id': '0', 'label': 'label0' }],
+        selectedResources: [{ type: 'PACKAGE', 'id': '0', 'label': 'label0' }]
       }
 
       const resources = [

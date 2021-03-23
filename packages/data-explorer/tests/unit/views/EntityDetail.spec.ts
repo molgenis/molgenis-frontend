@@ -20,7 +20,7 @@ const mocks = {
   $bvModal: { msgBoxConfirm: jest.fn() },
   router: { replace: jest.fn() }
 }
-const stubs = [ 'font-awesome-icon', 'router-link', 'b-tooltip' ]
+const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
 const directives = { 'b-tooltip': () => {} }
 let actions: any
 let getters: any
@@ -44,7 +44,7 @@ describe('EntityDetail.vue', () => {
     getRowDataWithReferenceLabels.mockResolvedValue({
       id: 'abc-123',
       key1: 'val1',
-      key2: [ 'val2', 'val3' ],
+      key2: ['val2', 'val3'],
       key3: {
         key4: 'val'
       }

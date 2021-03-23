@@ -18,7 +18,7 @@ export default {
   props: {
     value: {
       // {id {string}, label: {string}}
-      type: [ Object, Array ],
+      type: [Object, Array],
       required: true
     },
     metadata: {

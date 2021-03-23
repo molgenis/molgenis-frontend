@@ -2,7 +2,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils'
 import RefTable from '@/components/dataDisplayTypes/RefTable.vue'
 
 describe('RefTable.vue', () => {
-  const stubs = [ 'b-spinner' ]
+  const stubs = ['b-spinner']
   const localVue = createLocalVue()
 
   let isDataLoaded = false
@@ -30,12 +30,12 @@ describe('RefTable.vue', () => {
       }
       const wrapper = shallowMount(RefTable, { propsData: { isDataLoaded, entitiesToShow, metaData }, localVue, stubs })
       // @ts-ignore
-      expect(wrapper.vm.visibleColumns).toEqual([ {
+      expect(wrapper.vm.visibleColumns).toEqual([{
         id: 'id',
         name: 'name',
         type: 'type',
         refEntityType: 'refEntityType'
-      } ])
+      }])
     })
   })
 })

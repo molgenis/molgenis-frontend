@@ -25,7 +25,7 @@ export default {
   name: 'Navigator',
   components: { Alerts, Jobs, NavigatorSearch, NavigatorBreadcrumb, NavigatorActions, NavigatorTable },
   computed: {
-    ...mapGetters('navigator', [ 'query', 'folderId' ])
+    ...mapGetters('navigator', ['query', 'folderId'])
   },
   watch: {
     '$route' (to, from) {

@@ -2,7 +2,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils'
 import DefaultCardContent from '@/components/dataView/DefaultCardContent.vue'
 
 const mocks = { $t: (msg: any) => msg }
-const stubs = [ 'b-overlay', 'router-link', 'font-awesome-icon' ]
+const stubs = ['b-overlay', 'router-link', 'font-awesome-icon']
 
 describe('DefaultCardContent.vue', () => {
   const localVue = createLocalVue()

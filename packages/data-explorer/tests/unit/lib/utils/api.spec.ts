@@ -10,12 +10,12 @@ describe('api', () => {
   let folder
 
   beforeEach(() => {
-    resources = [ {
+    resources = [{
       type: 'PACKAGE',
       id: 'package0',
       label: 'package #0',
       readonly: false
-    } ]
+    }]
     folderId = 'folderId'
     folder = { id: folderId, label: 'label', readonly: false }
   })
@@ -96,7 +96,7 @@ describe('api', () => {
         resultUrl: undefined
       }
 
-      const response:any = { errors: [ { message: 'error' } ] }
+      const response:any = { errors: [{ message: 'error' }] }
       const get = td.function('molgenisApiClient.get')
       td.when(get('/api/v2/sys_job_ResourceDownloadJobExecution/jobId')).thenReject(response)
       td.replace(molgenisApiClient, 'get', get)
@@ -108,7 +108,7 @@ describe('api', () => {
     it('should call the get endpoint with folderId parameter and return folder state', async () => {
       const response = {
         folder: { id: 'id', label: 'label', readonly: 'false' },
-        resources: [ { type: 'PACKAGE', id: 'p0', label: 'package #0', readonly: 'false' } ]
+        resources: [{ type: 'PACKAGE', id: 'p0', label: 'package #0', readonly: 'false' }]
       }
       const get = td.function('molgenisApiClient.get')
       td.when(get('/plugin/navigator/get?folderId=f0')).thenResolve(response)
@@ -120,7 +120,7 @@ describe('api', () => {
     it('should call the get endpoint without folderId parameter and return folder state', async () => {
       const response = {
         folder: { id: 'id', label: 'label', readonly: 'false' },
-        resources: [ { type: 'PACKAGE', id: 'p0', label: 'package #0', readonly: 'false' } ]
+        resources: [{ type: 'PACKAGE', id: 'p0', label: 'package #0', readonly: 'false' }]
       }
       const get = td.function('molgenisApiClient.get')
       td.when(get('/plugin/navigator/get')).thenResolve(response)
@@ -130,7 +130,7 @@ describe('api', () => {
     })
 
     it('should return alerts in case of errors', async () => {
-      const response:any = { errors: [ { message: 'error' } ] }
+      const response:any = { errors: [{ message: 'error' }] }
       const get = td.function('molgenisApiClient.get')
       td.when(get('/plugin/navigator/get?folderId=unknownFolder')).thenReject(response)
       td.replace(molgenisApiClient, 'get', get)
@@ -141,7 +141,7 @@ describe('api', () => {
   describe('getResourcesByQuery', () => {
     it('should call the search endpoint and return folder state', async () => {
       const response = {
-        resources: [ { type: 'PACKAGE', id: 'p0', label: 'package #0', readonly: 'false' } ]
+        resources: [{ type: 'PACKAGE', id: 'p0', label: 'package #0', readonly: 'false' }]
       }
       const get = td.function('molgenisApiClient.get')
       td.when(get('/plugin/navigator/search?query=text')).thenResolve(response)
@@ -150,7 +150,7 @@ describe('api', () => {
     })
 
     it('should return alerts in case of errors', () => {
-      const response:any = { errors: [ { message: 'error' } ] }
+      const response:any = { errors: [{ message: 'error' }] }
       const get = td.function('molgenisApiClient.get')
       td.when(get('/plugin/navigator/search?query=text')).thenReject(response)
       td.replace(molgenisApiClient, 'get', get)
@@ -164,7 +164,7 @@ describe('api', () => {
     beforeEach(() => {
       body = {
         body: JSON.stringify({
-          resources: [ { id: 'package0', type: 'PACKAGE' } ],
+          resources: [{ id: 'package0', type: 'PACKAGE' }],
           targetFolderId: folderId
         })
       }
@@ -180,7 +180,7 @@ describe('api', () => {
     })
 
     it('should return alerts in case of errors', () => {
-      const response:any = { errors: [ { message: 'error' } ] }
+      const response:any = { errors: [{ message: 'error' }] }
       const post = td.function('molgenisApiClient.post')
       td.when(post('/plugin/navigator/move', body)).thenReject(response)
       td.replace(molgenisApiClient, 'post', post)
@@ -195,7 +195,7 @@ describe('api', () => {
     beforeEach(() => {
       body = {
         body: JSON.stringify({
-          resources: [ { id: 'package0', type: 'PACKAGE' } ],
+          resources: [{ id: 'package0', type: 'PACKAGE' }],
           targetFolderId: folderId
         })
       }
@@ -226,7 +226,7 @@ describe('api', () => {
     })
 
     it('should return alerts in case of errors', () => {
-      const response:any = { errors: [ { message: 'error' } ] }
+      const response:any = { errors: [{ message: 'error' }] }
       const post = td.function('molgenisApiClient.post')
       td.when(post('/plugin/navigator/copy', body)).thenReject(response)
       td.replace(molgenisApiClient, 'post', post)
@@ -241,7 +241,7 @@ describe('api', () => {
     beforeEach(() => {
       body = {
         body: JSON.stringify({
-          resources: [ { id: 'package0', type: 'PACKAGE' } ]
+          resources: [{ id: 'package0', type: 'PACKAGE' }]
         })
       }
     })
@@ -270,7 +270,7 @@ describe('api', () => {
     })
 
     it('should return alerts in case of errors', () => {
-      const response = { errors: [ { message: 'error' } ] }
+      const response = { errors: [{ message: 'error' }] }
       const delete_ = td.function('molgenisApiClient.delete_')
       td.when(delete_('/plugin/navigator/delete', body)).thenResolve(response)
       td.replace(molgenisApiClient, 'delete_', delete_)
@@ -285,7 +285,7 @@ describe('api', () => {
     beforeEach(() => {
       body = {
         body: JSON.stringify({
-          resources: [ { id: 'package0', type: 'PACKAGE' } ]
+          resources: [{ id: 'package0', type: 'PACKAGE' }]
         })
       }
     })
@@ -313,7 +313,7 @@ describe('api', () => {
     })
 
     it('should return alerts in case of errors', () => {
-      const response:any = { errors: [ { message: 'error' } ] }
+      const response:any = { errors: [{ message: 'error' }] }
       const delete_ = td.function('molgenisApiClient.delete_')
       td.when(delete_('/plugin/navigator/delete', body)).thenReject(response)
       td.replace(molgenisApiClient, 'delete_', delete_)
@@ -328,7 +328,7 @@ describe('api', () => {
     beforeEach(() => {
       body = {
         body: JSON.stringify({
-          resources: [ { id: 'package0', type: 'PACKAGE' } ]
+          resources: [{ id: 'package0', type: 'PACKAGE' }]
         })
       }
     })
@@ -357,7 +357,7 @@ describe('api', () => {
     })
 
     it('should return alerts in case of errors', () => {
-      const response:any = { errors: [ { message: 'error' } ] }
+      const response:any = { errors: [{ message: 'error' }] }
       const post = td.function('molgenisApiClient.post')
       td.when(post('/plugin/navigator/download', body)).thenReject(response)
       td.replace(molgenisApiClient, 'post', post)
@@ -373,7 +373,7 @@ describe('api', () => {
     beforeEach(() => {
       body = {
         body: JSON.stringify({
-          entities: [ { id: 'package0', label: 'package #0', parent: folderId } ]
+          entities: [{ id: 'package0', label: 'package #0', parent: folderId }]
         })
       }
       post = td.function('molgenisApiClient.post')
@@ -389,7 +389,7 @@ describe('api', () => {
     })
 
     it('should return alerts in case of errors', () => {
-      const response:any = { errors: [ { message: 'error' } ] }
+      const response:any = { errors: [{ message: 'error' }] }
       td.when(post('/api/v2/sys_md_Package', body)).thenReject(response)
       td.replace(molgenisApiClient, 'post', post)
 
@@ -427,7 +427,7 @@ describe('api', () => {
     })
 
     it('should return alerts in case of errors', () => {
-      const response:any = { errors: [ { message: 'error' } ] }
+      const response:any = { errors: [{ message: 'error' }] }
       td.when(put('/plugin/navigator/update', body)).thenReject(response)
       td.replace(molgenisApiClient, 'put', put)
 

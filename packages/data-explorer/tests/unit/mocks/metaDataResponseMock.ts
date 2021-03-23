@@ -128,7 +128,7 @@ export default {
       isReference: false,
       visible: true,
       aggregatable: false,
-      enumOptions: [ { text: 'option A', value: 'a' }, { text: 'option B', value: 'b' }, { text: 'option C', value: 'c' } ]
+      enumOptions: [{ text: 'option A', value: 'a' }, { text: 'option B', value: 'b' }, { text: 'option C', value: 'c' }]
     },
     {
       id: '/api/metadata/bool',

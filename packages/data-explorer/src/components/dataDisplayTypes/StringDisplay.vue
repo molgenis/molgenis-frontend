@@ -31,7 +31,7 @@ export default {
   name: 'StringDisplay',
   props: {
     value: {
-      type: [ String, Number, Boolean ],
+      type: [String, Number, Boolean],
       required: true
     },
     rowIndex: {

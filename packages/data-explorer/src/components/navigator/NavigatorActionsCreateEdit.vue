@@ -89,8 +89,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('navigator', [ 'nrSelectedResources', 'query' ]),
-    ...mapState('navigator', [ 'folder', 'selectedResources' ]),
+    ...mapGetters('navigator', ['nrSelectedResources', 'query']),
+    ...mapState('navigator', ['folder', 'selectedResources']),
     getSelectedResourceType () {
       return this.selectedResources[0].type
     },

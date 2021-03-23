@@ -29,7 +29,7 @@ import { REMOVE_ALERT } from '@/store/navigator/mutations'
 export default {
   name: 'Alerts',
   computed: {
-    ...mapState('navigator', [ 'alerts' ])
+    ...mapState('navigator', ['alerts'])
   },
   methods: {
     getVariant: function (alert) {

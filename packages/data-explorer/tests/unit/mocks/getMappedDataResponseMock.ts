@@ -1,15 +1,15 @@
 import { DataApiResponse } from '@/types/ApiResponse'
 const mappedDataResponseMock:DataApiResponse = {
   'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees?expand=department, user, function_description&filter=birthdate, department, user, function_description, id, firstName, lastName' },
-  'items': [ {
+  'items': [{
     'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000000' },
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000000/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/it' },
           'data': { 'id': 'it', 'label': 'IT employee' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/it' },
@@ -35,10 +35,10 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000001/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/a' },
@@ -65,10 +65,10 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000002/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/rs' },
           'data': { 'id': 'rs', 'label': 'Researcher' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/r' },
@@ -95,13 +95,13 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000003/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
         }, {
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/ps' },
           'data': { 'id': 'ps', 'label': 'Plastic surgeon' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/p' },
@@ -128,10 +128,10 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000004/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/rs' },
           'data': { 'id': 'rs', 'label': 'Researcher' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/g' },
@@ -157,10 +157,10 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000005/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/di' },
@@ -187,7 +187,7 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000006/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/hdm' },
           'data': { 'id': 'hdm', 'label': 'Head of diagnostic medicine' }
         }, {
@@ -202,7 +202,7 @@ const mappedDataResponseMock:DataApiResponse = {
         }, {
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/ids' },
           'data': { 'id': 'ids', 'label': 'Infectious disease specialist' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/di' },
@@ -229,13 +229,13 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000007/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
         }, {
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/onc' },
           'data': { 'id': 'onc', 'label': 'Oncologist' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/onc' },
@@ -261,13 +261,13 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000008/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dm' },
           'data': { 'id': 'dm', 'label': 'Dean of Medicine' }
         }, {
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
-        } ]
+        }]
       },
       'id': 'e000008',
       'firstName': 'Lisa',
@@ -290,13 +290,13 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000009/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
         }, {
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/sg' },
           'data': { 'id': 'sg', 'label': 'Surgeon' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/di' },
@@ -323,13 +323,13 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000010/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
         }, {
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/im' },
           'data': { 'id': 'im', 'label': 'Immunologist' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/di' },
@@ -356,13 +356,13 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000011/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
         }, {
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/ne' },
           'data': { 'id': 'ne', 'label': 'Neurologist' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/di' },
@@ -389,13 +389,13 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000012/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
         }, {
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/ps' },
           'data': { 'id': 'ps', 'label': 'Plastic surgeon' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/di' },
@@ -421,13 +421,13 @@ const mappedDataResponseMock:DataApiResponse = {
     'data': {
       'function_description': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_employees/e000013/function_description' },
-        'items': [ {
+        'items': [{
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/dc' },
           'data': { 'id': 'dc', 'label': 'Doctor' }
         }, {
           'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_functions/in' },
           'data': { 'id': 'in', 'label': 'Internist' }
-        } ]
+        }]
       },
       'department': {
         'links': { 'self': 'http: //localhost: 443/api/data/root_hospital_departments/di' },
@@ -449,7 +449,7 @@ const mappedDataResponseMock:DataApiResponse = {
         }
       }
     }
-  } ],
+  }],
   'page': { 'size': 14, 'totalElements': 14, 'totalPages': 1, 'number': 0 }
 }
 

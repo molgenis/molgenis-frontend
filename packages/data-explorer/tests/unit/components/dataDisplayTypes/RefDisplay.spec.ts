@@ -3,7 +3,7 @@ import RefDisplay from '@/components/dataDisplayTypes/RefDisplay.vue'
 import Vue from 'vue'
 
 describe('RefDisplay.vue', () => {
-  const stubs = [ 'font-awesome-icon' ]
+  const stubs = ['font-awesome-icon']
   const value = {
     id: 'id',
     label: 'label'
@@ -18,7 +18,7 @@ describe('RefDisplay.vue', () => {
   })
 
   it('should display the label list in case of multiple values', () => {
-    const value = [ { id: 'id', label: 'label' }, { id: 'id-2', label: 'label-2' } ]
+    const value = [{ id: 'id', label: 'label' }, { id: 'id-2', label: 'label-2' }]
     const wrapper = shallowMount(RefDisplay, { propsData: { value, metadata }, stubs })
     expect(wrapper.find('span').text()).toEqual('label, label-2')
   })

@@ -41,8 +41,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('explorer', [ 'tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort', 'hiddenColumns' ]),
-    ...mapGetters('explorer', [ 'filterRsql', 'hasEditRights', 'compressedRouteFilter' ]),
+    ...mapState('explorer', ['tableName', 'tableMeta', 'selectedItemIds', 'tableSettings', 'showSelected', 'sort', 'hiddenColumns']),
+    ...mapGetters('explorer', ['filterRsql', 'hasEditRights', 'compressedRouteFilter']),
     idAttribute () {
       return this.tableMeta.idAttribute
     },
@@ -60,8 +60,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('explorer', [ 'toggleSelectedItems', 'setSortColumn', 'setIsSortOrderReversed' ]),
-    ...mapActions('explorer', [ 'fetchTableViewData' ]),
+    ...mapMutations('explorer', ['toggleSelectedItems', 'setSortColumn', 'setIsSortOrderReversed']),
+    ...mapActions('explorer', ['fetchTableViewData']),
     getEntityId (entity) {
       return entity[this.idAttribute.name].toString()
     },

@@ -49,8 +49,8 @@ export default {
     }
   },
   computed: {
-    ...mapState('navigator', [ 'folder' ]),
-    ...mapGetters('navigator', [ 'nrSelectedResources', 'query' ]),
+    ...mapState('navigator', ['folder']),
+    ...mapGetters('navigator', ['nrSelectedResources', 'query']),
     canDownload () {
       return this.nrSelectedResources > 0
     },

@@ -10,7 +10,7 @@ export const toFilterValue = (routeFilterValue: any, filterDataType: TypeEnum): 
   case 'email':
     return decodeURI(routeFilterValue.toString())
   case 'bool':
-    return typeof routeFilterValue === 'boolean' ? [ routeFilterValue ] : [ routeFilterValue === 'true' ]
+    return typeof routeFilterValue === 'boolean' ? [routeFilterValue] : [routeFilterValue === 'true']
   case 'categorical':
   case 'categorical_mref':
   case 'enum':

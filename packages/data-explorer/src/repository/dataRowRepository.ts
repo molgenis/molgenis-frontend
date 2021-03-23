@@ -21,7 +21,7 @@ const isFileIncluded = (formData: { [x: string]: any }, formFields: any) => {
   return !!fieldsWithFile
 }
 
-export const appendToForm = (fields: any[], formData: FormData, [ key, value ]: [string, unknown]) => {
+export const appendToForm = (fields: any[], formData: FormData, [key, value]: [string, unknown]) => {
   const isFile = value && fields.find((field: { id: any; type: string }) => field.id === key && field.type === 'file' && typeof value !== 'string')
   if (isFile) {
     // @ts-ignore

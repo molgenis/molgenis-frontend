@@ -71,7 +71,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('explorer', [ 'dataDisplayLayout', 'tableMeta', 'selectedItemIds', 'defaultEntityData', 'tableData', 'CartSelectionToast' ]),
+    ...mapState('explorer', ['dataDisplayLayout', 'tableMeta', 'selectedItemIds', 'defaultEntityData', 'tableData', 'CartSelectionToast']),
     idAttribute () {
       return this.tableMeta.idAttribute.name
     },
@@ -90,7 +90,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('explorer', [ 'loadDefaultEntityData' ]),
+    ...mapActions('explorer', ['loadDefaultEntityData']),
     getEntityId (entity) {
       return entity[this.idAttribute].toString()
     },

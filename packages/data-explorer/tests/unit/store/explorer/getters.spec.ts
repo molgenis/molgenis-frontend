@@ -25,13 +25,13 @@ describe('getters', () => {
     const rootState:any = {
       account: {
         context: {
-          roles: [ 'r1', 'r2' ]
+          roles: ['r1', 'r2']
         }
       }
     }
 
     it('should return the user roles from the context', () => {
-      expect(getters.userRoles(state, getters, rootState)).toEqual([ 'r1', 'r2' ])
+      expect(getters.userRoles(state, getters, rootState)).toEqual(['r1', 'r2'])
     })
 
     it('should return empty list if context not yet set', () => {
@@ -72,7 +72,7 @@ describe('getters', () => {
     })
 
     it('should return true if authenticated and has edit rights', () => {
-      state.tablePermissions = [ 'UPDATE_DATA' ]
+      state.tablePermissions = ['UPDATE_DATA']
       expect(getters.hasEditRights(state)).toEqual(true)
     })
   })
@@ -86,7 +86,7 @@ describe('getters', () => {
     })
 
     it('should return true if authenticated and has add rights', () => {
-      state.tablePermissions = [ 'ADD_DATA' ]
+      state.tablePermissions = ['ADD_DATA']
       expect(getters.hasAddRights(state)).toEqual(true)
     })
   })
@@ -100,7 +100,7 @@ describe('getters', () => {
     })
 
     it('should return true if authenticated and has delete rights', () => {
-      state.tablePermissions = [ 'DELETE_DATA' ]
+      state.tablePermissions = ['DELETE_DATA']
       expect(getters.hasDeleteRights(state)).toEqual(true)
     })
   })
@@ -111,7 +111,7 @@ describe('getters', () => {
     it('should return true if authenticated and has super user role', () => {
       const localGetters = {
         isUserAuthenticated: true,
-        userRoles: [ 'ROLE_SU' ]
+        userRoles: ['ROLE_SU']
       }
       expect(getters.hasEditSettingsRights(state, localGetters)).toEqual(true)
     })
@@ -168,7 +168,7 @@ describe('getters', () => {
           { colA: 'my-id', colB: 'my-label' }
         ]
       }
-      state.selectedItemIds = [ 'my-id' ]
+      state.selectedItemIds = ['my-id']
       const localGetters = {
         tableIdAttributeName: 'colA',
         tableLabelAttributeName: 'colB'
@@ -182,11 +182,11 @@ describe('getters', () => {
   describe('routeFilter', () => {
     const state: any = {
       filters: {
-        shown: [ 'a', 'b' ],
+        shown: ['a', 'b'],
         selections: {
           'f1': 'val1',
-          'f2': [ 'val2', 'val3' ],
-          'f3': [ new Date('2021-01-01T11:00:00.000Z') ],
+          'f2': ['val2', 'val3'],
+          'f3': [new Date('2021-01-01T11:00:00.000Z')],
           'non-in-result': []
         }
       }
@@ -255,7 +255,7 @@ describe('getters', () => {
       expect(getters.parseRouteFilter(state, mockGetter)(encodedBookmark)).toEqual({
         searchText: 'test',
         selections: { 'shop': undefined },
-        shown: [ 'shop', 'table' ]
+        shown: ['shop', 'table']
       })
     })
   })

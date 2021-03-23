@@ -78,7 +78,7 @@ router.beforeEach((to, from, next) => {
 Vue.use(i18n, {
   lng: 'en',
   fallbackLng: 'en',
-  namespace: [ 'dataexplorer', 'navigator', 'data-row-edit', 'ui-form' ],
+  namespace: ['dataexplorer', 'navigator', 'data-row-edit', 'ui-form'],
   callback () {
     new Vue({ store, router, render: h => h(App) }).$mount('#app')
     // @ts-ignore

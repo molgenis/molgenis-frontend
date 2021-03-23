@@ -55,7 +55,7 @@ function getWrapper () {
       'b-tooltip': () => {}
     },
     mocks,
-    stubs: [ 'font-awesome-icon', 'router-link' ]
+    stubs: ['font-awesome-icon', 'router-link']
   })
 }
 
@@ -129,7 +129,7 @@ describe('ToolbarView.vue', () => {
       store.state.explorer.tableMeta = { id: '123', attributes: [] }
       // @ts-ignore
       await wrapper.vm.downloadData()
-      expect(actions.downloadResources).toHaveBeenCalledWith(expect.anything(), [ { id: '123', type: 'ENTITY_TYPE' } ])
+      expect(actions.downloadResources).toHaveBeenCalledWith(expect.anything(), [{ id: '123', type: 'ENTITY_TYPE' }])
     })
   })
 
@@ -149,7 +149,7 @@ describe('ToolbarView.vue', () => {
         ]
       }
       // @ts-ignore
-      expect(wrapper.vm.sortOptions).toEqual([ { id: '1', name: 'a' } ])
+      expect(wrapper.vm.sortOptions).toEqual([{ id: '1', name: 'a' }])
     })
   })
 

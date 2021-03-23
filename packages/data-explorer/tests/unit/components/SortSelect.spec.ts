@@ -8,7 +8,7 @@ describe('SortSelect', () => {
     'b-tooltip': () => { }
   }
 
-  const stubs = [ 'font-awesome-icon' ]
+  const stubs = ['font-awesome-icon']
 
   const propsData = {
     sort: {

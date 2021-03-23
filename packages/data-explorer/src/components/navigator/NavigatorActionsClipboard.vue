@@ -62,8 +62,8 @@ import { SET_CLIPBOARD } from '@/store/navigator/mutations'
 export default {
   name: 'NavigatorActionsClipboard',
   computed: {
-    ...mapGetters('navigator', [ 'nrSelectedResources', 'folderId', 'query', 'nrClipboardResources' ]),
-    ...mapState('navigator', [ 'clipboard', 'folder', 'selectedResources' ]),
+    ...mapGetters('navigator', ['nrSelectedResources', 'folderId', 'query', 'nrClipboardResources']),
+    ...mapState('navigator', ['clipboard', 'folder', 'selectedResources']),
     canCut () {
       return this.nrSelectedResources > 0 && !(this.folder && this.folder.readonly)
     },

@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import { routes } from '@/routes'
 
 const mocks = { $t: (msg: any) => msg }
-const stubs = [ 'font-awesome-icon' ]
+const stubs = ['font-awesome-icon']
 
 describe('SearchComponent', () => {
   let wrapper: any
@@ -33,7 +33,7 @@ describe('SearchComponent', () => {
 
     it('should fire a input event passing the searchText', () => {
       expect(wrapper.emitted('input')).toBeTruthy()
-      expect(wrapper.emitted('input')[0]).toEqual([ 'demo' ])
+      expect(wrapper.emitted('input')[0]).toEqual(['demo'])
     })
   })
 
@@ -56,7 +56,7 @@ describe('SearchComponent', () => {
     })
     it('should emit an event from the search component', async () => {
       expect(wrapper.emitted('input')).toBeTruthy()
-      expect(wrapper.emitted('input')[0]).toEqual([ '' ])
+      expect(wrapper.emitted('input')[0]).toEqual([''])
     })
   })
 })

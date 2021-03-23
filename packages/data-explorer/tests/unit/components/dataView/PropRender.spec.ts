@@ -5,7 +5,7 @@ describe('PropRender.vue', () => {
   const propsData = {
     object: {
       'col1': 'Column 1',
-      'col2': [ 'Column 2', 'Column 2b' ],
+      'col2': ['Column 2', 'Column 2b'],
       'col3': {
         'col4': 'Col 4'
       }

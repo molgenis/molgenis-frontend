@@ -35,12 +35,12 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
   let filterSelections = filters.selections
 
   if (searchText && searchText.length > 0) {
-    filterDefinitions = [ ...filterDefinitions, {
+    filterDefinitions = [...filterDefinitions, {
       type: 'search-filter',
       label: 'search',
       name: '_search',
       dataType: 'string'
-    } ]
+    }]
     filterSelections = { ...filters.selections, _search: searchText }
   }
   Object.keys(filterSelections).forEach((name: string) => {
@@ -75,7 +75,7 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
         operands.push(createGreaterEqualQuery(name, selection[0]))
       } else if (selection[0] !== null && selection[1] !== null) {
         // [value, value] -> filter a range of values
-        const correctedSelection = [ Math.min(selection[0], selection[1]), Math.max(selection[0], selection[1]) ]
+        const correctedSelection = [Math.min(selection[0], selection[1]), Math.max(selection[0], selection[1])]
         operands.push(createRangeQuery(name, correctedSelection))
       }
       break
@@ -83,7 +83,7 @@ export const createRSQLQuery = (filters: FilterGroup, searchText?: string): stri
       operands.push(createInQuery(name, selection))
       break
     case 'date-time-filter':
-      operands.push(createRangeQuery(name, [ selection[0].toISOString(), selection[1].toISOString() ]))
+      operands.push(createRangeQuery(name, [selection[0].toISOString(), selection[1].toISOString()]))
       break
     default:
       return null

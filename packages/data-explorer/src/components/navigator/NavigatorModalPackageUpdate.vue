@@ -59,7 +59,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('navigator', [ 'resources', 'selectedResources' ]),
+    ...mapState('navigator', ['resources', 'selectedResources']),
     selectedResource () {
       var selectedResourceId = this.selectedResources[0].id
       return this.resources.find(resource => resource.id === selectedResourceId)

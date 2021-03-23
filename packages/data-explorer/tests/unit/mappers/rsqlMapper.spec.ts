@@ -5,7 +5,7 @@ import { Value, transformToRSQL } from '@molgenis/rsql'
 describe('rsqlMapper', () => {
   describe('createInQuery', () => {
     it('create an inQuery', async () => {
-      const selections: Value[] = [ 'NL', 'DE' ]
+      const selections: Value[] = ['NL', 'DE']
       const inQuery = rsqlMapper.createInQuery('country', selections)
       const rsql = transformToRSQL(inQuery)
       expect(rsql).toEqual('country=in=(NL,DE)')
@@ -70,13 +70,13 @@ describe('rsqlMapper', () => {
     it('will create a rsql string from the given filterState', () => {
       filterState.selections = {
         search: 'Hello',
-        country: [ 'DE', 'NL' ],
-        age: [ '10', '30' ],
-        money: [ '0', null ],
-        amount: [ null, 100 ],
-        comply: [ 'yes' ],
-        date: [ new Date(1), new Date(2) ],
-        xref: [ 'bla' ],
+        country: ['DE', 'NL'],
+        age: ['10', '30'],
+        money: ['0', null],
+        amount: [null, 100],
+        comply: ['yes'],
+        date: [new Date(1), new Date(2)],
+        xref: ['bla'],
         default: true
       }
       filterState.definition.push({

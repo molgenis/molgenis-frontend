@@ -9,8 +9,8 @@ jest.mock('@/store/explorer/getters', () => {
     parseRouteFilter: () => () => {
       return {
         searchText: 'searchText',
-        shown: [ 'a', 'b' ],
-        selections: [ 'c' ]
+        shown: ['a', 'b'],
+        selections: ['c']
       }
     }
   }
@@ -59,7 +59,7 @@ describe('mutations', () => {
     description: 'description',
     label: 'Test',
     abstract: false,
-    attributes: [ IntAttribute, StringAttribute ]
+    attributes: [IntAttribute, StringAttribute]
   }
 
   let baseAppState: ApplicationState
@@ -83,7 +83,7 @@ describe('mutations', () => {
           {
             data: { id: '1', label: 'blaat' },
             links: { 'self': 'https://beautiful_link.nl/1' }
-          } ],
+          }],
         links: { 'self': 'https://beautiful_link.nl' },
         page: {
           size: 1,
@@ -106,8 +106,8 @@ describe('mutations', () => {
 
   describe('setFiltersShown', () => {
     it('sets the filters to be shown', () => {
-      mutations.setFiltersShown(baseAppState, [ 'filtera', 'filterb' ])
-      expect(baseAppState.filters.shown).toEqual([ 'filtera', 'filterb' ])
+      mutations.setFiltersShown(baseAppState, ['filtera', 'filterb'])
+      expect(baseAppState.filters.shown).toEqual(['filtera', 'filterb'])
     })
   })
 
@@ -135,18 +135,18 @@ describe('mutations', () => {
   describe('toggleSelectedItems', () => {
     it('adds item to shopping cart', () => {
       mutations.toggleSelectedItems(baseAppState, 'item1')
-      expect(baseAppState.selectedItemIds).toEqual([ 'item1' ])
+      expect(baseAppState.selectedItemIds).toEqual(['item1'])
     })
     it('adds another item to shopping cart', () => {
       mutations.toggleSelectedItems(baseAppState, 'item1')
       mutations.toggleSelectedItems(baseAppState, 'item2')
-      expect(baseAppState.selectedItemIds).toEqual([ 'item1', 'item2' ])
+      expect(baseAppState.selectedItemIds).toEqual(['item1', 'item2'])
     })
     it('removes an existing item from shopping cart', () => {
       mutations.toggleSelectedItems(baseAppState, 'item1')
       mutations.toggleSelectedItems(baseAppState, 'item2')
       mutations.toggleSelectedItems(baseAppState, 'item2')
-      expect(baseAppState.selectedItemIds).toEqual([ 'item1' ])
+      expect(baseAppState.selectedItemIds).toEqual(['item1'])
     })
   })
   describe('setTableSettings', () => {
@@ -162,7 +162,7 @@ describe('mutations', () => {
       expect(baseAppState.tableSettings.isShop).toEqual(true)
       expect(baseAppState.tableSettings.collapseLimit).toEqual(5)
       expect(baseAppState.tableSettings.settingsRowId).toEqual('blaat')
-      expect(baseAppState.tableSettings.defaultFilters).toEqual([ 'df-1', 'df-2' ])
+      expect(baseAppState.tableSettings.defaultFilters).toEqual(['df-1', 'df-2'])
     })
 
     it('should keep the defaults if no overrides are passed', () => {
@@ -212,12 +212,12 @@ describe('mutations', () => {
     it('should remove the item, corresponding to the passed row id, from the dataTable', () => {
       const mockState = {
         tableMeta: { idAttribute: { name: 'idField' } },
-        tableData: { items: [ { idField: 'a' }, { idField: 'b' } ] }
+        tableData: { items: [{ idField: 'a' }, { idField: 'b' }] }
       }
 
       // @ts-ignore
       mutations.removeRow(mockState, { rowId: 'b' })
-      expect(mockState.tableData.items).toEqual([ { idField: 'a' } ])
+      expect(mockState.tableData.items).toEqual([{ idField: 'a' }])
     })
   })
 
@@ -245,12 +245,12 @@ describe('mutations', () => {
     it('pushes a toast', () => {
       const toast:Toast = { message: 'foo', type: 'success' }
       mutations.addToast(baseAppState, toast)
-      expect(baseAppState.toasts).toEqual([ toast ])
+      expect(baseAppState.toasts).toEqual([toast])
     })
   })
   describe('setToasts', () => {
     it('sets the toasts', () => {
-      const toasts:Toast[] = [ { message: 'foo', type: 'success' } ]
+      const toasts:Toast[] = [{ message: 'foo', type: 'success' }]
       mutations.setToasts(baseAppState, toasts)
       expect(baseAppState.toasts).toEqual(toasts)
     })
@@ -263,8 +263,8 @@ describe('mutations', () => {
   })
   describe('setSelectedItems', () => {
     it('set the passed items on the state', () => {
-      mutations.setSelectedItems(baseAppState, [ 'a', 'list', 'of', 'items' ])
-      expect(baseAppState.selectedItemIds).toEqual([ 'a', 'list', 'of', 'items' ])
+      mutations.setSelectedItems(baseAppState, ['a', 'list', 'of', 'items'])
+      expect(baseAppState.selectedItemIds).toEqual(['a', 'list', 'of', 'items'])
     })
   })
   describe('setRouteQuery', () => {
@@ -293,12 +293,12 @@ describe('mutations', () => {
       mutations.setRouteQuery(baseAppState, filterRoute)
       expect(baseAppState.sort).toEqual({ 'isSortOrderReversed': true, 'sortColumnName': 'col-a' })
       expect(baseAppState.searchText).toEqual('searchText')
-      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: [ 'c' ], shown: [ 'a', 'b' ] })
+      expect(baseAppState.filters).toEqual({ definition: [], hideSidebar: false, selections: ['c'], shown: ['a', 'b'] })
 
       // when hide is set
       const hideColumnsRoute: RouteQuery = { hide: 'a,b,c' }
       mutations.setRouteQuery(baseAppState, hideColumnsRoute)
-      expect(baseAppState.hiddenColumns).toEqual([ 'a', 'b', 'c' ])
+      expect(baseAppState.hiddenColumns).toEqual(['a', 'b', 'c'])
     })
   })
 
@@ -317,8 +317,8 @@ describe('mutations', () => {
 
   describe('setTablePermissions', () => {
     it('sets permissions on the store', () => {
-      mutations.setTablePermissions(baseAppState, [ 'PERM_A', 'PERM_B' ])
-      expect(baseAppState.tablePermissions).toEqual([ 'PERM_A', 'PERM_B' ])
+      mutations.setTablePermissions(baseAppState, ['PERM_A', 'PERM_B'])
+      expect(baseAppState.tablePermissions).toEqual(['PERM_A', 'PERM_B'])
     })
   })
 })

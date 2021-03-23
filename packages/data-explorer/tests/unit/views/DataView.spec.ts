@@ -6,7 +6,7 @@ import Vue from 'vue'
 describe('DataView.vue', () => {
   const localVue = createLocalVue()
   localVue.directive('b-modal', {})
-  const stubs = [ 'b-modal' ]
+  const stubs = ['b-modal']
   const eventBus = new Vue()
 
   localVue.use(Vuex)
@@ -71,10 +71,10 @@ describe('DataView.vue', () => {
       label: 'reLabel',
       id: 'idLabel'
     }
-    const data = [ {
+    const data = [{
       id: 'id',
       label: 'label'
-    } ]
+    }]
     modules.reference.actions.fetchRefData.mockResolvedValue({ metaData, data })
 
     store = new Vuex.Store({ modules })
@@ -95,17 +95,17 @@ describe('DataView.vue', () => {
     })
 
     it('should add names to display to the items in the shopping cart', () => {
-      getters.clipBoardItems.mockReturnValueOnce([ { name: 'item1', id: '1' } ])
+      getters.clipBoardItems.mockReturnValueOnce([{ name: 'item1', id: '1' }])
       const wrapper = shallowMount(DataView, { store, localVue, mocks, stubs })
       // @ts-ignore
-      expect(wrapper.vm.handleSelectionItems).toEqual([ { name: 'item1', id: '1' } ])
+      expect(wrapper.vm.handleSelectionItems).toEqual([{ name: 'item1', id: '1' }])
     })
 
     it('should remove names to display from items before returning them', () => {
       const wrapper = shallowMount(DataView, { store, localVue, mocks, stubs })
       // @ts-ignore
-      wrapper.vm.handleSelectionItems = [ { name: 'item1', id: '1' }, { name: 'item2', id: '2' } ]
-      expect(mutations.setSelectedItems).toHaveBeenCalledWith(state, [ '1', '2' ])
+      wrapper.vm.handleSelectionItems = [{ name: 'item1', id: '1' }, { name: 'item2', id: '2' }]
+      expect(mutations.setSelectedItems).toHaveBeenCalledWith(state, ['1', '2'])
     })
   })
 
@@ -123,11 +123,11 @@ describe('DataView.vue', () => {
 
     it('should add search to the active filter selection', () => {
       // @ts-ignore
-      expect(wrapper.vm.filterDefinitions).toEqual([ {
+      expect(wrapper.vm.filterDefinitions).toEqual([{
         type: 'string',
         label: 'search',
         name: '_search'
-      } ])
+      }])
     })
   })
 
@@ -143,10 +143,10 @@ describe('DataView.vue', () => {
       await wrapper.vm.$eventBus.$emit('show-reference-table', { refEntityType, value })
       await wrapper.vm.$nextTick()
       expect(modules.reference.actions.fetchRefData).toHaveBeenCalled()
-      expect(wrapper.vm.refTableData).toEqual([ {
+      expect(wrapper.vm.refTableData).toEqual([{
         label: 'label',
         id: 'id'
-      } ])
+      }])
       expect(wrapper.vm.refTableMetaData).toEqual({
         label: 'reLabel',
         id: 'idLabel'

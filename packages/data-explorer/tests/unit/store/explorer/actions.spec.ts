@@ -151,7 +151,7 @@ const metaResponse = {
         'visible': true,
         'lookupAttribute': false,
         'isAggregatable': false
-      } ]
+      }]
   }
 }
 
@@ -221,12 +221,12 @@ const mockResponses: {[key:string]: Object} = {
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
-  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [ { data: { id: 'ent-set', shop: true, collapse_limit: 5 } } ] } },
+  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
   '/api/data/sys_ts_DataExplorerEntitySettings': {},
   '/api/v2/my-table?start=0&num=0': {
     data: {
       meta: {
-        permissions: [ 'PERM_A' ]
+        permissions: ['PERM_A']
       }
     }
   }
@@ -305,11 +305,11 @@ describe('actions', () => {
       metaDataRepository.fetchMetaDataById.mockResolvedValue('meta')
       await actions.fetchTableMeta({ commit, getters, dispatch }, { tableName: 'tableWithOutSettings' })
       expect(commit.mock.calls).toEqual([
-        [ 'setMetaData', null ],
-        [ 'setFilterDefinition', [] ],
-        [ 'setTableName', 'tableWithOutSettings' ],
-        [ 'setMetaData', 'meta' ],
-        [ 'setFilterDefinition', 'def' ]
+        ['setMetaData', null],
+        ['setFilterDefinition', []],
+        ['setTableName', 'tableWithOutSettings'],
+        ['setMetaData', 'meta'],
+        ['setFilterDefinition', 'def']
       ])
     })
   })
@@ -367,7 +367,7 @@ describe('actions', () => {
         }
       }
       // @ts-ignore ts does not know its a mock
-      metaDataService.getAttributesfromMeta.mockReturnValue([ 'attr' ])
+      metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ data: 'data', page: { totalElements: 21 } })
 
@@ -406,7 +406,7 @@ describe('actions', () => {
       // @ts-ignore ts does not know its a mock
       dataRepository.getTableDataWithLabel.mockResolvedValue({ data: 'data', page: { totalElements: 21 } })
       // @ts-ignore ts does not know its a mock
-      metaDataService.getAttributesfromMeta.mockReturnValue([ 'attr' ])
+      metaDataService.getAttributesfromMeta.mockReturnValue(['attr'])
 
       await actions.fetchTableViewData({ commit, state, getters })
 
@@ -415,7 +415,7 @@ describe('actions', () => {
       expect(dataRepository.getTableDataWithLabel).toHaveBeenCalledWith(
         'tableName',
         'tableMeta',
-        [ 'attr' ], 'a==b',
+        ['attr'], 'a==b',
         { 'count': 0, 'loading': false, 'page': 1, 'size': 10 },
         { 'isSortOrderReversed': false, 'sortColumnName': null })
     })
@@ -499,7 +499,7 @@ describe('actions', () => {
     it('downloads the data', async () => {
       jest.useFakeTimers()
       const commit = jest.fn()
-      const resources = [ { id: 'success', type: 'ENTITY_TYPE' } ]
+      const resources = [{ id: 'success', type: 'ENTITY_TYPE' }]
       // @ts-ignore
       client.post.mockResolvedValueOnce({ data: { identifier: 'success' } })
 
@@ -517,7 +517,7 @@ describe('actions', () => {
       const commit = jest.fn()
       // @ts-ignore
       client.post.mockResolvedValueOnce({ data: { identifier: 'failure' } })
-      await actions.downloadResources({ state, commit }, [ { id: 'failure', type: 'ENTITY_TYPE' } ])
+      await actions.downloadResources({ state, commit }, [{ id: 'failure', type: 'ENTITY_TYPE' }])
       jest.advanceTimersByTime(1000)
       await Vue.nextTick()
       expect(setInterval).toHaveBeenCalledTimes(1)
@@ -530,7 +530,7 @@ describe('actions', () => {
   describe('fetchTablePermissions', () => {
     it('fetch the permissions for the given table', async () => {
       await actions.fetchTablePermissions({ commit }, { tableName: 'my-table' })
-      expect(commit).toHaveBeenCalledWith('setTablePermissions', [ 'PERM_A' ])
+      expect(commit).toHaveBeenCalledWith('setTablePermissions', ['PERM_A'])
     })
   })
 

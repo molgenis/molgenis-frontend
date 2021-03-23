@@ -38,7 +38,7 @@ describe('dataRepository', () => {
         country: { id: 'id', label: 'label' },
         id: 1,
         label: 'my label row data',
-        age_groups: [ { id: 'id1', label: 'label1' } ],
+        age_groups: [{ id: 'id1', label: 'label1' }],
         file: {
           contentType: 'text/plain',
           filename: 'hello.txt',
@@ -62,13 +62,13 @@ describe('dataRepository', () => {
     })
 
     it('should fetch the table data and expand the query for the label data ', async (done) => {
-      await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, [ 'foo' ])
+      await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, ['foo'])
       expect(client.get).toBeCalledWith('/api/data/tableId?expanded-attributes-query')
       done()
     })
 
     it('should url encode the filter values if needed ', async (done) => {
-      await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, [ 'foo' ], 'bloodtype=in=(A-,A+)')
+      await dataRepository.getTableDataWithLabel('tableId', mockmeta as MetaData, ['foo'], 'bloodtype=in=(A-,A+)')
       expect(client.get).toBeCalledWith('/api/data/tableId?expanded-attributes-query&q=bloodtype=in=(A-,A%2B)')
       done()
     })
@@ -77,13 +77,13 @@ describe('dataRepository', () => {
   describe('getTableDataDeepReference', () => {
     const tableId = 'tableId'
     const metaData = mockmeta as MetaData
-    const columns = [ 'foo' ]
+    const columns = ['foo']
     const rsqlQuery = 'rsqlQuery'
     const pagination = defaultPagination
 
     beforeEach(() => {
       // @ts-ignore
-      client.get.mockResolvedValue({ data: { items: [ mockRowResponse ] } })
+      client.get.mockResolvedValue({ data: { items: [mockRowResponse] } })
       // @ts-ignore
       buildExpandedAttributesQuery.mockReturnValue('expanded-attributes-query')
     })
@@ -96,10 +96,10 @@ describe('dataRepository', () => {
     describe('with self reference in data result', () => {
       it('should build query with deep ref', async () => {
         // @ts-ignore
-        client.get.mockResolvedValue({ data: { items: [ selfRefMock ] } })
+        client.get.mockResolvedValue({ data: { items: [selfRefMock] } })
         const resp = await dataRepository.getTableDataDeepReference(tableId, metaData, columns, rsqlQuery, pagination)
         expect(resp).toEqual({
-          items: [ [ { id: 'A.Jigger', label: 'Arsenius Jigger' } ] ],
+          items: [[{ id: 'A.Jigger', label: 'Arsenius Jigger' }]],
           page: undefined
         }
         )

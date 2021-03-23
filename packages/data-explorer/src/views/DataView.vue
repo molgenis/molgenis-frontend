@@ -66,7 +66,7 @@ export default {
       'tableData',
       'tableMeta'
     ]),
-    ...mapGetters('explorer', [ 'tableLabelAttributeName', 'clipBoardItems' ]),
+    ...mapGetters('explorer', ['tableLabelAttributeName', 'clipBoardItems']),
     handleSelectionItems: {
       get () {
         return this.clipBoardItems
@@ -84,7 +84,7 @@ export default {
         label: 'search',
         name: '_search'
       }
-      return vm.searchText ? [ ...vm.filters.definition, searchDef ] : vm.filters.definition
+      return vm.searchText ? [...vm.filters.definition, searchDef] : vm.filters.definition
     }
   },
   created () {
@@ -100,7 +100,7 @@ export default {
       'setHideFilters',
       'setSelectedItems'
     ]),
-    ...mapActions('reference', [ 'fetchRefData' ]),
+    ...mapActions('reference', ['fetchRefData']),
     openSelectionList () {
       this.setShowSelected(true)
       this.setHideFilters(true)

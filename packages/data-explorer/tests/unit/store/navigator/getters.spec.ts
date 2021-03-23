@@ -67,7 +67,7 @@ describe('getters', () => {
       }
 
       expect(getters.folderPath(state)).toEqual(
-        [ {
+        [{
           id: 'parent',
           label: 'parent'
         }, {
@@ -76,7 +76,7 @@ describe('getters', () => {
         }, {
           id: 'grandchild',
           label: 'grandchild'
-        } ])
+        }])
     })
     it('should return an empty array when folder is absent', () => {
       const state = {
@@ -89,7 +89,7 @@ describe('getters', () => {
   describe('nrSelectedResources', () => {
     it('should return the number of selected resources', () => {
       const state = {
-        selectedResources: [ { id: '0', label: 'label0' }, { id: '1', label: 'label1' } ]
+        selectedResources: [{ id: '0', label: 'label0' }, { id: '1', label: 'label1' }]
       }
 
       expect(getters.nrSelectedResources(state)).toBe(2)
@@ -100,7 +100,7 @@ describe('getters', () => {
       const state = {
         clipboard: {
           mode: 'CUT',
-          resources: [ { id: '0', label: 'label0' }, { id: '1', label: 'label1' } ]
+          resources: [{ id: '0', label: 'label0' }, { id: '1', label: 'label1' }]
         }
       }
       expect(getters.nrClipboardResources(state)).toBe(2)

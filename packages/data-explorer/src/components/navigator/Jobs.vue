@@ -46,7 +46,7 @@ import { REMOVE_JOB } from '@/store/navigator/mutations'
 export default {
   name: 'Jobs',
   computed: {
-    ...mapState('navigator', [ 'jobs' ])
+    ...mapState('navigator', ['jobs'])
   },
   methods: {
     getVariant: function (job) {

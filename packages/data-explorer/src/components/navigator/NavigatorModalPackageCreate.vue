@@ -59,7 +59,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('navigator', [ 'folderId' ])
+    ...mapGetters('navigator', ['folderId'])
   },
   methods: {
     resetForm () {

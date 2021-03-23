@@ -110,7 +110,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('explorer', [ 'tableSettings', 'tableMeta' ]),
+    ...mapState('explorer', ['tableSettings', 'tableMeta']),
     template: {
       get () {
         return this.tableSettings.customDetailCode ? this.tableSettings.customDetailCode : ''
@@ -124,7 +124,7 @@ export default {
     this.fetchTablePermissions({ tableName: this.entityType })
     await this.fetchTableMeta({ tableName: this.entityType })
     // Wait for both items to be present, but only the second item is needed.
-    const [ , data ] = await Promise.all([
+    const [, data] = await Promise.all([
       this.fetchTableSettings({ tableName: this.entityType }),
       getRowDataWithReferenceLabels(this.entityType, this.entity, this.tableMeta)
     ])

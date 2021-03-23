@@ -36,7 +36,7 @@ describe('actions', () => {
   })
   describe('FETCH_RESOURCES_BY_QUERY', () => {
     it('should set resources in the state for the given query', async () => {
-      const resources = [ { type: 'PACKAGE', id: 'id', label: 'label', readonly: false } ]
+      const resources = [{ type: 'PACKAGE', id: 'id', label: 'label', readonly: false }]
 
       const getResourcesByQuery = td.function('api.getResourcesByQuery')
       td.when(getResourcesByQuery('myQuery')).thenResolve(Promise.resolve(resources))
@@ -55,7 +55,7 @@ describe('actions', () => {
 
       const error = new Error()
       // @ts-ignore
-      error.alerts = [ { type: 'ERROR', message: 'message' } ]
+      error.alerts = [{ type: 'ERROR', message: 'message' }]
       td.when(getResourcesByQuery('myQuery')).thenResolve(Promise.reject(new Error()))
       td.replace(api, 'getResourcesByQuery', getResourcesByQuery)
 
@@ -73,12 +73,12 @@ describe('actions', () => {
     it('should set folder and folder resources in the state for the given folder id', async () => {
       const folderState = {
         folder: { id: 'id', label: 'label', readonly: false },
-        resources: [ {
+        resources: [{
           type: 'PACKAGE',
           id: 'id',
           label: 'label',
           readonly: false
-        } ]
+        }]
       }
 
       const getResourcesByFolderId = td.function('api.getResourcesByFolderId')
@@ -110,7 +110,7 @@ describe('actions', () => {
   })
   describe('SELECT_ALL_RESOURCES', () => {
     it('should update selected resources in the state to be resources', async () => {
-      const resources = [ { type: 'PACKAGE', id: 'id', label: 'label', readonly: false } ]
+      const resources = [{ type: 'PACKAGE', id: 'id', label: 'label', readonly: false }]
 
       const options = {
         state: {
@@ -127,7 +127,7 @@ describe('actions', () => {
     it('should update selected resources in the state to be empty', async () => {
       const options = {
         state: {
-          selectedResources: [ { type: 'PACKAGE', id: 'id', label: 'label', readonly: false } ]
+          selectedResources: [{ type: 'PACKAGE', id: 'id', label: 'label', readonly: false }]
         },
         expectedMutations: [
           { type: '__SET_SELECTED_RESOURCES__', payload: [] }
@@ -142,13 +142,13 @@ describe('actions', () => {
       const resource1 = { type: 'PACKAGE', id: 'id1', label: 'label1', readonly: false }
       const options = {
         state: {
-          selectedResources: [ resource0 ]
+          selectedResources: [resource0]
         },
         payload: resource1,
         expectedMutations: [
           {
             type: '__SET_SELECTED_RESOURCES__',
-            payload: [ resource0, resource1 ]
+            payload: [resource0, resource1]
           }
         ]
       }
@@ -161,13 +161,13 @@ describe('actions', () => {
       const resource1 = { type: 'ENTITY_TYPE', id: '0', label: 'label0', readonly: false }
       const options = {
         state: {
-          selectedResources: [ resource0, resource1 ]
+          selectedResources: [resource0, resource1]
         },
         payload: resource0,
         expectedMutations: [
           {
             type: '__SET_SELECTED_RESOURCES__',
-            payload: [ resource1 ]
+            payload: [resource1]
           }
         ]
       }
@@ -175,7 +175,7 @@ describe('actions', () => {
     })
   })
   describe('DELETE_SELECTED_RESOURCES', () => {
-    const resources = [ { type: 'PACKAGE', id: 'id', label: 'label', readonly: false } ]
+    const resources = [{ type: 'PACKAGE', id: 'id', label: 'label', readonly: false }]
     const deleteResources = td.function('api.deleteResources')
 
     it('should delete selected resources', async () => {
@@ -202,7 +202,7 @@ describe('actions', () => {
     it('should set alerts in the state in case of errors', async () => {
       const error = new Error()
       // @ts-ignore
-      error.alerts = [ { type: 'ERROR', message: 'message' } ]
+      error.alerts = [{ type: 'ERROR', message: 'message' }]
 
       td.when(deleteResources(resources)).thenResolve(Promise.reject(error))
       td.replace(api, 'deleteResources', deleteResources)
@@ -244,7 +244,7 @@ describe('actions', () => {
     it('should set alerts in the state in case of errors', async () => {
       const error = new Error()
       // @ts-ignore
-      error.alerts = [ { type: 'ERROR', message: 'message' } ]
+      error.alerts = [{ type: 'ERROR', message: 'message' }]
       td.when(createResource(resource, folder)).thenResolve(Promise.reject(error))
       td.replace(api, 'createResource', createResource)
 
@@ -272,7 +272,7 @@ describe('actions', () => {
 
       const options = {
         state: {
-          resources: [ resource ]
+          resources: [resource]
         },
         payload: updatedResource,
         expectedActions: [
@@ -291,7 +291,7 @@ describe('actions', () => {
       const updateResource = td.function('api.createResource')
       const error = new Error()
       // @ts-ignore
-      error.alerts = [ { type: 'ERROR', message: 'message' } ]
+      error.alerts = [{ type: 'ERROR', message: 'message' }]
       td.when(updateResource(resource, updatedResource)).thenResolve(Promise.reject(error))
       td.replace(api, 'updateResource', updateResource)
 
@@ -301,7 +301,7 @@ describe('actions', () => {
           { type: '__ADD_ALERTS__', payload: error.alerts }
         ],
         state: {
-          resources: [ resource ]
+          resources: [resource]
         },
         payload: updatedResource
       }
@@ -310,7 +310,7 @@ describe('actions', () => {
   })
   describe('MOVE_CLIPBOARD_RESOURCES', () => {
     it('should move clipboard resources to given target folder', async () => {
-      const resources = [ { type: 'PACKAGE', id: 'id', label: 'label', readonly: false } ]
+      const resources = [{ type: 'PACKAGE', id: 'id', label: 'label', readonly: false }]
       const folder = { id: 'id', label: 'label', readonly: false }
 
       const moveResources = td.function('api.moveResources')
@@ -336,13 +336,13 @@ describe('actions', () => {
     })
 
     it('should set alerts in the state in case of errors', async () => {
-      const resources = [ { type: 'PACKAGE', id: 'id', label: 'label', readonly: false } ]
+      const resources = [{ type: 'PACKAGE', id: 'id', label: 'label', readonly: false }]
       const folder = { id: 'id', label: 'label', readonly: false }
 
       const moveResources = td.function('api.moveResources')
       const error = new Error()
       // @ts-ignore
-      error.alerts = [ { type: 'ERROR', message: 'message' } ]
+      error.alerts = [{ type: 'ERROR', message: 'message' }]
       td.when(moveResources(resources, folder)).thenResolve(Promise.reject(error))
       td.replace(api, 'moveResources', moveResources)
 
@@ -363,7 +363,7 @@ describe('actions', () => {
     })
   })
   describe('COPY_CLIPBOARD_RESOURCES', () => {
-    const resources = [ { type: 'PACKAGE', id: 'id', label: 'label', readonly: false } ]
+    const resources = [{ type: 'PACKAGE', id: 'id', label: 'label', readonly: false }]
     const folder = { id: 'id', label: 'label', readonly: false }
 
     it('should copy clipboard resources to given target folder', async () => {
@@ -395,7 +395,7 @@ describe('actions', () => {
       const copyResources = td.function('api.copyResources')
       const error = new Error()
       // @ts-ignore
-      error.alerts = [ { type: 'ERROR', message: 'message' } ]
+      error.alerts = [{ type: 'ERROR', message: 'message' }]
       td.when(copyResources(resources, folder)).thenResolve(Promise.reject(error))
       td.replace(api, 'copyResources', copyResources)
 
@@ -439,7 +439,7 @@ describe('actions', () => {
       const options = {
         payload: job,
         state: {
-          jobs: [ job ]
+          jobs: [job]
         },
         expectedMutations: [
           { type: '__UPDATE_JOB__', payload: updatedJob }
@@ -472,7 +472,7 @@ describe('actions', () => {
       const options = {
         payload: job,
         state: {
-          jobs: [ job ]
+          jobs: [job]
         },
         expectedMutations: [
           { type: '__UPDATE_JOB__', payload: updatedJob }
@@ -486,7 +486,7 @@ describe('actions', () => {
     it('should set alerts in the state in case of errors', async () => {
       const error = new Error()
       // @ts-ignore
-      error.alerts = [ { type: 'ERROR', message: 'message' } ]
+      error.alerts = [{ type: 'ERROR', message: 'message' }]
 
       const job = {
         type: 'COPY',
@@ -503,7 +503,7 @@ describe('actions', () => {
       const options = {
         payload: job,
         state: {
-          jobs: [ job ]
+          jobs: [job]
         },
         expectedMutations: [
           // @ts-ignore
@@ -515,7 +515,7 @@ describe('actions', () => {
     })
   })
   describe('DOWNLOAD_SELECTED_RESOURCES', () => {
-    const resources = [ { type: 'PACKAGE', id: 'id', label: 'label', readonly: false } ]
+    const resources = [{ type: 'PACKAGE', id: 'id', label: 'label', readonly: false }]
     const downloadResources = td.function('api.downloadResources')
 
     it('should download selected resources', async () => {
@@ -541,7 +541,7 @@ describe('actions', () => {
     it('should set alerts in the state in case of errors', async () => {
       const error = new Error()
       // @ts-ignore
-      error.alerts = [ { type: 'ERROR', message: 'message' } ]
+      error.alerts = [{ type: 'ERROR', message: 'message' }]
 
       td.when(downloadResources(resources)).thenResolve(Promise.reject(error))
       td.replace(api, 'downloadResources', downloadResources)

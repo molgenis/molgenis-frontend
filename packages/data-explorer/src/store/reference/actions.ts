@@ -7,7 +7,7 @@ export default {
     const metaData = await metaDataRepository.fetchMetaDataByURL(refEntityType)
     const attributes = metaDataService.getAttributesfromMeta(metaData)
     const idColumn = metaData.idAttribute.name
-    const columnSet = new Set([ ...attributes ])
+    const columnSet = new Set([...attributes])
 
     columnSet.add(idColumn)
 
@@ -20,7 +20,7 @@ export default {
     const data = (await dataRepository.getTableDataWithLabel(
       metaData.id,
       metaData,
-      [ ...columnSet ],
+      [...columnSet],
       rsqlQuery
     )).items
 

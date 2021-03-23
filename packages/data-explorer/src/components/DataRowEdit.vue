@@ -237,7 +237,7 @@ export default {
        */
     buildReferenceMap (metaData) {
       // recursily walk compound
-      const flattenAttr = (attr) => attr.attributes && attr.attributes.length ? attr.attributes.flatMap(flattenAttr) : [ attr ]
+      const flattenAttr = (attr) => attr.attributes && attr.attributes.length ? attr.attributes.flatMap(flattenAttr) : [attr]
 
       return metaData.attributes
         .flatMap(flattenAttr)

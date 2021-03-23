@@ -36,13 +36,13 @@ describe('header actions', () => {
         // @ts-ignore
         client.get.mockResolvedValueOnce({
           data: {
-            items: [ { data: { id: 'parent-id', label: 'parent-label', parent: { links: { self: 'self' } } } } ]
+            items: [{ data: { id: 'parent-id', label: 'parent-label', parent: { links: { self: 'self' } } } }]
           }
         })
         // @ts-ignore
         client.get.mockResolvedValueOnce({
           data: {
-            items: [ { data: { id: 'grand-parent-id', label: 'grand-parent-label' } } ]
+            items: [{ data: { id: 'grand-parent-id', label: 'grand-parent-label' } }]
           }
         })
       })
@@ -101,7 +101,7 @@ describe('header actions', () => {
         }
       }
       await actions.fetchPackageTables({ rootState }, payload)
-      expect(payload.callback).toHaveBeenCalledWith([ { id: 'p-id', label: 'p-label' } ])
+      expect(payload.callback).toHaveBeenCalledWith([{ id: 'p-id', label: 'p-label' }])
       done()
     })
   })
