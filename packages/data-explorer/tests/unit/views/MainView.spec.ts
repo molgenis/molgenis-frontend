@@ -72,6 +72,8 @@ function getWrapper (options:any = {}) {
       shown: [],
       selections: {}
     },
+    tableSettings: { isShop: false },
+    selectedItemIds: [],
     tablePagination: { count: 0, loading: false, page: 1, size: 20 }
   }
 
