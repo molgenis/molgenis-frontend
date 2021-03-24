@@ -30,7 +30,7 @@ exports[`EditDetailTemplate.vue should render the editor 1`] = `
     </div>
     <div class="row mb-3">
       <div class="col-12">
-        <form-component-stub id="template" formfields="[object Object]" initialformdata="[object Object]" formstate="[object Object]" options="[object Object]"></form-component-stub> <button type="submit" class="btn btn-primary mt-1">
+        <form-component-stub id="template" formfields="[object Object]" formstate="[object Object]" options="[object Object]"></form-component-stub> <button type="submit" class="btn btn-primary mt-1">
           Save template
           <!---->
         </button>
