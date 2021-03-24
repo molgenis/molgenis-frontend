@@ -23,7 +23,7 @@
           </li>
         </ol>
       </nav>
-      <Toaster v-model="_toasts" :class="{'gm-toast-spacer':reserveRoomForToasts}"/>
+      <Toaster v-model="_toasts" :class="{'gm-toast-spacer':reserveRoomForToasts}" />
     </div>
     <div class="mg-content d-flex h-100 overflow-control">
       <button
@@ -169,7 +169,7 @@ export default {
 </script>
 
 <style scoped>
-  .gm-toast-spacer{
+  .gm-toast-spacer {
     margin-bottom: 4rem;
   }
 
