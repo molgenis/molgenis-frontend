@@ -27,7 +27,7 @@
       <router-link
         v-b-tooltip.hover.bottom class="btn btn-sm text-secondary"
         role="button"
-        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}}"
+        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}, query: $route.query}"
       >
         <font-awesome-icon icon="search" />
       </router-link>
