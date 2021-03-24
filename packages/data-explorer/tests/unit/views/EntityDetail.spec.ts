@@ -19,7 +19,7 @@ jest.mock('@/repository/dataRepository', () => {
 const mocks = {
   $bvModal: { msgBoxConfirm: jest.fn() },
   router: { replace: jest.fn() },
-  $route: {query: {foo: 'bar'}}
+  $route: { query: { foo: 'bar' } }
 }
 const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
 const directives = { 'b-tooltip': () => {} }
