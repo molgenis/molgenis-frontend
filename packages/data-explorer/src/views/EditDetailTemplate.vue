@@ -25,7 +25,7 @@
 
       <h1>Template editor</h1>
 
-      <div class="row">
+      <div class="row mb-3">
         <div class="col-12">
           <div>
             <label>Preview</label>
@@ -42,23 +42,27 @@
         </div>
       </div>
 
-      <hr>
-
       <div class="row mb-3">
         <div class="col-12">
-          <form class="template-editor" @submit.prevent="saveTemplate">
-            <label for="template-txt-area" class="form-label">Template</label>
-            <textarea
-              id="template-txt-area" v-model="template"
-              class="form-control"
-              rows="6" placeholder="edit me"
-            />
-            <button type="submit" class="btn btn-primary mt-1" :disabled="isSavingTemplate">
-              Save template <font-awesome-icon v-if="isSavingTemplate" icon="spinner" spin />
-            </button>
-          </form>
+          <form-component
+            id="template"
+            :options="{ showEyeButton: false }"
+            :form-fields="formFields"
+            :initial-form-data="initialFormData"
+            @valueChange="template = $event.template"
+          />
+          <button 
+            class="btn btn-primary mt-1" 
+            type="submit" 
+            :disabled="isSavingTemplate"
+            @click.prevent="saveTemplate"
+          >
+            Save template <font-awesome-icon v-if="isSavingTemplate" icon="spinner" spin />
+          </button>
         </div>
       </div>
+
+      <label class="mt-3">Context</label>
 
       <div class="row">
         <div class="col-6">
@@ -88,10 +92,11 @@ import { getRowDataWithReferenceLabels } from '@/repository/dataRepository'
 import { mapActions, mapState } from 'vuex'
 import CustomEntityDetail from '@/components/dataView/CustomEntityDetail.vue'
 import PropRender from '@/components/dataView/PropRender.vue'
+import { FormComponent } from '@molgenis/molgenis-ui-form'
 
 export default {
   name: 'EditDetailTemplate',
-  components: { CustomEntityDetail, PropRender },
+  components: { CustomEntityDetail, PropRender, FormComponent },
   props: {
     entityType: {
       type: String,
@@ -106,7 +111,19 @@ export default {
     return {
       loading: true,
       isSavingTemplate: false,
-      record: null
+      record: null,
+      formFields: [
+        {
+          id: 'template',
+          label: 'Template',
+          description: 'Edit the template to change the layout, use record.[property-name] and metaData.[property-name] to refer to the entity (meta)data.',
+          type: 'script',
+          visible: () => true,
+          required: () => false,
+          validate: () => true
+        }
+      ],
+      formState: {}
     }
   },
   computed: {
@@ -142,6 +159,9 @@ export default {
       this.isSavingTemplate = true
       await this.saveEntityDetailTemplate({ template: this.template })
       this.$router.push({ name: 'entity-detail', params: { entityType: this.entityType, entity: this.entity } })
+    },
+    onTemplateChange (value) {
+      this.template = value.template
     }
   }
 }

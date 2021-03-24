@@ -12,7 +12,7 @@ jest.mock('@/repository/dataRepository', () => {
 const mocks = {
   $bvModal: { msgBoxConfirm: jest.fn() },
   $router: { push: jest.fn() },
-  $route: {query: {foo: 'bar'}}
+  $route: { query: { foo: 'bar' } }
 }
 const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
 const directives = { 'b-tooltip': () => {} }
@@ -89,7 +89,7 @@ describe('EditDetailTemplate.vue', () => {
 
   describe('when the template is edited', () => {
     beforeEach(async() => {
-      await wrapper.find('#template-txt-area').setValue('<p>edit</p>')
+      await wrapper.setData({ template: '<p>edit</p>' })
     })
 
     it('should update the template', () => {
@@ -99,7 +99,7 @@ describe('EditDetailTemplate.vue', () => {
 
   describe('when the template is saved', () => {
     beforeEach(async() => {
-      await wrapper.find('#template-txt-area').setValue('<p>edit</p>')
+      await wrapper.setData({ template: '<p>edit</p>' })
       await wrapper.find('button[type=submit]').trigger('click')
     })
 
