@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.4.3...@molgenis-ui/components-library@2.4.4) (2021-03-25)
+
+
+### Bug Fixes
+
+* **components-library:** match the styles of different toasts ([#582](https://github.com/molgenis/molgenis-frontend/issues/582)) ([c4bc486](https://github.com/molgenis/molgenis-frontend/commit/c4bc486e10df2054812b4e10e47edc9b9b0933b4))
+
+
+
+
+
 ## [2.4.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.4.2...@molgenis-ui/components-library@2.4.3) (2021-03-22)
 
 
