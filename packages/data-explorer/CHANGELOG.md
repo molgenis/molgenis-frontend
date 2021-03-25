@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.7.9...@molgenis-ui/data-explorer@3.8.0) (2021-03-25)
+
+
+### Features
+
+* **data-explorer:** Use code mirror editor as template editor ([#583](https://github.com/molgenis/molgenis-frontend/issues/583)) ([1249aac](https://github.com/molgenis/molgenis-frontend/commit/1249aac2e20cfa5eedc2b3e07ef311a87f0c870c))
+
+
+
+
+
 ## [3.7.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.7.8...@molgenis-ui/data-explorer@3.7.9) (2021-03-25)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
