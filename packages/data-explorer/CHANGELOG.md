@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.8](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.7.7...@molgenis-ui/data-explorer@3.7.8) (2021-03-25)
+
+
+### Bug Fixes
+
+* **data-explorer:** shopping cart component is always in the same position (bottom-right) ([#581](https://github.com/molgenis/molgenis-frontend/issues/581)) ([f5a3115](https://github.com/molgenis/molgenis-frontend/commit/f5a3115130e9a482d08b7c61fff8c3c6d328f2f8))
+
+
+
+
+
 ## [3.7.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.7.6...@molgenis-ui/data-explorer@3.7.7) (2021-03-24)
 
 
