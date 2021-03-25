@@ -2,7 +2,7 @@
   <div class="c-toaster" :class="{[position]: true}">
     <div
       v-for="(toast, index) in toasts" :key="index"
-      class="mg-toast alert alert-success alert-dismissible fade show"
+      class="mg-toast alert alert-dismissible fade show shadow-sm"
       :class="{[`alert-${toast.type}`]: true}"
     >
       <div class="mg-toast-message" v-html="toast.message" />
@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style lang="scss">
-$spacer: 1rem;
+$spacer: 0.5rem;
 
 .c-toaster {
   &.top-left,
@@ -112,7 +112,7 @@ $spacer: 1rem;
   }
 
   &:not(.inline) {
-    width: 20rem;
+    max-width: 350px; // To match bootstrap's toast size ( in case the shopping cart is under the toasts )
     z-index: 1060;  // Bootstrap popover z-index
 
     @media (max-width: 576px) {
