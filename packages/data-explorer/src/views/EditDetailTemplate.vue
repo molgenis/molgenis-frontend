@@ -48,7 +48,7 @@
             id="template"
             :options="{ showEyeButton: false }"
             :form-fields="formFields"
-            :initial-form-data="initialFormData"
+            :initial-form-data="{ template: template }"
             @valueChange="template = $event.template"
           />
           <button 
