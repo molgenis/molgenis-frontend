@@ -4,7 +4,7 @@
 # molgenis-frontend
 These are *stable* packages for MOLGENIS. The *stable* packages will compose the MOLGENIS frontend. These are used in the [molgenis/molgenis repository](https://github.com/molgenis/molgenis)
 
-The following will be addressed:
+The following topics are addressed:
 
 - [Environment](#environment)
 - [Developing](#developing)
