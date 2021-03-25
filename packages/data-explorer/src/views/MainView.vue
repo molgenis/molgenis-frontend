@@ -117,6 +117,10 @@ export default {
       }
       return this.searchText ? [...this.filters.definition, searchDef] : this.filters.definition
     },
+
+    // The toasts use a different system than the shopping-cart toast.
+    // This will move the other toasts above the shopping-cart.
+    // Note that the shopping-cart always remains in the same position.
     reserveRoomForToasts () {
       return this.tableSettings.isShop && this.selectedItemIds.length > 0
     }
