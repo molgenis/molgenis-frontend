@@ -120,7 +120,7 @@ describe('EditDetailTemplate.vue', () => {
       const explorer = { state, actions, getters, namespaced: true }
       const store = new Vuex.Store({ modules: { explorer } })
       const propsData = { entityType: 'entityType', entity: 'entity' }
-      wrapper = shallowMount(EditDetailTemplate, { propsData, attachTo: '#root', store, localVue, stubs, mocks, directives })
+      wrapper = shallowMount(EditDetailTemplate, { propsData, store, localVue, stubs, mocks, directives })
     })
 
     it('should not try to render it (empty string)', () => {

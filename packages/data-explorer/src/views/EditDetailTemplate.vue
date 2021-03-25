@@ -159,9 +159,6 @@ export default {
       this.isSavingTemplate = true
       await this.saveEntityDetailTemplate({ template: this.template })
       this.$router.push({ name: 'entity-detail', params: { entityType: this.entityType, entity: this.entity } })
-    },
-    onTemplateChange (value) {
-      this.template = value.template
     }
   }
 }
