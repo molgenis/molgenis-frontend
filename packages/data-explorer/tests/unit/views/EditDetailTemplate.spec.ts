@@ -67,12 +67,7 @@ describe('EditDetailTemplate.vue', () => {
     const store = new Vuex.Store({ modules: { explorer } })
     const propsData = { entityType: 'entityType', entity: 'entity' }
 
-    // needed to trigger form submit 
-    const div = document.createElement('div')
-    div.id = 'root'
-    document.body.appendChild(div)
-
-    wrapper = shallowMount(EditDetailTemplate, { propsData, attachTo: '#root', store, localVue, stubs, mocks, directives })
+    wrapper = shallowMount(EditDetailTemplate, { propsData, store, localVue, stubs, mocks, directives })
     await wrapper.vm.$nextTick // meta
     await wrapper.vm.$nextTick // settings
     await wrapper.vm.$nextTick // data
@@ -89,7 +84,7 @@ describe('EditDetailTemplate.vue', () => {
 
   describe('when the template is edited', () => {
     beforeEach(async() => {
-      await wrapper.find('#template-txt-area').setValue('<p>edit</p>')
+      await wrapper.setData({ template: '<p>edit</p>' })
     })
 
     it('should update the template', () => {
@@ -99,7 +94,7 @@ describe('EditDetailTemplate.vue', () => {
 
   describe('when the template is saved', () => {
     beforeEach(async() => {
-      await wrapper.find('#template-txt-area').setValue('<p>edit</p>')
+      await wrapper.setData({ template: '<p>edit</p>' })
       await wrapper.find('button[type=submit]').trigger('click')
     })
 
@@ -125,7 +120,7 @@ describe('EditDetailTemplate.vue', () => {
       const explorer = { state, actions, getters, namespaced: true }
       const store = new Vuex.Store({ modules: { explorer } })
       const propsData = { entityType: 'entityType', entity: 'entity' }
-      wrapper = shallowMount(EditDetailTemplate, { propsData, attachTo: '#root', store, localVue, stubs, mocks, directives })
+      wrapper = shallowMount(EditDetailTemplate, { propsData, store, localVue, stubs, mocks, directives })
     })
 
     it('should not try to render it (empty string)', () => {
