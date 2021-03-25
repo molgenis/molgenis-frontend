@@ -23,7 +23,7 @@
           </li>
         </ol>
       </nav>
-      <Toaster v-model="_toasts" />
+      <Toaster v-model="_toasts" :class="{'gm-toast-spacer':reserveRoomForToasts}" />
     </div>
     <div class="mg-content d-flex h-100 overflow-control">
       <button
@@ -103,7 +103,7 @@ export default {
         this.setToasts(value)
       }
     },
-    ...mapState('explorer', ['filters', 'showSelected', 'dataDisplayLayout', 'tablePagination', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'toasts', 'searchText', 'loading']),
+    ...mapState('explorer', ['filters', 'showSelected', 'dataDisplayLayout', 'tablePagination', 'tableData', 'tableName', 'tableMeta', 'tableSettings', 'toasts', 'searchText', 'loading', 'selectedItemIds']),
     ...mapState('header', ['breadcrumbs']),
     ...mapGetters('explorer', ['isUserAuthenticated', 'compressedRouteFilter']),
     activeFilterSelections () {
@@ -116,6 +116,13 @@ export default {
         name: '_search'
       }
       return this.searchText ? [...this.filters.definition, searchDef] : this.filters.definition
+    },
+
+    // The toasts use a different system than the shopping-cart toast.
+    // This will move the other toasts above the shopping-cart.
+    // Note that the shopping-cart always remains in the same position.
+    reserveRoomForToasts () {
+      return this.tableSettings.isShop && this.selectedItemIds.length > 0
     }
   },
   async created () {
@@ -166,6 +173,10 @@ export default {
 </script>
 
 <style scoped>
+  .gm-toast-spacer {
+    margin-bottom: 4rem;
+  }
+
   .mg-content {
     white-space: normal;
   }

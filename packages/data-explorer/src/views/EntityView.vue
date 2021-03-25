@@ -71,7 +71,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('explorer', ['dataDisplayLayout', 'tableMeta', 'selectedItemIds', 'defaultEntityData', 'tableData', 'CartSelectionToast']),
+    ...mapState('explorer', ['dataDisplayLayout', 'tableMeta', 'selectedItemIds', 'defaultEntityData', 'tableData']),
     idAttribute () {
       return this.tableMeta.idAttribute.name
     },
