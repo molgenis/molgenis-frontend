@@ -33,6 +33,9 @@
               <custom-entity-detail
                 :record="record"
                 :meta-data="tableMeta" :template="template"
+                :is-selectable="isSelectable"
+                :is-selected="isPreviewSelected"
+                @toggleSelection="debugEvent"
               />
             </div>
             <div v-else class="template-preview p-2 font-italic text-muted">
@@ -66,11 +69,24 @@
 
       <div class="row">
         <div class="col-6">
-          <div class="card p-2">
+          <div class="card p-2 mb-1">
             <h5 class="card-title">
               record
             </h5>
             <prop-render class="template-values" :object="record" />
+          </div>
+          <div class="card p-2">
+            <h5 class="card-title">
+              selection
+            </h5>
+            <div class="template-values">
+              <div>isSelectable: {{ isSelectable }}</div>
+              <div>isSelected: {{ isPreviewSelected }}</div>
+              <div class="font-weight-bolder mt-1">
+                events:
+              </div>
+              <div>toggleSelection <span class="font-italic">(example: @click="toggleSelection)</span></div>
+            </div>
           </div>
         </div>
 
@@ -89,7 +105,7 @@
 
 <script>
 import { getRowDataWithReferenceLabels } from '@/repository/dataRepository'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import CustomEntityDetail from '@/components/dataView/CustomEntityDetail.vue'
 import PropRender from '@/components/dataView/PropRender.vue'
 import { FormComponent } from '@molgenis/molgenis-ui-form'
@@ -128,6 +144,10 @@ export default {
   },
   computed: {
     ...mapState('explorer', ['tableSettings', 'tableMeta']),
+    ...mapGetters('explorer', [
+      'isSelectable',
+      'isSelected' // function takes record as param
+    ]),
     template: {
       get () {
         return this.tableSettings.customDetailCode ? this.tableSettings.customDetailCode : ''
@@ -135,6 +155,9 @@ export default {
       set (value) {
         this.tableSettings.customDetailCode = value
       }
+    },
+    isPreviewSelected () {
+      return this.isSelected(this.record)
     }
   },
   async mounted () {
@@ -159,6 +182,9 @@ export default {
       this.isSavingTemplate = true
       await this.saveEntityDetailTemplate({ template: this.template })
       this.$router.push({ name: 'entity-detail', params: { entityType: this.entityType, entity: this.entity } })
+    },
+    debugEvent: (payload) => {
+      alert(`Debug event from template preview, event payload: ${payload}`)
     }
   }
 }

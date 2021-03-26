@@ -31,6 +31,14 @@ export default {
     metaData: {
       type: Object,
       required: true
+    },
+    isSelectable: {
+      type: Boolean,
+      required: true
+    },
+    isSelected: {
+      type: Boolean,
+      required: true
     }
   }
 }

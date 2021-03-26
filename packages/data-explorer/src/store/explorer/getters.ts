@@ -26,6 +26,15 @@ export default {
   hasEditSettingsRights: (state: ApplicationState, getters: any): boolean => {
     return getters.isUserAuthenticated && getters.userRoles.includes('ROLE_SU')
   },
+  isSelectable: (state: ApplicationState): boolean => {
+    return state.tableSettings.isShop
+  },
+  isSelected: (state: ApplicationState) => (entity: object): boolean => {
+    if (state.tableMeta === null) {
+      return false
+    }
+    return state.selectedItemIds.includes(entity[state.tableMeta.idAttribute.name])
+  },
   tableIdAttributeName: (state: ApplicationState): string | undefined => {
     return state.tableMeta && state.tableMeta.idAttribute ? state.tableMeta.idAttribute.name : undefined
   },

@@ -25,6 +25,27 @@
     </div>
 
     <div class="btn-group float-right pr-3 mr-3" role="group" aria-label="row actions group">
+      <button
+        v-if="isSelectable && !isRecordSelected"
+        v-b-tooltip.hover.bottom
+        class="btn btn-outline-secondary select-btn"
+        role="button"
+        title="Add to selection"
+        @click="toggleSelectedItems(entity)"
+      >
+        select
+      </button>
+      <button
+        v-if="isSelectable && isRecordSelected"
+        v-b-tooltip.hover.bottom
+        class="btn btn-outline-secondary de-select-btn"
+        role="button"
+        title="Remove from selection"
+        @click="toggleSelectedItems(entity)"
+      >
+        deselect
+      </button>
+
       <router-link
         v-if="hasAddRights"
         v-b-tooltip.hover.bottom
@@ -68,10 +89,22 @@
     </div>
 
     <template v-if="customDetailCode">
-      <custom-entity-detail :record="record" :meta-data="metaData" :template="customDetailCode" />
+      <custom-entity-detail 
+        :record="record" 
+        :meta-data="metaData" :template="customDetailCode" 
+        :is-selectable="isSelectable"
+        :is-selected="isRecordSelected"
+        @toggleSelection="toggleSelectedItems(entity)"
+      />
     </template>
     <template v-else>
-      <default-entity-detail :record="record" :meta-data="metaData" />
+      <default-entity-detail 
+        :record="record" 
+        :meta-data="metaData" 
+        :is-selectable="isSelectable"
+        :is-selected="isRecordSelected"
+        @toggleSelection="toggleSelectedItems(entity)"
+      />
     </template>
   </div>
 </template>
@@ -79,7 +112,7 @@
 <script>
 import { fetchMetaDataById } from '@/repository/metaDataRepository'
 import { getRowDataWithReferenceLabels } from '@/repository/dataRepository'
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
 import DefaultEntityDetail from '@/components/dataView/DefaultEntityDetail.vue'
 import CustomEntityDetail from '@/components/dataView/CustomEntityDetail.vue'
 
@@ -105,14 +138,21 @@ export default {
   },
   computed: {
     ...mapState('explorer', {
-      customDetailCode: state => state.tableSettings.customDetailCode
+      customDetailCode: state => state.tableSettings.customDetailCode,
+      selectedItemIds: state => state.selectedItemIds
     }),
     ...mapGetters('explorer', [
       'hasAddRights',
       'hasEditRights',
       'hasDeleteRights',
-      'hasEditSettingsRights'
-    ])
+      'hasEditSettingsRights',
+      'isSelectable',
+      'isSelected' // function takes record as param
+    ]),
+    isRecordSelected () {
+      return this.selectedItemIds.includes(this.record[this.metaData.idAttribute.name]) // this works ?
+      // return this.record === null ? false : this.isSelected(this.record)  // this does not work :S
+    }
   },
   async mounted () {
     this.fetchTablePermissions({ tableName: this.entityType })
@@ -130,6 +170,7 @@ export default {
       'fetchTableSettings',
       'deleteRow'
     ]),
+    ...mapMutations('explorer', ['toggleSelectedItems']),
     async deleteEntity () {
       const msg = this.$t('dataexplorer_delete_confirm_msg')
       const isDeleteConfirmed = await this.$bvModal.msgBoxConfirm(msg, {
