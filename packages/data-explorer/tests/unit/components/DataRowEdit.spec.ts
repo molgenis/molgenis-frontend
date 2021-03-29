@@ -23,6 +23,12 @@ jest.mock('@molgenis/molgenis-ui-form', () => {
   }
 })
 
+jest.mock('vue', () => {
+  return {
+    extend: jest.fn()
+  }
+})
+
 const localVue = createLocalVue()
 
 describe('DataRowEdit.vue', () => {
@@ -77,9 +83,6 @@ describe('DataRowEdit.vue', () => {
       localVue,
       propsData: {
         entity: 'entity'
-      },
-      mocks: {
-        $t: () => 'default-msg'
       }
     })
     done()
@@ -106,14 +109,14 @@ describe('DataRowEdit.vue', () => {
     expect(repository.save).toHaveBeenCalled()
   })
 
-  it('onSumbit if the form is invalid save should not be called', () => {
+  it('onSubmit if the form is invalid save should not be called', () => {
     formState.$valid = false
     wrapper.setData({ formState })
     wrapper.vm.onSubmit()
     expect(repository.save).not.toHaveBeenCalled()
   })
 
-  it('onSumbit when a error is thrown during save, a alert should be shown', async (done) => {
+  it('onSubmit when a error is thrown during save, a alert should be shown', async (done) => {
     wrapper.setData({ formState })
     // @ts-ignore
     repository.save.mockRejectedValue('my error')
@@ -139,18 +142,18 @@ describe('DataRowEdit.vue', () => {
     await wrapper.vm.onSubmit()
     expect(wrapper.find('#message-span').text()).toEqual('my error')
     wrapper.find('#alert-message button').trigger('click')
-    await Vue.nextTick()
+    await wrapper.vm.$nextTick()
     expect(wrapper.html()).not.toContain('message-span')
     done()
   })
 
   it('set de default msg in case of non string error prop', () => {
     wrapper.vm.handleError({ foo: 'bar' })
-    expect(wrapper.vm.alert).toEqual({ 'message': 'default-msg', 'type': 'danger' })
+    expect(wrapper.vm.alert).toEqual({ 'message': 'data-row-edit:data-row-edit-default-error-message', 'type': 'danger' })
   })
 
   describe('when passing a rowId', () => {
-    beforeEach(async (done) => {
+    beforeEach(async () => {
       // @ts-ignore
       EntityToFormMapper.generateForm.mockReset()
       wrapper = await shallowMount(DataRowEdit, {
@@ -158,12 +161,8 @@ describe('DataRowEdit.vue', () => {
         propsData: {
           entity: 'entity',
           dataRowId: 'dataRowId'
-        },
-        mocks: {
-          $t: () => 'default-msg'
         }
       })
-      done()
     })
 
     it('the mapper should run in update mode', () => {
@@ -189,6 +188,11 @@ describe('DataRowEdit.vue', () => {
   describe('when adding a reference option', () => {
     it('should add a child data row edit', async (done) => {
       const optionCreatedCallback = jest.fn()
+      const mockChild = localVue.extend(DataRowEdit)
+      // @ts-ignore
+      mockChild.$t = jest.fn()
+      // @ts-ignore
+      Vue.extend.mockReturnValue(mockChild)
       const sourceField = {
         id: 'my-attr'
       }

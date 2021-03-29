@@ -24,8 +24,11 @@ describe('DefaultEntityDetail.vue', () => {
     }
   }
 
+  const isSelectable = true
+  const isSelected = false
+
   beforeEach(async () => {
-    wrapper = await shallowMount(DefaultEntityDetail, { stubs, directives, propsData: { metaData, record } })
+    wrapper = await shallowMount(DefaultEntityDetail, { stubs, directives, propsData: { metaData, record, isSelectable, isSelected } })
   })
 
   it('exists', async () => {

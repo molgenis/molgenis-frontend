@@ -252,9 +252,9 @@ export default {
         showNonVisibleAttributes: true,
         mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
         booleanLabels: {
-          trueLabel: this.$t('data-row-edit:data-row-edit-boolean-true'),
-          falseLabel: this.$t('data-row-edit:data-row-edit-boolean-false'),
-          nillLabel: this.$t('data-row-edit:data-row-edit-boolean-null')
+          trueLabel: this.$t ? this.$t('data-row-edit:data-row-edit-boolean-true') : 'true',
+          falseLabel:  this.$t ? this.$t('data-row-edit:data-row-edit-boolean-false') : 'false',
+          nillLabel: this.$t ? this.$t('data-row-edit:data-row-edit-boolean-null') : 'null'
         }
       }
       try {

@@ -47,7 +47,9 @@ describe('EditDetailTemplate.vue', () => {
       hasAddRights: () => true,
       hasEditRights: () => true,
       hasDeleteRights: () => true,
-      hasEditSettingsRights: () => true
+      hasEditSettingsRights: () => true,
+      isSelectable: () => true,
+      isSelected: () => () => false
     }
 
     state = {
@@ -65,7 +67,7 @@ describe('EditDetailTemplate.vue', () => {
 
     const explorer = { state, actions, getters, namespaced: true }
     const store = new Vuex.Store({ modules: { explorer } })
-    const propsData = { entityType: 'entityType', entity: 'entity' }
+    const propsData = { entityType: 'entityType', entity: 'entity', isSelectable: true, isSelected: false }
 
     wrapper = shallowMount(EditDetailTemplate, { propsData, store, localVue, stubs, mocks, directives })
     await wrapper.vm.$nextTick // meta

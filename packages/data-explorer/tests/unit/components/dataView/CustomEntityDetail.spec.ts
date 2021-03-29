@@ -12,7 +12,9 @@ describe('CustomEntityDetail.vue', () => {
       meta1: 'meta 1',
       meta2: 'meta 2'
     },
-    template: '    <h1>Hello MOLGENIS!</h1>    '
+    template: '    <h1>Hello MOLGENIS!</h1>    ',
+    isSelectable: true,
+    isSelected: false
   }
   const wrapper = shallowMount(CustomEntityDetail, { propsData })
   it('exists', () => {

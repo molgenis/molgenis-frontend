@@ -61,13 +61,16 @@ describe('EntityDetail.vue', () => {
       hasAddRights: () => true,
       hasEditRights: () => true,
       hasDeleteRights: () => true,
-      hasEditSettingsRights: () => true
+      hasEditSettingsRights: () => true,
+      isSelectable: () => true,
+      isSelected: () => () => false
     }
 
     state = {
       tableSettings: {
         customDetailCode: '<h1>I m not a template</h1>'
-      }
+      },
+      selectedItemIds: []
     }
 
     const explorer = { state, actions, getters, namespaced: true }
