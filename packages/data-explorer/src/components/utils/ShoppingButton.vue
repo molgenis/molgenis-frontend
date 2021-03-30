@@ -2,7 +2,7 @@
   <button
     type="button"
     :class="{'btn-primary': isSelected, 'btn-outline-secondary': !isSelected}"
-    class="btn-sm float-right text-nowrap shopping-button"
+    class="btn btn-sm text-nowrap shopping-button"
     @click="toggleSelectedItems(id)"
   >
     <font-awesome-icon v-if="isSelected" size="xs" icon="minus" />

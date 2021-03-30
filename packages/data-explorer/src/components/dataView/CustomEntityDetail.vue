@@ -4,9 +4,12 @@
 
 <script>
 import VRuntimeTemplate from 'v-runtime-template'
+import ShoppingCartButton from '../customViewComponents/ShoppingCartButton'
 export default {
   name: 'CustomEntityDetail',
-  components: { VRuntimeTemplate },
+  // We add components which might be used in the custom template therefor:
+  // eslint-disable-next-line vue/no-unused-components
+  components: { VRuntimeTemplate, ShoppingCartButton },
   props: {
     record: {
       type: Object,

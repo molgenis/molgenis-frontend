@@ -1,8 +1,8 @@
 <template>
   <ul class="list-group list-group-flush">
-    <li v-for="(value, propertyName, index) in record" :key="index" class="list-group-item">
+    <li v-for="(value, propertyName, index) in record" :key="index" class="list-group-item border-0">
       <h5>{{ propertyName }}</h5>
-      <template v-if="typeof value !== 'object'">
+      <template v-if="!isObject(value)">
         <p>{{ value }}</p>
       </template>
       <template v-else-if="Array.isArray(value)">
@@ -10,7 +10,7 @@
       </template>
       <template v-else>
         <ul class="list-group list-group-flush">
-          <li v-for="(refValue, refPropertyName, refIndex) in value" :key="refIndex" class="list-group-item">
+          <li v-for="(refValue, refPropertyName, refIndex) in value" :key="refIndex" class="list-group-item border-0">
             <h5>{{ refPropertyName }}</h5>
             <p>{{ refValue }}</p>
           </li>
@@ -31,6 +31,12 @@ export default {
     metaData: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    // doing this inline in the template breaks the vue code.
+    isObject(value) {
+      return typeof value === 'object'
     }
   }
 }
