@@ -28,6 +28,15 @@ export default {
     wrappedTemplate: function () {
       return '<div class="custom-entity-detail-container">' + this.template.trim() + '</div>'
     }
+  },
+  methods: {
+    // Helper function for template
+    isObject(value) {
+      return typeof value === 'object'
+    },
+    isArray(value) {
+      return Array.isArray(value)
+    }
   }
 }
 </script>
