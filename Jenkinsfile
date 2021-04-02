@@ -37,6 +37,7 @@ pipeline {
                 stage('Install & Test Components-Library') {
                     steps {
                         container('node') {
+                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                             sh "yarn install"
                             sh "yarn lerna bootstrap --scope @molgenis-ui/components-library"
                             sh "yarn lerna run lint --scope @molgenis-ui/components-library"
