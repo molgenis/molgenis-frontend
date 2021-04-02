@@ -46,4 +46,8 @@ describe('DefaultEntityDetail.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
     expect(wrapper.html()).toMatchSnapshot()
   })
+
+  it('can access the isShop property', () =>{
+    expect(wrapper.vm.isShop).not.toBe(undefined)
+  })
 })
