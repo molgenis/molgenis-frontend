@@ -79,7 +79,7 @@ pipeline {
                         }
                     }
                 }
-                stage('Others') {
+                stage('App Manager') {
                     agent {
                         kubernetes {
                             inheritFrom 'node-erbium'
