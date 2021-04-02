@@ -42,9 +42,9 @@ describe('CustomEntityDetail.vue', () => {
     expect(wrapper.vm.isShop).not.toBe(undefined)
   })
   it('has an isObject helper-function', () => {
-    expect(wrapper.vm.isObject).not.toBe(undefined)
+    expect(wrapper.vm.isObject()).not.toBe(undefined)
   })
   it('has an isArray helper-function', () => {
-    expect(wrapper.vm.isArray).not.toBe(undefined)
+    expect(wrapper.vm.isArray()).not.toBe(undefined)
   })
 })
