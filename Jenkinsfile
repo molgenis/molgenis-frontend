@@ -44,14 +44,14 @@ pipeline {
                             sh "yarn lerna run unit --since origin/master --scope @molgenis-ui/components-library"
                         }
                     }
-                },
+                }
                 post {
                     always {
                         container('node') {
                             sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
                         }
                     }
-                },
+                }
                 stage('Others') {
                     steps {
                             container('node') {
