@@ -34,12 +34,7 @@ pipeline {
             changeRequest()
             }
             parallel {
-                stage('Install & Test Components-Library') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
+                stage('Components-Library') {
                     steps {
                         container('node') {
                             dir("${env.WORKSPACE}/packages/components-library") {
