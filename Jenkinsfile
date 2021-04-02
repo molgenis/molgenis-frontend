@@ -8,6 +8,7 @@ pipeline {
         REPOSITORY = 'molgenis/molgenis-frontend'
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
         npm_config_registry = "https://registry.npmjs.org"
+        PACKAGE_DIR = "${env.WORKSPACE}/packages"
     }
     stages {
         stage('Prepare') {
@@ -34,12 +35,49 @@ pipeline {
             changeRequest()
             }
             parallel {
-                stage('Components-Library') {
+                stage('Components Library') {
                     steps {
                         container('node') {
-                            dir("${env.WORKSPACE}/packages/components-library") {
+                            dir("${PACKAGE_DIR}/components-library") {
                                 sh "yarn install"
                                 sh "yarn lint"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('Data Explorer 2') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/data-explorer") {
+                                sh "yarn install"
+                                sh "yarn lint"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('App Manager') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/app-manager") {
+                                sh "yarn install"
                                 sh "yarn build"
                                 sh "yarn unit"
                             }
@@ -59,7 +97,6 @@ pipeline {
                             sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                             sh "yarn install"
                             sh "yarn lerna bootstrap"
-                            sh "yarn lerna run lint --scope @molgenis-ui/data-explorer"
                             sh "yarn lerna run unit --since origin/master"
                         }
                         container('sonar') {
