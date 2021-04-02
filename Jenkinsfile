@@ -208,13 +208,13 @@ pipeline {
                 }
             }
         }
-    }
-    post {
-        success {
-            hubotSend(message: 'Build success', status:'INFO', site: 'slack-pr-app-team')
-        }
-        failure {
-            hubotSend(message: 'Build failed', status:'ERROR', site: 'slack-pr-app-team')
+        post {
+            success {
+                hubotSend(message: 'Build success', status:'INFO', site: 'slack-pr-app-team')
+            }
+            failure {
+                hubotSend(message: 'Build failed', status:'ERROR', site: 'slack-pr-app-team')
+            }
         }
     }
 }
