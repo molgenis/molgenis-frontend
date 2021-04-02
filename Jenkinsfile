@@ -87,9 +87,6 @@ pipeline {
                     }
                     steps {
                         container('node') {
-                            sh "yarn install"
-                        }
-                        container('node') {
                             dir("${PACKAGE_DIR}/app-manager") {
                                 sh "yarn install"
                                 sh "yarn build"
@@ -188,6 +185,8 @@ pipeline {
             }
             steps {
                 container('node') {
+
+                    sh "yarn install"
                     sh "yarn lerna run build --since origin/master"
                     sh "yarn lerna run styleguide:build -- --since origin/master --scope @molgenis-ui/components-library"
                 }
