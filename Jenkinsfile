@@ -136,7 +136,6 @@ pipeline {
                             dir("${PACKAGE_DIR}/legacy-lib") {
                                 sh "yarn install"
                                 sh "yarn build"
-                                sh "yarn unit"
                             }
                         }
                     }
