@@ -2,7 +2,7 @@
 
 exports[`EditDetailTemplate.vue should render the editor 1`] = `
 <div id="entity-detail-container" class="mg-mainview">
-  <div class="container-fluid">
+  <div class="ml-2">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li aria-current="page" class="breadcrumb-item">
@@ -18,39 +18,50 @@ exports[`EditDetailTemplate.vue should render the editor 1`] = `
           </span></li>
       </ol>
     </nav>
-    <h1>Template editor</h1>
-    <div class="row mb-3">
-      <div class="col-12">
-        <div><label>Preview</label>
-          <div class="template-preview">
-            <custom-entity-detail-stub record="[object Object]" metadata="[object Object]" template="<h1>I m not a template</h1>"></custom-entity-detail-stub>
-          </div>
-        </div>
-      </div>
+    <h1>
+      Template editor
+    </h1>
+    <div class="my-3">
+      <b-card no-body="">
+        <b-tabs pills="" card="" vertical="">
+          <b-tab title="Record properties" active="" class="property-tab"><em class="font-weight-light">Example usage: record.id</em>
+            <prop-render-stub object="[object Object]" class="template-values mt-2"></prop-render-stub>
+          </b-tab>
+          <b-tab title="Metadata properties" class="property-tab"><em class="font-weight-light">Example usage: metaData.id</em>
+            <prop-render-stub object="[object Object]" class="template-values mt-2"></prop-render-stub>
+          </b-tab>
+          <b-tab title="Components" class="property-tab">
+            <table class="table table-striped">
+              <thead>
+                <th>
+                  Component:
+                </th>
+                <th>Code:</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Shoppingcart Button</td>
+                  <td>&lt;shopping-cart-button :id="record.id" /&gt;</td>
+                </tr>
+              </tbody>
+            </table>
+          </b-tab>
+          <b-tab title="Editor options"><button class="btn btn-outline-primary">
+              Set Landscape
+            </button></b-tab>
+        </b-tabs>
+      </b-card>
     </div>
-    <div class="row mb-3">
-      <div class="col-12">
-        <form-component-stub id="template" formfields="[object Object]" initialformdata="[object Object]" formstate="[object Object]" options="[object Object]"></form-component-stub> <button type="submit" class="btn btn-primary mt-1">
+    <div class="d-flex w-100 flex-wrap">
+      <div class="mr-3 mt-3 w-50"><span class="font-weight-bold mb-1">Template</span>
+        <form-component-stub id="template" formfields="[object Object]" initialformdata="[object Object]" formstate="[object Object]" options="[object Object]" class="border-top"></form-component-stub> <button type="submit" class="btn btn-primary mb-2 ml-2">
           Save template
           <!---->
         </button>
       </div>
-    </div> <label class="mt-3">Context</label>
-    <div class="row">
-      <div class="col-6">
-        <div class="card p-2">
-          <h5 class="card-title">
-            record
-          </h5>
-          <prop-render-stub object="[object Object]" class="template-values"></prop-render-stub>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="card p-2">
-          <h5 class="card-title">
-            metaData
-          </h5>
-          <prop-render-stub object="[object Object]" class="template-values"></prop-render-stub>
+      <div class="preview-container mt-3 ml-auto"><span class="font-weight-bold mb-1">Preview</span>
+        <div class="template-preview border">
+          <custom-entity-detail-stub record="[object Object]" metadata="[object Object]" template="<h1>I m not a template</h1>"></custom-entity-detail-stub>
         </div>
       </div>
     </div>

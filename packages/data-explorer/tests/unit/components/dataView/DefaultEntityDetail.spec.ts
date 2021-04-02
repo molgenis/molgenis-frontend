@@ -1,8 +1,12 @@
 import { shallowMount } from '@vue/test-utils'
 import DefaultEntityDetail from '@/components/dataView/DefaultEntityDetail.vue'
+import Vuex from 'vuex'
+import Vue from 'vue'
 
 const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
 const directives = { 'b-tooltip': () => {} }
+
+Vue.use(Vuex)
 
 describe('DefaultEntityDetail.vue', () => {
   let wrapper
@@ -23,9 +27,19 @@ describe('DefaultEntityDetail.vue', () => {
       key4: 'val'
     }
   }
+  let state: any
 
   beforeEach(async () => {
-    wrapper = await shallowMount(DefaultEntityDetail, { stubs, directives, propsData: { metaData, record } })
+    state = {
+      tableSettings: {
+        isShop: false
+      }
+    }
+
+    const explorer = { state, namespaced: true }
+    const store = new Vuex.Store({ modules: { explorer } })
+
+    wrapper = await shallowMount(DefaultEntityDetail, { stubs, directives, store, propsData: { metaData, record } })
   })
 
   it('exists', async () => {
