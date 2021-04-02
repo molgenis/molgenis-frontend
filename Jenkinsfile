@@ -34,13 +34,13 @@ pipeline {
             when {
                 changeRequest()
             }
-            agent {
-                kubernetes {
-                    inheritFrom 'node-erbium'
-                }
-            }
             parallel {
                 stage('Components Library') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/components-library") {
@@ -60,6 +60,11 @@ pipeline {
                     }
                 }
                 stage('Data Explorer 2') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/data-explorer") {
@@ -79,6 +84,11 @@ pipeline {
                     }
                 }
                 stage('App Manager') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/app-manager") {
