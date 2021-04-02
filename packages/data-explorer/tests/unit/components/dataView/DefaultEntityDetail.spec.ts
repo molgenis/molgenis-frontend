@@ -1,12 +1,12 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import DefaultEntityDetail from '@/components/dataView/DefaultEntityDetail.vue'
 import Vuex from 'vuex'
-import Vue from 'vue'
 
 const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
 const directives = { 'b-tooltip': () => {} }
 
-Vue.use(Vuex)
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe('DefaultEntityDetail.vue', () => {
   let wrapper
@@ -39,7 +39,7 @@ describe('DefaultEntityDetail.vue', () => {
     const explorer = { state, namespaced: true }
     const store = new Vuex.Store({ modules: { explorer } })
 
-    wrapper = await shallowMount(DefaultEntityDetail, { stubs, directives, store, propsData: { metaData, record } })
+    wrapper = await shallowMount(DefaultEntityDetail, { stubs, directives, store, propsData: { metaData, record }, localVue })
   })
 
   it('exists', async () => {
