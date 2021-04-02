@@ -39,6 +39,7 @@ pipeline {
                         label "node-erbium"
                     }
                     steps {
+                        sh "npm install yarn"
                         sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                         sh "yarn install"
                         sh "yarn lerna bootstrap --scope @molgenis-ui/components-library"
