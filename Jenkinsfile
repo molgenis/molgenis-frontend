@@ -33,27 +33,50 @@ pipeline {
             when {
                 changeRequest()
             }
-            steps {
-                container('node') {
-                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
-                    sh "yarn install"
-                    sh "yarn lerna bootstrap"
-                    sh "yarn lerna run lint --scope @molgenis-ui/components-library"
-                    sh "yarn lerna run lint --scope @molgenis-ui/data-explorer"
-                    sh "yarn lerna bootstrap --scope @molgenis-ui/components-library"
-                    sh "yarn lerna run build --scope @molgenis-ui/components-library"
-                    sh "yarn lerna run unit --since origin/master"
-                }
-                container('sonar') {
-                    // Fetch the target branch, sonar likes to take a look at it
-                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
-                    sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
-                }
-            }
-            post {
-                always {
-                    container('node') {
-                        sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+            parallel {
+                stage('Install & Test Components-Library') {
+                    steps {
+                        container('node') {
+                            sh "yarn install"
+                            sh "yarn lerna bootstrap --scope @molgenis-ui/components-library"
+                            sh "yarn lerna run lint --scope @molgenis-ui/components-library"
+                            sh "yarn lerna run build --scope @molgenis-ui/components-library"
+                            sh "yarn lerna run unit --since origin/master --scope @molgenis-ui/components-library"
+                        }
+                    }
+                },
+                post {
+                    always {
+                        container('node') {
+                            sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                        }
+                    }
+                },
+                stage('Others') {
+                    steps {
+                            container('node') {
+                                sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
+                                sh "yarn install"
+                                sh "yarn lerna bootstrap"
+                                sh "yarn lerna run lint --scope @molgenis-ui/components-library"
+                                sh "yarn lerna run lint --scope @molgenis-ui/data-explorer"
+                                sh "yarn lerna bootstrap --scope @molgenis-ui/components-library"
+                                sh "yarn lerna run build --scope @molgenis-ui/components-library"
+                                sh "yarn lerna run unit --since origin/master"
+                            }
+                            container('sonar') {
+                                // Fetch the target branch, sonar likes to take a look at it
+                                sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                                sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                            }
+                        }
+                        post {
+                            always {
+                                container('node') {
+                                    sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                                }
+                            }
+                        }
                     }
                 }
             }
