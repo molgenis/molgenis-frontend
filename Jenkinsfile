@@ -32,7 +32,12 @@ pipeline {
         }
        stage('Install and test: [ pull request ]') {
             when {
-            changeRequest()
+                changeRequest()
+            }
+            agent {
+                kubernetes {
+                    inheritFrom 'node-erbium'
+                }
             }
             parallel {
                 stage('Components Library') {
