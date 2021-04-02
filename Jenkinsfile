@@ -79,13 +79,16 @@ pipeline {
                         }
                     }
                 }
-                stage('App Manager') {
+                stage('Others') {
                     agent {
                         kubernetes {
                             inheritFrom 'node-erbium'
                         }
                     }
                     steps {
+                        container('node') {
+                            sh "yarn install"
+                        }
                         container('node') {
                             dir("${PACKAGE_DIR}/app-manager") {
                                 sh "yarn install"
@@ -93,22 +96,6 @@ pipeline {
                                 sh "yarn unit"
                             }
                         }
-                    }
-                    post {
-                        always {
-                            container('node') {
-                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
-                            }
-                        }
-                    }
-                }
-                stage('Core UI') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
-                    steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/core-ui") {
                                 sh "yarn install"
@@ -116,44 +103,12 @@ pipeline {
                                 sh "yarn unit"
                             }
                         }
-                    }
-                    post {
-                        always {
-                            container('node') {
-                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
-                            }
-                        }
-                    }
-                }
-                stage('Legacy Lib') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
-                    steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/legacy-lib") {
                                 sh "yarn install"
                                 sh "yarn build"
                             }
                         }
-                    }
-                    post {
-                        always {
-                            container('node') {
-                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
-                            }
-                        }
-                    }
-                }
-                stage('Metadata Manager') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
-                    steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/metadata-manager") {
                                 sh "yarn install"
@@ -161,22 +116,6 @@ pipeline {
                                 sh "yarn unit"
                             }
                         }
-                    }
-                    post {
-                        always {
-                            container('node') {
-                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
-                            }
-                        }
-                    }
-                }
-                stage('One Click Importer') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
-                    steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/one-click-importer") {
                                 sh "yarn install"
@@ -184,22 +123,6 @@ pipeline {
                                 sh "yarn unit"
                             }
                         }
-                    }
-                    post {
-                        always {
-                            container('node') {
-                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
-                            }
-                        }
-                    }
-                }
-                stage('Questionnaires') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
-                    steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/questionnaires") {
                                 sh "yarn install"
@@ -207,22 +130,6 @@ pipeline {
                                 sh "yarn unit"
                             }
                         }
-                    }
-                    post {
-                        always {
-                            container('node') {
-                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
-                            }
-                        }
-                    }
-                }
-                stage('Scripts') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
-                    steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/scripts") {
                                 sh "yarn install"
@@ -230,22 +137,6 @@ pipeline {
                                 sh "yarn unit"
                             }
                         }
-                    }
-                    post {
-                        always {
-                            container('node') {
-                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
-                            }
-                        }
-                    }
-                }
-                stage('Search All') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
-                    steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/searchall") {
                                 sh "yarn install"
@@ -253,22 +144,6 @@ pipeline {
                                 sh "yarn unit"
                             }
                         }
-                    }
-                    post {
-                        always {
-                            container('node') {
-                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
-                            }
-                        }
-                    }
-                }
-                stage('Security') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
-                    steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/security") {
                                 sh "yarn install"
@@ -276,22 +151,6 @@ pipeline {
                                 sh "yarn unit"
                             }
                         }
-                    }
-                    post {
-                        always {
-                            container('node') {
-                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
-                            }
-                        }
-                    }
-                }
-                stage('Settings') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
-                    steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/settings") {
                                 sh "yarn install"
@@ -307,7 +166,7 @@ pipeline {
                             }
                         }
                     }
-                }
+                }                
                 stage('Sonar') {
                     steps {
                         container('sonar') {
