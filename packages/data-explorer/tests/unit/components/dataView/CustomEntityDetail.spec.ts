@@ -35,7 +35,6 @@ describe('CustomEntityDetail.vue', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
   it('should set the template', () => {
-    // @ts-ignore
     expect(wrapper.vm.wrappedTemplate).toBe('<div class="custom-entity-detail-container"><h1>Hello MOLGENIS!</h1></div>')
   })
 
