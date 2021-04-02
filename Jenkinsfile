@@ -42,7 +42,7 @@ pipeline {
                     }
                     steps {
                         container('node') {
-                            dir('/packages/components-library') {
+                            dir('${env.WORKSPACE}/packages/components-library') {
                                 sh "yarn install"
                                 sh "yarn lint"
                                 sh "yarn build"
@@ -64,10 +64,7 @@ pipeline {
                             sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
                             sh "yarn install"
                             sh "yarn lerna bootstrap"
-                            sh "yarn lerna run lint --scope @molgenis-ui/components-library"
                             sh "yarn lerna run lint --scope @molgenis-ui/data-explorer"
-                            sh "yarn lerna bootstrap --scope @molgenis-ui/components-library"
-                            sh "yarn lerna run build --scope @molgenis-ui/components-library"
                             sh "yarn lerna run unit --since origin/master"
                         }
                         container('sonar') {
