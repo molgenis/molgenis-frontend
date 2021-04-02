@@ -5,6 +5,7 @@
 <script>
 import VRuntimeTemplate from 'v-runtime-template'
 import ShoppingCartButton from '../customViewComponents/ShoppingCartButton'
+import { mapState } from 'vuex'
 export default {
   name: 'CustomEntityDetail',
   // We add components which might be used in the custom template therefor:
@@ -25,6 +26,9 @@ export default {
     }
   },
   computed: {
+    ...mapState('explorer', {
+      isShop: state => state.tableSettings.isShop
+    }),
     wrappedTemplate: function () {
       return '<div class="custom-entity-detail-container">' + this.template.trim() + '</div>'
     }

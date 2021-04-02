@@ -187,10 +187,9 @@ export default {
       this.$router.push({ name: 'entity-detail', params: { entityType: this.entityType, entity: this.entity } })
     },
     baseTemplate() {
-      return `
-<div class="d-flex m-2">
+      return `<div class="d-flex m-2">
 	<h2>{{ record.label || record.name }}</h2>
-	<div class="ml-auto"><shopping-cart-button :id="record.id" />
+	<div class="ml-auto" v-if="isShop"><shopping-cart-button :id="record.id" />
 	</div>
 </div>
 <ul class="list-group list-group-flush">
