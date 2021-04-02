@@ -42,7 +42,7 @@ pipeline {
                     }
                     steps {
                         container('node') {
-                            dir('${env.WORKSPACE}/packages/components-library') {
+                            dir("${env.WORKSPACE}/packages/components-library") {
                                 sh "yarn install"
                                 sh "yarn lint"
                                 sh "yarn build"
