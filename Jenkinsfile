@@ -60,11 +60,7 @@ pipeline {
                     }
                 }
                 stage('Data Explorer 2') {
-                    agent {
-                        kubernetes {
-                            inheritFrom 'node-erbium'
-                        }
-                    }
+                    // is the agent from line 2, this one is the biggest, so we start this one first
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/data-explorer") {
@@ -106,18 +102,19 @@ pipeline {
                         }
                     }
                 }
-                stage('Others') {
+                stage('Core UI') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
                     steps {
                         container('node') {
-                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
-                            sh "yarn install"
-                            sh "yarn lerna bootstrap"
-                            sh "yarn lerna run unit --since origin/master"
-                        }
-                        container('sonar') {
-                            // Fetch the target branch, sonar likes to take a look at it
-                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
-                            sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                            dir("${PACKAGE_DIR}/core-ui") {
+                                sh "yarn install"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
                         }
                     }
                     post {
@@ -125,6 +122,199 @@ pipeline {
                             container('node') {
                                 sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
                             }
+                        }
+                    }
+                }
+                stage('Legacy Lib') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/legacy-lib") {
+                                sh "yarn install"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('Metadata Manager') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/metadata-manager") {
+                                sh "yarn install"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('One Click Importer') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/one-click-importer") {
+                                sh "yarn install"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('Questionnaires') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/questionnaires") {
+                                sh "yarn install"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('Scripts') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/scripts") {
+                                sh "yarn install"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('Search All') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/searchall") {
+                                sh "yarn install"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('Security') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/security") {
+                                sh "yarn install"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('Settings') {
+                    agent {
+                        kubernetes {
+                            inheritFrom 'node-erbium'
+                        }
+                    }
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/settings") {
+                                sh "yarn install"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            container('node') {
+                                sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                            }
+                        }
+                    }
+                }
+                stage('Sonar') {
+                    steps {
+                        container('sonar') {
+                            // Fetch the target branch, sonar likes to take a look at it
+                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                            sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
                         }
                     }
                 }
