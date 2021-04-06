@@ -2,24 +2,25 @@
   "npmClient": "yarn",
   "useWorkspaces": true,
   "npmClientArgs": ["--frozen-lockfile"],
+  "workspaces": {
   "packages": [
     "packages/*"
   ],
+  "nohoist": [
+      "bootstrap-4",
+      "es6-promise",
+      "babel-polyfill",
+      "babel-loader",
+      "postcss-loader",
+      "cache-loader",
+      "@molgenis"
+    ]
+  },
   "version": "independent",
   "yes": true,
   "command": {
     "version": {
       "conventionalCommits": true
-    },
-    "bootstrap": {
-      "nohoist": [
-        "bootstrap-4",
-        "es6-promise",
-        "babel-polyfill",
-        "babel-loader",
-        "postcss-loader",
-        "cache-loader"
-      ]
     }
   }
 }
