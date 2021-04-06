@@ -26,7 +26,7 @@ pipeline {
                         env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
                     }
                 }
-                sh "git remote set-url origin https://$GITHUB_TOKEN@github.com/$REPOSITORY.git"
+                sh "git remote set-url origin https://$GITHUB_TOKEN@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
             }
         }
@@ -171,6 +171,9 @@ pipeline {
             }
         }
         stage('Codecov & SonarCube') {
+            when {
+                changeRequest()
+            }
             steps {
                 container('sonar') {
                     // Fetch the target branch, sonar likes to take a look at it
