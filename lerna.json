@@ -3,19 +3,13 @@
   "useWorkspaces": true,
   "npmClientArgs": ["--frozen-lockfile"],
   "workspaces": {
-  "packages": [
-    "packages/*"
-  ],
-  "nohoist": [
-      "bootstrap-4",
-      "es6-promise",
-      "babel-polyfill",
-      "babel-loader",
-      "postcss-loader",
-      "cache-loader",
-      "@molgenis",
-      "chromedriver"
-    ]
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+        "**/bootstrap-4",
+        "**/bootstrap-4/**"
+      ]
   },
   "version": "independent",
   "yes": true,
