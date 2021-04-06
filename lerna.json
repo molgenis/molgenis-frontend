@@ -14,7 +14,8 @@
     "bootstrap": {
       "nohoist": [
         "bootstrap-4",
-        "webpack",
+        "es6-promise",
+        "babel-polyfill",
         "babel-loader",
         "postcss-loader",
         "cache-loader"
