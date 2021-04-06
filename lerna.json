@@ -13,7 +13,8 @@
       "babel-loader",
       "postcss-loader",
       "cache-loader",
-      "@molgenis"
+      "@molgenis",
+      "chromedriver"
     ]
   },
   "version": "independent",
