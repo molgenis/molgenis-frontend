@@ -10,6 +10,15 @@
   "command": {
     "version": {
       "conventionalCommits": true
+    },
+    "bootstrap": {
+      "nohoist": [
+        "bootstrap-4",
+        "webpack",
+        "babel-loader",
+        "postcss-loader",
+        "cache-loader"
+      ]
     }
   }
 }
