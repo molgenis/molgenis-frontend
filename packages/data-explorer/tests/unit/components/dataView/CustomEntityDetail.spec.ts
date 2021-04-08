@@ -5,7 +5,6 @@ import Vuex from 'vuex'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-
 let wrapper: any
 
 describe('CustomEntityDetail.vue', () => {
