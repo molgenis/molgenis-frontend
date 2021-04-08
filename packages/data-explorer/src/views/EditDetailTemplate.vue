@@ -79,7 +79,6 @@
             :options="{ showEyeButton: false }"
             :form-fields="formFields"
             :initial-form-data="{ template: template }"
-            
             @valueChange="template = $event.template"
           />
           <button 
