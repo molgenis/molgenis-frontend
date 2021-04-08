@@ -1,7 +1,7 @@
 <template>
   <div v-if="!loading" id="entity-detail-container" class="mg-mainview">
-    <div class="container-fluid">
-      <nav aria-label="breadcrumb">
+    <div class="d-flex flex-column mb-3">
+      <nav aria-label="breadcrumb" class="w-100 ml-2">
         <ol class="breadcrumb">
           <li class="breadcrumb-item" aria-current="page">
             <router-link id="headItemTooltipId" :to="{ name: 'de-view', params: { entity: entityType}, query: $route.query }">
@@ -22,57 +22,59 @@
           </li>
         </ol>
       </nav>
+   
+
+      <div class="btn-group ml-auto align-items-center" role="group" aria-label="row actions group">
+        <router-link
+          v-if="hasAddRights"
+          v-b-tooltip.hover.bottom
+          class="btn btn-outline-secondary"
+          :title="$t('dataexplorer_add_entity_btn_tooltip')"
+          :to="{ name: 'de-create', params: { entity: entityType }}"
+        >
+          <font-awesome-icon icon="plus-square" />
+        </router-link>
+
+        <router-link
+          v-if="hasEditRights"
+          v-b-tooltip.hover.bottom
+          class="btn btn-outline-secondary"
+          :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
+          :to="{ name: 'de-edit', params: { entity: entityType, dataRowId: entity}}"
+        >
+          <font-awesome-icon icon="edit" />
+        </router-link>
+
+        <button
+          v-if="hasDeleteRights"
+          v-b-tooltip.hover.bottom
+          class="btn btn-outline-secondary delete-btn"
+          role="button"
+          :title="$t('dataexplorer_row_action_delete_btn_tooltip')"
+          @click="deleteEntity"
+        >
+          <font-awesome-icon icon="trash" />
+        </button>
+
+        <router-link
+          v-if="hasEditSettingsRights"
+          v-b-tooltip.hover.bottom
+          class="btn btn-outline-secondary"
+          title="Edit template"
+          :to="{ name: 'edit-detail-template', params: { entityType, entity}}"
+        >
+          <font-awesome-icon icon="cog" />
+        </router-link>
+      </div>
     </div>
-
-    <div class="btn-group float-right pr-3 mr-3" role="group" aria-label="row actions group">
-      <router-link
-        v-if="hasAddRights"
-        v-b-tooltip.hover.bottom
-        class="btn btn-outline-secondary"
-        :title="$t('dataexplorer_add_entity_btn_tooltip')"
-        :to="{ name: 'de-create', params: { entity: entityType }}"
-      >
-        <font-awesome-icon icon="plus-square" />
-      </router-link>
-
-      <router-link
-        v-if="hasEditRights"
-        v-b-tooltip.hover.bottom
-        class="btn btn-outline-secondary"
-        :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
-        :to="{ name: 'de-edit', params: { entity: entityType, dataRowId: entity}}"
-      >
-        <font-awesome-icon icon="edit" />
-      </router-link>
-
-      <button
-        v-if="hasDeleteRights"
-        v-b-tooltip.hover.bottom
-        class="btn btn-outline-secondary delete-btn"
-        role="button"
-        :title="$t('dataexplorer_row_action_delete_btn_tooltip')"
-        @click="deleteEntity"
-      >
-        <font-awesome-icon icon="trash" />
-      </button>
-
-      <router-link
-        v-if="hasEditSettingsRights"
-        v-b-tooltip.hover.bottom
-        class="btn btn-outline-secondary"
-        title="Edit template"
-        :to="{ name: 'edit-detail-template', params: { entityType, entity}}"
-      >
-        <font-awesome-icon icon="cog" />
-      </router-link>
+    <div class="border rounded p-1">
+      <template v-if="customDetailCode">
+        <custom-entity-detail :record="record" :meta-data="metaData" :template="customDetailCode" />
+      </template>
+      <template v-else>
+        <default-entity-detail :record="record" :meta-data="metaData" />
+      </template>
     </div>
-
-    <template v-if="customDetailCode">
-      <custom-entity-detail :record="record" :meta-data="metaData" :template="customDetailCode" />
-    </template>
-    <template v-else>
-      <default-entity-detail :record="record" :meta-data="metaData" />
-    </template>
   </div>
 </template>
 

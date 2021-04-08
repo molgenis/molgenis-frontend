@@ -1,7 +1,7 @@
 <template>
   <tr :class="{'row-selected': isSelected}">
     <th v-if="showSelected" scope="col">
-      <shopping-button :id="id" :is-selected="isSelected" />
+      <shopping-button :id="id" :is-selected="isSelected" class="float-right" />
     </th>
     <th
       v-else :id="'table-row-'+id"

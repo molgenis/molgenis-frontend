@@ -1,27 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DefaultEntityDetail.vue exists 1`] = `
-<ul class="list-group list-group-flush">
-  <li class="list-group-item">
-    <h5>id</h5>
-    <p>abc-123</p>
-  </li>
-  <li class="list-group-item">
-    <h5>key1</h5>
-    <p>val1</p>
-  </li>
-  <li class="list-group-item">
-    <h5>key2</h5>
-    ,
-  </li>
-  <li class="list-group-item">
-    <h5>key3</h5>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        <h5>key4</h5>
-        <p>val</p>
-      </li>
-    </ul>
-  </li>
-</ul>
+<div>
+  <div class="d-flex m-2">
+    <h2></h2>
+    <!---->
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item border-0">
+      <h5>id</h5>
+      <p>abc-123</p>
+    </li>
+    <li class="list-group-item border-0">
+      <h5>key1</h5>
+      <p>val1</p>
+    </li>
+    <li class="list-group-item border-0">
+      <h5>key2</h5>
+      ,
+    </li>
+    <li class="list-group-item border-0">
+      <h5>key3</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item border-0">
+          <h5>key4</h5>
+          <p>val</p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
 `;

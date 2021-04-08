@@ -1,7 +1,9 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import EditDetailTemplate from '@/views/EditDetailTemplate.vue'
 import { getRowDataWithReferenceLabels } from '@/repository/dataRepository'
+import { defaultDetailsView } from '@/lib/defaultTemplate/defaultDetailsView'
 import Vuex from 'vuex'
+
 
 jest.mock('@/repository/dataRepository', () => {
   return {
@@ -14,7 +16,7 @@ const mocks = {
   $router: { push: jest.fn() },
   $route: { query: { foo: 'bar' } }
 }
-const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
+const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip', 'b-tab', 'b-tabs', 'b-card']
 const directives = { 'b-tooltip': () => {} }
 let actions: any
 let getters: any
@@ -123,8 +125,8 @@ describe('EditDetailTemplate.vue', () => {
       wrapper = shallowMount(EditDetailTemplate, { propsData, store, localVue, stubs, mocks, directives })
     })
 
-    it('should not try to render it (empty string)', () => {
-      expect(wrapper.vm.template).toEqual('')
+    it('should render the default template if no custom code is specified', () => {
+      expect(wrapper.vm.template).toEqual(defaultDetailsView)
     })
   })
 

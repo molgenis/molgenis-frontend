@@ -35,6 +35,8 @@ module.exports = {
         'plugin:vue/recommended'
       ],
       rules: {
+        'vue/order-in-components': 'off',
+        'vue/html-self-closing': 'off',
         'vue/no-v-html': 'off',
         'vue/require-default-prop': 'off',
         'vue/max-attributes-per-line': ['error', {

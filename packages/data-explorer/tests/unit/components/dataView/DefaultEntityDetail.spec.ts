@@ -1,8 +1,12 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import DefaultEntityDetail from '@/components/dataView/DefaultEntityDetail.vue'
+import Vuex from 'vuex'
 
 const stubs = ['font-awesome-icon', 'router-link', 'b-tooltip']
 const directives = { 'b-tooltip': () => {} }
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe('DefaultEntityDetail.vue', () => {
   let wrapper
@@ -23,13 +27,27 @@ describe('DefaultEntityDetail.vue', () => {
       key4: 'val'
     }
   }
+  let state: any
 
   beforeEach(async () => {
-    wrapper = await shallowMount(DefaultEntityDetail, { stubs, directives, propsData: { metaData, record } })
+    state = {
+      tableSettings: {
+        isShop: false
+      }
+    }
+
+    const explorer = { state, namespaced: true }
+    const store = new Vuex.Store({ modules: { explorer } })
+
+    wrapper = await shallowMount(DefaultEntityDetail, { stubs, directives, store, propsData: { metaData, record }, localVue })
   })
 
   it('exists', async () => {
     expect(wrapper.exists()).toBeTruthy()
     expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('can access the isShop property', () =>{
+    expect(wrapper.vm.isShop).not.toBe(undefined)
   })
 })
