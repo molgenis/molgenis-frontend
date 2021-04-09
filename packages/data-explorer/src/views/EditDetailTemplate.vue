@@ -195,7 +195,8 @@ export default {
     this.loading = false
   },
   created() {
-    if(window.innerWidth < 1416) {
+    // if we have a small screen we still want to use the editor
+    if(window.innerWidth < 1420) {
       this.landscapeMode = true;
     }
   },
