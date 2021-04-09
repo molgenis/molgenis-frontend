@@ -47,19 +47,19 @@ exports[`EditDetailTemplate.vue should render the editor 1`] = `
             </table>
           </b-tab-stub>
           <b-tab-stub title="Editor options"><button class="btn btn-outline-primary">
-              Set Landscape
+              Set Portrait
             </button></b-tab-stub>
         </b-tabs-stub>
       </b-card-stub>
     </div>
-    <div class="d-flex w-100 flex-wrap">
-      <div class="mr-3 mt-3 w-50"><span class="font-weight-bold mb-1">Template</span>
+    <div class="d-flex w-100 flex-wrap flex-column">
+      <div class="mr-3 mt-3 w-100"><span class="font-weight-bold mb-1">Template</span>
         <form-component-stub id="template" formfields="[object Object]" initialformdata="[object Object]" formstate="[object Object]" options="[object Object]" class="border-top"></form-component-stub> <button type="submit" class="btn btn-primary mb-2 ml-2">
           Save template
           <!---->
         </button>
       </div>
-      <div class="preview-container mt-3 ml-auto"><span class="font-weight-bold mb-1">Preview</span>
+      <div class="preview-container mt-3 w-100"><span class="font-weight-bold mb-1">Preview</span>
         <div class="template-preview border">
           <custom-entity-detail-stub record="[object Object]" metadata="[object Object]" template="<h1>I m not a template</h1>"></custom-entity-detail-stub>
         </div>
