@@ -55,6 +55,7 @@
                 </tbody>
               </table>
             </b-tab>
+            <!-- Editor Options -->
             <b-tab title="Editor options">
               <button class="btn btn-outline-primary" @click="landscapeMode = !landscapeMode">
                 Set {{ landscapeMode ? "Portrait" : "Landscape" }}
@@ -163,17 +164,6 @@ export default {
       }
     }
   },
-  async mounted () {
-    this.fetchTablePermissions({ tableName: this.entityType })
-    await this.fetchTableMeta({ tableName: this.entityType })
-    // Wait for both items to be present, but only the second item is needed.
-    const [, data] = await Promise.all([
-      this.fetchTableSettings({ tableName: this.entityType }),
-      getRowDataWithReferenceLabels(this.entityType, this.entity, this.tableMeta)
-    ])
-    this.record = data
-    this.loading = false
-  },
   methods: {
     ...mapActions('explorer', [
       'fetchTablePermissions',
@@ -188,6 +178,23 @@ export default {
     },
     baseTemplate() {
       return defaultDetailsView
+    }
+  },
+  async mounted () {
+    this.fetchTablePermissions({ tableName: this.entityType })
+    await this.fetchTableMeta({ tableName: this.entityType })
+    // Wait for both items to be present, but only the second item is needed.
+    const [, data] = await Promise.all([
+      this.fetchTableSettings({ tableName: this.entityType }),
+      getRowDataWithReferenceLabels(this.entityType, this.entity, this.tableMeta)
+    ])
+    this.record = data
+    this.loading = false
+  },
+  created() {
+    // if we have a small screen we still want to use the editor
+    if(window.innerWidth < 1450) {
+      this.landscapeMode = true;
     }
   },
 }
