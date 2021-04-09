@@ -57,7 +57,7 @@
             </b-tab>
             <!-- Editor Options -->
             <b-tab title="Editor options">
-              <button class="btn btn-outline-primary" @click="switchMode">
+              <button class="btn btn-outline-primary" @click="landscapeMode = !landscapeMode">
                 Set {{ landscapeMode ? "Portrait" : "Landscape" }}
               </button>
             </b-tab>
@@ -178,9 +178,6 @@ export default {
     },
     baseTemplate() {
       return defaultDetailsView
-    },
-    switchMode() {
-      this.landscapeMode = !this.landscapeMode
     }
   },
   async mounted () {
