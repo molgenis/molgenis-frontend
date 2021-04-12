@@ -19,7 +19,7 @@
       <div class="row mt-1">
         <div class="col-lg-4"><b>{{'data-label' | i18n }}</b></div>
         <div class="col-lg-8"><a v-if="entityType.nrOfMatchingEntities > 0 && dataexplorer"
-                                 :href="dataexplorer + '?entity=' + entityType.id +'&query[q][0][operator]=SEARCH&query[q][0][value]='+this.$store.state.query"
+                                 :href="dataExplorerLink(entityType)"
                                  class="card-link"><i
           class="fa fa-align-justify" aria-hidden="true"></i>
           {{entityType.nrOfMatchingEntities}} {{'rows-found-label' | i18n }}</a>
@@ -44,10 +44,23 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+  import URLSearchParams from '@ungap/url-search-params'
+
   export default {
     name: 'entity-result',
     props: ['entityType', 'dataexplorer', 'navigator', 'highlight'],
+    methods: {
+      dataExplorerLink (entityType) {
+        const params = new URLSearchParams()
+        params.append('entity', entityType.id)
+        params.append('query[q][0][operator]', 'SEARCH')
+        params.append('query[q][0][value]', this.query)
+        return this.dataexplorer + '?' + params.toString()
+      }
+    },
     computed: {
+      ...mapState(['query']),
       navigatorLink () {
         const packageId = this.entityType.packageId
         return packageId !== undefined ? this.navigator + '/' + packageId : this.navigator
