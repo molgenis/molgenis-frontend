@@ -38,9 +38,7 @@ pipeline {
                 container('node') {
                     sh "yarn"
                     echo "Running yarn in all packages"
-                    new File(PACKAGE_DIR).eachDir() { dir ->
-                       sh "( cd $dir && yarn )"
-                    }
+                    sh "new File(PACKAGE_DIR).eachDir() { dir -> ( cd $dir && yarn ) }"
                 }
             }
         }
