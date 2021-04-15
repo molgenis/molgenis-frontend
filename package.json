@@ -18,8 +18,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+  }
 }

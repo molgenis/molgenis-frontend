@@ -37,6 +37,10 @@ pipeline {
             steps {
                 container('node') {
                     sh "yarn"
+                    echo "Running yarn in all packages"
+                    new File(PACKAGE_DIR).eachDir() { dir ->
+                        ( cd "$dir" && yarn )
+                    }
                 }
             }
         }
@@ -58,7 +62,6 @@ pipeline {
                     
                 }
                 stage('Data Explorer 2') {
-                    // is the agent from line 2, this one is the biggest, so we start this one first
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/data-explorer") {
