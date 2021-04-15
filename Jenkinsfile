@@ -36,7 +36,6 @@ pipeline {
             }
             steps {
                 container('node') {
-                    sh "yarn"
                     echo "Running yarn in all packages"
                     sh "( cd ${PACKAGE_DIR}/components-library && yarn )"
                     sh "( cd ${PACKAGE_DIR}/data-explorer && yarn )"
@@ -182,21 +181,25 @@ pipeline {
                 }
             }
         }
-        stage('Codecov & SonarCube') {
+        stage('Quality checks') {
             when {
                 changeRequest()
             }
-            steps {
-                container('sonar') {
-                    // Fetch the target branch, sonar likes to take a look at it
-                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
-                    sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+            parallel {
+                stage('Sonar Cube') {
+                    steps {
+                        container('sonar') {
+                            // Fetch the target branch, sonar likes to take a look at it
+                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                            sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                        }
+                    }
                 }
-            }
-            post {
-                always {
-                    container('node') {
-                        sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                stage('Codecov') {
+                    steps {
+                        container('node') {
+                            sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                        }
                     }
                 }
             }
