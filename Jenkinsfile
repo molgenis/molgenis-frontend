@@ -35,7 +35,7 @@ pipeline {
                 changeRequest()
             }
             steps {
-                container('node')
+                container('node') {
                     echo "Running yarn in all packages"
                     sh "( cd ${PACKAGE_DIR}/components-library && yarn )"
                     sh "( cd ${PACKAGE_DIR}/data-explorer && yarn )"
@@ -213,11 +213,6 @@ pipeline {
                 DOCKER_CONFIG="/root/.docker"
             }
             steps {
-                container('node') {
-                    sh "yarn"
-                    sh "yarn lerna run build --since origin/master"
-                    sh "yarn lerna run styleguide:build -- --since origin/master --scope @molgenis-ui/components-library"
-                }
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
                     sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
