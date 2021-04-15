@@ -38,7 +38,18 @@ pipeline {
                 container('node') {
                     sh "yarn"
                     echo "Running yarn in all packages"
-                    sh "new File($PACKAGE_DIR).eachDir() { dir -> cd dir && yarn }"
+                    sh "( cd ${PACKAGE_DIR}/components-library && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/data-explorer && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/app-manager && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/core-ui && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/legacy-lib && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/metadata-manager && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/one-click-importer && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/questionnaires && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/scripts && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/searchall && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/security && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/settings && yarn )"
                 }
             }
         }
