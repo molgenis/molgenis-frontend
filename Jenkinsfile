@@ -53,7 +53,8 @@ pipeline {
             post {
                 always {
                     container('node') {
-                        sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                        fetch_codecov()
+                        sh "./codecov -c -F unit -K -C ${GIT_COMMIT}"
                     }
                 }
             }
@@ -140,7 +141,8 @@ pipeline {
             post {
                 always {
                     container('node') {
-                        sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
+                        fetch_codecov()
+                        sh "./codecov -c -F unit -K -C ${GIT_COMMIT}"
                     }
                 }
             }
