@@ -39,7 +39,7 @@ pipeline {
                     sh "yarn"
                     echo "Running yarn in all packages"
                     new File(PACKAGE_DIR).eachDir() { dir ->
-                        ( cd "$dir" && yarn )
+                       sh "( cd $dir && yarn )"
                     }
                 }
             }
