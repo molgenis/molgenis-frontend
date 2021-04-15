@@ -35,7 +35,7 @@ pipeline {
                 changeRequest()
             }
             steps {
-                container('node') {
+                container('node')
                     echo "Running yarn in all packages"
                     sh "( cd ${PACKAGE_DIR}/components-library && yarn )"
                     sh "( cd ${PACKAGE_DIR}/data-explorer && yarn )"
@@ -214,6 +214,7 @@ pipeline {
             }
             steps {
                 container('node') {
+                    sh "yarn"
                     sh "yarn lerna run build --since origin/master"
                     sh "yarn lerna run styleguide:build -- --since origin/master --scope @molgenis-ui/components-library"
                 }
