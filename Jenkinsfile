@@ -30,7 +30,7 @@ pipeline {
                 sh "git fetch --tags"
             }
         }
-        stage('Install packages [ pull request ]') {
+        stage('[PR] Install packages') {
             when {
                 changeRequest()
             }
@@ -52,11 +52,33 @@ pipeline {
                 }
             }
         }
-       stage('Build and Test: [ pull request ]') {
+        stage('[PR] Build and Test 1/3') {
             when {
                 changeRequest()
             }
             parallel {
+                stage('Components Library') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/components-library") {
+                                sh "yarn lint"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Data Explorer 2') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/data-explorer") {
+                                sh "yarn lint"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
                 stage('App Manager') {
                     steps {
                         container('node') {
@@ -77,6 +99,13 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage('[PR] Build and Test 2/3') {
+            when {
+                changeRequest()
+            }
+            parallel {
                 stage('Legacy Lib') {
                     steps {
                         container('node') {
@@ -116,6 +145,13 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage('[PR] Build and Test 3/3') {
+            when {
+                changeRequest()
+            }
+            parallel {
                 stage('Scripts') {
                     steps {
                         container('node') {
@@ -158,29 +194,7 @@ pipeline {
                 }
             }
         }
-        stage('Components Library') {
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/components-library") {
-                        sh "yarn lint"
-                        sh "yarn build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('Data Explorer 2') {
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/data-explorer") {
-                        sh "yarn lint"
-                        sh "yarn build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('Quality checks') {
+        stage('[PR] Quality checks') {
             when {
                 changeRequest()
             }
@@ -203,7 +217,7 @@ pipeline {
                 }
             }
         }
-        stage('Build container serving the artifacts [ PR ]') {
+        stage('[PR] Build container serving the artifacts') {
             when {
                 changeRequest()
             }
@@ -221,7 +235,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy preview [ PR ]') {
+        stage('[PR] Deploy preview') {
             when {
                 changeRequest()
             }
