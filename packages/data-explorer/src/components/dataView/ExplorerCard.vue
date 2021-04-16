@@ -9,7 +9,11 @@
           :record="dataContents"
         >
           <template #shopping-button>
-            <shopping-button v-if="isShop" :id="dataId" :is-selected="isSelected" />
+            <shopping-button
+              v-if="isShop" :id="dataId"
+              :is-selected="isSelected"
+              class="float-right"
+            />
           </template>
         </custom-card-content>
         <default-card-content
@@ -25,7 +29,11 @@
           @expandDefaultCard="handleDefaultCardExpand"
         >
           <template #shopping-button>
-            <shopping-button v-if="isShop" :id="dataId" :is-selected="isSelected" />
+            <shopping-button
+              v-if="isShop" :id="dataId"
+              :is-selected="isSelected"
+              class="float-right"
+            />
           </template>
         </default-card-content>
       </slot>

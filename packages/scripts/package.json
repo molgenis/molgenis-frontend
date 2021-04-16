@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/scripts",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "license": "LGPL-3.0",
   "publishConfig": {
     "access": "public"
@@ -24,7 +24,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.5",
     "@molgenis/molgenis-api-client": "^3.1.0",
     "@molgenis/molgenis-i18n-js": "^0.1.1",
-    "@molgenis/molgenis-ui-form": "^5.3.0",
+    "@molgenis/molgenis-ui-form": "^5.3.1",
     "vue": "^2.6.8",
     "vue-router": "^3.0.2",
     "vuex": "^3.1.0"

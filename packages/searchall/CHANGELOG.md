@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/searchall@0.1.6...@molgenis-ui/searchall@0.1.7) (2021-04-14)
+
+
+### Bug Fixes
+
+* **searchall:** escape data explorer link ([#590](https://github.com/molgenis/molgenis-frontend/issues/590)) ([6cc46de](https://github.com/molgenis/molgenis-frontend/commit/6cc46de50dd66aeabe403b72b557df0f591f4b9b)), closes [#588](https://github.com/molgenis/molgenis-frontend/issues/588)
+
+
+
+
+
 ## [0.1.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/searchall@0.1.5...@molgenis-ui/searchall@0.1.6) (2021-02-25)
 
 

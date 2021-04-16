@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/questionnaires",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "license": "LGPL-3.0",
   "description": "Frontend code for the molgenis-questionnaire module",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
@@ -24,7 +24,7 @@
   "dependencies": {
     "@molgenis/molgenis-api-client": "^2.1.2",
     "@molgenis/molgenis-i18n-js": "^0.1.1",
-    "@molgenis/molgenis-ui-form": "^5.3.0",
+    "@molgenis/molgenis-ui-form": "^5.3.1",
     "font-awesome": "^4.7.0",
     "moment": "^2.20.1",
     "pdfmake": "^0.1.36",

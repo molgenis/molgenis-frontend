@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.4.4...@molgenis-ui/components-library@2.4.5) (2021-04-08)
+
+**Note:** Version bump only for package @molgenis-ui/components-library
+
+
+
+
+
 ## [2.4.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.4.3...@molgenis-ui/components-library@2.4.4) (2021-03-25)
 
 

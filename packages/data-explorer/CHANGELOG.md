@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.8.2...@molgenis-ui/data-explorer@3.9.0) (2021-04-15)
+
+
+### Features
+
+* upgrade molgenis-ui-form to 5.3.1 ([96f25a6](https://github.com/molgenis/molgenis-frontend/commit/96f25a6de1ae63c042ea91deba09477655e620f6))
+
+
+
+
+
+## [3.8.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.8.1...@molgenis-ui/data-explorer@3.8.2) (2021-04-09)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [3.8.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.8.0...@molgenis-ui/data-explorer@3.8.1) (2021-04-08)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
 # [3.8.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.7.9...@molgenis-ui/data-explorer@3.8.0) (2021-03-25)
 
 
