@@ -8,6 +8,7 @@ pipeline {
         REPOSITORY = 'molgenis/molgenis-frontend'
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
         npm_config_registry = "https://registry.npmjs.org"
+        PACKAGE_DIR = "${env.WORKSPACE}/packages"
     }
     stages {
         stage('Prepare') {
@@ -25,41 +26,199 @@ pipeline {
                         env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
                     }
                 }
-                sh "git remote set-url origin https://${GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
+                sh "git remote set-url origin https://$GITHUB_TOKEN@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
             }
         }
-        stage('Install and test: [ pull request ]') {
+        stage('[PR] Install packages') {
             when {
                 changeRequest()
             }
             steps {
                 container('node') {
-                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}" // For lerna
-                    sh "yarn install"
-                    sh "yarn lerna bootstrap"
-                    sh "yarn lerna run lint --scope @molgenis-ui/components-library"
-                    sh "yarn lerna run lint --scope @molgenis-ui/data-explorer"
-                    sh "yarn lerna bootstrap --scope @molgenis-ui/components-library"
-                    sh "yarn lerna run build --scope @molgenis-ui/components-library"
-                    sh "yarn lerna run unit --since origin/master"
-                }
-                container('sonar') {
-                    // Fetch the target branch, sonar likes to take a look at it
-                    sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
-                    sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                    echo "Running yarn in all packages"
+                    sh "( cd ${PACKAGE_DIR}/components-library && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/data-explorer && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/app-manager && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/core-ui && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/legacy-lib && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/metadata-manager && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/one-click-importer && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/questionnaires && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/scripts && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/searchall && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/security && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/settings && yarn )"
                 }
             }
-            post {
-                always {
-                    container('node') {
-                        fetch_codecov()
-                        sh "./codecov -c -F unit -K -C ${GIT_COMMIT}"
+        }
+        stage('[PR] Build and Test 1/3') {
+            when {
+                changeRequest()
+            }
+            parallel {
+                stage('Components Library') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/components-library") {
+                                sh "yarn lint"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Data Explorer 2') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/data-explorer") {
+                                sh "yarn lint"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
                     }
                 }
             }
         }
-        stage('Build container serving the artifacts [ PR ]') {
+        stage('[PR] Build and Test 2/3') {
+            when {
+                changeRequest()
+            }
+            parallel {
+                stage('App Manager') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/app-manager") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Legacy Lib') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/legacy-lib") {
+                                sh "yarn build"
+                            }
+                        }
+                    }
+                }
+                stage('Metadata Manager') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/metadata-manager") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('One Click Importer') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/one-click-importer") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Questionnaires') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/questionnaires") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test 3/3') {
+            when {
+                changeRequest()
+            }
+            parallel {
+                stage('Core UI') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/core-ui") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Scripts') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/scripts") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Search All') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/searchall") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Security') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/security") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Settings') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/settings") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('[PR] Quality checks') {
+            when {
+                changeRequest()
+            }
+            parallel {
+                stage('Sonar Cube') {
+                    steps {
+                        container('sonar') {
+                            // Fetch the target branch, sonar likes to take a look at it
+                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                            sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                        }
+                    }
+                }
+                stage('Codecov') {
+                    steps {
+                        container('node') {
+                            fetch_codecov()
+                            sh "./codecov -c -F unit -K -C ${GIT_COMMIT}"
+                        }
+                    }
+                }
+            }
+        }
+        stage('[PR] Build container serving the artifacts') {
             when {
                 changeRequest()
             }
@@ -68,10 +227,6 @@ pipeline {
                 DOCKER_CONFIG="/root/.docker"
             }
             steps {
-                container('node') {
-                    sh "yarn lerna run build --since origin/master"
-                    sh "yarn lerna run styleguide:build -- --since origin/master --scope @molgenis-ui/components-library"
-                }
                 container (name: 'kaniko', shell: '/busybox/sh') {
                     sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
                     sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
@@ -81,7 +236,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy preview [ PR ]') {
+        stage('[PR] Deploy preview') {
             when {
                 changeRequest()
             }
