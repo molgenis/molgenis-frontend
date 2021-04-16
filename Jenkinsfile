@@ -57,29 +57,6 @@ pipeline {
                 changeRequest()
             }
             parallel {
-                stage('Components Library') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/components-library") {
-                                sh "yarn lint"
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                    
-                }
-                stage('Data Explorer 2') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/data-explorer") {
-                                sh "yarn lint"
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
                 stage('App Manager') {
                     steps {
                         container('node') {
@@ -181,28 +158,50 @@ pipeline {
                 }
             }
         }
+        stage('Components Library') {
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/components-library") {
+                        sh "yarn lint"
+                        sh "yarn build"
+                        sh "yarn unit"
+                    }
+                }
+            }
+        }
+        stage('Data Explorer 2') {
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/data-explorer") {
+                        sh "yarn lint"
+                        sh "yarn build"
+                        sh "yarn unit"
+                    }
+                }
+            }
+        }
         stage('Quality checks') {
             when {
                 changeRequest()
             }
-            // parallel {
-            //     stage('Sonar Cube') {
-            //         steps {
-            //             container('sonar') {
-            //                 // Fetch the target branch, sonar likes to take a look at it
-            //                 sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
-            //                 sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
-            //             }
-            //         }
-            //     }
-            //    stage('Codecov') {
+            parallel {
+                stage('Sonar Cube') {
+                    steps {
+                        container('sonar') {
+                            // Fetch the target branch, sonar likes to take a look at it
+                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                            sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                        }
+                    }
+                }
+                stage('Codecov') {
                     steps {
                         container('node') {
                             sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
                         }
                     }
-            //    }
-            // }
+                }
+            }
         }
         stage('Build container serving the artifacts [ PR ]') {
             when {
