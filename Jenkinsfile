@@ -79,6 +79,13 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage('[PR] Build and Test 2/3') {
+            when {
+                changeRequest()
+            }
+            parallel {
                 stage('App Manager') {
                     steps {
                         container('node') {
@@ -89,23 +96,6 @@ pipeline {
                         }
                     }
                 }
-                stage('Core UI') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/core-ui") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        stage('[PR] Build and Test 2/3') {
-            when {
-                changeRequest()
-            }
-            parallel {
                 stage('Legacy Lib') {
                     steps {
                         container('node') {
@@ -152,6 +142,16 @@ pipeline {
                 changeRequest()
             }
             parallel {
+                stage('Core UI') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/core-ui") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
                 stage('Scripts') {
                     steps {
                         container('node') {
