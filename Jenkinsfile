@@ -195,13 +195,13 @@ pipeline {
             //             }
             //         }
             //     }
-                stage('Codecov') {
+            //    stage('Codecov') {
                     steps {
                         container('node') {
                             sh "curl -s https://codecov.io/bash | bash -s - -c -F unit -K -C ${GIT_COMMIT}"
                         }
                     }
-                }
+            //    }
             // }
         }
         stage('Build container serving the artifacts [ PR ]') {
