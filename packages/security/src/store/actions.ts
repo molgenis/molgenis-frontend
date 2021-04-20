@@ -10,6 +10,9 @@ import { AddVOGroupMemberCommand } from '@/types/AddVOGroupMemberCommand'
 import { getVOGroupID } from './helpers'
 import { VOGroup } from '@/types/VOGroup'
 import { SecurityModel } from '@/types/SecurityModel'
+import { Member } from '@/types/Member'
+import { GroupRole } from '@/types/GroupRole'
+import { User } from '@/types/User'
 
 const SECURITY_API_ROUTE = '/api/identities'
 const SECURITY_API_VERSION = ''
@@ -17,7 +20,7 @@ const GROUP_ENDPOINT = SECURITY_API_ROUTE + SECURITY_API_VERSION + '/group'
 const TEMP_USER_ENDPOINT = SECURITY_API_ROUTE + SECURITY_API_VERSION + '/user'
 const TEMP_VO_GROUP_ENDPOINT = SECURITY_API_ROUTE + SECURITY_API_VERSION + '/vo-group'
 
-const toGroupMember = (response: { user: { id: string; username: string }; role: { roleName: string; roleLabel: string } }): GroupMember => {
+const toGroupMember = (response: { user: User; role: GroupRole }): GroupMember => {
   return {
     userId: response.user.id,
     username: response.user.username,
@@ -26,7 +29,7 @@ const toGroupMember = (response: { user: { id: string; username: string }; role:
   }
 }
 
-const toVOGroupMember = (response: { VOGroup: { id: string; name: string }; role: { roleName: string; roleLabel: string } }): VOGroupMember => {
+const toVOGroupMember = (response: { VOGroup: VOGroup; role: GroupRole }): VOGroupMember => {
   return {
     groupId: response.VOGroup.id,
     groupName: response.VOGroup.name,
@@ -92,7 +95,7 @@ const actions = {
 
   'fetchGroupMembers' ({ commit }: { commit: Function }, groupName: string) {
     const url = GROUP_ENDPOINT + '/' + encodeURIComponent(groupName) + '/member'
-    return api.get(url).then((response: { user: { id: string; username: string }; role: { roleName: string; roleLabel: string } }[]) => {
+    return api.get(url).then((response: { user: User; role: GroupRole }[]) => {
       const groupMembers = response.map(toGroupMember)
       commit('setGroupMembers', { groupName, groupMembers })
     }, (response: { errors: any[] }) => {
@@ -102,7 +105,7 @@ const actions = {
 
   'fetchVOGroupMembers' ({ commit }: { commit: Function }, groupName: string) {
     const url = GROUP_ENDPOINT + '/' + encodeURIComponent(groupName) + '/vo-group'
-    return api.get(url).then((response: { VOGroup: { id: string; name: string }; role: { roleName: string; roleLabel: string } }[]) => {
+    return api.get(url).then((response: { VOGroup: VOGroup; role: GroupRole }[]) => {
       const voGroupMembers = response.map(toVOGroupMember).sort((a, b) => a.groupName.localeCompare(b.groupName))
       commit('setVOGroupMembers', { groupName, voGroupMembers })
     }, (response: { errors: any[] }) => {
@@ -138,7 +141,7 @@ const actions = {
     })
   },
 
-  'addMember' ({ commit, state }: { commit: Function; state: { voGroups: VOGroup[] | null} }, { groupName, type, name, roleName }: {groupName: string; type: 'member'|'vo-group'; name: string; roleName: string}) {
+  'addMember' ({ commit, state }: { commit: Function; state: { voGroups: VOGroup[] | null} }, { groupName, type, name, roleName }: Member) {
     let payload: {body: string}
     if (type === 'member') {
       const command: AddMemberCommand = {
