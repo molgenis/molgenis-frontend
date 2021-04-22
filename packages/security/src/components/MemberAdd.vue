@@ -30,7 +30,8 @@
         <form>
 
           <div class="form-group">
-            <label for="memberSelect">{{ 'security-ui-membership-attribute-user' | i18n }}</label>
+            <label for="memberSelect" v-if="!isVOGroup">{{ 'security-ui-membership-attribute-user' | i18n }}</label>
+            <label for="memberSelect" v-else>{{ 'security-ui-membership-attribute-vo-group' | i18n }}</label>
             <select id="memberSelect" v-model="name" class="form-control" :disabled="candidates.length === 0">
               <option v-if="candidates.length > 0" value="">- {{ emptyCandidateLabel }} -
               </option>
