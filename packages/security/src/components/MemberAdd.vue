@@ -61,7 +61,8 @@
             type="submit"
             @click.prevent="onSubmit"
             :disabled="!name || !roleName">
-            {{ 'security-ui-btn-add-member' | i18n }}
+            <span v-if="!isVOGroup">{{ 'security-ui-btn-add-member' | i18n }}</span>
+            <span v-else>{{'security-ui-group-btn-add-group' | i18n}}</span>
           </button>
 
           <button
@@ -111,6 +112,9 @@ export default {
       'users',
       'groupMembers'
     ]),
+    isVOGroup () {
+      return this.type === 'vo-group'
+    },
     noCandidatesLabel () {
       return this.type === 'member'
         ? this.$t('security-ui-no-available-users')

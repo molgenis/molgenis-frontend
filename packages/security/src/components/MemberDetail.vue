@@ -28,7 +28,8 @@
 
     <div class="row mb-3  ">
       <div class="col">
-        <h1>{{'security-ui-member-details-header' | i18n}}</h1>
+        <h1 v-if="!isVOGroup">{{'security-ui-member-details-header' | i18n}}</h1>
+        <h1 v-else>{{'security-ui-vo-group-details-header' | i18n }}</h1>
       </div>
     </div>
 
