@@ -20,7 +20,7 @@
 
     <div class="row mb-3  ">
       <div class="col">
-        <h1>{{ 'security-ui-add-member-title' | i18n }}</h1>
+        <h1 v-if="!isVOGroup">{{ 'security-ui-add-member-title' | i18n }}</h1>
         <h1 v-else>{{'security-ui-vo-group-title' | i18n }}</h1>
       </div>
     </div>
