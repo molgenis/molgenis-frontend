@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.4.5...@molgenis-ui/security@0.5.0) (2021-04-22)
+
+
+### Features
+
+* **security:** manage VO Group membership ([#564](https://github.com/molgenis/molgenis-frontend/issues/564)) ([64d374a](https://github.com/molgenis/molgenis-frontend/commit/64d374aa748442beeee6bf5f8185b8332c880ebb))
+
+
+
+
+
 ## [0.4.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/security@0.4.4...@molgenis-ui/security@0.4.5) (2021-03-11)
 
 
