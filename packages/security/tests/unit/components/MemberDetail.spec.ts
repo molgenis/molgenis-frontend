@@ -64,6 +64,8 @@ describe('MemberDetail component', () => {
   const state: any = {
     loginUser: {},
     groups: [],
+    voGroups: [],
+    voGroupMembers: {},
     groupMembers: {},
     groupRoles: {},
     groupPermissions: groupPermissions,
@@ -72,6 +74,8 @@ describe('MemberDetail component', () => {
   }
 
   const actions: any = {
+    tempFetchVOGroups: jest.fn(),
+    fetchVOGroupMembers: jest.fn(),
     fetchGroupMembers: jest.fn(),
     fetchGroupRoles: jest.fn(),
     fetchGroupPermissions: jest.fn(),
@@ -92,7 +96,8 @@ describe('MemberDetail component', () => {
   describe('created with empty store', () => {
     const propsData = {
       groupName: 'group1',
-      memberName: 'member1'
+      memberName: 'member1',
+      type: 'member'
     }
 
     beforeEach(() => {
@@ -121,7 +126,8 @@ describe('MemberDetail component', () => {
   describe('created with filled up store', () => {
     const propsData = {
       groupName: 'group1',
-      memberName: 'member1'
+      memberName: 'member1',
+      type: 'member'
     }
 
     beforeEach(() => {
@@ -145,7 +151,8 @@ describe('MemberDetail component', () => {
     let wrapper: any
     const propsData = {
       groupName: 'group1',
-      memberName: 'ans'
+      memberName: 'ans',
+      type: 'member'
     }
 
     beforeEach(() => {
@@ -175,7 +182,8 @@ describe('MemberDetail component', () => {
     let wrapper: any
     const propsData = {
       groupName: 'group1',
-      memberName: 'ans'
+      memberName: 'ans',
+      type: 'member'
     }
 
     beforeEach(() => {

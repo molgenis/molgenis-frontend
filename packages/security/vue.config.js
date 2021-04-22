@@ -25,7 +25,15 @@ module.exports = {
         target: target,
         keepOrigin: true
       },
-      '/plugin/security': { target }
+      '/plugin/security': { target },
+      '/themes': {
+        target: 'https://unpkg.com',
+        pathRewrite: { '^/themes': '/@molgenis/molgenis-theme/dist/themes' }
+      },
+      '/fonts': {
+        target: 'https://unpkg.com',
+        pathRewrite: { '^/fonts': '/@molgenis/molgenis-theme/fonts' }
+      }
     }
   },
   configureWebpack: config => {

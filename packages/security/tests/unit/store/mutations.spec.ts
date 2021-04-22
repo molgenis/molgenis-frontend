@@ -18,6 +18,21 @@ describe('mutations', () => {
       expect(state.groups).toEqual(payload)
     })
   })
+  describe('setVOGroups', () => {
+    it('should set a list of VO groups in the store', () => {
+      const state: any = {
+        voGroups: []
+      }
+
+      const payload: any = [
+        { name: 'group1', id: 'id1' }
+      ]
+
+      mutations.setVOGroups(state, payload)
+
+      expect(state.voGroups).toEqual(payload)
+    })
+  })
   describe('setUsers', () => {
     it('should set an list of users in the store', () => {
       const state: any = {
@@ -62,6 +77,33 @@ describe('mutations', () => {
       })
     })
   })
+
+  describe('setVOGroupMembers', () => {
+    const state: any = {
+      voGroupMembers: {}
+    }
+
+    const payload: any = {
+      groupName: 'my-group',
+      voGroupMembers: [
+        {
+          groupId: 'abc-123',
+          groupName: 'user1',
+          roleName: 'VIEWER',
+          roleLabel: 'Viewer'
+        }
+      ]
+    }
+
+    it('should set a list op VO group members in the groupsMembers map', (done) => {
+      mutations.setVOGroupMembers(state, payload)
+      Vue.nextTick(() => {
+        expect(state.voGroupMembers[payload.groupName]).toEqual(payload.voGroupMembers)
+        done()
+      })
+    })
+  })
+
   describe('setGroupRoles', () => {
     const state: any = {
       groupRoles: {}

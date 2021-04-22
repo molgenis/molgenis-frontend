@@ -18,7 +18,8 @@
                            class="text-capitalize">{{groupName}}
               </router-link>
             </li>
-            <li class="breadcrumb-item active text-capitalize" aria-current="page">{{memberName}}
+            <li class="breadcrumb-item active"
+              :class="{'text-capitalize': !isVOGroup}" aria-current="page">{{memberName}}
             </li>
           </ol>
         </nav>
@@ -27,14 +28,18 @@
 
     <div class="row mb-3  ">
       <div class="col">
-        <h1>{{'security-ui-member-details-header' | i18n}}</h1>
+        <h1 v-if="!isVOGroup">{{'security-ui-member-details-header' | i18n}}</h1>
+        <h1 v-else>{{'security-ui-vo-group-details-header' | i18n }}</h1>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6">
-        <h5 class="font-weight-light">{{'security-ui-membership-attribute-user' | i18n}}</h5>
-        <p v-if="member" class="pl-3 text-capitalize font-weight-bold">{{memberName}}</p>
+        <h5 class="font-weight-light" v-if="isVOGroup">{{'security-ui-membership-attribute-vo-group' | i18n}}</h5>
+        <h5 class="font-weight-light" v-else>{{'security-ui-membership-attribute-user' | i18n}}</h5>
+        <p v-if="member" class="pl-3 font-weight-bold" :class="{'text-capitalize': !isVOGroup}">
+          {{memberName}}
+        </p>
       </div>
     </div>
 
@@ -126,7 +131,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import Toast from '@/components/Toast.vue'
 
 export default {
@@ -135,6 +140,11 @@ export default {
     groupName: {
       type: String,
       required: true
+    },
+    type: {
+      type: String,
+      required: true,
+      validator: (val) => ['member', 'vo-group'].includes(val)
     },
     memberName: {
       type: String,
@@ -150,12 +160,20 @@ export default {
     }
   },
   computed: {
+    ...mapState(['voGroupMembers']),
     ...mapGetters([
       'groupRoles',
       'groupMembers',
       'groupPermissions'
     ]),
+    isVOGroup () {
+      return this.type === 'vo-group'
+    },
     member () {
+      if (this.isVOGroup) {
+        const groupMembers = this.voGroupMembers[this.groupName] || []
+        return groupMembers.find(m => m.groupName === this.memberName)
+      }
       const members = this.groupMembers[this.groupName] || []
       return members.find(m => m.username === this.memberName)
     },
@@ -183,7 +201,7 @@ export default {
     onRemoveMember () {
       this.isRemoving = !this.isRemoving
       this.$store.dispatch('removeMember',
-        { groupName: this.groupName, memberName: this.memberName })
+        { groupName: this.groupName, memberName: this.memberName, type: this.type })
         .then(() => {
           this.$router.push({ name: 'groupDetail', params: { name: this.groupName } })
         }, () => {
@@ -194,7 +212,7 @@ export default {
       this.isUpdating = !this.isUpdating
       const updateMemberCommand = { roleName: this.selectedRole }
       this.$store.dispatch('updateMember',
-        { groupName: this.groupName, memberName: this.memberName, updateMemberCommand })
+        { groupName: this.groupName, memberName: this.memberName, updateMemberCommand, type: this.type })
         .then(() => {
           this.$router.push({ name: 'groupDetail', params: { name: this.groupName } })
         }, () => {
@@ -203,8 +221,12 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('tempFetchVOGroups')
     if (!this.groupMembers[this.groupName]) {
       this.$store.dispatch('fetchGroupMembers', this.groupName)
+    }
+    if (!this.voGroupMembers[this.groupName]) {
+      this.$store.dispatch('fetchVOGroupMembers', this.groupName)
     }
     if (!this.groupRoles[this.groupName]) {
       this.$store.dispatch('fetchGroupRoles', this.groupName)

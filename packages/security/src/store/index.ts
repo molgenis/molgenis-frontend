@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import actions from '@/store/actions.ts'
-import getters from '@/store/getters.ts'
-import mutations from '@/store/mutations.ts'
+import actions from '@/store/actions'
+import getters from '@/store/getters'
+import mutations from '@/store/mutations'
 import { SecurityModel } from '@/types/SecurityModel'
 const uiContextModule = require('@molgenis/molgenis-ui-context').default
 
@@ -10,10 +10,12 @@ Vue.use(Vuex)
 
 const state: SecurityModel = {
   groups: [],
+  voGroupMembers: {},
   groupMembers: {},
   groupRoles: {},
   groupPermissions: {},
   users: [],
+  voGroups: null,
   toast: null,
   groupRights: { user: null, anonymous: null, roles: [] }
 }

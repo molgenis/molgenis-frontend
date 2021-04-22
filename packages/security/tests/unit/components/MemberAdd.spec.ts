@@ -1,9 +1,13 @@
 import MemberAdd from '@/components/MemberAdd.vue'
+import { VOGroupMember } from '@/types/VOGroupMember'
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Vuex from 'vuex'
 
 const $t = (key: string | number) => {
-  const translations = {}
+  const translations = {
+    'security-ui-no-available-users': 'No available users',
+    'security-ui-no-available-vo-groups': 'No available VO Groups'
+  }
   // @ts-ignore
   return translations[key]
 }
@@ -79,11 +83,37 @@ describe('MemberAdd component', () => {
     }
   ]
 
+  const voGroups = [
+    {
+      id: 'vo-1',
+      username: 'foo'
+    },
+    {
+      id: 'vo-2',
+      username: 'bar'
+    }
+  ]
+
+  const voGroupMembers: { group1: VOGroupMember[] } = {
+    group1: [
+      {
+        groupId: 'vo-1',
+        groupName: 'foo',
+        roleName: 'VIEWER',
+        roleLabel: 'Viewer'
+      }
+    ]
+  }
+
   describe('after created', () => {
     beforeEach(() => {
-      state = {}
+      state = {
+        voGroups,
+        voGroupMembers
+      }
 
       actions = {
+        tempFetchVOGroups: () => jest.fn(),
         tempFetchUsers: () => jest.fn(),
         fetchGroupRoles: () => jest.fn(),
         addMember: () => jest.fn()
@@ -104,39 +134,53 @@ describe('MemberAdd component', () => {
     })
 
     const stubs = ['router-link', 'router-view']
+    const propsData = {
+      groupName: 'group1',
+      type: 'member'
+    }
 
     it('should return the groupRoles via a getter', () => {
-      const wrapper = shallowMount(MemberAdd, { store, stubs, localVue })
+      const wrapper = shallowMount(MemberAdd, { store, stubs, localVue, propsData, mocks: { $t } })
       // @ts-ignore
       expect(wrapper.vm.groupRoles).toEqual(groupRoles)
     })
 
     it('should return the users via a getter', () => {
-      const wrapper = shallowMount(MemberAdd, { store, stubs, localVue })
+      const wrapper = shallowMount(MemberAdd, { store, stubs, localVue, propsData, mocks: { $t } })
       // @ts-ignore
       expect(wrapper.vm.users).toEqual(users)
     })
 
     it('should return the groupMembers via a getter', () => {
-      const wrapper = shallowMount(MemberAdd, { store, stubs, localVue })
+      const wrapper = shallowMount(MemberAdd, { store, stubs, localVue, propsData, mocks: { $t } })
       // @ts-ignore
       expect(wrapper.vm.groupMembers).toEqual(groupMembers)
+    })
+
+    it('should return the noCandidatesLabel via a getter', () => {
+      const wrapper = shallowMount(MemberAdd, { store, stubs, localVue, propsData, mocks: { $t } })
+      // @ts-ignore
+      expect(wrapper.vm.noCandidatesLabel).toEqual('No available users')
+    })
+
+    it('should return the noCandidatesLabel via a getter', () => {
+      const wrapper = shallowMount(MemberAdd, { store, stubs, localVue, propsData: { ...propsData, type: 'vo-group' }, mocks: { $t } })
+      // @ts-ignore
+      expect(wrapper.vm.noCandidatesLabel).toEqual('No available VO Groups')
     })
 
     describe('on add member', () => {
       it('should add a member', async (done) => {
         const wrapper = shallowMount(MemberAdd, {
-          propsData: {
-            groupName: 'group1'
-          },
-          mocks: { $router, $route },
+          propsData,
+          mocks: { $router, $route, $t },
           store,
           stubs,
           localVue
         })
 
         wrapper.setData({
-          username: 'user-3',
+          name: 'user-3',
           roleName: 'EDITOR',
           isAdding: false
         })

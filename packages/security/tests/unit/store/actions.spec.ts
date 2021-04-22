@@ -1,4 +1,6 @@
-import actions from '@/store/actions.ts'
+import actions from '@/store/actions'
+import { VOGroup } from '@/types/VOGroup'
+import { VOGroupMember } from '@/types/VOGroupMember'
 // @ts-ignore
 import api from '@molgenis/molgenis-api-client'
 
@@ -86,6 +88,86 @@ describe('actions', () => {
       }
       api.get.mockRejectedValueOnce(error)
       await actions.tempFetchUsers({ commit })
+      expect(commit).toBeCalledWith('setToast', { type: 'danger', message: 'Error when calling (backend)' })
+      done()
+    })
+  })
+
+  describe('tempFetchVOGroups', () => {
+    it('should fetch a list of all VO groups', async () => {
+      const voGroups: VOGroup[] = [
+        { id: 'id1', name: 'group-1' },
+        { id: 'id1', name: 'group-2' }
+      ]
+      const state = { voGroups: null }
+      api.get.mockResolvedValueOnce(voGroups)
+      await actions.tempFetchVOGroups({ commit, state })
+      expect(commit).toBeCalledWith('setVOGroups', voGroups)
+    })
+
+    it('should do nothing if groups are already present', async () => {
+      const state = { voGroups: [] }
+      await actions.tempFetchVOGroups({ commit, state })
+      expect(api.get).toHaveBeenCalledTimes(0)
+    })
+
+    it('should commit any errors to the store', async () => {
+      const error = {
+        errors: [{
+          message: 'Error when calling',
+          code: 'backend'
+        }]
+      }
+      const state = { voGroups: null }
+      api.get.mockRejectedValueOnce(error)
+      await actions.tempFetchVOGroups({ commit, state })
+      expect(commit).toBeCalledWith('setToast', { type: 'danger', message: 'Error when calling (backend)' })
+    })
+  })
+
+  describe('fetchVOGroupMembers', () => {
+    const groupName = 'my-group'
+
+    it('should fetch a list of groups roles for a given group and commit them to the store', async (done) => {
+      const members = [
+        {
+          VOGroup: { id: '123-abc', name: 'user1' },
+          role: { roleName: 'ADMIN', roleLabel: 'Admin' }
+        },
+        {
+          VOGroup: { id: '456-dfg', name: 'user2' },
+          role: { roleName: 'VIEWER', roleLabel: 'Viewer' }
+        }
+      ]
+
+      const voGroupMembers: VOGroupMember[] = [
+        {
+          groupId: members[0].VOGroup.id,
+          groupName: members[0].VOGroup.name,
+          roleName: members[0].role.roleName,
+          roleLabel: members[0].role.roleLabel
+        }, {
+          groupId: members[1].VOGroup.id,
+          groupName: members[1].VOGroup.name,
+          roleName: members[1].role.roleName,
+          roleLabel: members[1].role.roleLabel
+        }
+      ]
+      api.get.mockResolvedValueOnce(members)
+      await actions.fetchVOGroupMembers({ commit }, groupName)
+      expect(commit).toBeCalledWith('setVOGroupMembers', { groupName, voGroupMembers })
+      done()
+    })
+
+    it('should commit any errors to the store', async (done) => {
+      const error = {
+        errors: [{
+          message: 'Error when calling',
+          code: 'backend'
+        }]
+      }
+      api.get.mockRejectedValueOnce(error)
+      await actions.fetchVOGroupMembers({ commit }, 'error-group')
       expect(commit).toBeCalledWith('setToast', { type: 'danger', message: 'Error when calling (backend)' })
       done()
     })
@@ -205,17 +287,28 @@ describe('actions', () => {
 
   describe('addMember', () => {
     const groupName = 'my-group'
+    const state = {
+      voGroups: [{ id: 'id1', name: 'vo-group-1' }]
+    }
 
-    it('should add a member to the group and displays toast', async (done) => {
-      const addMemberCommand = { username: 'user1', roleName: 'VIEWER' }
+    it('should add a member to the group and display toast', async (done) => {
       api.post.mockResolvedValueOnce()
-      await actions.addMember({ commit }, { groupName, addMemberCommand })
+      await actions.addMember({ commit, state },
+        { groupName, name: 'user1', type: 'member', roleName: 'VIEWER' })
       expect(commit).toBeCalledWith('setToast', { type: 'success', message: 'Added member' })
       done()
     })
 
+    it('should add a VO group member to the group', async (done) => {
+      api.post.mockResolvedValueOnce()
+      await actions.addMember({ commit, state },
+        { groupName, name: 'vo-group-1', type: 'vo-group', roleName: 'VIEWER' })
+      expect(api.post).toBeCalledWith('/api/identities/group/my-group/vo-group',
+        { body: '{"roleName":"VIEWER","VOGroupID":"id1"}' })
+      done()
+    })
+
     it('should commit any errors to the store', async (done) => {
-      const addMemberCommand = { username: 'user1', roleName: 'ERROR-ROLE' }
       const error = {
         errors: [{
           message: 'Error when calling',
@@ -224,7 +317,8 @@ describe('actions', () => {
       }
       api.post.mockRejectedValueOnce(error)
       try {
-        await actions.addMember({ commit }, { groupName, addMemberCommand })
+        await actions.addMember({ commit, state },
+          { groupName, name: 'user1', type: 'member', roleName: 'ERROR-ROLE' })
       } catch {
       }
       expect(commit).toBeCalledWith('setToast', { type: 'danger', message: 'Error when calling (backend)' })
@@ -233,13 +327,23 @@ describe('actions', () => {
   })
 
   describe('removeMember', () => {
+    const state = {
+      voGroups: [{ id: 'id1', name: 'vo-group-1' }]
+    }
     const groupName = 'my-group'
     const memberName = 'user1'
 
-    it('should remove a member from the group and displays toast', async (done) => {
+    it('should remove a member from the group and display toast', async (done) => {
       api.delete_.mockResolvedValueOnce()
-      await actions.removeMember({ commit }, { groupName, memberName })
+      await actions.removeMember({ commit, state }, { groupName, memberName, type: 'member' })
       expect(commit).toBeCalledWith('setToast', { type: 'success', message: 'Member removed from group' })
+      done()
+    })
+
+    it('should remove a VO group member from the group', async (done) => {
+      api.delete_.mockResolvedValueOnce()
+      await actions.removeMember({ commit, state }, { groupName, memberName: 'vo-group-1', type: 'vo-group' })
+      expect(api.delete_).toBeCalledWith('/api/identities/group/my-group/vo-group/id1')
       done()
     })
 
@@ -252,7 +356,7 @@ describe('actions', () => {
       }
       api.delete_.mockRejectedValueOnce(error)
       try {
-        await actions.removeMember({ commit }, { groupName, memberName })
+        await actions.removeMember({ commit, state }, { groupName, memberName, type: 'member' })
       } catch {
       }
       expect(commit).toBeCalledWith('setToast', { type: 'danger', message: 'Error when calling (backend)' })
@@ -263,12 +367,14 @@ describe('actions', () => {
   describe('updateMember', () => {
     const groupName = 'my-group'
     const memberName = 'user1'
-
+    const state = {
+      voGroups: []
+    }
     const updateMemberCommand = { roleName: 'NEW-ROLE' }
 
     it('should updateMember a member from the group and displays toast', async (done) => {
       api.put.mockResolvedValueOnce()
-      await actions.updateMember({ commit }, { groupName, memberName, updateMemberCommand })
+      await actions.updateMember({ commit, state }, { groupName, memberName, type: 'member', updateMemberCommand })
       expect(commit).toBeCalledWith('setToast', { type: 'success', message: 'Member updated' })
       done()
     })
@@ -282,7 +388,7 @@ describe('actions', () => {
       }
       api.put.mockRejectedValueOnce(error)
       try {
-        await actions.updateMember({ commit }, { groupName, memberName, updateMemberCommand })
+        await actions.updateMember({ commit, state }, { groupName, memberName, type: 'member', updateMemberCommand })
       } catch {
       }
       expect(commit).toBeCalledWith('setToast', { type: 'danger', message: 'Error when calling (backend)' })
