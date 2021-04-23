@@ -4,7 +4,7 @@ import EditDetailTemplate from '@/views/EditDetailTemplate.vue'
 import MainView from './views/MainView.vue'
 import Navigator from '@/components/navigator/Navigator.vue'
 
-export const defaultRouteQuery:any = { page: 1, size: 20, hideSidebar: 'false', view: 'CardView' }
+export const defaultRouteQuery:any = { page: 1, size: 20, hideSidebar: 'false', view: 'TableView' }
 
 export const routes = [
   {
