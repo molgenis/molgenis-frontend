@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.9.0...@molgenis-ui/data-explorer@3.10.0) (2021-04-23)
+
+
+### Features
+
+* **data-explorer:** Default view is now TableView ([772b8e6](https://github.com/molgenis/molgenis-frontend/commit/772b8e68cd4f7ace09e95ab0ddefe10bd6cf0466))
+
+
+
+
+
 # [3.9.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.8.2...@molgenis-ui/data-explorer@3.9.0) (2021-04-15)
 
 
