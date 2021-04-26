@@ -2,13 +2,14 @@
   <div>
     <h1>Patient ID</h1>
     <validation-observer v-slot="formValidationContext">
-      <b-form>
+      <b-form @submit.prevent="submit">
         <validation-provider
           name="Patient ID"
           rules="required"
           v-slot="validationContext">
           <b-form-group
             label="Patient ID:"
+            description="The PID that should be pseudonymized"
             label-for="pid"
           >
             <b-form-input
@@ -75,11 +76,12 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </validation-provider>
-      </b-form>   
-      <pre v-if="getValidationState(formValidationContext)">
-        phonetic: {{ JSON.stringify(phonetic) }}
-        PSN: {{ psn }}
-      </pre>
+        <b-button
+          type="submit"
+          :enabled="getValidationState(formValidationContext)">
+          Submit
+        </b-button>
+      </b-form>
     </validation-observer>
   </div>
 </template>
@@ -94,8 +96,13 @@ import {LocalDate} from 'js-joda'
 import {required} from 'vee-validate/dist/rules'
 import eudex from 'talisman/phonetics/eudex'
 import crc32 from 'talisman/hash/crc32'
-import hmacSHA512 from 'crypto-js/hmac-sha512'
-import Hex from 'crypto-js/enc-hex'
+import {
+  SodiumPlus,
+  SodiumUtil,
+  getBackendObject,
+  CryptographyKey,
+  X25519PublicKey
+} from 'sodium-plus'
 
 function isEmpty(value) {
   if (value === null || value === undefined || value === '') {
@@ -133,29 +140,47 @@ export default {
     ValidationProvider
   },
   props: {
-    context: String
+    context: String,
+    ttp: String
   },
   data() {
     return {
+      sodium: null,
       pid: null,
       first: null,
       last: null,
       dob: null
     }
   },
-  computed: {
-    psn () {
-      return this.pid && hmacSHA512(this.context, this.pid).toString(Hex).substring(0, 8).toUpperCase()
-    },
-    phonetic () {
-      return {
+  methods: {
+    async submit() {
+      if (!this.sodium) {
+        const backend = getBackendObject('LibsodiumWrappers')
+        SodiumUtil.populateConstants(backend)
+        this.sodium = new SodiumPlus(await backend.init())
+      }
+      const key = CryptographyKey.from(this.context, 'hex')
+      const hashed = await this.sodium.crypto_shorthash(this.pid, key)
+      const psn = hashed.toString('hex').substring(0,8).toUpperCase()
+      const phonetic = {
         first: this.first && eudex(this.first),
         last: this.last && eudex(this.last),
         dob: this.dob && crc32(this.dob)
       }
-    }
-  },
-  methods: {
+      const registration = { psn, phonetic }
+      if (this.ttp) {
+        const publicKey = X25519PublicKey.from(this.ttp, 'hex')
+        registration.crypted = {
+          dob: await this.encrypt(this.dob, publicKey),
+          first: await this.encrypt(this.first, publicKey),
+          last: await this.encrypt(this.last, publicKey)
+        }
+      }
+      console.log(registration)
+    },
+    async encrypt (value, publicKey) {
+      return (await this.sodium.crypto_box_seal(value, publicKey)).toString('hex')
+    },
     getValidationState({ dirty, validated, valid = null }) {
       return dirty || validated ? valid : null
     },
@@ -172,6 +197,8 @@ Generation of Patient ID based on patient details
 
 ### Usage
 ```vue
-<PID context="secret"></PID>
+<PID
+  context="204f32b28314c223a752e21435c8a0e4"
+  ttp="204f32b28314c223a752e21435c8a0e4204f32b28314c223a752e21435c8a0e4"></PID>
 ```
 </docs>
