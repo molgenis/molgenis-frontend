@@ -11,6 +11,7 @@ import Pagination from './components/ui/Pagination.vue'
 import RangeFilter from './components/filters/RangeFilter.vue'
 import StringFilter from './components/filters/StringFilter.vue'
 import Toaster from './components/ui/Toaster.vue'
+import PID from './components/ui/PID.vue'
 
 export {
   ActiveFilters,
@@ -25,5 +26,6 @@ export {
   Pagination,
   RangeFilter,
   StringFilter,
-  Toaster
+  Toaster,
+  PID
 }
