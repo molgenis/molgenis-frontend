@@ -101,6 +101,16 @@
         </b-button>
       </b-form>
     </validation-observer>
+    <b-card
+      v-if="registration"
+      class="mt-3"
+      header-bg-variant="info"
+      header-text-variant="white"
+      :header="registration.psn">
+      <b-card-text>
+        Successfully registered pseudonym for context {{ registration.context }}.
+      </b-card-text>
+    </b-card>
   </div>
 </template>
 
@@ -163,7 +173,8 @@ export default {
       pid: null,
       first: null,
       last: null,
-      dob: null
+      dob: null,
+      registration: null
     }
   },
   computed: {
@@ -197,7 +208,7 @@ export default {
           last: await this.encrypt(this.last, publicKey)
         }
       }
-      console.log(registration)
+      this.registration = registration
     },
     async encrypt (value, publicKey) {
       return (await this.sodium.crypto_box_seal(value, publicKey)).toString('hex')
