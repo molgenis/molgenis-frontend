@@ -186,7 +186,8 @@ export default {
      * The contexts the patient can be registered in.
      */
     contexts: {
-      type: Array
+      type: Array[{name: String, ttp: String, key: String}],
+      validator: (contexts) => contexts.length > 0 
     }
   },
   data() {
@@ -251,7 +252,7 @@ export default {
 </script>
 
 <docs>
-Generation of Patient ID based on patient details
+Registration of patient details and generated
 
 ### Usage
 ```vue
