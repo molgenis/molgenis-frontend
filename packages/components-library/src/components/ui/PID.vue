@@ -4,11 +4,12 @@
     <validation-observer v-slot="formValidationContext">
       <b-form @submit.prevent="submit">
         <validation-provider
+          v-if="contexts.length > 1"
           name="Context"
           rules="required"
           v-slot="validationContext">
           <b-form-group
-            label="Select context:"
+            label="Context:"
             label-for="context"
           >
             <b-form-select
@@ -22,6 +23,16 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </validation-provider>
+        <b-form-group
+          v-else
+          label="Context:"
+          label-for="context"
+        >
+          <b-form-input
+            plaintext
+            :value="context.name"
+          ></b-form-input>
+        </b-form-group>
         <validation-provider
           name="Patient ID"
           rules="required"
@@ -170,10 +181,17 @@ export default {
     ValidationObserver,
     ValidationProvider
   },
-  props: ['contexts'],
+  props: {
+    /**
+     * The contexts the patient can be registered in.
+     */
+    contexts: {
+      type: Array
+    }
+  },
   data() {
     return {
-      contextIndex: null,
+      contextIndex: this.contexts.length == 1 ? 0 : null,
       sodium: null,
       pid: null,
       first: null,
@@ -214,7 +232,13 @@ export default {
         }
       }
       this.registration = registration
-      this.$emit('input', registration.psn)
+      /**
+       * Triggers when the patient has been registered
+       *
+       * @property {string} psn the pseudonym
+       * @property {string} context the name of the context
+       */
+      this.$emit('input', registration.psn, registration.context)
     },
     async encrypt (value, publicKey) {
       return (await this.sodium.crypto_box_seal(value, publicKey)).toString('hex')
@@ -242,12 +266,12 @@ const contexts = [
     ttp: "7b26cc4f22ac92c3b4a66efa39c401c24ba3554ace393e885db67fe33719d5b5"
   }
 ]
-let psn = null
+let registration = {}
 
 <PID
   :contexts="contexts"
-  @input="(value) => { psn = value }"></PID>
+  @input="(psn, context) => { registration = {psn, context} }"></PID>
 
-{{ psn }}
+<pre>{{ registration }}</pre>
 ```
 </docs>
