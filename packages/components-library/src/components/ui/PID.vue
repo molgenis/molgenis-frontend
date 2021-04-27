@@ -15,6 +15,7 @@
               v-model="contextIndex"
               :options="contextOptions"
               :state = getValidationState(validationContext)
+              :disabled = "registration"
             ></b-form-select>
             <b-form-invalid-feedback>
               {{ validationContext.errors[0] }}
@@ -34,6 +35,7 @@
               id="pid"
               v-model="pid"
               :state = getValidationState(validationContext)
+              :disabled = "registration"
             ></b-form-input>
             <b-form-invalid-feedback>
               {{ validationContext.errors[0] }}
@@ -52,6 +54,7 @@
               id="first"
               v-model="first"
               :state = getValidationState(validationContext)
+              :disabled = "registration"
             ></b-form-input>
             <b-form-invalid-feedback>
               {{ validationContext.errors[0] }}
@@ -70,6 +73,7 @@
               id="last"
               v-model="last"
               :state = getValidationState(validationContext)
+              :disabled = "registration"
             ></b-form-input>
             <b-form-invalid-feedback>
               {{ validationContext.errors[0] }}
@@ -88,6 +92,7 @@
               v-model="dob"
               placeholder="yyyy-mm-dd"
               :state = getValidationState(validationContext)
+              :disabled = "registration"
             ></b-form-input>
             <b-form-invalid-feedback>
               {{ validationContext.errors[0] }}
@@ -96,7 +101,7 @@
         </validation-provider>
         <b-button
           type="submit"
-          :enabled="getValidationState(formValidationContext)">
+          :disabled="registration || !getValidationState(formValidationContext)">
           Register
         </b-button>
       </b-form>
@@ -209,6 +214,7 @@ export default {
         }
       }
       this.registration = registration
+      this.$emit('input', registration.psn)
     },
     async encrypt (value, publicKey) {
       return (await this.sodium.crypto_box_seal(value, publicKey)).toString('hex')
@@ -236,7 +242,12 @@ const contexts = [
     ttp: "7b26cc4f22ac92c3b4a66efa39c401c24ba3554ace393e885db67fe33719d5b5"
   }
 ]
+let psn = null
 
-<PID :contexts="contexts"></PID>
+<PID
+  :contexts="contexts"
+  @input="(value) => { psn = value }"></PID>
+
+{{ psn }}
 ```
 </docs>
