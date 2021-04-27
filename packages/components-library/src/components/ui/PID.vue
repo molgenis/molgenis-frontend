@@ -1,8 +1,26 @@
 <template>
   <div>
-    <h1>Patient ID</h1>
+    <h1>Register Patient</h1>
     <validation-observer v-slot="formValidationContext">
       <b-form @submit.prevent="submit">
+        <validation-provider
+          name="Context"
+          rules="required"
+          v-slot="validationContext">
+          <b-form-group
+            label="Select context:"
+            label-for="context"
+          >
+            <b-form-select
+              v-model="contextIndex"
+              :options="contextOptions"
+              :state = getValidationState(validationContext)
+            ></b-form-select>
+            <b-form-invalid-feedback>
+              {{ validationContext.errors[0] }}
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </validation-provider>
         <validation-provider
           name="Patient ID"
           rules="required"
@@ -79,7 +97,7 @@
         <b-button
           type="submit"
           :enabled="getValidationState(formValidationContext)">
-          Submit
+          Register
         </b-button>
       </b-form>
     </validation-observer>
@@ -100,15 +118,16 @@ import X25519PublicKey from 'sodium-plus/lib/keytypes/x25519pk'
 import CryptographyKey from 'sodium-plus/lib/cryptography-key'
 import SodiumUtil from 'sodium-plus/lib/util'
 import backend from 'sodium-plus/lib/backend/libsodium-wrappers'
+import SodiumPlus from 'sodium-plus/lib/sodiumplus'
 
 function isEmpty(value) {
   if (value === null || value === undefined || value === '') {
-    return true;
+    return true
   }
   if (Array.isArray(value) && value.length === 0) {
-    return true;
+    return true
   }
-  return false;
+  return false
 }
 
 extend('required', {
@@ -136,12 +155,10 @@ export default {
     ValidationObserver,
     ValidationProvider
   },
-  props: {
-    context: String,
-    ttp: String
-  },
+  props: ['contexts'],
   data() {
     return {
+      contextIndex: null,
       sodium: null,
       pid: null,
       first: null,
@@ -149,13 +166,21 @@ export default {
       dob: null
     }
   },
+  computed: {
+    contextOptions() {
+      return this.contexts.map((context, index) => ({value: index, text: context.name}))
+    },
+    context() {
+      return this.contextIndex == null ? null : this.contexts[this.contextIndex]
+    },
+  },
   methods: {
     async submit() {
       if (!this.sodium) {
         SodiumUtil.populateConstants(backend)
         this.sodium = new SodiumPlus(await backend.init())
       }
-      const key = CryptographyKey.from(this.context, 'hex')
+      const key = CryptographyKey.from(this.context.key, 'hex')
       const hashed = await this.sodium.crypto_shorthash(this.pid, key)
       const psn = hashed.toString('hex').substring(0,8).toUpperCase()
       const phonetic = {
@@ -163,9 +188,9 @@ export default {
         last: this.last && eudex(this.last),
         dob: this.dob && crc32(this.dob)
       }
-      const registration = { psn, phonetic }
-      if (this.ttp) {
-        const publicKey = X25519PublicKey.from(this.ttp, 'hex')
+      const registration = { psn, phonetic, context: this.context.name }
+      if (this.context.ttp) {
+        const publicKey = X25519PublicKey.from(this.context.ttp, 'hex')
         registration.crypted = {
           dob: await this.encrypt(this.dob, publicKey),
           first: await this.encrypt(this.first, publicKey),
@@ -184,17 +209,23 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
-
 <docs>
 Generation of Patient ID based on patient details
 
 ### Usage
 ```vue
-<PID
-  context="204f32b28314c223a752e21435c8a0e4"
-  ttp="204f32b28314c223a752e21435c8a0e4204f32b28314c223a752e21435c8a0e4"></PID>
+const contexts = [
+  {
+    name: "Ithaca", 
+    key: "ccbb79d11efcbcab7a95e60914ae2749",
+    ttp: "f1a70d54c453c22693767eb6e8e91229e00e833e5eff14dc32a699f258a8f62e"
+  }, {
+    name: "Skin",
+    key: "8f28841f22a638135688d93ec6b6170d",
+    ttp: "7b26cc4f22ac92c3b4a66efa39c401c24ba3554ace393e885db67fe33719d5b5"
+  }
+]
+
+<PID :contexts="contexts"></PID>
 ```
 </docs>
