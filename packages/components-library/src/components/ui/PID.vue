@@ -96,13 +96,10 @@ import {LocalDate} from 'js-joda'
 import {required} from 'vee-validate/dist/rules'
 import eudex from 'talisman/phonetics/eudex'
 import crc32 from 'talisman/hash/crc32'
-import {
-  SodiumPlus,
-  SodiumUtil,
-  getBackendObject,
-  CryptographyKey,
-  X25519PublicKey
-} from 'sodium-plus'
+import X25519PublicKey from 'sodium-plus/lib/keytypes/x25519pk'
+import CryptographyKey from 'sodium-plus/lib/cryptography-key'
+import SodiumUtil from 'sodium-plus/lib/util'
+import backend from 'sodium-plus/lib/backend/libsodium-wrappers'
 
 function isEmpty(value) {
   if (value === null || value === undefined || value === '') {
@@ -155,7 +152,6 @@ export default {
   methods: {
     async submit() {
       if (!this.sodium) {
-        const backend = getBackendObject('LibsodiumWrappers')
         SodiumUtil.populateConstants(backend)
         this.sodium = new SodiumPlus(await backend.init())
       }
