@@ -10,7 +10,10 @@ import {
   faExclamationCircle,
   faFilter,
   faSpinner,
-  faTimes
+  faTimes,
+  faSort,
+  faSortAlphaDown,
+  faSortAlphaUp
 } from '@fortawesome/free-solid-svg-icons'
 
 // @ts-ignore
@@ -29,7 +32,10 @@ export default function (BootstrapVue: any, Vue: any) {
     faExclamationCircle,
     faFilter,
     faSpinner,
-    faTimes
+    faTimes,
+    faSort,
+    faSortAlphaDown,
+    faSortAlphaUp
   )
 
   Vue.use(BootstrapVue)

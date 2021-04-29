@@ -1,7 +1,7 @@
 <template>
   <tr :class="{'row-selected': isSelected}">
     <th v-if="showSelected" scope="col">
-      <shopping-button :id="id" :is-selected="isSelected" class="float-right" />
+      <slot name="shopping-button"></slot>
     </th>
     <th
       v-else :id="'table-row-'+id"
@@ -53,12 +53,11 @@
 </template>
 
 <script>
-import DataDisplayCell from '@/components/dataDisplayTypes/DataDisplayCell'
-import ShoppingButton from '../utils/ShoppingButton'
+import DataDisplayCell from '@/components/table/dataDisplayTypes/DataDisplayCell'
 
 export default {
   name: 'TableRow',
-  components: { ShoppingButton, DataDisplayCell },
+  components: { DataDisplayCell },
   props: {
     id: {
       type: String,
@@ -165,3 +164,37 @@ export default {
   }
 
 </style>
+
+<docs>
+  Builds a header for a table. The column will have sorting options
+
+
+  ### Usage
+  ```jsx
+  const entities = [
+    { name: 'id' }, { name: 'name' }, { name: 'age' }, { name: 'job' }, { name: 'email' }
+  ]
+  var sorting = "name"
+  var isReversed = false
+
+  <table>
+    <TableRow
+        v-for="(entity, index) in entities"
+        :id="getEntityId(entity)"
+        :key="index"
+        :row-index="index"
+        :table-name="MyEntity"
+        :row-data="entity"
+        :visible-columns="visibleColumns"
+        :is-selected="false"
+        :is-shop="true"
+        :is-editable="true"
+        :show-selected="true"
+        @toggleSelectedItemsHandler="() => {}"
+    ></TableRow>
+  </table>
+  <hr/>
+  <div>sorting: {{sorting}}</div>
+  <div>isReversed: {{isReversed}}</div>
+  ```
+</docs>

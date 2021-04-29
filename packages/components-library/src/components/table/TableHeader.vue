@@ -7,7 +7,7 @@
         class="header-column"
         scope="col"
       >
-        <a class="header-label" @click="$emit('sort', column.name)">{{ column.name }}
+        <a class="header-label" @click="sortEvent(column.name)">{{ column.name }}
           <font-awesome-icon
             v-if="column.name !== sortColumnName"
             class="mr-1 sort-icon" icon="sort"
@@ -30,24 +30,39 @@
 export default {
   name: 'TableHeader',
   props: {
+    /**
+     * The list of columns to display. 
+     * type: [ { name: 'name of column' }, ... ]
+     */
     visibleColumns: {
       type: Array,
       required: true
     },
-    isShop: {
-      type: Boolean,
-      required: false,
-      default: () => false
-    },
+    /**
+     * The current column that is being used for sorting
+     */
     sortColumnName: {
       type: String,
       required: false,
       default: () => null
     },
+    /**
+     * Sorting the current column but in reversed order
+     */
     isSortOrderReversed: {
       type: Boolean,
       required: false,
       default: () => false
+    }
+  },
+  methods:{
+    sortEvent(name) {
+      /**
+       * Emits the name of to column the user wishes to sort
+       * @property {String} sort - name of column to sort
+       * @event sort
+       */
+      this.$emit('sort', name)
     }
   }
 }
@@ -122,3 +137,32 @@ export default {
     cursor: pointer;
   }
 </style>
+
+<docs>
+  Builds a header for a table. The column will have sorting options
+
+
+  ### Usage
+  ```jsx
+  const columns = [
+    { name: 'id' }, { name: 'name' }, { name: 'age' }, { name: 'job' }, { name: 'email' }
+  ]
+  var sorting = "name"
+  var isReversed = false
+
+  <table>
+    <TableHeader
+      v-bind:visibleColumns="columns"
+      v-bind:sortColumnName="sorting"
+      v-bind:isSortOrderReversed="isReversed"
+      v-on:sort="(newValue) => {
+        isReversed =  ( sorting === newValue && isReversed == false )
+        sorting = newValue
+      }">
+    </TableHeader>
+  </table>
+  <hr/>
+  <div>sorting: {{sorting}}</div>
+  <div>isReversed: {{isReversed}}</div>
+  ```
+</docs>
