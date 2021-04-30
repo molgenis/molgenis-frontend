@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.2.0...@molgenis-ui/data-row-edit@5.3.0) (2021-04-30)
+
+
+### Features
+
+* **data-explorer, navigator:** [#7889](https://github.com/molgenis/molgenis-frontend/issues/7889) merged data-row-edit in de2 ([#547](https://github.com/molgenis/molgenis-frontend/issues/547)) ([b395814](https://github.com/molgenis/molgenis-frontend/commit/b3958147a0fbe2c6705fc8dacaaa758f3393a6e6))
+
+
+
+
+
 # [5.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.1.3...@molgenis-ui/data-row-edit@5.2.0) (2021-02-26)
 
 
