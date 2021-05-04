@@ -53,6 +53,7 @@ export default {
         .map(a => ({
           id: a.id,
           name: a.name,
+          label: a.label,
           type: a.type,
           refEntityType: a.refEntityType,
           expression: a.expression

@@ -1,4 +1,5 @@
 <template>
+  <!-- Used for rendering inside <component :is > -->
   <div
     v-if="tableData && tableData.items.length > 0"
     class="entity-table container-fluid"
