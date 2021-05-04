@@ -8,6 +8,7 @@ describe('SelectLayoutView.vue', () => {
   localVue.use(Vuex)
   let store: any
   let state: any
+  let getters: any
 
   beforeEach(() => {
     state = {
@@ -20,7 +21,11 @@ describe('SelectLayoutView.vue', () => {
           { data: { id: '3' } }
         ] }
     }
-    store = new Vuex.Store({ modules: { explorer: { mutations, namespaced: true, state } } })
+
+    getters = {
+      hasNoResults: jest.fn()
+    }
+    store = new Vuex.Store({ modules: { explorer: { mutations, namespaced: true, state, getters } } })
   })
 
   it('exists', () => {

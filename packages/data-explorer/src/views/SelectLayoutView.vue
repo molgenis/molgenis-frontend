@@ -5,7 +5,7 @@
     </div>
     <component
       :is="dataDisplayLayout"
-      v-else
+      v-else-if="tableData"
       :entities-to-show="tableData.items"
     />
   </div>
