@@ -122,12 +122,14 @@ describe('getters', () => {
       loading: true,
       tableData: null,
     }
-    it('should return false if application is loading or has no metadata', () => {
+    it('should return false if application is loading or has no tableData', () => {
       expect(getters.hasNoResults(state)).toEqual(false)
     })
-    it('should return a boolean when tableData is not null', () => {
-      state.tableData = { items: [] };
-      expect(getters.hasNoResults(state)).toEqual(false)
+    it('should return true when tableData is not null and has no items', () => {
+      state.tableData = { items: [] }
+      state.loading = false
+
+      expect(getters.hasNoResults(state)).toEqual(true)
     })
   })
 
