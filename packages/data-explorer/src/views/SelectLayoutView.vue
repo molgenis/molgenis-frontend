@@ -1,11 +1,11 @@
 <template>
   <div class="entity-table">
-    <div v-if="!loading && (!tableMeta || !tableData || !tableData.items.length)" class="alert alert-warning">
+    <div v-if="hasNoResults" class="alert alert-warning">
       {{ $t('dataexplorer_empty_table') }}
     </div>
     <component
       :is="dataDisplayLayout"
-      v-else-if="!loading"
+      v-else
       :entities-to-show="tableData.items"
     />
   </div>
@@ -17,13 +17,14 @@ import TableView from './TableView'
 import ExplorerCard from '../components/dataView/ExplorerCard'
 import TableRow from '../components/dataView/TableRow'
 import TableHeader from '../components/dataView/TableHeader'
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'SelectLayoutView',
   components: { ExplorerCard, TableRow, TableHeader, CardView, TableView },
   computed: {
-    ...mapState('explorer', ['dataDisplayLayout', 'loading', 'tableMeta', 'tableData'])
+    ...mapState('explorer', ['dataDisplayLayout', 'tableData']),
+    ...mapGetters('explorer', ['hasNoResults'])
   }
 }
 </script>
