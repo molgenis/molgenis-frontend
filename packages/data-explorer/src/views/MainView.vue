@@ -38,6 +38,7 @@
 
       <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
         <active-filters
+          v-if="Object.keys(activeFilterSelections).length"
           class="pb-2" :value="activeFilterSelections"
           :filters="filterDefinitions"
           @input="saveFilterState"
