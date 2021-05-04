@@ -172,18 +172,28 @@ export default {
   ### Usage
   ```jsx
   const entities = [
-    { name: 'id' }, { name: 'name' }, { name: 'age' }, { name: 'job' }, { name: 'email' }
+    { id: '0', name: 'Max', age: '39', job: 'code monkey', email: 'yes' },
+    { id: '1', name: 'Monkey', age: '10', job: 'monkeying around', email: 'no' },
+    { id: '2', name: 'World', age: 'lots', job: 'receiving "hallo"', email: 'yes' }
+  ]
+
+  const visibleColumns = [
+    { id: '0', name: 'id', type: 'string', refEntityType: '', expression: '' },
+    { id: '1', name: 'name', type: 'string', refEntityType: '', expression: '' },
+    { id: '2', name: 'age', type: 'string', refEntityType: '', expression: '' },
+    { id: '3', name: 'job', type: 'string', refEntityType: '', expression: '' },
+    { id: '4', name: 'email', type: 'string', refEntityType: '', expression: '' },
   ]
   var sorting = "name"
   var isReversed = false
 
-  <table>
+  <table class="table table-bordered">
     <TableRow
         v-for="(entity, index) in entities"
-        :id="getEntityId(entity)"
+        id="0"
         :key="index"
         :row-index="index"
-        :table-name="MyEntity"
+        table-name="MyEntity"
         :row-data="entity"
         :visible-columns="visibleColumns"
         :is-selected="false"
