@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.2...@molgenis-ui/data-explorer@3.10.3) (2021-05-04)
+
+
+### Bug Fixes
+
+* **data-explorer:** update count after removing row ([df659aa](https://github.com/molgenis/molgenis-frontend/commit/df659aad1c5a886a2369657309f23f5203fc5fbd))
+
+
+
+
+
 ## [3.10.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.1...@molgenis-ui/data-explorer@3.10.2) (2021-05-04)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
