@@ -7,7 +7,8 @@
         class="header-column"
         scope="col"
       >
-        <a class="header-label" @click="$emit('sort', column.name)">{{ column.name }}
+        <a class="header-label" @click="$emit('sort', column.name)">
+          {{ column.label || column.name }}
           <font-awesome-icon
             v-if="column.name !== sortColumnName"
             class="mr-1 sort-icon" icon="sort"
