@@ -122,8 +122,13 @@ export default {
       commit('addToast', { message: 'cannot delete row from unknown table', type: 'danger' })
       return
     }
-    await dataRepository.deleteRow(state.tableName, payload.rowId)
-    commit('removeRow', { rowId: payload.rowId })
+
+    const result = await dataRepository.deleteRow(state.tableName, payload.rowId)
+    if (result.status === 204) {
+      // Substract 1 from the pagination display items
+      commit('substractTablePaginationCount', 1)
+      commit('removeRow', { rowId: payload.rowId })
+    }
   },
 
   downloadResources: async (store, resources) => {
