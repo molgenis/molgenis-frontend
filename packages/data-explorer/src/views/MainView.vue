@@ -37,7 +37,11 @@
       <filters-view class="mg-filter mr-2" :class="{'active': filters.hideSidebar}" />
 
       <div class="d-flex flex-column mr-2 h-100 overflow-control w-100">
-        <active-filters :value="activeFilterSelections" :filters="filterDefinitions" @input="saveFilterState" />
+        <active-filters
+          class="pb-2" :value="activeFilterSelections"
+          :filters="filterDefinitions"
+          @input="saveFilterState"
+        />
         <toolbar-view class="mb-2" />
 
         <div class="mg-data-view-container">

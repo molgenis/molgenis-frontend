@@ -1,6 +1,6 @@
 <template>
   <div class="entity-table">
-    <div v-if="hasNoResults" class="alert alert-warning">
+    <div v-if="hasNoResults" class="alert alert-warning mt-4">
       {{ $t('dataexplorer_empty_table') }}
     </div>
     <component
