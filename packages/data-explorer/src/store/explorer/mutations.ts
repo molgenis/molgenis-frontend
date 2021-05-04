@@ -166,5 +166,9 @@ export default {
   },
   setTablePermissions (state: ApplicationState, permissions: string []) {
     Vue.set(state, 'tablePermissions', permissions)
+  },
+  substractTablePaginationCount (state: ApplicationState, amount: number) {
+    state.tablePagination.count = Math.max(0, state.tablePagination.count - amount);
+
   }
 }

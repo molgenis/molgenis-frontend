@@ -258,7 +258,7 @@ jest.mock('@/repository/dataRepository', () => {
     getTableDataDeepReference: jest.fn(),
     getTableDataWithLabel: jest.fn(),
     getRowDataWithReferenceLabels: jest.fn(),
-    deleteRow: jest.fn()
+    deleteRow: jest.fn().mockReturnValue({ status: 204 })
   }
 })
 
