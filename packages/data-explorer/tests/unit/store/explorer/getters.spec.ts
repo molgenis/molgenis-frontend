@@ -117,6 +117,20 @@ describe('getters', () => {
     })
   })
 
+  describe('hasNoResults', () => {
+    const state: any = {
+      loading: true,
+      tableData: null,
+    }
+    it('should return false if application is loading or has no metadata', () => {
+      expect(getters.hasNoResults(state)).toEqual(false)
+    })
+    it('should return a boolean when tableData is not null', () => {
+      state.tableData = { items: [] };
+      expect(getters.hasNoResults(state)).toEqual(false)
+    })
+  })
+
   describe('tableIdAttributeName', () => {
     let state: any = {}
 
