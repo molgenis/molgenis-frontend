@@ -95,7 +95,6 @@ const withSpinner = (commit, promise) => {
 }
 
 function getEditorEntityType (commit: Function, entityTypeId: string) {
-  console.log('getEditorEntityType')
   withSpinner(commit,
     api.get('/plugin/metadata-manager/entityType/' + entityTypeId).then(
       response => {
