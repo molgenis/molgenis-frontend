@@ -73,8 +73,8 @@ export const toAttribute = (attribute: Object): EditorAttribute => {
     'descriptionI18n': attribute.descriptionI18n,
     'aggregatable': attribute.aggregatable,
     'enumOptions': attribute.enumOptions,
-    'rangeMin': attribute.minRange,
-    'rangeMax': attribute.maxRange,
+    'rangeMin': attribute.rangeMin,
+    'rangeMax': attribute.rangeMax,
     'readonly': attribute.readonly,
     'unique': attribute.unique,
     'tags': attribute.tags,
@@ -95,9 +95,11 @@ const withSpinner = (commit, promise) => {
 }
 
 function getEditorEntityType (commit: Function, entityTypeId: string) {
+  console.log('getEditorEntityType')
   withSpinner(commit,
     api.get('/plugin/metadata-manager/entityType/' + entityTypeId).then(
       response => {
+        console.log({ response })
         commit(SET_LANGUAGE_CODES, toLanguageCodes(response.languageCodes))
         commit(SET_EDITOR_ENTITY_TYPE, toEntityType(response.entityType))
       }))
