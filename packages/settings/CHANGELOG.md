@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.3.1...@molgenis-ui/settings@4.3.2) (2021-05-05)
+
+
+### Bug Fixes
+
+* **settings:** updated molgenis-ui-form ([c210f41](https://github.com/molgenis/molgenis-frontend/commit/c210f41ba379b5ba1d7efd1659731e306dbeb9fe))
+
+
+
+
+
 ## [4.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.3.0...@molgenis-ui/settings@4.3.1) (2021-04-30)
 
 

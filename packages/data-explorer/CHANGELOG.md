@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.3...@molgenis-ui/data-explorer@3.10.4) (2021-05-05)
+
+
+### Bug Fixes
+
+* **data-explorer:** updated molgenis-ui-form ([af3b51c](https://github.com/molgenis/molgenis-frontend/commit/af3b51c8be1ca2da3d695b5dd47a4392e4d28d7b))
+
+
+
+
+
 ## [3.10.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.2...@molgenis-ui/data-explorer@3.10.3) (2021-05-04)
 
 
