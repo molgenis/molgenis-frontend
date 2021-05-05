@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div v-if="showSatisfyAllCheckbox===true" class="query-type-selector">
+      <label class="label-disabled">
+        Satisfy all
+        <input type="checkbox" v-model="satisfyAllOptions"/>
+      </label>
+    </div>
     <b-input-group>
       <b-form-input
         v-model="query"
@@ -121,10 +127,17 @@ export default {
     maxVisibleOptions: {
       type: Number,
       default: () => 10
-    }
+    },
+    showSatisfyAllCheckbox: {
+      type: Boolean,
+      required: false,
+      default: () => true
+    },
+
   },
   data () {
     return {
+      satisfyAllOptions: false,
       externalUpdate: false,
       showCount: 0,
       isLoading: false,
@@ -173,6 +186,10 @@ export default {
 
       this.$emit('input', newSelection)
     },
+    satisfyAllOptions (newValue) {
+      this.$emit('satisfyAll', newValue)
+    },
+
     value () {
       this.setValue()
     },
