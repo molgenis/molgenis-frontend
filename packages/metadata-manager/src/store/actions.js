@@ -99,7 +99,6 @@ function getEditorEntityType (commit: Function, entityTypeId: string) {
   withSpinner(commit,
     api.get('/plugin/metadata-manager/entityType/' + entityTypeId).then(
       response => {
-        console.log({ response })
         commit(SET_LANGUAGE_CODES, toLanguageCodes(response.languageCodes))
         commit(SET_EDITOR_ENTITY_TYPE, toEntityType(response.entityType))
       }))
