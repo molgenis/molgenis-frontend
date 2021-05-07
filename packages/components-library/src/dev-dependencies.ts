@@ -13,7 +13,10 @@ import {
   faTimes,
   faSort,
   faSortAlphaDown,
-  faSortAlphaUp
+  faSortAlphaUp,
+  faEdit,
+  faSearch,
+  faTrash
 } from '@fortawesome/free-solid-svg-icons'
 
 // @ts-ignore
@@ -35,7 +38,10 @@ export default function (BootstrapVue: any, Vue: any) {
     faTimes,
     faSort,
     faSortAlphaDown,
-    faSortAlphaUp
+    faSortAlphaUp,
+    faEdit,
+    faSearch,
+    faTrash
   )
 
   Vue.use(BootstrapVue)

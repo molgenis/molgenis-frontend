@@ -1,7 +1,7 @@
 <template>
   <tr :class="{'row-selected': isSelected}">
     <th v-if="showSelected" scope="col">
-      <slot name="shopping-button"></slot>
+      <slot name="shopping-button" />
     </th>
     <th
       v-else :id="'table-row-'+id"
@@ -12,12 +12,12 @@
         v-if="isEditable" class="form-check-input"
         type="checkbox"
         :checked="isSelected" :value="id"
-        @click="$emit('toggleSelectedItemsHandler', id)"
+        @click="toggleSelectedItemsHandler('id')"
       >
       <router-link
         v-if="isEditable"
         v-b-tooltip.hover.bottom
-        :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
+        :title="editButtonTooltip"
         class="btn btn-sm text-secondary pl-2"
         role="button"
         :to="{ name: 'de-edit', params: { entity: tableName, dataRowId: id}, query: {}}"
@@ -27,17 +27,17 @@
       <router-link
         v-b-tooltip.hover.bottom class="btn btn-sm text-secondary"
         role="button"
-        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}, query: $route.query}"
+        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}, query: route.query}"
       >
         <font-awesome-icon icon="search" />
       </router-link>
       <button
         v-if="isEditable"
         v-b-tooltip.hover.bottom
-        :title="$t('dataexplorer_row_action_delete_btn_tooltip')"
+        :title="deleteButtonTooltip"
         class="btn btn-sm text-secondary"
         role="button"
-        @click="$eventBus.$emit('delete-item', id)"
+        @click="deleteItem(id)"
       >
         <font-awesome-icon icon="trash" />
       </button>
@@ -59,37 +59,86 @@ export default {
   name: 'TableRow',
   components: { DataDisplayCell },
   props: {
+    /**
+     * Add the molgenis id, used for row selections and mutations
+     * Note: check the metadata to make sure you have the correct id attribute 
+     */
     id: {
       type: String,
       required: true
     },
+    /**
+     * Name of the current table
+     */
     tableName: {
       type: String,
       required: true
     },
+    /**
+     * Row of table data of type: DataApiResponseItem
+     * See: https://github.com/molgenis/molgenis-frontend/blob/master/packages/data-explorer/src/types/ApiResponse.ts for type definition
+     */
     rowData: {
       type: Object,
       required: true
     },
+    /**
+     * Information about all visable columns of type:
+     * [ { id, name, type, refEntityType, expression } ]
+     */
     visibleColumns: {
       type: Array,
       required: true
     },
+    /**
+     * is this current row selected?
+     */
     isSelected: {
       type: Boolean,
       required: false,
       default: () => false
     },
+    /**
+     * De we have edit rights on this table?
+     */
     isEditable: {
       type: Boolean,
       default: () => false
     },
+    /**
+     * will show shopping cart button template if true. Will also hide edit/delete row opperations 
+     */
     showSelected: {
       type: Boolean,
       required: true
     },
     rowIndex: {
       type: Number,
+      required: true
+    },
+    /**
+     * Add you i18n string for the edit tooltip here
+     * dataexplorer will use $t('dataexplorer_row_action_edit_btn_tooltip')
+     */
+    editButtonTooltip: {
+      type: String,
+      required: false,
+      default: () => "Edit"
+    }, 
+    /**
+     * Add you i18n string for the delete tooltip here
+     * dataexplorer will use $t('dataexplorer_row_action_delete_btn_tooltip')
+     */
+    deleteButtonTooltip: {
+      type: String,
+      required: false,
+      default: () => "Delete"
+    },
+    /**
+     * Please provide acces to the $route object
+     */
+    route: {
+      type: Object,
       required: true
     }
   },
@@ -98,6 +147,22 @@ export default {
       if (name in this.rowData && this.rowData[name] !== undefined) {
         return this.rowData[name]
       }
+    },
+    toggleSelectedItemsHandler (id) {
+      /**
+        * Emits the id of to column of the user selects a new colunm
+        * @property {String} id - id of column selected
+        * @event toggleSelectedItemsHandler
+        */
+      this.$emit('toggleSelectedItemsHandler', id)
+    },
+    deleteItem (id) {
+      /**
+        * Emits the id of to column if the user delete's a row
+        * @property {String} id - id of column deleted
+        * @event delete-item
+        */
+      this.$eventBus.$emit('delete-item', id)
     }
   }
 }
@@ -184,27 +249,47 @@ export default {
     { id: '3', name: 'job', type: 'string', refEntityType: '', expression: '' },
     { id: '4', name: 'email', type: 'string', refEntityType: '', expression: '' },
   ]
-  var sorting = "name"
-  var isReversed = false
+
+  function getEntityId (entity) {
+      return entity['id'].toString()
+  }
+  function i18n(string) {
+    return string
+  }
+  
+  var iseditable = true
+  var showSelected = false
+  var lastSelectedRow = 'none'
+  var lastDeletedRow = 'none'
 
   <table class="table table-bordered">
     <TableRow
         v-for="(entity, index) in entities"
-        id="0"
-        :key="index"
-        :row-index="index"
+        id="entity.id"
+        v-bind:key="index"
+        v-bind:row-index="index"
         table-name="MyEntity"
-        :row-data="entity"
-        :visible-columns="visibleColumns"
-        :is-selected="false"
-        :is-shop="true"
-        :is-editable="true"
-        :show-selected="true"
-        @toggleSelectedItemsHandler="() => {}"
-    ></TableRow>
+        v-bind:row-data="entity"
+        v-bind:visible-columns="visibleColumns"
+        v-bind:is-selected="false"
+        v-bind:is-editable="iseditable"
+        v-bind:show-selected="showSelected"
+        v-bind:editButtonTooltip="editButtonTooltip" 
+        v-bind:deleteButtonTooltip="deleteButtonTooltip" 
+        v-bind:route="{ query: '' }" 
+        v-on:toggleSelectedItemsHandler="(id) => { lastSelectedRow = id }"
+        v-on:delete-item="(id) => { lastDeletedRow = id }"
+    >
+      <template v-slot:shopping-button>
+        <button class="btn btn-primary"> Shopping-button slot </button>
+      </template>
+    </TableRow>
   </table>
   <hr/>
-  <div>sorting: {{sorting}}</div>
-  <div>isReversed: {{isReversed}}</div>
+  <strong>Helpers:</strong>
+  <div>lastSelectedRow: {{lastSelectedRow}}</div>
+  <div>lastDeletedRow: {{lastDeletedRow}}</div>
+  <div><button v-on:click="iseditable=!iseditable">toggle iseditable state</button> {{iseditable}}</div>
+  <div><button v-on:click="showSelected=!showSelected">toggle showSelected state</button> {{showSelected}}</div>
   ```
 </docs>
