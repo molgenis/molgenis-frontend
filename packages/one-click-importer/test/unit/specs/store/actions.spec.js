@@ -11,6 +11,13 @@ describe('actions', () => {
     it('Should send a file to the server and poll twice due to RUNNING job', done => {
       const file = 'test-file'
       const jobUrl = '/api/v2/job/test_job'
+
+      const response = {
+        text: async function () {
+          return jobUrl
+        }
+      }
+
       const job1 = {
         id: '1',
         status: 'RUNNING'
@@ -22,7 +29,7 @@ describe('actions', () => {
       }
 
       const postFile = td.function('api.postFile')
-      td.when(postFile('/plugin/one-click-importer/upload', file)).thenResolve(jobUrl)
+      td.when(postFile('/plugin/one-click-importer/upload', file)).thenResolve(response)
       td.replace(api, 'postFile', postFile)
 
       const get = td.function('api.get')
@@ -44,6 +51,13 @@ describe('actions', () => {
     it('Should send a file to the server and poll twice due to PENDING job', done => {
       const file = 'test-file'
       const jobUrl = '/api/v2/job/test_job'
+
+      const response = {
+        text: async function () {
+          return jobUrl
+        }
+      }
+
       const job1 = {
         id: '1',
         status: 'PENDING'
@@ -55,7 +69,7 @@ describe('actions', () => {
       }
 
       const postFile = td.function('api.postFile')
-      td.when(postFile('/plugin/one-click-importer/upload', file)).thenResolve(jobUrl)
+      td.when(postFile('/plugin/one-click-importer/upload', file)).thenResolve(response)
       td.replace(api, 'postFile', postFile)
 
       const get = td.function('api.get')
@@ -82,8 +96,14 @@ describe('actions', () => {
         status: 'FAILED'
       }
 
+      const response = {
+        text: async function () {
+          return jobUrl
+        }
+      }
+
       const postFile = td.function('api.postFile')
-      td.when(postFile('/plugin/one-click-importer/upload', file)).thenResolve(jobUrl)
+      td.when(postFile('/plugin/one-click-importer/upload', file)).thenResolve(response)
       td.replace(api, 'postFile', postFile)
 
       const get = td.function('api.get')
