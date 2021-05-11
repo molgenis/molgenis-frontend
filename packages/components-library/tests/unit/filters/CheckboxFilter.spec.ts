@@ -33,7 +33,7 @@ function getWrapper (props = {}) {
 describe('CheckboxFilter.vue', () => {
   describe('Parsing only required props', () => {
     let wrapper: any
-    beforeEach(() => { wrapper = getWrapper() })
+    beforeEach(() => { wrapper = getWrapper({ showSatisfyAllCheckbox: false }) })
 
     it('can set and unset values', async () => {
       const inputElements = wrapper.findAll('input')
@@ -69,7 +69,7 @@ describe('CheckboxFilter.vue', () => {
 
   describe('When restricting maxVisibleOptions to 1', () => {
     let wrapper: any
-    beforeEach(() => { wrapper = getWrapper({ maxVisibleOptions: 1 }) })
+    beforeEach(() => { wrapper = getWrapper({ maxVisibleOptions: 1, showSatisfyAllCheckbox: false}) })
 
     it('can hide elements based on maxVisibleOptions', async () => {
       expect(wrapper.findAll('input[type=checkbox]').length).toBe(1)

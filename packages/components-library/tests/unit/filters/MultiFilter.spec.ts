@@ -25,7 +25,8 @@ describe('MultiFilter.vue', () => {
     collapsed: false,
     maxVisibleOptions: 3,
     options: optionsPromise,
-    type: 'multi-filter'
+    type: 'multi-filter',
+    showSatisfyAllCheckbox: false
   }
 
   beforeEach(() => {
@@ -75,7 +76,8 @@ describe('MultiFilter.vue', () => {
       collapsed: false,
       options: optionsPromise,
       type: 'multi-filter',
-      value: ['red']
+      value: ['red'],
+      showSatisfyAllCheckbox: false
     }
 
     const wrapperFromBookmark = mount(MultiFilter, { localVue, propsData: bmProps })
