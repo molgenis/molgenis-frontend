@@ -18,8 +18,9 @@ const pollJobUrl = (commit, dispatch, jobUrl) => {
 
 export default {
   [IMPORT_FILE] ({commit, dispatch}, file) {
-    api.postFile('/plugin/one-click-importer/upload', file).then(response => {
-      pollJobUrl(commit, dispatch, response)
+    api.postFile('/plugin/one-click-importer/upload', file).then(async (response) => {
+      const url = await response.text()
+      pollJobUrl(commit, dispatch, url)
     })
   }
 }
