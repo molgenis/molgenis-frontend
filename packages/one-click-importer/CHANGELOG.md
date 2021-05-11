@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/one-click-importer@0.1.5...@molgenis-ui/one-click-importer@0.1.6) (2021-05-11)
+
+
+### Bug Fixes
+
+* **one-click-importer:** fix unittest for api response ([7921f19](https://github.com/molgenis/molgenis-frontend/commit/7921f1912846ac1b98e70c16a471b4567f9256a6))
+* **one-click-importer:** response body was not parsed correctly ([eb6468f](https://github.com/molgenis/molgenis-frontend/commit/eb6468ffe88210304e8c29bc1793f65118109d20))
+
+
+
+
+
 ## [0.1.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/one-click-importer@0.1.4...@molgenis-ui/one-click-importer@0.1.5) (2021-02-25)
 
 
