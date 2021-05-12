@@ -16,7 +16,8 @@ import {
   faSortAlphaUp,
   faEdit,
   faSearch,
-  faTrash
+  faTrash,
+  faShare
 } from '@fortawesome/free-solid-svg-icons'
 
 // @ts-ignore
@@ -41,7 +42,8 @@ export default function (BootstrapVue: any, Vue: any) {
     faSortAlphaUp,
     faEdit,
     faSearch,
-    faTrash
+    faTrash,
+    faShare
   )
 
   // Create a eventBus

@@ -250,19 +250,26 @@ export default {
   ```
   ### Full table
   ```jsx
+  const ref = [
+    { id: '0', label: 'Hello' },
+    { id: '1', label: 'World' }
+  ]
+
   const entities = [
-    { id: '0', name: 'Jan', age: '23', job: 'Welder', email: 'test@weld.test' },
-    { id: '1', name: 'Klaas', age: '50', job: '<h1>Evil overlord</h1>', email: 'test@evil.test' },
-    { id: '2', name: 'Piet', age: '32', job: 'Shopkeeper', email: 'test@shop.test' }
+    { id: '0', name: 'Jan', born: '1/1/1990', job: 'Welder', email: 'test@weld.test', mref:ref },
+    { id: '1', name: 'Klaas', born: '12-5-1980', job: '<h1>Evil overlord</h1>', email: 'test@evil.test', mref:ref },
+    { id: '2', name: 'Piet', born: '1985 6 8', job: 'Shopkeeper', email: 'test@shop.test', mref:ref }
   ]
 
   const visibleColumns = [
     { id: '0', name: 'id', type: 'string', refEntityType: '', expression: '' },
     { id: '1', name: 'name', type: 'string', refEntityType: '', expression: '' },
-    { id: '2', name: 'age', type: 'number', refEntityType: '', expression: '' },
+    { id: '2', name: 'born', type: 'date', refEntityType: '', expression: '' },
     { id: '3', name: 'job', type: 'html', refEntityType: '', expression: '' },
     { id: '4', name: 'email', type: 'email', refEntityType: '', expression: '' },
+    { id: '5', name: 'mref', type: 'mref', refEntityType: '', expression: '' },
   ]
+
 
   var sorting = "name"
   var isReversed = false
