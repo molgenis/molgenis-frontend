@@ -44,11 +44,16 @@ export default function (BootstrapVue: any, Vue: any) {
     faTrash
   )
 
+  // Create a eventBus
+  Vue.prototype.$eventBus = new Vue()
+
   Vue.use(BootstrapVue)
   Vue.component('FontAwesomeIcon', FontAwesomeIcon)
   Vue.component('DateRangePicker', DateRangePicker)
   Vue.component('VueSlider', VueSlider)
   Vue.component('draggable', draggable)
-
+  Vue.component('RouterLink', { // Mock a router-link within the components-library
+    template: `<a><slot></slot></a>`
+  })
   return Vue
 }

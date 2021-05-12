@@ -12,12 +12,12 @@
         v-if="isEditable" class="form-check-input"
         type="checkbox"
         :checked="isSelected" :value="id"
-        @click="toggleSelectedItemsHandler('id')"
+        @click="toggleSelectedItemsHandler(id)"
       >
       <router-link
         v-if="isEditable"
         v-b-tooltip.hover.bottom
-        :title="editButtonTooltip"
+        :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
         class="btn btn-sm text-secondary pl-2"
         role="button"
         :to="{ name: 'de-edit', params: { entity: tableName, dataRowId: id}, query: {}}"
@@ -34,7 +34,7 @@
       <button
         v-if="isEditable"
         v-b-tooltip.hover.bottom
-        :title="deleteButtonTooltip"
+        :title="$t('dataexplorer_row_action_delete_btn_tooltip')"
         class="btn btn-sm text-secondary"
         role="button"
         @click="deleteItem(id)"
@@ -117,24 +117,6 @@ export default {
       required: true
     },
     /**
-     * Add you i18n string for the edit tooltip here
-     * dataexplorer will use $t('dataexplorer_row_action_edit_btn_tooltip')
-     */
-    editButtonTooltip: {
-      type: String,
-      required: false,
-      default: () => "Edit"
-    }, 
-    /**
-     * Add you i18n string for the delete tooltip here
-     * dataexplorer will use $t('dataexplorer_row_action_delete_btn_tooltip')
-     */
-    deleteButtonTooltip: {
-      type: String,
-      required: false,
-      default: () => "Delete"
-    },
-    /**
      * Please provide acces to the $route object
      */
     route: {
@@ -157,11 +139,6 @@ export default {
       this.$emit('toggleSelectedItemsHandler', id)
     },
     deleteItem (id) {
-      /**
-        * Emits the id of to column if the user delete's a row
-        * @property {String} id - id of column deleted
-        * @event delete-item
-        */
       this.$eventBus.$emit('delete-item', id)
     }
   }
@@ -233,21 +210,23 @@ export default {
 <docs>
   Builds a header for a table. The column will have sorting options
 
+  Please note that the delete item event is routed via event bus. You can catch the event in any component via a call like this:
+  `Vue.$eventBus.$on('delete-item', (data) => {})`
 
   ### Usage
   ```jsx
   const entities = [
-    { id: '0', name: 'Max', age: '39', job: 'code monkey', email: 'yes' },
-    { id: '1', name: 'Monkey', age: '10', job: 'monkeying around', email: 'no' },
-    { id: '2', name: 'World', age: 'lots', job: 'receiving "hallo"', email: 'yes' }
+    { id: '0', name: 'Jan', age: '23', job: 'Welder', email: 'test@weld.test' },
+    { id: '1', name: 'Klaas', age: '50', job: '<h1>Evil overlord</h1>', email: 'test@evil.test' },
+    { id: '2', name: 'Piet', age: '32', job: 'Shopkeeper', email: 'test@shop.test' }
   ]
 
   const visibleColumns = [
     { id: '0', name: 'id', type: 'string', refEntityType: '', expression: '' },
     { id: '1', name: 'name', type: 'string', refEntityType: '', expression: '' },
-    { id: '2', name: 'age', type: 'string', refEntityType: '', expression: '' },
-    { id: '3', name: 'job', type: 'string', refEntityType: '', expression: '' },
-    { id: '4', name: 'email', type: 'string', refEntityType: '', expression: '' },
+    { id: '2', name: 'age', type: 'date', refEntityType: '', expression: '' },
+    { id: '3', name: 'job', type: 'html', refEntityType: '', expression: '' },
+    { id: '4', name: 'email', type: 'email', refEntityType: '', expression: '' },
   ]
 
   function getEntityId (entity) {
@@ -260,12 +239,10 @@ export default {
   var iseditable = true
   var showSelected = false
   var lastSelectedRow = 'none'
-  var lastDeletedRow = 'none'
-
   <table class="table table-bordered">
     <TableRow
         v-for="(entity, index) in entities"
-        id="entity.id"
+        v-bind:id="entity.id"
         v-bind:key="index"
         v-bind:row-index="index"
         table-name="MyEntity"
@@ -274,11 +251,8 @@ export default {
         v-bind:is-selected="false"
         v-bind:is-editable="iseditable"
         v-bind:show-selected="showSelected"
-        v-bind:editButtonTooltip="editButtonTooltip" 
-        v-bind:deleteButtonTooltip="deleteButtonTooltip" 
         v-bind:route="{ query: '' }" 
         v-on:toggleSelectedItemsHandler="(id) => { lastSelectedRow = id }"
-        v-on:delete-item="(id) => { lastDeletedRow = id }"
     >
       <template v-slot:shopping-button>
         <button class="btn btn-primary"> Shopping-button slot </button>
@@ -288,7 +262,6 @@ export default {
   <hr/>
   <strong>Helpers:</strong>
   <div>lastSelectedRow: {{lastSelectedRow}}</div>
-  <div>lastDeletedRow: {{lastDeletedRow}}</div>
   <div><button v-on:click="iseditable=!iseditable">toggle iseditable state</button> {{iseditable}}</div>
   <div><button v-on:click="showSelected=!showSelected">toggle showSelected state</button> {{showSelected}}</div>
   ```

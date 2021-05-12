@@ -24,7 +24,7 @@ describe('RefDisplay.vue', () => {
   })
 
   it('should not show refLink if list is empty', () => {
-    const value = []
+    const value:[] = []
     const wrapper = shallowMount(RefDisplay, { propsData: { value, metadata }, stubs })
     expect(wrapper.find('font-awesome-icon-stub').exists()).toBeFalsy()
   })
