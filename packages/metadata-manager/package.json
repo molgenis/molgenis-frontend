@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/metadata-manager",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "license": "LGPL-3.0",
   "description": "MOLGENIS Metadata manager",
   "author": "Mark-de-Haan <markdehaan90@gmail.com>",
@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "dev": "node build/dev-server.js",
+    "serve": "node build/dev-server.js",
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "unit:watch": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --watch",

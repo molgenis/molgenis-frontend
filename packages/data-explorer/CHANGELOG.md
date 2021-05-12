@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.3...@molgenis-ui/data-explorer@3.10.4) (2021-05-05)
+
+
+### Bug Fixes
+
+* **data-explorer:** updated molgenis-ui-form ([af3b51c](https://github.com/molgenis/molgenis-frontend/commit/af3b51c8be1ca2da3d695b5dd47a4392e4d28d7b))
+
+
+
+
+
+## [3.10.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.2...@molgenis-ui/data-explorer@3.10.3) (2021-05-04)
+
+
+### Bug Fixes
+
+* **data-explorer:** update count after removing row ([df659aa](https://github.com/molgenis/molgenis-frontend/commit/df659aad1c5a886a2369657309f23f5203fc5fbd))
+
+
+
+
+
+## [3.10.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.1...@molgenis-ui/data-explorer@3.10.2) (2021-05-04)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
+## [3.10.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.0...@molgenis-ui/data-explorer@3.10.1) (2021-04-30)
+
+
+### Bug Fixes
+
+* upgrade ui-forms to 5.4.1 ([93edbf9](https://github.com/molgenis/molgenis-frontend/commit/93edbf9e111472ab354f150f9e08c5a36db2bd07))
+
+
+
+
+
 # [3.10.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.9.0...@molgenis-ui/data-explorer@3.10.0) (2021-04-23)
 
 

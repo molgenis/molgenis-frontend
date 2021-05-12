@@ -1,4 +1,5 @@
-var path = require('path')
+const path = require('path')
+const target = 'https://master.dev.molgenis.org'
 
 module.exports = {
   build: {
@@ -20,10 +21,16 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/plugin/one-click-importer/upload': {
-        target: 'http://localhost:8080'
+        target,
+        changeOrigin: true
       },
       '/api': {
-        target: 'http://localhost:8080'
+        target,
+        changeOrigin: true
+      },
+      '/login': {
+        target,
+        changeOrigin: true
       }
     },
     cssSourceMap: false

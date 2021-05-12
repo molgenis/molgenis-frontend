@@ -49,6 +49,7 @@ pipeline {
                     sh "( cd ${PACKAGE_DIR}/searchall && yarn )"
                     sh "( cd ${PACKAGE_DIR}/security && yarn )"
                     sh "( cd ${PACKAGE_DIR}/settings && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/data-row-edit && yarn )"
                 }
             }
         }
@@ -129,6 +130,16 @@ pipeline {
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/questionnaires") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Data Row Edit') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/data-row-edit") {
                                 sh "yarn build"
                                 sh "yarn unit"
                             }

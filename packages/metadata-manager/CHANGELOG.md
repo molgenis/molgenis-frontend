@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.9...@molgenis-ui/metadata-manager@0.1.10) (2021-05-05)
+
+
+### Bug Fixes
+
+* **metadata-manager:** added correct attribute names for min & max ([#611](https://github.com/molgenis/molgenis-frontend/issues/611)) ([b556f90](https://github.com/molgenis/molgenis-frontend/commit/b556f90775048a7c9edd7a8ff7738604745327bb))
+
+
+
+
+
 ## [0.1.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.8...@molgenis-ui/metadata-manager@0.1.9) (2021-02-25)
 
 

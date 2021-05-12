@@ -1,4 +1,5 @@
-var path = require('path')
+const path = require('path')
+const target = 'https://master.dev.molgenis.org'
 
 module.exports = {
   build: {
@@ -20,13 +21,17 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/login': {
-        target: 'http://localhost:8080'
+        target,
+        changeOrigin: true
+
       },
       '/api': {
-        target: 'http://localhost:8080'
+        target,
+        changeOrigin: true
       },
       '/plugin/metadata-manager': {
-        target: 'http://localhost:8080'
+        target,
+        changeOrigin: true
       }
     },
     cssSourceMap: false

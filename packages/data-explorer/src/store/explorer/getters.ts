@@ -32,6 +32,12 @@ export default {
   tableLabelAttributeName: (state: ApplicationState): string | undefined => {
     return state.tableMeta && state.tableMeta.labelAttribute && state.tableMeta.labelAttribute.name ? state.tableMeta.labelAttribute.name : undefined
   },
+  hasNoResults: (state: ApplicationState): boolean => {
+    // We are still loading, so don't show no items found.
+    if(state.loading || !state.tableData) return false;
+
+    return !state.tableData.items.length
+  },
   clipBoardItems: (state: ApplicationState, getters: any): ClipBoardItem[] => {
     if (!state.tableData || !state.tableData.items) {
       return []
