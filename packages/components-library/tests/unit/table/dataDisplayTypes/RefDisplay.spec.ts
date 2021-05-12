@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import RefDisplay from '@/components/dataDisplayTypes/RefDisplay.vue'
+import RefDisplay from '@/components/table/dataDisplayTypes/RefDisplay.vue'
 import Vue from 'vue'
 
 describe('RefDisplay.vue', () => {

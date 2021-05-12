@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import TableHeader from '@/components/dataView/TableHeader.vue'
+import TableHeader from '@/components/table/TableHeader.vue'
 
 describe('TableHeader.vue', () => {
   it('exists', () => {

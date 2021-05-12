@@ -1,7 +1,7 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import TableRow from '@/components/dataView/TableRow.vue'
+import TableRow from '@/components/table/TableRow.vue'
 
-const getWrapper = (propsData) => {
+const getWrapper = (propsData:any) => {
   const localVue = createLocalVue()
   const wrapper = shallowMount(TableRow, {
     directives: {
@@ -13,10 +13,11 @@ const getWrapper = (propsData) => {
       id: 'id',
       rowIndex: 0,
       tableName: 'tableName',
-      showSelected: false
+      showSelected: false,
+      route: { query: { foo: 'bar' } }
     },
     stubs: ['font-awesome-icon', 'router-link'],
-    mocks: { $t: (msg: any) => msg, $route: { query: { foo: 'bar' } } }
+    mocks: { $t: (msg: any) => msg }
   })
 
   return wrapper

@@ -212,8 +212,43 @@ export default {
 
   Please note that the delete item event is routed via event bus. You can catch the event in any component via a call like this:
   `Vue.$eventBus.$on('delete-item', (data) => {})`
-
   ### Usage
+  ```jsx
+  const entities = [
+    { id: '0', name: 'Jan', born: '1/1/1990', job: 'Welder', email: 'test@weld.test' },
+    { id: '1', name: 'Klaas', born: '12-5-1980', job: '<h1>Evil overlord</h1>', email: 'test@evil.test' },
+    { id: '2', name: 'Piet', born: '1985 6 8', job: 'Shopkeeper', email: 'test@shop.test' }
+  ]
+
+  const visibleColumns = [
+    { id: '0', name: 'id', type: 'string', refEntityType: '', expression: '' },
+    { id: '1', name: 'name', type: 'string', refEntityType: '', expression: '' },
+    { id: '2', name: 'born', type: 'date', refEntityType: '', expression: '' },
+    { id: '3', name: 'job', type: 'html', refEntityType: '', expression: '' },
+    { id: '4', name: 'email', type: 'email', refEntityType: '', expression: '' },
+  ]
+  <table class="table table-bordered">
+    <TableRow
+        v-for="(entity, index) in entities"
+        v-bind:id="entity.id"
+        v-bind:key="index"
+        v-bind:row-index="index"
+        table-name="MyEntity"
+        v-bind:row-data="entity"
+        v-bind:visible-columns="visibleColumns"
+        v-bind:is-selected="false"
+        v-bind:is-editable="true"
+        v-bind:show-selected="false"
+        v-bind:route="{ query: '' }" 
+        v-on:toggleSelectedItemsHandler="() => { }"
+    >
+      <template v-slot:shopping-button>
+        <button class="btn btn-primary"> Shopping-button slot </button>
+      </template>
+    </TableRow>
+  </table>
+  ```
+  ### Full table
   ```jsx
   const entities = [
     { id: '0', name: 'Jan', age: '23', job: 'Welder', email: 'test@weld.test' },
@@ -224,22 +259,29 @@ export default {
   const visibleColumns = [
     { id: '0', name: 'id', type: 'string', refEntityType: '', expression: '' },
     { id: '1', name: 'name', type: 'string', refEntityType: '', expression: '' },
-    { id: '2', name: 'age', type: 'date', refEntityType: '', expression: '' },
+    { id: '2', name: 'age', type: 'number', refEntityType: '', expression: '' },
     { id: '3', name: 'job', type: 'html', refEntityType: '', expression: '' },
     { id: '4', name: 'email', type: 'email', refEntityType: '', expression: '' },
   ]
 
-  function getEntityId (entity) {
-      return entity['id'].toString()
-  }
-  function i18n(string) {
-    return string
-  }
-  
+  var sorting = "name"
+  var isReversed = false
+
   var iseditable = true
   var showSelected = false
   var lastSelectedRow = 'none'
+
   <table class="table table-bordered">
+    <TableHeader
+      v-bind:visibleColumns="visibleColumns"
+      v-bind:sortColumnName="sorting"
+      v-bind:isSortOrderReversed="isReversed"
+      v-on:sort="(newValue) => {
+        isReversed =  ( sorting === newValue && isReversed == false )
+        sorting = newValue
+      }">
+    </TableHeader>
+
     <TableRow
         v-for="(entity, index) in entities"
         v-bind:id="entity.id"

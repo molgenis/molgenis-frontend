@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import TableHeader from '@/components/dataView/TableHeader'
-import TableRow from '@/components/dataView/TableRow'
+import TableHeader from '@/components/table/TableHeader'
+import TableRow from '@/components/table/TableRow'
 
 export default {
   name: 'RefTable',

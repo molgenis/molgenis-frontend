@@ -1,5 +1,5 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import FileDisplay from '@/components/dataDisplayTypes/FileDisplay.vue'
+import FileDisplay from '@/components/table/dataDisplayTypes/FileDisplay.vue'
 
 describe('FileDisplay.vue', () => {
   const localVue = createLocalVue()
@@ -15,7 +15,7 @@ describe('FileDisplay.vue', () => {
   }
 
   it('should display the file and download link', () => {
-    const wrapper = shallowMount(FileDisplay, { localVue, propsData: { value }, stubs })
+    const wrapper = shallowMount(FileDisplay, { localVue, propsData: { value }, stubs, mocks: { $t: (msg: any) => msg } })
     expect(wrapper.html()).toMatchSnapshot()
   })
 })

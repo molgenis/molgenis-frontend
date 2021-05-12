@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import DataDisplayCell from '@/components/dataDisplayTypes/DataDisplayCell.vue'
+import DataDisplayCell from '@/components/table/dataDisplayTypes/DataDisplayCell.vue'
 
 describe('DataDisplayCell.vue', () => {
   // String, Object, Array, Number, Boolean
