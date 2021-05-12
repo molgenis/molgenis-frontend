@@ -147,17 +147,33 @@ describe('MultiFilter.vue', () => {
   })
 
   describe('SatisfyAllCheckbox', () => {
-    const propsData = {
-      name: 'multi-filter',
-      label: 'Filter with multiple options',
-      collapsed: false,
-      maxVisibleOptions: 3,
-      options: optionsPromise,
-      type: 'multi-filter',
-      showSatisfyAllCheckbox: true
-    }
 
+    it('checks that the satisfyAll checkbox is shown by default', async () => {
+      const propsData = {
+        name: 'multi-filter',
+        label: 'Filter with multiple options',
+        collapsed: false,
+        maxVisibleOptions: 3,
+        options: optionsPromise,
+        type: 'multi-filter',
+      }
+      wrapper = mount(MultiFilter, { localVue, propsData })
+      // satisfyAllButton is always the fist one, as it is above all the others   
+      const satisfyAllButton = wrapper.find('input[type=checkbox]')    
+      await satisfyAllButton.trigger('click')
+      expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
+    })
+    
     it('triggers the proper emit when the satisfyAll checkbos is clicked', async () => {
+      const propsData = {
+        name: 'multi-filter',
+        label: 'Filter with multiple options',
+        collapsed: false,
+        maxVisibleOptions: 3,
+        options: optionsPromise,
+        type: 'multi-filter',
+        showSatisfyAllCheckbox: true
+      }
       wrapper = mount(MultiFilter, { localVue, propsData })
       // satisfyAllButton is always the fist one, as it is above all the others   
       const satisfyAllButton = wrapper.find('input[type=checkbox]')    
