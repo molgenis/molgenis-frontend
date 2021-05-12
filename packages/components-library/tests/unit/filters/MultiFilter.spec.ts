@@ -145,4 +145,28 @@ describe('MultiFilter.vue', () => {
       expect(wrapper.emitted().input).toEqual([[[{ text: 'Red', value: 'red' }]]])
     })
   })
+
+  describe('SatisfyAllCheckbox', () => {
+    const propsData = {
+      name: 'multi-filter',
+      label: 'Filter with multiple options',
+      collapsed: false,
+      maxVisibleOptions: 3,
+      options: optionsPromise,
+      type: 'multi-filter',
+      showSatisfyAllCheckbox: true
+    }
+
+    it('triggers the proper emit when the satisfyAll checkbos is clicked', async () => {
+      wrapper = mount(MultiFilter, { localVue, propsData })
+      // satisfyAllButton is always the fist one, as it is above all the others   
+      const satisfyAllButton = wrapper.find('input[type=checkbox]')    
+      await satisfyAllButton.trigger('click')
+      expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
+      await satisfyAllButton.trigger('click')
+      expect(wrapper.emitted('satisfyAll')[1]).toEqual([false])
+
+    })
+  })
+
 })

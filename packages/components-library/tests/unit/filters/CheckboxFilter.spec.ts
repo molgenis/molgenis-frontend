@@ -81,4 +81,19 @@ describe('CheckboxFilter.vue', () => {
       expect(wrapper.findAll('input[type=checkbox]').length).toBe(1)
     })
   })
+
+  describe('SatisfyAllCheckbox', () => {
+    let wrapper: any
+    beforeEach(() => { wrapper = getWrapper({ }) })
+
+    it('triggers the proper emit when the satisfyAll checkbos is clicked', async () => {
+      // satisfyAllButton is always the fist one, as it is above all the others   
+      const satisfyAllButton = wrapper.find('input[type=checkbox]')    
+      await satisfyAllButton.trigger('click')
+      expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
+      await satisfyAllButton.trigger('click')
+      expect(wrapper.emitted('satisfyAll')[1]).toEqual([false])
+
+    })
+  })
 })
