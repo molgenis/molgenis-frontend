@@ -38,9 +38,8 @@
 </template>
 
 <script>
-import TableRow from '../components/dataView/TableRow'
-import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import { TableRow, TableHeader } from '@molgenis-ui/components-library'
 
 export default {
   name: 'ClipboardView',

@@ -15,9 +15,8 @@
 import CardView from './CardView'
 import TableView from './TableView'
 import ExplorerCard from '../components/dataView/ExplorerCard'
-import TableRow from '../components/dataView/TableRow'
-import TableHeader from '../components/dataView/TableHeader'
 import { mapGetters, mapState } from 'vuex'
+import { TableRow, TableHeader } from '@molgenis-ui/components-library'
 
 export default {
   name: 'SelectLayoutView',

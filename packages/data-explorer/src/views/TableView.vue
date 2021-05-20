@@ -17,7 +17,6 @@
         :row-data="entity"
         :visible-columns="visibleColumns"
         :is-selected="isSelected(entity)"
-        :is-shop="tableSettings.isShop"
         :is-editable="hasEditRights"
         :show-selected="showSelected"
         @toggleSelectedItemsHandler="toggleSelectedItems"
@@ -27,9 +26,8 @@
 </template>
 
 <script>
-import TableRow from '../components/dataView/TableRow'
-import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
+import { TableRow, TableHeader } from '@molgenis-ui/components-library'
 
 export default {
   name: 'TableView',
