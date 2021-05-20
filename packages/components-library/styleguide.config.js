@@ -28,6 +28,10 @@ module.exports = {
     {
       name: 'Table',
       components: 'src/components/table/*.vue'
+    },
+    {
+      name: 'RefTable',
+      components: 'src/components/table/dataDisplayTypes/RefTable.vue'
     }
   ],
   exampleMode: 'expand',

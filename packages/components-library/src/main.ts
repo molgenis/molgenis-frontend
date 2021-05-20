@@ -11,6 +11,9 @@ import Pagination from './components/ui/Pagination.vue'
 import RangeFilter from './components/filters/RangeFilter.vue'
 import StringFilter from './components/filters/StringFilter.vue'
 import Toaster from './components/ui/Toaster.vue'
+import TableHeader from './components/table/TableHeader.vue'
+import TableRow from './components/table/TableRow.vue'
+import RefTable from './components/table/dataDisplayTypes/RefTable.vue'
 
 export {
   ActiveFilters,
@@ -25,5 +28,8 @@ export {
   Pagination,
   RangeFilter,
   StringFilter,
-  Toaster
+  Toaster,
+  TableHeader,
+  TableRow,
+  RefTable
 }
