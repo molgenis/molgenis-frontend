@@ -156,7 +156,6 @@ export default {
     background-color: var(--light);
     border-right: 1px var(--border) solid;
     left: 0;
-    position: sticky; /* for Safari */
     position: sticky;
     text-align: center;
   }
