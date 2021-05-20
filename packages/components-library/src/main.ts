@@ -14,6 +14,13 @@ import Toaster from './components/ui/Toaster.vue'
 import TableHeader from './components/table/TableHeader.vue'
 import TableRow from './components/table/TableRow.vue'
 import RefTable from './components/table/dataDisplayTypes/RefTable.vue'
+import RefDisplay from './components/table/dataDisplayTypes/RefDisplay.vue'
+import DataDisplayCell from './components/table/dataDisplayTypes/DataDisplayCell.vue'
+import DataDisplay from './components/table/dataDisplayTypes/DataDisplay.vue'
+import EmailDisplay from './components/table/dataDisplayTypes/EmailDisplay.vue'
+import HTMLDisplay from './components/table/dataDisplayTypes/HTMLDisplay.vue'
+import LinkDisplay from './components/table/dataDisplayTypes/LinkDisplay.vue'
+import StringDisplay from './components/table/dataDisplayTypes/StringDisplay.vue'
 
 export {
   ActiveFilters,
@@ -31,5 +38,12 @@ export {
   Toaster,
   TableHeader,
   TableRow,
-  RefTable
+  RefTable,
+  RefDisplay,
+  DataDisplayCell,
+  DataDisplay,
+  EmailDisplay,
+  HTMLDisplay,
+  LinkDisplay,
+  StringDisplay
 }
