@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import TableHeader from '@/components/table/TableHeader'
-import TableRow from '@/components/table/TableRow'
+import TableHeader from '../TableHeader'
+import TableRow from '../TableRow'
 
 export default {
   name: 'RefTable',

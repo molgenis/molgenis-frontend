@@ -142,7 +142,6 @@ export default {
 <docs>
   Builds a header for a table. The column will have sorting options
 
-
   ### Usage
   ```jsx
   const columns = [

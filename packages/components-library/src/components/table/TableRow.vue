@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import DataDisplayCell from '@/components/table/dataDisplayTypes/DataDisplayCell'
+import DataDisplayCell from './dataDisplayTypes/DataDisplayCell'
 
 export default {
   name: 'TableRow',
