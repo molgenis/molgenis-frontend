@@ -19,6 +19,7 @@
         :is-selected="isSelected(entity)"
         :is-editable="hasEditRights"
         :show-selected="showSelected"
+        :router="$router"
         @toggleSelectedItemsHandler="toggleSelectedItems"
       />
     </tbody>

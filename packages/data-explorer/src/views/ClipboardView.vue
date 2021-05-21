@@ -22,7 +22,7 @@
             :row-data="entity"
             :visible-columns="visibleColumns"
             :is-selected="isSelected(entity)"
-            :is-shop="true"
+            :router="$router"
             :show-selected="showSelected"
           />
         </tbody>

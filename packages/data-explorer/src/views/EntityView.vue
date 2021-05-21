@@ -37,7 +37,7 @@
               :row-index="index"
               :row-data="entity"
               :is-selected="isSelected(entity)"
-              :is-shop="isShop"
+              :router="$router"
             />
           </tbody>
         </table>
@@ -57,9 +57,8 @@
 
 <script>
 import ExplorerCard from '../components/dataView/ExplorerCard'
-import TableRow from '../components/dataView/TableRow'
-import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions } from 'vuex'
+import { TableRow, TableHeader } from '@molgenis-ui/components-library'
 
 export default {
   name: 'EntityView',

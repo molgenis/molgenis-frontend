@@ -31,6 +31,7 @@
           :is-data-loaded="isReferenceModalDataLoaded"
           :entities-to-show="refTableData"
           :meta-data="refTableMetaData"
+          :router="$router"
         />
       </b-modal>
     </template>
