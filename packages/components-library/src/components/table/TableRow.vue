@@ -27,7 +27,7 @@
       <router-link
         v-b-tooltip.hover.bottom class="btn btn-sm text-secondary"
         role="button"
-        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}, query: route.query}"
+        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}, query: router.query}"
       >
         <font-awesome-icon icon="search" />
       </router-link>
@@ -117,9 +117,9 @@ export default {
       required: true
     },
     /**
-     * Please provide acces to the $route object
+     * Please provide acces to the $router object for use in internal links
      */
-    route: {
+    router: {
       type: Object,
       required: true
     }
@@ -238,7 +238,7 @@ export default {
         v-bind:is-selected="false"
         v-bind:is-editable="true"
         v-bind:show-selected="false"
-        v-bind:route="{ query: '' }" 
+        v-bind:router="{ query: '' }" 
         v-on:toggleSelectedItemsHandler="() => { }"
     >
       <template v-slot:shopping-button>
@@ -299,7 +299,7 @@ export default {
         v-bind:is-selected="false"
         v-bind:is-editable="iseditable"
         v-bind:show-selected="showSelected"
-        v-bind:route="{ query: '' }" 
+        v-bind:router="{ query: '' }" 
         v-on:toggleSelectedItemsHandler="(id) => { lastSelectedRow = id }"
     >
       <template v-slot:shopping-button>

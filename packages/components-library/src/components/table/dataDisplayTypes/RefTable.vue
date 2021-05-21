@@ -14,7 +14,7 @@
           :is-selected="false"
           :is-editable="false"
           :show-selected="false"
-          :route="route" 
+          :router="router" 
         />
       </tbody>
     </table>
@@ -54,7 +54,7 @@ export default {
      /**
      * Please provide acces to the $route object
      */
-    route: {
+    router: {
       type: Object,
       required: true
     }   
@@ -92,7 +92,7 @@ export default {
     v-bind:isDataLoaded="true"
     v-bind:entitiesToShow="entities"
     v-bind:metaData="metadata"
-    v-bind:route="{ query: '' }"
+    v-bind:router="{ query: '' }"
   >
   </RefTable>
   ```
