@@ -64,6 +64,7 @@ pipeline {
                             dir("${PACKAGE_DIR}/components-library") {
                                 sh "yarn lint"
                                 sh "yarn build"
+                                sh "yarn styleguide:build"
                                 sh "yarn unit"
                             }
                         }
