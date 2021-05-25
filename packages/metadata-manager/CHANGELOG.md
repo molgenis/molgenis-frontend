@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.10...@molgenis-ui/metadata-manager@0.2.0) (2021-05-25)
+
+
+### Features
+
+* **metadata-manager:** add option to enter an id when creating new entity type ([c9f63f3](https://github.com/molgenis/molgenis-frontend/commit/c9f63f3893fa09d45dd374175dba546fe175248b))
+
+
+
+
+
 ## [0.1.10](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.9...@molgenis-ui/metadata-manager@0.1.10) (2021-05-05)
 
 
