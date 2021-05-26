@@ -71,7 +71,7 @@ export default {
 
 
 <docs>
-  A table build for folowing xref and mref links
+  A table built for following xref and mref links
   ### Usage
   ```jsx
   const entities = [
