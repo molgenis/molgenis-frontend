@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.4.5...@molgenis-ui/components-library@2.5.0) (2021-05-26)
+
+
+### Features
+
+* add table row and header components ([95ce975](https://github.com/molgenis/molgenis-frontend/commit/95ce975ca95e4e4c1453906f5c1c75c4f32961d7))
+
+
+
+
+
 ## [2.4.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.4.4...@molgenis-ui/components-library@2.4.5) (2021-04-08)
 
 **Note:** Version bump only for package @molgenis-ui/components-library

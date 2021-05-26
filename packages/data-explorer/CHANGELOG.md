@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.11.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.4...@molgenis-ui/data-explorer@3.11.0) (2021-05-26)
+
+
+### Features
+
+* add table row and header components ([95ce975](https://github.com/molgenis/molgenis-frontend/commit/95ce975ca95e4e4c1453906f5c1c75c4f32961d7))
+
+
+
+
+
 ## [3.10.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.3...@molgenis-ui/data-explorer@3.10.4) (2021-05-05)
 
 
