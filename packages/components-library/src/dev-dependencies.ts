@@ -10,7 +10,14 @@ import {
   faExclamationCircle,
   faFilter,
   faSpinner,
-  faTimes
+  faTimes,
+  faSort,
+  faSortAlphaDown,
+  faSortAlphaUp,
+  faEdit,
+  faSearch,
+  faTrash,
+  faShare
 } from '@fortawesome/free-solid-svg-icons'
 
 // @ts-ignore
@@ -29,14 +36,26 @@ export default function (BootstrapVue: any, Vue: any) {
     faExclamationCircle,
     faFilter,
     faSpinner,
-    faTimes
+    faTimes,
+    faSort,
+    faSortAlphaDown,
+    faSortAlphaUp,
+    faEdit,
+    faSearch,
+    faTrash,
+    faShare
   )
+
+  // Create a eventBus
+  Vue.prototype.$eventBus = new Vue()
 
   Vue.use(BootstrapVue)
   Vue.component('FontAwesomeIcon', FontAwesomeIcon)
   Vue.component('DateRangePicker', DateRangePicker)
   Vue.component('VueSlider', VueSlider)
   Vue.component('draggable', draggable)
-
+  Vue.component('RouterLink', { // Mock a router-link within the components-library
+    template: `<a><slot></slot></a>`
+  })
   return Vue
 }

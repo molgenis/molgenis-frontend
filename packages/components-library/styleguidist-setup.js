@@ -6,6 +6,11 @@ import devDependencies from '@/dev-dependencies'
 devDependencies(BootstrapVue, Vue)
 
 Vue.mixin({
+  methods: {
+    $t(key) {
+      return key // Mock i18n within the components-library
+    }
+  },
   data () {
     return {
       fruitOptionsFunction,
