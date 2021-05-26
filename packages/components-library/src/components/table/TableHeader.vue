@@ -118,7 +118,6 @@ export default {
     background-color: var(--light);
     border: 1px var(--border) solid;
     position: sticky; /* for Safari */
-    position: sticky;
     top: 0;
   }
 
