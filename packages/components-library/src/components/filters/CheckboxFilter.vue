@@ -3,7 +3,7 @@
     <div v-if="showSatisfyAllCheckbox===true" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-        <input type="checkbox" v-model="satisfyAllOptions"/>
+        <input type="checkbox" v-model="satisfyAllSelection"/>
       </label>
     </div>
     <b-form-checkbox-group
@@ -66,6 +66,12 @@ export default {
       type: Array,
       default: () => []
     },
+
+    satisfyAllValue: {
+      type: Boolean,
+      default: () => false
+    },
+
     /**
      * Whether to use (De)Select All or not.
      */
@@ -89,8 +95,9 @@ export default {
   },
   data () {
     return {
-      satisfyAllOptions: false,
+      satisfyAllSelection: undefined,
       externalUpdate: false,
+      satisfyAllExternalUpdate: false,
       selection: [],
       resolvedOptions: [],
       sliceOptions: this.maxVisibleOptions && this.optionsToRender && this.maxVisibleOptions < this.optionsToRender.length
@@ -137,15 +144,19 @@ export default {
       }
       this.externalUpdate = false
     },
-    satisfyAllOptions (newValue) {
-      this.$emit('satisfyAll', newValue)
-    },
+    satisfyAllSelection (newSatisfyAllSelectionValue) {
+      if (!this.satisfyAllExternalUpdate) {
+        this.$emit('satisfyAll', newSatisfyAllSelectionValue)
+      }
+      this.satisfyAllExternalUpdate = false
+    }
   },
   created () {
     this.options().then(response => {
       this.resolvedOptions = response
     })
     this.setValue()
+    this.setSatisfyAllValue()
   },
   methods: {
     toggleSelect () {
@@ -165,6 +176,10 @@ export default {
       } else {
         this.selection = this.value
       }
+    },
+    setSatisfyAllValue () {
+      this.satisfyAllExternalUpdate = true
+      this.satisfyAllSelection = this.satisfyAllValue
     }
   }
 }

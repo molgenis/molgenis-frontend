@@ -3,7 +3,7 @@
     <div v-if="showSatisfyAllCheckbox===true" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-        <input type="checkbox" v-model="satisfyAllOptions"/>
+        <input type="checkbox" v-model="satisfyAllSelection"/>
       </label>
     </div>
     <b-input-group>
@@ -121,6 +121,10 @@ export default {
       type: Array,
       default: () => []
     },
+    satisfyAllValue: {
+      type: Boolean,
+      default: () => false
+    },
     /**
      * The amount of options to show after filtering the checkbox options.
      */
@@ -137,8 +141,9 @@ export default {
   },
   data () {
     return {
-      satisfyAllOptions: false,
+      satisfyAllSelection: undefined,
       externalUpdate: false,
+      satisfyAllExternalUpdate: false,
       showCount: 0,
       isLoading: false,
       triggerQuery: Number,
@@ -186,8 +191,11 @@ export default {
 
       this.$emit('input', newSelection)
     },
-    satisfyAllOptions (newValue) {
-      this.$emit('satisfyAll', newValue)
+    satisfyAllSelection (newSatisfyAllSelectionValue) {
+      if (!this.satisfyAllExternalUpdate) {
+        this.$emit('satisfyAll', newSatisfyAllSelectionValue)
+      }
+      this.satisfyAllExternalUpdate = false
     },
 
     value () {
@@ -224,6 +232,7 @@ export default {
   },
   created () {
     this.showCount = this.maxVisibleOptions
+    this.setSatisfyAllValue()
   },
   beforeMount () {
     this.initializeFilter()
@@ -254,6 +263,10 @@ export default {
         typeof this.value[0] === 'object'
           ? this.value.map((vo) => vo.value)
           : this.value
+    },
+    setSatisfyAllValue () {
+      this.satisfyAllExternalUpdate = true
+      this.satisfyAllSelection = this.satisfyAllValue
     },
     showMore () {
       this.showCount += this.maxVisibleOptions

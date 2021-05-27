@@ -177,6 +177,7 @@ describe('MultiFilter.vue', () => {
       wrapper = mount(MultiFilter, { localVue, propsData })
       // satisfyAllButton is always the fist one, as it is above all the others   
       const satisfyAllButton = wrapper.find('input[type=checkbox]')    
+      console.log(satisfyAllButton)
       await satisfyAllButton.trigger('click')
       expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
       await satisfyAllButton.trigger('click')
