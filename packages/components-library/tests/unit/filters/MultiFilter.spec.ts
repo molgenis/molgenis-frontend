@@ -147,37 +147,31 @@ describe('MultiFilter.vue', () => {
   })
 
   describe('SatisfyAllCheckbox', () => {
+    const propsData = {
+      name: 'multi-filter',
+      label: 'Filter with multiple options',
+      collapsed: false,
+      maxVisibleOptions: 3,
+      options: jest.fn(() => Promise.resolve([
+        { value: 'red', text: 'Red' },
+        { value: 'green', text: 'Green' },])),
+      type: 'multi-filter',
+    }
+    beforeEach(() => {
+      wrapper = mount(MultiFilter, { localVue, propsData })
+    })
 
     it('checks that the satisfyAll checkbox is shown by default', async () => {
-      const propsData = {
-        name: 'multi-filter',
-        label: 'Filter with multiple options',
-        collapsed: false,
-        maxVisibleOptions: 3,
-        options: optionsPromise,
-        type: 'multi-filter',
-      }
-      wrapper = mount(MultiFilter, { localVue, propsData })
       // satisfyAllButton is always the fist one, as it is above all the others   
       const satisfyAllButton = wrapper.find('input[type=checkbox]')    
       await satisfyAllButton.trigger('click')
       expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
+      
     })
     
     it('triggers the proper emit when the satisfyAll checkbos is clicked', async () => {
-      const propsData = {
-        name: 'multi-filter',
-        label: 'Filter with multiple options',
-        collapsed: false,
-        maxVisibleOptions: 3,
-        options: optionsPromise,
-        type: 'multi-filter',
-        showSatisfyAllCheckbox: true
-      }
-      wrapper = mount(MultiFilter, { localVue, propsData })
-      // satisfyAllButton is always the fist one, as it is above all the others   
-      const satisfyAllButton = wrapper.find('input[type=checkbox]')    
-      console.log(satisfyAllButton)
+      // satisfyAllButton is always the fist one, as it is above all the others 
+      const satisfyAllButton = wrapper.find('input[type=checkbox]')
       await satisfyAllButton.trigger('click')
       expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
       await satisfyAllButton.trigger('click')

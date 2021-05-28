@@ -31,56 +31,56 @@ function getWrapper (props = {}) {
 }
 
 describe('CheckboxFilter.vue', () => {
-  describe('Parsing only required props', () => {
-    let wrapper: any
-    beforeEach(() => { wrapper = getWrapper({ showSatisfyAllCheckbox: false }) })
+  // describe('Parsing only required props', () => {
+  //   let wrapper: any
+  //   beforeEach(() => { wrapper = getWrapper({ showSatisfyAllCheckbox: false }) })
 
-    it('can set and unset values', async () => {
-      const inputElements = wrapper.findAll('input')
-      inputElements.at(0).trigger('click') // select foo
-      inputElements.at(1).trigger('click') // select bar
-      inputElements.at(2).trigger('click') // select baz
-      inputElements.at(1).trigger('click') // deselect bar
-      await localVue.nextTick()
-      expect(wrapper.emitted('input')[0]).toEqual([['foo', 'baz']])
-    })
+  //   it('can set and unset values', async () => {
+  //     const inputElements = wrapper.findAll('input')
+  //     inputElements.at(0).trigger('click') // select foo
+  //     inputElements.at(1).trigger('click') // select bar
+  //     inputElements.at(2).trigger('click') // select baz
+  //     inputElements.at(1).trigger('click') // deselect bar
+  //     await localVue.nextTick()
+  //     expect(wrapper.emitted('input')[0]).toEqual([['foo', 'baz']])
+  //   })
 
-    it('can return objects', async () => {
-      wrapper.setProps({ returnTypeAsObject: true })
+  //   it('can return objects', async () => {
+  //     wrapper.setProps({ returnTypeAsObject: true })
 
-      const inputElements = wrapper.findAll('input')
-      inputElements.at(0).trigger('click') // select foo
-      inputElements.at(1).trigger('click') // select bar
-      await localVue.nextTick()
-      expect(wrapper.emitted('input')[0]).toEqual([[{ value: 'foo', text: 'Foo' },
-        { value: 'bar', text: 'Bar' }]])
-    })
+  //     const inputElements = wrapper.findAll('input')
+  //     inputElements.at(0).trigger('click') // select foo
+  //     inputElements.at(1).trigger('click') // select bar
+  //     await localVue.nextTick()
+  //     expect(wrapper.emitted('input')[0]).toEqual([[{ value: 'foo', text: 'Foo' },
+  //       { value: 'bar', text: 'Bar' }]])
+  //   })
 
-    it('can select all and deselect all', async () => {
-      const toggleSelect = wrapper.find('.toggle-select')
-      expect(toggleSelect.text()).toBe('Select all')
-      await toggleSelect.trigger('click') // select all
-      expect(toggleSelect.text()).toBe('Deselect all')
-      expect(wrapper.findAll('input[type=checkbox]:checked').length).toEqual(3)
-      await toggleSelect.trigger('click') // deselect all
-      expect(wrapper.findAll('input[type=checkbox]:checked').length).toEqual(0)
-    })
-  })
+  //   it('can select all and deselect all', async () => {
+  //     const toggleSelect = wrapper.find('.toggle-select')
+  //     expect(toggleSelect.text()).toBe('Select all')
+  //     await toggleSelect.trigger('click') // select all
+  //     expect(toggleSelect.text()).toBe('Deselect all')
+  //     expect(wrapper.findAll('input[type=checkbox]:checked').length).toEqual(3)
+  //     await toggleSelect.trigger('click') // deselect all
+  //     expect(wrapper.findAll('input[type=checkbox]:checked').length).toEqual(0)
+  //   })
+  // })
 
-  describe('When restricting maxVisibleOptions to 1', () => {
-    let wrapper: any
-    beforeEach(() => { wrapper = getWrapper({ maxVisibleOptions: 1, showSatisfyAllCheckbox: false}) })
+  // describe('When restricting maxVisibleOptions to 1', () => {
+  //   let wrapper: any
+  //   beforeEach(() => { wrapper = getWrapper({ maxVisibleOptions: 1, showSatisfyAllCheckbox: false}) })
 
-    it('can hide elements based on maxVisibleOptions', async () => {
-      expect(wrapper.findAll('input[type=checkbox]').length).toBe(1)
+  //   it('can hide elements based on maxVisibleOptions', async () => {
+  //     expect(wrapper.findAll('input[type=checkbox]').length).toBe(1)
 
-      const sliceButton = wrapper.find('.toggle-slice')
-      await sliceButton.trigger('click')
-      expect(wrapper.findAll('input[type=checkbox]').length).toBe(3)
-      await sliceButton.trigger('click')
-      expect(wrapper.findAll('input[type=checkbox]').length).toBe(1)
-    })
-  })
+  //     const sliceButton = wrapper.find('.toggle-slice')
+  //     await sliceButton.trigger('click')
+  //     expect(wrapper.findAll('input[type=checkbox]').length).toBe(3)
+  //     await sliceButton.trigger('click')
+  //     expect(wrapper.findAll('input[type=checkbox]').length).toBe(1)
+  //   })
+  // })
 
   describe('SatisfyAllCheckbox', () => {
     let wrapper: any
@@ -88,7 +88,7 @@ describe('CheckboxFilter.vue', () => {
 
     it('triggers the proper emit when the satisfyAll checkbos is clicked', async () => {
       // satisfyAllButton is always the fist one, as it is above all the others   
-      const satisfyAllButton = wrapper.find('input[type=checkbox]')    
+      const satisfyAllButton = wrapper.find('input[type=checkbox]') 
       await satisfyAllButton.trigger('click')
       expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
       await satisfyAllButton.trigger('click')
