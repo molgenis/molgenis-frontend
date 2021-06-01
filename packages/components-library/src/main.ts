@@ -11,6 +11,16 @@ import Pagination from './components/ui/Pagination.vue'
 import RangeFilter from './components/filters/RangeFilter.vue'
 import StringFilter from './components/filters/StringFilter.vue'
 import Toaster from './components/ui/Toaster.vue'
+import TableHeader from './components/table/TableHeader.vue'
+import TableRow from './components/table/TableRow.vue'
+import RefTable from './components/table/dataDisplayTypes/RefTable.vue'
+import RefDisplay from './components/table/dataDisplayTypes/RefDisplay.vue'
+import DataDisplayCell from './components/table/dataDisplayTypes/DataDisplayCell.vue'
+import DateDisplay from './components/table/dataDisplayTypes/DateDisplay.vue'
+import EmailDisplay from './components/table/dataDisplayTypes/EmailDisplay.vue'
+import HTMLDisplay from './components/table/dataDisplayTypes/HTMLDisplay.vue'
+import LinkDisplay from './components/table/dataDisplayTypes/LinkDisplay.vue'
+import StringDisplay from './components/table/dataDisplayTypes/StringDisplay.vue'
 
 export {
   ActiveFilters,
@@ -25,5 +35,15 @@ export {
   Pagination,
   RangeFilter,
   StringFilter,
-  Toaster
+  Toaster,
+  TableHeader,
+  TableRow,
+  RefTable,
+  RefDisplay,
+  DataDisplayCell,
+  DateDisplay,
+  EmailDisplay,
+  HTMLDisplay,
+  LinkDisplay,
+  StringDisplay
 }

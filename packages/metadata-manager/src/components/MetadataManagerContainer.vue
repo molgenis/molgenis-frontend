@@ -16,7 +16,7 @@
     <div v-else>
       <div class="row">
         <div class="col">
-          <div v-if="editorEntityType && editorEntityType.id !== ''">
+          <div v-if="editorEntityType && (editorEntityType.id !== '' || editorEntityType.isNew)">
             <metadata-manager-entity-edit-form></metadata-manager-entity-edit-form>
             <hr>
           </div>
@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col">
           <metadata-manager-attribute-edit-form
-            v-if="editorEntityType && editorEntityType.id !== ''"></metadata-manager-attribute-edit-form>
+            v-if="editorEntityType && (editorEntityType.id !== '' || editorEntityType.isNew)"></metadata-manager-attribute-edit-form>
         </div>
       </div>
     </div>

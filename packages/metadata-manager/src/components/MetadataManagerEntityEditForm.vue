@@ -38,8 +38,15 @@
         </div>
       </div>
 
-      <!-- Column containing: Label, Description and Package -->
+      <!-- Column containing: Id, Label, Description and Package -->
       <div class="col-md-4 col-sm-12 col-xs-12 inner-column">
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-muted">ID</label>
+          <div class="col input-group">
+            <input v-model="id" class="form-control" type="text" :placeholder="$t('entity-edit-form-id-placeholder')" :disabled="!editorEntityType.isNew">
+          </div>
+        </div>
+
         <div class="form-group row">
           <label class="col-4 col-form-label text-muted">{{ 'entity-edit-form-label-label' | i18n
             }}</label>
@@ -217,6 +224,14 @@
         },
         set (value) {
           this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, {key: 'abstract0', value: value})
+        }
+      },
+      id: {
+        get () {
+          return this.$store.state.editorEntityType.id
+        },
+        set (value) {
+          this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, {key: 'id', value: value})
         }
       },
       label: {
