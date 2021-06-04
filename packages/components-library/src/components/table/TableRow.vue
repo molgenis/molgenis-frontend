@@ -27,7 +27,7 @@
       <router-link
         v-b-tooltip.hover.bottom class="btn btn-sm text-secondary"
         role="button"
-        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}, query: router.query}"
+        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}, query: searchRoute()}"
       >
         <font-awesome-icon icon="search" />
       </router-link>
@@ -112,19 +112,19 @@ export default {
       type: Boolean,
       required: true
     },
+    /**
+     * index of the current row ( used to make a unique id in StringFilter.vue )
+     */
     rowIndex: {
       type: Number,
       required: true
     },
-    /**
-     * Please provide acces to the $router object for use in internal links
-     */
-    router: {
-      type: Object,
-      required: true
-    }
   },
   methods: {
+    searchRoute(){
+      if(this.$route != null) return this.$route.query;
+      return {}
+    },
     getColumnValue (name) {
       if (name in this.rowData && this.rowData[name] !== undefined) {
         return this.rowData[name]
@@ -238,7 +238,7 @@ export default {
         v-bind:is-selected="false"
         v-bind:is-editable="true"
         v-bind:show-selected="false"
-        v-bind:router="{ query: '' }" 
+        v-bind:route="{ query: '' }" 
         v-on:toggleSelectedItemsHandler="() => { }"
     >
       <template v-slot:shopping-button>
@@ -299,7 +299,6 @@ export default {
         v-bind:is-selected="false"
         v-bind:is-editable="iseditable"
         v-bind:show-selected="showSelected"
-        v-bind:router="{ query: '' }" 
         v-on:toggleSelectedItemsHandler="(id) => { lastSelectedRow = id }"
     >
       <template v-slot:shopping-button>

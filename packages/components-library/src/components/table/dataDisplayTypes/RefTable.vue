@@ -14,7 +14,6 @@
           :is-selected="false"
           :is-editable="false"
           :show-selected="false"
-          :router="router" 
         />
       </tbody>
     </table>
@@ -50,14 +49,7 @@ export default {
      */
     metaData: {
       type: Object
-    },
-     /**
-     * Please provide acces to the $route object
-     */
-    router: {
-      type: Object,
-      required: true
-    }   
+    }
   },
   computed: {
     visibleColumns () {
