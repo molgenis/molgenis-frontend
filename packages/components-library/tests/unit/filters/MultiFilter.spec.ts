@@ -165,7 +165,7 @@ describe('MultiFilter.vue', () => {
       // satisfyAllButton is always the fist one, as it is above all the others   
       const satisfyAllButton = wrapper.find('input[type=checkbox]')    
       await satisfyAllButton.trigger('click')
-      expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
+      expect(wrapper.emitted('satisfyAll')[0])
       
     })
     
@@ -173,10 +173,7 @@ describe('MultiFilter.vue', () => {
       // satisfyAllButton is always the fist one, as it is above all the others 
       const satisfyAllButton = wrapper.find('input[type=checkbox]')
       await satisfyAllButton.trigger('click')
-      expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
-      await satisfyAllButton.trigger('click')
-      expect(wrapper.emitted('satisfyAll')[1]).toEqual([false])
-
+      expect(wrapper.emitted('satisfyAll')[0])
     })
   })
 

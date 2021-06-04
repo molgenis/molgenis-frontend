@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-if="showSatisfyAllCheckbox===true" class="query-type-selector">
+    <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-        <input type="checkbox" v-model="satisfyAllSelection"/>
+        <input type="checkbox" :checked='satisfyAllValue' :value='satisfyAllValue' @change="satisfyAllSelection"/>
       </label>
     </div>
     <b-input-group>
@@ -141,9 +141,7 @@ export default {
   },
   data () {
     return {
-      satisfyAllSelection: undefined,
       externalUpdate: false,
-      satisfyAllExternalUpdate: false,
       showCount: 0,
       isLoading: false,
       triggerQuery: Number,
@@ -191,13 +189,6 @@ export default {
 
       this.$emit('input', newSelection)
     },
-    satisfyAllSelection (newSatisfyAllSelectionValue) {
-      if (!this.satisfyAllExternalUpdate) {
-        this.$emit('satisfyAll', newSatisfyAllSelectionValue)
-      }
-      this.satisfyAllExternalUpdate = false
-    },
-
     value () {
       this.setValue()
     },
@@ -232,7 +223,6 @@ export default {
   },
   created () {
     this.showCount = this.maxVisibleOptions
-    this.setSatisfyAllValue()
   },
   beforeMount () {
     this.initializeFilter()
@@ -264,9 +254,8 @@ export default {
           ? this.value.map((vo) => vo.value)
           : this.value
     },
-    setSatisfyAllValue () {
-      this.satisfyAllExternalUpdate = true
-      this.satisfyAllSelection = this.satisfyAllValue
+    satisfyAllSelection (event) {
+      this.$emit('satisfyAll', event.target.value)
     },
     showMore () {
       this.showCount += this.maxVisibleOptions
