@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.11.0...@molgenis-ui/data-explorer@3.11.1) (2021-06-04)
+
+**Note:** Version bump only for package @molgenis-ui/data-explorer
+
+
+
+
+
 # [3.11.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.10.4...@molgenis-ui/data-explorer@3.11.0) (2021-05-26)
 
 
