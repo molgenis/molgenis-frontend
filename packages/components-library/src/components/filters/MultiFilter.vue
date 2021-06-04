@@ -3,7 +3,11 @@
     <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-        <input type="checkbox" :checked='satisfyAllValue' :value='satisfyAllValue' @change="satisfyAllSelection"/>
+        <input
+          type="checkbox" :checked="satisfyAllValue"
+          :value="satisfyAllValue"
+          @change="(event) => $emit('satisfyAll', event.target.checked)"
+        >
       </label>
     </div>
     <b-input-group>
@@ -253,9 +257,6 @@ export default {
         typeof this.value[0] === 'object'
           ? this.value.map((vo) => vo.value)
           : this.value
-    },
-    satisfyAllSelection (event) {
-      this.$emit('satisfyAll', event.target.value)
     },
     showMore () {
       this.showCount += this.maxVisibleOptions

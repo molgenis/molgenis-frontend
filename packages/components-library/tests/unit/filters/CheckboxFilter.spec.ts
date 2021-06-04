@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import CheckboxFilter from '@/components/filters/CheckboxFilter.vue'
 import { localVue as getLocalVue } from '../../lib/helpers'
-import Vue from 'vue'
+
 const localVue = getLocalVue()
 
 function getWrapper (props = {}) {
@@ -90,9 +90,8 @@ describe('CheckboxFilter.vue', () => {
       // satisfyAllButton is always the fist one, as it is above all the others   
       const satisfyAllButton = wrapper.find('input[type=checkbox]') 
       await satisfyAllButton.trigger('click')
-      await Vue.nextTick()
       expect(wrapper.emitted('satisfyAll')[0])
-
+      expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
     })
   })
 })

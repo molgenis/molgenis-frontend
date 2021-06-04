@@ -3,7 +3,11 @@
     <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-        <input type="checkbox" :checked='satisfyAllValue' :value='satisfyAllValue' @change="satisfyAllSelection"/>
+        <input
+          type="checkbox" :checked="satisfyAllValue"
+          :value="satisfyAllValue"
+          @change="(event) => $emit('satisfyAll', event.target.checked)"
+        >
       </label>
     </div>
     <b-form-checkbox-group
@@ -167,9 +171,6 @@ export default {
       } else {
         this.selection = this.value
       }
-    },
-    satisfyAllSelection (event) {
-      this.$emit('satisfyAll', event.target.value)
     }
   }
 }

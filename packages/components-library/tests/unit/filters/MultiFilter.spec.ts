@@ -174,7 +174,7 @@ describe('MultiFilter.vue', () => {
       const satisfyAllButton = wrapper.find('input[type=checkbox]')
       await satisfyAllButton.trigger('click')
       expect(wrapper.emitted('satisfyAll')[0])
+      expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
     })
   })
-
 })
