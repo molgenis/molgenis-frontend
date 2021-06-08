@@ -9,38 +9,12 @@
       scope="col"
     >
       <input
-        v-if="isEditable" class="form-check-input"
+        v-if="isEditable" class="form-check-input mr-2"
         type="checkbox"
         :checked="isSelected" :value="id"
         @click="toggleSelectedItemsHandler(id)"
       >
-      <router-link
-        v-if="isEditable"
-        v-b-tooltip.hover.bottom
-        :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
-        class="btn btn-sm text-secondary pl-2"
-        role="button"
-        :to="{ name: 'de-edit', params: { entity: tableName, dataRowId: id}, query: {}}"
-      >
-        <font-awesome-icon icon="edit" />
-      </router-link>
-      <router-link
-        v-b-tooltip.hover.bottom class="btn btn-sm text-secondary"
-        role="button"
-        :to="{ name: 'entity-detail', params: { entityType: tableName, entity: id}, query: router.query}"
-      >
-        <font-awesome-icon icon="search" />
-      </router-link>
-      <button
-        v-if="isEditable"
-        v-b-tooltip.hover.bottom
-        :title="$t('dataexplorer_row_action_delete_btn_tooltip')"
-        class="btn btn-sm text-secondary"
-        role="button"
-        @click="deleteItem(id)"
-      >
-        <font-awesome-icon icon="trash" />
-      </button>
+      <slot name="edit-buttons" />
     </th>
     <td v-for="(column, index) in visibleColumns" :key="index" class="mg-data-column">
       <DataDisplayCell
@@ -112,17 +86,13 @@ export default {
       type: Boolean,
       required: true
     },
+    /**
+     * index of the current row ( used to make a unique id in StringFilter.vue )
+     */
     rowIndex: {
       type: Number,
       required: true
     },
-    /**
-     * Please provide acces to the $router object for use in internal links
-     */
-    router: {
-      type: Object,
-      required: true
-    }
   },
   methods: {
     getColumnValue (name) {
@@ -137,9 +107,6 @@ export default {
         * @event toggleSelectedItemsHandler
         */
       this.$emit('toggleSelectedItemsHandler', id)
-    },
-    deleteItem (id) {
-      this.$eventBus.$emit('delete-item', id)
     }
   }
 }
@@ -238,11 +205,30 @@ export default {
         v-bind:is-selected="false"
         v-bind:is-editable="true"
         v-bind:show-selected="false"
-        v-bind:router="{ query: '' }" 
         v-on:toggleSelectedItemsHandler="() => { }"
     >
       <template v-slot:shopping-button>
         <button class="btn btn-primary"> Shopping-button slot </button>
+      </template>
+      <template v-slot:edit-buttons>
+        <router-link
+          class="btn btn-sm text-secondary"
+          role="button"
+        >
+          <font-awesome-icon icon="edit" />
+        </router-link>
+        <router-link
+          class="btn btn-sm text-secondary"
+          role="button"
+        >
+          <font-awesome-icon icon="search" />
+        </router-link>
+        <button
+          class="btn btn-sm text-secondary"
+          role="button"
+        >
+          <font-awesome-icon icon="trash" />
+        </button>
       </template>
     </TableRow>
   </table>
@@ -299,12 +285,33 @@ export default {
         v-bind:is-selected="false"
         v-bind:is-editable="iseditable"
         v-bind:show-selected="showSelected"
-        v-bind:router="{ query: '' }" 
         v-on:toggleSelectedItemsHandler="(id) => { lastSelectedRow = id }"
     >
       <template v-slot:shopping-button>
         <button class="btn btn-primary"> Shopping-button slot </button>
       </template>
+      <template v-slot:edit-buttons>
+        <router-link
+          class="btn btn-sm text-secondary"
+          role="button"
+          v-if="iseditable"
+        >
+          <font-awesome-icon icon="edit" />
+        </router-link>
+        <router-link
+          class="btn btn-sm text-secondary"
+          role="button"
+        >
+          <font-awesome-icon icon="search" />
+        </router-link>
+        <button
+          class="btn btn-sm text-secondary"
+          v-if="iseditable"
+          role="button"
+        >
+          <font-awesome-icon icon="trash" />
+        </button>
+      </template>      
     </TableRow>
   </table>
   <hr/>
