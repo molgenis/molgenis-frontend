@@ -62,6 +62,7 @@
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 import { TableRow, TableHeader } from '@molgenis-ui/components-library'
+import ShoppingButton from '@/components/utils/ShoppingButton.vue'
 
 export default {
   name: 'TableView',

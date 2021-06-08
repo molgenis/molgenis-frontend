@@ -13,7 +13,7 @@
       :custom-code="tableSettings.customCardCode"
       :is-editable="hasEditRights"
       :hidden-columns="hiddenColumns"
-      :router="$router"
+      :is-shop="tableSettings.isShop"
       @expandCard="handleExpandCard(entity)"
     />
   </div>

@@ -50,10 +50,11 @@
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import { TableRow, TableHeader } from '@molgenis-ui/components-library'
+import ShoppingButton from '../components/utils/ShoppingButton.vue'
 
 export default {
   name: 'ClipboardView',
-  components: { TableRow, TableHeader },
+  components: { TableRow, TableHeader, ShoppingButton },
   computed: {
     ...mapState('explorer', ['tableMeta', 'selectedItemIds', 'tableData', 'sort', 'tableName', 'showSelected']),
     ...mapGetters('explorer', ['tableIdAttributeName']),
