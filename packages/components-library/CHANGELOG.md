@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.5.0...@molgenis-ui/components-library@2.5.1) (2021-06-08)
+
+
+### Bug Fixes
+
+* fixed route-router naming error by not needing it in de components library ([4f5c3e0](https://github.com/molgenis/molgenis-frontend/commit/4f5c3e028f46c6e92569425f9d56b47402b0a138))
+* make buttons a slot ([202ccca](https://github.com/molgenis/molgenis-frontend/commit/202cccaa86e0ac0f783403db1872c4f883a56e8e))
+
+
+
+
+
 # [2.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.4.5...@molgenis-ui/components-library@2.5.0) (2021-05-26)
 
 
