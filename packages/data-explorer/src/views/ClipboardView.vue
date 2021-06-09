@@ -31,7 +31,7 @@
             :show-selected="true"
             @toggleSelectedItemsHandler="toggleSelectedItems"
           >
-            <template v-slot:shopping-button>
+            <template #shopping-button>
               <shopping-button :id="getEntityId(entity)" :is-selected="isSelected(entity)" class="float-right" />
             </template>
           </table-row>
