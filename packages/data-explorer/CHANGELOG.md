@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.11.2...@molgenis-ui/data-explorer@3.11.3) (2021-06-09)
+
+
+### Bug Fixes
+
+* **data-explorer:** use table component from library ([64114ab](https://github.com/molgenis/molgenis-frontend/commit/64114ab1affc4ffb4bf030451fde4eaaec2e7e19))
+
+
+
+
+
 ## [3.11.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.11.1...@molgenis-ui/data-explorer@3.11.2) (2021-06-08)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
