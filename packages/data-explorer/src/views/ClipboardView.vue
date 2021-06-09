@@ -86,7 +86,7 @@ export default {
       const sortQueryParam = isSortOrderReversed ? '-' + sortOrderColumn : sortOrderColumn
 
       this.$router.push({
-        name: 'de-view', // TODO: ADD ROUTE TO Clipboardview?
+        name: 'de-view',
         query: { ...this.$route.query, sort: sortQueryParam }
       })
     }
