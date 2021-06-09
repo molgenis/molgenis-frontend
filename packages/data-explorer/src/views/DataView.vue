@@ -40,9 +40,8 @@
 <script>
 import SelectLayoutView from './SelectLayoutView'
 import ClipboardView from './ClipboardView'
-import RefTable from '@/components/dataDisplayTypes/RefTable'
 import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
-import { CartSelectionToast } from '@molgenis-ui/components-library'
+import { CartSelectionToast, RefTable } from '@molgenis-ui/components-library'
 
 export default {
   name: 'DataView',

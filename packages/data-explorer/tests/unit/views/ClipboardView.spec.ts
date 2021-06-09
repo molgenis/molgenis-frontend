@@ -16,6 +16,10 @@ describe('ClipboardView.vue', () => {
   beforeEach(() => {
     state = {
       showSelected: false,
+      sort: {
+        sortColumnName: 'sortedColumnName',
+        isSortOrderReversed: false
+      },
       tableMeta: {
         idAttribute: { name: 'tableID' },
         attributes: [

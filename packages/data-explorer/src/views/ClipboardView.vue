@@ -11,7 +11,12 @@
         <font-awesome-icon icon="shopping-bag" /> {{ $t('dataexplorer_shopping_cart_order_btn_label') }}
       </button>
       <table class="table table-bordered overflow-hidden">
-        <table-header :visible-columns="visibleColumns" :is-shop="true" />
+        <table-header
+          :visible-columns="visibleColumns"
+          :sort-column-name="sort.sortColumnName"
+          :is-sort-order-reversed="sort.isSortOrderReversed"
+          @sort="handleSortEvent"
+        />
         <tbody>
           <table-row
             v-for="(entity, index) in entitiesToShow"
@@ -22,9 +27,14 @@
             :row-data="entity"
             :visible-columns="visibleColumns"
             :is-selected="isSelected(entity)"
-            :is-shop="true"
-            :show-selected="showSelected"
-          />
+            :is-editable="false"
+            :show-selected="true"
+            @toggleSelectedItemsHandler="toggleSelectedItems"
+          >
+            <template #shopping-button>
+              <shopping-button :id="getEntityId(entity)" :is-selected="isSelected(entity)" class="float-right" />
+            </template>
+          </table-row>
         </tbody>
       </table>
     </div>
@@ -38,15 +48,15 @@
 </template>
 
 <script>
-import TableRow from '../components/dataView/TableRow'
-import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import { TableRow, TableHeader } from '@molgenis-ui/components-library'
+import ShoppingButton from '../components/utils/ShoppingButton.vue'
 
 export default {
   name: 'ClipboardView',
-  components: { TableRow, TableHeader },
+  components: { TableRow, TableHeader, ShoppingButton },
   computed: {
-    ...mapState('explorer', ['tableMeta', 'selectedItemIds', 'tableData', 'tableName', 'showSelected']),
+    ...mapState('explorer', ['tableMeta', 'selectedItemIds', 'tableData', 'sort', 'tableName', 'showSelected']),
     ...mapGetters('explorer', ['tableIdAttributeName']),
     entitiesToShow () {
       return this.tableData.items.filter((entity) => this.selectedItemIds.includes(this.getEntityId(entity)))
@@ -60,7 +70,7 @@ export default {
   },
   methods: {
     ...mapActions('explorer', ['fetchTableViewData']),
-    ...mapMutations('explorer', ['setShowSelected', 'setHideFilters']),
+    ...mapMutations('explorer', ['setShowSelected', 'setHideFilters', 'toggleSelectedItems']),
     getEntityId (entity) {
       return entity[this.tableIdAttributeName].toString()
     },
@@ -70,6 +80,15 @@ export default {
     closeShoppingCart () {
       this.setShowSelected(false)
       this.setHideFilters(false)
+    },
+    handleSortEvent (sortOrderColumn) {
+      const isSortOrderReversed = sortOrderColumn === this.sort.sortColumnName ? !this.sort.isSortOrderReversed : false
+      const sortQueryParam = isSortOrderReversed ? '-' + sortOrderColumn : sortOrderColumn
+
+      this.$router.push({
+        name: 'de-view',
+        query: { ...this.$route.query, sort: sortQueryParam }
+      })
     }
   }
 }

@@ -6,7 +6,6 @@
       :data-id="getEntityId(entity)"
       :data-table="tableName"
       :is-selected="isSelected(entity)"
-      :is-shop="tableSettings.isShop"
       :collapse-limit="tableSettings.collapseLimit"
       :data-label="getEntityLabel(entity)"
       :data-contents="entity"
@@ -14,6 +13,7 @@
       :custom-code="tableSettings.customCardCode"
       :is-editable="hasEditRights"
       :hidden-columns="hiddenColumns"
+      :is-shop="tableSettings.isShop"
       @expandCard="handleExpandCard(entity)"
     />
   </div>
