@@ -1,7 +1,7 @@
 <template>
     <table class="table table-bordered">
         <table-header
-            v-bind:visibleColumns="visibleColumns"
+            v-bind:visibleColumns="columns"
             v-bind:sortColumnName="sortColumnName"
             v-bind:isSortOrderReversed="isSortOrderReversed"
             v-on:sort="sortEvent">
@@ -12,12 +12,12 @@
             v-bind:id="getEntityId(entity)"
             v-bind:key="index"
             v-bind:row-index="index"
-            v-bind:table-name="table-name"
+            v-bind:table-name="tableName"
             v-bind:row-data="entity"
-            v-bind:visible-columns="visibleColumns"
-            v-bind:is-selected="is-selected"
-            v-bind:is-editable="is-editable"
-            v-bind:show-selected="show-selected"
+            v-bind:visible-columns="columns"
+            v-bind:is-selected="true"
+            v-bind:is-editable="isEditable"
+            v-bind:show-selected="showSelected"
             v-on:toggleSelectedItemsHandler="toggleSelectedItemsHandler"
         >
         <template v-slot:shopping-button>
@@ -41,7 +41,7 @@ export default {
      * The list of columns to display. 
      * type: [ { name: 'name of column' }, ... ]
      */
-    visibleColumns: {
+    columns: {
       type: Array,
       required: true
     },
@@ -78,14 +78,6 @@ export default {
     tableName: {
       type: String,
       required: true
-    },
-    /**
-     * is this current row selected?
-     */
-    isSelected: {
-      type: Boolean,
-      required: false,
-      default: () => false
     },
     /**
      * De we have edit rights on this table?
@@ -162,7 +154,7 @@ export default {
   var lastSelectedRow = 'none'
 
   <Table
-    v-bind:visibleColumns="visibleColumns"
+    v-bind:columns="visibleColumns"
     v-bind:sortColumnName="sorting"
     v-bind:isSortOrderReversed="isReversed"
     v-on:sort="(newValue) => {
@@ -172,15 +164,14 @@ export default {
     v-bind:entities="entities"
     idAttribute="id"
     table-name="MyEntity"
-    v-bind:is-selected="false"
     v-bind:is-editable="iseditable"
     v-bind:show-selected="showSelected"
     v-on:toggleSelectedItemsHandler="(id) => { lastSelectedRow = id }"
   >
     <template v-slot:shopping-button>
-    <button class="btn btn-primary"> Shopping-button slot </button>
+      <button class="btn btn-primary"> Shopping-button slot </button>
     </template>
-  </table>
+  </Table>
   <hr/>
   <strong>Helpers:</strong>
   <div>lastSelectedRow: {{lastSelectedRow}}</div>

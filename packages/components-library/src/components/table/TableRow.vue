@@ -238,7 +238,6 @@ export default {
         v-bind:is-selected="false"
         v-bind:is-editable="true"
         v-bind:show-selected="false"
-        v-bind:router="{ query: '' }" 
         v-on:toggleSelectedItemsHandler="() => { }"
     >
       <template v-slot:shopping-button>
@@ -299,7 +298,6 @@ export default {
         v-bind:is-selected="false"
         v-bind:is-editable="iseditable"
         v-bind:show-selected="showSelected"
-        v-bind:router="{ query: '' }" 
         v-on:toggleSelectedItemsHandler="(id) => { lastSelectedRow = id }"
     >
       <template v-slot:shopping-button>
