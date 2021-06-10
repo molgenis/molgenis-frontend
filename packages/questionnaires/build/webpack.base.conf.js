@@ -24,6 +24,9 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  externals: {
+    '@molgenis/molgenis-ui-form': 'window["molgenis-ui-form"]'
+  },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -36,7 +39,7 @@ module.exports = {
     alias: {
       'src': resolve('src'),
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': resolve('src')
     }
   },
   module: {

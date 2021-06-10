@@ -23,7 +23,6 @@
 <script>
   import { FormComponent } from '@molgenis/molgenis-ui-form'
   import 'flatpickr/dist/flatpickr.css'
-  import '@molgenis/molgenis-ui-form/dist/static/css/molgenis-ui-form.css'
 
   export default {
     name: 'ChapterForm',
