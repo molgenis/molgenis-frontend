@@ -1212,10 +1212,10 @@
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.0"
 
-"@molgenis/molgenis-ui-form@^5.4.3":
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.4.3.tgz#76bc9f390dac79b8e484921032dcbd061afdb2af"
-  integrity sha512-DJk8AhW0p0lkpfglhziTjDuByByPE8X74I6f63kgBxyM3Z+02h7dljRRWwPn4B2GWfNeb2C0sDWcoDJ+RKKUOA==
+"@molgenis/molgenis-ui-form@^5.5.1":
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.5.1.tgz#328b4d3f42af9a4cffc165634981f431693bd945"
+  integrity sha512-IKwbIFhd4pOhV7IWK3lKuj8N3fcIFi8Aa4Ymj8MGVQHEGrsA3Vf/Z2MMxHvEy8U8IRPzH4aHJYuBRIdErIJIIA==
   dependencies:
     "@molgenis/molgenis-api-client" "^2.1.2"
     "@molgenis/rsql" "^0.1.1"

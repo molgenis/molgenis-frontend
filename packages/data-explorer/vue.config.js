@@ -32,6 +32,9 @@ module.exports = {
     config.resolve.symlinks(false)
   },
   configureWebpack: config => {
+    config.externals = {
+      '@molgenis/molgenis-ui-form': 'window["molgenis-ui-form"]'
+    }
     config.plugins.push(
       new BannerPlugin({
         banner: bannerText
@@ -83,8 +86,8 @@ module.exports = {
         target: PROXY_TARGET,
         changeOrigin: true
       },
-      '^/@molgenis-ui': {
-        target: PROXY_TARGET,
+      '^/@molgenis(-ui)?': {
+        target: "https://unpkg.com",
         changeOrigin: true
       },
       '^/plugin': {
