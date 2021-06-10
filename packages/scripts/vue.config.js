@@ -19,7 +19,8 @@ module.exports = {
   configureWebpack: config => {
     config.devtool = 'source-map'
     config.externals = {
-      'bootstrap': 'bootstrap'
+      'bootstrap': 'bootstrap',
+      '@molgenis/molgenis-ui-form': 'window["molgenis-ui-form"]'
     }
     config.plugins.push(
       new BannerPlugin({
@@ -48,6 +49,9 @@ module.exports = {
       },
       '^/menu': {
         'target': 'http://localhost:8080'
+      },
+      '^/@molgenis': {
+        'target': 'https://unpkg.com'
       }
     },
     before: function (app, server) {

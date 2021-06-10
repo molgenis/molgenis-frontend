@@ -23,7 +23,8 @@ module.exports = {
       '/login': { target },
       '/api': { target },
       '/theme': { target },
-      '/plugin/settings': { target }
+      '/plugin/settings': { target },
+      '/@molgenis': { target: 'https://unpkg.com' }
     }
   },
   configureWebpack: config => {
@@ -32,7 +33,8 @@ module.exports = {
     }
     config.devtool = 'source-map'
     config.externals = {
-      bootstrap: 'bootstrap'
+      bootstrap: 'bootstrap',
+      "@molgenis/molgenis-ui-form": "window['molgenis-ui-form']"
     }
     config.plugins.push(
       new BannerPlugin({
