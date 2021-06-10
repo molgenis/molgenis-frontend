@@ -84,20 +84,18 @@ describe('CheckboxFilter.vue', () => {
 
   describe('SatisfyAllCheckbox', () => {
     it('checks that the satisfyAll checkbox is not shown by default ', () => {
-      let wrapper: any
-      wrapper = getWrapper() 
+      const wrapper = getWrapper() 
       const satisfyAllButton = wrapper.find('input[type=checkbox]') 
       expect (satisfyAllButton.exists()).toBe(false)
     })
 
     it('triggers the proper emit when the satisfyAll checkbox is clicked', async () => {
-      let wrapper: any
-      wrapper = getWrapper({ showSatisfyAllCheckbox: true }) 
+      const wrapper = getWrapper({ showSatisfyAllCheckbox: true }) 
       // satisfyAllButton is always the fist one, as it is above all the others   
       const satisfyAllButton = wrapper.find('input[type=checkbox]') 
       await satisfyAllButton.trigger('click')
-      expect(wrapper.emitted('satisfyAll')[0])
-      expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
+      expect(wrapper.emitted('satisfyAll'))
+      expect(wrapper.emitted('satisfyAll')).toEqual([[true]])
     })
   })
 })

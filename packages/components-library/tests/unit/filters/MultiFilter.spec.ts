@@ -163,7 +163,7 @@ describe('MultiFilter.vue', () => {
       
     })
     
-    it('triggers the proper emit when the satisfyAll checkbos is clicked', async () => {
+    it('triggers the proper emit when the satisfyAll checkbox is clicked', async () => {
       const propsData = {
         name: 'multi-filter',
         label: 'Filter with multiple options',
