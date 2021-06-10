@@ -17,23 +17,56 @@
         :row-data="entity"
         :visible-columns="visibleColumns"
         :is-selected="isSelected(entity)"
-        :is-shop="tableSettings.isShop"
         :is-editable="hasEditRights"
         :show-selected="showSelected"
         @toggleSelectedItemsHandler="toggleSelectedItems"
-      />
+      >
+        <template #shopping-button>
+          <shopping-button :id="getEntityId(entity)" :is-selected="isSelected(entity)" class="float-right" />
+        </template>
+      
+        <template #edit-buttons>
+          <router-link
+            v-if="hasEditRights"
+            v-b-tooltip.hover.bottom
+            :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
+            class="btn btn-sm text-secondary"
+            role="button"
+            :to="{ name: 'de-edit', params: { entity: tableName, dataRowId: getEntityId(entity)}, query: {}}"
+          >
+            <font-awesome-icon icon="edit" />
+          </router-link>
+          <router-link
+            v-b-tooltip.hover.bottom class="btn btn-sm text-secondary"
+            role="button"
+            :to="{ name: 'entity-detail', params: { entityType: tableName, entity: getEntityId(entity)}, query: $route.query}"
+          >
+            <font-awesome-icon icon="search" />
+          </router-link>
+          <button
+            v-if="hasEditRights"
+            v-b-tooltip.hover.bottom
+            :title="$t('dataexplorer_row_action_delete_btn_tooltip')"
+            class="btn btn-sm text-secondary"
+            role="button"
+            @click="$eventBus.$emit('delete-item', getEntityId(entity))"
+          >
+            <font-awesome-icon icon="trash" />
+          </button>
+        </template>
+      </table-row>
     </tbody>
   </table>
 </template>
 
 <script>
-import TableRow from '../components/dataView/TableRow'
-import TableHeader from '../components/dataView/TableHeader'
 import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
+import { TableRow, TableHeader } from '@molgenis-ui/components-library'
+import ShoppingButton from '@/components/utils/ShoppingButton.vue'
 
 export default {
   name: 'TableView',
-  components: { 'table-row': TableRow, TableHeader },
+  components: { 'table-row': TableRow, TableHeader, ShoppingButton },
   props: {
     entitiesToShow: {
       type: Array,
