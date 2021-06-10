@@ -71,6 +71,10 @@ export default {
       default: () => []
     },
 
+    /**
+     * This is the satisfyAll property value. It is true if the satisfyAll property has been set (satisfyAll button checked),
+     * false if not. 
+     */
     satisfyAllValue: {
       type: Boolean,
       default: () => false
@@ -91,10 +95,13 @@ export default {
       type: Number,
       default: () => undefined
     },
+    /**
+     * Whether to show the SatisfyAll chechbox or not.
+     */
     showSatisfyAllCheckbox: {
       type: Boolean,
       required: false,
-      default: () => true
+      default: () => false
     }
   },
   data () {

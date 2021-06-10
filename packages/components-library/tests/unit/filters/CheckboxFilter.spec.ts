@@ -33,7 +33,7 @@ function getWrapper (props = {}) {
 describe('CheckboxFilter.vue', () => {
   describe('Parsing only required props', () => {
     let wrapper: any
-    beforeEach(() => { wrapper = getWrapper({ showSatisfyAllCheckbox: false }) })
+    beforeEach(() => { wrapper = getWrapper({ }) })
 
     it('can set and unset values', async () => {
       const inputElements = wrapper.findAll('input')
@@ -69,7 +69,7 @@ describe('CheckboxFilter.vue', () => {
 
   describe('When restricting maxVisibleOptions to 1', () => {
     let wrapper: any
-    beforeEach(() => { wrapper = getWrapper({ maxVisibleOptions: 1, showSatisfyAllCheckbox: false}) })
+    beforeEach(() => { wrapper = getWrapper({ maxVisibleOptions: 1 }) })
 
     it('can hide elements based on maxVisibleOptions', async () => {
       expect(wrapper.findAll('input[type=checkbox]').length).toBe(1)
@@ -83,10 +83,16 @@ describe('CheckboxFilter.vue', () => {
   })
 
   describe('SatisfyAllCheckbox', () => {
-    let wrapper: any
-    beforeEach(() => { wrapper = getWrapper({ }) })
+    it('checks that the satisfyAll checkbox is not shown by default ', () => {
+      let wrapper: any
+      wrapper = getWrapper() 
+      const satisfyAllButton = wrapper.find('input[type=checkbox]') 
+      expect (satisfyAllButton.exists()).toBe(false)
+    })
 
-    it('triggers the proper emit when the satisfyAll checkbos is clicked', async () => {
+    it('triggers the proper emit when the satisfyAll checkbox is clicked', async () => {
+      let wrapper: any
+      wrapper = getWrapper({ showSatisfyAllCheckbox: true }) 
       // satisfyAllButton is always the fist one, as it is above all the others   
       const satisfyAllButton = wrapper.find('input[type=checkbox]') 
       await satisfyAllButton.trigger('click')
