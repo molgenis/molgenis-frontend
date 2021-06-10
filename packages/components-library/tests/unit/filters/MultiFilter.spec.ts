@@ -143,4 +143,44 @@ describe('MultiFilter.vue', () => {
       expect(wrapper.emitted().input).toEqual([[[{ text: 'Red', value: 'red' }]]])
     })
   })
+
+  describe('SatisfyAllCheckbox', () => {
+    
+    it('checks that the satisfyAll checkbox is not shown by default', () => {
+      const propsData = {
+        name: 'multi-filter',
+        label: 'Filter with multiple options',
+        collapsed: false,
+        maxVisibleOptions: 3,
+        options: jest.fn(() => Promise.resolve([
+          { value: 'red', text: 'Red' },
+          { value: 'green', text: 'Green' },])),
+        type: 'multi-filter'
+      }
+      wrapper = mount(MultiFilter, { localVue, propsData })
+      const satisfyAllButton = wrapper.find('input[type=checkbox]')    
+      expect (satisfyAllButton.exists()).toBe(false)
+      
+    })
+    
+    it('triggers the proper emit when the satisfyAll checkbox is clicked', async () => {
+      const propsData = {
+        name: 'multi-filter',
+        label: 'Filter with multiple options',
+        collapsed: false,
+        maxVisibleOptions: 3,
+        options: jest.fn(() => Promise.resolve([
+          { value: 'red', text: 'Red' },
+          { value: 'green', text: 'Green' },])),
+        type: 'multi-filter',
+        showSatisfyAllCheckbox: true
+      }
+      wrapper = mount(MultiFilter, { localVue, propsData })
+      // satisfyAllButton is always the fist one, as it is above all the others 
+      const satisfyAllButton = wrapper.find('input[type=checkbox]')
+      await satisfyAllButton.trigger('click')
+      expect(wrapper.emitted('satisfyAll')[0])
+      expect(wrapper.emitted('satisfyAll')[0]).toEqual([true])
+    })
+  })
 })
