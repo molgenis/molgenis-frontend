@@ -15,13 +15,13 @@
             v-bind:table-name="tableName"
             v-bind:row-data="entity"
             v-bind:visible-columns="columns"
-            v-bind:is-selected="true"
-            v-bind:is-editable="isEditable"
-            v-bind:show-selected="showSelected"
+            v-bind:is-selected="value.includes(getEntityId(entity))"
+            v-bind:is-editable="isSelectable"
+            v-bind:show-selected="false"
             v-on:toggleSelectedItemsHandler="toggleSelectedItemsHandler"
         >
-        <template v-slot:shopping-button>
-            <slot name="shopping-button" />
+        <template v-slot:edit-buttons>
+          <slot name="edit-buttons" />
         </template>
         </table-row>
     </table>
@@ -35,8 +35,14 @@ export default {
   name: 'Table',
   components: { TableHeader, TableRow },
   props: {
-    // TABLE HEADER
-
+    /**
+     * v-model interface, expects a array with ids for selected items of the table ["1", "5"]
+     */
+    value: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
     /**
      * The list of columns to display. 
      * type: [ { name: 'name of column' }, ... ]
@@ -62,12 +68,17 @@ export default {
       default: () => false
     },
 
-    // TABLE ROW
+    /**
+     * An array of: DataApiResponseItem
+     * See: https://github.com/molgenis/molgenis-frontend/blob/master/packages/data-explorer/src/types/ApiResponse.ts for type definition
+     */
     entities: {
       type: Array,
       required: true
     },
-
+    /**
+     * Please provide the ColumnName of the ID colomn
+     */
     idAttribute: {
       type: String,
       required: true
@@ -80,19 +91,12 @@ export default {
       required: true
     },
     /**
-     * De we have edit rights on this table?
+     * De we wish to be able to select rows?
      */
-    isEditable: {
+    isSelectable: {
       type: Boolean,
       default: () => false
-    },
-    /**
-     * will show shopping cart button template if true. Will also hide edit/delete row opperations 
-     */
-    showSelected: {
-      type: Boolean,
-      required: true
-    },
+    }
   },
   methods:{
     getEntityId (entity) {
@@ -112,6 +116,11 @@ export default {
         * @property {String} id - id of column selected
         * @event toggleSelectedItemsHandler
         */
+      if(this.value.includes(id)){
+        this.$emit('input', this.value.filter(item => item !== id))
+      }else{
+        this.$emit('input', [...this.value,id])
+      }
       this.$emit('toggleSelectedItemsHandler', id)
     }
   }
@@ -124,7 +133,9 @@ export default {
 <docs>
   Create a table using `TableHeader` and `TableRow` in one go, you will have less freedom but it easier to use.
 
-  ### Full table
+  Note that the table will not sort the containing data, only gives you the heads up that sorting is needed. The way data is sorted is up to the person that implements the table. (a new api request may be needed)
+
+  ### Table
   ```jsx
   const ref = [
     { id: '0', label: 'Hello' },
@@ -148,13 +159,13 @@ export default {
 
   var sorting = "name"
   var isReversed = false
-
-  var iseditable = true
-  var showSelected = false
+  var isselectable = true
   var lastSelectedRow = 'none'
+  var selection = ["1"]
 
   <Table
     v-bind:columns="visibleColumns"
+    v-model="selection"
     v-bind:sortColumnName="sorting"
     v-bind:isSortOrderReversed="isReversed"
     v-on:sort="(newValue) => {
@@ -164,18 +175,17 @@ export default {
     v-bind:entities="entities"
     idAttribute="id"
     table-name="MyEntity"
-    v-bind:is-editable="iseditable"
-    v-bind:show-selected="showSelected"
+    v-bind:is-selectable="isselectable"
     v-on:toggleSelectedItemsHandler="(id) => { lastSelectedRow = id }"
   >
-    <template v-slot:shopping-button>
-      <button class="btn btn-primary"> Shopping-button slot </button>
+    <template v-slot:edit-buttons>
+      <button class="btn btn-sm btn-primary"> edit </button>
     </template>
   </Table>
   <hr/>
   <strong>Helpers:</strong>
   <div>lastSelectedRow: {{lastSelectedRow}}</div>
-  <div><button v-on:click="iseditable=!iseditable">toggle iseditable state</button> {{iseditable}}</div>
-  <div><button v-on:click="showSelected=!showSelected">toggle showSelected state</button> {{showSelected}}</div>
+  <div>selection: {{selection}}</div>
+  <div><button v-on:click="isselectable=!isselectable">toggle isselectable state</button> {{isselectable}}</div>
   ```
 </docs>
