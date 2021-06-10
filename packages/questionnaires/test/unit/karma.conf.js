@@ -17,7 +17,12 @@ module.exports = function karmaConfig (config) {
     files: [
       '../../node_modules/es6-promise/dist/es6-promise.auto.js',
       '../../node_modules/babel-polyfill/dist/polyfill.js',
-      './index.js'],
+      '../../node_modules/@molgenis/molgenis-ui-form/dist/static/molgenis-ui-form.js',
+      './index.js'
+    ],
+    setupFiles: [
+      './setup.js'
+    ],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']
     },

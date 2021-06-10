@@ -106,10 +106,10 @@
     i18next-xhr-backend "^1.4.1"
     moment "^2.18.1"
 
-"@molgenis/molgenis-ui-form@^5.4.3":
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.4.3.tgz#76bc9f390dac79b8e484921032dcbd061afdb2af"
-  integrity sha512-DJk8AhW0p0lkpfglhziTjDuByByPE8X74I6f63kgBxyM3Z+02h7dljRRWwPn4B2GWfNeb2C0sDWcoDJ+RKKUOA==
+"@molgenis/molgenis-ui-form@^5.5.1":
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.5.1.tgz#328b4d3f42af9a4cffc165634981f431693bd945"
+  integrity sha512-IKwbIFhd4pOhV7IWK3lKuj8N3fcIFi8Aa4Ymj8MGVQHEGrsA3Vf/Z2MMxHvEy8U8IRPzH4aHJYuBRIdErIJIIA==
   dependencies:
     "@molgenis/molgenis-api-client" "^2.1.2"
     "@molgenis/rsql" "^0.1.1"
@@ -2160,9 +2160,9 @@ code-point-at@^1.0.0:
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
 codemirror@5.x:
-  version "5.61.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.61.0.tgz#318e5b034a707207948b92ffc2862195e8fdb08e"
-  integrity sha512-D3wYH90tYY1BsKlUe0oNj2JAhQ9TepkD51auk3N7q+4uz7A/cgJ5JsWHreT0PqieW1QhOuqxQ2reCXV1YXzecg==
+  version "5.61.1"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.61.1.tgz#ccfc8a43b8fcfb8b12e8e75b5ffde48d541406e0"
+  integrity sha512-+D1NZjAucuzE93vJGbAaXzvoBHwp9nJZWWWF9utjv25+5AZUiah6CIlfb4ikG4MoDsFsCG8niiJH5++OO2LgIQ==
 
 collection-visit@^1.0.0:
   version "1.0.0"
@@ -4182,7 +4182,6 @@ flow-bin@0.53.1, "flow-bin@>=0.44.2 <1":
   version "0.53.1"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.53.1.tgz#9b22b63a23c99763ae533ebbab07f88c88c97d84"
   integrity sha1-myK2OiPJl2OuUz67qwf4jIjJfYQ=
-
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
