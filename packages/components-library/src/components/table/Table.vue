@@ -20,9 +20,9 @@
             v-bind:show-selected="false"
             v-on:toggleSelectedItemsHandler="toggleSelectedItemsHandler"
         >
-        <template v-slot:edit-buttons>
-          <slot name="edit-buttons" />
-        </template>
+          <template v-slot:edit-buttons>
+            <slot name="edit-buttons" />
+          </template>
         </table-row>
     </table>
 </template>
