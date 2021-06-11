@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.6.0...@molgenis-ui/components-library@2.7.0) (2021-06-11)
+
+
+### Bug Fixes
+
+* updated naming ([c2444bc](https://github.com/molgenis/molgenis-frontend/commit/c2444bc398eb8d9f622089433aaebd930c81d479))
+
+
+### Features
+
+* table component ([89c3bb0](https://github.com/molgenis/molgenis-frontend/commit/89c3bb017ca84452bebb505f912195841d9d2865))
+* working table component ([218ce6d](https://github.com/molgenis/molgenis-frontend/commit/218ce6d0cb9a0c9ef4604d9fc13674b3fe99f606))
+
+
+
+
+
 # [2.6.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.5.1...@molgenis-ui/components-library@2.6.0) (2021-06-10)
 
 
