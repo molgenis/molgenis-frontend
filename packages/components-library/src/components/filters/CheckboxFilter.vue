@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
+      <label class="label-disabled">
+        Satisfy all
+        <input
+          type="checkbox" :checked="satisfyAllValue"
+          :value="satisfyAllValue"
+          @change="(event) => $emit('satisfyAll', event.target.checked)"
+        >
+      </label>
+    </div>
     <b-form-checkbox-group
       v-model="selection"
       stacked
@@ -60,6 +70,16 @@ export default {
       type: Array,
       default: () => []
     },
+
+    /**
+     * This is the satisfyAll property value. It is true if the satisfyAll property has been set (satisfyAll button checked),
+     * false if not. 
+     */
+    satisfyAllValue: {
+      type: Boolean,
+      default: () => false
+    },
+
     /**
      * Whether to use (De)Select All or not.
      */
@@ -74,6 +94,14 @@ export default {
     maxVisibleOptions: {
       type: Number,
       default: () => undefined
+    },
+    /**
+     * Whether to show the SatisfyAll chechbox or not.
+     */
+    showSatisfyAllCheckbox: {
+      type: Boolean,
+      required: false,
+      default: () => false
     }
   },
   data () {
@@ -124,7 +152,7 @@ export default {
         this.$emit('input', newSelection)
       }
       this.externalUpdate = false
-    }
+    },
   },
   created () {
     this.options().then(response => {

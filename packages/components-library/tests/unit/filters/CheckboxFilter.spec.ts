@@ -33,7 +33,7 @@ function getWrapper (props = {}) {
 describe('CheckboxFilter.vue', () => {
   describe('Parsing only required props', () => {
     let wrapper: any
-    beforeEach(() => { wrapper = getWrapper() })
+    beforeEach(() => { wrapper = getWrapper({ }) })
 
     it('can set and unset values', async () => {
       const inputElements = wrapper.findAll('input')
@@ -79,6 +79,23 @@ describe('CheckboxFilter.vue', () => {
       expect(wrapper.findAll('input[type=checkbox]').length).toBe(3)
       await sliceButton.trigger('click')
       expect(wrapper.findAll('input[type=checkbox]').length).toBe(1)
+    })
+  })
+
+  describe('SatisfyAllCheckbox', () => {
+    it('checks that the satisfyAll checkbox is not shown by default ', () => {
+      const wrapper = getWrapper() 
+      const satisfyAllButton = wrapper.find('input[type=checkbox]') 
+      expect (satisfyAllButton.exists()).toBe(false)
+    })
+
+    it('triggers the proper emit when the satisfyAll checkbox is clicked', async () => {
+      const wrapper = getWrapper({ showSatisfyAllCheckbox: true }) 
+      // satisfyAllButton is always the fist one, as it is above all the others   
+      const satisfyAllButton = wrapper.find('input[type=checkbox]') 
+      await satisfyAllButton.trigger('click')
+      expect(wrapper.emitted('satisfyAll'))
+      expect(wrapper.emitted('satisfyAll')).toEqual([[true]])
     })
   })
 })
