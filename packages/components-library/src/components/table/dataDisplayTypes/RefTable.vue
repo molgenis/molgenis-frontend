@@ -84,7 +84,6 @@ export default {
     v-bind:isDataLoaded="true"
     v-bind:entitiesToShow="entities"
     v-bind:metaData="metadata"
-    v-bind:router="{ query: '' }"
   >
   </RefTable>
   ```
