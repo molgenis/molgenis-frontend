@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.1...@molgenis-ui/components-library@2.7.2) (2021-06-15)
+
+
+### Bug Fixes
+
+* forgot to add the component ([4b72bcc](https://github.com/molgenis/molgenis-frontend/commit/4b72bcc3f3c351f0e0ab70eadd198fad162e6cfc))
+
+
+
+
+
 ## [2.7.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.0...@molgenis-ui/components-library@2.7.1) (2021-06-15)
 
 
