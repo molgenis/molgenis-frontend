@@ -40,6 +40,8 @@ export {
   Toaster,
   TableHeader,
   TableRow,
+  Table,
+  ApiTable,
   RefTable,
   RefDisplay,
   DataDisplayCell,
