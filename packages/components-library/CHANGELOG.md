@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.0...@molgenis-ui/components-library@2.7.1) (2021-06-15)
+
+
+### Bug Fixes
+
+* expose table and apitable component ([854e862](https://github.com/molgenis/molgenis-frontend/commit/854e86289002404171f5cdf5d9804639c81ee6f9))
+
+
+
+
+
 # [2.7.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.6.0...@molgenis-ui/components-library@2.7.0) (2021-06-11)
 
 
