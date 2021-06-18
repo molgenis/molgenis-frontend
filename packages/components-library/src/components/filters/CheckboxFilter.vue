@@ -3,7 +3,6 @@
     <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-
         <b-form-checkbox
           class="d-inline-block ml-1"
           :value="satisfyAllValue"
