@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.2...@molgenis-ui/components-library@2.7.3) (2021-06-18)
+
+
+### Bug Fixes
+
+* **components-library:** converted html input checkbox to vue bootstrap checkbox ([43a069f](https://github.com/molgenis/molgenis-frontend/commit/43a069fe977f3b92405b98d2c36982bb8b2c35f0))
+
+
+
+
+
 ## [2.7.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.1...@molgenis-ui/components-library@2.7.2) (2021-06-15)
 
 
