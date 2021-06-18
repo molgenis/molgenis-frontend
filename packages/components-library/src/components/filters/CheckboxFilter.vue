@@ -2,7 +2,7 @@
   <div>
     <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
-        Satisfy all
+        {{ satisfyAllLabel }}
         <b-form-checkbox
           v-model="satisfyAll"
           name="satisfy-all"
@@ -103,6 +103,14 @@ export default {
       type: Boolean,
       required: false,
       default: () => false
+    },
+    /**
+     * The label to show on the left of the satisfy all Checkbox
+     */
+    satisfyAllLabel: {
+      type: String,
+      required: false,
+      default: () => 'Satisfy all'
     }
   },
   data () {

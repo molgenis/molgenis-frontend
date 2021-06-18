@@ -2,7 +2,7 @@
   <div>
     <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
-        Satisfy all
+        {{ satisfyAllLabel }}
         <b-form-checkbox
           v-model="satisfyAll"
           name="satisfy-all"
@@ -57,14 +57,17 @@
         v-b-popover.hover="
           `There are ${optionsWarningCount} or more results found, only the first ${optionsWarningCount} are available. Please refine your search.`
         "
-        class="badge badge-warning warning text-white ml-auto d-flex align-items-center"
+        class="
+          badge badge-warning
+          warning
+          text-white
+          ml-auto
+          d-flex
+          align-items-center
+        "
       >
-        <span class="mr-1">
-          {{ optionsWarningCount }}+
-        </span>
-        <font-awesome-icon
-          icon="exclamation-circle"
-        />
+        <span class="mr-1"> {{ optionsWarningCount }}+ </span>
+        <font-awesome-icon icon="exclamation-circle" />
       </div>
     </div>
   </div>
@@ -130,7 +133,7 @@ export default {
     },
     /**
      * This is the satisfyAll property value. It is true if the satisfyAll property has been set (satisfyAll button checked),
-     * false if not. 
+     * false if not.
      */
     satisfyAllValue: {
       type: Boolean,
@@ -151,8 +154,15 @@ export default {
       type: Boolean,
       required: false,
       default: () => false
+    },
+    /**
+     * The label to show on the left of the satisfy all Checkbox
+     */
+    satisfyAllLabel: {
+      type: String,
+      required: false,
+      default: () => 'Satisfy all'
     }
-
   },
   data () {
     return {
@@ -263,9 +273,9 @@ export default {
         } else return 1
       })
 
-      return Array.from(
-        new Set(optionsArray.map(cio => cio.value))
-      ).map(value => optionsArray.find(cio => cio.value === value))
+      return Array.from(new Set(optionsArray.map(cio => cio.value))).map(
+        value => optionsArray.find(cio => cio.value === value)
+      )
     },
     setValue () {
       this.externalUpdate = true
