@@ -1,30 +1,30 @@
 <template>
-    <table class="table table-bordered">
-        <table-header
-            v-bind:visibleColumns="columns"
-            v-bind:sortColumnName="sortColumnName"
-            v-bind:isSortOrderReversed="isSortOrderReversed"
-            v-on:sort="sortEvent">
-        </table-header>
+  <table class="table table-bordered">
+    <table-header
+      :visible-columns="columns"
+      :sort-column-name="sortColumnName"
+      :is-sort-order-reversed="isSortOrderReversed"
+      @sort="sortEvent"
+    />
 
-        <table-row
-            v-for="(entity, index) in entities"
-            v-bind:id="getEntityId(entity)"
-            v-bind:key="index"
-            v-bind:row-index="index"
-            v-bind:table-name="tableName"
-            v-bind:row-data="entity"
-            v-bind:visible-columns="columns"
-            v-bind:is-selected="value.includes(getEntityId(entity))"
-            v-bind:is-editable="isSelectable"
-            v-bind:show-selected="false"
-            v-on:toggleSelectedItemsHandler="toggleSelectedItemsHandler"
-        >
-          <template v-slot:edit-buttons>
-            <slot name="edit-buttons" />
-          </template>
-        </table-row>
-    </table>
+    <table-row
+      v-for="(entity, index) in entities"
+      :id="getEntityId(entity)"
+      :key="index"
+      :row-index="index"
+      :table-name="tableName"
+      :row-data="entity"
+      :visible-columns="columns"
+      :is-selected="value.includes(getEntityId(entity))"
+      :is-editable="isSelectable"
+      :show-selected="false"
+      @toggleSelectedItemsHandler="toggleSelectedItemsHandler"
+    >
+      <template #edit-buttons>
+        <slot name="edit-buttons" />
+      </template>
+    </table-row>
+  </table>
 </template>
 
 <script>

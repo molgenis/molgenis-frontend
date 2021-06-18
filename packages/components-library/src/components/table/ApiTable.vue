@@ -1,18 +1,18 @@
 <template>
   <Table
-      v-bind:columns="getColumns"
-      v-bind:value="value"
-      v-bind:sortColumnName="sortColumnName"
-      v-bind:isSortOrderReversed="isSortOrderReversed"
-      v-bind:entities="getEntities"
-      v-bind:idAttribute="getIdAttribute"
-      v-bind:table-name="getTableName"
-      v-bind:is-selectable="isSelectable"
-      v-on:sort="sortEvent"
-      v-on:input="inputEvent"
-      v-on:toggleSelectedItemsHandler="toggleSelectedItemsHandler"
-    >
-    <template v-slot:edit-buttons>
+    :columns="getColumns"
+    :value="value"
+    :sort-column-name="sortColumnName"
+    :is-sort-order-reversed="isSortOrderReversed"
+    :entities="getEntities"
+    :id-attribute="getIdAttribute"
+    :table-name="getTableName"
+    :is-selectable="isSelectable"
+    @sort="sortEvent"
+    @input="inputEvent"
+    @toggleSelectedItemsHandler="toggleSelectedItemsHandler"
+  >
+    <template #edit-buttons>
       <slot name="edit-buttons" />
     </template>
   </Table>
