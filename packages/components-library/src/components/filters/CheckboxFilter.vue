@@ -96,7 +96,8 @@ export default {
       default: () => undefined
     },
     /**
-     * Whether to show the SatisfyAll chechbox or not.
+     * Whether to show the SatisfyAll checkbox or not.
+     * If checked it emits 'satisfyAll' with a boolean
      */
     showSatisfyAllCheckbox: {
       type: Boolean,
