@@ -4,10 +4,12 @@
       <label class="label-disabled">
         Satisfy all
         <b-form-checkbox
+          v-model="satisfyAll"
+          name="satisfy-all"
           class="d-inline-block ml-1"
-          :value="satisfyAllValue"
-          unchecked-value="false"
-          @change="(event) => $emit('satisfyAll', event.target.checked)"
+          :value="true"
+          :unchecked-value="false"
+          @change="(value) => $emit('satisfyAll', value)"
         />
       </label>
     </div>
@@ -153,6 +155,7 @@ export default {
   },
   data () {
     return {
+      satisfyAll: false,
       externalUpdate: false,
       showCount: 0,
       isLoading: false,
@@ -204,6 +207,9 @@ export default {
     value () {
       this.setValue()
     },
+    satisfyAllValue (newValue) {
+      this.satisfyAll = newValue
+    },
     query (queryValue) {
       if (this.triggerQuery) {
         clearTimeout(this.triggerQuery)
@@ -235,6 +241,7 @@ export default {
   },
   created () {
     this.showCount = this.maxVisibleOptions
+    this.satisfyAll = this.satisfyAllValue
   },
   beforeMount () {
     this.initializeFilter()

@@ -4,10 +4,12 @@
       <label class="label-disabled">
         Satisfy all
         <b-form-checkbox
+          v-model="satisfyAll"
+          name="satisfy-all"
           class="d-inline-block ml-1"
-          :value="satisfyAllValue"
-          unchecked-value="false"
-          @change="(event) => $emit('satisfyAll', event.target.checked)"
+          :value="true"
+          :unchecked-value="false"
+          @change="(value) => $emit('satisfyAll', value)"
         />
       </label>
     </div>
@@ -104,6 +106,7 @@ export default {
   },
   data () {
     return {
+      satisfyAll: false,
       externalUpdate: false,
       selection: [],
       resolvedOptions: [],
@@ -149,6 +152,9 @@ export default {
     value () {
       this.setValue()
     },
+    satisfyAllValue (newValue) {
+      this.satisfyAll = newValue
+    },
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
     },
@@ -174,6 +180,7 @@ export default {
       this.resolvedOptions = response
     })
     this.setValue()
+    this.satisfyAll = this.satisfyAllValue
   },
   methods: {
     toggleSelect () {
