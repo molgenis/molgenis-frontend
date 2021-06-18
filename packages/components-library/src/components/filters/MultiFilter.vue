@@ -3,11 +3,12 @@
     <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-        <input
-          type="checkbox" :checked="satisfyAllValue"
+        <b-form-checkbox
+          class="d-inline-block ml-1"
           :value="satisfyAllValue"
+          unchecked-value="false"
           @change="(event) => $emit('satisfyAll', event.target.checked)"
-        >
+        />
       </label>
     </div>
     <b-input-group>

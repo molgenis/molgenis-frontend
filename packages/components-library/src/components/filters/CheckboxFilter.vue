@@ -3,11 +3,13 @@
     <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-        <input
-          type="checkbox" :checked="satisfyAllValue"
+
+        <b-form-checkbox
+          class="d-inline-block ml-1"
           :value="satisfyAllValue"
+          unchecked-value="false"
           @change="(event) => $emit('satisfyAll', event.target.checked)"
-        >
+        />
       </label>
     </div>
     <b-form-checkbox-group
@@ -23,10 +25,7 @@
       >
         {{ toggleSliceText }}
       </b-link>
-      <b-link
-        class="toggle-select card-link"
-        @click.prevent="toggleSelect"
-      >
+      <b-link class="toggle-select card-link" @click.prevent="toggleSelect">
         {{ toggleSelectText }}
       </b-link>
     </span>
@@ -43,7 +42,7 @@ export default {
     returnTypeAsObject: {
       type: Boolean,
       required: false,
-      default: () => false
+      default: () => false,
     },
     /**
      * A Promise-function that resolves with an array of options.
@@ -51,7 +50,7 @@ export default {
      */
     options: {
       type: [Function],
-      required: true
+      required: true,
     },
     /**
      * An array that contains values of options
@@ -60,7 +59,7 @@ export default {
      */
     optionsFilter: {
       type: Array,
-      required: false
+      required: false,
     },
     /**
      * This is the v-model value; an array of selected options.
@@ -68,16 +67,16 @@ export default {
      */
     value: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
 
     /**
      * This is the satisfyAll property value. It is true if the satisfyAll property has been set (satisfyAll button checked),
-     * false if not. 
+     * false if not.
      */
     satisfyAllValue: {
       type: Boolean,
-      default: () => false
+      default: () => false,
     },
 
     /**
@@ -86,14 +85,14 @@ export default {
     bulkOperation: {
       type: Boolean,
       required: false,
-      default: () => true
+      default: () => true,
     },
     /**
      * Limit the maximum number of visible items.
      */
     maxVisibleOptions: {
       type: Number,
-      default: () => undefined
+      default: () => undefined,
     },
     /**
      * Whether to show the SatisfyAll chechbox or not.
@@ -101,51 +100,68 @@ export default {
     showSatisfyAllCheckbox: {
       type: Boolean,
       required: false,
-      default: () => false
-    }
+      default: () => false,
+    },
   },
-  data () {
+  data() {
     return {
       externalUpdate: false,
       selection: [],
       resolvedOptions: [],
-      sliceOptions: this.maxVisibleOptions && this.optionsToRender && this.maxVisibleOptions < this.optionsToRender.length
+      sliceOptions:
+        this.maxVisibleOptions &&
+        this.optionsToRender &&
+        this.maxVisibleOptions < this.optionsToRender.length,
     }
   },
   computed: {
-    visibleOptions () {
-      return this.sliceOptions ? this.optionsToRender.slice(0, this.maxVisibleOptions) : (typeof this.optionsToRender === 'function' ? [] : this.optionsToRender)
+    visibleOptions() {
+      return this.sliceOptions
+        ? this.optionsToRender.slice(0, this.maxVisibleOptions)
+        : typeof this.optionsToRender === 'function'
+        ? []
+        : this.optionsToRender
     },
-    showToggleSlice () {
-      return this.maxVisibleOptions && this.maxVisibleOptions < this.optionsToRender.length
+    showToggleSlice() {
+      return (
+        this.maxVisibleOptions &&
+        this.maxVisibleOptions < this.optionsToRender.length
+      )
     },
-    toggleSelectText () {
+    toggleSelectText() {
       return this.value.length ? 'Deselect all' : 'Select all'
     },
-    toggleSliceText () {
-      return this.sliceOptions ? `Show ${this.optionsToRender.length - this.maxVisibleOptions} more` : 'Show less'
+    toggleSliceText() {
+      return this.sliceOptions
+        ? `Show ${this.optionsToRender.length - this.maxVisibleOptions} more`
+        : 'Show less'
     },
-    optionsToRender () {
+    optionsToRender() {
       if (this.optionsFilter && this.optionsFilter.length) {
-        return this.resolvedOptions.filter(option => this.optionsFilter.includes(option.value))
+        return this.resolvedOptions.filter((option) =>
+          this.optionsFilter.includes(option.value)
+        )
       } else {
         return this.resolvedOptions
       }
-    }
+    },
   },
   watch: {
-    value () {
+    value() {
       this.setValue()
     },
-    resolvedOptions () {
+    resolvedOptions() {
       this.sliceOptions = this.showToggleSlice
     },
-    selection (newValue) {
+    selection(newValue) {
       if (!this.externalUpdate) {
         let newSelection = []
 
         if (this.returnTypeAsObject) {
-          newSelection = Object.assign(newSelection, this.optionsToRender.filter(of => newValue.includes(of.value)))
+          newSelection = Object.assign(
+            newSelection,
+            this.optionsToRender.filter((of) => newValue.includes(of.value))
+          )
         } else {
           newSelection = [...newValue]
         }
@@ -154,38 +170,44 @@ export default {
       this.externalUpdate = false
     },
   },
-  created () {
-    this.options().then(response => {
+  created() {
+    this.options().then((response) => {
       this.resolvedOptions = response
     })
     this.setValue()
   },
   methods: {
-    toggleSelect () {
+    toggleSelect() {
       if (this.selection && this.selection.length > 0) {
         this.selection = []
       } else {
-        this.selection = this.optionsToRender.map(option => option.value)
+        this.selection = this.optionsToRender.map((option) => option.value)
       }
     },
-    toggleSlice () {
+    toggleSlice() {
       this.sliceOptions = !this.sliceOptions
     },
-    setValue () {
+    setValue() {
       this.externalUpdate = true
-      if (this.value && this.value.length > 0 && typeof this.value[0] === 'object') {
-        this.selection = this.value.map(vo => vo.value)
+      if (
+        this.value &&
+        this.value.length > 0 &&
+        typeof this.value[0] === 'object'
+      ) {
+        this.selection = this.value.map((vo) => vo.value)
       } else {
         this.selection = this.value
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style>
-.card-link { font-size: small;
-  font-style: italic; }
+.card-link {
+  font-size: small;
+  font-style: italic;
+}
 </style>
 
 <docs>
