@@ -3,11 +3,14 @@
     <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-        <input
-          type="checkbox" :checked="satisfyAllValue"
-          :value="satisfyAllValue"
-          @change="(event) => $emit('satisfyAll', event.target.checked)"
-        >
+        <b-form-checkbox
+          v-model="satisfyAll"
+          name="satisfy-all"
+          class="d-inline-block ml-1"
+          :value="true"
+          :unchecked-value="false"
+          @change="(value) => $emit('satisfyAll', value)"
+        />
       </label>
     </div>
     <b-form-checkbox-group
@@ -23,10 +26,7 @@
       >
         {{ toggleSliceText }}
       </b-link>
-      <b-link
-        class="toggle-select card-link"
-        @click.prevent="toggleSelect"
-      >
+      <b-link class="toggle-select card-link" @click.prevent="toggleSelect">
         {{ toggleSelectText }}
       </b-link>
     </span>
@@ -73,7 +73,7 @@ export default {
 
     /**
      * This is the satisfyAll property value. It is true if the satisfyAll property has been set (satisfyAll button checked),
-     * false if not. 
+     * false if not.
      */
     satisfyAllValue: {
       type: Boolean,
@@ -96,7 +96,8 @@ export default {
       default: () => undefined
     },
     /**
-     * Whether to show the SatisfyAll chechbox or not.
+     * Whether to show the SatisfyAll checkbox or not.
+     * If checked it emits 'satisfyAll' with a boolean
      */
     showSatisfyAllCheckbox: {
       type: Boolean,
@@ -106,28 +107,43 @@ export default {
   },
   data () {
     return {
+      satisfyAll: false,
       externalUpdate: false,
       selection: [],
       resolvedOptions: [],
-      sliceOptions: this.maxVisibleOptions && this.optionsToRender && this.maxVisibleOptions < this.optionsToRender.length
+      sliceOptions:
+        this.maxVisibleOptions &&
+        this.optionsToRender &&
+        this.maxVisibleOptions < this.optionsToRender.length
     }
   },
   computed: {
     visibleOptions () {
-      return this.sliceOptions ? this.optionsToRender.slice(0, this.maxVisibleOptions) : (typeof this.optionsToRender === 'function' ? [] : this.optionsToRender)
+      return this.sliceOptions
+        ? this.optionsToRender.slice(0, this.maxVisibleOptions)
+        : typeof this.optionsToRender === 'function'
+        ? []
+        : this.optionsToRender
     },
     showToggleSlice () {
-      return this.maxVisibleOptions && this.maxVisibleOptions < this.optionsToRender.length
+      return (
+        this.maxVisibleOptions &&
+        this.maxVisibleOptions < this.optionsToRender.length
+      )
     },
     toggleSelectText () {
       return this.value.length ? 'Deselect all' : 'Select all'
     },
     toggleSliceText () {
-      return this.sliceOptions ? `Show ${this.optionsToRender.length - this.maxVisibleOptions} more` : 'Show less'
+      return this.sliceOptions
+        ? `Show ${this.optionsToRender.length - this.maxVisibleOptions} more`
+        : 'Show less'
     },
     optionsToRender () {
       if (this.optionsFilter && this.optionsFilter.length) {
-        return this.resolvedOptions.filter(option => this.optionsFilter.includes(option.value))
+        return this.resolvedOptions.filter(option =>
+          this.optionsFilter.includes(option.value)
+        )
       } else {
         return this.resolvedOptions
       }
@@ -137,6 +153,9 @@ export default {
     value () {
       this.setValue()
     },
+    satisfyAllValue (newValue) {
+      this.satisfyAll = newValue
+    },
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
     },
@@ -145,20 +164,24 @@ export default {
         let newSelection = []
 
         if (this.returnTypeAsObject) {
-          newSelection = Object.assign(newSelection, this.optionsToRender.filter(of => newValue.includes(of.value)))
+          newSelection = Object.assign(
+            newSelection,
+            this.optionsToRender.filter(of => newValue.includes(of.value))
+          )
         } else {
           newSelection = [...newValue]
         }
         this.$emit('input', newSelection)
       }
       this.externalUpdate = false
-    },
+    }
   },
   created () {
     this.options().then(response => {
       this.resolvedOptions = response
     })
     this.setValue()
+    this.satisfyAll = this.satisfyAllValue
   },
   methods: {
     toggleSelect () {
@@ -173,7 +196,11 @@ export default {
     },
     setValue () {
       this.externalUpdate = true
-      if (this.value && this.value.length > 0 && typeof this.value[0] === 'object') {
+      if (
+        this.value &&
+        this.value.length > 0 &&
+        typeof this.value[0] === 'object'
+      ) {
         this.selection = this.value.map(vo => vo.value)
       } else {
         this.selection = this.value
@@ -184,8 +211,10 @@ export default {
 </script>
 
 <style>
-.card-link { font-size: small;
-  font-style: italic; }
+.card-link {
+  font-size: small;
+  font-style: italic;
+}
 </style>
 
 <docs>

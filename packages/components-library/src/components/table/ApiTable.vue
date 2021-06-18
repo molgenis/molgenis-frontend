@@ -1,18 +1,18 @@
 <template>
   <Table
-      v-bind:columns="getColumns"
-      v-bind:value="value"
-      v-bind:sortColumnName="sortColumnName"
-      v-bind:isSortOrderReversed="isSortOrderReversed"
-      v-bind:entities="getEntities"
-      v-bind:idAttribute="getIdAttribute"
-      v-bind:table-name="getTableName"
-      v-bind:is-selectable="isSelectable"
-      v-on:sort="sortEvent"
-      v-on:input="inputEvent"
-      v-on:toggleSelectedItemsHandler="toggleSelectedItemsHandler"
-    >
-    <template v-slot:edit-buttons>
+    :columns="getColumns"
+    :value="value"
+    :sort-column-name="sortColumnName"
+    :is-sort-order-reversed="isSortOrderReversed"
+    :entities="getEntities"
+    :id-attribute="getIdAttribute"
+    :table-name="getTableName"
+    :is-selectable="isSelectable"
+    @sort="sortEvent"
+    @input="inputEvent"
+    @toggleSelectedItemsHandler="toggleSelectedItemsHandler"
+  >
+    <template #edit-buttons>
       <slot name="edit-buttons" />
     </template>
   </Table>
@@ -38,14 +38,14 @@ export default {
      */
     data:{
       type: Object,
-      required: true, 
+      required: true 
     },
     /**
      * molgenis v3 metadata api request
      */
     metadata:{
       type: Object,
-      required: true, 
+      required: true 
     },
     /**
      * The current column that is being used for sorting
@@ -72,28 +72,28 @@ export default {
     }
   },
   computed:{
-    getColumns(){
+    getColumns (){
       if(this.metadata && this.metadata.data && this.metadata.data.attributes){
         return this.metadata.data.attributes.items.map(item => item.data)
       } else {
         return []
       }
     },
-    getTableName(){
+    getTableName (){
       if(this.metadata && this.metadata.data){
         return this.metadata.data.id
       } else {
         return ""
       }
     },
-    getIdAttribute(){
+    getIdAttribute (){
       if(this.metadata && this.metadata.data && this.metadata.data.attributes){
         return this.metadata.data.attributes.items.find(item => item.data.idAttribute === true).data.name
       } else {
         return "id"
       }
     },
-    getEntities(){
+    getEntities (){
       if(this.data && this.data.items){
         return this.data.items.map(item => item.data)
       } else {
@@ -102,7 +102,7 @@ export default {
     }
   },
   methods:{
-    sortEvent(name) {
+    sortEvent (name) {
       /**
        * Emits the name of to column the user wishes to sort
        * @property {String} sort - name of column to sort

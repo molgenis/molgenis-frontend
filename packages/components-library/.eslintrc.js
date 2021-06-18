@@ -47,10 +47,13 @@ module.exports = {
                 "vue/max-attributes-per-line": ["error", {
                     "singleline": 3,
                     "multiline": {
-                      "max": 2,
-                      "allowFirstLine": false
+                        "max": 2,
+                        "allowFirstLine": false
                     }
-                }]
+                }],
+                "space-before-function-paren": ["error", "always"],
+                "comma-dangle": ["error", "never"],
+                "arrow-parens": ["error", "as-needed"]
             }
         }
     ]

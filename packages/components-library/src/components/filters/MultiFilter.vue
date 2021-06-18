@@ -3,11 +3,14 @@
     <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
       <label class="label-disabled">
         Satisfy all
-        <input
-          type="checkbox" :checked="satisfyAllValue"
-          :value="satisfyAllValue"
-          @change="(event) => $emit('satisfyAll', event.target.checked)"
-        >
+        <b-form-checkbox
+          v-model="satisfyAll"
+          name="satisfy-all"
+          class="d-inline-block ml-1"
+          :value="true"
+          :unchecked-value="false"
+          @change="(value) => $emit('satisfyAll', value)"
+        />
       </label>
     </div>
     <b-input-group>
@@ -141,17 +144,19 @@ export default {
       default: () => 10
     },
     /**
-     * Whether to show the SatisfyAll chechbox or not.
+     * Whether to show the SatisfyAll checkbox or not.
+     * If checked it emits 'satisfyAll' with a boolean
      */
     showSatisfyAllCheckbox: {
       type: Boolean,
       required: false,
       default: () => false
-    },
+    }
 
   },
   data () {
     return {
+      satisfyAll: false,
       externalUpdate: false,
       showCount: 0,
       isLoading: false,
@@ -192,7 +197,7 @@ export default {
       if (this.returnTypeAsObject) {
         newSelection = Object.assign(
           newValue,
-          this.multifilterOptions.filter((mfo) => newValue.includes(mfo.value))
+          this.multifilterOptions.filter(mfo => newValue.includes(mfo.value))
         )
       } else {
         newSelection = [...newValue]
@@ -202,6 +207,9 @@ export default {
     },
     value () {
       this.setValue()
+    },
+    satisfyAllValue (newValue) {
+      this.satisfyAll = newValue
     },
     query (queryValue) {
       if (this.triggerQuery) {
@@ -220,7 +228,7 @@ export default {
         this.isLoading = true
 
         this.options({ nameAttribute: 'label', query: this.query }).then(
-          (searchResults) => {
+          searchResults => {
             const allOptions = searchResults
               ? searchResults.concat(this.inputOptions)
               : this.inputOptions
@@ -234,6 +242,7 @@ export default {
   },
   created () {
     this.showCount = this.maxVisibleOptions
+    this.satisfyAll = this.satisfyAllValue
   },
   beforeMount () {
     this.initializeFilter()
@@ -255,14 +264,14 @@ export default {
       })
 
       return Array.from(
-        new Set(optionsArray.map((cio) => cio.value))
-      ).map((value) => optionsArray.find((cio) => cio.value === value))
+        new Set(optionsArray.map(cio => cio.value))
+      ).map(value => optionsArray.find(cio => cio.value === value))
     },
     setValue () {
       this.externalUpdate = true
       this.selection =
         typeof this.value[0] === 'object'
-          ? this.value.map((vo) => vo.value)
+          ? this.value.map(vo => vo.value)
           : this.value
     },
     showMore () {
