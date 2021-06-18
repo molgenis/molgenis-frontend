@@ -137,7 +137,7 @@ export default {
     },
     optionsToRender () {
       if (this.optionsFilter && this.optionsFilter.length) {
-        return this.resolvedOptions.filter((option) =>
+        return this.resolvedOptions.filter(option =>
           this.optionsFilter.includes(option.value)
         )
       } else {
@@ -159,7 +159,7 @@ export default {
         if (this.returnTypeAsObject) {
           newSelection = Object.assign(
             newSelection,
-            this.optionsToRender.filter((of) => newValue.includes(of.value))
+            this.optionsToRender.filter(of => newValue.includes(of.value))
           )
         } else {
           newSelection = [...newValue]
@@ -170,7 +170,7 @@ export default {
     }
   },
   created () {
-    this.options().then((response) => {
+    this.options().then(response => {
       this.resolvedOptions = response
     })
     this.setValue()
@@ -180,7 +180,7 @@ export default {
       if (this.selection && this.selection.length > 0) {
         this.selection = []
       } else {
-        this.selection = this.optionsToRender.map((option) => option.value)
+        this.selection = this.optionsToRender.map(option => option.value)
       }
     },
     toggleSlice () {
@@ -193,7 +193,7 @@ export default {
         this.value.length > 0 &&
         typeof this.value[0] === 'object'
       ) {
-        this.selection = this.value.map((vo) => vo.value)
+        this.selection = this.value.map(vo => vo.value)
       } else {
         this.selection = this.value
       }

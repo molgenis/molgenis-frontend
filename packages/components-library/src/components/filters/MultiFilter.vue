@@ -193,7 +193,7 @@ export default {
       if (this.returnTypeAsObject) {
         newSelection = Object.assign(
           newValue,
-          this.multifilterOptions.filter((mfo) => newValue.includes(mfo.value))
+          this.multifilterOptions.filter(mfo => newValue.includes(mfo.value))
         )
       } else {
         newSelection = [...newValue]
@@ -221,7 +221,7 @@ export default {
         this.isLoading = true
 
         this.options({ nameAttribute: 'label', query: this.query }).then(
-          (searchResults) => {
+          searchResults => {
             const allOptions = searchResults
               ? searchResults.concat(this.inputOptions)
               : this.inputOptions
@@ -256,14 +256,14 @@ export default {
       })
 
       return Array.from(
-        new Set(optionsArray.map((cio) => cio.value))
-      ).map((value) => optionsArray.find((cio) => cio.value === value))
+        new Set(optionsArray.map(cio => cio.value))
+      ).map(value => optionsArray.find(cio => cio.value === value))
     },
     setValue () {
       this.externalUpdate = true
       this.selection =
         typeof this.value[0] === 'object'
-          ? this.value.map((vo) => vo.value)
+          ? this.value.map(vo => vo.value)
           : this.value
     },
     showMore () {

@@ -65,14 +65,14 @@ export default {
       if (state) {
         this.selected.push(option.name)
       } else {
-        this.selected = this.selected.filter((item) => item !== option.name)
+        this.selected = this.selected.filter(item => item !== option.name)
       }
 
       // parent compound toggle
       if (option.type === 'compound-title') {
         const subCompounds = this.filters
-          .filter((item) => item.compound === option.name)
-          .map((item) => item.name)
+          .filter(item => item.compound === option.name)
+          .map(item => item.name)
         if (this.selected.includes(option.name)) {
           // Select all and make unique
           this.selected = [...this.selected, ...subCompounds].filter(
@@ -81,7 +81,7 @@ export default {
         } else {
           // Deselect all
           this.selected = this.selected.filter(
-            (item) => !subCompounds.includes(item)
+            item => !subCompounds.includes(item)
           )
         }
       }
@@ -89,13 +89,13 @@ export default {
       // child compound toggle
       if (option.compound) {
         const subCompounds = this.filters
-          .filter((item) => item.compound === option.compound)
-          .map((item) => item.name)
-        const allSelected = subCompounds.every((item) =>
+          .filter(item => item.compound === option.compound)
+          .map(item => item.name)
+        const allSelected = subCompounds.every(item =>
           this.selected.includes(item)
         )
         const noneSelected = subCompounds.every(
-          (item) => !this.selected.includes(item)
+          item => !this.selected.includes(item)
         )
         const partialSelected = !allSelected && !noneSelected
         if (allSelected) {
@@ -105,12 +105,12 @@ export default {
         }
         if (noneSelected) {
           this.selected = this.selected.filter(
-            (item) => item !== option.compound
+            item => item !== option.compound
           )
         }
         if (partialSelected) {
           this.selected = this.selected.filter(
-            (item) => item !== option.compound
+            item => item !== option.compound
           )
         }
       }
