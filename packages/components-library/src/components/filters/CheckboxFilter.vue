@@ -41,7 +41,7 @@ export default {
     returnTypeAsObject: {
       type: Boolean,
       required: false,
-      default: () => false,
+      default: () => false
     },
     /**
      * A Promise-function that resolves with an array of options.
@@ -49,7 +49,7 @@ export default {
      */
     options: {
       type: [Function],
-      required: true,
+      required: true
     },
     /**
      * An array that contains values of options
@@ -58,7 +58,7 @@ export default {
      */
     optionsFilter: {
       type: Array,
-      required: false,
+      required: false
     },
     /**
      * This is the v-model value; an array of selected options.
@@ -66,7 +66,7 @@ export default {
      */
     value: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
 
     /**
@@ -75,7 +75,7 @@ export default {
      */
     satisfyAllValue: {
       type: Boolean,
-      default: () => false,
+      default: () => false
     },
 
     /**
@@ -84,14 +84,14 @@ export default {
     bulkOperation: {
       type: Boolean,
       required: false,
-      default: () => true,
+      default: () => true
     },
     /**
      * Limit the maximum number of visible items.
      */
     maxVisibleOptions: {
       type: Number,
-      default: () => undefined,
+      default: () => undefined
     },
     /**
      * Whether to show the SatisfyAll chechbox or not.
@@ -99,10 +99,10 @@ export default {
     showSatisfyAllCheckbox: {
       type: Boolean,
       required: false,
-      default: () => false,
-    },
+      default: () => false
+    }
   },
-  data() {
+  data () {
     return {
       externalUpdate: false,
       selection: [],
@@ -110,32 +110,32 @@ export default {
       sliceOptions:
         this.maxVisibleOptions &&
         this.optionsToRender &&
-        this.maxVisibleOptions < this.optionsToRender.length,
+        this.maxVisibleOptions < this.optionsToRender.length
     }
   },
   computed: {
-    visibleOptions() {
+    visibleOptions () {
       return this.sliceOptions
         ? this.optionsToRender.slice(0, this.maxVisibleOptions)
         : typeof this.optionsToRender === 'function'
         ? []
         : this.optionsToRender
     },
-    showToggleSlice() {
+    showToggleSlice () {
       return (
         this.maxVisibleOptions &&
         this.maxVisibleOptions < this.optionsToRender.length
       )
     },
-    toggleSelectText() {
+    toggleSelectText () {
       return this.value.length ? 'Deselect all' : 'Select all'
     },
-    toggleSliceText() {
+    toggleSliceText () {
       return this.sliceOptions
         ? `Show ${this.optionsToRender.length - this.maxVisibleOptions} more`
         : 'Show less'
     },
-    optionsToRender() {
+    optionsToRender () {
       if (this.optionsFilter && this.optionsFilter.length) {
         return this.resolvedOptions.filter((option) =>
           this.optionsFilter.includes(option.value)
@@ -143,16 +143,16 @@ export default {
       } else {
         return this.resolvedOptions
       }
-    },
+    }
   },
   watch: {
-    value() {
+    value () {
       this.setValue()
     },
-    resolvedOptions() {
+    resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
     },
-    selection(newValue) {
+    selection (newValue) {
       if (!this.externalUpdate) {
         let newSelection = []
 
@@ -167,26 +167,26 @@ export default {
         this.$emit('input', newSelection)
       }
       this.externalUpdate = false
-    },
+    }
   },
-  created() {
+  created () {
     this.options().then((response) => {
       this.resolvedOptions = response
     })
     this.setValue()
   },
   methods: {
-    toggleSelect() {
+    toggleSelect () {
       if (this.selection && this.selection.length > 0) {
         this.selection = []
       } else {
         this.selection = this.optionsToRender.map((option) => option.value)
       }
     },
-    toggleSlice() {
+    toggleSlice () {
       this.sliceOptions = !this.sliceOptions
     },
-    setValue() {
+    setValue () {
       this.externalUpdate = true
       if (
         this.value &&
@@ -197,8 +197,8 @@ export default {
       } else {
         this.selection = this.value
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

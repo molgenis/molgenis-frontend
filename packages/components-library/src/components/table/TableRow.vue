@@ -92,7 +92,7 @@ export default {
     rowIndex: {
       type: Number,
       required: true
-    },
+    }
   },
   methods: {
     getColumnValue (name) {

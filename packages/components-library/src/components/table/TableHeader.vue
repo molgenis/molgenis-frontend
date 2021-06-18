@@ -57,7 +57,7 @@ export default {
     }
   },
   methods:{
-    sortEvent(name) {
+    sortEvent (name) {
       /**
        * Emits the name of to column the user wishes to sort
        * @property {String} sort - name of column to sort
