@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.3...@molgenis-ui/components-library@2.7.4) (2021-06-18)
+
+
+### Bug Fixes
+
+* **components-library:** add i18n functionality ([f2e27d5](https://github.com/molgenis/molgenis-frontend/commit/f2e27d5e0248f7d9fbf73536b815b46b27c14d7b))
+
+
+
+
+
 ## [2.7.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.2...@molgenis-ui/components-library@2.7.3) (2021-06-18)
 
 
