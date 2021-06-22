@@ -18,6 +18,9 @@ pipeline {
                 }
                 container('vault') {
                     script {
+                        env.TUNNEL_IDENTIFIER = sh(script: 'echo ${GIT_COMMIT}-${BUILD_NUMBER}', returnStdout: true)
+                        env.SAUCE_CRED_USR = sh(script: 'vault read -field=username secret/ops/token/saucelabs', returnStdout: true)
+                        env.SAUCE_CRED_PSW = sh(script: 'vault read -field=value secret/ops/token/saucelabs', returnStdout: true)
                         env.GITHUB_TOKEN = sh(script: 'vault read -field=value secret/ops/token/github', returnStdout: true)
                         env.CODECOV_TOKEN = sh(script: 'vault read -field=molgenis-frontend secret/ops/token/codecov', returnStdout: true)
                         env.NEXUS_AUTH = sh(script: 'vault read -field=base64 secret/ops/account/nexus', returnStdout: true)
@@ -25,6 +28,9 @@ pipeline {
                         env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
                         env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
                     }
+                }
+                container('node') {
+                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
                 }
                 sh "git remote set-url origin https://$GITHUB_TOKEN@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
@@ -77,6 +83,7 @@ pipeline {
                                 sh "yarn lint"
                                 sh "yarn build"
                                 sh "yarn unit"
+                                sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
                             }
                         }
                     }
@@ -133,6 +140,7 @@ pipeline {
                             dir("${PACKAGE_DIR}/questionnaires") {
                                 sh "yarn build"
                                 sh "yarn unit"
+                                sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
                             }
                         }
                     }
@@ -362,6 +370,11 @@ pipeline {
         }
         failure {
             hubotSend(message: 'Build failed', status:'ERROR', site: 'slack-pr-app-team')
+        }
+        always {
+            container('node') {
+                sh "daemon --name=sauceconnect --stop"
+            }
         }
     }
 }
