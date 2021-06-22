@@ -30,7 +30,10 @@ pipeline {
                     }
                 }
                 container('node') {
-                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
+                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc --readyfile /tmp/sauce-ready.txt -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
+                    timeout (1) {
+                        sh "while [ ! -f /tmp/sauce-ready.txt ]; do sleep 1; done"
+                    }
                 }
                 sh "git remote set-url origin https://$GITHUB_TOKEN@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
