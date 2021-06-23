@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.11.11](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.11.10...@molgenis-ui/data-explorer@3.11.11) (2021-06-23)
+
+
+### Bug Fixes
+
+* **data-explorer:** make tooltip noninteractive ([b6a7661](https://github.com/molgenis/molgenis-frontend/commit/b6a7661f9e393c1513be200650a931d7ca271c49))
+
+
+
+
+
 ## [3.11.10](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.11.9...@molgenis-ui/data-explorer@3.11.10) (2021-06-18)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
