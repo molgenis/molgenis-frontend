@@ -8,7 +8,7 @@
     >
       <router-link
         v-if="hasAddRights"
-        v-b-tooltip.hover.bottom
+        v-b-tooltip.noninteractive.hover.bottom
         class="btn btn-outline-secondary add-row"
         :title="$t('dataexplorer_add_entity_btn_tooltip')"
         :to="{ name: 'de-create', params: { entity: tableName }, query: {}}"
@@ -45,7 +45,7 @@
     </div>
     <div class="btn-group" role="group" aria-label="Table actions group">
       <button
-        v-b-tooltip.hover.bottom
+        v-b-tooltip.noninteractive.hover.bottom
         :disabled="isDownloading"
         class="btn btn-outline-secondary"
         :title="$t('dataexplorer_download_btn_tooltip')"
@@ -56,7 +56,7 @@
 
       <button
         v-if="!showSelected && dataDisplayLayout === 'TableView'"
-        v-b-tooltip.hover.bottom
+        v-b-tooltip.noninteractive.hover.bottom
         type="button"
         role="button"
         class="btn btn-light btn-outline-secondary card-layout"
@@ -68,7 +68,7 @@
 
       <button
         v-else-if="!showSelected"
-        v-b-tooltip.hover.bottom
+        v-b-tooltip.noninteractive.hover.bottom
         type="button"
         role="button"
         class="btn btn-light btn-outline-secondary table-layout"

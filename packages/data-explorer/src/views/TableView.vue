@@ -28,7 +28,7 @@
         <template #edit-buttons>
           <router-link
             v-if="hasEditRights"
-            v-b-tooltip.hover.bottom
+            v-b-tooltip.noninteractive.hover.bottom
             :title="$t('dataexplorer_row_action_edit_btn_tooltip')"
             class="btn btn-sm text-secondary"
             role="button"
@@ -37,7 +37,7 @@
             <font-awesome-icon icon="edit" />
           </router-link>
           <router-link
-            v-b-tooltip.hover.bottom class="btn btn-sm text-secondary"
+            v-b-tooltip.noninteractive.hover.bottom class="btn btn-sm text-secondary"
             role="button"
             :to="{ name: 'entity-detail', params: { entityType: tableName, entity: getEntityId(entity)}, query: $route.query}"
           >
@@ -45,7 +45,7 @@
           </router-link>
           <button
             v-if="hasEditRights"
-            v-b-tooltip.hover.bottom
+            v-b-tooltip.noninteractive.hover.bottom
             :title="$t('dataexplorer_row_action_delete_btn_tooltip')"
             class="btn btn-sm text-secondary"
             role="button"
