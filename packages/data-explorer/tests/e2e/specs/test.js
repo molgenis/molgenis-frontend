@@ -1,7 +1,6 @@
 // For authoring Nightwatch tests, see
 // http://nightwatchjs.org/guide#usage
 const timeOutDelay = 5000
-const animationDelay = 300
 
 const patientsLocation = `${process.env.VUE_DEV_SERVER_URL}#/explorer/root_hospital_patients`
 
