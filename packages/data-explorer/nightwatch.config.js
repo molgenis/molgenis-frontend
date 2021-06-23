@@ -12,12 +12,14 @@ module.exports = {
   test_settings: {
 
     ci_chrome: {
-      launch_url: 'http://ondemand.saucelabs.com:80',
       selenium_port: 80,
-      selenium_host: 'ondemand.saucelabs.com',
+      selenium_host: 'ondemand.us-west-1.saucelabs.com',
       silent: true,
       username: process.env.SAUCE_CRED_USR,
       access_key: process.env.SAUCE_CRED_PSW,
+      selenium: {
+        start_process: false
+      },
       desiredCapabilities: {
         name: packageJson.name,
         build: buildName,
@@ -26,12 +28,14 @@ module.exports = {
       }
     },
     ci_firefox: {
-      launch_url: 'http://ondemand.saucelabs.com:80',
       selenium_port: 80,
-      selenium_host: 'ondemand.saucelabs.com',
+      selenium_host: 'ondemand.us-west-1.saucelabs.com',
       silent: true,
       username: process.env.SAUCE_CRED_USR,
       access_key: process.env.SAUCE_CRED_PSW,
+      selenium: {
+        start_process: false
+      },
       desiredCapabilities: {
         name: packageJson.name,
         build: buildName,
@@ -40,12 +44,14 @@ module.exports = {
       }
     },
     ci_ie11: {
-      launch_url: 'http://ondemand.saucelabs.com:80',
       selenium_port: 80,
-      selenium_host: 'ondemand.saucelabs.com',
+      selenium_host: 'ondemand.us-west-1.saucelabs.com',
       silent: true,
       username: process.env.SAUCE_CRED_USR,
       access_key: process.env.SAUCE_CRED_PSW,
+      selenium: {
+        start_process: false
+      },
       desiredCapabilities: {
         name: packageJson.name,
         build: buildName,
@@ -56,12 +62,14 @@ module.exports = {
       }
     },
     ci_safari: {
-      launch_url: 'http://ondemand.saucelabs.com:80',
       selenium_port: 80,
-      selenium_host: 'ondemand.saucelabs.com',
+      selenium_host: 'ondemand.us-west-1.saucelabs.com',
       silent: true,
       username: process.env.SAUCE_CRED_USR,
       access_key: process.env.SAUCE_CRED_PSW,
+      selenium: {
+        start_process: false
+      },
       desiredCapabilities: {
         name: packageJson.name,
         build: buildName,
