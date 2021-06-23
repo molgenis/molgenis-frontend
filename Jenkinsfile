@@ -276,7 +276,7 @@ pipeline {
                 }
                 container('rancher') {
                     sh "rancher apps delete ${NAME} || true"
-                    sh "sleep 5s" // wait for deletion
+                    sh "sleep 15s" // wait for deletion
                     sh "rancher apps install " + 
                         "-n ${NAME} " +
                         "p-vx5vf:molgenis-helm3-molgenis-frontend " +
