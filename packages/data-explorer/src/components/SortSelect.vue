@@ -16,7 +16,7 @@
     </select>
     <div class="input-group-append">
       <button
-        v-b-tooltip.hover.bottom="'reverse sort order'" class="btn btn-outline-secondary"
+        v-b-tooltip.noninteractive.hover.bottom="'reverse sort order'" class="btn btn-outline-secondary"
         type="button"
         :disabled="sort.sortColumnName === null"
         @click="handleSortSelectChange(sort.sortColumnName, !sort.isSortOrderReversed)"

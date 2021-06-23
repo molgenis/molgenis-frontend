@@ -1,26 +1,27 @@
 // For authoring Nightwatch tests, see
 // http://nightwatchjs.org/guide#usage
 const timeOutDelay = 5000
-const animationDelay = 300
 
-const patientsLocation = `${process.env.VUE_DEV_SERVER_URL}#/root_hospital_patients`
+const patientsLocation = `${process.env.VUE_DEV_SERVER_URL}#/explorer/root_hospital_patients`
 
 module.exports = {
   'show table layout and card layout': browser => {
     browser
       .url(patientsLocation)
       .waitForElementPresent('#app', timeOutDelay)
-      .waitForElementPresent('.card-deck', timeOutDelay)
-      .click('.table-layout')
       .waitForElementPresent('table.table', timeOutDelay)
       .click('.card-layout')
       .waitForElementPresent('.card-deck', timeOutDelay)
+      .click('.table-layout')
+      .waitForElementPresent('table.table', timeOutDelay)
       .end()
   },
   'add and remove items from shoppingcart': browser => {
     browser
       .url(patientsLocation)
       .waitForElementPresent('#app', timeOutDelay)
+      .waitForElementPresent('table.table', timeOutDelay)
+      .click('.card-layout')
       .waitForElementPresent('.shopping-button', timeOutDelay)
       .click('.shopping-button')
       .waitForElementPresent('.toast-body .btn-secondary', timeOutDelay)
@@ -34,8 +35,10 @@ module.exports = {
   },
   'should display custom card': browser => {
     browser
-      .url(process.env.VUE_DEV_SERVER_URL + '#/TableWithCustomCard')
+      .url(process.env.VUE_DEV_SERVER_URL + '#/explorer/TableWithCustomCard')
       .waitForElementPresent('#app', timeOutDelay)
+      .waitForElementPresent('.card-layout', timeOutDelay)
+      .click('.card-layout')
       .waitForElementPresent('div.entity-table', timeOutDelay)
       .pause(10)
       .waitForElementPresent('#app div.entity-table > div > div:nth-child(1) > div > div > div > p', timeOutDelay)
@@ -46,6 +49,8 @@ module.exports = {
     browser
       .url(patientsLocation)
       .waitForElementPresent('#app', timeOutDelay)
+      .waitForElementPresent('.card-layout', timeOutDelay)
+      .click('.card-layout')
       .waitForElementPresent('#app div.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(4)', timeOutDelay)
       .assert.visible('#app div.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(4)')
       .assert.elementNotPresent('#app div.entity-table > div > div:nth-child(1) > div > div > div > div:nth-child(7)')
@@ -62,14 +67,14 @@ module.exports = {
       .url(patientsLocation)
       .waitForElementPresent('#app', timeOutDelay)
       .waitForElementPresent('.btn.hide-filters', timeOutDelay)
-      .assert.elementNotPresent('show-filters-button')
-      .assert.cssClassNotPresent('.mg-content', 'hidefilters')
+      .assert.elementNotPresent('.mg-filter-tab.active')
+      .assert.cssClassNotPresent('.mg-filter', 'active')
       .click('.btn.hide-filters')
-      .assert.cssClassPresent('.mg-content', 'hidefilters')
-      .waitForElementPresent('.btn.show-filters-button', timeOutDelay)
-      .click('.btn.show-filters-button')
+      .assert.cssClassPresent('.mg-filter', 'active')
+      .waitForElementPresent('.btn.mg-filter-tab', timeOutDelay)
+      .click('.btn.mg-filter-tab')
       .waitForElementPresent('.btn.hide-filters', timeOutDelay)
-      .assert.elementNotPresent('show-filters-button')
+      .assert.elementNotPresent('.mg-filter-tab.active')
       .end()
   }
 }

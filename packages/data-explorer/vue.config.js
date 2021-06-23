@@ -124,9 +124,14 @@ module.exports = {
       app.get('/api/data/root_hospital_patients/p000000001', function (req, res) {
         res.json(require('./tests/e2e/resources/v3/data_p00001'))
       })
-
       app.get('/api/data/root_hospital_patients', function (req, res) {
         res.json(require('./tests/e2e/resources/typeTestData.js'))
+      })
+      app.get('/api/v2/root_hospital_patients', function (req, res) {
+        res.json(require('./tests/e2e/resources/v2/root_hospital_patients_num0.js'))
+      })
+      app.get('/api/v2/TableWithCustomCard', function (req, res) {
+        res.json(require('./tests/e2e/resources/v2/TableWithCustomCard_num0.js'))
       })
       app.get('/api/data/sys_ts_DataExplorerEntitySettings', function (req, res) {
         if (req.url.includes('TableWithMoreColumns')) {
