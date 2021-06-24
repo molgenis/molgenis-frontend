@@ -32,6 +32,10 @@ module.exports = {
     {
       name: 'RefTable',
       components: 'src/components/table/dataDisplayTypes/RefTable.vue'
+    },
+    {
+      name: "Building blocks",
+      components: 'src/components/blocks/*.vue'
     }
   ],
   exampleMode: 'expand',

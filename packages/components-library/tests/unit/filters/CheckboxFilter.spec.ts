@@ -1,10 +1,11 @@
 import { mount } from '@vue/test-utils'
 import CheckboxFilter from '@/components/filters/CheckboxFilter.vue'
+import SatisfyAll from '@/components/blocks/SatisfyAll.vue'
 import { localVue as getLocalVue } from '../../lib/helpers'
 
 const localVue = getLocalVue()
 
-function getWrapper (props = {}) {
+function getWrapper(props = {}) {
   const propsData = {
     ...props,
     value: [],
@@ -19,6 +20,7 @@ function getWrapper (props = {}) {
 
   const wrapper = mount(CheckboxFilter, {
     localVue,
+    components: { SatisfyAll },
     stubs: ['font-awesome-icon'],
     propsData,
     listeners: {
@@ -33,7 +35,7 @@ function getWrapper (props = {}) {
 describe('CheckboxFilter.vue', () => {
   describe('Parsing only required props', () => {
     let wrapper: any
-    beforeEach(() => { wrapper = getWrapper({ }) })
+    beforeEach(() => { wrapper = getWrapper({}) })
 
     it('can set and unset values', async () => {
       const inputElements = wrapper.findAll('input')
@@ -53,7 +55,7 @@ describe('CheckboxFilter.vue', () => {
       inputElements.at(1).trigger('click') // select bar
       await localVue.nextTick()
       expect(wrapper.emitted('input')[0]).toEqual([[{ value: 'foo', text: 'Foo' },
-        { value: 'bar', text: 'Bar' }]])
+      { value: 'bar', text: 'Bar' }]])
     })
 
     it('can select all and deselect all', async () => {
@@ -84,17 +86,16 @@ describe('CheckboxFilter.vue', () => {
 
   describe('SatisfyAllCheckbox', () => {
     it('checks that the satisfyAll checkbox is not shown by default ', () => {
-      const wrapper = getWrapper() 
+      const wrapper = getWrapper()
       const satisfyAllButton = wrapper.find('input[name="satisfy-all"]')
-      expect (satisfyAllButton.exists()).toBe(false)
+      expect(satisfyAllButton.exists()).toBe(false)
     })
 
     it('triggers the proper emit when the satisfyAll checkbox is clicked', async () => {
-      const wrapper = getWrapper({ showSatisfyAllCheckbox: true }) 
+      const wrapper = getWrapper({ showSatisfyAllCheckbox: true })
       const satisfyAllButton = wrapper.find('input[name="satisfy-all"]')
       await satisfyAllButton.trigger('click')
-      expect(wrapper.emitted('satisfyAll'))
-      expect(wrapper.emitted('satisfyAll')).toEqual([[true]])
+      expect(wrapper.emitted('satisfy-all')).toEqual([[true]])
     })
   })
 })

@@ -1,18 +1,11 @@
 <template>
   <div>
-    <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
-      <label class="label-disabled">
-        {{ satisfyAllLabel }}
-        <b-form-checkbox
-          v-model="satisfyAll"
-          name="satisfy-all"
-          class="d-inline-block ml-1"
-          :value="true"
-          :unchecked-value="false"
-          @change="(value) => $emit('satisfyAll', value)"
-        />
-      </label>
-    </div>
+    <satisfy-all
+      v-if="showSatisfyAllCheckbox"
+      :value="satisfyAllValue"
+      :satisfy-all-label="satisfyAllLabel"
+      @input="(value) => $emit('satisfy-all', value)"
+    />
     <b-form-checkbox-group
       v-model="selection"
       stacked
@@ -34,8 +27,13 @@
 </template>
 
 <script>
+import SatisfyAll from '../blocks/SatisfyAll.vue'
+
 export default {
   name: 'CheckboxFilter',
+  components: {
+    SatisfyAll
+  },
   props: {
     /**
      * Toggle to switch between returning an array with values or an array with the full option
@@ -70,16 +68,6 @@ export default {
       type: Array,
       default: () => []
     },
-
-    /**
-     * This is the satisfyAll property value. It is true if the satisfyAll property has been set (satisfyAll button checked),
-     * false if not.
-     */
-    satisfyAllValue: {
-      type: Boolean,
-      default: () => false
-    },
-
     /**
      * Whether to use (De)Select All or not.
      */
@@ -94,6 +82,14 @@ export default {
     maxVisibleOptions: {
       type: Number,
       default: () => undefined
+    },
+    /**
+     * This is the satisfyAll property value. It is true if the satisfyAll property has been set (satisfyAll button checked),
+     * false if not.
+     */
+    satisfyAllValue: {
+      type: Boolean,
+      default: () => false
     },
     /**
      * Whether to show the SatisfyAll checkbox or not.
@@ -115,7 +111,6 @@ export default {
   },
   data () {
     return {
-      satisfyAll: false,
       externalUpdate: false,
       selection: [],
       resolvedOptions: [],
@@ -161,9 +156,6 @@ export default {
     value () {
       this.setValue()
     },
-    satisfyAllValue (newValue) {
-      this.satisfyAll = newValue
-    },
     resolvedOptions () {
       this.sliceOptions = this.showToggleSlice
     },
@@ -189,7 +181,6 @@ export default {
       this.resolvedOptions = response
     })
     this.setValue()
-    this.satisfyAll = this.satisfyAllValue
   },
   methods: {
     toggleSelect () {
@@ -231,13 +222,18 @@ Filter that renders a list of options as a set of checkboxes
 ## Usage
 ```jsx
 const model = []
+let satisfyAll = false
 <CheckboxFilter
+  show-satisfy-all-checkbox
   v-bind:maxVisibleOptions="5"
   v-bind:bulkOperation="true"
   v-bind:options="fruitOptionsFunction"
   v-bind:optionsFilter="[]"
-  v-model="model">
+  v-model="model"
+  v-on:satisfy-all="(value) => { satisfyAll = value }"
+  >
 </CheckboxFilter>
 <div>model: {{model}}</div>
+<div>satisfyAll: {{satisfyAll}}</div>
 ```
 </docs>

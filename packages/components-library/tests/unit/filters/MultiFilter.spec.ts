@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import MultiFilter from '@/components/filters/MultiFilter.vue'
+import SatisfyAll from '@/components/blocks/SatisfyAll.vue'
 import { localVue as getLocalVue } from '../../lib/helpers'
 
 const localVue = getLocalVue()
@@ -29,7 +30,7 @@ describe('MultiFilter.vue', () => {
   }
 
   beforeEach(() => {
-    wrapper = mount(MultiFilter, { localVue, propsData })
+    wrapper = mount(MultiFilter, { localVue, propsData, components: { SatisfyAll } })
   })
 
   it('does not show checkbox fields when input options are not resolved yet', () => {
@@ -158,7 +159,7 @@ describe('MultiFilter.vue', () => {
         type: 'multi-filter'
       }
       wrapper = mount(MultiFilter, { localVue, propsData })
-      const satisfyAllButton = wrapper.find('input[type=checkbox]')    
+      const satisfyAllButton = wrapper.find('input[name="satisfy-all"]')  
       expect (satisfyAllButton.exists()).toBe(false)
       
     })
@@ -178,8 +179,7 @@ describe('MultiFilter.vue', () => {
       wrapper = mount(MultiFilter, { localVue, propsData })
       const satisfyAllButton = wrapper.find('input[name="satisfy-all"]')
       await satisfyAllButton.trigger('click')
-      expect(wrapper.emitted('satisfyAll'))
-      expect(wrapper.emitted('satisfyAll')).toEqual([[true]])
+      expect(wrapper.emitted('satisfy-all')).toEqual([[true]])
     })
   })
 })
