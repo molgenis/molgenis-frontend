@@ -1,18 +1,11 @@
 <template>
   <div>
-    <div v-if="showSatisfyAllCheckbox">
-      <label class="label-disabled">
-        {{ satisfyAllLabel }}
-        <b-form-checkbox
-          v-model="satisfyAll"
-          name="satisfy-all"
-          class="d-inline-block ml-1"
-          :value="true"
-          :unchecked-value="false"
-          @change="(value) => $emit('satisfyAll', value)"
-        />
-      </label>
-    </div>
+    <satisfy-all
+      v-if="showSatisfyAllCheckbox"
+      :value="satisfyAllValue"
+      :satisfy-all-label="satisfyAllLabel"
+      @satisfy-all="(value) => $emit('satisfy-all', value)"
+    />
     <b-input-group>
       <b-form-input
         v-model="query"
@@ -74,8 +67,13 @@
 </template>
 
 <script>
+import SatisfyAll from '@/components/blocks/SatisfyAll.vue'
+
 export default {
   name: 'MultiFilter',
+  components: {
+    SatisfyAll
+  },
   props: {
     /**
      * Toggle to switch between returning an array with values or an array with the full option
@@ -218,9 +216,6 @@ export default {
     value () {
       this.setValue()
     },
-    satisfyAllValue (newValue) {
-      this.satisfyAll = newValue
-    },
     query (queryValue) {
       if (this.triggerQuery) {
         clearTimeout(this.triggerQuery)
@@ -252,7 +247,6 @@ export default {
   },
   created () {
     this.showCount = this.maxVisibleOptions
-    this.satisfyAll = this.satisfyAllValue
   },
   beforeMount () {
     this.initializeFilter()
