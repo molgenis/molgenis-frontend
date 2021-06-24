@@ -3,12 +3,9 @@
     <label>
       {{ satisfyAllLabel }}
       <b-form-checkbox
-        v-model="satisfyAll"
+        v-model="satisfyAllModel"
         name="satisfy-all"
         class="d-inline-block ml-1"
-        :value="true"
-        :unchecked-value="false"
-        @change="(value) => $emit('satisfy-all', value)"
       />
     </label>
   </div>
@@ -39,13 +36,15 @@ export default {
       satisfyAll: false
     }
   },
-  watch: {
-    satisfyAllValue (newValue) {
-      this.satisfyAll = newValue
+  computed: {
+    satisfyAllModel: {
+      get () {
+        return this.value
+      },
+      set (value) {
+        this.$emit('satisfy-all', value)
+      }
     }
-  },
-  created () {
-      this.satisfyAllValue = this.value;
   }
 }
 </script>
