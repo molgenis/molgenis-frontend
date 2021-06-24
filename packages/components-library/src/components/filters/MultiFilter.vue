@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import SatisfyAll from '@/components/blocks/SatisfyAll.vue'
+import SatisfyAll from '../blocks/SatisfyAll.vue'
 
 export default {
   name: 'MultiFilter',
