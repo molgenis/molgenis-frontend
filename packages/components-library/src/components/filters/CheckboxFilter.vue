@@ -224,7 +224,7 @@ Filter that renders a list of options as a set of checkboxes
 const model = []
 let satisfyAll = false
 <CheckboxFilter
-show-satisfy-all-checkbox
+  show-satisfy-all-checkbox
   v-bind:maxVisibleOptions="5"
   v-bind:bulkOperation="true"
   v-bind:options="fruitOptionsFunction"
