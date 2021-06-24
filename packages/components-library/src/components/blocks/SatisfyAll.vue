@@ -54,7 +54,7 @@ const satisfyAllLabel = 'Satisfy all'
 let satisfyAll = false
     <satisfy-all
       v-bind:satisfy-all-label="satisfyAllLabel"
-      v-on:satisfy-all="event => satisfyAll = event"
+      v-model="satisfyAll"
     />
 <div>satisfyAll: {{satisfyAll}}</div>
 ```
