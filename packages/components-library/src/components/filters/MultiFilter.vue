@@ -4,7 +4,7 @@
       v-if="showSatisfyAllCheckbox"
       :value="satisfyAllValue"
       :satisfy-all-label="satisfyAllLabel"
-      @satisfy-all="(value) => $emit('satisfy-all', value)"
+      @input="(value) => $emit('satisfy-all', value)"
     />
     <b-input-group>
       <b-form-input

@@ -15,9 +15,10 @@
 export default {
   props: {
     /**
-     * This is the satisfyAll property value. It is true if the satisfyAll property has been set (satisfyAll button checked),
-     * false if not.
+     * This is the satisfyAll v-model value. 
+     * @model
      */
+    
     value: {
       type: Boolean,
       default: () => false
@@ -37,7 +38,7 @@ export default {
         return this.value
       },
       set (value) {
-        this.$emit('satisfy-all', value)
+        this.$emit('input', value)
       }
     }
   }
