@@ -1,5 +1,5 @@
 <template>
-  <div class="text-right mb-2">
+  <div class="text-right mb-2 satisfy-all-checkbox">
     <label>
       {{ satisfyAllLabel }}
       <b-form-checkbox
