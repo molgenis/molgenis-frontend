@@ -31,11 +31,6 @@ export default {
       default: () => 'Satisfy all'
     }
   },
-  data () {
-    return {
-      satisfyAll: false
-    }
-  },
   computed: {
     satisfyAllModel: {
       get () {
@@ -48,7 +43,6 @@ export default {
   }
 }
 </script>
-
 
 <docs>
 Filter that renders a list of options as a set of checkboxes
