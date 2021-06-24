@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="showSatisfyAllCheckbox" class="query-type-selector">
+    <div v-if="showSatisfyAllCheckbox">
       <label class="label-disabled">
         {{ satisfyAllLabel }}
         <b-form-checkbox
