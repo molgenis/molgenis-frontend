@@ -64,13 +64,3 @@ import Router from 'vue-router'
 ```
 
 > See [preview-build](https://preview-frontend-pr-[PR_NUMBER].dev.molgenis.org/styleguide) when reviewing a PR
-
-
-## FAQ
-Yarn build breaks on node-sass on MacOS
-
-You need to have the xcode-cli installed
-
-```
-xcode-select --install
-```
