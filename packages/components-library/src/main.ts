@@ -23,7 +23,7 @@ import EmailDisplay from './components/table/dataDisplayTypes/EmailDisplay.vue'
 import HTMLDisplay from './components/table/dataDisplayTypes/HTMLDisplay.vue'
 import LinkDisplay from './components/table/dataDisplayTypes/LinkDisplay.vue'
 import StringDisplay from './components/table/dataDisplayTypes/StringDisplay.vue'
-import SatisfyAllCheckbox from './components/blocks/SatisfyAll.vue'
+import SatisfyAllCheckbox from './components/blocks/SatisfyAllCheckbox.vue'
 
 export {
   ActiveFilters,
