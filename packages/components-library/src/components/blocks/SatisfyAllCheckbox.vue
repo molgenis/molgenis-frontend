@@ -53,7 +53,7 @@ Filter that renders a list of options as a set of checkboxes
 ```jsx
 const satisfyAllLabel = 'Satisfy all'
 let satisfyAll = false
-    <satisfy-all
+    <satisfy-all-checkbox
       v-bind:satisfy-all-label="satisfyAllLabel"
       v-model="satisfyAll"
     />
