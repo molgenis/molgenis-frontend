@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.6...@molgenis-ui/components-library@2.7.7) (2021-06-25)
+
+
+### Bug Fixes
+
+* **components-library:** need name for import to work ([ec3cadb](https://github.com/molgenis/molgenis-frontend/commit/ec3cadbd4593e76c296779a7c10747f8829e5e42))
+
+
+
+
+
 ## [2.7.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.5...@molgenis-ui/components-library@2.7.6) (2021-06-25)
 
 **Note:** Version bump only for package @molgenis-ui/components-library
