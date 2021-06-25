@@ -32,7 +32,19 @@ module.exports = {
                 "@typescript-eslint/explicit-module-boundary-types": "off",
                 "@typescript-eslint/no-explicit-any": "off",
                 "@typescript-eslint/ban-types": "off",
-                "@typescript-eslint/ban-ts-comment": "off"
+                "@typescript-eslint/ban-ts-comment": "off",
+            }
+        },
+        {
+            "files": ["src/components/**/*.ts"],
+            "parser": "@typescript-eslint/parser",
+            "extends": [
+                "eslint:recommended",
+                "plugin:@typescript-eslint/eslint-recommended",
+                "plugin:@typescript-eslint/recommended"
+            ],
+            "rules": {
+                "no-restricted-imports": ["error", { "patterns": ["@*"] }],
             }
         },
         {
@@ -51,6 +63,7 @@ module.exports = {
                         "allowFirstLine": false
                     }
                 }],
+                "no-restricted-imports": ["error", { "patterns": ["@*"] }],
                 "space-before-function-paren": ["error", "always"],
                 "comma-dangle": ["error", "never"],
                 "arrow-parens": ["error", "as-needed"]
