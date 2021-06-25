@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import CheckboxFilter from '@/components/filters/CheckboxFilter.vue'
-import SatisfyAll from '@/components/blocks/SatisfyAll.vue'
+import SatisfyAllCheckbox from '@/components/blocks/SatisfyAllCheckbox.vue'
 import { localVue as getLocalVue } from '../../lib/helpers'
 
 const localVue = getLocalVue()
@@ -20,7 +20,7 @@ function getWrapper(props = {}) {
 
   const wrapper = mount(CheckboxFilter, {
     localVue,
-    components: { SatisfyAll },
+    components: { SatisfyAllCheckbox },
     stubs: ['font-awesome-icon'],
     propsData,
     listeners: {

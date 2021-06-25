@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  name: "SatisfyAllCheckbox",
   props: {
     /**
      * This is the satisfyAll v-model value. 

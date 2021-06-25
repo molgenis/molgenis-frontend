@@ -1,6 +1,6 @@
 <template>
   <div>
-    <satisfy-all
+    <satisfy-all-checkbox
       v-if="showSatisfyAllCheckbox"
       :value="satisfyAllValue"
       :satisfy-all-label="satisfyAllLabel"
@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import SatisfyAll from '../blocks/SatisfyAll.vue'
+import SatisfyAllCheckbox from '../blocks/SatisfyAllCheckbox.vue'
 
 export default {
   name: 'CheckboxFilter',
   components: {
-    SatisfyAll
+    SatisfyAllCheckbox
   },
   props: {
     /**

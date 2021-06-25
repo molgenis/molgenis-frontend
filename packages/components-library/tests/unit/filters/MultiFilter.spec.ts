@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import MultiFilter from '@/components/filters/MultiFilter.vue'
-import SatisfyAll from '@/components/blocks/SatisfyAll.vue'
+import SatisfyAllCheckbox from '@/components/blocks/SatisfyAllCheckbox.vue'
 import { localVue as getLocalVue } from '../../lib/helpers'
 
 const localVue = getLocalVue()
@@ -30,7 +30,7 @@ describe('MultiFilter.vue', () => {
   }
 
   beforeEach(() => {
-    wrapper = mount(MultiFilter, { localVue, propsData, components: { SatisfyAll } })
+    wrapper = mount(MultiFilter, { localVue, propsData, components: { SatisfyAllCheckbox } })
   })
 
   it('does not show checkbox fields when input options are not resolved yet', () => {
