@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.4...@molgenis-ui/components-library@2.7.5) (2021-06-25)
+
+
+### Bug Fixes
+
+* **components-library:** abstracted satisfy-all and changed its styling ([b1e3109](https://github.com/molgenis/molgenis-frontend/commit/b1e31090fe673143b987805cc9aa9ccd6c1414f3))
+* **components-library:** don't use @ shortcut ([bff1c8a](https://github.com/molgenis/molgenis-frontend/commit/bff1c8a03d678a4b8b197426c1968f49ec3588fb))
+
+
+
+
+
 ## [2.7.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.3...@molgenis-ui/components-library@2.7.4) (2021-06-18)
 
 
