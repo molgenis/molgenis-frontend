@@ -1,18 +1,18 @@
 <template>
   <nav class="c-pagination">
-    <div v-if="localValue.count > localValue.size" class="btn-group mb-2 mr-3">
+    <div v-if="count > size" class="btn-group mb-2 mr-3">
       <button
-        :class="css" class="btn btn-outline-primary"
-        :disabled="localValue.page <= 1"
-        @click="updateValue({page: 1})"
+        :class="css" class="t-page-first btn btn-outline-primary"
+        :disabled="page <= 1"
+        @click="page = 1"
       >
         «
       </button>
 
       <button
         :class="css" class="t-page-prev btn btn-outline-primary"
-        :disabled="localValue.page <= 1"
-        @click="updateValue({page: localValue.page - 1})"
+        :disabled="page <= 1"
+        @click="page = page - 1"
       >
         ‹
       </button>
@@ -20,24 +20,24 @@
       <button
         v-for="pageNumber in pageNumbers" :key="pageNumber"
         class="btn btn-outline-primary"
-        :class="{'active': pageNumber === localValue.page, ...css}"
-        @click="updateValue({page: pageNumber})"
+        :class="{'active': pageNumber === page, ...css}"
+        @click="page = pageNumber"
       >
         {{ pageNumber }}
       </button>
 
       <button
         :class="css" class="t-page-next btn btn-outline-primary"
-        :disabled="localValue.page >= pageCount"
-        @click="updateValue({page: localValue.page + 1})"
+        :disabled="page >= pageCount"
+        @click="page = page + 1"
       >
         ›
       </button>
 
       <button
-        :class="css" class="btn btn-outline-primary"
-        :disabled="localValue.page >= pageCount"
-        @click="updateValue({page: pageCount})"
+        :class="css" class="t-page-last btn btn-outline-primary"
+        :disabled="page >= pageCount"
+        @click="page = pageCount"
       >
         »
       </button>
@@ -51,9 +51,9 @@
       <div class="form-check form-check-inline">
         <label class="form-check-label mr-2" for="page-size">{{ i18n['per page'] }}</label>
         <select
-          id="page-size" v-model="localValue.size"
+          id="page-size"
+          v-model="size" 
           class="form-control"
-          @change="handleSizeChange"
         >
           <option v-for="pageSize of pageSizes" :key="pageSize" :value="pageSize">
             {{ pageSize }}
@@ -114,27 +114,26 @@ export default {
       }
     }
   },
-  data: function () {
-    return {
-      localValue: {
-        size: 20,
-        page: 1,
-        loading: false,
-        count: 0
-      }
-    }
-  },
   computed: {
+    page: {
+      get () { return this.value.page },
+      set (page) { this.$emit('input', {...this.value, page })}
+    },
+    count () { return this.value.count },
+    size: {
+      get () { return this.value.size },
+      set (size) { this.$emit('input', {...this.value, page: 1, size})}
+    },
     navigationText () {
       if (this.pageCount <= 1) {
-        return `${this.i18n.items}: ${this.localValue.count}`
+        return `${this.i18n.items}: ${this.value.count}`
       } else {
-        return `${this.i18n.page} ${this.localValue.page}/${this.pageCount} (${this.localValue.count} ${this.i18n.items})`
+        return `${this.i18n.page} ${this.value.page}/${this.pageCount} (${this.value.count} ${this.i18n.items})`
       }
     },
     pageCount () {
-      if (!this.localValue.count) { return 0 }
-      return Math.ceil(this.localValue.count / this.localValue.size)
+      if (!this.value.count) { return 0 }
+      return Math.ceil(this.value.count / this.value.size)
     },
     pageNumbers () {
       const pages = []
@@ -147,8 +146,8 @@ export default {
      */
     pageRange () {
       const edge = Math.floor(this.visiblePages / 2)
-      const start = this.localValue.page <= edge
-      const end = this.localValue.page >= (Math.floor(this.localValue.count / this.localValue.size) - edge)
+      const start = this.value.page <= edge
+      const end = this.value.page >= (Math.floor(this.value.count / this.value.size) - edge)
 
       let left, right
 
@@ -160,34 +159,11 @@ export default {
         right = this.pageCount
       } else {
         // Must be within the mid-range.
-        left = this.localValue.page - edge
-        right = this.localValue.page + edge
+        left = this.value.page - edge
+        right = this.value.page + edge
       }
 
       return { left, right }
-    }
-  },
-  watch: {
-    /**
-     * Sync the local state when the external state changes.
-     */
-    value: {
-      handler (value) {
-        this.localValue = value
-      },
-      deep: true
-    }
-  },
-  async created () {
-    this.localValue = { ...this.localValue, ...this.value }
-  },
-  methods: {
-    updateValue (value) {
-      this.localValue = { ...this.localValue, ...this.value, ...value }
-      this.$emit('input', { ...this.localValue })
-    },
-    handleSizeChange () {
-      this.updateValue({ page: 1, size: this.localValue.size })
     }
   }
 }
@@ -235,11 +211,9 @@ export default {
   // Always provide at least 'size' and 'page'; the other properties
   // are added from the pagination component itself.
   let model = { size: 20, page: 1, count: 124 }
-  const mockStore = (e) => { model = e }
 
   <Pagination
     v-model="model"
-    v-on:input="mockStore"
     v-bind:visiblePages="9"
     v-bind:pageSizes="[10, 20, 50, 100]"
     v-bind:css="{'btn-sm': true}"/>
