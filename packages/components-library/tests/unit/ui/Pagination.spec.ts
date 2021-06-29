@@ -2,72 +2,105 @@ import { mount } from '@vue/test-utils'
 import Pagination from '@/components/ui/Pagination.vue'
 import { localVue as getLocalVue } from '../../lib/helpers'
 
-let wrapper: any
-
 const localVue: any = getLocalVue()
 
-let propsData: any
+describe('Pagination.vue', () => {
+  const propsData = {
+    value: {
+      count: 100, loading: false, size: 20, page: 3
+    },
+    visiblePages: 3
+  }
 
-const buildWrapper = async (propsData: any, attrs: any = null) => {
-  wrapper = await mount(Pagination, {
-    listeners: {
-      input: async function (e: any) {
-        propsData.value = e
-      }
-    },
-    localVue,
-    mocks: {
-      $tc: (msg: any) => msg,
-      $t: (msg: any) => msg
-    },
-    propsData,
-    ...attrs
+  it('navigates to next page', async () => {
+    const wrapper = mount(Pagination, { localVue, propsData })
+    await wrapper.find('.t-page-next').trigger('click')
+    expect(wrapper.emitted()).toEqual({input: [[{ count: 100, loading: false, page: 4, size: 20 }]]})
   })
 
-  return wrapper
-}
+  it('navigates to last page', async () => {
+    const wrapper = mount(Pagination, { localVue, propsData })
+    await wrapper.find('.t-page-last').trigger('click')
+    expect(wrapper.emitted()).toEqual({input: [[{ count: 100, loading: false, page: 5, size: 20 }]]})
+  })
 
-describe('Pagination.vue', () => {
-  it('navigates within a paginated range', async () => {
-    propsData = {
+  it('navigates to previous page', async () => {
+    const wrapper = mount(Pagination, { localVue, propsData })
+    await wrapper.find('.t-page-prev').trigger('click')
+    expect(wrapper.emitted()).toEqual({input: [[{ count: 100, loading: false, page: 2, size: 20 }]]})
+  })
+
+  it('navigates to first page', async () => {
+    const wrapper = mount(Pagination, { localVue, propsData })
+    await wrapper.find('.t-page-first').trigger('click')
+    expect(wrapper.emitted()).toEqual({input: [[{ count: 100, loading: false, page: 1, size: 20 }]]})
+  })
+
+  it('changes page size and moves to first page', async () => {
+    const wrapper = mount(Pagination, { localVue, propsData })
+    await wrapper.find('#page-size').setValue(10)
+    expect(wrapper.emitted()).toEqual({input: [[{ count: 100, loading: false, page: 1, size: 10 }]]})
+  })
+
+  it('disables next buttons on last page', async () => {
+    const lastPageProps = {
       value: {
-        count: 100, loading: false, size: 20, page: 4
+        count: 100, loading: false, size: 20, page: 5
       },
       visiblePages: 3
     }
-    const wrapper = await buildWrapper(propsData)
-    // The model is leading to determine the current page:
-    expect(wrapper.vm.localValue).toEqual({ count: 100, loading: false, page: 4, size: 20 })
-    await wrapper.find('.t-page-next').trigger('click')
-    expect(propsData.value.page).toEqual(5)
-    // // Next page is disabled when on the last page:
+    const wrapper = mount(Pagination, { localVue, propsData: lastPageProps })
     expect(wrapper.find('.t-page-next[disabled]').exists()).toBe(true)
-
-    await wrapper.find('.t-page-prev').trigger('click')
-    expect(propsData.value.page).toEqual(4)
-
-    // go back to page 1
-    await wrapper.find('.t-page-prev').trigger('click')
-    await wrapper.find('.t-page-prev').trigger('click')
-    await wrapper.find('.t-page-prev').trigger('click')
-    expect(propsData.value.page).toEqual(1)
+    expect(wrapper.find('.t-page-last[disabled]').exists()).toBe(true)
   })
 
-  it('it emits the updated model when the size is changed', async () => {
-    propsData = {
-      value: { count: 100, loading: false, size: 20, page: 4 },
+  it('disables prev buttons on first page', async () => {
+    const firstPageProps = {
+      value: {
+        count: 100, loading: false, size: 20, page: 1
+      },
       visiblePages: 3
     }
-    const wrapper = await buildWrapper(propsData)
-    const options = await wrapper.find('select').findAll('option')
+    const wrapper = mount(Pagination, { localVue, propsData: firstPageProps })
+    expect(wrapper.find('.t-page-prev[disabled]').exists()).toBe(true)
+    expect(wrapper.find('.t-page-first[disabled]').exists()).toBe(true)
+  })
 
-    await options.at(0).setSelected()
-    expect(wrapper.emitted().input[0][0]).toEqual({ count: 100, loading: false, page: 1, size: 10 })
-    await options.at(1).setSelected()
-    expect(wrapper.emitted().input[1][0]).toEqual({ count: 100, loading: false, page: 1, size: 20 })
-    await options.at(2).setSelected()
-    expect(wrapper.emitted().input[2][0]).toEqual({ count: 100, loading: false, page: 1, size: 50 })
-    await options.at(0).setSelected()
-    expect(wrapper.emitted().input[3][0]).toEqual({ count: 100, loading: false, page: 1, size: 10 })
+  it('responds to page prop change', async () => {
+    const firstPageProps = {
+      value: {
+        count: 100, loading: false, size: 20, page: 1
+      },
+      visiblePages: 3
+    }
+    const wrapper = mount(Pagination, { localVue, propsData })
+    expect(wrapper.find('.btn.active').text()).toBe('3')
+    await wrapper.setProps(firstPageProps)
+    expect(wrapper.find('.btn.active').text()).toBe('1')
+  })
+
+  it('emits size selection', async () => {
+    const firstPageProps = {
+      value: {
+        count: 100, loading: false, size: 20, page: 3
+      },
+      visiblePages: 3
+    }
+    const wrapper = mount(Pagination, { localVue, propsData: firstPageProps })
+    await wrapper.find('#page-size').find('option').setSelected()
+    expect(wrapper.emitted()).toEqual({input: [[{ count: 100, loading: false, page: 1, size: 10 }]]})
+  })
+
+  it('responds to size prop change', async () => {
+    const smallPageProps = {
+      value: {
+        count: 100, loading: false, size: 10, page: 1
+      },
+      visiblePages: 3
+    }
+    const wrapper = mount(Pagination, { localVue, propsData })
+    await wrapper.setProps(smallPageProps)
+    expect((wrapper.find('#page-size').element as HTMLSelectElement).value).toBe('10')
+    expect(wrapper.find('.btn.active').text()).toBe('1')
   })
 })
