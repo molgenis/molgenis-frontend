@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.8](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.7...@molgenis-ui/components-library@2.7.8) (2021-06-29)
+
+
+### Bug Fixes
+
+* **components-library:** controlled Pagination ([dc2d5f5](https://github.com/molgenis/molgenis-frontend/commit/dc2d5f59cb24aa8826d714984b0e63c65b6c4194))
+
+
+
+
+
 ## [2.7.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.6...@molgenis-ui/components-library@2.7.7) (2021-06-25)
 
 
