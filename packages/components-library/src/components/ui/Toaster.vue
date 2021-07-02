@@ -112,7 +112,7 @@ $spacer: 0.5rem;
   }
 
   &:not(.inline) {
-    max-width: 350px; // To match bootstrap's toast size ( in case the shopping cart is under the toasts )
+    width: 350px; // To match bootstrap's toast size ( in case the shopping cart is under the toasts )
     z-index: 1060;  // Bootstrap popover z-index
 
     @media (max-width: 576px) {
