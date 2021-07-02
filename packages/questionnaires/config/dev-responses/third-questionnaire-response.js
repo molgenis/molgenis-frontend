@@ -37,8 +37,8 @@ module.exports = {
         label: 'Submit date',
         description: 'The date of submission',
         fieldType: 'DATE',
-        nullableExpression: '$("status").value() !== "SUBMITTED"',
-        visibleExpression: '$("status").value() === "SUBMITTED"'
+        nullableExpression: '{status} != "SUBMITTED"',
+        visibleExpression: '{status} = "SUBMITTED"'
       },
       {
         name: 'chapter1',
@@ -185,8 +185,8 @@ module.exports = {
             label: 'Question #3 - Please specify this "other" you speak of',
             description: 'What is greater than www.molgenis.org?',
             fieldType: 'TEXT',
-            visibleExpression: '$("ch2_question2").value() === "2"',
-            nullableExpression: '$("ch2_question2").value() !== "2"'
+            visibleExpression: '{ch2_question2} = "2"',
+            nullableExpression: '{ch2_question2} != "2"'
           }
         ]
       }
@@ -203,7 +203,7 @@ module.exports = {
       ch1_question1: 'Mark de Haan',
       ch1_question2: 27,
       ch2_question1: [{id: 'vue', label: 'VueJS'}, {id: 'javascript', label: 'JavaScript'}],
-      ch2_question2: {id: '1', label: 'www.molgenis.org'},
+      ch2_question2: {id: '1', label: 'www.molgenis.org'}
     }
   ]
 }

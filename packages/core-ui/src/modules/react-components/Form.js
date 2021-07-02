@@ -732,7 +732,7 @@ var Form = React.createClass({
         }, this);
 
         try {
-            return evalScript(expression, form);
+            return Expressions.evaluate(expression, form);
         } catch (e) {
             return false;
         }

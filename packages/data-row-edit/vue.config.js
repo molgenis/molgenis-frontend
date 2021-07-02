@@ -21,7 +21,8 @@ module.exports = {
     host: process.env.JENKINS_AGENT_NAME || 'localhost',
     proxy: process.env.NODE_ENV === 'production' ? undefined : {
       '/login': { target },
-      '/api': { target }
+      '/api': { target },
+      '/@molgenis': { target: 'https://unpkg.com' }
     }
   },
   configureWebpack: config => {
@@ -30,7 +31,8 @@ module.exports = {
     }
     config.devtool = 'source-map'
     config.externals = {
-      bootstrap: 'bootstrap'
+      bootstrap: 'bootstrap',
+      '@molgenis/molgenis-ui-form': 'window["molgenis-ui-form"]'
     }
     config.plugins.push(
       new BannerPlugin({

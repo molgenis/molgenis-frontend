@@ -304,7 +304,8 @@
             <label class="text-muted">{{ 'attribute-edit-form-computed-expression-label' | i18n
               }}</label>
             <textarea v-model="expression" class="form-control" rows="3"
-                      :placeholder="$t('attribute-edit-form-computed-expression-placeholder')"></textarea>
+                      :placeholder="$t('attribute-edit-form-computed-expression-placeholder',
+                        { interpolation: { prefix: '<<', suffix: '>>' } })"></textarea>
           </div>
         </div>
         <div class="col">

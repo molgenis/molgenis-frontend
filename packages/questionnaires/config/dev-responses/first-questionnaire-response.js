@@ -37,8 +37,8 @@ module.exports = {
         label: 'Submit date',
         description: 'The date of submission',
         fieldType: 'DATE',
-        nullableExpression: '$("status").value() !== "SUBMITTED"',
-        visibleExpression: '$("status").value() === "SUBMITTED"'
+        nullableExpression: '{status} != "SUBMITTED"',
+        visibleExpression: '{status} = "SUBMITTED"'
       },
       {
         name: 'chapter1',
@@ -52,7 +52,7 @@ module.exports = {
             description: 'Please fill in your name',
             fieldType: 'STRING',
             visible: true,
-            nullableExpression: '$("status").value() !== "SUBMITTED"'
+            nullableExpression: '{status} != "SUBMITTED"'
           },
           {
             name: 'ch1_question2',
@@ -64,7 +64,7 @@ module.exports = {
               max: 99
             },
             visible: true,
-            nullableExpression: '$("status").value() !== "SUBMITTED"'
+            nullableExpression: '{status} != "SUBMITTED"'
           },
           {
             name: 'ch1_question3',
@@ -72,7 +72,7 @@ module.exports = {
             description: 'Verify if we can navigate to next chapter with nullable expressions',
             fieldType: 'TEXT',
             visible: true,
-            nullableExpression: '$("status").value() !== "SUBMITTED"'
+            nullableExpression: '{status} != "SUBMITTED"'
           },
           {
             name: 'ch1_question4',
@@ -203,8 +203,8 @@ module.exports = {
             label: 'Question #3 - Please specify this "other" you speak of',
             description: 'What is greater than www.molgenis.org?',
             fieldType: 'TEXT',
-            visibleExpression: '$("ch2_question2").value() === "2"',
-            nullableExpression: '$("ch2_question2").value() !== "2"'
+            visibleExpression: '{ch2_question2} = "2"',
+            nullableExpression: '{ch2_question2} != "2"'
           }
         ]
       }
@@ -221,7 +221,7 @@ module.exports = {
       ch1_question1: undefined,
       ch1_question2: undefined,
       ch2_question1: undefined,
-      ch2_question2: undefined,
+      ch2_question2: undefined
     }
   ]
 }

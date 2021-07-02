@@ -24,12 +24,12 @@
     "@fortawesome/vue-fontawesome": "^0.1.5",
     "@molgenis/molgenis-api-client": "^3.1.0",
     "@molgenis/molgenis-i18n-js": "^0.1.1",
-    "@molgenis/molgenis-ui-form": "^5.4.3",
     "vue": "^2.6.8",
     "vue-router": "^3.0.2",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
+    "@molgenis/molgenis-ui-form": "^5.5.1",
     "@types/jest": "^24.0.9",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
