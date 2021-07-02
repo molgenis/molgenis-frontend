@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.3.2...@molgenis-ui/settings@4.4.0) (2021-07-02)
+
+
+### Features
+
+* **scripts:** simple expressions ([20dc8a8](https://github.com/molgenis/molgenis-frontend/commit/20dc8a850b493488c94756e7727bb68534ffbf83))
+
+
+
+
+
 ## [4.3.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.3.1...@molgenis-ui/settings@4.3.2) (2021-05-05)
 
 

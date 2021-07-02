@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.2.0...@molgenis-ui/metadata-manager@0.2.1) (2021-07-02)
+
+
+### Bug Fixes
+
+* **metadata-manager:** change interpolation ([862a65c](https://github.com/molgenis/molgenis-frontend/commit/862a65cfbcf1b588f29640cfa52960d47ddad152))
+
+
+
+
+
 # [0.2.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.1.10...@molgenis-ui/metadata-manager@0.2.0) (2021-05-25)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.3.1...@molgenis-ui/data-row-edit@5.4.0) (2021-07-02)
+
+
+### Features
+
+* **data-row-edit:** simple expressions ([f6da9e4](https://github.com/molgenis/molgenis-frontend/commit/f6da9e4858a96654cd5318c8aa7c95ba0c691e71))
+
+
+
+
+
 ## [5.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.3.0...@molgenis-ui/data-row-edit@5.3.1) (2021-05-05)
 
 

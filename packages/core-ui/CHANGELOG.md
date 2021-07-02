@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/core-ui@0.3.3...@molgenis-ui/core-ui@0.4.0) (2021-07-02)
+
+
+### Features
+
+* **core-ui:** simple expressions in forms ([8b9f852](https://github.com/molgenis/molgenis-frontend/commit/8b9f8523bf2fb1cde7a5368d5439f94216c34698))
+
+
+
+
+
 ## [0.3.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/core-ui@0.3.2...@molgenis-ui/core-ui@0.3.3) (2021-02-25)
 
 
