@@ -48,7 +48,12 @@ module.exports = {
     // In CI mode, Safari cannot contact "localhost", so as a workaround, run the dev server using the jenkins agent pod dns instead.
     host: process.env.JENKINS_AGENT_NAME || 'localhost',
     // Used to proxy a external API server to have someone to talk to during development
-    proxy: process.env.NODE_ENV !== 'development' ? undefined : {
+    proxy: process.env.NODE_ENV !== 'development' ? {
+      '^/@molgenis': {
+        target: "https://unpkg.com",
+        changeOrigin: true
+      },
+    } : {
       '^/api': apiDevServerProxyConf,
       '^/theme': {
         target: PROXY_TARGET,
