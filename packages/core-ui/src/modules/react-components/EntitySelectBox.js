@@ -20,6 +20,7 @@ var EntitySelectBox = React.createClass({
         entity: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]).isRequired,
         query: React.PropTypes.object,
         mode: React.PropTypes.oneOf(['view', 'create']),
+        formSettings: React.PropTypes.object,
         name: React.PropTypes.string,
         disabled: React.PropTypes.bool,
         readOnly: React.PropTypes.bool,
@@ -82,6 +83,7 @@ var EntitySelectBox = React.createClass({
         } else if (this.props.mode === 'create') {
             return this.state.modal ? Form({
                 entity: this.state.entity.name,
+                formSettings: this.props.formSettings,
                 showHidden: true,
                 cancelBtn: true,
                 modal: true,

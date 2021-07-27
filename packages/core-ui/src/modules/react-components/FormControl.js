@@ -21,6 +21,7 @@ var FormControl = React.createClass({
         attr: React.PropTypes.object.isRequired,
         formLayout: React.PropTypes.oneOf(['horizontal', 'vertical']),
         mode: React.PropTypes.oneOf(['create', 'edit', 'view']),
+        addNullOption: React.PropTypes.bool,
         colOffset: React.PropTypes.number,
         errorMessage: React.PropTypes.string,
         focus: React.PropTypes.bool,

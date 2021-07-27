@@ -54,6 +54,7 @@ var Table = React.createClass({
         onRowInspect: React.PropTypes.func,
         onRowClick: React.PropTypes.func,
         onExecute: React.PropTypes.func,
+        formSettings: React.PropTypes.object,
         enableAdd: React.PropTypes.bool,
         enableEdit: React.PropTypes.bool,
         enableDelete: React.PropTypes.bool,
@@ -81,6 +82,11 @@ var Table = React.createClass({
             onRowEdit: function () {
             },
             onRowDelete: function () {
+            },
+            formSettings: {
+                addEnumNullOption: true,
+                addBooleanNullOption: true,
+                addCategoricalNullOption: true
             },
             onRowInspect: null,
             enableAdd: true,
@@ -140,6 +146,7 @@ var Table = React.createClass({
             enableDelete: deletable && this.props.enableDelete === true,
             enableInspect: this.props.enableInspect === true && this.props.onRowInspect !== null,
             enableExecute: this.props.enableExecute === true && this.props.onExecute != null,
+            formSettings: this.props.formSettings,
             onEdit: this._handleEdit,
             onDelete: this._handleDelete,
             onRowInspect: this.props.onRowInspect,
@@ -323,6 +330,7 @@ var TableHeader = React.createClass({
         if (this.props.enableAdd === true) {
             Headers.push(th({className: 'compact', key: 'add'}, EntityCreateBtnFactory({
                 entity: this.props.entity,
+                formSettings: this.props.formSettings,
                 onCreate: this.props.onCreate,
                 onClick: this.props.onAddClick
             })));
@@ -471,6 +479,7 @@ var TableBody = React.createClass({
         enableDelete: React.PropTypes.bool,
         enableInspect: React.PropTypes.bool,
         enableExecute: React.PropTypes.bool,
+        formSettings: React.PropTypes.object,
         onEdit: React.PropTypes.func,
         onDelete: React.PropTypes.func,
         onRowInspect: React.PropTypes.func,
@@ -517,6 +526,7 @@ var TableBody = React.createClass({
         if (this.props.enableEdit === true) {
             var EntityEditBtn = EntityEditBtnFactory({
                 name: entity.name,
+                formSettings: this.props.formSettings,
                 id: item[entity.idAttribute],
                 onEdit: this.props.onEdit,
                 onClick: this.props.onEditClick
@@ -934,7 +944,8 @@ var EntityCreateBtn = React.createClass({
     propTypes: {
         entity: React.PropTypes.object.isRequired,
         onCreate: React.PropTypes.func,
-        onClick: React.PropTypes.func
+        onClick: React.PropTypes.func,
+        formSettings: React.PropTypes.object
     },
     getInitialState: function () {
         return {
@@ -971,6 +982,7 @@ var EntityCreateBtn = React.createClass({
         return this.state.form ? Form({
             entity: this.props.entity.name,
             mode: 'create',
+            formSettings: this.props.formSettings,
             showHidden: true,
             modal: true,
             onSubmitSuccess: this._handleCreateConfirm,
@@ -1007,6 +1019,7 @@ var EntityEditBtn = React.createClass({
     propTypes: {
         name: React.PropTypes.string.isRequired,
         id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
+        formSettings: React.PropTypes.object,
         onEdit: React.PropTypes.func,
         onClick: React.PropTypes.func
     },
@@ -1048,6 +1061,7 @@ var EntityEditBtn = React.createClass({
             entity: this.props.name,
             entityInstance: this.props.id,
             mode: 'edit',
+            formSettings: this.props.formSettings,
             showHidden: true,
             modal: true,
             onSubmitSuccess: this._handleEditConfirm,

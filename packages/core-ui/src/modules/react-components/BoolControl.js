@@ -25,6 +25,7 @@ var BoolControl = React.createClass({
         required: React.PropTypes.bool,
         disabled: React.PropTypes.bool,
         readOnly: React.PropTypes.bool,
+        addNullOption: React.PropTypes.bool,
         focus: React.PropTypes.bool,
         value: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.array]),
         onValueChange: React.PropTypes.func.isRequired
@@ -50,7 +51,7 @@ var BoolControl = React.createClass({
             value: 'false',
             label: this.state.i18nStrings.form_bool_false
         }];
-        if (!this.props.required && !this.props.multiple) {
+        if (!this.props.required && !this.props.multiple && this.props.addNullOption) {
             options = options.concat({value: '', label: this.state.i18nStrings.form_bool_missing});
         }
 

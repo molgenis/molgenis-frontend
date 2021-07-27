@@ -20,6 +20,7 @@ var FormControlGroup = React.createClass({
         attr: React.PropTypes.object.isRequired,
         value: React.PropTypes.object,
         mode: React.PropTypes.oneOf(['create', 'edit', 'view']),
+        formSettings: React.PropTypes.object,
         formLayout: React.PropTypes.oneOf(['horizontal', 'vertical']),
         colOffset: React.PropTypes.number,
         errorMessages: React.PropTypes.object.isRequired,
@@ -64,6 +65,19 @@ var FormControlGroup = React.createClass({
                 showAsteriskIfNotNillable: this.props.showAsteriskIfNotNillable,
                 key: '' + i
             };
+
+            switch (attr.fieldType) {
+                case 'BOOL':
+                    controlProps.addNullOption = this.props.formSettings.addBooleanNullOption;
+                    break;
+                case 'ENUM':
+                    controlProps.addNullOption = this.props.formSettings.addEnumNullOption;
+                    break;
+                case 'CATEGORICAL':
+                    controlProps.addNullOption = this.props.formSettings.addCategoricalNullOption;
+                    break;
+                case 'COMPOUND':
+            }
 
             if (attr.fieldType === 'COMPOUND') {
                 _.extend(controlProps, {
