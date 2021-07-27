@@ -4,6 +4,11 @@ import { Pagination } from '@molgenis-ui/components-library'
 export const defaultPagination:Pagination = { count: 0, loading: false, page: 1, size: 20 }
 
 const state: ApplicationState = {
+  formSettings: {
+    addBooleanNullOption: true,
+    addCategoricalNullOption: true,
+    addEnumNullOption: true
+  },
   toasts: [],
   settingsTable: 'sys_ts_DataExplorerEntitySettings',
   tableName: null,

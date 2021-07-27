@@ -7,16 +7,25 @@ describe('App.vue', () => {
   localVue.use(Vuex)
   let store: any
   let state: any
+  let actions: any
 
   beforeEach(() => {
     state = {
       dataDisplayLayout: 'ClipboardView'
     }
-    store = new Vuex.Store({ modules: { explorer: { namespaced: true, state } } })
+    actions = {
+      fetchFormSettings: jest.fn()
+    }
+    store = new Vuex.Store({ modules: { explorer: { namespaced: true, state, actions } } })
   })
 
   it('exists', () => {
     const wrapper = shallowMount(App, { store, localVue, stubs: ['router-view'] })
     expect(wrapper.exists()).toBeTruthy()
+  })
+
+  it('fetches form settings', () => {
+    shallowMount(App, { store, localVue, stubs: ['router-view'] })
+    expect(actions.fetchFormSettings).toHaveBeenCalled()
   })
 })

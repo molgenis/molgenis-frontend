@@ -173,6 +173,18 @@ export default {
     }
   },
 
+  fetchFormSettings: async ({ commit }: { commit: any }) => {
+    try {
+      const response = await client.get("/api/data/sys_set_forms/forms")
+      commit('setFormSettings', response.data)
+    } catch (error) {
+      commit('addToast', {
+        message: 'Failed to fetch form settings. ' + error.message,
+        type: 'danger'
+      })
+    }
+  },
+
   saveEntityDetailTemplate: async ({ commit, state }: { commit: any, state: ApplicationState }, payload: { template: string }) => {
     if (state.tableMeta === null) {
       commit('addToast', { message: 'cannot save template without meta data', type: 'danger' })

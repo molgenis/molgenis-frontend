@@ -5,6 +5,7 @@ import * as repository from '@/repository/dataRowRepository'
 // @ts-ignore
 import { EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 import Vue from 'vue'
+import Vuex from 'vuex'
 
 jest.mock('@/repository/dataRowRepository', () => {
   return {
@@ -24,9 +25,11 @@ jest.mock('@molgenis/molgenis-ui-form', () => {
 })
 
 const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe('DataRowEdit.vue', () => {
   let wrapper: any
+  let store: any
 
   const mappedCreateData = {
     formFields: [
@@ -40,6 +43,16 @@ describe('DataRowEdit.vue', () => {
   let formState: any
 
   beforeEach(async (done) => {
+    store = new Vuex.Store({
+      state: {
+        formSettings: {
+          addNullOptionEnum: true,
+          addNullOptionBoolean: true,
+          addNullOptionCategorical: true
+        }
+      }
+    })
+
     // @ts-ignore
     repository.save.mockReset()
     // @ts-ignore ts does not know its a mock
@@ -80,7 +93,8 @@ describe('DataRowEdit.vue', () => {
       },
       mocks: {
         $t: () => 'default-msg'
-      }
+      },
+      store
     })
     done()
   })
@@ -161,7 +175,8 @@ describe('DataRowEdit.vue', () => {
         },
         mocks: {
           $t: () => 'default-msg'
-        }
+        },
+        store
       })
       done()
     })
@@ -225,7 +240,8 @@ describe('DataRowEdit.vue', () => {
         },
         mocks: {
           $t: () => 'default-msg'
-        }
+        },
+        store
       })
 
       // @ts-ignore
@@ -247,7 +263,8 @@ describe('DataRowEdit.vue', () => {
         },
         mocks: {
           $t: () => 'default-msg'
-        }
+        },
+        store
       })
       done()
     })

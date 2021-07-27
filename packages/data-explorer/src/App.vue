@@ -7,13 +7,19 @@
 <script>
 import PageComponent from '../node_modules/@molgenis/molgenis-ui-context/src/components/PageComponent.vue'
 import '../node_modules/@molgenis/molgenis-ui-context/public/sticky-footer.css'
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapState, mapActions } from 'vuex'
 
 export default {
   name: 'App',
   components: { PageComponent },
   computed: { ...mapState('explorer', ['dataDisplayLayout']) },
-  methods: { ...mapMutations('account', ['setContext']) }
+  methods: {
+    ...mapMutations('account', ['setContext']),
+    ...mapActions('explorer', ['fetchFormSettings'])
+  },
+  created () {
+    this.fetchFormSettings()
+  }
 }
 </script>
 
