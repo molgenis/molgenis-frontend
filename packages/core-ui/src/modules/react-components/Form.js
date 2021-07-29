@@ -705,10 +705,10 @@ var Form = React.createClass({
 
             switch (attr.fieldType) {
                 case 'DATE':
-                    form[attr.name] = moment(value, 'YYYY-MM-DD', true);
+                    form[attr.name] = value;
                     break;
                 case 'DATE_TIME':
-                    form[attr.name] = moment(value, moment.ISO_8601, true);
+                    form[attr.name] = moment(value, moment.ISO_8601, true).toISOString();
                     break;
                 case 'CATEGORICAL':
                 case 'XREF':
