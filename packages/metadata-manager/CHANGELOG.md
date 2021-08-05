@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.2.2...@molgenis-ui/metadata-manager@0.2.3) (2021-08-05)
+
+
+### Bug Fixes
+
+* make tab key work with multiselect ([593a5e9](https://github.com/molgenis/molgenis-frontend/commit/593a5e959e94db3a1ba3a1403ab34e82b9c25684))
+
+
+
+
+
 ## [0.2.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.2.1...@molgenis-ui/metadata-manager@0.2.2) (2021-08-05)
 
 
