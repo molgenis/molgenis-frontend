@@ -470,7 +470,7 @@
         },
         set (value) {
           this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE_ATTRIBUTE,
-            {key: 'defaultValue', value: value})
+            {key: 'defaultValue', value: value === '' ? null : value})
         }
       },
       type: {
@@ -552,7 +552,7 @@
           return this.selectedAttribute.expression
         },
         set (value) {
-          this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE_ATTRIBUTE, {key: 'expression', value: value})
+          this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE_ATTRIBUTE, {key: 'expression', value: value === '' ? null : value})
         }
       },
       nullableExpression: {
@@ -561,7 +561,7 @@
         },
         set (value) {
           this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE_ATTRIBUTE,
-            {key: 'nullableExpression', value: value})
+            {key: 'nullableExpression', value: value === '' ? null : value})
         }
       },
       visibleExpression: {
@@ -570,7 +570,7 @@
         },
         set (value) {
           this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE_ATTRIBUTE,
-            {key: 'visibleExpression', value: value})
+            {key: 'visibleExpression', value: value === '' ? null : value})
         }
       },
       validationExpression: {
@@ -579,7 +579,7 @@
         },
         set (value) {
           this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE_ATTRIBUTE,
-            {key: 'validationExpression', value: value})
+            {key: 'validationExpression', value: value === '' ? null : value})
         }
       },
       enumOptions: {
