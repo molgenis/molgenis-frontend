@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.2.1...@molgenis-ui/metadata-manager@0.2.2) (2021-08-05)
+
+
+### Bug Fixes
+
+* **metadata-manager:** makes it able to clear some fields and still save ([5ed6fc0](https://github.com/molgenis/molgenis-frontend/commit/5ed6fc0aa06b5e6bc0b725194f13d6d7160e76a4))
+
+
+
+
+
 ## [0.2.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/metadata-manager@0.2.0...@molgenis-ui/metadata-manager@0.2.1) (2021-07-02)
 
 
