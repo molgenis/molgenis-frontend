@@ -56,7 +56,15 @@ export type FilterGroup = {
   shown: string[]
   selections: FilterSelections
 }
+
+export interface FormSettings {
+  addEnumNullOption: boolean
+  addBooleanNullOption: boolean
+  addCategoricalNullOption: boolean
+}
+
 export default interface ApplicationState {
+  formSettings: FormSettings
   toasts: Toast[]
   settingsTable: string
   dataDisplayLayout: 'CardView' | 'TableView'

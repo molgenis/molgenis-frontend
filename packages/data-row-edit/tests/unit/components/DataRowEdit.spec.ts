@@ -32,6 +32,12 @@ Object.defineProperty(window, '__INITIAL_STATE__', {
   }
 })
 
+const formSettings = {
+  addEnumNullOption: true,
+  addBooleanNullOption: true,
+  addCategoricalNullOption: true
+}
+
 describe('DataRowEdit.vue', () => {
 
   let wrapper: any
@@ -84,7 +90,8 @@ describe('DataRowEdit.vue', () => {
     wrapper = await shallowMount(DataRowEdit, {
       localVue,
       propsData: {
-        dataTableId: 'dataTableId'
+        dataTableId: 'dataTableId',
+        formSettings
       },
       mocks: {
         $t: () => 'default-msg'
@@ -166,7 +173,8 @@ describe('DataRowEdit.vue', () => {
         localVue,
         propsData: {
           dataTableId: 'dataTableId',
-          dataRowId: 'dataRowId'
+          dataRowId: 'dataRowId',
+          formSettings
         },
         mocks: {
           $t: () => 'default-msg'
@@ -235,6 +243,7 @@ describe('DataRowEdit.vue', () => {
         localVue,
         propsData: {
           dataTableId: 'dataTableId',
+          formSettings
         },
         mocks: {
           $t: () => 'default-msg'
@@ -256,6 +265,7 @@ describe('DataRowEdit.vue', () => {
         localVue,
         propsData: {
           dataTableId: 'refTableId',
+          formSettings,
           parent: mockParent
         },
         mocks: {

@@ -101,6 +101,7 @@ import { FormComponent, EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 import * as repository from '@/repository/dataRowRepository'
 import DataRowEdit from '@/components/DataRowEdit'
 import Vue from 'vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'DataRowEdit',
@@ -143,6 +144,9 @@ export default {
       labelAttribute: null,
       referenceMap: {} // Map from field id to entityName for all reference entities
     }
+  },
+  computed: {
+    ...mapState(['formSettings'])
   },
   created: async function () {
     this.fetchTableData(this.entity, this.dataRowId)
@@ -250,6 +254,7 @@ export default {
       const mapperOptions = {
         showNonVisibleAttributes: true,
         mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
+        formOptions: this.formSettings,
         booleanLabels: {
           trueLabel: this.$t('data-row-edit:data-row-edit-boolean-true'),
           falseLabel: this.$t('data-row-edit:data-row-edit-boolean-false'),

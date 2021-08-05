@@ -32,6 +32,7 @@ var AttributeControl = React.createClass({
         readOnly: React.PropTypes.bool, // optional overwrite for attr.readOnly
         visible: React.PropTypes.bool,  // optional overwrite for attr.visible
         disabled: React.PropTypes.bool, // optional overwrite for attr.disabled
+        addNullOption: React.PropTypes.bool,
         multiple: React.PropTypes.bool,
         focus: React.PropTypes.bool,
         onValueChange: React.PropTypes.func.isRequired,
@@ -77,6 +78,7 @@ var AttributeControl = React.createClass({
             switch (attr.fieldType) {
                 case 'BOOL':
                     return BoolControl(_.extend({}, controlProps, {
+                        addNullOption: props.addNullOption,
                         label: props.label,
                         layout: props.layout || 'horizontal',
                     }));
@@ -91,7 +93,7 @@ var AttributeControl = React.createClass({
 
                     var CategoricalControl = props.multiple === true ? CheckboxGroup : RadioGroup;
                     var options = this.state.options;
-                    if (CategoricalControl === RadioGroup && controlProps.required === false) {
+                    if (CategoricalControl === RadioGroup && controlProps.required === false && props.addNullOption) {
                         options = options.concat({value: '', label: this.state.i18nStrings.form_bool_missing});
                     }
 
@@ -145,7 +147,7 @@ var AttributeControl = React.createClass({
 
                     var EnumControl = props.multiple === true ? CheckboxGroup : RadioGroup;
                     var options = this.state.options;
-                    if (EnumControl === RadioGroup && controlProps.required === false) {
+                    if (EnumControl === RadioGroup && controlProps.required === false && props.addNullOption) {
                         options = options.concat({value: '', label: this.state.i18nStrings.form_bool_missing});
                     }
 

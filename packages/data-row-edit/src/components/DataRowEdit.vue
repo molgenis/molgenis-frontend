@@ -108,6 +108,10 @@ export default {
         type: Object,
         required: false,
         default: null
+      },
+      formSettings: {
+        type: Object,
+        required: true
       }
     },
     data () {
@@ -146,7 +150,7 @@ export default {
         // Create a new child DataRowEdit for the reference option passing the parent for context
         const ComponentClass = Vue.extend(DataRowEdit)
         const refDataRowEdit = new ComponentClass({
-            propsData: { dataTableId: referenceTableId, parent: this }
+            propsData: { dataTableId: referenceTableId, parent: this, formSettings: this.formSettings }
         })
         refDataRowEdit.$mount()
 
@@ -237,6 +241,7 @@ export default {
         const mapperOptions = {
           showNonVisibleAttributes: true,
           mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
+          formOptions: this.formSettings,
           booleanLabels: {
             trueLabel: this.$t('data-row-edit-boolean-true'),
             falseLabel: this.$t('data-row-edit-boolean-false'),

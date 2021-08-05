@@ -1,4 +1,4 @@
-import ApplicationState, { Toast, FilterDefinition } from '@/types/ApplicationState'
+import ApplicationState, { Toast, FilterDefinition, FormSettings } from '@/types/ApplicationState'
 import { DataApiResponse } from '@/types/ApiResponse'
 import Vue from 'vue'
 import { MetaData } from '@/types/MetaData'
@@ -17,6 +17,9 @@ const defaultSettings = {
 }
 
 export default {
+  setFormSettings (state: ApplicationState, formSettings: FormSettings) {
+    state.formSettings = formSettings
+  },
   addToast (state: ApplicationState, toast: Toast) {
     state.toasts.push(toast)
   },

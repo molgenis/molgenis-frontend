@@ -29,6 +29,7 @@ var Form = React.createClass({
         entity: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]).isRequired,
         entityInstance: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number, React.PropTypes.object]),
         mode: React.PropTypes.oneOf(['create', 'edit', 'view']),
+        formSettings: React.PropTypes.object,
         formLayout: React.PropTypes.oneOf(['horizontal', 'vertical']),
         modal: React.PropTypes.bool, // whether or not to render form in a modal dialog
         enableOptionalFilter: React.PropTypes.bool, // whether or not to show a control to filter optional form fields
@@ -258,6 +259,7 @@ var Form = React.createClass({
             entity: this.state.entity,
             value: this.state.entityInstance, // FIXME replace value with entity instance
             mode: this.props.mode,
+            formSettings: this.props.formSettings,
             formLayout: this.props.formLayout,
             colOffset: this.props.colOffset,
             hideOptional: this.state.hideOptional,
@@ -812,6 +814,18 @@ var FormControls = React.createClass({
                         onValueChange: this.props.onValueChange,
                         key: key
                     };
+
+                    switch (attr.fieldType) {
+                        case 'BOOL':
+                            controlProps.addNullOption = this.props.formSettings.addBooleanNullOption;
+                            break;
+                        case 'ENUM':
+                            controlProps.addNullOption = this.props.formSettings.addEnumNullOption;
+                            break;
+                        case 'CATEGORICAL':
+                            controlProps.addNullOption = this.props.formSettings.addCategoricalNullOption;
+                            break;
+                    }
 
                     if (attr.fieldType === 'COMPOUND') {
                         _.extend(controlProps, {

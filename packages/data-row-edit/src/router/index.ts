@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 
 // @ts-ignore
-const {baseUrl, dataExplorerBaseUrl} = window.__INITIAL_STATE__
+const {baseUrl, dataExplorerBaseUrl, formSettings} = window.__INITIAL_STATE__
 
 // @ts-ignore
 console.log(window.__INITIAL_STATE__)
@@ -14,13 +14,13 @@ console.log(window.__INITIAL_STATE__)
   const routes: Array<RouteConfig> = [
   {
     path: '/:dataTableId/:dataRowId',
-    props: true,
+    props: route => ({...route.params, formSettings}),
     name: 'update',
     component: DataRowEdit
   },
   {
     path: '/:dataTableId',
-    props: true,
+    props: route => ({...route.params, formSettings}),
     name: 'create',
     component: DataRowEdit
   },
