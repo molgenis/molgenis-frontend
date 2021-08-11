@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.13.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.12.1...@molgenis-ui/data-explorer@3.13.0) (2021-08-11)
+
+
+### Features
+
+* **data-explorer:** configure form options ([8706fa1](https://github.com/molgenis/molgenis-frontend/commit/8706fa18622d5fcdc20cfe7cf641f2e3d7b1d325))
+
+
+
+
+
 ## [3.12.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.12.0...@molgenis-ui/data-explorer@3.12.1) (2021-07-23)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer

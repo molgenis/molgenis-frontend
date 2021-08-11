@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/core-ui@0.4.1...@molgenis-ui/core-ui@0.5.0) (2021-08-11)
+
+
+### Features
+
+* **core-ui:** configure form options ([43cc022](https://github.com/molgenis/molgenis-frontend/commit/43cc022660a1706bd05a869a554039f782d6a77c))
+
+
+
+
+
 ## [0.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/core-ui@0.4.0...@molgenis-ui/core-ui@0.4.1) (2021-07-29)
 
 
