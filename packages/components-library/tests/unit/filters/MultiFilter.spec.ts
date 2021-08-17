@@ -1,4 +1,4 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import MultiFilter from '@/components/filters/MultiFilter.vue'
 import SatisfyAllCheckbox from '@/components/blocks/SatisfyAllCheckbox.vue'
 import { localVue as getLocalVue } from '../../lib/helpers'
