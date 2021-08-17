@@ -296,17 +296,16 @@ export default {
     },
     checkMissingOptions () {
       let values
-      if(this.selection.length && this.returnTypeAsObject) {
+      if (this.selection.length && this.returnTypeAsObject) {
          values = this.selection.map(s => s.value)
-      }
-      else {
+      } else {
         values = selection
       }
 
       const comparison = this.inputOptions.map(io => io.value)
       const newValues = values.filter(value => !comparison.includes(value))
 
-      if(newValues){
+      if (newValues) {
         const newOptions = this.options({
           nameAttribute: 'label',
           queryType: 'in',
@@ -315,7 +314,6 @@ export default {
         this.inputOptions.concat(newOptions)
         this.sortBySelected(this.inputOptions)
       }
-
     },
     setSelection () {
       this.externalUpdate = true
