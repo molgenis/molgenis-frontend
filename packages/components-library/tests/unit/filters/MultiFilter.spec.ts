@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import MultiFilter from '@/components/filters/MultiFilter.vue'
 import SatisfyAllCheckbox from '@/components/blocks/SatisfyAllCheckbox.vue'
 import { localVue as getLocalVue } from '../../lib/helpers'
@@ -180,6 +180,39 @@ describe('MultiFilter.vue', () => {
       const satisfyAllButton = wrapper.find('input[name="satisfy-all"]')
       await satisfyAllButton.trigger('click')
       expect(wrapper.emitted('satisfy-all')).toEqual([[true]])
+    })
+
+    it('finds an option outside the initialOptions and marks it as selected when passed as value', async () => {
+      const propsData = {
+        name: 'multi-filter',
+        value: ['sugar-apple'],
+        type: 'multi-filter',
+        label: 'Filter with multiple options',
+        collapsed: false,
+        maxVisibleOptions: 10,
+        options: jest.fn((value) => {
+          if(value.query && value.query === 'sugar-apple'){
+           return Promise.resolve([
+              { value: 'sugar-apple', text: 'Sugar Apple' },
+            ])
+          }
+          else {
+           return Promise.resolve([
+              { value: 'red', text: 'Red' },
+              { value: 'green', text: 'Green' }])
+            }
+        })
+      }
+
+      wrapper = mount(MultiFilter, { localVue, propsData })
+      // wait until all is processed:
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick()
+      // expected outcome is that Sugar Apple is our first checkbox
+      const firstCheckbox = wrapper.find('input[type="checkbox"]')
+      expect(firstCheckbox.attributes().value).toEqual('sugar-apple')
+      expect(firstCheckbox.element.checked).toBeTruthy()
+
     })
   })
 })
