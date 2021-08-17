@@ -161,7 +161,6 @@ describe('MultiFilter.vue', () => {
       wrapper = mount(MultiFilter, { localVue, propsData })
       const satisfyAllButton = wrapper.find('input[name="satisfy-all"]')  
       expect (satisfyAllButton.exists()).toBe(false)
-      
     })
     
     it('triggers the proper emit when the satisfyAll checkbox is clicked', async () => {
@@ -212,7 +211,6 @@ describe('MultiFilter.vue', () => {
       const firstCheckbox = wrapper.find('input[type="checkbox"]')
       expect(firstCheckbox.attributes().value).toEqual('sugar-apple')
       expect(firstCheckbox.element.checked).toBeTruthy()
-
     })
   })
 })
