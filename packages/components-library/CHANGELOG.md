@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.8...@molgenis-ui/components-library@2.7.9) (2021-08-17)
+
+
+### Bug Fixes
+
+* selection outside initial range not visible on mounted ([#682](https://github.com/molgenis/molgenis-frontend/issues/682)) ([b5d5502](https://github.com/molgenis/molgenis-frontend/commit/b5d550220e36acff487162bb6265ea6f59f7e10a))
+
+
+
+
+
 ## [2.7.8](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.7...@molgenis-ui/components-library@2.7.8) (2021-06-29)
 
 
