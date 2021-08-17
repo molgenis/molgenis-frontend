@@ -214,7 +214,9 @@ export default {
       this.$emit('input', newSelection)
     },
     value () {
-      this.setValue()
+      this.setSelection()
+      // We can get a value which might be outside the 100 initial range.
+      this.checkMissingOptions()
     },
     query (queryValue) {
       if (this.triggerQuery) {
@@ -223,7 +225,7 @@ export default {
 
       if (!queryValue.length) {
         const newInititalOptions = [].concat(this.multifilterOptions)
-        this.inputOptions = this.inputOptionsSort(newInititalOptions)
+        this.inputOptions = this.sortBySelected(newInititalOptions)
         return
       }
 
@@ -234,10 +236,10 @@ export default {
 
         this.options({ nameAttribute: 'label', query: this.query }).then(
           searchResults => {
-            const allOptions = searchResults
+              const allOptions = searchResults
               ? searchResults.concat(this.inputOptions)
               : this.inputOptions
-            this.inputOptions = this.inputOptionsSort(allOptions)
+            this.inputOptions = this.sortByQuery(allOptions)
           }
         )
 
@@ -252,26 +254,68 @@ export default {
     this.initializeFilter()
   },
   methods: {
-    inputOptionsSort (optionsArray) {
+    // When you initialize or remove a search, you want to see what you selected
+    sortBySelected (optionsArray) {
       optionsArray.sort((a, b) => {
         if (
           !this.selection.includes(a.value) &&
           !this.selection.includes(b.value)
         ) {
-          return 0
+          return 1
         } else if (
           this.selection.includes(a.value) &&
           !this.selection.includes(b.value)
         ) {
           return -1
-        } else return 1
+        } else {
+          return 0
+        }
       })
 
       return Array.from(new Set(optionsArray.map(cio => cio.value))).map(
         value => optionsArray.find(cio => cio.value === value)
       )
     },
-    setValue () {
+    // When you search you want to quickly see your search results.
+    sortByQuery (optionsArray) {
+      optionsArray.sort((a, b) => {
+        if (a.value.indexOf(this.query) === -1 && b.value.indexOf(this.query) === -1) {
+          return 1
+        } else if (
+          a.value.indexOf(this.query) >= 0 &&
+          b.value.indexOf(this.query) === -1
+        ) {
+          return -1
+        } else {
+          return 0
+        }
+      })
+      return Array.from(new Set(optionsArray.map(cio => cio.value))).map(
+        value => optionsArray.find(cio => cio.value === value)
+      )
+    },
+    checkMissingOptions () {
+      let values
+      if (this.selection.length && this.returnTypeAsObject) {
+         values = this.selection.map(s => s.value)
+      } else {
+        values = selection
+      }
+
+      const comparison = this.inputOptions.map(io => io.value)
+      const newValues = values.filter(value => !comparison.includes(value))
+
+      if (newValues) {
+        const newOptions = this.options({
+          nameAttribute: 'label',
+          queryType: 'in',
+          query: this.newValues.join(',')
+        })
+        this.inputOptions.concat(newOptions)
+        this.sortBySelected(this.inputOptions)
+      }
+    },
+    setSelection () {
       this.externalUpdate = true
       this.selection =
         typeof this.value[0] === 'object'
@@ -285,7 +329,7 @@ export default {
       let selectedOptions = []
 
       if (this.value && this.value.length) {
-        this.setValue()
+        this.setSelection()
         // Get the initial selected
         selectedOptions = await this.options({
           nameAttribute: 'label',
@@ -303,7 +347,7 @@ export default {
       )
 
       // deduplicate by first mapping the id's then getting the first matching object back.
-      this.initialOptions = this.inputOptionsSort(completeInitialOptions)
+      this.initialOptions = this.sortBySelected(completeInitialOptions)
       this.inputOptions = this.initialOptions
     }
   }
@@ -334,6 +378,23 @@ Item-based Filter. Search box is used to find items in the table.
 ```jsx
 
 const model = []
+<MultiFilter
+  v-bind:returnTypeAsObject="false"
+  v-bind:options="multiFilterOptions"
+  v-bind:collapses="false"
+  v-bind:initialDisplayItems="5"
+  v-bind:maxVisibleOptions="5"
+  v-bind:optionsWarningCount="10"
+  v-model="model"
+  name="multi-filter">
+</MultiFilter>
+<div>{{model}}</div>
+```
+
+Preselected item, outside of initial options:
+```jsx
+
+const model = ['sugar-apple']
 <MultiFilter
   v-bind:returnTypeAsObject="false"
   v-bind:options="multiFilterOptions"
