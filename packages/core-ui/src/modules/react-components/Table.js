@@ -131,6 +131,7 @@ var Table = React.createClass({
             enableDelete: deletable && this.props.enableDelete === true,
             enableInspect: this.props.enableInspect === true && this.props.onRowInspect !== null,
             enableExecute: this.props.enableExecute === true && this.props.onExecute != null,
+            formSettings: this.props.formSettings,
             onSort: this._handleSort,
             onExpand: this._handleExpand,
             onCollapse: this._handleCollapse,
@@ -316,6 +317,7 @@ var TableHeader = React.createClass({
         enableDelete: React.PropTypes.bool,
         enableInspect: React.PropTypes.bool,
         enableExecute: React.PropTypes.bool,
+        formSettings: React.PropTypes.object,
         onAddClick: React.PropTypes.func
     },
     render: function () {
