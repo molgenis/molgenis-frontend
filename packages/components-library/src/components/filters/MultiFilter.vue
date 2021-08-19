@@ -305,7 +305,7 @@ export default {
       const comparison = this.inputOptions.map(io => io.value)
       const newValues = values.filter(value => !comparison.includes(value))
 
-      if (newValues) {
+      if (newValues.length) {
         const newOptions = this.options({
           nameAttribute: 'label',
           queryType: 'in',
