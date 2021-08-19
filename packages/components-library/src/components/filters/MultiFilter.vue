@@ -219,9 +219,11 @@ export default {
       await this.checkMissingOptions()
     },
     query (queryValue) {
+
       if (this.triggerQuery) {
         clearTimeout(this.triggerQuery)
       }
+
       if (!queryValue || !queryValue.length) {
         this.inputOptions = this.sort(this.multifilterOptions)
         return
@@ -254,6 +256,7 @@ export default {
   },
   methods: {
     sort ( optionsArray) {
+
       const notSelectedOptions = optionsArray.filter(option => !this.selection.includes(option.value))
       const selectedOptions = optionsArray.filter(option => this.selection.includes(option.value))
 
