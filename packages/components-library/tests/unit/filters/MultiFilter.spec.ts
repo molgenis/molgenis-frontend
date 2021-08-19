@@ -110,13 +110,13 @@ describe('MultiFilter.vue', () => {
     // Find the searchbox
     const searchInput = wrapper.find('input[name="multi-filter"]')
 
-    // give it an empty string, which would be the same as deleting the current input
+    // search for 'yellow'
     await searchInput.setValue('yellow')
 
     // Set the data to replicate that someone selected the checkbox with yellow
     wrapper.setData({ selection: ['yellow'] })
 
-    // now clear the search box
+      // give it an empty string, which would be the same as deleting the current input
     await searchInput.setValue('')
 
     jest.runAllTimers() // wait for the setTimeout
