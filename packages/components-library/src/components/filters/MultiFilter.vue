@@ -256,6 +256,8 @@ export default {
   methods: {
     // When you initialize or remove a search, you want to see what you selected
     sortBySelected (optionsArray) {
+      if(!this.selection) return;
+      
       optionsArray.sort((a, b) => {
         if (
           !this.selection.includes(a.value) &&
@@ -299,7 +301,7 @@ export default {
       if (this.selection && this.selection.length && this.returnTypeAsObject) {
          values = this.selection.map(s => s.value)
       } else {
-        values = selection
+        values = this.selection
       }
 
       const comparison = this.inputOptions.map(io => io.value)
