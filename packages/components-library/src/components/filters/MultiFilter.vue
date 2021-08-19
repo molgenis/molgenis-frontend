@@ -256,21 +256,23 @@ export default {
   methods: {
     // When you initialize or remove a search, you want to see what you selected
     sortBySelected (optionsArray) {
-      optionsArray.sort((a, b) => {
-        if (
-          !this.selection.includes(a.value) &&
-          !this.selection.includes(b.value)
-        ) {
-          return 1
-        } else if (
-          this.selection.includes(a.value) &&
-          !this.selection.includes(b.value)
-        ) {
-          return -1
-        } else {
-          return 0
-        }
-      })
+      if(this.selection && this.selection.length) {
+        optionsArray.sort((a, b) => {
+          if (
+            !this.selection.includes(a.value) &&
+            !this.selection.includes(b.value)
+          ) {
+            return 1
+          } else if (
+            this.selection.includes(a.value) &&
+            !this.selection.includes(b.value)
+          ) {
+            return -1
+          } else {
+            return 0
+          }
+        })
+      }
 
       return Array.from(new Set(optionsArray.map(cio => cio.value))).map(
         value => optionsArray.find(cio => cio.value === value)
@@ -296,16 +298,16 @@ export default {
     },
     checkMissingOptions () {
       let values
-      if (this.selection.length && this.returnTypeAsObject) {
+      if (this.selection && this.selection.length && this.returnTypeAsObject) {
          values = this.selection.map(s => s.value)
       } else {
-        values = selection
+        values = this.selection
       }
 
       const comparison = this.inputOptions.map(io => io.value)
       const newValues = values.filter(value => !comparison.includes(value))
 
-      if (newValues) {
+      if (newValues.length) {
         const newOptions = this.options({
           nameAttribute: 'label',
           queryType: 'in',
