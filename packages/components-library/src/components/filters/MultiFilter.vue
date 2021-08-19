@@ -296,7 +296,7 @@ export default {
     },
     checkMissingOptions () {
       let values
-      if (this.selection.length && this.returnTypeAsObject) {
+      if (this.selection && this.selection.length && this.returnTypeAsObject) {
          values = this.selection.map(s => s.value)
       } else {
         values = selection
