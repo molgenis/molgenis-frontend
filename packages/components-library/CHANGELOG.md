@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.13](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.12...@molgenis-ui/components-library@2.7.13) (2021-08-19)
+
+
+### Bug Fixes
+
+* this.options is async, needs await ([85d6e98](https://github.com/molgenis/molgenis-frontend/commit/85d6e98185377702f6a36d90dba9997b1946d5db))
+
+
+
+
+
 ## [2.7.12](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.11...@molgenis-ui/components-library@2.7.12) (2021-08-19)
 
 
