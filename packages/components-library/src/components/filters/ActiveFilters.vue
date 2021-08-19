@@ -86,7 +86,7 @@ export default {
               activeValues.push({
                 key,
                 subKey,
-                value: findTextFromValue.text,
+                value: findTextFromValue ? findTextFromValue.text : '',
                 label: filter.label
               })
             })
