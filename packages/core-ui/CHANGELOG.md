@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/core-ui@0.5.0...@molgenis-ui/core-ui@0.5.1) (2021-08-19)
+
+
+### Bug Fixes
+
+* **core-ui:** fixes the react forms not opening when creating a new entity ([fa09fc6](https://github.com/molgenis/molgenis-frontend/commit/fa09fc67e01cc37b86c82f39351f15e8c2c1b5f8)), closes [#684](https://github.com/molgenis/molgenis-frontend/issues/684)
+
+
+
+
+
 # [0.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/core-ui@0.4.1...@molgenis-ui/core-ui@0.5.0) (2021-08-11)
 
 
