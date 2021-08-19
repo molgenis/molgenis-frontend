@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.10](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.9...@molgenis-ui/components-library@2.7.10) (2021-08-19)
+
+
+### Bug Fixes
+
+* added null check for selections ([d6dce87](https://github.com/molgenis/molgenis-frontend/commit/d6dce87058512277b36a22261318da799595484f))
+* can't sort by selection if there is no selection ([298e60c](https://github.com/molgenis/molgenis-frontend/commit/298e60ce541a3069e9e5170510ff19eef84b85ab))
+* newValues was empty array, which was always truthy and led to error on join ([8961caa](https://github.com/molgenis/molgenis-frontend/commit/8961caa9c7e7cd95cfa44c643b838172b4c5d735))
+* returning a deduplicated array ([737ca8d](https://github.com/molgenis/molgenis-frontend/commit/737ca8d13903b27cb8020bacf44880c07e5c19fa))
+
+
+
+
+
 ## [2.7.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.8...@molgenis-ui/components-library@2.7.9) (2021-08-17)
 
 
