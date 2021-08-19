@@ -311,7 +311,7 @@ export default {
         const newOptions = this.options({
           nameAttribute: 'label',
           queryType: 'in',
-          query: this.newValues.join(',')
+          query: newValues.join(',')
         })
         this.inputOptions.concat(newOptions)
         this.sortBySelected(this.inputOptions)
