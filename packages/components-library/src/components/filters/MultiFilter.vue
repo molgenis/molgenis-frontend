@@ -313,7 +313,7 @@ export default {
           queryType: 'in',
           query: newValues.join(',')
         })
-        this.inputOptions.concat(newOptions)
+        this.inputOptions = this.inputOptions.concat(newOptions)
         this.sortBySelected(this.inputOptions)
       }
     },
