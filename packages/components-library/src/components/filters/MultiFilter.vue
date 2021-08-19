@@ -296,7 +296,7 @@ export default {
         value => optionsArray.find(cio => cio.value === value)
       )
     },
-    checkMissingOptions () {
+    async checkMissingOptions () {
       let values
       if (this.selection && this.selection.length && this.returnTypeAsObject) {
          values = this.selection.map(s => s.value)
@@ -308,7 +308,7 @@ export default {
       const newValues = values.filter(value => !comparison.includes(value))
 
       if (newValues.length) {
-        const newOptions = this.options({
+        const newOptions = await this.options({
           nameAttribute: 'label',
           queryType: 'in',
           query: newValues.join(',')
