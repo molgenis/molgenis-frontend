@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/data-explorer",
-  "version": "3.13.2",
+  "version": "3.13.3",
   "license": "LGPL-3.0",
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/vue-fontawesome": "^0.1.6",
-    "@molgenis-ui/components-library": "^2.7.10",
+    "@molgenis-ui/components-library": "^2.7.11",
     "@molgenis/molgenis-api-client": "^3.1.3",
     "@molgenis/molgenis-i18n-js": "1.0.0",
     "@molgenis/molgenis-ui-context": "^1.6.5",

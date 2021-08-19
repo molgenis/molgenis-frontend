@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.11](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.10...@molgenis-ui/components-library@2.7.11) (2021-08-19)
+
+
+### Bug Fixes
+
+* newValues not a vue data property ([4d2f1ac](https://github.com/molgenis/molgenis-frontend/commit/4d2f1acf575170d60f712fd86ff42d7be8f8c984))
+
+
+
+
+
 ## [2.7.10](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.9...@molgenis-ui/components-library@2.7.10) (2021-08-19)
 
 
