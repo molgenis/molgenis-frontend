@@ -101,10 +101,7 @@ describe('MultiFilter.vue', () => {
   })
 
   it('should sort the list based on current selection when query is emptied', async () => {
-    // Set the data to replicate the scenario where someone searched yellow and selected the checkbox with yellow
-    wrapper.setData({ query: 'yellow', selection: ['yellow'] })
-
-    // Assert that the order is still the way it was initialized
+      // Assert that the order is still the way it was initialized
     expect(wrapper.vm.inputOptions[0]).toStrictEqual({
       text: 'Red',
       value: 'red'
@@ -113,8 +110,15 @@ describe('MultiFilter.vue', () => {
     // Find the searchbox
     const searchInput = wrapper.find('input[name="multi-filter"]')
 
-    // give it an empty string, which would be the same as deleting the current input
+    // search for 'yellow'
+    await searchInput.setValue('yellow')
+
+    // Set the data to replicate that someone selected the checkbox with yellow
+    wrapper.setData({ selection: ['yellow'] })
+
+      // give it an empty string, which would be the same as deleting the current input
     await searchInput.setValue('')
+
     jest.runAllTimers() // wait for the setTimeout
     await wrapper.vm.$nextTick() // await the Vue reactiveness
 

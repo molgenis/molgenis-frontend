@@ -177,7 +177,7 @@ export default {
   },
   computed: {
     multifilterOptions () {
-      return this.inputOptions
+      return this.inputOptions || []
     },
     slicedOptions () {
       return this.multifilterOptions.slice(0, this.showCount)
@@ -213,19 +213,19 @@ export default {
 
       this.$emit('input', newSelection)
     },
-    value () {
+    async value () {
       this.setSelection()
       // We can get a value which might be outside the 100 initial range.
-      this.checkMissingOptions()
+      await this.checkMissingOptions()
     },
     query (queryValue) {
+
       if (this.triggerQuery) {
         clearTimeout(this.triggerQuery)
       }
 
-      if (!queryValue.length) {
-        const newInititalOptions = [].concat(this.multifilterOptions)
-        this.inputOptions = this.sortBySelected(newInititalOptions)
+      if (!queryValue || !queryValue.length) {
+        this.inputOptions = this.sort(this.multifilterOptions)
         return
       }
 
@@ -239,7 +239,8 @@ export default {
               const allOptions = searchResults
               ? searchResults.concat(this.inputOptions)
               : this.inputOptions
-            this.inputOptions = this.sortByQuery(allOptions)
+
+              this.inputOptions = this.deduplicateOptions(allOptions)
           }
         )
 
@@ -254,54 +255,57 @@ export default {
     this.initializeFilter()
   },
   methods: {
-    // When you initialize or remove a search, you want to see what you selected
-    sortBySelected (optionsArray) {
-      if(this.selection && this.selection.length) {
-        optionsArray.sort((a, b) => {
-          if (
-            !this.selection.includes(a.value) &&
-            !this.selection.includes(b.value)
-          ) {
-            return 1
-          } else if (
-            this.selection.includes(a.value) &&
-            !this.selection.includes(b.value)
-          ) {
-            return -1
-          } else {
-            return 0
-          }
-        })
-      }
+    sort ( optionsArray) {
 
-      return Array.from(new Set(optionsArray.map(cio => cio.value))).map(
-        value => optionsArray.find(cio => cio.value === value)
-      )
-    },
-    // When you search you want to quickly see your search results.
-    sortByQuery (optionsArray) {
-      optionsArray.sort((a, b) => {
-        if (a.value.indexOf(this.query) === -1 && b.value.indexOf(this.query) === -1) {
+      const notSelectedOptions = optionsArray.filter(option => !this.selection.includes(option.value))
+      const selectedOptions = optionsArray.filter(option => this.selection.includes(option.value))
+
+      notSelectedOptions.sort((a, b) => {
+        if (
+          !this.selection.includes(a.value) ||
+          !this.selection.includes(b.value)
+        ) {
+          return 0
+        } else if (
+          this.selection.includes(a.value) &&
+          !this.selection.includes(b.value)
+        ) {
           return 1
         } else if (
-          a.value.indexOf(this.query) >= 0 &&
-          b.value.indexOf(this.query) === -1
+          !this.selection.includes(a.value) &&
+          this.selection.includes(b.value)
         ) {
-          return -1
+          return 1
         } else {
-          return 0
+          return -1
         }
       })
-      return Array.from(new Set(optionsArray.map(cio => cio.value))).map(
-        value => optionsArray.find(cio => cio.value === value)
-      )
+
+      const allOptions = selectedOptions.concat(notSelectedOptions)
+      return this.deduplicateOptions(allOptions)
+    },
+    deduplicateOptions (optionArray) {
+      const addedValues = []
+      const uniqueOptions = []
+      const optionSize = optionArray.length
+
+      for (let index = 0; index < optionSize; index++) {
+        const option = optionArray[index];
+
+        if(!addedValues.includes(option.value)){
+          addedValues.push(option.value)
+          uniqueOptions.push(option)
+        }   
+      }
+
+      return uniqueOptions
     },
     async checkMissingOptions () {
       let values
-      if (this.selection && this.selection.length && this.returnTypeAsObject) {
-         values = this.selection.map(s => s.value)
+      if (this.value && Array.isArray(this.value) && this.value.length && typeof this.value[0] === 'object') {
+         values = this.value.map(s => s.value)
       } else {
-        values = this.selection
+        values = this.value
       }
 
       const comparison = this.inputOptions.map(io => io.value)
@@ -313,8 +317,7 @@ export default {
           queryType: 'in',
           query: newValues.join(',')
         })
-        this.inputOptions = this.inputOptions.concat(newOptions)
-        this.sortBySelected(this.inputOptions)
+        this.inputOptions = this.sort(newOptions.concat(this.inputOptions))
       }
     },
     setSelection () {
@@ -348,9 +351,7 @@ export default {
         })
       )
 
-      // deduplicate by first mapping the id's then getting the first matching object back.
-      this.initialOptions = this.sortBySelected(completeInitialOptions)
-      this.inputOptions = this.initialOptions
+      this.inputOptions = this.deduplicateOptions(this.sort(completeInitialOptions))
     }
   }
 }
