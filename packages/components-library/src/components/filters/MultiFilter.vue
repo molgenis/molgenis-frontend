@@ -240,7 +240,7 @@ export default {
               ? searchResults.concat(this.inputOptions)
               : this.inputOptions
 
-              this.inputOptions = allOptions
+              this.inputOptions = this.deduplicateOptions(allOptions)
           }
         )
 
