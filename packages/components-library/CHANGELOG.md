@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.14](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.13...@molgenis-ui/components-library@2.7.14) (2021-08-20)
+
+
+### Bug Fixes
+
+* deduplication on query ([937b2c2](https://github.com/molgenis/molgenis-frontend/commit/937b2c235d060f4dfc7f80554182bcc9f00ae395))
+* everything that wcould go wrong and has gone wrong, has been fixed ([7da549b](https://github.com/molgenis/molgenis-frontend/commit/7da549b554a9b73afb637c869505349942c0b8ea))
+* unittestt to test as intended and linting ([813e225](https://github.com/molgenis/molgenis-frontend/commit/813e22519397a0a6d1a1c035c0c480d26c35accf))
+
+
+
+
+
 ## [2.7.13](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.12...@molgenis-ui/components-library@2.7.13) (2021-08-19)
 
 
