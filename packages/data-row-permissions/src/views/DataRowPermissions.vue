@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import RlsEntitySelector from '../components/RlsEntitySelector.vue'
+import RlsEntitySelector from './RlsEntitySelector.vue'
 export default {
   components: { RlsEntitySelector }
 

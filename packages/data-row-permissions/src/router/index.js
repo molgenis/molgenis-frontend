@@ -1,14 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import DataRowPermissions from '../views/DataRowPermissions'
+import RlsEntitySelector from '../views/RlsEntitySelector'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'DataRowPermissions',
-    component: DataRowPermissions
+    name: 'SelectEntity',
+    component: RlsEntitySelector
+  },
+  {
+    path: '/:entityId/:entityType',
+    name: 'SelectEntitityObject',
+    props: true,
+    component: () => import('../views/RlsObjectSelector.vue')
   }
 ]
 

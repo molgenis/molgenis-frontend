@@ -17,10 +17,32 @@ import {
   faCaretRight,
   faExclamationCircle,
   faSpinner,
-  faTimes
+  faTimes,
+  faAngleRight
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCaretRight, faTimes, faSpinner, faExclamationCircle)
+library.add(faCaretRight, faTimes, faSpinner, faExclamationCircle, faAngleRight)
+
+Vue.directive('add-class-hover', {
+  bind (el, binding, vnode) {
+    const { value = '' } = binding
+    const values = value.split(' ')
+    el.addEventListener('mouseenter', () => {
+      values.forEach(value => {
+        el.classList.add(value)
+      })
+    })
+    el.addEventListener('mouseleave', () => {
+      values.forEach(value => {
+        el.classList.remove(value)
+      })
+    })
+  },
+  unbind (el, binding, vnode) {
+    el.removeEventListener('mouseenter', vnode)
+    el.removeEventListener('mouseleave', vnode)
+  }
+})
 
 Vue.use(BootstrapVue)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
