@@ -10,20 +10,25 @@
         back
       </router-link>
     </div>
+    <input
+      v-model="search"
+      class="p-2 mb-2"
+      type="text"
+      placeholder="Type to filter">
     <div
-      v-for="row in rls_objects"
+      v-for="row in results"
       :key="row.id">
       <router-link
         v-add-class-hover="'bg-primary text-white'"
-        class="list-group-item d-flex justify-content-between"
+        class="list-group-item d-flex"
         :to="{ name: 'SelectEntitityObject', params: { entityId, objectId: row.id }}">
         <b>{{ row.label }}</b>
-        <div class="d-inline">
+        <div class="d-inline ml-3">
           <span>{{ row.description }}</span>
-          <font-awesome-icon
-            class="ml-3 fa-icon"
-            icon="angle-right" />
         </div>
+        <font-awesome-icon
+          class="ml-auto mt-1 fa-icon"
+          icon="angle-right" />
       </router-link>
     </div>
   </div>
@@ -48,9 +53,24 @@ export default {
   },
   data () {
     return {
+      search: '',
       // id is typeId
       // typeId's you can get by querying api/data/entityType (their id's)
       rls_objects: []
+    }
+  },
+  computed: {
+    results () {
+      if (!this.search) {
+        return this.rls_objects
+      } else {
+        const matchOn = this.search.toLowerCase()
+
+        return this.rls_objects.filter(entity =>
+          (entity.description && entity.description.toLowerCase().includes(matchOn)) ||
+        entity.label.toLowerCase().includes(matchOn) ||
+        entity.id.toLowerCase().includes(matchOn))
+      }
     }
   },
   beforeMount () {
@@ -62,7 +82,7 @@ export default {
 </script>
 
 <style scoped>
-a:not(.text-white) > div {
+a:not(.text-white) > div, a:not(.text-white) > .fa-angle-right {
     color: #000;
 }
 </style>

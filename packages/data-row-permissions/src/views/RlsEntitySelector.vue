@@ -3,8 +3,13 @@
     <h3 class="mb-4">
       Row level secured entities
     </h3>
+    <input
+      v-model="search"
+      class="p-2 mb-2"
+      type="text"
+      placeholder="Type to filter">
     <div
-      v-for="row in rls_entities"
+      v-for="row in results"
       :key="row.id">
       <router-link
         v-add-class-hover="'bg-primary text-white'"
@@ -26,9 +31,23 @@ export default {
   name: 'RlsEntitySelector',
   data () {
     return {
+      search: '',
       // id is typeId
       // typeId's you can get by querying api/data/entityType (their id's)
       rls_entities: []
+    }
+  },
+  computed: {
+    results () {
+      if (!this.search) {
+        return this.rls_entities
+      } else {
+        const matchOn = this.search.toLowerCase()
+
+        return this.rls_entities.filter(entity => entity.entityType.toLowerCase().includes(matchOn) ||
+        entity.label.toLowerCase().includes(matchOn) ||
+        entity.id.toLowerCase().includes(matchOn))
+      }
     }
   },
   beforeMount () {
