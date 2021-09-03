@@ -11,27 +11,33 @@
     <div
       v-for="row in results"
       :key="row.id">
-      <router-link
-        v-add-class-hover="'bg-primary text-white'"
-        class="list-group-item d-flex justify-content-between"
-        :to="{ name: 'SelectEntitityObject', params: { entityId: row.id, entityType: row.entityType }}">
-        <span>{{ row.label }}</span>
+      <custom-router-link
+        :name="'SelectEntitityObject'"
+        :params="{ entityId: row.id }">
+        <span>{{ row.label || row.id }}</span>
         <font-awesome-icon
           class="mt-1"
           icon="angle-right" />
-      </router-link>
+      </custom-router-link>
     </div>
+    <data-status
+      :items="results"
+      :loaded="loaded" />
   </div>
 </template>
 
 <script>
 import api from '@molgenis/molgenis-api-client'
+import DataStatus from '../components/DataStatus.vue'
+import CustomRouterLink from '../components/CustomRouterLink.vue'
 
 export default {
   name: 'RlsEntitySelector',
+  components: { DataStatus, CustomRouterLink },
   data () {
     return {
       search: '',
+      loaded: false,
       // id is typeId
       // typeId's you can get by querying api/data/entityType (their id's)
       rls_entities: []
@@ -52,7 +58,8 @@ export default {
   },
   beforeMount () {
     api.get('/api/permissions/types').then((response) => {
-      this.rls_entities = response.data
+      this.rls_entities = response.data.filter(entity => entity.id)
+      this.loaded = true
     })
   }
 }

@@ -11,10 +11,16 @@ const routes = [
     component: RlsEntitySelector
   },
   {
-    path: '/:entityId/:entityType',
+    path: '/:entityId/',
     name: 'SelectEntitityObject',
     props: true,
     component: () => import('../views/RlsObjectSelector.vue')
+  },
+  {
+    path: '/:entityId/:objectId',
+    name: 'DataRowPermissions',
+    props: true,
+    component: () => import('../views/DataRowPermissions.vue')
   }
 ]
 
