@@ -29,6 +29,7 @@
       </custom-router-link>
     </div>
     <data-status
+      v-if="status < 400"
       :items="results"
       :loaded="loaded" />
   </div>
