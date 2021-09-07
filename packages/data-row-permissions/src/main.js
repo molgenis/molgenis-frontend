@@ -18,10 +18,12 @@ import {
   faExclamationCircle,
   faSpinner,
   faTimes,
-  faAngleRight
+  faAngleRight,
+  faFolderOpen,
+  faList
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCaretRight, faTimes, faSpinner, faExclamationCircle, faAngleRight)
+library.add(faCaretRight, faTimes, faSpinner, faExclamationCircle, faAngleRight, faFolderOpen, faList)
 
 Vue.directive('add-class-hover', {
   bind (el, binding, vnode) {

@@ -10,11 +10,11 @@
         Back
       </router-link>
     </div>
-    <input
+    <b-form-input
       v-model="search"
       class="p-2 mb-2"
       type="text"
-      placeholder="Type to filter">
+      placeholder="Type to filter" />
     <server-status :code="status" />
     <div
       v-for="row in results"
@@ -22,7 +22,11 @@
       <custom-router-link
         :name="'DataRowPermissions'"
         :params="{ entityId, objectId: row.id }">
-        <span>{{ row.label || row.id }}</span>
+        <span>
+          <font-awesome-icon
+            class="mr-3"
+            icon="list" />{{ row.label || row.id }}
+        </span>
         <font-awesome-icon
           class="mt-1"
           icon="angle-right" />

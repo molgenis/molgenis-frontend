@@ -10,72 +10,103 @@
         Back
       </router-link>
     </div>
-    <div
-      v-if="unauthorized">
-      <span>You might see more results if you <a href="/login">log in.</a></span>
-    </div>
-    <div class="mt-5">
-      <div class="mb-3">
-        <button
-          class="btn mr-3"
-          :class="addMode ? 'btn-danger px-3' : 'btn-primary px-4'"
-          :disabled="editMode"
-          @click="toggleAddMode()">
-          {{ addMode ? 'Cancel' : 'Add' }}
-        </button>
-        <button
-          class="btn mr-3"
-          :class="editMode ? 'btn-danger px-3' : 'btn-outline-primary px-4'"
-          :disabled="addMode"
-          @click="toggleEditMode()">
-          {{ editMode ? 'Cancel' : 'Edit' }}
-        </button>
-      </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th class="text-right">
-              Permission
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(permission, index) of permissions"
-            :key="permission.id">
-            <td class="align-middle">
-              {{ permission.user || permission.role }}
-            </td>
-            <td class="align-middle w-25">
-              {{ permission.role ? 'Role' : 'User' }}
-            </td>
-            <td
-              v-if="!editMode"
-              class="align-middle text-right w-25">
-              {{ permission.permission }}
-            </td>
-            <td
-              v-else
-              class="align-middle text-right p-0 w-25">
-              <b-form-select
-                :value="permissions[index].permission"
-                class="w-auto"
-                :options="available_permissions"
-                @change="(value) => updatePermission(index, value)" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div
-        v-if="editMode"
-        class="mt-3">
-        <button
-          class="btn btn-success px-4"
-          :disabled="!hasChanges">
-          Save
-        </button>
+    <server-status :code="status" />
+    <div>
+      <div class="mt-5">
+        <div class="mb-3">
+          <button
+            class="btn mr-3"
+            :class="addMode ? 'btn-danger px-3' : 'btn-primary px-4'"
+            :disabled="editMode"
+            @click="toggleAddMode()">
+            {{ addMode ? 'Cancel' : 'Add' }}
+          </button>
+          <button
+            class="btn mr-3"
+            :class="editMode ? 'btn-danger px-3' : 'btn-outline-primary px-4'"
+            :disabled="addMode"
+            @click="toggleEditMode()">
+            {{ editMode ? 'Cancel' : 'Edit' }}
+          </button>
+          <b-form-input
+            v-model="search"
+            class="filter-height w-25 d-inline"
+            type="text"
+            placeholder="Type to filter" />
+        </div>
+        <table
+          v-if="permissions && permissions.length"
+          class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="text-middle">
+                Permission
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-if="addMode">
+              <td class="pl-0">
+                <b-form-input
+                  v-model="newPermissionObject.role" />
+              </td>
+              <td class="pl-0">
+                <b-form-select
+                  :value="newPermissionObject.type"
+                  class="w-auto m-0 pl-2"
+                  :options="available_types"
+                  @change="(value) => updatePermission(index, value)" />
+              </td>
+              <td class="text-middle pl-0">
+                <b-form-select
+                  :value="newPermissionObject.permission"
+                  class="w-auto ml-1 pl-1 mr-3"
+                  :options="available_permissions"
+                  @change="(value) => updatePermission(index, value)" />
+                <button
+                  class="btn btn-success px-4"
+                  :disabled="!hasChanges">
+                  Save
+                </button>
+              </td>
+            </tr>
+            <tr
+              v-for="(permission, index) of permissions"
+              :key="permission.id">
+              <td class="align-middle">
+                {{ permission.user || permission.role }}
+              </td>
+              <td class="align-middle w-25">
+                {{ permission.role ? 'Role' : 'User' }}
+              </td>
+              <td
+                v-if="!editMode"
+                class="align-middle text-middle w-25">
+                {{ permission.permission }}
+              </td>
+              <td
+                v-else
+                class="align-middle text-middle p-0 w-25">
+                <b-form-select
+                  :value="permissions[index].permission"
+                  class="w-auto"
+                  :options="available_permissions"
+                  @change="(value) => updatePermission(index, value)" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div
+          v-if="editMode"
+          class="mt-3">
+          <button
+            class="btn btn-success px-4"
+            :disabled="!hasChanges">
+            Save
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -83,8 +114,10 @@
 
 <script>
 import api from '@molgenis/molgenis-api-client'
+import ServerStatus from '../components/ServerStatus.vue'
 
 export default {
+  components: { ServerStatus },
   props: {
     entityId: {
       type: String,
@@ -98,18 +131,35 @@ export default {
   data () {
     return {
       status: 0,
-      editMode: false,
+      search: '',
       addMode: false,
+      editMode: false,
       permissionObjects: {},
+      newPermissionObject: {
+        type: ''
+      },
       available_permissions: [],
-      changedPermissionObjects: []
+      addedPermissionObjects: [],
+      changedPermissionObjects: [],
+      available_types: [{ text: 'Select a type', value: '' }, { text: 'Role', value: 'role' }, { text: 'User', value: 'user' }]
     }
   },
   computed: {
     unauthorized () {
       return this.status === 401
     },
+    names () {
+      return this.permissionObjects.permissions.map(permission => permission.role || permission.user)
+    },
     permissions () {
+      if (this.search && this.search) {
+        const ciSearch = this.search.toLowerCase()
+        return this.permissionObjects.permissions.filter(permission => {
+          return (permission.role && ('role'.includes(ciSearch) || permission.role.toLowerCase().includes(ciSearch))) ||
+          (permission.user && ('user'.includes(ciSearch) || permission.user.toLowerCase().includes(ciSearch))) ||
+          permission.permission.toLowerCase().includes(ciSearch)
+        })
+      }
       return this.permissionObjects.permissions
     },
     hasChanges () {
@@ -144,6 +194,22 @@ export default {
       }
       this.addMode = !this.addMode
     },
+    savePermission (name, type, permission) {
+      if (this.names.filter(existingName => existingName.toLowerCase() === name.toLowerCase()) > 0) {
+        // give an error
+        return
+      }
+      const newPermission = {
+        [type]: name,
+        permission
+      }
+
+      this.addedPermissionObjects.push(newPermission)
+
+      this.newPermissionObject = {
+        type: ''
+      }
+    },
     updatePermission (index, value) {
       const permissionItem = this.permissions[index]
 
@@ -171,3 +237,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.filter-height {
+  padding: 0.3rem;
+  position: relative;
+  top: 2px;
+}
+</style>

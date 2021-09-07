@@ -1,20 +1,24 @@
 <template>
-  <div class="list-group w-25 mx-auto my-5 ">
+  <div class="list-group w-50 mx-auto my-5 ">
     <h3 class="mb-4">
       Row level secured entities
     </h3>
-    <input
+    <b-form-input
       v-model="search"
       class="p-2 mb-2"
       type="text"
-      placeholder="Type to filter">
+      placeholder="Type to filter" />
     <div
       v-for="row in results"
       :key="row.id">
       <custom-router-link
         :name="'SelectEntitityObject'"
         :params="{ entityId: row.id }">
-        <span>{{ row.label || row.id }}</span>
+        <span>
+          <font-awesome-icon
+            class="mr-3"
+            icon="folder-open" />{{ row.label || row.id }}
+        </span>
         <font-awesome-icon
           class="mt-1"
           icon="angle-right" />
