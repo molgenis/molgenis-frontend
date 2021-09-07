@@ -177,13 +177,6 @@ export default {
     })
   },
   methods: {
-    save () {
-      // send to server
-      // patch updated
-      // refetch from server
-      this.permissionObjects = {}
-      this.getPermissionsForObject()
-    },
     toggleEditMode () {
       // if true, it means we are going to cancel.
       if (this.editMode) {
@@ -232,6 +225,8 @@ export default {
       this.changedPermissionObjects.push(permissionBase)
     },
     getPermissionsForObject () {
+      this.changedPermissionObjects = []
+      this.addedPermissionObjects = []
       this.status = 0
       api.get(`/api/permissions/${this.entityId}/${this.objectId}`).then((response) => {
         this.permissionObjects = response.data
