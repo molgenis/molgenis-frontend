@@ -17,16 +17,23 @@
           <button
             class="btn mr-3"
             :class="addMode ? 'btn-danger px-3' : 'btn-primary px-4'"
-            :disabled="editMode"
+            :disabled="editMode || deleteMode"
             @click="toggleAddMode()">
             {{ addMode ? 'Cancel' : 'Add' }}
           </button>
           <button
             class="btn mr-3"
             :class="editMode ? 'btn-danger px-3' : 'btn-outline-primary px-4'"
-            :disabled="addMode"
+            :disabled="addMode || deleteMode"
             @click="toggleEditMode()">
             {{ editMode ? 'Cancel' : 'Edit' }}
+          </button>
+          <button
+            class="btn mr-3"
+            :class="deleteMode ? 'btn-danger px-3' : 'btn-outline-danger px-4'"
+            :disabled="addMode || editMode"
+            @click="deleteMode = !deleteMode">
+            {{ deleteMode ? 'Cancel' : 'Delete' }}
           </button>
           <b-form-input
             v-model="search"
@@ -52,29 +59,29 @@
                 <b-form-select
                   v-if="selectedNewPermissionType === 'role'"
                   v-model="newPermissionObject.role"
-                  :options="available_roles" />
+                  :options="selectableRoles" />
                 <b-form-select
                   v-else
                   v-model="newPermissionObject.user"
-                  :options="available_users"
+                  :options="selectableUsers"
                   :disabled="selectedNewPermissionType !== 'user'" />
               </td>
               <td class="pl-0">
-                <!-- on change, delete keys. -->
                 <b-form-select
                   v-model="newPermissionType"
                   class="w-auto m-0 pl-2"
-                  :options="available_types" />
+                  :options="available_types"
+                  @change="resetNewPermissionObject" />
               </td>
-              <td class="text-middle pl-0">
+              <td class="text-middle px-0 d-flex">
                 <b-form-select
-                  :value="newPermissionObject.permission"
+                  v-model="newPermissionObject.permission"
                   class="w-auto ml-1 pl-1 mr-3"
-                  :options="available_permissions"
-                  @change="(value) => addPermissionChange(index, value)" />
+                  :options="available_permissions" />
                 <button
-                  class="btn btn-success px-4"
-                  :disabled="!hasChanges">
+                  class="btn btn-success px-4 ml-auto"
+                  :disabled="!canAddPermission"
+                  @click="addPermission">
                   Save
                 </button>
               </td>
@@ -90,8 +97,17 @@
               </td>
               <td
                 v-if="!editMode"
-                class="align-middle text-middle w-25">
-                {{ permission.permission }}
+                class="align-middle text-middle  w-25">
+                <div class="d-flex align-items-center">
+                  {{ permission.permission }}
+                  <button
+                    v-if="deleteMode"
+                    class="btn btn-danger ml-auto py-1 px-2"
+                    @click="removePermission(index)">
+                    <font-awesome-icon
+                      icon="trash-alt" />
+                  </button>
+                </div>
               </td>
               <td
                 v-else
@@ -143,6 +159,7 @@ export default {
       search: '',
       addMode: false,
       editMode: false,
+      deleteMode: false,
       available_roles: [],
       available_users: [],
       permissionObjects: {},
@@ -172,11 +189,24 @@ export default {
       }
       return this.permissionObjects.permissions
     },
+    canAddPermission () {
+      return (this.newPermissionObject.role || this.newPermissionObject.user) && this.newPermissionObject.permission
+    },
     hasChanges () {
       return this.changedPermissionObjects.length
     },
     selectedNewPermissionType () {
       return this.newPermissionType
+    },
+    selectableUsers () {
+      let assignedUsers = ['admin'] // assigning admin is not necessary
+      assignedUsers = assignedUsers.concat(this.permissionObjects.permissions.map(item => item.user))
+      return this.available_users.filter(f => !assignedUsers.includes(f.value))
+    },
+    selectableRoles () {
+      let assignedRoles = ['SU'] // assigning SU is not necessary
+      assignedRoles = assignedRoles.concat(this.permissionObjects.permissions.map(item => item.role))
+      return this.available_roles.filter(f => !assignedRoles.includes(f.value))
     }
   },
   beforeMount () {
@@ -220,6 +250,19 @@ export default {
         this.getPermissionsForObject()
       })
     },
+    addPermission () {
+      this.addMode = false
+      api.post(`/api/permissions/${this.entityId}/${this.objectId}`, { body: JSON.stringify({ permissions: [this.newPermissionObject] }) }).then(() => {
+        this.getPermissionsForObject()
+      })
+    },
+    removePermission (index) {
+      const permissionToDelete = JSON.parse(JSON.stringify(this.permissions[index]))
+      delete permissionToDelete.permission
+      api.delete_(`/api/permissions/${this.entityId}/${this.objectId}`, { body: JSON.stringify(permissionToDelete) }).then(() => {
+        this.getPermissionsForObject()
+      })
+    },
     addPermissionChange (index, value) {
       const permissionItem = this.permissions[index]
 
@@ -250,11 +293,20 @@ export default {
       api.get('/api/data/sys_sec_Role').then((response) => {
         this.available_roles = response.items.map(item => ({ value: item.data.name, text: `${item.data.label} (${item.data.name})` }))
       })
+
+      // filter on current shown roles + SU
     },
     getAllUsers () {
       api.get('/api/identities/user').then((response) => {
         this.available_users = response.map(user => ({ text: user.username, value: user.username }))
       })
+
+      // filter on current shown users + admin
+    },
+    // if you switch type, reset the object
+    resetNewPermissionObject () {
+      delete this.newPermissionObject.role
+      delete this.newPermissionObject.user
     }
   }
 }
