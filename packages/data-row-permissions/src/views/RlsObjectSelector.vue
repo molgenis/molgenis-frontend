@@ -2,7 +2,7 @@
   <div class="list-group w-50 mx-auto my-5 ">
     <div class="d-flex justify-content-between">
       <h3 class="mb-4">
-        RLS objects of {{ entityId }}
+        RLS objects of {{ label }}
       </h3>
       <router-link
         :to="{name: 'SelectEntity'}"
@@ -62,7 +62,8 @@ export default {
       status: 0,
       // id is typeId
       // typeId's you can get by querying api/data/entityType (their id's)
-      rls_objects: []
+      rls_objects: [],
+      label: ''
     }
   },
   computed: {
@@ -85,6 +86,10 @@ export default {
       this.loaded = true
     }).catch(e => {
       this.status = e.status
+    })
+
+    api.get('/api/permissions/types').then((response) => {
+      this.label = response.data.find(entity => entity.id === this.entityId).label
     })
   }
 }

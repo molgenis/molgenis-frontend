@@ -2,7 +2,7 @@
   <div class="w-75 mx-auto my-5">
     <div class="d-flex justify-content-between">
       <h3 class="mb-4">
-        Permission of {{ objectId }}
+        Permission(s) of {{ permissionObjects.label }}
       </h3>
       <router-link
         :to="{ name: 'SelectEntitityObject', params: { entityId }}"
@@ -57,14 +57,14 @@
                   :value="newPermissionObject.type"
                   class="w-auto m-0 pl-2"
                   :options="available_types"
-                  @change="(value) => updatePermission(index, value)" />
+                  @change="(value) => addPermissionChange(index, value)" />
               </td>
               <td class="text-middle pl-0">
                 <b-form-select
                   :value="newPermissionObject.permission"
                   class="w-auto ml-1 pl-1 mr-3"
                   :options="available_permissions"
-                  @change="(value) => updatePermission(index, value)" />
+                  @change="(value) => addPermissionChange(index, value)" />
                 <button
                   class="btn btn-success px-4"
                   :disabled="!hasChanges">
@@ -93,7 +93,7 @@
                   :value="permissions[index].permission"
                   class="w-auto"
                   :options="available_permissions"
-                  @change="(value) => updatePermission(index, value)" />
+                  @change="(value) => addPermissionChange(index, value)" />
               </td>
             </tr>
           </tbody>
@@ -103,7 +103,8 @@
           class="mt-3">
           <button
             class="btn btn-success px-4"
-            :disabled="!hasChanges">
+            :disabled="!hasChanges"
+            @click="updatePermissions">
             Save
           </button>
         </div>
@@ -113,6 +114,7 @@
 </template>
 
 <script>
+// TODO: Break this down in to smaller pieces, use VUEX as well.
 import api from '@molgenis/molgenis-api-client'
 import ServerStatus from '../components/ServerStatus.vue'
 
@@ -134,6 +136,7 @@ export default {
       search: '',
       addMode: false,
       editMode: false,
+      available_roles: [],
       permissionObjects: {},
       newPermissionObject: {
         type: ''
@@ -168,7 +171,7 @@ export default {
   },
   beforeMount () {
     this.getPermissionsForObject()
-
+    this.getAllRoles()
     api.get(`/api/permissions/types/permissions/${this.entityId}`).then((response) => {
       this.available_permissions = response.data
     })
@@ -194,23 +197,26 @@ export default {
       }
       this.addMode = !this.addMode
     },
-    savePermission (name, type, permission) {
-      if (this.names.filter(existingName => existingName.toLowerCase() === name.toLowerCase()) > 0) {
-        // give an error
-        return
-      }
-      const newPermission = {
-        [type]: name,
-        permission
-      }
-
-      this.addedPermissionObjects.push(newPermission)
-
-      this.newPermissionObject = {
-        type: ''
-      }
+    updatePermissions () {
+      this.editMode = false
+      // TODO upgrade api-client
+      fetch(`/api/permissions/${this.entityId}/${this.objectId}`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin',
+        method: 'PATCH',
+        body: JSON.stringify({
+          permissions: this.changedPermissionObjects
+        })
+      }).then(() => {
+        // reset
+        this.getPermissionsForObject()
+      })
     },
-    updatePermission (index, value) {
+    addPermissionChange (index, value) {
       const permissionItem = this.permissions[index]
 
       if (permissionItem.permission === value) {
@@ -232,6 +238,11 @@ export default {
         this.status = response.status
       }).catch(e => {
         this.status = e.status
+      })
+    },
+    getAllRoles () {
+      api.get('/api/data/sys_sec_Role').then((response) => {
+        this.available_roles = response.items.map(item => ({ value: item.data.name, text: item.data.label }))
       })
     }
   }
