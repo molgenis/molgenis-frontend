@@ -25,7 +25,7 @@
         <span>
           <font-awesome-icon
             class="mr-3"
-            icon="list" />{{ row.label || row.id }}
+            icon="file" />{{ row.label || row.id }}
         </span>
         <font-awesome-icon
           class="mt-1"

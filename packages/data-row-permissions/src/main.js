@@ -20,10 +20,10 @@ import {
   faTimes,
   faAngleRight,
   faFolderOpen,
-  faList
+  faFile
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCaretRight, faTimes, faSpinner, faExclamationCircle, faAngleRight, faFolderOpen, faList)
+library.add(faCaretRight, faTimes, faSpinner, faExclamationCircle, faAngleRight, faFolderOpen, faFile)
 
 Vue.directive('add-class-hover', {
   bind (el, binding, vnode) {

@@ -49,15 +49,22 @@
           <tbody>
             <tr v-if="addMode">
               <td class="pl-0">
-                <b-form-input
-                  v-model="newPermissionObject.role" />
+                <b-form-select
+                  v-if="selectedNewPermissionType === 'role'"
+                  v-model="newPermissionObject.role"
+                  :options="available_roles" />
+                <b-form-select
+                  v-else
+                  v-model="newPermissionObject.user"
+                  :options="available_users"
+                  :disabled="selectedNewPermissionType !== 'user'" />
               </td>
               <td class="pl-0">
+                <!-- on change, delete keys. -->
                 <b-form-select
-                  :value="newPermissionObject.type"
+                  v-model="newPermissionType"
                   class="w-auto m-0 pl-2"
-                  :options="available_types"
-                  @change="(value) => addPermissionChange(index, value)" />
+                  :options="available_types" />
               </td>
               <td class="text-middle pl-0">
                 <b-form-select
@@ -137,10 +144,10 @@ export default {
       addMode: false,
       editMode: false,
       available_roles: [],
+      available_users: [],
       permissionObjects: {},
-      newPermissionObject: {
-        type: ''
-      },
+      newPermissionType: '',
+      newPermissionObject: {},
       available_permissions: [],
       addedPermissionObjects: [],
       changedPermissionObjects: [],
@@ -167,11 +174,15 @@ export default {
     },
     hasChanges () {
       return this.changedPermissionObjects.length
+    },
+    selectedNewPermissionType () {
+      return this.newPermissionType
     }
   },
   beforeMount () {
     this.getPermissionsForObject()
     this.getAllRoles()
+    this.getAllUsers()
     api.get(`/api/permissions/types/permissions/${this.entityId}`).then((response) => {
       this.available_permissions = response.data
     })
@@ -237,7 +248,12 @@ export default {
     },
     getAllRoles () {
       api.get('/api/data/sys_sec_Role').then((response) => {
-        this.available_roles = response.items.map(item => ({ value: item.data.name, text: item.data.label }))
+        this.available_roles = response.items.map(item => ({ value: item.data.name, text: `${item.data.label} (${item.data.name})` }))
+      })
+    },
+    getAllUsers () {
+      api.get('/api/identities/user').then((response) => {
+        this.available_users = response.map(user => ({ text: user.username, value: user.username }))
       })
     }
   }
