@@ -7,6 +7,7 @@ import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 import Vue from 'vue'
 import client from '@/lib/client'
+import { AxiosResponse } from 'axios'
 
 const metaResponse = {
   meta: {
@@ -204,44 +205,38 @@ const dataResponse = {
 }
 
 const mockResponses: {[key:string]: Object} = {
-  '/api/data/entity': { 'loaded': true },
+  '/api/data/entity': {},
   '/api/v2/sys_job_ResourceDownloadJobExecution/failure': {
-    data: {
-      progressMessage: 'failed',
-      status: 'FAILED'
-    }
+    progressMessage: 'failed',
+    status: 'FAILED'
   },
   '/api/v2/sys_job_ResourceDownloadJobExecution/success': {
-    data: {
-      progressMessage: 'progress',
-      resultUrl: '/foo/bar',
-      status: 'SUCCESS'
-    }
+    progressMessage: 'progress',
+    resultUrl: '/foo/bar',
+    status: 'SUCCESS'
   },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
-  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
-  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
+  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { items: [] },
+  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] },
   '/api/data/sys_ts_DataExplorerEntitySettings': {},
-  '/api/data/sys_set_forms/forms': {"data": {"data":{"addEnumNullOption":false,"addBooleanNullOption":false,"addCategoricalNullOption":false,"id":"forms"}}},
+  '/api/data/sys_set_forms/forms': { "data":{ "addEnumNullOption":false,"addBooleanNullOption":false,"addCategoricalNullOption":false,"id":"forms" } },
   '/api/v2/my-table?start=0&num=0': {
-    data: {
-      meta: {
-        permissions: ['PERM_A']
-      }
+    meta: {
+      permissions: ['PERM_A']
     }
   }
 }
 
 jest.mock('@/lib/client', () => {
   return {
-    get: (url: string) => {
+    get: (url: string): Promise<AxiosResponse> => {
       const mockResp = mockResponses[url]
       if (!mockResp) {
         // eslint-disable-next-line no-console
         console.warn(`mock url (${url}) called but not found in ${JSON.stringify(mockResponses, null, 4)}`)
       }
-      return Promise.resolve(mockResp)
+      return Promise.resolve({ data: mockResp, status: 200, statusText: 'OK', headers: {}, config: {} })
     },
     post: jest.fn(),
     patch: jest.fn()
@@ -553,7 +548,7 @@ describe('actions', () => {
     it('should fetch the form settings and commit them to the store', async () => {
       await actions.fetchFormSettings({ commit, state })
       expect(commit).toHaveBeenCalledWith('setFormSettings',
-        {"addEnumNullOption":false,"addBooleanNullOption":false,"addCategoricalNullOption":false,"id":"forms"})
+        { "addEnumNullOption":false,"addBooleanNullOption":false,"addCategoricalNullOption":false,"id":"forms" })
     })
   })
 
