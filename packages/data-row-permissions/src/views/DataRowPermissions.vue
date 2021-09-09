@@ -254,7 +254,12 @@ export default {
       this.addMode = false
       api.post(`/api/permissions/${this.entityId}/${this.objectId}`, { body: JSON.stringify({ permissions: [this.newPermissionObject] }) }).then(() => {
         this.getPermissionsForObject()
+      }).catch(async (e) => {
+        const response = await e.json()
+        this.error(response.detail)
       })
+
+      this.newPermissionObject = {}
     },
     removePermission (index) {
       const permissionToDelete = JSON.parse(JSON.stringify(this.permissions[index]))
@@ -293,20 +298,26 @@ export default {
       api.get('/api/data/sys_sec_Role').then((response) => {
         this.available_roles = response.items.map(item => ({ value: item.data.name, text: `${item.data.label} (${item.data.name})` }))
       })
-
-      // filter on current shown roles + SU
     },
     getAllUsers () {
       api.get('/api/identities/user').then((response) => {
         this.available_users = response.map(user => ({ text: user.username, value: user.username }))
       })
-
-      // filter on current shown users + admin
     },
     // if you switch type, reset the object
     resetNewPermissionObject () {
       delete this.newPermissionObject.role
       delete this.newPermissionObject.user
+    },
+    error (mssg) {
+      this.$bvToast.toast(mssg, {
+        title: 'Error occurred',
+        toaster: 'b-toaster-bottom-right',
+        solid: true,
+        variant: 'danger',
+        appendToast: true,
+        autoHideDelay: 6000
+      })
     }
   }
 }
