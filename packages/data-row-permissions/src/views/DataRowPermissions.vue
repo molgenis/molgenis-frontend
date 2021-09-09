@@ -18,7 +18,7 @@
             class="btn mr-3"
             :class="addMode ? 'btn-danger px-3' : 'btn-primary px-4'"
             :disabled="editMode || deleteMode"
-            @click="toggleAddMode()">
+            @click="addMode = !addMode">
             {{ addMode ? 'Cancel' : 'Add' }}
           </button>
           <button
@@ -42,7 +42,6 @@
             placeholder="Type to filter" />
         </div>
         <table
-          v-if="permissions && permissions.length"
           class="table">
           <thead>
             <tr>
@@ -138,6 +137,7 @@
 
 <script>
 // TODO: Break this down in to smaller pieces, use VUEX as well.
+// { "ownedByRole": "EDITOR" } || { "ownedByUser": "f.kelpin"}
 import api from '@molgenis/molgenis-api-client'
 import ServerStatus from '../components/ServerStatus.vue'
 
@@ -198,10 +198,12 @@ export default {
     selectedNewPermissionType () {
       return this.newPermissionType
     },
+    canChangeOwnerShip () {
+      return this.permissionObjects.yours === true
+    },
     selectableUsers () {
-      let assignedUsers = ['admin'] // assigning admin is not necessary
-      assignedUsers = assignedUsers.concat(this.permissionObjects.permissions.map(item => item.user))
-      return this.available_users.filter(f => !assignedUsers.includes(f.value))
+      const assignedUsers = this.permissionObjects.permissions.map(item => item.user)
+      return this.available_users.filter(f => !assignedUsers.includes(f.value) && !f.superuser)
     },
     selectableRoles () {
       let assignedRoles = ['SU'] // assigning SU is not necessary
@@ -224,12 +226,6 @@ export default {
         this.changedPermissionObjects = []
       }
       this.editMode = !this.editMode
-    },
-    toggleAddMode () {
-      if (this.addMode) {
-        // this.changedPermissionObjects = []
-      }
-      this.addMode = !this.addMode
     },
     updatePermissions () {
       this.editMode = false
@@ -289,6 +285,8 @@ export default {
       this.status = 0
       api.get(`/api/permissions/${this.entityId}/${this.objectId}`).then((response) => {
         this.permissionObjects = response.data
+        // straight to add mode if there are no permission set
+        this.addMode = !this.permissionObjects.permissions.length
         this.status = response.status
       }).catch(e => {
         this.status = e.status

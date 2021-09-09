@@ -17,6 +17,7 @@
     "@molgenis-ui/components-library": "2.7.14",
     "@molgenis/molgenis-api-client": "^3.1.4",
     "@molgenis/molgenis-i18n-js": "^1.0.0",
+    "@molgenis/molgenis-ui-context": "^1.6.5",
     "bootstrap": "4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
