@@ -101,7 +101,7 @@ import { FormComponent, EntityToFormMapper } from '@molgenis/molgenis-ui-form'
 import * as repository from '@/repository/dataRowRepository'
 import DataRowEdit from '@/components/DataRowEdit'
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'DataRowEdit',
@@ -146,12 +146,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(['formSettings'])
+    ...mapState('explorer', ['formSettings'])
   },
   created: async function () {
     this.fetchTableData(this.entity, this.dataRowId)
   },
   methods: {
+    ...mapActions('explorer', ['fetchFormSettings']),
     onValueChanged (updatedFormData) {
       this.formData = updatedFormData
     },
@@ -251,18 +252,19 @@ export default {
         }, {})
     },
     async fetchTableData (entity, dataRowId) {
-      const mapperOptions = {
-        showNonVisibleAttributes: true,
-        mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
-        formOptions: this.formSettings,
-        booleanLabels: {
-          trueLabel: this.$t('data-row-edit:data-row-edit-boolean-true'),
-          falseLabel: this.$t('data-row-edit:data-row-edit-boolean-false'),
-          nillLabel: this.$t('data-row-edit:data-row-edit-boolean-null')
-        }
-      }
       try {
-        const resp = await repository.fetch(entity, dataRowId)
+        // fetch form settings and row data in parallel
+        const [resp] = await Promise.all([repository.fetch(entity, dataRowId), this.fetchFormSettings()])
+        const mapperOptions = {
+          showNonVisibleAttributes: true,
+          mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
+          formOptions: this.formSettings,
+          booleanLabels: {
+            trueLabel: this.$t('data-row-edit:data-row-edit-boolean-true'),
+            falseLabel: this.$t('data-row-edit:data-row-edit-boolean-false'),
+            nillLabel: this.$t('data-row-edit:data-row-edit-boolean-null')
+          }
+        }
         this.idAttribute = resp.meta.idAttribute
         this.labelAttribute = resp.meta.labelAttribute
         this.referenceMap = this.buildReferenceMap(resp.meta)

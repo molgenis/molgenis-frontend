@@ -223,6 +223,7 @@ const mockResponses: {[key:string]: Object} = {
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
   '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
   '/api/data/sys_ts_DataExplorerEntitySettings': {},
+  '/api/data/sys_set_forms/forms': {"data": {"data":{"addEnumNullOption":false,"addBooleanNullOption":false,"addCategoricalNullOption":false,"id":"forms"}}},
   '/api/v2/my-table?start=0&num=0': {
     data: {
       meta: {
@@ -545,6 +546,14 @@ describe('actions', () => {
       await actions.fetchTableSettings({ commit, state }, { tableName: 'tableWithOutSettings' })
       expect(commit).toHaveBeenCalledWith('setTableSettings', {})
       expect(commit).not.toHaveBeenCalledWith('setTableSettings', { id: 'ent-set', shop: true, collapse_limit: 5 })
+    })
+  })
+
+  describe('fetchFormSetttings', () => {
+    it('should fetch the form settings and commit them to the store', async () => {
+      await actions.fetchFormSettings({ commit, state })
+      expect(commit).toHaveBeenCalledWith('setFormSettings',
+        {"addEnumNullOption":false,"addBooleanNullOption":false,"addCategoricalNullOption":false,"id":"forms"})
     })
   })
 
