@@ -2,7 +2,7 @@
   <div class="w-75 mx-auto my-5">
     <div class="d-flex justify-content-between">
       <h3 class="mb-4">
-        Permission(s) of {{ permissionObjects.label }}
+        Permission(s) of {{ permissionObject.label }}
       </h3>
       <router-link
         :to="{ name: 'SelectEntitityObject', params: { entityId }}"
@@ -10,10 +10,10 @@
         Back
       </router-link>
     </div>
-    <server-status :code="status" />
+    <server-status :code="responseStatus" />
     <div>
       <div class="mt-5">
-        <div class="mb-3">
+        <div class="mb-3 d-flex">
           <button
             class="btn mr-3"
             :class="addMode ? 'btn-danger px-3' : 'btn-primary px-4'"
@@ -29,6 +29,12 @@
             {{ editMode ? 'Cancel' : 'Edit' }}
           </button>
           <button
+            v-if="canChangeOwnerShip"
+            class="btn mr-3 btn-outline-primary px-4"
+            :disabled="addMode || editMode || deleteMode">
+            <span>Change owner</span>
+          </button>
+          <button
             class="btn mr-3"
             :class="deleteMode ? 'btn-danger px-3' : 'btn-outline-danger px-4'"
             :disabled="addMode || editMode"
@@ -40,6 +46,10 @@
             class="filter-height w-25 d-inline"
             type="text"
             placeholder="Type to filter" />
+          <div class="ml-auto">
+            <span class="font-weight-bold mr-3">Owned by:</span>
+            <span>{{ permissionObject.ownedByUser || permissionObject.ownedByRole }}</span>
+          </div>
         </div>
         <table
           class="table">
@@ -80,8 +90,8 @@
                 <button
                   class="btn btn-success px-4 ml-auto"
                   :disabled="!canAddPermission"
-                  @click="addPermission">
-                  Save
+                  @click="add">
+                  Add
                 </button>
               </td>
             </tr>
@@ -102,7 +112,7 @@
                   <button
                     v-if="deleteMode"
                     class="btn btn-danger ml-auto py-1 px-2"
-                    @click="removePermission(index)">
+                    @click="remove(index)">
                     <font-awesome-icon
                       icon="trash-alt" />
                   </button>
@@ -126,7 +136,7 @@
           <button
             class="btn btn-success px-4"
             :disabled="!hasChanges"
-            @click="updatePermissions">
+            @click="update">
             Save
           </button>
         </div>
@@ -136,10 +146,9 @@
 </template>
 
 <script>
-// TODO: Break this down in to smaller pieces, use VUEX as well.
-// { "ownedByRole": "EDITOR" } || { "ownedByUser": "f.kelpin"}
 import api from '@molgenis/molgenis-api-client'
 import ServerStatus from '../components/ServerStatus.vue'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
   components: { ServerStatus },
@@ -155,71 +164,73 @@ export default {
   },
   data () {
     return {
-      status: 0,
       search: '',
       addMode: false,
       editMode: false,
       deleteMode: false,
-      available_roles: [],
-      available_users: [],
-      permissionObjects: {},
       newPermissionType: '',
       newPermissionObject: {},
       available_permissions: [],
-      addedPermissionObjects: [],
       changedPermissionObjects: [],
       available_types: [{ text: 'Select a type', value: '' }, { text: 'Role', value: 'role' }, { text: 'User', value: 'user' }]
     }
   },
   computed: {
-    unauthorized () {
-      return this.status === 401
-    },
+    ...mapGetters(['isSU']),
+    ...mapState(['userOptions', 'roleOptions', 'permissionObject', 'responseStatus', 'startInAddMode']),
     names () {
-      return this.permissionObjects.permissions.map(permission => permission.role || permission.user)
+      return this.permissionObject.permissions.map(permission => permission.role || permission.user)
     },
     permissions () {
       if (this.search && this.search) {
         const ciSearch = this.search.toLowerCase()
-        return this.permissionObjects.permissions.filter(permission => {
+        return this.permissionObject.permissions.filter(permission => {
           return (permission.role && ('role'.includes(ciSearch) || permission.role.toLowerCase().includes(ciSearch))) ||
           (permission.user && ('user'.includes(ciSearch) || permission.user.toLowerCase().includes(ciSearch))) ||
           permission.permission.toLowerCase().includes(ciSearch)
         })
       }
-      return this.permissionObjects.permissions
+      return this.permissionObject.permissions
     },
     canAddPermission () {
       return (this.newPermissionObject.role || this.newPermissionObject.user) && this.newPermissionObject.permission
     },
     hasChanges () {
-      return this.changedPermissionObjects.length
+      return this.changedPermissionObjects.length > 0
     },
     selectedNewPermissionType () {
       return this.newPermissionType
     },
     canChangeOwnerShip () {
-      return this.permissionObjects.yours === true
+      return this.permissionObject.yours === true || this.isSU === true
     },
     selectableUsers () {
-      const assignedUsers = this.permissionObjects.permissions.map(item => item.user)
-      return this.available_users.filter(f => !assignedUsers.includes(f.value) && !f.superuser)
+      const assignedUsers = this.permissionObject.permissions.map(item => item.user)
+      return this.userOptions.filter(f => !assignedUsers.includes(f.value) && !f.superuser)
     },
     selectableRoles () {
       let assignedRoles = ['SU'] // assigning SU is not necessary
-      assignedRoles = assignedRoles.concat(this.permissionObjects.permissions.map(item => item.role))
-      return this.available_roles.filter(f => !assignedRoles.includes(f.value))
+      assignedRoles = assignedRoles.concat(this.permissionObject.permissions.map(item => item.role))
+      return this.roleOptions.filter(f => !assignedRoles.includes(f.value))
+    }
+  },
+  watch: {
+    startInAddMode (startWithAdd) {
+      if (startWithAdd) {
+        this.addMode = true
+      }
     }
   },
   beforeMount () {
     this.getPermissionsForObject()
     this.getAllRoles()
-    this.getAllUsers()
     api.get(`/api/permissions/types/permissions/${this.entityId}`).then((response) => {
       this.available_permissions = response.data
     })
   },
   methods: {
+    ...mapActions(['getAllRoles', 'getPermissionsForObject',
+      'addPermission', 'removePermission', 'updatePermissions']),
     toggleEditMode () {
       // if true, it means we are going to cancel.
       if (this.editMode) {
@@ -227,49 +238,26 @@ export default {
       }
       this.editMode = !this.editMode
     },
-    updatePermissions () {
-      this.editMode = false
-      // TODO upgrade api-client
-      fetch(`/api/permissions/${this.entityId}/${this.objectId}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        credentials: 'same-origin',
-        method: 'PATCH',
-        body: JSON.stringify({
-          permissions: this.changedPermissionObjects
-        })
-      }).then(() => {
-        // reset
-        this.getPermissionsForObject()
-      })
-    },
-    addPermission () {
+    add () {
       this.addMode = false
-      api.post(`/api/permissions/${this.entityId}/${this.objectId}`, { body: JSON.stringify({ permissions: [this.newPermissionObject] }) }).then(() => {
-        this.getPermissionsForObject()
-      }).catch(async (e) => {
-        const response = await e.json()
-        this.error(response.detail)
-      })
-
+      this.addPermission(this.newPermissionObject)
       this.newPermissionObject = {}
     },
-    removePermission (index) {
-      const permissionToDelete = JSON.parse(JSON.stringify(this.permissions[index]))
-      delete permissionToDelete.permission
-      api.delete_(`/api/permissions/${this.entityId}/${this.objectId}`, { body: JSON.stringify(permissionToDelete) }).then(() => {
-        this.getPermissionsForObject()
-      })
+    update () {
+      this.editMode = false
+      this.updatePermissions(this.changedPermissionObjects)
+      this.changedPermissionObjects = []
+    },
+    remove (index) {
+      const permissionToRemove = JSON.parse(JSON.stringify(this.permissions[index]))
+      this.removePermission(permissionToRemove)
     },
     addPermissionChange (index, value) {
       const permissionItem = this.permissions[index]
 
       if (permissionItem.permission === value) {
-        const hasBeenchangedBack = this.changedPermissionObjects.find(cpo => cpo.user === permissionItem.user)
-        if (hasBeenchangedBack) {
+        const hasBeenchangedBack = this.changedPermissionObjects.findIndex(cpo => cpo.user === permissionItem.user)
+        if (hasBeenchangedBack >= 0) {
           this.changedPermissionObjects.splice(hasBeenchangedBack, 1)
         }
         return
@@ -279,51 +267,11 @@ export default {
       permissionBase.permission = value
       this.changedPermissionObjects.push(permissionBase)
     },
-    getPermissionsForObject () {
-      this.changedPermissionObjects = []
-      this.addedPermissionObjects = []
-      this.status = 0
-      api.get(`/api/permissions/${this.entityId}/${this.objectId}`).then((response) => {
-        this.permissionObjects = response.data
-        // straight to add mode if there are no permission set
-        this.addMode = !this.permissionObjects.permissions.length
-        this.status = response.status
-      }).catch(e => {
-        this.status = e.status
-      })
-    },
-    getAllRoles () {
-      api.get('/api/data/sys_sec_Role').then((response) => {
-        this.available_roles = response.items.map(item => ({ value: item.data.name, text: `${item.data.label} (${item.data.name})` }))
-      })
-    },
-    getAllUsers () {
-      api.get('/api/identities/user').then((response) => {
-        this.available_users = response.map(user => ({ text: user.username, value: user.username }))
-      })
-    },
     // if you switch type, reset the object
     resetNewPermissionObject () {
       delete this.newPermissionObject.role
       delete this.newPermissionObject.user
-    },
-    error (mssg) {
-      this.$bvToast.toast(mssg, {
-        title: 'Error occurred',
-        toaster: 'b-toaster-bottom-right',
-        solid: true,
-        variant: 'danger',
-        appendToast: true,
-        autoHideDelay: 6000
-      })
     }
   }
 }
 </script>
-<style scoped>
-.filter-height {
-  padding: 0.3rem;
-  position: relative;
-  top: 2px;
-}
-</style>

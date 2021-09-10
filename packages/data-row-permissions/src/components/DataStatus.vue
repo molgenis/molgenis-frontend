@@ -12,13 +12,17 @@
         </div>
       </div>
       <span
-        v-else
+        v-else-if="isAuthenticated"
         class="mt-2">These are not the results you are looking for.</span>
+      <span
+        v-else
+        class="mt-2">You might see more results if you <a href="/login">log in</a>.</span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: {
     items: {
@@ -31,6 +35,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isAuthenticated']),
     results () {
       return this.items
     },

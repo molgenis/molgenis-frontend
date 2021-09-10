@@ -1,4 +1,4 @@
-const PROXY_TARGET = 'https://master.dev.molgenis.org' // 'https://preview-pr-9308-6.dev.molgenis.org'
+const PROXY_TARGET = 'https://preview-pr-9308-6.dev.molgenis.org' // 'https://master.dev.molgenis.org'
 
 const apiDevServerProxyConf = {
   target: PROXY_TARGET,
@@ -50,6 +50,10 @@ module.exports = {
             changeOrigin: true
           },
           '^/login': {
+            target: PROXY_TARGET,
+            changeOrigin: true
+          },
+          '^/logout': {
             target: PROXY_TARGET,
             changeOrigin: true
           },
