@@ -4,6 +4,7 @@
     centered
     :title="modalTitle"
     :ok-title="okTitle"
+    @hide="$emit('cancel')"
     @close="$emit('cancel')"
     @cancel="$emit('cancel')"
     @ok="$emit('ok')">
