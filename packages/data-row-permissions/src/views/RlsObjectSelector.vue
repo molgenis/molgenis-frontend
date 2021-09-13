@@ -15,7 +15,6 @@
       class="p-2 mb-2"
       type="text"
       placeholder="Type to filter" />
-    <server-status :code="responseStatus" />
     <div
       v-for="row in results"
       :key="row.id">
@@ -33,7 +32,6 @@
       </custom-router-link>
     </div>
     <data-status
-      v-if="statusOk"
       :items="results"
       :loaded="loaded" />
   </div>
@@ -41,13 +39,12 @@
 
 <script>
 import DataStatus from '../components/DataStatus.vue'
-import ServerStatus from '../components/ServerStatus.vue'
 import CustomRouterLink from '../components/CustomRouterLink.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'RlsEntitySelector',
-  components: { DataStatus, ServerStatus, CustomRouterLink },
+  components: { DataStatus, CustomRouterLink },
   props: {
     // needed for the first part of the permissions query
     entityId: {
@@ -70,10 +67,7 @@ export default {
       return ''
     },
     loaded () {
-      return this.rlsObjects.length > 0
-    },
-    statusOk () {
-      return this.responseStatus < 400
+      return this.responseStatus !== 0
     },
     results () {
       if (!this.search) {

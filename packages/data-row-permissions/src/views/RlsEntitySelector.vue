@@ -44,9 +44,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(['rlsEntities']),
+    ...mapState(['rlsEntities', 'responseStatus']),
     loaded () {
-      return this.rlsEntities.length > 0
+      return this.responseStatus !== 0
     },
     results () {
       if (!this.search) {

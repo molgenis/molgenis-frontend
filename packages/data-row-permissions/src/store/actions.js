@@ -12,8 +12,10 @@ export const actions = {
     })
   },
   getAllPermissionsTypes ({ commit }) {
+    commit('setResponseStatus', { status: 0 })
     api.get('/api/permissions/types').then((response) => {
       commit('setRlsEntities', response)
+      commit('setResponseStatus', response)
     })
   },
   getPermissionsByEntityId ({ commit }, entityId) {
@@ -25,8 +27,10 @@ export const actions = {
   // At this point only items are shown which have permission set to it,
   // being owner is not enough to be shown here [13/08/2021]
   getAllRlsObjects ({ commit }, entityId) {
+    commit('setResponseStatus', { status: 0 })
     api.get(`/api/permissions/${entityId}`).then((response) => {
       commit('setRlsObjects', response)
+      commit('setResponseStatus', response)
     }).catch(e => {
       commit('setResponseStatus', e)
     })
