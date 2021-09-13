@@ -230,17 +230,23 @@ const mockResponses: {[key:string]: Object} = {
 
 jest.mock('@/lib/client', () => {
   return {
-    get: (url: string): Promise<AxiosResponse> => {
-      const mockResp = mockResponses[url]
-      if (!mockResp) {
-        // eslint-disable-next-line no-console
-        console.warn(`mock url (${url}) called but not found in ${JSON.stringify(mockResponses, null, 4)}`)
-      }
-      return Promise.resolve({ data: mockResp, status: 200, statusText: 'OK', headers: {}, config: {} })
-    },
+    get: jest.fn(),
     post: jest.fn(),
     patch: jest.fn()
   }
+})
+
+// typed mock functions
+const clientGet = (client.get as jest.MockedFunction<typeof client.get>)
+const clientPost = (client.post as jest.MockedFunction<typeof client.post>)
+
+clientGet.mockImplementation((url: string): Promise<AxiosResponse> => {
+  const mockResp = mockResponses[url]
+  if (!mockResp) {
+    // eslint-disable-next-line no-console
+    console.warn(`mock url (${url}) called but not found in ${JSON.stringify(mockResponses, null, 4)}`)
+  }
+  return Promise.resolve({ data: mockResp, status: 200, statusText: 'OK', headers: {}, config: {} })
 })
 
 jest.mock('@/repository/metaDataRepository', () => {
@@ -288,8 +294,7 @@ describe('actions', () => {
     commit = jest.fn()
     dispatch = jest.fn()
 
-    // @ts-ignore
-    client.post.mockReset()
+    clientPost.mockReset()
   })
 
   describe('fetchTableMeta', () => {
@@ -544,11 +549,19 @@ describe('actions', () => {
     })
   })
 
-  describe('fetchFormSetttings', () => {
+  describe('fetchFormSettings', () => {
     it('should fetch the form settings and commit them to the store', async () => {
       await actions.fetchFormSettings({ commit, state })
       expect(commit).toHaveBeenCalledWith('setFormSettings',
         { "addEnumNullOption":false,"addBooleanNullOption":false,"addCategoricalNullOption":false,"id":"forms" })
+    })
+
+    it('should warn and use defaults if fetching the form settings fails', async () => {
+      clientGet.mockRejectedValueOnce(new Error("No permission to fetch form settings"))
+      await actions.fetchFormSettings({ commit, state })
+      expect(commit).toHaveBeenCalledWith('setFormSettings',
+        { "addEnumNullOption":true,"addBooleanNullOption":true,"addCategoricalNullOption":true })
+      expect(commit).toHaveBeenCalledWith('addToast', { "message": "Failed to fetch form settings. No permission to fetch form settings", "type": "danger" })
     })
   })
 
@@ -571,8 +584,7 @@ describe('actions', () => {
         },
         settingsTable: 'sys_ts_DataExplorerEntitySettings'
       }
-      // @ts-ignore
-      client.post.mockResolvedValueOnce({ data: 'success' })
+      clientPost.mockResolvedValueOnce({ data: 'success' })
       await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
       expect(client.post).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings', {
         detail_template: 'template',
@@ -591,8 +603,7 @@ describe('actions', () => {
         },
         settingsTable: 'sys_ts_DataExplorerEntitySettings'
       }
-      // @ts-ignore
-      client.post.mockResolvedValueOnce({ data: 'success' })
+      clientPost.mockResolvedValueOnce({ data: 'success' })
       await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
       expect(client.patch).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings/101', {
         detail_template: 'template',
