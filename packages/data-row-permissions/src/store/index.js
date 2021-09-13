@@ -58,7 +58,7 @@ export default new Vuex.Store({
       state.rlsEntities = response.data
     },
     setAvailablePermissions (state, response) {
-      state.availablePermissions = response.data
+      state.availablePermissions = response
     }
   },
   actions,
