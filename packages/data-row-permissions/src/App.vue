@@ -37,6 +37,7 @@ export default {
   beforeMount () {
     this.fetchContext()
     this.getAllUsers()
+    this.getAllPermissionsTypes()
   },
   destroyed () {
     // During app/Vue teardown (e.g., you only use Vue.js in a portion of your app
@@ -46,7 +47,7 @@ export default {
   },
   methods: {
     ...mapActions('uiContext', ['fetchContext']),
-    ...mapActions(['getAllUsers'])
+    ...mapActions(['getAllUsers', 'getAllPermissionsTypes'])
   }
 }
 </script>

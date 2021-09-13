@@ -2,7 +2,7 @@
   <div class="list-group w-50 mx-auto my-5 ">
     <div class="d-flex justify-content-between">
       <h3 class="mb-4">
-        RLS objects of {{ label }}
+        RLS objects of {{ currentLabel }}
       </h3>
       <router-link
         :to="{name: 'SelectEntity'}"
@@ -15,7 +15,7 @@
       class="p-2 mb-2"
       type="text"
       placeholder="Type to filter" />
-    <server-status :code="status" />
+    <server-status :code="responseStatus" />
     <div
       v-for="row in results"
       :key="row.id">
@@ -33,17 +33,17 @@
       </custom-router-link>
     </div>
     <data-status
-      v-if="status < 400"
+      v-if="statusOk"
       :items="results"
       :loaded="loaded" />
   </div>
 </template>
 
 <script>
-import api from '@molgenis/molgenis-api-client'
 import DataStatus from '../components/DataStatus.vue'
 import ServerStatus from '../components/ServerStatus.vue'
 import CustomRouterLink from '../components/CustomRouterLink.vue'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'RlsEntitySelector',
@@ -57,23 +57,31 @@ export default {
   },
   data () {
     return {
-      search: '',
-      loaded: false,
-      status: 0,
-      // id is typeId
-      // typeId's you can get by querying api/data/entityType (their id's)
-      rls_objects: [],
-      label: ''
+      search: ''
     }
   },
   computed: {
+    ...mapState(['rlsEntities', 'responseStatus', 'rlsObjects']),
+    currentLabel () {
+      if (this.rlsEntities && this.rlsEntities.length) {
+        return this.rlsEntities.find(entity => entity.id === this.entityId).label
+      }
+
+      return ''
+    },
+    loaded () {
+      return this.rlsObjects.length > 0
+    },
+    statusOk () {
+      return this.responseStatus < 400
+    },
     results () {
       if (!this.search) {
-        return this.rls_objects
+        return this.rlsObjects
       } else {
         const matchOn = this.search.toLowerCase()
 
-        return this.rls_objects.filter(entity =>
+        return this.rlsObjects.filter(entity =>
           (entity.description && entity.description.toLowerCase().includes(matchOn)) ||
         entity.label.toLowerCase().includes(matchOn) ||
         entity.id.toLowerCase().includes(matchOn))
@@ -81,16 +89,10 @@ export default {
     }
   },
   beforeMount () {
-    api.get(`/api/permissions/${this.entityId}`).then((response) => {
-      this.rls_objects = response.data.objects
-      this.loaded = true
-    }).catch(e => {
-      this.status = e.status
-    })
-
-    api.get('/api/permissions/types').then((response) => {
-      this.label = response.data.find(entity => entity.id === this.entityId).label
-    })
+    this.getAllRlsObjects(this.entityId)
+  },
+  methods: {
+    ...mapActions(['getAllRlsObjects'])
   }
 }
 </script>

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import api from '@molgenis/molgenis-api-client'
+import { actions } from './actions'
 const uiContextModule = require('@molgenis/molgenis-ui-context').default
 
 Vue.use(Vuex)
@@ -14,9 +14,12 @@ export default new Vuex.Store({
     userOptions: [],
     roleOptions: [],
     serverError: '',
+    rlsObjects: [], // the 'rows'
+    rlsEntities: [], // the 'tables'
     responseStatus: 0,
     permissionObject: {},
-    startInAddMode: false
+    startInAddMode: false,
+    availablePermissions: []
   },
   getters: {
     isSU (state) {
@@ -47,67 +50,18 @@ export default new Vuex.Store({
     },
     setStartInAddMode (state, response) {
       state.startInAddMode = !response.data.permissions.length && state.responseStatus < 400
+    },
+    setRlsObjects (state, response) {
+      state.rlsObjects = response.data.objects
+    },
+    setRlsEntities (state, response) {
+      state.rlsEntities = response.data
+    },
+    setAvailablePermissions (state, response) {
+      state.availablePermissions = response.data
     }
   },
-  actions: {
-    getAllRoles ({ commit }) {
-      api.get('/api/data/sys_sec_Role').then((response) => {
-        commit('setRoleOptions', response)
-      })
-    },
-    getAllUsers ({ commit }) {
-      api.get('/api/identities/user').then((response) => {
-        commit('setUserOptions', response)
-      })
-    },
-    getPermissionsForObject ({ commit, state }) {
-      this.changedPermissionObjects = []
-      this.addedPermissionObjects = []
-      commit('setResponseStatus', { status: 0 })
-      api.get(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`).then((response) => {
-        commit('setPermissionObject', response)
-        commit('setResponseStatus', response)
-        commit('setStartInAddMode', response)
-      }).catch(e => {
-        commit('setResponseStatus', e)
-      })
-    },
-    updatePermissions ({ state, dispatch }, changedPermissionObjects) {
-      this.editMode = false
-      // TODO upgrade api-client
-      fetch(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        credentials: 'same-origin',
-        method: 'PATCH',
-        body: JSON.stringify({
-          permissions: changedPermissionObjects
-        })
-      }).then(() => {
-        // reset
-        dispatch('getPermissionsForObject')
-      })
-    },
-    addPermission ({ state, commit, dispatch }, newPermissionObject) {
-      api.post(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`, { body: JSON.stringify({ permissions: [newPermissionObject] }) }).then(() => {
-        dispatch('getPermissionsForObject')
-      }).catch(async (e) => {
-        const response = await e.json()
-        commit('setServerError', response)
-      })
-
-      this.newPermissionObject = {}
-    },
-    removePermission ({ dispatch, state }, permissionToRemove) {
-      delete permissionToRemove.permission
-      api.delete_(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`, { body: JSON.stringify(permissionToRemove) }).then(() => {
-        dispatch('getPermissionsForObject')
-      })
-    }
-  },
+  actions,
   modules: {
     uiContext: {
       namespaced: true,

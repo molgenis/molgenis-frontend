@@ -31,40 +31,34 @@
 </template>
 
 <script>
-import api from '@molgenis/molgenis-api-client'
 import DataStatus from '../components/DataStatus.vue'
 import CustomRouterLink from '../components/CustomRouterLink.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'RlsEntitySelector',
   components: { DataStatus, CustomRouterLink },
   data () {
     return {
-      search: '',
-      loaded: false,
-      // id is typeId
-      // typeId's you can get by querying api/data/entityType (their id's)
-      rls_entities: []
+      search: ''
     }
   },
   computed: {
+    ...mapState(['rlsEntities']),
+    loaded () {
+      return this.rlsEntities.length > 0
+    },
     results () {
       if (!this.search) {
-        return this.rls_entities
+        return this.rlsEntities
       } else {
         const matchOn = this.search.toLowerCase()
 
-        return this.rls_entities.filter(entity => entity.entityType.toLowerCase().includes(matchOn) ||
+        return this.rlsEntities.filter(entity => entity.entityType.toLowerCase().includes(matchOn) ||
         entity.label.toLowerCase().includes(matchOn) ||
         entity.id.toLowerCase().includes(matchOn))
       }
     }
-  },
-  beforeMount () {
-    api.get('/api/permissions/types').then((response) => {
-      this.rls_entities = response.data.filter(entity => entity.id)
-      this.loaded = true
-    })
   }
 }
 </script>

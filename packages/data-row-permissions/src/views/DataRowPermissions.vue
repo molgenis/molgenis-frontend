@@ -86,7 +86,7 @@
                 <b-form-select
                   v-model="newPermissionObject.permission"
                   class="w-auto ml-1 pl-1 mr-3"
-                  :options="available_permissions" />
+                  :options="availablePermissions" />
                 <button
                   class="btn btn-success px-4 ml-auto"
                   :disabled="!canAddPermission"
@@ -124,7 +124,7 @@
                 <b-form-select
                   :value="permissions[index].permission"
                   class="w-auto"
-                  :options="available_permissions"
+                  :options="availablePermissions"
                   @change="(value) => addPermissionChange(index, value)" />
               </td>
             </tr>
@@ -146,7 +146,6 @@
 </template>
 
 <script>
-import api from '@molgenis/molgenis-api-client'
 import ServerStatus from '../components/ServerStatus.vue'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
@@ -170,14 +169,14 @@ export default {
       deleteMode: false,
       newPermissionType: '',
       newPermissionObject: {},
-      available_permissions: [],
       changedPermissionObjects: [],
       available_types: [{ text: 'Select a type', value: '' }, { text: 'Role', value: 'role' }, { text: 'User', value: 'user' }]
     }
   },
   computed: {
     ...mapGetters(['isSU']),
-    ...mapState(['userOptions', 'roleOptions', 'permissionObject', 'responseStatus', 'startInAddMode']),
+    ...mapState(['userOptions', 'roleOptions', 'permissionObject',
+      'responseStatus', 'startInAddMode', 'availablePermissions']),
     names () {
       return this.permissionObject.permissions.map(permission => permission.role || permission.user)
     },
@@ -224,13 +223,12 @@ export default {
   beforeMount () {
     this.getPermissionsForObject()
     this.getAllRoles()
-    api.get(`/api/permissions/types/permissions/${this.entityId}`).then((response) => {
-      this.available_permissions = response.data
-    })
+    this.getPermissionsByEntityId(this.entityId)
   },
   methods: {
     ...mapActions(['getAllRoles', 'getPermissionsForObject',
-      'addPermission', 'removePermission', 'updatePermissions']),
+      'addPermission', 'removePermission', 'updatePermissions',
+      'getPermissionsByEntityId']),
     toggleEditMode () {
       // if true, it means we are going to cancel.
       if (this.editMode) {
