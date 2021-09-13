@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.13.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.13.6...@molgenis-ui/data-explorer@3.13.7) (2021-09-13)
+
+
+### Bug Fixes
+
+* retrieve data.data and await formSettings ([440ab26](https://github.com/molgenis/molgenis-frontend/commit/440ab260fe3d2460025908d38bbee592ff9f6423)), closes [#697](https://github.com/molgenis/molgenis-frontend/issues/697)
+
+
+
+
+
 ## [3.13.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.13.5...@molgenis-ui/data-explorer@3.13.6) (2021-08-20)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
