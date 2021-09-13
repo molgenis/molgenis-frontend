@@ -31,7 +31,8 @@
           <button
             v-if="canChangeOwnerShip"
             class="btn mr-3 btn-outline-primary px-4"
-            :disabled="addMode || editMode || deleteMode">
+            :disabled="addMode || editMode || deleteMode"
+            @click="changeOwner = !changeOwner">
             <span>Change owner</span>
           </button>
           <button
@@ -142,6 +143,8 @@
         </div>
       </div>
     </div>
+    <change-ownership
+      v-model="changeOwner" />
   </div>
 </template>
 
@@ -149,10 +152,13 @@
 import ServerStatus from '../components/ServerStatus.vue'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
+import ChangeOwnership from '../components/ChangeOwnership.vue'
+
 export default {
-  components: { ServerStatus },
+  components: { ServerStatus, ChangeOwnership },
   props: {
-    entityId: {
+    entityId:
+    {
       type: String,
       required: true
     },
@@ -167,6 +173,7 @@ export default {
       addMode: false,
       editMode: false,
       deleteMode: false,
+      changeOwner: false,
       newPermissionType: '',
       newPermissionObject: {},
       changedPermissionObjects: [],
@@ -243,7 +250,7 @@ export default {
     },
     update () {
       this.editMode = false
-      this.updatePermissions(this.changedPermissionObjects)
+      this.updatePermissions({ permissions: this.changedPermissionObjects })
       this.changedPermissionObjects = []
     },
     remove (index) {

@@ -60,7 +60,7 @@ export const actions = {
       credentials: 'same-origin',
       method: 'PATCH',
       body: JSON.stringify({
-        permissions: changedPermissionObjects
+        ...changedPermissionObjects
       })
     }).then(() => {
       // reset
