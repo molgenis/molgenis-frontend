@@ -173,14 +173,20 @@ export default {
     }
   },
 
-  fetchFormSettings: async ({ commit }: { commit: any }) => {
+  fetchFormSettings: async ({ commit, state }: { commit: any, state: ApplicationState }) => {
+    if (state.formSettings) return
     try {
       const response = await client.get("/api/data/sys_set_forms/forms")
-      commit('setFormSettings', response.data)
+      commit('setFormSettings', response.data.data)
     } catch (error) {
       commit('addToast', {
         message: 'Failed to fetch form settings. ' + error.message,
         type: 'danger'
+      })
+      commit('setFormSettings', {
+        addBooleanNullOption: true,
+        addCategoricalNullOption: true,
+        addEnumNullOption: true
       })
     }
   },

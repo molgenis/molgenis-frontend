@@ -7,6 +7,7 @@ import * as metaDataService from '@/repository/metaDataService'
 import * as metaFilterMapper from '@/mappers/metaFilterMapper'
 import Vue from 'vue'
 import client from '@/lib/client'
+import { AxiosResponse } from 'axios'
 
 const metaResponse = {
   meta: {
@@ -204,47 +205,48 @@ const dataResponse = {
 }
 
 const mockResponses: {[key:string]: Object} = {
-  '/api/data/entity': { 'loaded': true },
+  '/api/data/entity': {},
   '/api/v2/sys_job_ResourceDownloadJobExecution/failure': {
-    data: {
-      progressMessage: 'failed',
-      status: 'FAILED'
-    }
+    progressMessage: 'failed',
+    status: 'FAILED'
   },
   '/api/v2/sys_job_ResourceDownloadJobExecution/success': {
-    data: {
-      progressMessage: 'progress',
-      resultUrl: '/foo/bar',
-      status: 'SUCCESS'
-    }
+    progressMessage: 'progress',
+    resultUrl: '/foo/bar',
+    status: 'SUCCESS'
   },
   '/api/data/entity?expand=xcategorical_value&filter=id,xbool,xcategorical_value(label)': dataResponse,
   '/api/v2/entity?num=0': metaResponse,
-  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { data: { items: [] } },
-  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { data: { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] } },
+  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithOutSettings"': { items: [] },
+  '/api/data/sys_ts_DataExplorerEntitySettings?q=table=="tableWithSettings"': { items: [{ data: { id: 'ent-set', shop: true, collapse_limit: 5 } }] },
   '/api/data/sys_ts_DataExplorerEntitySettings': {},
+  '/api/data/sys_set_forms/forms': { "data":{ "addEnumNullOption":false,"addBooleanNullOption":false,"addCategoricalNullOption":false,"id":"forms" } },
   '/api/v2/my-table?start=0&num=0': {
-    data: {
-      meta: {
-        permissions: ['PERM_A']
-      }
+    meta: {
+      permissions: ['PERM_A']
     }
   }
 }
 
 jest.mock('@/lib/client', () => {
   return {
-    get: (url: string) => {
-      const mockResp = mockResponses[url]
-      if (!mockResp) {
-        // eslint-disable-next-line no-console
-        console.warn(`mock url (${url}) called but not found in ${JSON.stringify(mockResponses, null, 4)}`)
-      }
-      return Promise.resolve(mockResp)
-    },
+    get: jest.fn(),
     post: jest.fn(),
     patch: jest.fn()
   }
+})
+
+// typed mock functions
+const clientGet = (client.get as jest.MockedFunction<typeof client.get>)
+const clientPost = (client.post as jest.MockedFunction<typeof client.post>)
+
+clientGet.mockImplementation((url: string): Promise<AxiosResponse> => {
+  const mockResp = mockResponses[url]
+  if (!mockResp) {
+    // eslint-disable-next-line no-console
+    console.warn(`mock url (${url}) called but not found in ${JSON.stringify(mockResponses, null, 4)}`)
+  }
+  return Promise.resolve({ data: mockResp, status: 200, statusText: 'OK', headers: {}, config: {} })
 })
 
 jest.mock('@/repository/metaDataRepository', () => {
@@ -292,8 +294,7 @@ describe('actions', () => {
     commit = jest.fn()
     dispatch = jest.fn()
 
-    // @ts-ignore
-    client.post.mockReset()
+    clientPost.mockReset()
   })
 
   describe('fetchTableMeta', () => {
@@ -548,6 +549,22 @@ describe('actions', () => {
     })
   })
 
+  describe('fetchFormSettings', () => {
+    it('should fetch the form settings and commit them to the store', async () => {
+      await actions.fetchFormSettings({ commit, state })
+      expect(commit).toHaveBeenCalledWith('setFormSettings',
+        { "addEnumNullOption":false,"addBooleanNullOption":false,"addCategoricalNullOption":false,"id":"forms" })
+    })
+
+    it('should warn and use defaults if fetching the form settings fails', async () => {
+      clientGet.mockRejectedValueOnce(new Error("No permission to fetch form settings"))
+      await actions.fetchFormSettings({ commit, state })
+      expect(commit).toHaveBeenCalledWith('setFormSettings',
+        { "addEnumNullOption":true,"addBooleanNullOption":true,"addCategoricalNullOption":true })
+      expect(commit).toHaveBeenCalledWith('addToast', { "message": "Failed to fetch form settings. No permission to fetch form settings", "type": "danger" })
+    })
+  })
+
   describe('saveEntityDetailTemplate', () => {
     it('should show warning if the table meta is not set', async () => {
       const commit = jest.fn()
@@ -567,8 +584,7 @@ describe('actions', () => {
         },
         settingsTable: 'sys_ts_DataExplorerEntitySettings'
       }
-      // @ts-ignore
-      client.post.mockResolvedValueOnce({ data: 'success' })
+      clientPost.mockResolvedValueOnce({ data: 'success' })
       await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
       expect(client.post).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings', {
         detail_template: 'template',
@@ -587,8 +603,7 @@ describe('actions', () => {
         },
         settingsTable: 'sys_ts_DataExplorerEntitySettings'
       }
-      // @ts-ignore
-      client.post.mockResolvedValueOnce({ data: 'success' })
+      clientPost.mockResolvedValueOnce({ data: 'success' })
       await actions.saveEntityDetailTemplate({ commit, state }, { template: 'template' })
       expect(client.patch).toHaveBeenCalledWith('/api/data/sys_ts_DataExplorerEntitySettings/101', {
         detail_template: 'template',

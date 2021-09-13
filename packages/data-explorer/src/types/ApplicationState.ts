@@ -64,7 +64,7 @@ export interface FormSettings {
 }
 
 export default interface ApplicationState {
-  formSettings: FormSettings
+  formSettings: FormSettings | null
   toasts: Toast[]
   settingsTable: string
   dataDisplayLayout: 'CardView' | 'TableView'
