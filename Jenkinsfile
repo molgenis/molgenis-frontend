@@ -61,6 +61,7 @@ pipeline {
                     sh "( cd ${PACKAGE_DIR}/security && yarn )"
                     sh "( cd ${PACKAGE_DIR}/settings && yarn )"
                     sh "( cd ${PACKAGE_DIR}/data-row-edit && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/data-row-permissions && yarn )"
                 }
             }
         }
