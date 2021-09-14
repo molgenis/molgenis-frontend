@@ -217,6 +217,15 @@ pipeline {
                         }
                     }
                 }
+                stage('Data Row Permissions') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/data-row-permissions") {
+                                sh "yarn build"
+                            }
+                        }
+                    }
+                }
             }
         }
         stage('[PR] Quality checks') {
