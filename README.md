@@ -118,18 +118,14 @@ If you have the vue-cli installed you can use the following steps to quickly ins
 
 ```bash
 > cd packages/
-> vue create --preset ../preset.json <new-app-name> 
+> vue create --preset ../preset.json <my-app-name> 
 ```
 
 Using the ```preset.json``` is recommended. If you need specific tooling you can also choose manual.
 
->note: Make sure you update the project-name to @molgenis-ui/#new-app# for publishing purposes in the ```package.json``` *name-key* of the package you created.
+>note: Make sure you update the project-name to @molgenis-ui/#my-app# for publishing purposes in the ```package.json``` *name-key* of the package you created.
 
 ### Update existing stable packages
-**You have to update the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json) in the [molgenis/molgenis](https://github.com/molgenis/molgenis) repository before you start developing in the frontend stable packages. The version of the app you start to develop has to be updated to [ *canary* ]**. 
-
-That way each merge with the master on this repository will be automatically picked up by the main MOLGENIS repository.
-
 The whole development flow is working as follows. 
 
 - [PR's](#pull-requests)
@@ -138,7 +134,7 @@ The whole development flow is working as follows.
 - [Deployment](#Deployment)
 
 #### Pull requests
-PR's will build locally and will be packaged locally in a docker. The docker will be proxied in front of the https://master.dev.molgenis.org as a preview on kubernetes. 
+PR preview docker containers are available on registry.molgenis.org/molgenis-frontend:PR-XYZ and get deployed to the kubernetes cluster, as a proxy in front of master.dev.molgenis.org 
 
 #### Merges with master
 Merges with the master automatically will deploy on npmjs.org.
@@ -173,12 +169,11 @@ unpkg.com forwards requests to versioned requests.
  is forwarded to 
 ```unpkg/@molgenis-ui/navigator@2.0.1 ( latest within major )```
 
-### Testing packages
-There are three ways to test a package:
+### Developing packages
+There are two ways to develop a package:
 
 1. [Make a standalone setup and mock the API responses](#make-a-standalone-setup)
-2. [Proxy the MOLGENIS backend in front of the package](#proxying-molgenis-backend)
-3. [Link the package in the MOLGENIS backend for full integration](#using-yarn-link-for-live-editing) 
+2. [Proxy the package in front of a MOLGENIS backend](#proxying-molgenis-backend) 
 
 > **note: the ordering of the ways to test the packages is important.**
 >
@@ -344,63 +339,16 @@ The idea is that we lean as much on public API's as possible. That we do not nee
 > note: You need to disable the ```before```-block in the ```vue.config.js```. This way you are making sure that 
 the package is not using the mock responses.
 
-#### Using yarn link for live editing
-You can use [`yarn link`](https://yarnpkg.com/lang/en/docs/cli/link/) while developing to view the
-results directly in MOLGENIS.
+## Add a MOLGENIS plugin for the package
+There is a workflow you have to follow to add a new frontend package as a plugin in [molgenis/molgenis](https://github.com/molgenis/molgenis).
+This is used for the stable apps, core features of MOLGENIS that should always be available on all deployments.
 
-Assuming you've checked out `molgenis/molgenis` and `molgenis/molgenis-frontend` repositories to directory `~/git`,
-and want to get started working on module `scripts`, do this once:
-
-* Open both projects in IntelliJ.
-* In the molgenis project, go to the molgenis-frontend module and mark the 
-`node_modules/@molgenis-ui/scripts/dist` directory as resources root. (Does not happen automatically even
-though the pom.xml lists it as such.)
-* Start `molgenis` webapp in exploded mode using IntelliJ IDEA
-* Run `yarn link` in `~/git/molgenis-frontend/packages/scripts`.
-* Run `yarn link "@molgenis-ui/scripts"` in `~/git/molgenis/molgenis-frontend/`
-* If the project supports webpack watch modus, start it: `yarn watch`
-
-Now for each change:
-* make change in `molgenis-frontend`
-* (If the project does not support webpack watch modus) Manually run `yarn build`.
-* Wait for webpack to finish
-* Tab out to the browser. You should see a tiny progress bar in the molgenis window of IntelliJ.
-* Wait for the popup saying `Compilation finished` to appear.
-* Reload the browser window to see the changes 
-
-## Integrate with MOLGENIS
-There is a workflow you have to follow to implement new frontend code in [molgenis/molgenis/molgenis-frontend](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/).
-
-### Add to [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json)
-Make sure you add the new app to the [package.json](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/package.json).
-
-```bash
-> cd molgenis/molgenis-frontend
-> 
-> yarn add <new-app>
-```
-
-Change the version into **canary**.
-
-### Add to [pom.xml](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/pom.xml) as well.
-You have to include the package in the [pom.xml](https://github.com/molgenis/molgenis/blob/master/molgenis-frontend/pom.xml) as well.
-
-```
-...
-<build>
-  <resources>
-    <resource>
-      <directory>node_modules/@molgenis-ui/##new-app##/dist</directory>
-    </resource>
-...
-```
-
-### Create a [molgenis/molgenis-new-app](https://github.com/molgenis/molgenis) module to serve the new app
+### Create a [molgenis/molgenis-my-app](https://github.com/molgenis/molgenis) module to serve your new app
 You need three files:
 
 - pom.xml
-- src/main/java/org/molgenis/new/app/controller.java
-- src/main/resource/templates/view-new-app.ftl
+- src/main/java/org/molgenis/my/app/MyAppController.java
+- src/main/resources/templates/view-my-app.ftl
 
 You have to create a module with the following inside your ```pom.xml```:
 
@@ -414,23 +362,48 @@ You have to create a module with the following inside your ```pom.xml```:
     <version>#molgenis version#</version>
   </parent>
 
-  <artifactId>molgenis-new-app</artifactId>
+  <artifactId>molgenis-my-app</artifactId>
   <name>#new app#</name>
   <description>Plugin module for serving new app.</description>
 
-  <!-- start optional -->
   <dependencies>
     <dependency>
-      <groupId>org.molgenis</groupId>
-      <artifactId>#depedant module#</artifactId>
-      <version>${project.version}</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
     </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-webmvc</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.molgenis</groupId>
+          <artifactId>molgenis-web</artifactId>
+          <version>${project.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.molgenis</groupId>
+          <artifactId>molgenis-security</artifactId>
+          <version>${project.version}</version>
+          <scope>compile</scope>
+      </dependency>
+      <!-- start optional -->
+      <dependency>
+        <groupId>org.molgenis</groupId>
+        <artifactId>#dependant module#</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- end optional -->  
   </dependencies>
-  <!-- end optional -->  
+
 </project>
 ```
 
-You create in ```src/main/resources/templates/``` a ```view-new-app.ftl``` file with the content below.
+* Add the new module to the module list in the pom.xml in the root dir.
+* Add the new module as to the `<dependencies>` block of the pom.xml of the `molgenis-app` module.
+
+You create in ```src/main/resources/templates/``` a ```view-my-app.ftl``` view template with the content below.
 
 ```injectedfreemarker
 <#include "resource-macros.ftl">
@@ -438,13 +411,13 @@ You create in ```src/main/resources/templates/``` a ```view-new-app.ftl``` file 
 <#include "molgenis-footer.ftl">
 
 <#assign js = []>
-<#assign css = ["#new app#/app.css"]>
+<#assign css = ["/@molgenis-ui/my-app/dist/css/app.css"]>
 <#assign version = 2>
 
 <@header css js version/>
-    <div id="app"></div>
+<div id="app"></div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
         window.__INITIAL_STATE__ = {
             baseUrl: '${baseUrl}',
             lng: '${lng}',
@@ -452,36 +425,50 @@ You create in ```src/main/resources/templates/``` a ```view-new-app.ftl``` file 
             isSuperUser: ${isSuperUser?c}
         }
     </script>
-
-    <script type=text/javascript src="<@resource_href "/js/#new app name#/manifest.js"/>"></script>
-    <script type=text/javascript src="<@resource_href "/js/#new app name#/vendor.js"/>"></script>
-    <script type=text/javascript src="<@resource_href "/js/#new app name#/app.js"/>"></script>
-
+<script type=text/javascript src="/@molgenis-ui/my-app/dist/js/manifest.js"></script>
+<script type=text/javascript src="/@molgenis-ui/my-app/dist/js/vendor.js"></script>
+<script type=text/javascript src="/@molgenis-ui/my-app/dist/js/app.js"></script>
 <@footer version/>
 ```
+Note that there can be *no* chunks in the URLs.
 
-You have to create a controller in ```src/main/java/org/molgenis/new/app``` with the following content:
+You have to create a file `MyAppController.java` in ```src/main/java/org/molgenis/my/app``` with a tiny PluginController that serves the template:
 
 ```java
+package org.molgenis.data.my.app;
+
+import static java.util.Objects.requireNonNull;
+import static org.molgenis.data.my.app.MyAppController.URI;
+
+import org.molgenis.web.PluginController;
+import org.molgenis.web.menu.MenuReaderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
 @RequestMapping(URI)
-public class NewAppController extends VuePluginController {
-  private static final Logger LOG = LoggerFactory.getLogger(NewAppController.class);
+public class MyAppController extends PluginController {
+  private static final Logger LOG = LoggerFactory.getLogger(MyAppController.class);
 
-  public static final String NEW_APP = "new-app";
-  public static final String URI = PLUGIN_URI_PREFIX + NEW_APP;
+  public static final String ID = "my-app";
+  public static final String URI = PluginController.PLUGIN_URI_PREFIX + ID;
+  private static final String KEY_BASE_URL = "baseUrl";
 
-  public NewAppController(
-      MenuReaderService menuReaderService,
-      AppSettings appSettings,
-      UserAccountService userAccountService) {
-    super(URI, menuReaderService, appSettings, userAccountService);
+  public static final String VIEW_TEMPLATE = "view-my-app";
+  private final MenuReaderService menuReaderService;
+
+  public MyAppController(MenuReaderService menuReaderService) {
+    super(URI);
+    this.menuReaderService = requireNonNull(menuReaderService);
   }
 
   @GetMapping("/**")
-  public String init(Model model) {
-    super.init(model, NEW_APP);
-    return "view-new-app";
+  public String init() {
+    model.addAttribute(KEY_BASE_URL, menuReaderService.findMenuItemPath(ID));
+    return VIEW_TEMPLATE;
   }
 }
 ```
@@ -490,7 +477,7 @@ That is it.
 
 ### Preview frontend with alternative backend using CI rancher cluster
 
-You can link the generated PR preview to a alternative backend service
+You can link the generated PR preview to an alternative backend preview
 - Login to rancher ( or use cli).
 - Find the preview config ( Menu item 'config-maps', use search to find the preview version you are looking for).
 - Edit the ...-config file, change the 'proxy_pass' location to use the alternative backend service ( save after edit).
