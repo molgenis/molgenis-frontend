@@ -6,6 +6,7 @@ const apiDevServerProxyConf = {
 }
 
 module.exports = {
+  filenameHashing: false,
   transpileDependencies: ['@molgenis-ui/components-library'],
   devServer: {
     // In CI mode, Safari cannot contact "localhost", so as a workaround, run the dev server using the jenkins agent pod dns instead.
