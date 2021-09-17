@@ -56,4 +56,4 @@ new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#data-row-permissions-plugin')
+}).$mount('#app')
