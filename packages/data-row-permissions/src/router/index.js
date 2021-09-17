@@ -4,6 +4,8 @@ import RlsEntitySelector from '../views/RlsEntitySelector'
 
 Vue.use(VueRouter)
 
+const { baseUrl } = window.__INITIAL_STATE__
+
 const routes = [
   {
     path: '/',
@@ -25,8 +27,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+  mode: 'hash',
+  base: baseUrl,
   routes
 })
 
