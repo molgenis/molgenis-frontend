@@ -53,7 +53,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
-window.x = Vue.use(i18n, {
+Vue.use(i18n, {
   lng: window.__INITIAL_STATE__.lng || 'en',
   fallbackLng: window.__INITIAL_STATE__.fallbackLng || 'en',
   namespace: ['data-row-permissions'],

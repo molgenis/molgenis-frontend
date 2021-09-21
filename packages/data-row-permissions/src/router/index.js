@@ -4,9 +4,13 @@ import RlsEntitySelector from '../views/RlsEntitySelector'
 
 Vue.use(VueRouter)
 
-const { baseUrl } = window.__INITIAL_STATE__
+let baseUrl = '/'
 
-const routes = [
+if (window.__INITIAL_STATE__) {
+  baseUrl = window.__INITIAL_STATE__.baseUrl
+}
+
+export const routes = [
   {
     path: '/',
     name: 'SelectEntity',
