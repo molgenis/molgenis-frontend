@@ -1,8 +1,8 @@
 /**
- * @param {[{}]} objectArray
- * @param {string[]} propArray properties that contain strings in which you want to search
- * @param {string} search string: search term
- * @param {string[]} searchProps array of strings, case sensitive. Represents the properties that can trigger a result
+ * @param {[{}]} objectArray objects in an array to perform the search on
+ * @param {string[]} propArray properties (case sensitive) that contain strings in which you want to search
+ * @param {string} search string to match on
+ * @param {string[]} searchProps array of strings (case sensitive). Represents the presence of properties that can trigger a result
  *                               e.g. role or user
  * @returns matching objects from objectArray
  */
