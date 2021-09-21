@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { filterObjectOnStringProperties } from '../logic/filter'
 import DataStatus from '../components/DataStatus.vue'
 import CustomRouterLink from '../components/CustomRouterLink.vue'
 import { mapState } from 'vuex'
@@ -49,15 +50,7 @@ export default {
       return this.responseStatus !== 0
     },
     results () {
-      if (!this.search) {
-        return this.rlsEntities
-      } else {
-        const matchOn = this.search.toLowerCase()
-
-        return this.rlsEntities.filter(entity => entity.entityType.toLowerCase().includes(matchOn) ||
-        entity.label.toLowerCase().includes(matchOn) ||
-        entity.id.toLowerCase().includes(matchOn))
-      }
+      return filterObjectOnStringProperties(this.rlsEntities, ['entityType', 'label', 'id'], this.search)
     }
   }
 }

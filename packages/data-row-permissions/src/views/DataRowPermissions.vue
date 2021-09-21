@@ -90,7 +90,7 @@
                   class="btn btn-success px-4 ml-auto"
                   :disabled="!canAddPermission"
                   @click="add">
-                  Add
+                  {{ $t('data-row-permissions-add') }}
                 </button>
               </td>
             </tr>
@@ -152,6 +152,7 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 
 import ChangeOwnership from '../components/ChangeOwnership.vue'
 import BackButton from '../components/BackButton.vue'
+import { filterObjectOnStringProperties } from '../logic/filter'
 
 export default {
   components: { ServerStatus, ChangeOwnership, BackButton },
@@ -187,15 +188,7 @@ export default {
       return this.permissionObject.permissions.map(permission => permission.role || permission.user)
     },
     permissions () {
-      if (this.search && this.search) {
-        const ciSearch = this.search.toLowerCase()
-        return this.permissionObject.permissions.filter(permission => {
-          return (permission.role && ('role'.includes(ciSearch) || permission.role.toLowerCase().includes(ciSearch))) ||
-          (permission.user && ('user'.includes(ciSearch) || permission.user.toLowerCase().includes(ciSearch))) ||
-          permission.permission.toLowerCase().includes(ciSearch)
-        })
-      }
-      return this.permissionObject.permissions
+      return filterObjectOnStringProperties(this.permissionObject.permissions, ['role', 'user', 'permission'], this.search, ['role', 'user'])
     },
     canAddPermission () {
       return (this.newPermissionObject.role || this.newPermissionObject.user) && this.newPermissionObject.permission

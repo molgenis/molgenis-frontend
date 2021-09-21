@@ -38,6 +38,7 @@ import DataStatus from '../components/DataStatus.vue'
 import CustomRouterLink from '../components/CustomRouterLink.vue'
 import { mapActions, mapState } from 'vuex'
 import BackButton from '../components/BackButton.vue'
+import { filterObjectOnStringProperties } from '../logic/filter'
 
 export default {
   name: 'RlsEntitySelector',
@@ -67,16 +68,7 @@ export default {
       return this.responseStatus !== 0
     },
     results () {
-      if (!this.search) {
-        return this.rlsObjects
-      } else {
-        const matchOn = this.search.toLowerCase()
-
-        return this.rlsObjects.filter(entity =>
-          (entity.description && entity.description.toLowerCase().includes(matchOn)) ||
-        entity.label.toLowerCase().includes(matchOn) ||
-        entity.id.toLowerCase().includes(matchOn))
-      }
+      return filterObjectOnStringProperties(this.rlsObjects, ['description', 'label', 'id'], this.search)
     }
   },
   beforeMount () {
