@@ -4,6 +4,7 @@
     centered
     :title="modalTitle"
     :ok-title="okTitle"
+    :cancel-title="cancelTitle"
     @hide="$emit('cancel')"
     @close="$emit('cancel')"
     @cancel="$emit('cancel')"
@@ -20,12 +21,16 @@ export default {
       required: false,
       default: () => ''
     },
-    okTitle:
-     {
-       type: String,
-       required: false,
-       default: () => ''
-     },
+    okTitle: {
+      type: String,
+      required: false,
+      default: () => ''
+    },
+    cancelTitle: {
+      type: String,
+      required: false,
+      default: () => ''
+    },
     value: {
       type: Boolean,
       required: true,

@@ -1,4 +1,4 @@
-const PROXY_TARGET = 'https://preview-pr-9308-6.dev.molgenis.org' // 'https://master.dev.molgenis.org'
+const PROXY_TARGET = 'https://preview-pr-9315-12.dev.molgenis.org/' // 'https://master.dev.molgenis.org'
 
 const apiDevServerProxyConf = {
   target: PROXY_TARGET,

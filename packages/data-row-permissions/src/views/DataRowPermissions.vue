@@ -2,13 +2,11 @@
   <div class="w-75 mx-auto my-5">
     <div class="d-flex justify-content-between">
       <h3 class="mb-4">
-        Permission(s) of {{ permissionObject.label }}
+        {{ $t('data-row-permissions-rls-permissions-of') }} {{ permissionObject.label }}
       </h3>
-      <router-link
-        :to="{ name: 'SelectEntitityObject', params: { entityId }}"
-        class="mb-4 px-4 btn btn-secondary align-self-center">
-        Back
-      </router-link>
+      <back-button
+        route="SelectEntitityObject"
+        :params="{ entityId }" />
     </div>
     <server-status :code="responseStatus" />
     <div>
@@ -19,36 +17,36 @@
             :class="addMode ? 'btn-danger px-3' : 'btn-primary px-4'"
             :disabled="editMode || deleteMode"
             @click="addMode = !addMode">
-            {{ addMode ? 'Cancel' : 'Add' }}
+            {{ addMode ? $t('data-row-permissions-cancel') : $t('data-row-permissions-add') }}
           </button>
           <button
             class="btn mr-3"
             :class="editMode ? 'btn-danger px-3' : 'btn-outline-primary px-4'"
             :disabled="addMode || deleteMode"
             @click="toggleEditMode()">
-            {{ editMode ? 'Cancel' : 'Edit' }}
+            {{ editMode ? $t('data-row-permissions-cancel') : $t('data-row-permissions-edit') }}
           </button>
           <button
             v-if="canChangeOwnerShip"
             class="btn mr-3 btn-outline-primary px-4"
             :disabled="addMode || editMode || deleteMode"
             @click="changeOwner = !changeOwner">
-            <span>Change owner</span>
+            <span>{{ $t('data-row-permissions-change-owner') }}</span>
           </button>
           <button
             class="btn mr-3"
             :class="deleteMode ? 'btn-danger px-3' : 'btn-outline-danger px-4'"
             :disabled="addMode || editMode"
             @click="deleteMode = !deleteMode">
-            {{ deleteMode ? 'Cancel' : 'Delete' }}
+            {{ deleteMode ? $t('data-row-permissions-cancel') : $t('data-row-permissions-delete') }}
           </button>
           <b-form-input
             v-model="search"
             class="filter-height w-25 d-inline"
             type="text"
-            placeholder="Type to filter" />
+            :placeholder="$t('data-row-permissions-filter-placeholder')" />
           <div class="ml-auto">
-            <span class="font-weight-bold mr-3">Owned by:</span>
+            <span class="font-weight-bold mr-3">{{ $t('data-row-permissions-owned-by') }}:</span>
             <span>{{ permissionObject.ownedByUser || permissionObject.ownedByRole }}</span>
           </div>
         </div>
@@ -56,10 +54,10 @@
           class="table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Type</th>
+              <th>{{ $t('data-row-permissions-name') }}</th>
+              <th>{{ $t('data-row-permissions-type') }}</th>
               <th class="text-middle">
-                Permission
+                {{ $t('data-row-permissions-permission') }}
               </th>
             </tr>
           </thead>
@@ -138,7 +136,7 @@
             class="btn btn-success px-4"
             :disabled="!hasChanges"
             @click="update">
-            Save
+            {{ $t('data-row-permissions-save') }}
           </button>
         </div>
       </div>
@@ -153,9 +151,10 @@ import ServerStatus from '../components/ServerStatus.vue'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
 import ChangeOwnership from '../components/ChangeOwnership.vue'
+import BackButton from '../components/BackButton.vue'
 
 export default {
-  components: { ServerStatus, ChangeOwnership },
+  components: { ServerStatus, ChangeOwnership, BackButton },
   props: {
     entityId:
     {

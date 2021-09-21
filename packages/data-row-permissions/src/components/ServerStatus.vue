@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="unauthorized">
-    <span>You might see more results if you <a href="/login">log in</a>.</span>
+    <span>{{ $t('data-row-permissions-no-results-cta') }}&nbsp;<a href="/login">{{ $t('data-row-permissions-cta-login') }}</a>.</span>
   </div>
 </template>
 

@@ -8,15 +8,15 @@
           label="Spinning"
           variant="primary" />
         <div class="mt-5">
-          Asking the server nicely for data.
+          {{ $t('data-row-permissions-spinner-text') }}
         </div>
       </div>
       <span
         v-else-if="isAuthenticated"
-        class="mt-2">These are not the results you are looking for.</span>
+        class="mt-2">{{ $t('data-row-permissions-no-results') }}</span>
       <span
         v-else
-        class="mt-2">You might see more results if you <a href="/login">log in</a>.</span>
+        class="mt-2">{{ $t('data-row-permissions-no-results-cta') }}&nbsp;<a href="/login">{{ $t('data-row-permissions-cta-login') }}</a>.</span>
     </div>
   </div>
 </template>

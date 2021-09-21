@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import i18n from '@molgenis/molgenis-i18n-js'
 import { BootstrapVue } from 'bootstrap-vue'
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
@@ -52,8 +53,15 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+window.x = Vue.use(i18n, {
+  lng: window.__INITIAL_STATE__.lng || 'en',
+  fallbackLng: window.__INITIAL_STATE__.fallbackLng || 'en',
+  namespace: ['data-row-permissions'],
+  callback () {
+    new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount('#app')
+  }
+})

@@ -1,8 +1,9 @@
 <template>
   <center-modal
     v-model="changeOwner"
-    title="Change ownership"
-    ok-title="Change owner"
+    :title="$t('data-row-permissions-modal-title-change-ownership')"
+    :ok-title="$t('data-row-permissions-change-owner')"
+    :cancel-title="$t('data-row-permissions-cancel')"
     @ok="save"
     @cancel="cancel">
     <b-form-select

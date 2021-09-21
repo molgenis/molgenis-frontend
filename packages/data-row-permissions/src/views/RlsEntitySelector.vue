@@ -1,13 +1,13 @@
 <template>
   <div class="list-group w-50 mx-auto my-5 ">
     <h3 class="mb-4">
-      Row level secured entities
+      {{ $t('data-row-permissions-rls-entities') }}
     </h3>
     <b-form-input
       v-model="search"
       class="p-2 mb-2"
       type="text"
-      placeholder="Type to filter" />
+      :placeholder="$t('data-row-permissions-filter-placeholder')" />
     <div
       v-for="row in results"
       :key="row.id">

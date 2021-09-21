@@ -2,19 +2,15 @@
   <div class="list-group w-50 mx-auto my-5 ">
     <div class="d-flex justify-content-between">
       <h3 class="mb-4">
-        RLS objects of {{ currentLabel }}
+        {{ $t('data-row-permissions-rls-object-of') }} {{ currentLabel }}
       </h3>
-      <router-link
-        :to="{name: 'SelectEntity'}"
-        class="mb-4 px-4 btn btn-secondary align-self-center">
-        Back
-      </router-link>
+      <back-button route="SelectEntity" />
     </div>
     <b-form-input
       v-model="search"
       class="p-2 mb-2"
       type="text"
-      placeholder="Type to filter" />
+      :placeholder="$t('data-row-permissions-filter-placeholder')" />
     <div
       v-for="row in results"
       :key="row.id">
@@ -41,10 +37,11 @@
 import DataStatus from '../components/DataStatus.vue'
 import CustomRouterLink from '../components/CustomRouterLink.vue'
 import { mapActions, mapState } from 'vuex'
+import BackButton from '../components/BackButton.vue'
 
 export default {
   name: 'RlsEntitySelector',
-  components: { DataStatus, CustomRouterLink },
+  components: { DataStatus, CustomRouterLink, BackButton },
   props: {
     // needed for the first part of the permissions query
     entityId: {
