@@ -13,6 +13,7 @@
       <div class="mt-5">
         <div class="mb-3 d-flex">
           <button
+            id="add-button"
             class="btn mr-3"
             :class="addMode ? 'btn-danger px-3' : 'btn-primary px-4'"
             :disabled="editMode || deleteMode"
@@ -20,6 +21,7 @@
             {{ addMode ? $t('data-row-permissions-cancel') : $t('data-row-permissions-add') }}
           </button>
           <button
+            id="edit-button"
             class="btn mr-3"
             :class="editMode ? 'btn-danger px-3' : 'btn-outline-primary px-4'"
             :disabled="addMode || deleteMode"
@@ -28,12 +30,14 @@
           </button>
           <button
             v-if="canChangeOwnerShip"
+            id="change-owner-button"
             class="btn mr-3 btn-outline-primary px-4"
             :disabled="addMode || editMode || deleteMode"
             @click="changeOwner = !changeOwner">
             <span>{{ $t('data-row-permissions-change-owner') }}</span>
           </button>
           <button
+            id="delete-button"
             class="btn mr-3"
             :class="deleteMode ? 'btn-danger px-3' : 'btn-outline-danger px-4'"
             :disabled="addMode || editMode"
@@ -87,6 +91,7 @@
                   class="w-auto ml-1 pl-1 mr-3"
                   :options="availablePermissions" />
                 <button
+                  id="add-save-button"
                   class="btn btn-success px-4 ml-auto"
                   :disabled="!canAddPermission"
                   @click="add">
@@ -184,9 +189,6 @@ export default {
     ...mapGetters(['isSU']),
     ...mapState(['userOptions', 'roleOptions', 'permissionObject',
       'responseStatus', 'startInAddMode', 'availablePermissions']),
-    names () {
-      return this.permissionObject.permissions.map(permission => permission.role || permission.user)
-    },
     permissions () {
       return filterObjectOnStringProperties(this.permissionObject.permissions, ['role', 'user', 'permission'], this.search, ['role', 'user'])
     },
@@ -203,12 +205,12 @@ export default {
       return this.permissionObject.yours === true || this.isSU === true
     },
     selectableUsers () {
-      const assignedUsers = this.permissionObject.permissions.map(item => item.user)
+      const assignedUsers = this.permissionObject.permissions.filter(f => f.user).map(item => item.user)
       return this.userOptions.filter(f => !assignedUsers.includes(f.value) && !f.superuser)
     },
     selectableRoles () {
       let assignedRoles = ['SU'] // assigning SU is not necessary
-      assignedRoles = assignedRoles.concat(this.permissionObject.permissions.map(item => item.role))
+      assignedRoles = assignedRoles.concat(this.permissionObject.permissions.filter(f => f.role).map(item => item.role))
       return this.roleOptions.filter(f => !assignedRoles.includes(f.value))
     }
   },

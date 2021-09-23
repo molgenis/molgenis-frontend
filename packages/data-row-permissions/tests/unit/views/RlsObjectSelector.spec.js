@@ -11,7 +11,7 @@ localVue.use(VueRouter)
 localVue.use(BootstrapVue)
 
 describe('RlsObjectSelector.vue', () => {
-  let state, store, rlsMock
+  let state, store, rlsMock, wrapper
 
   beforeEach(() => {
     rlsMock = jest.fn()
@@ -21,17 +21,17 @@ describe('RlsObjectSelector.vue', () => {
       actions: { ...mockActions, ...{ getAllRlsObjects: rlsMock } },
       mutations: { ...mockMutations }
     })
-  })
 
-  it('returns true if responseStatus has been filled', () => {
-    const wrapper = shallowMount(RlsObjectSelector, {
+    wrapper = shallowMount(RlsObjectSelector, {
       store,
       localVue,
       mocks: { $t: (prop) => prop },
       stubs: ['font-awesome-icon'],
       propsData: { entityId: '1' }
     })
+  })
 
+  it('returns true if responseStatus has been filled', () => {
     // assert initial state
     expect(wrapper.vm.loaded).toBeFalsy()
 
@@ -41,26 +41,10 @@ describe('RlsObjectSelector.vue', () => {
   })
 
   it('loads rls objects on startup', () => {
-    shallowMount(RlsObjectSelector, {
-      store,
-      localVue,
-      mocks: { $t: (prop) => prop },
-      stubs: ['font-awesome-icon'],
-      propsData: { entityId: '1' }
-    })
-
     expect(rlsMock).toHaveBeenCalled()
   })
 
   it('returns the current label from retrieved entities', async () => {
-    const wrapper = shallowMount(RlsObjectSelector, {
-      store,
-      localVue,
-      mocks: { $t: (prop) => prop },
-      stubs: ['font-awesome-icon'],
-      propsData: { entityId: '1' }
-    })
-
     expect(wrapper.vm.currentLabel).toBe('test label')
   })
 })
