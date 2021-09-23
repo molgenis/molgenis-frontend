@@ -1,4 +1,3 @@
-
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import RlsEntitySelector from '../../../src/views/RlsEntitySelector.vue'
 import Vuex from 'vuex'

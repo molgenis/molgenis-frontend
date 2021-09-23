@@ -22,15 +22,15 @@ export const filterObjectOnStringProperties = (objectArray, propArray, search, s
     if (!searchProps.length) {
       match = objectArray.filter(object => object[propArray[i]] && object[propArray[i]].toLowerCase().includes(matchOn))
     } else {
-      match = objectArray.filter(object => object[propArray[i]] &&
+      match = match.concat(objectArray.filter(object => object[propArray[i]] &&
         (object[propArray[i]].toLowerCase().includes(matchOn) ||
-        (searchProps.includes(propArray[i]) && propArray[i].toLowerCase().includes(search))))
+        (searchProps.includes(propArray[i]) && propArray[i].toLowerCase().includes(matchOn)))))
     }
 
     if (matches.length) {
       for (const m of match) {
         // check if already found
-        if (!matches.filter(matched => matched[propArray[0]] !== m[propArray[0]])) {
+        if (matches.every(matched => matched[propArray[0]] !== m[propArray[0]])) {
           matches.push(m)
         }
       }
