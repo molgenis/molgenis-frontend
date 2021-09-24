@@ -20,7 +20,7 @@ export const actions = {
   },
   getPermissionsByEntityId ({ commit }, entityId) {
     api.get(`/api/permissions/types/permissions/${entityId}`).then((response) => {
-      commit('setAvailablePermissions', response.data)
+      commit('setAvailablePermissions', response)
     })
   },
   // These are all the 'objects' which can be anything, from a row, to a zip file
@@ -37,8 +37,6 @@ export const actions = {
   },
   // CRUD actions for permissions
   getPermissionsForObject ({ commit, state }) {
-    this.changedPermissionObjects = []
-    this.addedPermissionObjects = []
     commit('setResponseStatus', { status: 0 })
     api.get(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`).then((response) => {
       commit('setPermissionObject', response)
@@ -49,7 +47,6 @@ export const actions = {
     })
   },
   updatePermissions ({ state, dispatch }, changedPermissionObjects) {
-    this.editMode = false
     // TODO upgrade api-client
     fetch(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`, {
       headers: {
@@ -74,11 +71,8 @@ export const actions = {
       const response = await e.json()
       commit('setServerError', response)
     })
-
-    this.newPermissionObject = {}
   },
   removePermission ({ dispatch, state }, permissionToRemove) {
-    delete permissionToRemove.permission
     api.delete_(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`, { body: JSON.stringify(permissionToRemove) }).then(() => {
       dispatch('getPermissionsForObject')
     })

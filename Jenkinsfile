@@ -223,6 +223,7 @@ pipeline {
                         container('node') {
                             dir("${PACKAGE_DIR}/data-row-permissions") {
                                 sh "yarn build"
+                                sh "yarn unit"
                             }
                         }
                     }

@@ -25,6 +25,6 @@ export const mutations = {
     state.rlsEntities = response.data
   },
   setAvailablePermissions (state, response) {
-    state.availablePermissions = response
+    state.availablePermissions = response.data
   }
 }
