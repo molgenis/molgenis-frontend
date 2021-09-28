@@ -1,5 +1,5 @@
 {
-  "name": "data-row-permissions",
+  "name": "@molgenis-ui/data-row-permissions",
   "version": "0.2.1",
   "publishConfig": {
     "access": "public"
