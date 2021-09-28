@@ -61,6 +61,7 @@ pipeline {
                     sh "( cd ${PACKAGE_DIR}/security && yarn )"
                     sh "( cd ${PACKAGE_DIR}/settings && yarn )"
                     sh "( cd ${PACKAGE_DIR}/data-row-edit && yarn )"
+                    sh "( cd ${PACKAGE_DIR}/data-row-permissions && yarn )"
                 }
             }
         }
@@ -211,6 +212,16 @@ pipeline {
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/settings") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Data Row Permissions') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/data-row-permissions") {
                                 sh "yarn build"
                                 sh "yarn unit"
                             }
