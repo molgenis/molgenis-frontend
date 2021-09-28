@@ -55,7 +55,7 @@ export const actions = {
     })
   },
   updatePermissions ({ state, dispatch, commit }, changedPermissionObjects) {
-    // TODO upgrade api-client
+    // https://github.com/molgenis/molgenis-js-client/issues/66
     fetch(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`, {
       headers: {
         Accept: 'application/json',
