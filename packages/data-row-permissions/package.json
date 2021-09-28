@@ -1,7 +1,9 @@
 {
   "name": "data-row-permissions",
   "version": "0.2.0",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
