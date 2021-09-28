@@ -4,10 +4,8 @@ import router from './router'
 import store from './store'
 
 import i18n from '@molgenis/molgenis-i18n-js'
-import { BootstrapVue } from 'bootstrap-vue'
 
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
+import { BootstrapVue } from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@molgenis-ui/components-library/dist/components-library.css'
 

@@ -36,12 +36,12 @@ describe('filter.js', () => {
     const filteredResult = filterObjectOnStringProperties(objectsArrayToFilter, ['name', 'role', 'perk'], 'perk', ['perk'])
 
     expect(filteredResult).toStrictEqual([{
-      name: 'Perkins',
-      role: 'janitor'
-    }, {
       name: 'Dumbledor',
       role: 'teacher',
       perk: 'Full wizard'
+    }, {
+      name: 'Perkins',
+      role: 'janitor'
     }])
   })
 })

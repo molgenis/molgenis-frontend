@@ -2,7 +2,7 @@ import { createLocalVue, shallowMount } from '@vue/test-utils'
 import RlsObjectSelector from '../../../src/views/RlsObjectSelector.vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
-import { mockState, mockMutations, mockActions } from '../mocks'
+import { mockState, mockMutations, mockActions, mockGetters } from '../mocks'
 import BootstrapVue from 'bootstrap-vue'
 
 const localVue = createLocalVue()
@@ -19,7 +19,8 @@ describe('RlsObjectSelector.vue', () => {
     store = new Vuex.Store({
       state: { ...state, ...{ rlsEntities: [{ id: '1', label: 'test label' }, { id: '2', label: 'test label2' }] } },
       actions: { ...mockActions, ...{ getAllRlsObjects: rlsMock } },
-      mutations: { ...mockMutations }
+      mutations: mockMutations,
+      getters: mockGetters
     })
 
     wrapper = shallowMount(RlsObjectSelector, {
@@ -29,15 +30,6 @@ describe('RlsObjectSelector.vue', () => {
       stubs: ['font-awesome-icon'],
       propsData: { entityId: '1' }
     })
-  })
-
-  it('returns true if responseStatus has been filled', () => {
-    // assert initial state
-    expect(wrapper.vm.loaded).toBeFalsy()
-
-    // assert changed state reactiveness
-    store.state.responseStatus = 200
-    expect(wrapper.vm.loaded).toBeTruthy()
   })
 
   it('loads rls objects on startup', () => {

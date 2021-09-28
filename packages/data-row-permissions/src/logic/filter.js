@@ -6,37 +6,17 @@
  *                               e.g. role or user
  * @returns matching objects from objectArray
  */
-
 export const filterObjectOnStringProperties = (objectArray, propArray, search, searchProps = []) => {
   if (!search) {
     return objectArray
   }
-
-  let matches = []
-  const matchOn = search.toLowerCase()
-
-  const numberOfProperties = propArray.length
-  for (let i = 0; i < numberOfProperties; i++) {
-    let match = []
-
-    if (!searchProps.length) {
-      match = objectArray.filter(object => object[propArray[i]] && object[propArray[i]].toLowerCase().includes(matchOn))
-    } else {
-      match = match.concat(objectArray.filter(object => object[propArray[i]] &&
-        (object[propArray[i]].toLowerCase().includes(matchOn) ||
-        (searchProps.includes(propArray[i]) && propArray[i].toLowerCase().includes(matchOn)))))
-    }
-
-    if (matches.length) {
-      for (const m of match) {
-        // check if already found
-        if (matches.every(matched => matched[propArray[0]] !== m[propArray[0]])) {
-          matches.push(m)
-        }
-      }
-    } else {
-      matches = match
-    }
-  }
-  return matches
+  const matchOn = new RegExp(search, 'i')
+  return objectArray.filter(object =>
+    propArray
+      .map(prop => object[prop])
+      .some(value => matchOn.test(value)) ||
+    searchProps
+      .filter(prop => matchOn.test(prop))
+      .some(prop => object[prop])
+  )
 }
