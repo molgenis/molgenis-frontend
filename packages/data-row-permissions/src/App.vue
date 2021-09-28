@@ -22,7 +22,7 @@ export default {
   watch: {
     serverError (mssg) {
       this.$bvToast.toast(mssg, {
-        title: 'Error occurred',
+        title: this.$t('data-row-permissions-error'),
         toaster: 'b-toaster-bottom-right',
         solid: true,
         variant: 'danger',

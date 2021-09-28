@@ -106,7 +106,7 @@
                 {{ permission.user || permission.role }}
               </td>
               <td class="align-middle w-25">
-                {{ permission.role ? 'Role' : 'User' }}
+                {{ permission.role ? $t('data-row-permissions-role') : $t('data-row-permissions-user') }}
               </td>
               <td
                 v-if="!editMode"
@@ -182,7 +182,9 @@ export default {
       newPermissionType: '',
       newPermissionObject: {},
       changedPermissionObjects: [],
-      available_types: [{ text: 'Select a type', value: '' }, { text: 'Role', value: 'role' }, { text: 'User', value: 'user' }]
+      available_types: [{ text: this.$t('data-row-permissions-select'), value: '' },
+        { text: this.$t('data-row-permissions-role'), value: 'role' },
+        { text: this.$t('data-row-permissions-user'), value: 'user' }]
     }
   },
   computed: {

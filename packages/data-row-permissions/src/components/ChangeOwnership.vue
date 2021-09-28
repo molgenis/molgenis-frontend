@@ -48,7 +48,7 @@ export default {
     ...mapActions(['updatePermissions']),
     save () {
       const updateOwnership = {}
-      if (this.userOptions.filter(f => f.value === this.newOwner).length) {
+      if (this.userOptions.some(f => f.value === this.newOwner)) {
         updateOwnership.ownedByUser = this.newOwner
       } else {
         updateOwnership.ownedByRole = this.newOwner
