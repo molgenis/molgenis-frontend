@@ -34,7 +34,7 @@
 import { filterObjectOnStringProperties } from '../logic/filter'
 import DataStatus from '../components/DataStatus.vue'
 import CustomRouterLink from '../components/CustomRouterLink.vue'
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'RlsEntitySelector',
@@ -46,9 +46,7 @@ export default {
   },
   computed: {
     ...mapState(['rlsEntities', 'responseStatus']),
-    loaded () {
-      return this.responseStatus !== 0
-    },
+    ...mapGetters(['loaded']),
     results () {
       return filterObjectOnStringProperties(this.rlsEntities, ['entityType', 'label', 'id'], this.search)
     }

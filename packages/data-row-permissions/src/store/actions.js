@@ -4,11 +4,15 @@ export const actions = {
   getAllRoles ({ commit }) {
     api.get('/api/data/sys_sec_Role').then((response) => {
       commit('setRoleOptions', response)
+    }).catch(e => {
+      commit('setResponseStatus', e)
     })
   },
   getAllUsers ({ commit }) {
     api.get('/api/identities/user').then((response) => {
       commit('setUserOptions', response)
+    }).catch(e => {
+      commit('setResponseStatus', e)
     })
   },
   getAllPermissionsTypes ({ commit }) {
@@ -16,11 +20,15 @@ export const actions = {
     api.get('/api/permissions/types').then((response) => {
       commit('setRlsEntities', response)
       commit('setResponseStatus', response)
+    }).catch(e => {
+      commit('setResponseStatus', e)
     })
   },
   getPermissionsByEntityId ({ commit }, entityId) {
     api.get(`/api/permissions/types/permissions/${entityId}`).then((response) => {
       commit('setAvailablePermissions', response)
+    }).catch(e => {
+      commit('setResponseStatus', e)
     })
   },
   // These are all the 'objects' which can be anything, from a row, to a zip file
@@ -46,7 +54,7 @@ export const actions = {
       commit('setResponseStatus', e)
     })
   },
-  updatePermissions ({ state, dispatch }, changedPermissionObjects) {
+  updatePermissions ({ state, dispatch, commit }, changedPermissionObjects) {
     // TODO upgrade api-client
     fetch(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`, {
       headers: {
@@ -62,6 +70,8 @@ export const actions = {
     }).then(() => {
       // reset
       dispatch('getPermissionsForObject')
+    }).catch(e => {
+      commit('setResponseStatus', e)
     })
   },
   addPermission ({ state, commit, dispatch }, newPermissionObject) {
@@ -72,9 +82,11 @@ export const actions = {
       commit('setServerError', response)
     })
   },
-  removePermission ({ dispatch, state }, permissionToRemove) {
+  removePermission ({ dispatch, state, commit }, permissionToRemove) {
     api.delete_(`/api/permissions/${state.route.params.entityId}/${state.route.params.objectId}`, { body: JSON.stringify(permissionToRemove) }).then(() => {
       dispatch('getPermissionsForObject')
+    }).catch(e => {
+      commit('setResponseStatus', e)
     })
   }
 }

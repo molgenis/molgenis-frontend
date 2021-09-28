@@ -36,7 +36,7 @@
 <script>
 import DataStatus from '../components/DataStatus.vue'
 import CustomRouterLink from '../components/CustomRouterLink.vue'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import BackButton from '../components/BackButton.vue'
 import { filterObjectOnStringProperties } from '../logic/filter'
 
@@ -57,15 +57,12 @@ export default {
   },
   computed: {
     ...mapState(['rlsEntities', 'responseStatus', 'rlsObjects']),
+    ...mapGetters(['loaded']),
     currentLabel () {
       if (this.rlsEntities && this.rlsEntities.length) {
         return this.rlsEntities.find(entity => entity.id === this.entityId).label
       }
-
       return ''
-    },
-    loaded () {
-      return this.responseStatus !== 0
     },
     results () {
       return filterObjectOnStringProperties(this.rlsObjects, ['description', 'label', 'id'], this.search)

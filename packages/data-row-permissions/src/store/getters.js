@@ -6,5 +6,8 @@ export const getters = {
   isAuthenticated (state) {
     if (!state.uiContext || !state.uiContext.context) return false
     return state.uiContext.context.authenticated
+  },
+  loaded (state) {
+    return state.responseStatus !== 0
   }
 }
