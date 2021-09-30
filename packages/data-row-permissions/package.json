@@ -1,6 +1,12 @@
 {
   "name": "@molgenis-ui/data-row-permissions",
   "version": "0.3.0",
+  "author": "Jelmer Veen <https://github.com/jelmerveen>",
+  "main": "dist/index.html",
+  "files": [
+    "dist",
+    "src"
+  ],
   "publishConfig": {
     "access": "public"
   },
