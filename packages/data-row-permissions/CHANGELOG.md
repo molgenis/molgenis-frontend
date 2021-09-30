@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-permissions@0.3.0...@molgenis-ui/data-row-permissions@0.3.1) (2021-09-30)
+
+
+### Bug Fixes
+
+* updated package json to release dist and updated docker config ([b3b2580](https://github.com/molgenis/molgenis-frontend/commit/b3b2580772ddc8c824cbbcf3f66316344cf9876f))
+
+
+
+
+
 # 0.3.0 (2021-09-28)
 
 
