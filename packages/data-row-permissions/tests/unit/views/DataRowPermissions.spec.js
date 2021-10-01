@@ -30,7 +30,8 @@ describe('DataRowPermissions.vue', () => {
             permissions: [{ permission: 'READWRITE', role: 'USER' }, { permission: 'READWRITE', user: 'USER' }]
           },
           userOptions: ['UnpickedUser'],
-          roleOptions: ['UnpickedRole']
+          roleOptions: ['UnpickedRole'],
+          route: { params: { objectId: 1337 } }
         }
       },
       actions: {

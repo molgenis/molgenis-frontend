@@ -1,5 +1,7 @@
 <template>
-  <div class="w-75 mx-auto my-5">
+  <div
+    :key="route.objectId"
+    class="w-75 mx-auto my-5">
     <div class="d-flex justify-content-between">
       <h3 class="mb-4">
         {{ $t('data-row-permissions-rls-permissions-of') }} {{ permissionObject.label }}
@@ -190,7 +192,7 @@ export default {
   computed: {
     ...mapGetters(['isSU']),
     ...mapState(['userOptions', 'roleOptions', 'permissionObject',
-      'responseStatus', 'startInAddMode', 'availablePermissions']),
+      'responseStatus', 'startInAddMode', 'availablePermissions', 'route']),
     permissions () {
       return filterObjectOnStringProperties(this.permissionObject.permissions, ['role', 'user', 'permission'], this.search, ['role', 'user'])
     },
@@ -217,6 +219,9 @@ export default {
     }
   },
   watch: {
+    'route.params.objectId' () {
+      this.init()
+    },
     startInAddMode (startWithAdd) {
       if (startWithAdd) {
         this.addMode = true
@@ -224,14 +229,17 @@ export default {
     }
   },
   beforeMount () {
-    this.getPermissionsForObject()
-    this.getAllRoles()
-    this.getPermissionsByEntityId(this.entityId)
+    this.init()
   },
   methods: {
     ...mapActions(['getAllRoles', 'getPermissionsForObject',
       'addPermission', 'removePermission', 'updatePermissions',
       'getPermissionsByEntityId']),
+    init () {
+      this.getPermissionsForObject()
+      this.getAllRoles()
+      this.getPermissionsByEntityId(this.entityId)
+    },
     toggleEditMode () {
       // if true, it means we are going to cancel.
       if (this.editMode) {
