@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-permissions@0.3.1...@molgenis-ui/data-row-permissions@0.3.2) (2021-10-01)
+
+
+### Bug Fixes
+
+* add styling rules to fill the modal nicely with the selectlist ([018f896](https://github.com/molgenis/molgenis-frontend/commit/018f896810f7f76fe569f3d9d1dcee643ed27340))
+
+
+
+
+
 ## [0.3.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-permissions@0.3.0...@molgenis-ui/data-row-permissions@0.3.1) (2021-09-30)
 
 
