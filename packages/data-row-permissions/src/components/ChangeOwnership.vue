@@ -8,7 +8,7 @@
     @cancel="cancel">
     <b-form-select
       v-model="newOwner"
-      class="m-1 py-3"
+      class="m-1 py-3 fill-modal"
       :select-size="10"
       :options="potentialOwnerList" />
   </center-modal>
@@ -63,3 +63,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.fill-modal {
+  /*  -1% to take scrollbar into account and make the space left and right
+   *  pretty equal
+   */
+  max-width: 99%
+}
+</style>
