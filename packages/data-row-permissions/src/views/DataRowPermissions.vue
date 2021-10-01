@@ -1,6 +1,5 @@
 <template>
   <div
-    :key="route.objectId"
     class="w-75 mx-auto my-5">
     <div class="d-flex justify-content-between">
       <h3 class="mb-4">
