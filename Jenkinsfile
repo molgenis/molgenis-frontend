@@ -311,27 +311,27 @@ pipeline {
                 }
             }
         }
-        stage('[PR] E2E Tests') {
+        stage('[PR] E2E Test Data Explorer 2') {
             when {
                 changeRequest()
             }
-            parallel {
-                stage('Data Explorer 2') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/data-explorer") {
-                                sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
-                            }
-                        }
+    
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/data-explorer") {
+                        sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
                     }
                 }
-                stage('Questionnaires') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/questionnaires") {
-                                sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
-                            }
-                        }
+            }
+        }
+        stage('[PR] E2E Test Questionnaires') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/questionnaires") {
+                        sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
                     }
                 }
             }
