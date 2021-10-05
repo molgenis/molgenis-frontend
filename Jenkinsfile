@@ -89,7 +89,6 @@ pipeline {
                                 sh "yarn lint"
                                 sh "yarn build"
                                 sh "yarn unit"
-                                sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
                             }
                         }
                     }
@@ -146,7 +145,6 @@ pipeline {
                             dir("${PACKAGE_DIR}/questionnaires") {
                                 sh "yarn build"
                                 sh "yarn unit"
-                                sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
                             }
                         }
                     }
@@ -309,6 +307,31 @@ pipeline {
                         sh "set +x; curl -X POST -H 'Content-Type: application/json' -H 'Authorization: token ${GITHUB_TOKEN}' " +
                             "--data '{\"body\":\":star: PR Preview available on https://${NAME}.dev.molgenis.org\"}' " +
                             "https://api.github.com/repos/molgenis/molgenis-frontend/issues/${CHANGE_ID}/comments"
+                    }
+                }
+            }
+        }
+        stage('[PR] E2E Test Data Explorer 2') {
+            when {
+                changeRequest()
+            }
+    
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/data-explorer") {
+                        sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
+                    }
+                }
+            }
+        }
+        stage('[PR] E2E Test Questionnaires') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/questionnaires") {
+                        sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
                     }
                 }
             }
