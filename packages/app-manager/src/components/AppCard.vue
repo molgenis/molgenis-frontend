@@ -10,16 +10,22 @@
           <div class="col">
               <span>
                 <toggle-button
+                class="mt-2"
                   :labels="{checked: ' Active', unchecked: ' Inactive'}"
                   :width="72" :value="app.isActive"
                   @change="toggleAppActiveState(app)" :sync="true"
                   title="toggle active status"></toggle-button>
             </span>
-            <button :disabled="app.isActive" class="btn btn-danger btn-sm mx-1 float-right"
+          </div>
+          <div class="col">
+            <div class="float-right">
+              <upload-app :appId="app.id" update class="d-inline mr-3"/>
+              <button :disabled="app.isActive" class="btn btn-danger btn-sm mx-1 "
                     @click="deleteApp(app)"
                     title="delete">
               <i class="fa fa-trash"></i>
             </button>
+            </div>
           </div>
         </div>
       </div>
@@ -49,9 +55,11 @@
 <script>
 import Vue from 'vue'
 import ToggleButton from 'vue-js-toggle-button'
+import UploadApp from './UploadApp.vue'
 Vue.use(ToggleButton)
 
 export default {
+  components: { UploadApp },
   name: 'AppCard',
   props: ['app'],
   methods: {

@@ -8,7 +8,7 @@ const bannerText = `package-name: ${pkgName}
 package-version: ${pkgVersion}
 build-date: ${buildDate}`
 
-const target = 'https://master.dev.molgenis.org'
+const target =  'http://localhost' //'https://master.dev.molgenis.org'
 module.exports = {
   filenameHashing: false,
   outputDir: 'dist',

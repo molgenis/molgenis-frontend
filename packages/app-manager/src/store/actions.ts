@@ -43,5 +43,12 @@ export default {
     }, (error: any) => {
       commit('SET_ERROR', error)
     })
+  },
+  'UPDATE_APP' ({ commit, dispatch }: VuexContext, updateObject: { id: string; file: File }) {
+    api.postFile(`/plugin/appmanager/update/${updateObject.id}`, updateObject.file).then(() => {
+      dispatch('FETCH_APPS')
+    }, (error: any) => {
+      commit('SET_ERROR', error)
+    })
   }
 }
