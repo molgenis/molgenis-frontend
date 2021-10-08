@@ -44,8 +44,14 @@ export default {
       commit('SET_ERROR', error)
     })
   },
-  'UPDATE_APP' ({ commit, dispatch }: VuexContext, updateObject: { id: string; file: File }) {
-    api.postFile(`/plugin/appmanager/update/${updateObject.id}`, updateObject.file).then(() => {
+  'UPDATE_APP' ({ commit, dispatch }: VuexContext, updateObject: { id: string; file: File; updateConfig: boolean }) {
+    let updateUrl = `/plugin/appmanager/update/${updateObject.id}`
+
+    if (updateObject.updateConfig) {
+      updateUrl += '?updateConfig=true'
+    }
+
+    api.postFile(updateUrl, updateObject.file).then(() => {
       dispatch('FETCH_APPS')
     }, (error: any) => {
       commit('SET_ERROR', error)
