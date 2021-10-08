@@ -57,6 +57,7 @@ export default {
       // Clear the existing value to make it possible to upload the same file again
       this.$refs['app-file-input-field'].value = ''
       this.file = {}
+      this.updateConfig = false
     }
   }
 }

@@ -24,7 +24,7 @@
           <div class="col pr-2">
             <div class="float-right">
               <upload-app :appId="app.id"/>
-              <button :disabled="app.isActive" class="btn btn-danger btn-sm mx-1 "
+              <button :disabled="app.isActive" class="btn btn-danger btn-sm mr-2"
                     @click="deleteApp(app)"
                     title="delete">
               <i class="fa fa-trash"></i>
