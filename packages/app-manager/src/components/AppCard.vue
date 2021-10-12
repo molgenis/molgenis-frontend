@@ -5,7 +5,7 @@
             <h5>{{ app.label }} </h5>
             <a
               class="ml-auto pl-1"
-              :href="`/plugin/data-row-edit/sys_App/${app.id}`"
+              :href="appSettingsLink"
               title="Go to app settings">
               <span class="fa fa-cog fa-lg text-muted" aria-hidden="true"></span>
             </a>
@@ -66,6 +66,11 @@ export default {
   components: { UploadApp },
   name: 'AppCard',
   props: ['app'],
+  computed: {
+    linkToAppSettings () {
+      return `/plugin/data-row-edit/sys_App/${this.app.id}`
+    }
+  },
   methods: {
     deleteApp (app) {
       this.$store.dispatch('DELETE_APP', app.id)
