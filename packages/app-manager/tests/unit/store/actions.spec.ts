@@ -91,14 +91,14 @@ describe('actions', () => {
     let updateObject: {
       id: string;
       file: File;
-      updateConfig: boolean;
+      updateRuntimeOptions: boolean;
     }
 
     beforeEach(() => {
       updateObject = {
         id: '1337',
         file: new File([], 'file'),
-        updateConfig: false
+        updateRuntimeOptions: false
       }
     })
 
@@ -111,12 +111,12 @@ describe('actions', () => {
       done()
     })
 
-    it('should add query parameter on postFile when updateConfig set to true', async (done) => {
-      updateObject.updateConfig = true
+    it('should add query parameter on postFile when updateRuntimeOptions set to true', async (done) => {
+      updateObject.updateRuntimeOptions = true
       api.postFile.mockResolvedValueOnce()
       await actions.UPDATE_APP(context, updateObject)
 
-      expect(api.postFile).toHaveBeenCalledWith('/plugin/appmanager/update/1337?updateConfig=true', updateObject.file)
+      expect(api.postFile).toHaveBeenCalledWith('/plugin/appmanager/update/1337?updateRuntimeOptions=true', updateObject.file)
       expect(context.dispatch).toBeCalledWith('FETCH_APPS')
       done()
     })

@@ -5,7 +5,7 @@
             <h5>{{ app.label }} </h5>
             <a
               class="ml-auto pl-1"
-              :href="appSettingsLink"
+              :href="linkToAppSettings"
               title="Go to app settings">
               <span class="fa fa-cog fa-lg text-muted" aria-hidden="true"></span>
             </a>

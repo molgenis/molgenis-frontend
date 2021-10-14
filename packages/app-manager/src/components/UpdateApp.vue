@@ -9,7 +9,7 @@
           accept=".gz, .zip"
         />
     <b-button variant="primary" size="sm" class="mr-2" v-b-modal.update-modal>Update</b-button>
-    <b-modal id="update-modal" title="Update app" okTitle="Update" @ok="handleFileUpload">
+    <b-modal id="update-modal" title="Update app" okTitle="Update" @ok="handleFileUpload" centered>
       <div class="d-flex">
           <button
             class="app-upload-btn btn btn-sm btn-outline-primary"
@@ -18,7 +18,7 @@
           </button>
         <div v-if="fileName" class="ml-auto mr-2 mt-1"><span>{{ fileName }}</span></div>
         </div>
-        <b-form-checkbox v-model="updateConfig" class="mt-3"><span>Update config</span></b-form-checkbox>
+        <b-form-checkbox v-model="updateRuntimeOptions" class="mt-3"><span>Update runtime options</span></b-form-checkbox>
     </b-modal>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
   data: () => {
     return {
       file: {},
-      updateConfig: false
+      updateRuntimeOptions: false
     }
   },
   computed: {
@@ -52,12 +52,12 @@ export default {
     },
     handleFileUpload () {
       this.$store.commit('SET_ERROR', '')
-      this.$store.dispatch('UPDATE_APP', { id: this.appId, file: this.file, updateConfig: this.updateConfig })
+      this.$store.dispatch('UPDATE_APP', { id: this.appId, file: this.file, updateRuntimeOptions: this.updateRuntimeOptions })
 
       // Clear the existing value to make it possible to upload the same file again
       this.$refs['app-file-input-field'].value = ''
       this.file = {}
-      this.updateConfig = false
+      this.updateRuntimeOptions = false
     }
   }
 }

@@ -8,7 +8,7 @@ const bannerText = `package-name: ${pkgName}
 package-version: ${pkgVersion}
 build-date: ${buildDate}`
 
-const target = 'https://master.dev.molgenis.org'
+const target = 'https://jelmer.gcc.rug.nl'
 module.exports = {
   filenameHashing: false,
   outputDir: 'dist',
