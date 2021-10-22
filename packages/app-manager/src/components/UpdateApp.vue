@@ -8,8 +8,8 @@
           v-show="false"
           accept=".gz, .zip"
         />
-    <b-button variant="primary" size="sm" class="mr-2" v-b-modal.update-modal>Update</b-button>
-    <b-modal id="update-modal" title="Update app" okTitle="Update" @ok="handleFileUpload" centered>
+    <b-button variant="primary" size="sm" class="mr-2" v-b-modal="`${appId}`">Update</b-button>
+    <b-modal :id="appId" title="Update app" okTitle="Update" @ok="handleFileUpload" centered>
       <div class="d-flex">
           <button
             class="app-upload-btn btn btn-sm btn-outline-primary"
@@ -27,8 +27,7 @@ export default {
   props: {
     appId: {
       type: String,
-      required: false,
-      default: ''
+      required: true
     }
   },
   data: () => {
@@ -43,6 +42,10 @@ export default {
     }
   },
   methods: {
+    // we need to generate id's else modal pops up for all
+    generateId () {
+      return 'update-modal' + Math.random().toString().split('.')[1]
+    },
     triggerFileBrowser () {
       // Trigger file upload by clicking the hidden input
       document.getElementById('app-file-input').click()
