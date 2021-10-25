@@ -76,7 +76,6 @@ export default {
     deleteApp (app) {
       this.$store.dispatch('DELETE_APP', app.id)
     },
-
     toggleAppActiveState (app) {
       if (app.isActive) {
         this.$store.dispatch('DEACTIVATE_APP', app.id)
