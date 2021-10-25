@@ -68,6 +68,7 @@ export default {
   props: ['app'],
   computed: {
     linkToAppSettings () {
+      // https://vuejs.org/v2/guide/security.html#Attribute-bindings
       return `/plugin/data-row-edit/sys_App/${this.app.id}`
     }
   },
