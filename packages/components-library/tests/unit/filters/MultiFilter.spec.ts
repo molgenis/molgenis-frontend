@@ -18,7 +18,9 @@ const checkboxLotsOptions = [
 
 describe('MultiFilter.vue', () => {
   let wrapper: any
-  const optionsPromise = jest.fn(() => Promise.resolve(checkboxLotsOptions))
+  const optionsPromise = jest.fn(({ query }) => {
+    return Promise.resolve(query !== undefined ? checkboxLotsOptions.filter(f => f.text.toLowerCase().includes(query.toLowerCase())) : checkboxLotsOptions)
+  })
 
   const propsData = {
     name: 'multi-filter',
@@ -127,6 +129,23 @@ describe('MultiFilter.vue', () => {
       text: 'Yellow',
       value: 'yellow'
     })
+  })
+
+  it('should not display any checkboxes if search has no results', async () => {
+      // Assert that the order is still the way it was initialized
+    expect(wrapper.vm.inputOptions[0]).toStrictEqual({
+      text: 'Red',
+      value: 'red'
+    })
+
+    wrapper.vm.query = 'az'
+    await wrapper.vm.$nextTick() // wait for the watch
+
+    jest.runAllTimers() // wait for the setTimeout
+    await wrapper.vm.$nextTick() // wait for the search
+
+    expect(wrapper.vm.inputOptions).toStrictEqual([])
+
   })
 
   it('does not emit an input event when value is set from outside the component', async () => {
