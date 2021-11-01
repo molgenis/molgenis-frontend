@@ -52,7 +52,7 @@
         "
         class="
           badge badge-warning
-          warning
+          help
           text-white
           ml-auto
           d-flex
@@ -67,10 +67,10 @@
 </template>
 
 <script>
-import SatisfyAllCheckbox from '../blocks/SatisfyAllCheckbox.vue'
+import SatisfyAllCheckbox from "../blocks/SatisfyAllCheckbox.vue";
 
 export default {
-  name: 'MultiFilter',
+  name: "MultiFilter",
   components: {
     SatisfyAllCheckbox
   },
@@ -96,7 +96,7 @@ export default {
     placeholder: {
       type: String,
       required: false,
-      default: () => 'Type to search more'
+      default: () => "Type to search more"
     },
     /**
      * The async method returning filter options.
@@ -159,7 +159,7 @@ export default {
     satisfyAllLabel: {
       type: String,
       required: false,
-      default: () => 'Satisfy all'
+      default: () => "Satisfy all"
     }
   },
   data () {
@@ -172,8 +172,8 @@ export default {
       inputOptions: [],
       initialOptions: [],
       selection: [],
-      query: ''
-    }
+      query: ""
+    };
   },
   computed: {
     multifilterOptions () {
@@ -211,7 +211,7 @@ export default {
         newSelection = [...newValue]
       }
 
-      this.$emit('input', newSelection)
+      this.$emit("input", newSelection)
     },
     async value () {
       this.setSelection()
@@ -219,30 +219,24 @@ export default {
       await this.checkMissingOptions()
     },
     query (queryValue) {
-
       if (this.triggerQuery) {
         clearTimeout(this.triggerQuery)
       }
 
       if (!queryValue || !queryValue.length) {
-        this.inputOptions = this.sort(this.multifilterOptions)
+        this.inputOptions = this.sort(this.initialOptions)
         return
       }
 
-      this.triggerQuery = setTimeout(() => {
-        clearTimeout(this.triggerQuery)
+      this.triggerQuery = setTimeout(async () => {
+        clearTimeout(this.triggerQuery);
         this.showCount = this.maxVisibleOptions
         this.isLoading = true
 
-        this.options({ nameAttribute: 'label', query: this.query }).then(
-          searchResults => {
-              const allOptions = searchResults
-              ? searchResults.concat(this.inputOptions)
-              : this.inputOptions
-
-              this.inputOptions = this.deduplicateOptions(allOptions)
-          }
-        )
+        this.inputOptions  = await this.options({
+          nameAttribute: "label",
+          query: this.query
+        })
 
         this.isLoading = false
       }, 500)
@@ -255,10 +249,13 @@ export default {
     this.initializeFilter()
   },
   methods: {
-    sort ( optionsArray) {
-
-      const notSelectedOptions = optionsArray.filter(option => !this.selection.includes(option.value))
-      const selectedOptions = optionsArray.filter(option => this.selection.includes(option.value))
+    sort (optionsArray) {
+      const notSelectedOptions = optionsArray.filter(
+        option => !this.selection.includes(option.value)
+      )
+      const selectedOptions = optionsArray.filter(option =>
+        this.selection.includes(option.value)
+      )
 
       notSelectedOptions.sort((a, b) => {
         if (
@@ -290,20 +287,25 @@ export default {
       const optionSize = optionArray.length
 
       for (let index = 0; index < optionSize; index++) {
-        const option = optionArray[index];
+        const option = optionArray[index]
 
-        if(!addedValues.includes(option.value)){
+        if (!addedValues.includes(option.value)) {
           addedValues.push(option.value)
           uniqueOptions.push(option)
-        }   
+        }
       }
 
       return uniqueOptions
     },
     async checkMissingOptions () {
       let values
-      if (this.value && Array.isArray(this.value) && this.value.length && typeof this.value[0] === 'object') {
-         values = this.value.map(s => s.value)
+      if (
+        this.value &&
+        Array.isArray(this.value) &&
+        this.value.length &&
+        typeof this.value[0] === "object"
+      ) {
+        values = this.value.map(s => s.value)
       } else {
         values = this.value
       }
@@ -313,9 +315,9 @@ export default {
 
       if (newValues.length) {
         const newOptions = await this.options({
-          nameAttribute: 'label',
-          queryType: 'in',
-          query: newValues.join(',')
+          nameAttribute: "label",
+          queryType: "in",
+          query: newValues.join(",")
         })
         this.inputOptions = this.sort(newOptions.concat(this.inputOptions))
       }
@@ -323,7 +325,7 @@ export default {
     setSelection () {
       this.externalUpdate = true
       this.selection =
-        typeof this.value[0] === 'object'
+        typeof this.value[0] === "object"
           ? this.value.map(vo => vo.value)
           : this.value
     },
@@ -337,29 +339,33 @@ export default {
         this.setSelection()
         // Get the initial selected
         selectedOptions = await this.options({
-          nameAttribute: 'label',
-          queryType: 'in',
-          query: this.selection.join(',')
+          nameAttribute: "label",
+          queryType: "in",
+          query: this.selection.join(",")
         })
       }
 
       // fetch the other options and concat
       const completeInitialOptions = selectedOptions.concat(
         await this.options({
-          nameAttribute: 'label',
+          nameAttribute: "label",
           count: this.initialDisplayItems
         })
       )
 
-      this.inputOptions = this.deduplicateOptions(this.sort(completeInitialOptions))
+      this.inputOptions = this.deduplicateOptions(
+        this.sort(completeInitialOptions)
+      )
+
+      this.initialOptions = this.inputOptions
     }
   }
 }
 </script>
 
 <style scoped>
-.warning:hover {
-  cursor: pointer;
+.help:hover {
+  cursor: help;
 }
 
 .checkbox-list {
