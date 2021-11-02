@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.15](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.14...@molgenis-ui/components-library@2.7.15) (2021-11-02)
+
+
+### Bug Fixes
+
+* finding no results now gives empty list. Change cursor to help for warning badge ([302cf6a](https://github.com/molgenis/molgenis-frontend/commit/302cf6a999b09a72b2cf74599252ad386d23402b))
+
+
+
+
+
 ## [2.7.14](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.13...@molgenis-ui/components-library@2.7.14) (2021-08-20)
 
 
