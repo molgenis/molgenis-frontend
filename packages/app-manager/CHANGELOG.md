@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/app-manager@1.0.2...@molgenis-ui/app-manager@1.1.0) (2021-11-08)
+
+
+### Features
+
+* **app-manager:** add update functionality ([#708](https://github.com/molgenis/molgenis-frontend/issues/708)) ([85f8ebd](https://github.com/molgenis/molgenis-frontend/commit/85f8ebdade5d477115ee414a9f777c0a1ad57206))
+
+
+
+
+
 ## [1.0.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/app-manager@1.0.1...@molgenis-ui/app-manager@1.0.2) (2021-06-10)
 
 **Note:** Version bump only for package @molgenis-ui/app-manager
