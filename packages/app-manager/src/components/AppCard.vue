@@ -1,30 +1,40 @@
 <template>
     <div class="card app-card-component">
-      <div class="card-header">
-        <div class="row">
-          <div class="col">
-            <h5>{{ app.label }}</h5>
-          </div>
+      <div class="card-header p-2" >
+        <div class="d-flex mb-3">
+            <h5>{{ app.label }} </h5>
+            <a
+              class="ml-auto pl-1"
+              :href="linkToAppSettings"
+              title="Go to app settings">
+              <span class="fa fa-cog fa-lg text-muted" aria-hidden="true"></span>
+            </a>
         </div>
         <div class="row">
-          <div class="col">
+          <div class="col pl-3">
               <span>
                 <toggle-button
+                class="mt-2"
                   :labels="{checked: ' Active', unchecked: ' Inactive'}"
                   :width="72" :value="app.isActive"
                   @change="toggleAppActiveState(app)" :sync="true"
                   title="toggle active status"></toggle-button>
             </span>
-            <button :disabled="app.isActive" class="btn btn-danger btn-sm mx-1 float-right"
+          </div>
+          <div class="col pr-2">
+            <div class="float-right">
+              <upload-app :appId="app.id"/>
+              <button :disabled="app.isActive" class="btn btn-danger btn-sm mr-2"
                     @click="deleteApp(app)"
                     title="delete">
               <i class="fa fa-trash"></i>
             </button>
+            </div>
           </div>
         </div>
       </div>
 
-        <div class="card-body app-card-body">
+        <div class="card-body pt-3 pb-0">
               <dl>
                 <dt>Version</dt>
                 <dd class="text-muted">{{ app.version }}</dd>
@@ -37,7 +47,7 @@
 
 <style scoped>
     .app-card-component {
-      height: 15rem;
+      height: 20rem;
       margin-bottom: 1rem;
     }
 
@@ -49,16 +59,23 @@
 <script>
 import Vue from 'vue'
 import ToggleButton from 'vue-js-toggle-button'
+import UploadApp from './UpdateApp.vue'
 Vue.use(ToggleButton)
 
 export default {
+  components: { UploadApp },
   name: 'AppCard',
   props: ['app'],
+  computed: {
+    linkToAppSettings () {
+      // https://vuejs.org/v2/guide/security.html#Attribute-bindings
+      return `/plugin/data-row-edit/sys_App/${this.app.id}`
+    }
+  },
   methods: {
     deleteApp (app) {
       this.$store.dispatch('DELETE_APP', app.id)
     },
-
     toggleAppActiveState (app) {
       if (app.isActive) {
         this.$store.dispatch('DEACTIVATE_APP', app.id)

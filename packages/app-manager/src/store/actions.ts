@@ -43,5 +43,18 @@ export default {
     }, (error: any) => {
       commit('SET_ERROR', error)
     })
+  },
+  'UPDATE_APP' ({ commit, dispatch }: VuexContext, updateObject: { id: string; file: File; updateRuntimeOptions: boolean }) {
+    let updateUrl = `/plugin/appmanager/update/${updateObject.id}`
+
+    if (updateObject.updateRuntimeOptions) {
+      updateUrl += '?updateRuntimeOptions=true'
+    }
+
+    api.postFile(updateUrl, updateObject.file).then(() => {
+      dispatch('FETCH_APPS')
+    }, (error: any) => {
+      commit('SET_ERROR', error)
+    })
   }
 }

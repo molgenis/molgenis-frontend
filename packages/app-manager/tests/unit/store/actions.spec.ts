@@ -88,6 +88,48 @@ describe('actions', () => {
   })
 
   describe('UPLOAD_APP', () => {
+    let updateObject: {
+      id: string;
+      file: File;
+      updateRuntimeOptions: boolean;
+    }
+
+    beforeEach(() => {
+      updateObject = {
+        id: '1337',
+        file: new File([], 'file'),
+        updateRuntimeOptions: false
+      }
+    })
+
+    it('should dispatch FETCH_APPS on successful post request', async (done) => {
+      api.postFile.mockResolvedValueOnce()
+      await actions.UPDATE_APP(context, updateObject)
+
+      expect(api.postFile).toHaveBeenCalledWith('/plugin/appmanager/update/1337', updateObject.file)
+      expect(context.dispatch).toBeCalledWith('FETCH_APPS')
+      done()
+    })
+
+    it('should add query parameter on postFile when updateRuntimeOptions set to true', async (done) => {
+      updateObject.updateRuntimeOptions = true
+      api.postFile.mockResolvedValueOnce()
+      await actions.UPDATE_APP(context, updateObject)
+
+      expect(api.postFile).toHaveBeenCalledWith('/plugin/appmanager/update/1337?updateRuntimeOptions=true', updateObject.file)
+      expect(context.dispatch).toBeCalledWith('FETCH_APPS')
+      done()
+    })
+
+    it('should commit SET_ERROR on failed post request', async (done) => {
+      api.postFile.mockRejectedValueOnce('failed post request')
+      await actions.UPDATE_APP(context, updateObject)
+      expect(context.commit).toBeCalledWith('SET_ERROR', 'failed post request')
+      done()
+    })
+  })
+
+  describe('UPDATE_APP', () => {
     it('should dispatch FETCH_APPS on successful post request', async (done) => {
       api.postFile.mockResolvedValueOnce()
       const file = new File([], 'file')
