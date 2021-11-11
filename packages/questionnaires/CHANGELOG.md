@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.0...@molgenis-ui/questionnaires@3.4.1) (2021-11-11)
+
+
+### Bug Fixes
+
+* updated forms version for validation fixes ([4f8e0d2](https://github.com/molgenis/molgenis-frontend/commit/4f8e0d23d9744dd2977f3b1b803a32cb1febd1a5))
+
+
+
+
+
 # [3.4.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.3.2...@molgenis-ui/questionnaires@3.4.0) (2021-07-02)
 
 
