@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.5.0...@molgenis-ui/data-row-edit@5.5.1) (2021-11-11)
+
+
+### Bug Fixes
+
+* versionbump of forms for the new fixes regarding the validation ([ed4613b](https://github.com/molgenis/molgenis-frontend/commit/ed4613b2cc8cfbf63cb21cac0085d57412e51bcf))
+
+
+
+
+
 # [5.5.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.4.0...@molgenis-ui/data-row-edit@5.5.0) (2021-08-11)
 
 
