@@ -28,7 +28,7 @@
     "vue-router": "^3.4.6"
   },
   "devDependencies": {
-    "@molgenis/molgenis-ui-form": "^5.5.1",
+    "@molgenis/molgenis-ui-form": "^5.8.1",
     "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
