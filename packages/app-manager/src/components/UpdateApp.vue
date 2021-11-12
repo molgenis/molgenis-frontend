@@ -1,8 +1,8 @@
 <template>
   <div class="d-inline">
     <input
-          id="app-file-input"
-          ref="app-file-input-field"
+          :id="appId"
+          :ref="appId"
           @change="selectedFile"
           type="file"
           v-show="false"
@@ -48,7 +48,7 @@ export default {
     },
     triggerFileBrowser () {
       // Trigger file upload by clicking the hidden input
-      document.getElementById('app-file-input').click()
+      document.getElementById(this.appId).click()
     },
     selectedFile (event) {
       this.file = event.target.files[0]
@@ -58,7 +58,7 @@ export default {
       this.$store.dispatch('UPDATE_APP', { id: this.appId, file: this.file, updateRuntimeOptions: this.updateRuntimeOptions })
 
       // Clear the existing value to make it possible to upload the same file again
-      this.$refs['app-file-input-field'].value = ''
+      this.$refs[this.appId].value = ''
       this.file = {}
       this.updateRuntimeOptions = false
     }
