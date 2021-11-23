@@ -164,7 +164,11 @@ describe('MultiFilter.vue', () => {
       wrapper.setProps({ returnTypeAsObject: true })
       const checkbox = wrapper.find('input[type=checkbox]').element as HTMLInputElement
       await checkbox.click()
-      expect(wrapper.emitted().input).toEqual([[[{ text: 'Red', value: 'red' }]]])
+
+      // waiting for async behaviour
+      wrapper.vm.$nextTick(() => 
+        expect(wrapper.emitted().input).toEqual([[[{ text: 'Red', value: 'red' }]]])
+      )
     })
   })
 
