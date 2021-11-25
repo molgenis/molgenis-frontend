@@ -195,7 +195,8 @@ export default {
     }
   },
   watch: {
-    selection (newValue) {
+    async selection (newValue) {
+
       let newSelection
       if (this.externalUpdate) {
         this.externalUpdate = false
@@ -203,6 +204,8 @@ export default {
       }
 
       if (this.returnTypeAsObject) {
+        await this.checkMissingOptions()
+      
         newSelection = Object.assign(
           newValue,
           this.multifilterOptions.filter(mfo => newValue.includes(mfo.value))
@@ -210,20 +213,19 @@ export default {
       } else {
         newSelection = [...newValue]
       }
-
+      
       this.$emit("input", newSelection)
     },
-    async value () {
+    value () {
       this.setSelection()
-      // We can get a value which might be outside the 100 initial range.
-      await this.checkMissingOptions()
     },
-    query (queryValue) {
+    async query (queryValue) {
       if (this.triggerQuery) {
         clearTimeout(this.triggerQuery)
       }
 
       if (!queryValue || !queryValue.length) {
+
         this.inputOptions = this.sort(this.initialOptions)
         return
       }
@@ -312,10 +314,9 @@ export default {
 
       const comparison = this.inputOptions.map(io => io.value)
       const newValues = values.filter(value => !comparison.includes(value))
-
       if (newValues.length) {
         const newOptions = await this.options({
-          nameAttribute: "label",
+          nameAttribute: "id",
           queryType: "in",
           query: newValues.join(",")
         })
@@ -339,7 +340,7 @@ export default {
         this.setSelection()
         // Get the initial selected
         selectedOptions = await this.options({
-          nameAttribute: "label",
+          nameAttribute: "id",
           queryType: "in",
           query: this.selection.join(",")
         })
