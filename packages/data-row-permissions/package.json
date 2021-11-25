@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/data-row-permissions",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "author": "Jelmer Veen <https://github.com/jelmerveen>",
   "license": "LGPL-3.0",
   "main": "dist/index.html",
@@ -23,7 +23,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^2.0.2",
-    "@molgenis-ui/components-library": "^2.7.15",
+    "@molgenis-ui/components-library": "^2.7.16",
     "@molgenis/molgenis-api-client": "^3.1.4",
     "@molgenis/molgenis-i18n-js": "^1.0.0",
     "@molgenis/molgenis-ui-context": "^1.6.5",

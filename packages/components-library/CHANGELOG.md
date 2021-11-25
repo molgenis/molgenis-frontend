@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.16](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.15...@molgenis-ui/components-library@2.7.16) (2021-11-25)
+
+
+### Bug Fixes
+
+* multifilter now correctly emit selected values when searching and has return objects enabled ([99e1b34](https://github.com/molgenis/molgenis-frontend/commit/99e1b34f48b28cf085a703632c756ac852bdc47b))
+
+
+
+
+
 ## [2.7.15](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/components-library@2.7.14...@molgenis-ui/components-library@2.7.15) (2021-11-02)
 
 
