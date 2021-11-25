@@ -11,6 +11,9 @@ build-date: ${buildDate}`
 
 const target = 'https://master.dev.molgenis.org'
 module.exports = {
+  chainWebpack: (config) => {
+    config.resolve.symlinks(false) // need this to do yarn link on ui-forms, so linter won't go ballistic
+  },
   filenameHashing: false,
   outputDir: 'dist',
   publicPath: process.env.NODE_ENV === 'production'
@@ -32,7 +35,7 @@ module.exports = {
     config.devtool = 'source-map'
     config.externals = {
       bootstrap: 'bootstrap',
-      '@molgenis/molgenis-ui-form': 'window["molgenis-ui-form"]'
+      '@molgenis/molgenis-ui-form': 'window["molgenis-ui-form"]' // comment this out if you link molgenis forms lib
     }
     config.plugins.push(
       new BannerPlugin({
