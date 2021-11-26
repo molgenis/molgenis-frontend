@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.4.1...@molgenis-ui/settings@4.4.2) (2021-11-26)
+
+
+### Bug Fixes
+
+* updated data-explorer, questionnaires, settings to latest form ([72f7386](https://github.com/molgenis/molgenis-frontend/commit/72f7386195116769c9df3bc0006f5eba7775d53c))
+
+
+
+
+
 ## [4.4.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.4.0...@molgenis-ui/settings@4.4.1) (2021-08-25)
 
 **Note:** Version bump only for package @molgenis-ui/settings

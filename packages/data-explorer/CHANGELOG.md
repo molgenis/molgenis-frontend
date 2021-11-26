@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.13.10](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.13.9...@molgenis-ui/data-explorer@3.13.10) (2021-11-26)
+
+
+### Bug Fixes
+
+* updated data-explorer, questionnaires, settings to latest form ([72f7386](https://github.com/molgenis/molgenis-frontend/commit/72f7386195116769c9df3bc0006f5eba7775d53c))
+
+
+
+
+
 ## [3.13.9](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.13.8...@molgenis-ui/data-explorer@3.13.9) (2021-11-25)
 
 **Note:** Version bump only for package @molgenis-ui/data-explorer
