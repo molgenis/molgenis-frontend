@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.5.3...@molgenis-ui/data-row-edit@5.5.4) (2022-01-18)
+
+
+### Bug Fixes
+
+* bumped forms to 5.8.4 for bug that didn't find the xref option below the first 100 ([#723](https://github.com/molgenis/molgenis-frontend/issues/723)) ([7513b89](https://github.com/molgenis/molgenis-frontend/commit/7513b890794af35571d0a3be6b1e94e23aeb3f94))
+
+
+
+
+
 ## [5.5.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.5.2...@molgenis-ui/data-row-edit@5.5.3) (2021-11-26)
 
 
