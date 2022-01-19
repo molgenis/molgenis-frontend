@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.6.0](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.5.4...@molgenis-ui/data-row-edit@5.6.0) (2022-01-19)
+
+
+### Features
+
+* make cancel button red ([2453e99](https://github.com/molgenis/molgenis-frontend/commit/2453e998235b776f89c7a7b55479a631ddf57a09))
+
+
+
+
+
 ## [5.5.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.5.3...@molgenis-ui/data-row-edit@5.5.4) (2022-01-18)
 
 
