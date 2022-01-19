@@ -5,12 +5,12 @@
       <div class="row">
         <div class="col-md-12">
           <div
-            id="alert-message"
             v-if="alert"
+            id="alert-message"
             :class="'alert alert-' + alert.type"
             role="alert"
           >
-            <button @click="clearAlert()" type="button" class="close">
+            <button type="button" class="close" @click="clearAlert()">
               <span aria-hidden="true">&times;</span>
             </button>
             <span id="message-span">{{ alert.message }}</span>
@@ -22,7 +22,7 @@
         <nav v-if="parent" aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#" v-on:click.prevent="showParent()"
+              <a href="#" @click.prevent="showParent()"
                 >{{ parent.dataTableLabel }}
               </a>
             </li>
@@ -35,23 +35,22 @@
 
         <form-component
           id="data-row-edit-form"
-          :formFields="formFields"
-          :initialFormData="formData"
-          :formState="formState"
+          :form-fields="formFields"
+          :initial-form-data="formData"
+          :form-state="formState"
           :options="formComponentOptions"
           @valueChange="onValueChanged"
           @addOptionRequest="onAddOptionRequest"
-        >
-        </form-component>
+        />
 
         <div class="row">
           <div class="col-md-12">
             <button
               id="cancel-btn"
-              @click.prevent="onCancelClick"
               class="btn btn-danger mr-1"
+              @click.prevent="onCancelClick"
             >
-              {{ "data-row-edit-cancel-button-label" | i18n }}
+              {{ 'data-row-edit-cancel-button-label' | i18n }}
             </button>
 
             <button
@@ -61,7 +60,7 @@
               type="submit"
               @click.prevent="onSubmit"
             >
-              {{ "data-row-edit-save-button-label" | i18n }}
+              {{ 'data-row-edit-save-button-label' | i18n }}
             </button>
 
             <button
@@ -71,8 +70,8 @@
               type="button"
               disabled="disabled"
             >
-              {{ "data-row-edit-save-busy-state-label" | i18n }}
-              <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+              {{ 'data-row-edit-save-busy-state-label' | i18n }}
+              <i class="fa fa-spinner fa-spin" aria-hidden="true" />
             </button>
 
             <span
@@ -84,7 +83,7 @@
               "
               class="alert text-danger"
             >
-              {{ "data-row-edit-invalid-fields-msg" | i18n }}
+              {{ 'data-row-edit-invalid-fields-msg' | i18n }}
             </span>
             <span
               v-else-if="alert && alert.type === 'danger' && alert.message"
@@ -96,46 +95,49 @@
         </div>
       </div>
       <div v-else class="">
-        <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i>
+        <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true" />
       </div>
     </div>
 
-    <div ref="refContainer"></div>
+    <div ref="refContainer" />
   </div>
 </template>
 
 <script>
-import { FormComponent, EntityToFormMapper } from "@molgenis/molgenis-ui-form"
-import * as repository from "@/repository/dataRowRepository"
-import DataRowEdit from "@/components/DataRowEdit"
-import Vue from "vue"
+import { FormComponent, EntityToFormMapper } from '@molgenis/molgenis-ui-form'
+import * as repository from '@/repository/dataRowRepository'
+import DataRowEdit from '@/components/DataRowEdit'
+import Vue from 'vue'
 
 export default {
-  name: "DataRowEdit",
+  name: 'DataRowEdit',
+  components: {
+    FormComponent
+  },
   props: {
     dataTableId: {
       type: String,
-      required: true,
+      required: true
     },
     dataRowId: {
       type: String,
       required: false,
-      default: null,
+      default: null
     },
     parent: {
       type: Object,
       required: false,
-      default: null,
+      default: null
     },
     formSettings: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       dataExplorerBaseUrl: window.__INITIAL_STATE__.dataExplorerBaseUrl,
-      dataTableLabel: "",
+      dataTableLabel: '',
       formFields: [],
       formData: {},
       formState: {},
@@ -146,13 +148,16 @@ export default {
       formComponentOptions: {
         showEyeButton: true,
         allowAddingOptions: true,
-        inputDebounceTime: 500,
+        inputDebounceTime: 500
       },
       showRef: false,
       idAttribute: null,
       labelAttribute: null,
-      referenceMap: {}, // Map from field id to entityName for all reference entities
+      referenceMap: {} // Map from field id to entityName for all reference entities
     }
+  },
+  created: async function() {
+    this.fetchTableData(this.dataTableId, this.dataRowId)
   },
   methods: {
     onValueChanged(updatedFormData) {
@@ -171,8 +176,8 @@ export default {
         propsData: {
           dataTableId: referenceTableId,
           parent: this,
-          formSettings: this.formSettings,
-        },
+          formSettings: this.formSettings
+        }
       })
       refDataRowEdit.$mount()
 
@@ -198,13 +203,13 @@ export default {
             this.dataRowId
           )
           if (this.parent) {
-            const newOptionLocation = response.headers.get("Location")
+            const newOptionLocation = response.headers.get('Location')
             const createdRow = await repository.fetchOption(newOptionLocation)
             // Create a new option object to pass to the reference select
             this.parent.optionCreatedCallback({
               id: createdRow[this.idAttribute],
               value: createdRow[this.idAttribute],
-              label: createdRow[this.labelAttribute],
+              label: createdRow[this.labelAttribute]
             })
             this.showParent()
           } else {
@@ -237,15 +242,15 @@ export default {
       const alertMsg = this.errorToMessage(error)
       this.showForm = true
       this.isSaving = false
-      this.alert = { message: alertMsg, type: "danger" }
+      this.alert = { message: alertMsg, type: 'danger' }
     },
     errorToMessage(error) {
-      if (typeof error === "string") {
+      if (typeof error === 'string') {
         return error
       } else if (error && Array.isArray(error.errors) && error.errors.length) {
         return `${error.errors[0].message} (${error.errors[0].code})`
       } else {
-        return this.$t("data-row-edit-default-error-message")
+        return this.$t('data-row-edit-default-error-message')
       }
     },
     /**
@@ -254,16 +259,14 @@ export default {
      */
     buildReferenceMap(metaData) {
       // recursily walk compound
-      const flattenAttr = (attr) =>
+      const flattenAttr = attr =>
         attr.attributes && attr.attributes.length
           ? attr.attributes.flatMap(flattenAttr)
           : [attr]
 
       return metaData.attributes
         .flatMap(flattenAttr)
-        .filter((attr) =>
-          Object.prototype.hasOwnProperty.call(attr, "refEntity")
-        )
+        .filter(attr => Object.prototype.hasOwnProperty.call(attr, 'refEntity'))
         .reduce((accum, attr) => {
           accum[attr.name] = attr.refEntity.name
           return accum
@@ -272,13 +275,13 @@ export default {
     async fetchTableData(dataTableId, dataRowId) {
       const mapperOptions = {
         showNonVisibleAttributes: true,
-        mapperMode: dataRowId ? "UPDATE" : "CREATE",
+        mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
         formOptions: this.formSettings,
         booleanLabels: {
-          trueLabel: this.$t("data-row-edit-boolean-true"),
-          falseLabel: this.$t("data-row-edit-boolean-false"),
-          nillLabel: this.$t("data-row-edit-boolean-null"),
-        },
+          trueLabel: this.$t('data-row-edit-boolean-true'),
+          falseLabel: this.$t('data-row-edit-boolean-false'),
+          nillLabel: this.$t('data-row-edit-boolean-null')
+        }
       }
       try {
         const resp = await repository.fetch(dataTableId, dataRowId)
@@ -297,13 +300,7 @@ export default {
       } catch (e) {
         this.handleError(e)
       }
-    },
-  },
-  created: async function () {
-    this.fetchTableData(this.dataTableId, this.dataRowId)
-  },
-  components: {
-    FormComponent,
-  },
+    }
+  }
 }
 </script>
