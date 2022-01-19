@@ -1,46 +1,55 @@
 <template>
   <div class="container">
-
     <div v-show="!showRef">
-
       <!-- Alert container -->
       <div class="row">
         <div class="col-md-12">
-          <div id="alert-message" v-if="alert" :class="'alert alert-' + alert.type" role="alert">
-            <button @click="clearAlert()" type="button" class="close">
+          <div
+            v-if="alert"
+            id="alert-message"
+            :class="'alert alert-' + alert.type"
+            role="alert"
+          >
+            <button type="button" class="close" @click="clearAlert()">
               <span aria-hidden="true">&times;</span>
             </button>
-            <span id="message-span">{{alert.message}}</span>
+            <span id="message-span">{{ alert.message }}</span>
           </div>
         </div>
       </div>
 
       <div v-if="showForm">
-
-        <nav  v-if="parent" aria-label="breadcrumb">
+        <nav v-if="parent" aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#" v-on:click.prevent="showParent()">{{parent.dataTableLabel}} </a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{dataTableLabel}}</li>
+            <li class="breadcrumb-item">
+              <a href="#" @click.prevent="showParent()"
+                >{{ parent.dataTableLabel }}
+              </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              {{ dataTableLabel }}
+            </li>
           </ol>
         </nav>
-        <h1>{{dataTableLabel}}</h1>
+        <h1>{{ dataTableLabel }}</h1>
 
         <form-component
           id="data-row-edit-form"
-          :formFields="formFields"
-          :initialFormData="formData"
-          :formState="formState"
+          :form-fields="formFields"
+          :initial-form-data="formData"
+          :form-state="formState"
           :options="formComponentOptions"
           @valueChange="onValueChanged"
-          @addOptionRequest="onAddOptionRequest">
-        </form-component>
+          @addOptionRequest="onAddOptionRequest"
+        />
 
         <div class="row">
           <div class="col-md-12">
             <button
               id="cancel-btn"
+              class="btn btn-danger mr-1"
               @click.prevent="onCancelClick"
-              class="btn btn-secondary mr-1">
+            >
               {{ 'data-row-edit-cancel-button-label' | i18n }}
             </button>
 
@@ -49,7 +58,8 @@
               id="save-btn"
               class="btn btn-primary"
               type="submit"
-              @click.prevent="onSubmit">
+              @click.prevent="onSubmit"
+            >
               {{ 'data-row-edit-save-button-label' | i18n }}
             </button>
 
@@ -58,32 +68,39 @@
               id="save-btn-saving"
               class="btn btn-primary"
               type="button"
-              disabled="disabled">
-              {{ 'data-row-edit-save-busy-state-label' | i18n }} <i
-              class="fa fa-spinner fa-spin " aria-hidden="true"></i>
+              disabled="disabled"
+            >
+              {{ 'data-row-edit-save-busy-state-label' | i18n }}
+              <i class="fa fa-spinner fa-spin" aria-hidden="true" />
             </button>
 
-            <span v-if="!isSaving && formState.$invalid && formState.$touched && saveFailed"
-                  class="alert text-danger">
-                {{ 'data-row-edit-invalid-fields-msg' | i18n }}
+            <span
+              v-if="
+                !isSaving &&
+                formState.$invalid &&
+                formState.$touched &&
+                saveFailed
+              "
+              class="alert text-danger"
+            >
+              {{ 'data-row-edit-invalid-fields-msg' | i18n }}
             </span>
-            <span v-else-if="alert && alert.type === 'danger' && alert.message"
-                  class="alert text-danger">
-                {{ alert.message }}
+            <span
+              v-else-if="alert && alert.type === 'danger' && alert.message"
+              class="alert text-danger"
+            >
+              {{ alert.message }}
             </span>
-
           </div>
         </div>
-
       </div>
-      <div v-else class=""><i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true"></i></div>
-
+      <div v-else class="">
+        <i class="fa fa-spinner fa-spin fa-3x" aria-hidden="true" />
+      </div>
     </div>
 
-    <div ref="refContainer"></div>
-
+    <div ref="refContainer" />
   </div>
-
 </template>
 
 <script>
@@ -94,180 +111,196 @@ import Vue from 'vue'
 
 export default {
   name: 'DataRowEdit',
-    props: {
-      dataTableId: {
-        type: String,
-        required: true
-      },
-      dataRowId: {
-        type: String,
-        required: false,
-        default: null
-      },
-      parent: {
-        type: Object,
-        required: false,
-        default: null
-      },
-      formSettings: {
-        type: Object,
-        required: true
-      }
+  components: {
+    FormComponent
+  },
+  props: {
+    dataTableId: {
+      type: String,
+      required: true
     },
-    data () {
-      return {
-        dataExplorerBaseUrl: window.__INITIAL_STATE__.dataExplorerBaseUrl,
-        dataTableLabel: '',
-        formFields: [],
-        formData: {},
-        formState: {},
-        alert: null,
-        showForm: false,
-        isSaving: false,
-        saveFailed: false,
-        formComponentOptions: {
-          showEyeButton: true,
-          allowAddingOptions: true,
-          inputDebounceTime: 500
-        },
-        showRef: false,
-        idAttribute: null,
-        labelAttribute: null,
-        referenceMap: {} // Map from field id to entityName for all reference entities
-      }
+    dataRowId: {
+      type: String,
+      required: false,
+      default: null
     },
-    methods: {
-      onValueChanged (updatedFormData) {
-        this.formData = updatedFormData
+    parent: {
+      type: Object,
+      required: false,
+      default: null
+    },
+    formSettings: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      dataExplorerBaseUrl: window.__INITIAL_STATE__.dataExplorerBaseUrl,
+      dataTableLabel: '',
+      formFields: [],
+      formData: {},
+      formState: {},
+      alert: null,
+      showForm: false,
+      isSaving: false,
+      saveFailed: false,
+      formComponentOptions: {
+        showEyeButton: true,
+        allowAddingOptions: true,
+        inputDebounceTime: 500
       },
-      onAddOptionRequest (optionCreatedCallback, event, sourceField) {
-        // Translate the reference field id (short name) into a tableId (full molgenis name)
-        const referenceTableId = this.referenceMap[sourceField.id]
+      showRef: false,
+      idAttribute: null,
+      labelAttribute: null,
+      referenceMap: {} // Map from field id to entityName for all reference entities
+    }
+  },
+  created: async function() {
+    this.fetchTableData(this.dataTableId, this.dataRowId)
+  },
+  methods: {
+    onValueChanged(updatedFormData) {
+      this.formData = updatedFormData
+    },
+    onAddOptionRequest(optionCreatedCallback, event, sourceField) {
+      // Translate the reference field id (short name) into a tableId (full molgenis name)
+      const referenceTableId = this.referenceMap[sourceField.id]
 
-        // Store the afterOption creation callback on the parent
-        this.optionCreatedCallback = optionCreatedCallback
+      // Store the afterOption creation callback on the parent
+      this.optionCreatedCallback = optionCreatedCallback
 
-        // Create a new child DataRowEdit for the reference option passing the parent for context
-        const ComponentClass = Vue.extend(DataRowEdit)
-        const refDataRowEdit = new ComponentClass({
-            propsData: { dataTableId: referenceTableId, parent: this, formSettings: this.formSettings }
-        })
-        refDataRowEdit.$mount()
-
-        // Show the reference option form and hide the parent form
-        this.setRef(true) // hide parent
-        this.$refs.refContainer.appendChild(refDataRowEdit.$el) // show child
-      },
-      touchField (field) {
-        field.children ? field.children.forEach(this.touchField) : this.formState[field.id].$touched = true
-      },
-      async onSubmit () {
-        this.formFields.forEach(this.touchField) // validate all fields
-
-        if (this.formState.$valid) {
-          this.isSaving = true
-          try {
-            const response = await repository.save(this.formData, this.formFields, this.dataTableId, this.dataRowId)
-            if (this.parent) {
-              const newOptionLocation = response.headers.get('Location');
-              const createdRow = await repository.fetchOption(newOptionLocation)
-              // Create a new option object to pass to the reference select
-              this.parent.optionCreatedCallback({
-                id: createdRow[this.idAttribute],
-                value: createdRow[this.idAttribute],
-                label: createdRow[this.labelAttribute]
-              })
-              this.showParent()
-            } else {
-              this.goBackToPluginCaller()
-            }
-
-          } catch (e) {
-            this.handleError(e)
-          }
-        } else {
-          this.saveFailed = true
+      // Create a new child DataRowEdit for the reference option passing the parent for context
+      const ComponentClass = Vue.extend(DataRowEdit)
+      const refDataRowEdit = new ComponentClass({
+        propsData: {
+          dataTableId: referenceTableId,
+          parent: this,
+          formSettings: this.formSettings
         }
-      },
-      onCancelClick () {
-        this.parent ? this.showParent() : this.goBackToPluginCaller()
-      },
-      goBackToPluginCaller () {
-        window.history.go(-1)
-      },
-      clearAlert () {
-        this.alert = null
-      },
-      setRef(ref){
-        this.showRef = ref
-      },
-      showParent () {
-        this.parent.setRef(false) // show parent
-        this.parent.$refs.refContainer.removeChild(this.$el) // destroy child
-      },
-      handleError (error) {
-        const alertMsg = this.errorToMessage(error)
-        this.showForm = true
-        this.isSaving = false
-        this.alert = {message: alertMsg, type: 'danger'}
-      },
-      errorToMessage (error) {
-        if(typeof error === 'string') {
-          return error
-        } else if (error && Array.isArray(error.errors) && error.errors.length) {
-          return `${error.errors[0].message} (${error.errors[0].code})`
-        } else {
-          return this.$t('data-row-edit-default-error-message')
-        }
-      },
-      /**
-       * Takes molgenis api-v2 metaData object and builds a map from fieldName to referenceEntity name
-       * Only field that have a reference entity are included in the map
-       */
-      buildReferenceMap (metaData) {
-        // recursily walk compound
-        const flattenAttr = (attr) => attr.attributes && attr.attributes.length ? attr.attributes.flatMap(flattenAttr) : [attr] 
-        
-        return metaData.attributes
-          .flatMap(flattenAttr)
-          .filter(attr => Object.prototype.hasOwnProperty.call(attr, 'refEntity'))
-          .reduce((accum, attr) => {
-          accum[attr.name] = attr.refEntity.name
-            return accum
-          }, {})
+      })
+      refDataRowEdit.$mount()
 
-      },
-      async fetchTableData (dataTableId, dataRowId) {
-        const mapperOptions = {
-          showNonVisibleAttributes: true,
-          mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
-          formOptions: this.formSettings,
-          booleanLabels: {
-            trueLabel: this.$t('data-row-edit-boolean-true'),
-            falseLabel: this.$t('data-row-edit-boolean-false'),
-            nillLabel: this.$t('data-row-edit-boolean-null')
-          }
-        }
+      // Show the reference option form and hide the parent form
+      this.setRef(true) // hide parent
+      this.$refs.refContainer.appendChild(refDataRowEdit.$el) // show child
+    },
+    touchField(field) {
+      field.children
+        ? field.children.forEach(this.touchField)
+        : (this.formState[field.id].$touched = true)
+    },
+    async onSubmit() {
+      this.formFields.forEach(this.touchField) // validate all fields
+
+      if (this.formState.$valid) {
+        this.isSaving = true
         try {
-          const resp = await repository.fetch(dataTableId, dataRowId)
-          this.idAttribute = resp.meta.idAttribute
-          this.labelAttribute = resp.meta.labelAttribute
-          this.referenceMap = this.buildReferenceMap(resp.meta)
-          this.dataTableLabel = resp.meta.label
-          const mappedData = EntityToFormMapper.generateForm(resp.meta, resp.rowData, mapperOptions)
-          this.formFields = mappedData.formFields
-          this.formData = mappedData.formData
-          this.showForm = true
+          const response = await repository.save(
+            this.formData,
+            this.formFields,
+            this.dataTableId,
+            this.dataRowId
+          )
+          if (this.parent) {
+            const newOptionLocation = response.headers.get('Location')
+            const createdRow = await repository.fetchOption(newOptionLocation)
+            // Create a new option object to pass to the reference select
+            this.parent.optionCreatedCallback({
+              id: createdRow[this.idAttribute],
+              value: createdRow[this.idAttribute],
+              label: createdRow[this.labelAttribute]
+            })
+            this.showParent()
+          } else {
+            this.goBackToPluginCaller()
+          }
         } catch (e) {
           this.handleError(e)
         }
+      } else {
+        this.saveFailed = true
       }
     },
-    created: async function () {
-      this.fetchTableData(this.dataTableId, this.dataRowId)
+    onCancelClick() {
+      this.parent ? this.showParent() : this.goBackToPluginCaller()
     },
-    components: {
-      FormComponent
+    goBackToPluginCaller() {
+      window.history.go(-1)
+    },
+    clearAlert() {
+      this.alert = null
+    },
+    setRef(ref) {
+      this.showRef = ref
+    },
+    showParent() {
+      this.parent.setRef(false) // show parent
+      this.parent.$refs.refContainer.removeChild(this.$el) // destroy child
+    },
+    handleError(error) {
+      const alertMsg = this.errorToMessage(error)
+      this.showForm = true
+      this.isSaving = false
+      this.alert = { message: alertMsg, type: 'danger' }
+    },
+    errorToMessage(error) {
+      if (typeof error === 'string') {
+        return error
+      } else if (error && Array.isArray(error.errors) && error.errors.length) {
+        return `${error.errors[0].message} (${error.errors[0].code})`
+      } else {
+        return this.$t('data-row-edit-default-error-message')
+      }
+    },
+    /**
+     * Takes molgenis api-v2 metaData object and builds a map from fieldName to referenceEntity name
+     * Only field that have a reference entity are included in the map
+     */
+    buildReferenceMap(metaData) {
+      // recursily walk compound
+      const flattenAttr = attr =>
+        attr.attributes && attr.attributes.length
+          ? attr.attributes.flatMap(flattenAttr)
+          : [attr]
+
+      return metaData.attributes
+        .flatMap(flattenAttr)
+        .filter(attr => Object.prototype.hasOwnProperty.call(attr, 'refEntity'))
+        .reduce((accum, attr) => {
+          accum[attr.name] = attr.refEntity.name
+          return accum
+        }, {})
+    },
+    async fetchTableData(dataTableId, dataRowId) {
+      const mapperOptions = {
+        showNonVisibleAttributes: true,
+        mapperMode: dataRowId ? 'UPDATE' : 'CREATE',
+        formOptions: this.formSettings,
+        booleanLabels: {
+          trueLabel: this.$t('data-row-edit-boolean-true'),
+          falseLabel: this.$t('data-row-edit-boolean-false'),
+          nillLabel: this.$t('data-row-edit-boolean-null')
+        }
+      }
+      try {
+        const resp = await repository.fetch(dataTableId, dataRowId)
+        this.idAttribute = resp.meta.idAttribute
+        this.labelAttribute = resp.meta.labelAttribute
+        this.referenceMap = this.buildReferenceMap(resp.meta)
+        this.dataTableLabel = resp.meta.label
+        const mappedData = EntityToFormMapper.generateForm(
+          resp.meta,
+          resp.rowData,
+          mapperOptions
+        )
+        this.formFields = mappedData.formFields
+        this.formData = mappedData.formData
+        this.showForm = true
+      } catch (e) {
+        this.handleError(e)
+      }
     }
+  }
 }
 </script>
