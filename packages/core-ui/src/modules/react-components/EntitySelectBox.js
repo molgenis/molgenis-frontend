@@ -137,7 +137,7 @@ var EntitySelectBox = React.createClass({
         if (term.length > 0) {
             var attrs = this._getAttrs();
             for (var i = 0; i < attrs.length; ++i) {
-                var operator = 'SEARCH';
+                var operator = 'LIKE';
               switch (this.state.entity.allAttributes[attrs[i]].fieldType) {
                     case 'INT':
                     case 'LONG':
@@ -146,6 +146,9 @@ var EntitySelectBox = React.createClass({
                     case 'DATE_TIME':
                     case 'DECIMAL':
                         operator = 'EQUALS';
+                        break;
+                    case 'TEXT':
+                        operator = 'SEARCH'
                         break;
                     case 'COMPOUND':
                         continue;
