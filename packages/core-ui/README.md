@@ -1,3 +1,6 @@
+## Contents
+This package contains React components that are used in some plugins of MOLGENIS (including the Data Explorer). Some of the components of the Data Explorer (including the **filters**) are still part of molgenis/molgenis and can be found in `molgenis-dataexplorer/src/main/resources/js/`.
+
 ## Developing locally
 
 There is no way to serve and link the code to MOLGENIS. There's a workaround: you will need to copy the `dist` contents to a build of MOLGENIS. Here's how to do it:
