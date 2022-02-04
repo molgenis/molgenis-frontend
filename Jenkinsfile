@@ -376,7 +376,7 @@ pipeline {
                 GIT_AUTHOR_NAME = 'molgenis-jenkins'
                 GIT_COMMITTER_EMAIL = 'molgenis+ci@gmail.com'
                 GIT_COMMITTER_NAME = 'molgenis-jenkins'
-                TAG = '9'
+                TAG = '10'
                 DOCKER_CONFIG='/root/.docker'
             }
             stages {
