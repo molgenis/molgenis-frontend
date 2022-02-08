@@ -7,3 +7,4 @@
 - [ ] No warnings during install
 - [ ] Updated javascript typing
 - [ ] Add fix/feature to [molgenis-frontend release draft](https://github.com/molgenis/molgenis-frontend/releases)
+- [ ] Update package version in [molgenis-frontend release draft](https://github.com/molgenis/molgenis-frontend/releases)
