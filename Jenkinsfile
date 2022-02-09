@@ -294,7 +294,7 @@ pipeline {
                         "--set environment=dev " +
                         "--set image.tag=${TAG} " +
                         "--set image.repository=${LOCAL_REGISTRY} " +
-                        "--set proxy.backend.service.targetNamespace=molgenis-master " +
+                        "--set proxy.backend.service.targetNamespace=molgenis-abcde " +
                         "--set proxy.backend.service.targetRelease=master " +
                         "--set image.pullPolicy=Always " +
                         "--set readinessPath=/@molgenis-ui/heartbeat.txt"
@@ -376,7 +376,7 @@ pipeline {
                 GIT_AUTHOR_NAME = 'molgenis-jenkins'
                 GIT_COMMITTER_EMAIL = 'molgenis+ci@gmail.com'
                 GIT_COMMITTER_NAME = 'molgenis-jenkins'
-                TAG = '9'
+                TAG = '10'
                 DOCKER_CONFIG='/root/.docker'
             }
             stages {
