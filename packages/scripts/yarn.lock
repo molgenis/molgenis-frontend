@@ -776,16 +776,6 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@molgenis/molgenis-api-client@^2.1.2":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-api-client/-/molgenis-api-client-2.3.0.tgz#7bb085006508ad908d8dcc755d7a01703721b2df"
-  integrity sha512-lsbBM/lGpexdF02jQTFNv4MZb0ytFq+l5irSEUK0Dsr60hw/sLxwCcyzyNAZNtFuyqu0JLcqXdn8BDyyKrAdLA==
-  dependencies:
-    babel-runtime "^6.11.6"
-    form-data "^2.3.1"
-    isomorphic-fetch "^2.2.1"
-    lodash "^4.17.4"
-
 "@molgenis/molgenis-api-client@^3.1.0":
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/@molgenis/molgenis-api-client/-/molgenis-api-client-3.1.4.tgz#f67499d0068caa57fa2d3d9600d3e3be2f8c0e67"
@@ -796,6 +786,16 @@
     isomorphic-fetch "^2.2.1"
     lodash "^4.17.4"
 
+"@molgenis/molgenis-api-client@^3.1.4":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-api-client/-/molgenis-api-client-3.2.0.tgz#b96b015ecc01e98d1df518fea6e9f752d05c856f"
+  integrity sha512-UPbu+iEYU7irDtt/nys2yRoYZuXGP+E45Mp5oY/PvbhCjUQfDck3aQ/BkSAjCw6JOU1F1DaNhkfGoO0AxozGxQ==
+  dependencies:
+    babel-runtime "^6.26.0"
+    form-data "^2.3.1"
+    isomorphic-fetch "^2.2.1"
+    lodash "^4.17.21"
+
 "@molgenis/molgenis-i18n-js@^0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@molgenis/molgenis-i18n-js/-/molgenis-i18n-js-0.1.1.tgz#6d6350aa2a221ac0537a7b58c564cc407e1da7ed"
@@ -805,19 +805,19 @@
     i18next-xhr-backend "^1.4.1"
     moment "^2.18.1"
 
-"@molgenis/molgenis-ui-form@^5.5.1":
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.5.1.tgz#328b4d3f42af9a4cffc165634981f431693bd945"
-  integrity sha512-IKwbIFhd4pOhV7IWK3lKuj8N3fcIFi8Aa4Ymj8MGVQHEGrsA3Vf/Z2MMxHvEy8U8IRPzH4aHJYuBRIdErIJIIA==
+"@molgenis/molgenis-ui-form@^5.9.2":
+  version "5.9.2"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.9.2.tgz#13f0b67a1d7152335af81e21e86aef6effbe9ac5"
+  integrity sha512-NVfOvC833JKCz6tAF/VTWW/ve1lVZtJY0LiYybiLflDdqfOdNOYPDvkaY1NKTzxLCRa6m7f/YeLPwfm4LvBCoA==
   dependencies:
-    "@molgenis/molgenis-api-client" "^2.1.2"
+    "@molgenis/molgenis-api-client" "^3.1.4"
     "@molgenis/rsql" "^0.1.1"
     debounce "^1.1.0"
     moment "^2.20.1"
     vue-code "^1.2.3"
     vue-flatpickr-component "^8.0.0"
     vue-form "^4.10.1"
-    vue-select "^2.6.4"
+    vue-multiselect "^2.1.6"
 
 "@molgenis/rsql@^0.1.1":
   version "0.1.4"
@@ -2126,7 +2126,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.11.6, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -7345,7 +7345,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -11396,15 +11396,15 @@ vue-loader@^15.7.0:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-multiselect@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/vue-multiselect/-/vue-multiselect-2.1.6.tgz#5be5d811a224804a15c43a4edbb7485028a89c7f"
+  integrity sha512-s7jmZPlm9FeueJg1RwJtnE9KNPtME/7C8uRWSfp9/yEN4M8XcS/d+bddoyVwVnvFyRh9msFo0HWeW0vTL8Qv+w==
+
 vue-router@^3.0.2:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.5.1.tgz#edf3cf4907952d1e0583e079237220c5ff6eb6c9"
   integrity sha512-RRQNLT8Mzr8z7eL4p7BtKvRaTSGdCbTy2+Mm5HTJvLGYSSeG9gDzNasJPP/yOYKLy+/cLG/ftrqq5fvkFwBJEw==
-
-vue-select@^2.6.4:
-  version "2.6.4"
-  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-2.6.4.tgz#cb82ea3417a4b0f68101f53528ba1c0b04de5308"
-  integrity sha512-OZIzzGlYwro2QcgAmcn2c4LQDPrYIT3+iaf4WciKPIeFFjgzRti6FC5Qjr2XEPqd85wqtsifuYyxsyb/JoJ4CQ==
 
 vue-style-loader@^4.1.0:
   version "4.1.2"
