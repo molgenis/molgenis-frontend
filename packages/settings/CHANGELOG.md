@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.4.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.4.3...@molgenis-ui/settings@4.4.4) (2022-02-11)
+
+
+### Bug Fixes
+
+* fix yarn lock files ([b42f95b](https://github.com/molgenis/molgenis-frontend/commit/b42f95b73454ce7d16138de8cdfb06418eadd11d))
+
+
+
+
+
 ## [4.4.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/settings@4.4.2...@molgenis-ui/settings@4.4.3) (2022-02-04)
 
 

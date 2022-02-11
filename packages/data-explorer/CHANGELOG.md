@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.13.12](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.13.11...@molgenis-ui/data-explorer@3.13.12) (2022-02-11)
+
+
+### Bug Fixes
+
+* fix yarn lock files ([b42f95b](https://github.com/molgenis/molgenis-frontend/commit/b42f95b73454ce7d16138de8cdfb06418eadd11d))
+
+
+
+
+
 ## [3.13.11](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-explorer@3.13.10...@molgenis-ui/data-explorer@3.13.11) (2022-02-04)
 
 

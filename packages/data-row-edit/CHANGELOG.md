@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.6.1...@molgenis-ui/data-row-edit@5.6.2) (2022-02-11)
+
+
+### Bug Fixes
+
+* fix yarn lock files ([b42f95b](https://github.com/molgenis/molgenis-frontend/commit/b42f95b73454ce7d16138de8cdfb06418eadd11d))
+* version bump ([5d07b27](https://github.com/molgenis/molgenis-frontend/commit/5d07b27c99c02aa420b9fbefe419bcda1044a373))
+
+
+
+
+
 ## [5.6.1](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/data-row-edit@5.6.0...@molgenis-ui/data-row-edit@5.6.1) (2022-02-04)
 
 
