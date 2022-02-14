@@ -9,7 +9,7 @@ pipeline {
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
         npm_config_registry = "https://registry.npmjs.org"
         PACKAGE_DIR = "${env.WORKSPACE}/packages"
-        DOCKER_CONFIG="/root/.docker"
+        DOCKER_CONFIG="/kaniko/.docker"
     }
     stages {
         stage('Prepare') {
