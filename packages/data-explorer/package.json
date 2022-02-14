@@ -1,6 +1,6 @@
 {
   "name": "@molgenis-ui/data-explorer",
-  "version": "3.13.10",
+  "version": "3.13.12",
   "license": "LGPL-3.0",
   "publishConfig": {
     "access": "public"
@@ -51,7 +51,7 @@
     "vuex-router-sync": "5.0.0"
   },
   "devDependencies": {
-    "@molgenis/molgenis-ui-form": "^5.8.3",
+    "@molgenis/molgenis-ui-form": "^5.9.2",
     "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",

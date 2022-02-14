@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.3...@molgenis-ui/questionnaires@3.4.4) (2022-02-11)
+
+
+### Bug Fixes
+
+* fix yarn lock files ([b42f95b](https://github.com/molgenis/molgenis-frontend/commit/b42f95b73454ce7d16138de8cdfb06418eadd11d))
+
+
+
+
+
+## [3.4.3](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.2...@molgenis-ui/questionnaires@3.4.3) (2022-02-04)
+
+
+### Bug Fixes
+
+* upgrade molgenis-ui-form versions ([8eae575](https://github.com/molgenis/molgenis-frontend/commit/8eae57528e24e3bf1aadb0025c92975af5dffef9))
+
+
+
+
+
 ## [3.4.2](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.1...@molgenis-ui/questionnaires@3.4.2) (2021-11-26)
 
 
