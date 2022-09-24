@@ -288,7 +288,7 @@ pipeline {
                     sh "sleep 15s" // wait for deletion
                     sh "rancher apps install " + 
                         "-n ${NAME} " +
-                        "c-l4svj:molgenis-molgenis-frontend " +
+                        "p-tl227:molgenis-helm3-molgenis-frontend " +
                         "${NAME} " +
                         "--no-prompt " +
                         "--set environment=dev " +
