@@ -57,7 +57,8 @@ These version represent the apps that a going to be served.
 **CSS is not loading**
 Please make sure you ran ```docker-compose down``` and then ```docker volume prune```. This will teardown all the existing resources from another deployment.
 
-
+**yarn e2e not working because of chromedriver**
+```yarn add chromedriver --chromedriver-force-download```
 
 
 
