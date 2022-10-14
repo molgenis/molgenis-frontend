@@ -144,4 +144,4 @@ You need to add the following code snipper in your plugin **pom.xml**.
     </build>
 ```
 
-That way MOLGENIS integrates the frontend build with the MOLGENIS package.
+That way MOLGENIS integrates the frontend build with the MOLGENIS package. 
