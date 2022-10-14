@@ -1,7 +1,10 @@
 pipeline {
     agent {
         kubernetes {
-            inheritFrom 'node-erbium'
+            // the shared pod template defined on the Jenkins server config
+            inheritFrom 'shared'
+            // molgenis-frontend pod template defined in molgenis/molgenis-jenkins-pipeline repository
+            yaml libraryResource("pod-templates/molgenis-frontend.yaml")
         }
     }
     environment {
@@ -65,7 +68,7 @@ pipeline {
                 }
             }
         }
-        stage('[PR] Build and Test 1/3') {
+        stage('[PR] Build and Test 1/4') {
             when {
                 changeRequest()
             }
@@ -95,7 +98,7 @@ pipeline {
                 }
             }
         }
-        stage('[PR] Build and Test 2/3') {
+        stage('[PR] Build and Test 2/4') {
             when {
                 changeRequest()
             }
@@ -139,16 +142,6 @@ pipeline {
                         }
                     }
                 }
-                stage('Questionnaires') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/questionnaires") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
                 stage('Data Row Edit') {
                     steps {
                         container('node') {
@@ -161,7 +154,7 @@ pipeline {
                 }
             }
         }
-        stage('[PR] Build and Test 3/3') {
+        stage('[PR] Build and Test 3/4') {
             when {
                 changeRequest()
             }
@@ -170,16 +163,6 @@ pipeline {
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/core-ui") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
-                stage('Scripts') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/scripts") {
                                 sh "yarn build"
                                 sh "yarn unit"
                             }
@@ -216,6 +199,33 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage('[PR] Build and Test 4/4') {
+            when {
+                changeRequest()
+            }
+            parallel {
+                stage('Questionnaires') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/questionnaires") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Scripts') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/scripts") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
                 stage('Data Row Permissions') {
                     steps {
                         container('node') {
@@ -233,15 +243,16 @@ pipeline {
                 changeRequest()
             }
             parallel {
-                stage('Sonar Cube') {
-                    steps {
-                        container('sonar') {
-                            // Fetch the target branch, sonar likes to take a look at it
-                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
-                            sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
-                        }
-                    }
-                }
+                // Requires a new image!
+                // stage('Sonar Cube') {
+                //     steps {
+                //         container('sonar') {
+                //             // Fetch the target branch, sonar likes to take a look at it
+                //             sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                //             sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                //         }
+                //     }
+                // }
                 stage('Codecov') {
                     steps {
                         container('node') {
@@ -288,7 +299,7 @@ pipeline {
                     sh "sleep 15s" // wait for deletion
                     sh "rancher apps install " + 
                         "-n ${NAME} " +
-                        "p-vx5vf:molgenis-helm3-molgenis-frontend " +
+                        "c-l4svj:molgenis-molgenis-frontend " +
                         "${NAME} " +
                         "--no-prompt " +
                         "--set environment=dev " +
@@ -311,6 +322,18 @@ pipeline {
                 }
             }
         }
+        stage('[PR] E2E Test Questionnaires') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/questionnaires") {
+                        sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
+                    }
+                }
+            }
+        }
         stage('[PR] E2E Test Data Explorer 2') {
             when {
                 changeRequest()
@@ -319,18 +342,6 @@ pipeline {
             steps {
                 container('node') {
                     dir("${PACKAGE_DIR}/data-explorer") {
-                        sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
-                    }
-                }
-            }
-        }
-        stage('[PR] E2E Test Questionnaires') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/questionnaires") {
                         sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
                     }
                 }
