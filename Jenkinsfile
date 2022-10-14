@@ -1,7 +1,10 @@
 pipeline {
     agent {
         kubernetes {
-            inheritFrom 'node-erbium'
+            // the shared pod template defined on the Jenkins server config
+            inheritFrom 'shared'
+            // molgenis-frontend pod template defined in molgenis/molgenis-jenkins-pipeline repository
+            yaml libraryResource("pod-templates/molgenis-frontend.yaml")
         }
     }
     environment {
@@ -27,14 +30,6 @@ pipeline {
                         env.DOCKERHUB_AUTH = sh(script: 'vault read -field=value secret/gcc/token/dockerhub', returnStdout: true)
                         env.NPM_TOKEN = sh(script: 'vault read -field=value secret/ops/token/npm', returnStdout: true)
                         env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
-                    }
-                }
-                container('node') {
-                    // We intermittently get a DNS error: non-recoverable failure in name resolution (-4)
-                    // To prevent this, use Google DNS server instead
-                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc --dns 8.8.8.8,8.8.4.4:53 --readyfile /tmp/sauce-ready.txt -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
-                    timeout (1) {
-                        sh "while [ ! -f /tmp/sauce-ready.txt ]; do sleep 1; done"
                     }
                 }
                 sh "git remote set-url origin https://$GITHUB_TOKEN@github.com/${REPOSITORY}.git"
@@ -65,51 +60,118 @@ pipeline {
                 }
             }
         }
-        stage('[PR] Build and Test 1/3') {
+        stage('[PR] Build and Test Components Library') {
             when {
                 changeRequest()
             }
-            parallel {
-                stage('Components Library') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/components-library") {
-                                sh "yarn lint"
-                                sh "yarn build"
-                                sh "yarn styleguide:build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
-                stage('Data Explorer 2') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/data-explorer") {
-                                sh "yarn lint"
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/components-library") {
+                        sh "yarn lint"
+                        sh "yarn build"
+                        sh "yarn styleguide:build"
+                        sh "yarn unit"
                     }
                 }
             }
         }
-        stage('[PR] Build and Test 2/3') {
+        stage('[PR] Build and Test Data Explorer 2') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/data-explorer") {
+                        sh "yarn lint"
+                        sh "yarn build"
+                        sh "yarn unit"
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test App manager') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/app-manager") {
+                        sh "yarn build"
+                        sh "yarn unit"
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test Questionnaires') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/questionnaires") {
+                        sh "yarn build"
+                        sh "yarn unit"
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test Data Row Permissions') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/data-row-permissions") {
+                        sh "yarn build"
+                        sh "yarn unit"
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test Scripts') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/scripts") {
+                        sh "yarn build"
+                        sh "yarn unit"
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test Security') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/security") {
+                        sh "yarn build"
+                        sh "yarn unit"
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test Settings') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/settings") {
+                        sh "yarn build"
+                        sh "yarn unit"
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test Bulk 1/2') {
             when {
                 changeRequest()
             }
             parallel {
-                stage('App Manager') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/app-manager") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
                 stage('Legacy Lib') {
                     steps {
                         container('node') {
@@ -139,16 +201,6 @@ pipeline {
                         }
                     }
                 }
-                stage('Questionnaires') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/questionnaires") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
                 stage('Data Row Edit') {
                     steps {
                         container('node') {
@@ -161,7 +213,7 @@ pipeline {
                 }
             }
         }
-        stage('[PR] Build and Test 3/3') {
+         stage('[PR] Build and Test Bulk 2/2') {
             when {
                 changeRequest()
             }
@@ -170,16 +222,6 @@ pipeline {
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/core-ui") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
-                stage('Scripts') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/scripts") {
                                 sh "yarn build"
                                 sh "yarn unit"
                             }
@@ -196,36 +238,6 @@ pipeline {
                         }
                     }
                 }
-                stage('Security') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/security") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
-                stage('Settings') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/settings") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
-                stage('Data Row Permissions') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/data-row-permissions") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
             }
         }
         stage('[PR] Quality checks') {
@@ -233,15 +245,16 @@ pipeline {
                 changeRequest()
             }
             parallel {
-                stage('Sonar Cube') {
-                    steps {
-                        container('sonar') {
-                            // Fetch the target branch, sonar likes to take a look at it
-                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
-                            sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
-                        }
-                    }
-                }
+                // Requires a new image!
+                // stage('Sonar Cube') {
+                //     steps {
+                //         container('sonar') {
+                //             // Fetch the target branch, sonar likes to take a look at it
+                //             sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                //             sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                //         }
+                //     }
+                // }
                 stage('Codecov') {
                     steps {
                         container('node') {
@@ -288,7 +301,7 @@ pipeline {
                     sh "sleep 15s" // wait for deletion
                     sh "rancher apps install " + 
                         "-n ${NAME} " +
-                        "p-vx5vf:molgenis-helm3-molgenis-frontend " +
+                        "c-l4svj:molgenis-molgenis-frontend " +
                         "${NAME} " +
                         "--no-prompt " +
                         "--set environment=dev " +
@@ -311,6 +324,21 @@ pipeline {
                 }
             }
         }
+        stage('Prepare E2E Environment') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    // We intermittently get a DNS error: non-recoverable failure in name resolution (-4)
+                    // To prevent this, use Google DNS server instead
+                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc --dns 8.8.8.8,8.8.4.4:53 --readyfile /tmp/sauce-ready.txt -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
+                    timeout (1) {
+                        sh "while [ ! -f /tmp/sauce-ready.txt ]; do sleep 1; done"
+                    }
+                }
+            }
+        }
         stage('[PR] E2E Test Data Explorer 2') {
             when {
                 changeRequest()
@@ -324,14 +352,38 @@ pipeline {
                 }
             }
         }
-        stage('[PR] E2E Test Questionnaires') {
+        stage('[PR] E2E Test Questionnaires Chrome') {
             when {
                 changeRequest()
             }
             steps {
                 container('node') {
                     dir("${PACKAGE_DIR}/questionnaires") {
-                        sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
+                        sh "yarn e2e --env ci_chrome"
+                    }
+                }
+            }
+        }
+        stage('[PR] E2E Test Questionnaires Firefox') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/questionnaires") {
+                        sh "yarn e2e --env ci_firefox"
+                    }
+                }
+            }
+        }
+        stage('[PR] E2E Test Questionnaires Safari') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/questionnaires") {
+                        sh "yarn e2e --env ci_safari"
                     }
                 }
             }
