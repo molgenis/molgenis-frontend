@@ -32,6 +32,14 @@ pipeline {
                         env.SONAR_TOKEN = sh(script: 'vault read -field=value secret/ops/token/sonar', returnStdout: true)
                     }
                 }
+                container('node') {
+                    // We intermittently get a DNS error: non-recoverable failure in name resolution (-4)
+                    // To prevent this, use Google DNS server instead
+                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc --dns 8.8.8.8,8.8.4.4:53 --readyfile /tmp/sauce-ready.txt -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
+                    timeout (1) {
+                        sh "while [ ! -f /tmp/sauce-ready.txt ]; do sleep 1; done"
+                    }
+                }
                 sh "git remote set-url origin https://$GITHUB_TOKEN@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
             }
@@ -320,21 +328,6 @@ pipeline {
                         sh "set +x; curl -X POST -H 'Content-Type: application/json' -H 'Authorization: token ${GITHUB_TOKEN}' " +
                             "--data '{\"body\":\":star: PR Preview available on https://${NAME}.dev.molgenis.org\"}' " +
                             "https://api.github.com/repos/molgenis/molgenis-frontend/issues/${CHANGE_ID}/comments"
-                    }
-                }
-            }
-        }
-        stage('Prepare E2E Environment') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    // We intermittently get a DNS error: non-recoverable failure in name resolution (-4)
-                    // To prevent this, use Google DNS server instead
-                    sh "daemon --name=sauceconnect -- /usr/local/bin/sc --dns 8.8.8.8,8.8.4.4:53 --readyfile /tmp/sauce-ready.txt -u ${SAUCE_CRED_USR} -k ${SAUCE_CRED_PSW} -i ${TUNNEL_IDENTIFIER}"
-                    timeout (1) {
-                        sh "while [ ! -f /tmp/sauce-ready.txt ]; do sleep 1; done"
                     }
                 }
             }
