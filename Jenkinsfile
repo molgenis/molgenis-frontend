@@ -68,7 +68,7 @@ pipeline {
                 }
             }
         }
-        stage('[PR] Build and Test 1/3') {
+        stage('[PR] Build and Test 1/4') {
             when {
                 changeRequest()
             }
@@ -98,7 +98,7 @@ pipeline {
                 }
             }
         }
-        stage('[PR] Build and Test 2/3') {
+        stage('[PR] Build and Test 2/4') {
             when {
                 changeRequest()
             }
@@ -164,7 +164,7 @@ pipeline {
                 }
             }
         }
-        stage('[PR] Build and Test 3/3') {
+        stage('[PR] Build and Test 3/4') {
             when {
                 changeRequest()
             }
@@ -173,16 +173,6 @@ pipeline {
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/core-ui") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
-                stage('Scripts') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/scripts") {
                                 sh "yarn build"
                                 sh "yarn unit"
                             }
@@ -213,6 +203,23 @@ pipeline {
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/settings") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test 4/4') {
+            when {
+                changeRequest()
+            }
+            parallel {
+                stage('Scripts') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/scripts") {
                                 sh "yarn build"
                                 sh "yarn unit"
                             }
