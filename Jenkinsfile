@@ -142,16 +142,6 @@ pipeline {
                         }
                     }
                 }
-                stage('Questionnaires') {
-                    steps {
-                        container('node') {
-                            dir("${PACKAGE_DIR}/questionnaires") {
-                                sh "yarn build"
-                                sh "yarn unit"
-                            }
-                        }
-                    }
-                }
                 stage('Data Row Edit') {
                     steps {
                         container('node') {
@@ -216,6 +206,16 @@ pipeline {
                 changeRequest()
             }
             parallel {
+                stage('Questionnaires') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/questionnaires") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
                 stage('Scripts') {
                     steps {
                         container('node') {
