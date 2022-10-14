@@ -68,118 +68,51 @@ pipeline {
                 }
             }
         }
-        stage('[PR] Build and Test Components Library') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/components-library") {
-                        sh "yarn lint"
-                        sh "yarn build"
-                        sh "yarn styleguide:build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('[PR] Build and Test Data Explorer 2') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/data-explorer") {
-                        sh "yarn lint"
-                        sh "yarn build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('[PR] Build and Test App manager') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/app-manager") {
-                        sh "yarn build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('[PR] Build and Test Questionnaires') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/questionnaires") {
-                        sh "yarn build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('[PR] Build and Test Data Row Permissions') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/data-row-permissions") {
-                        sh "yarn build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('[PR] Build and Test Scripts') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/scripts") {
-                        sh "yarn build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('[PR] Build and Test Security') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/security") {
-                        sh "yarn build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('[PR] Build and Test Settings') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/settings") {
-                        sh "yarn build"
-                        sh "yarn unit"
-                    }
-                }
-            }
-        }
-        stage('[PR] Build and Test Bulk 1/2') {
+        stage('[PR] Build and Test 1/3') {
             when {
                 changeRequest()
             }
             parallel {
+                stage('Components Library') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/components-library") {
+                                sh "yarn lint"
+                                sh "yarn build"
+                                sh "yarn styleguide:build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Data Explorer 2') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/data-explorer") {
+                                sh "yarn lint"
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('[PR] Build and Test 2/3') {
+            when {
+                changeRequest()
+            }
+            parallel {
+                stage('App Manager') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/app-manager") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
                 stage('Legacy Lib') {
                     steps {
                         container('node') {
@@ -209,6 +142,16 @@ pipeline {
                         }
                     }
                 }
+                stage('Questionnaires') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/questionnaires") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
                 stage('Data Row Edit') {
                     steps {
                         container('node') {
@@ -221,7 +164,7 @@ pipeline {
                 }
             }
         }
-         stage('[PR] Build and Test Bulk 2/2') {
+        stage('[PR] Build and Test 3/3') {
             when {
                 changeRequest()
             }
@@ -236,10 +179,50 @@ pipeline {
                         }
                     }
                 }
+                stage('Scripts') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/scripts") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
                 stage('Search All') {
                     steps {
                         container('node') {
                             dir("${PACKAGE_DIR}/searchall") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Security') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/security") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Settings') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/settings") {
+                                sh "yarn build"
+                                sh "yarn unit"
+                            }
+                        }
+                    }
+                }
+                stage('Data Row Permissions') {
+                    steps {
+                        container('node') {
+                            dir("${PACKAGE_DIR}/data-row-permissions") {
                                 sh "yarn build"
                                 sh "yarn unit"
                             }
@@ -345,38 +328,14 @@ pipeline {
                 }
             }
         }
-        stage('[PR] E2E Test Questionnaires Chrome') {
+        stage('[PR] E2E Test Questionnaires') {
             when {
                 changeRequest()
             }
             steps {
                 container('node') {
                     dir("${PACKAGE_DIR}/questionnaires") {
-                        sh "yarn e2e --env ci_chrome"
-                    }
-                }
-            }
-        }
-        stage('[PR] E2E Test Questionnaires Firefox') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/questionnaires") {
-                        sh "yarn e2e --env ci_firefox"
-                    }
-                }
-            }
-        }
-        stage('[PR] E2E Test Questionnaires Safari') {
-            when {
-                changeRequest()
-            }
-            steps {
-                container('node') {
-                    dir("${PACKAGE_DIR}/questionnaires") {
-                        sh "yarn e2e --env ci_safari"
+                        sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
                     }
                 }
             }
