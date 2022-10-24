@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.4...@molgenis-ui/questionnaires@3.4.5) (2022-10-24)
+
+
+### Bug Fixes
+
+* e2e now works locally in questionnaires ([07d8093](https://github.com/molgenis/molgenis-frontend/commit/07d8093f5cd4751700c8814c5d633074e94ac80f))
+* update molgenis-ui-form version ([#737](https://github.com/molgenis/molgenis-frontend/issues/737)) ([e36c08e](https://github.com/molgenis/molgenis-frontend/commit/e36c08e436a163624ee5f17f799dd815bb95cb69))
+
+
+
+
+
 ## [3.4.4](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.3...@molgenis-ui/questionnaires@3.4.4) (2022-02-11)
 
 
