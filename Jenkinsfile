@@ -360,9 +360,9 @@ pipeline {
                     sh "yarn lerna run build --concurrency 1"
                     sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
                 }
-                container('sonar') {
-                    sh "sonar-scanner"
-                }
+                // container('sonar') {
+                //     sh "sonar-scanner"
+                // }
             }
             post {
                 always {
