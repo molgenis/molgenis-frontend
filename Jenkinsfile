@@ -356,7 +356,7 @@ pipeline {
                     sh "yarn install"
                     sh "yarn lerna bootstrap"
                     sh "yarn lerna run build --scope @molgenis-ui/components-library"
-                    sh "yarn lerna run unit"
+                    sh "yarn lerna run unit --concurrency 1"
                     sh "yarn lerna run build"
                     sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
                 }
