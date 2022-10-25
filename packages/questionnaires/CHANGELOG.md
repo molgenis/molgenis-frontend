@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.5...@molgenis-ui/questionnaires@3.4.6) (2022-10-25)
+
+
+### Bug Fixes
+
+* make save of change work agian by forcing a copy of fromdata and not a reference ([88850e6](https://github.com/molgenis/molgenis-frontend/commit/88850e6af9890eef6a856bc9bf4df023bc90f74e))
+
+
+
+
+
 ## [3.4.5](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.4...@molgenis-ui/questionnaires@3.4.5) (2022-10-24)
 
 
