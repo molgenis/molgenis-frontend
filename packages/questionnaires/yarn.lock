@@ -116,10 +116,10 @@
     i18next-xhr-backend "^1.4.1"
     moment "^2.18.1"
 
-"@molgenis/molgenis-ui-form@^5.9.3":
-  version "5.9.3"
-  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.9.3.tgz#529f5390d7eca0d7de9f40207ff65519bca0cd4f"
-  integrity sha512-XKX7XMce8dme/XOCjjo1CDaeZTfGrViPn6Nz1eEi0SBEF2UHcq29jVBs7K522mxNtzfsxf/gtaVJIIslqkb45Q==
+"@molgenis/molgenis-ui-form@^5.9.4":
+  version "5.9.4"
+  resolved "https://registry.yarnpkg.com/@molgenis/molgenis-ui-form/-/molgenis-ui-form-5.9.4.tgz#dc24f506dd00a3cad9e4795e5335174e3ad0436b"
+  integrity sha512-0TqYpVV+wh0CRvOBM+SD0ESZvKfWeYjNQ961nsRqYiVxHDgeS8TuJubF2tDtt8Kq9NdQHnq2J8jb13yGbhnYOg==
   dependencies:
     "@molgenis/molgenis-api-client" "^3.1.4"
     "@molgenis/rsql" "^0.1.1"
@@ -9040,7 +9040,7 @@ select-hose@^2.0.0:
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
   integrity sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=
 
-selenium-server@^3.0.1:
+selenium-server@^3.141.59:
   version "3.141.59"
   resolved "https://registry.yarnpkg.com/selenium-server/-/selenium-server-3.141.59.tgz#cbefdf50aae636ee4c67b819532a8233ce3fd6b0"
   integrity sha512-pL7T1YtAqOEXiBbTx0KdZMkE2U7PYucemd7i0nDLcxcR1APXYZlJfNr5hrvL3mZgwXb7AJEZPINzC6mDU3eP5g==
