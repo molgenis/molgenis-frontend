@@ -24,6 +24,7 @@
   "dependencies": {
     "@molgenis/molgenis-api-client": "^2.1.2",
     "@molgenis/molgenis-i18n-js": "^0.1.1",
+    "chromedriver": "^108.0.0",
     "font-awesome": "^4.7.0",
     "moment": "^2.20.1",
     "pdfmake": "^0.1.36",
@@ -50,7 +51,6 @@
     "babel-register": "^6.22.0",
     "chai": "^4.1.2",
     "chalk": "^2.0.1",
-    "chromedriver": "^106.0.1",
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^5.0.1",
     "cross-spawn": "^5.0.1",
