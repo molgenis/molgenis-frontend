@@ -2,8 +2,8 @@
 
 > Frontend code for the molgenis-questionnaire module
 
-
 ## Develop frontend-plugins for MOLGENIS
+
 There are 2 ways to test and develop in frontend-plugins for MOLGENIS.
 
 - locally without MOLGENIS
@@ -24,6 +24,7 @@ yarn dev
 It will render a local version of the questionnaires.
 
 #### Run unit tests
+
 You can run unit tests by executing this command:
 
 ```bash
@@ -35,6 +36,7 @@ yarn debug
 ```
 
 #### Run end-to-end tests
+
 You can run edn-to-end test locally by running the following command:
 
 ```bash
@@ -47,7 +49,7 @@ For local testing with a running MOLGENIS instance you have to alter the config 
 
 Comment in the following block
 
-```src/main/frontend/config/index.js```
+`src/main/frontend/config/index.js`
 
 ```javascript
 module.exports = {
@@ -72,7 +74,6 @@ module.exports = {
 ```
 
 And comment out this block in the same file.
-
 
 ```javascript
 /**
@@ -144,4 +145,4 @@ You need to add the following code snipper in your plugin **pom.xml**.
     </build>
 ```
 
-That way MOLGENIS integrates the frontend build with the MOLGENIS package. 
+That way MOLGENIS integrates the frontend build with the MOLGENIS package.
