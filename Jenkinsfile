@@ -322,20 +322,18 @@ pipeline {
                 }
             }
         }
-        // Disabled safari e2e tests. The tests keep faling on build server but do work locally
-        //
-        // stage('[PR] E2E Test safari Questionnaires') {
-        //     when {
-        //         changeRequest()
-        //     }
-        //     steps {
-        //         container('node') {
-        //             dir("${PACKAGE_DIR}/questionnaires") {
-        //                 sh "yarn e2e --env ci_safari"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('[PR] E2E Test safari Questionnaires') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/questionnaires") {
+                        sh "yarn e2e --env ci_safari"
+                    }
+                }
+            }
+        }
         stage('[PR] E2E Test chrome, firefox Questionnaires') {
             when {
                 changeRequest()
