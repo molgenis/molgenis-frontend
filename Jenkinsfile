@@ -4,7 +4,7 @@ pipeline {
             // the shared pod template defined on the Jenkins server config
             inheritFrom 'shared'
             // molgenis-frontend pod template defined in molgenis/molgenis-jenkins-pipeline repository
-            yaml libraryResource("pod-templates/molgenis-frontend.yaml")
+            yaml libraryResource("pod-templates/molgenis-frontend2.yaml")
         }
     }
     environment {
