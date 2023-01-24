@@ -322,14 +322,26 @@ pipeline {
                 }
             }
         }
-        stage('[PR] E2E Test Questionnaires') {
+        stage('[PR] E2E Test safari Questionnaires') {
             when {
                 changeRequest()
             }
             steps {
                 container('node') {
                     dir("${PACKAGE_DIR}/questionnaires") {
-                        sh "yarn e2e --env ci_chrome,ci_firefox,ci_safari"
+                        sh "yarn e2e --env ci_safari"
+                    }
+                }
+            }
+        }
+        stage('[PR] E2E Test chrome, firefox Questionnaires') {
+            when {
+                changeRequest()
+            }
+            steps {
+                container('node') {
+                    dir("${PACKAGE_DIR}/questionnaires") {
+                        sh "yarn e2e --env ci_chrome,ci_firefox"
                     }
                 }
             }
