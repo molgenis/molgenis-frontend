@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.7](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.6...@molgenis-ui/questionnaires@3.4.7) (2023-01-24)
+
+
+### Bug Fixes
+
+* molgenis-ui-form version bumb ([a3dc42a](https://github.com/molgenis/molgenis-frontend/commit/a3dc42a4cfb778ba828af80c957c85f30b3f70eb))
+* set correct devDependency ([0078948](https://github.com/molgenis/molgenis-frontend/commit/0078948c36314389b196d848613b14dcdb313221))
+* update chrome driver ([dd4bdd1](https://github.com/molgenis/molgenis-frontend/commit/dd4bdd19b673b66f403b6052cb7583147265db46))
+* update selenium-server to fix e2e test ([344ee9d](https://github.com/molgenis/molgenis-frontend/commit/344ee9de1a81c82065383a01280a6c3560b182a5))
+
+
+
+
+
 ## [3.4.6](https://github.com/molgenis/molgenis-frontend/compare/@molgenis-ui/questionnaires@3.4.5...@molgenis-ui/questionnaires@3.4.6) (2022-10-25)
 
 
