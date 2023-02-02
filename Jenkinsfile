@@ -243,16 +243,15 @@ pipeline {
                 changeRequest()
             }
             parallel {
-                // Requires a new image!
-                // stage('Sonar Cube') {
-                //     steps {
-                //         container('sonar') {
-                //             // Fetch the target branch, sonar likes to take a look at it
-                //             sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
-                //             sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
-                //         }
-                //     }
-                // }
+                stage('Sonar Cube') {
+                    steps {
+                        container('sonarqube') {
+                            // Fetch the target branch, sonar likes to take a look at it
+                            sh "git fetch --no-tags origin ${CHANGE_TARGET}:refs/remotes/origin/${CHANGE_TARGET}"
+                            sh "sonar-scanner -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.github.oauth=${env.GITHUB_TOKEN} -Dsonar.pullrequest.base=${CHANGE_TARGET} -Dsonar.pullrequest.branch=${BRANCH_NAME} -Dsonar.pullrequest.key=${env.CHANGE_ID} -Dsonar.pullrequest.provider=GitHub -Dsonar.pullrequest.github.repository=molgenis/molgenis-frontend"
+                        }
+                    }
+                }
                 stage('Codecov') {
                     steps {
                         container('node') {
@@ -372,9 +371,9 @@ pipeline {
                     sh "yarn lerna run build --concurrency 1"
                     sh "yarn lerna run styleguide:build -- --scope @molgenis-ui/components-library"
                 }
-                // container('sonar') {
-                //     sh "sonar-scanner"
-                // }
+                container('sonarqube') {
+                    sh "sonar-scanner"
+                }
             }
             post {
                 always {
