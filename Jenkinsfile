@@ -12,6 +12,7 @@ pipeline {
         LOCAL_REPOSITORY = "${LOCAL_REGISTRY}/molgenis/molgenis-frontend"
         npm_config_registry = "https://registry.npmjs.org"
         PACKAGE_DIR = "${env.WORKSPACE}/packages"
+        DOCKER_CONFIG="/kaniko/.docker"
     }
     stages {
         stage('Prepare') {
@@ -39,6 +40,10 @@ pipeline {
                     timeout (1) {
                         sh "while [ ! -f /tmp/sauce-ready.txt ]; do sleep 1; done"
                     }
+                }
+                container (name: 'kaniko', shell: '/busybox/sh') {
+                    sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
+                    sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}, \"https://index.docker.io/v1/\": {\"auth\": \"${DOCKERHUB_AUTH}\"}, \"registry.hub.docker.com\": {\"auth\": \"${DOCKERHUB_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
                 }
                 sh "git remote set-url origin https://$GITHUB_TOKEN@github.com/${REPOSITORY}.git"
                 sh "git fetch --tags"
@@ -269,12 +274,9 @@ pipeline {
             }
             environment {
                 TAG = "PR-${CHANGE_ID}"
-                DOCKER_CONFIG="/root/.docker"
             }
             steps {
                 container (name: 'kaniko', shell: '/busybox/sh') {
-                    sh "#!/busybox/sh\nmkdir -p ${DOCKER_CONFIG}"
-                    sh "#!/busybox/sh\necho '{\"auths\": {\"registry.molgenis.org\": {\"auth\": \"${NEXUS_AUTH}\"}, \"https://index.docker.io/v1/\": {\"auth\": \"${DOCKERHUB_AUTH}\"}, \"registry.hub.docker.com\": {\"auth\": \"${DOCKERHUB_AUTH}\"}}}' > ${DOCKER_CONFIG}/config.json"
                     sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview-config/copy_package_dist_dirs.sh"
                     sh "#!/busybox/sh\n. ${WORKSPACE}/docker/preview-config/copy_component_styleguide.sh"
                     sh "#!/busybox/sh\n/kaniko/executor --context ${WORKSPACE}/docker/preview-config --destination ${LOCAL_REPOSITORY}:${TAG}"
