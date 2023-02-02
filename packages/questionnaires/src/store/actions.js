@@ -125,7 +125,7 @@ const actions = {
     Vue.nextTick(() => {
       const fieldState = formState[updatedAttribute]
       const updatedValue = formData[updatedAttribute]
-      if (fieldState && Object.keys(fieldState.$error).every((errorKey) => errorKey === 'required')) {
+      if (fieldState) {
         const options = {
           body: JSON.stringify(updatedValue),
           method: 'PUT'
