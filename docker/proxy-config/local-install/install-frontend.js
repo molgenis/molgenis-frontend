@@ -2877,10 +2877,6 @@ const packageJson = `{
 async function installPackages() {
 
     return new Promise(resolve => {
-
-
-
-
         for (const pkg of packages) {
             console.log(`installing ${pkg}`);
             const exactInstall = /@([0-9])/.test(pkg);
@@ -2913,15 +2909,15 @@ function prepare() {
             lib.remove('package-lock.json');
         }
 
-        if (require$$0$2.existsSync('@molgenis-ui')) {
+        if (require$$0$2.existsSync('/usr/share/nginx/html/@molgenis-ui')) {
             console.log('Removing @molgenis-ui');
-            lib.emptyDirSync('@molgenis-ui');
-            lib.removeSync('@molgenis-ui');
+            lib.emptyDirSync('/usr/share/nginx/html/@molgenis-ui');
+            lib.removeSync('/usr/share/nginx/html/@molgenis-ui');
         }
-        if (require$$0$2.existsSync('@molgenis')) {
+        if (require$$0$2.existsSync('/usr/share/nginx/html/@molgenis')) {
             console.log('Removing @molgenis');
-            lib.emptyDirSync('@molgenis');
-            lib.removeSync('@molgenis');
+            lib.emptyDirSync('/usr/share/nginx/html/@molgenis');
+            lib.removeSync('/usr/share/nginx/html/@molgenis');
         }
 
         console.log('Creating package.json');
@@ -2931,8 +2927,8 @@ function prepare() {
 }
 
 function cleanup() {
-    lib.moveSync('node_modules/@molgenis', '@molgenis');
-    lib.moveSync('node_modules/@molgenis-ui', '@molgenis-ui');
+    lib.moveSync('node_modules/@molgenis', '/usr/share/nginx/html/@molgenis');
+    lib.moveSync('node_modules/@molgenis-ui', '/usr/share/nginx/html/@molgenis-ui');
     lib.emptyDirSync('node_modules');
     lib.removeSync('node_modules');
 }

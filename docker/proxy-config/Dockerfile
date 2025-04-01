@@ -20,7 +20,7 @@ COPY proxy.d/frontend/custom.conf /etc/nginx/proxy.d/
 COPY proxy.d/frontend/${MOLGENIS_FRONTEND_VERSION}.conf /etc/nginx/proxy.d/
 
 # The following lines will install the frontend packages locally, comment if frontend version is not local.
-COPY local-install/install-frontend.js / usr/share/nginx/html/
+COPY local-install/install-frontend.js /usr/share/nginx/html/install-frontend.js
 
 RUN apt-get update && apt-get install -y \
     curl \
