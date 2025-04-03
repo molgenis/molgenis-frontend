@@ -52,6 +52,15 @@ We are now only deploying the frontend at dev time or in production on the clust
 
 These version represent the apps that a going to be served.
 
+## Build locally:
+```
+docker build --platform linux/amd64,linux/arm64 -t molgenis/molgenis-frontend-local:latest .
+```
+
+```
+docker build --platform linux/amd64,linux/arm64 -t molgenis/molgenis-frontend-local:x.y .
+```
+
 ## Troubleshooting
 
 **CSS is not loading**
