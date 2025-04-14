@@ -61,7 +61,7 @@
     "svg-pan-zoom": "3.2.6",
     "twix": "^0.9.0",
     "typedarray": "0.0.6",
-    "underscore": "1.8.2",
+    "underscore": "1.12.1",
     "urijs": "1.17.0"
   },
   "devDependencies": {
